@@ -1,0 +1,32 @@
+public class toy_benchmark.ToyBenchmark6 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.ToyBenchmark6 r0;
+
+        r0 := @this: toy_benchmark.ToyBenchmark6;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void test1(int)
+    {
+        int[] r0;
+        int i0, i1;
+
+        i0 := @parameter0: int;
+
+        r0 = newarray (int)[10];
+
+        r0[5] = 0;
+
+        i1 = r0[5];
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error1(int)>(i1);
+
+        return;
+    }
+}

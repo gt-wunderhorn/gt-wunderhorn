@@ -1,0 +1,46 @@
+public class toy_benchmark.Test1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.Test1 r0;
+
+        r0 := @this: toy_benchmark.Test1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void test(int)
+    {
+        int i0, $i1;
+        toy_benchmark.LinkedList r0, r1, $r2, $r3;
+
+        i0 := @parameter0: int;
+
+        $r2 = new toy_benchmark.LinkedList;
+
+        specialinvoke $r2.<toy_benchmark.LinkedList: void <init>()>();
+
+        r0 = $r2;
+
+        virtualinvoke r0.<toy_benchmark.LinkedList: void add(int)>(1);
+
+        virtualinvoke r0.<toy_benchmark.LinkedList: void add(int)>(i0);
+
+        $r3 = new toy_benchmark.LinkedList;
+
+        specialinvoke $r3.<toy_benchmark.LinkedList: void <init>()>();
+
+        r1 = $r3;
+
+        virtualinvoke r1.<toy_benchmark.LinkedList: void add(int)>(i0);
+
+        $i1 = virtualinvoke r0.<toy_benchmark.LinkedList: int get(int)>(0);
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error1(int)>($i1);
+
+        return;
+    }
+}

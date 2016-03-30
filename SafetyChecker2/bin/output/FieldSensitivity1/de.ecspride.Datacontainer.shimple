@@ -1,0 +1,68 @@
+public class de.ecspride.Datacontainer extends java.lang.Object
+{
+    private java.lang.String secret;
+    private java.lang.String description;
+
+    public void <init>()
+    {
+        de.ecspride.Datacontainer r0;
+
+        r0 := @this: de.ecspride.Datacontainer;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String getSecret()
+    {
+        de.ecspride.Datacontainer r0;
+        java.lang.String $r1;
+
+        r0 := @this: de.ecspride.Datacontainer;
+
+        $r1 = r0.<de.ecspride.Datacontainer: java.lang.String secret>;
+
+        return $r1;
+    }
+
+    public void setSecret(java.lang.String)
+    {
+        de.ecspride.Datacontainer r0;
+        java.lang.String r1;
+
+        r0 := @this: de.ecspride.Datacontainer;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<de.ecspride.Datacontainer: java.lang.String secret> = r1;
+
+        return;
+    }
+
+    public java.lang.String getDescription()
+    {
+        de.ecspride.Datacontainer r0;
+        java.lang.String $r1;
+
+        r0 := @this: de.ecspride.Datacontainer;
+
+        $r1 = r0.<de.ecspride.Datacontainer: java.lang.String description>;
+
+        return $r1;
+    }
+
+    public void setDescription(java.lang.String)
+    {
+        de.ecspride.Datacontainer r0;
+        java.lang.String r1;
+
+        r0 := @this: de.ecspride.Datacontainer;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<de.ecspride.Datacontainer: java.lang.String description> = r1;
+
+        return;
+    }
+}

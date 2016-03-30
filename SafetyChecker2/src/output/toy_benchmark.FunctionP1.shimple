@@ -1,0 +1,43 @@
+public class toy_benchmark.FunctionP1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.FunctionP1 r0;
+
+        r0 := @this: toy_benchmark.FunctionP1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static int test()
+    {
+        byte b0, b1;
+        int i2;
+
+        b0 = 10;
+
+        b1 = 9;
+
+        i2 = staticinvoke <toy_benchmark.FunctionP1: int add(int,int)>(b0, b1);
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error1(int)>(b0);
+
+        return i2;
+    }
+
+    public static int add(int, int)
+    {
+        int i0, i1, i2;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        i2 = i0 + i1;
+
+        return i2;
+    }
+}

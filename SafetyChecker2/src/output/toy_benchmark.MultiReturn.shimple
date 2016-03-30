@@ -1,0 +1,41 @@
+public class toy_benchmark.MultiReturn extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.MultiReturn r0;
+
+        r0 := @this: toy_benchmark.MultiReturn;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public int f1(int)
+    {
+        toy_benchmark.MultiReturn r0;
+        int i0;
+
+        r0 := @this: toy_benchmark.MultiReturn;
+
+        i0 := @parameter0: int;
+
+        if i0 <= 5 goto label1;
+
+        return 4;
+
+     label1:
+        if i0 <= 10 goto label2;
+
+        return 6;
+
+     label2:
+        if i0 <= 100 goto label3;
+
+        return 9;
+
+     label3:
+        return 100;
+    }
+}

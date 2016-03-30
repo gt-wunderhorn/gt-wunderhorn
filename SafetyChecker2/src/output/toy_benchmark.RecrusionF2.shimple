@@ -1,0 +1,61 @@
+public class toy_benchmark.RecrusionF2 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.RecrusionF2 r0;
+
+        r0 := @this: toy_benchmark.RecrusionF2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static int f1()
+    {
+        byte b0, b1, b2;
+        int i3;
+
+        b0 = 10;
+
+        b1 = 1;
+
+        b2 = 1;
+
+        i3 = b1 + b2;
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
+        return i3;
+    }
+
+    public static int f2(int)
+    {
+        int i0, $i1, $i2;
+
+        i0 := @parameter0: int;
+
+        if i0 <= 100 goto label1;
+
+        $i1 = i0 - 1;
+
+        $i2 = staticinvoke <toy_benchmark.RecrusionF2: int f2(int)>($i1);
+
+        return $i2;
+
+     label1:
+        return 10;
+    }
+
+    public static int f3(int)
+    {
+        int i0, $i1;
+
+        i0 := @parameter0: int;
+
+        $i1 = staticinvoke <toy_benchmark.RecrusionF2: int f2(int)>(i0);
+
+        return $i1;
+    }
+}

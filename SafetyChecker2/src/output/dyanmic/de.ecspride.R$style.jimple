@@ -1,0 +1,25 @@
+public final class de.ecspride.R$style extends java.lang.Object
+{
+    public static final int AppBaseTheme;
+    public static final int AppTheme;
+
+    public void <init>()
+    {
+        de.ecspride.R$style r0;
+
+        r0 := @this: de.ecspride.R$style;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <de.ecspride.R$style: int AppTheme> = 2131034113;
+
+        <de.ecspride.R$style: int AppBaseTheme> = 2131034112;
+
+        return;
+    }
+}

@@ -1,0 +1,43 @@
+public class StringBench.Node extends java.lang.Object
+{
+    private java.lang.String result;
+
+    public void <init>()
+    {
+        StringBench.Node r0;
+
+        r0 := @this: StringBench.Node;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<StringBench.Node: java.lang.String result> = "abcdefg";
+
+        return;
+    }
+
+    public void change(java.lang.String)
+    {
+        StringBench.Node r0;
+        java.lang.String r1;
+
+        r0 := @this: StringBench.Node;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<StringBench.Node: java.lang.String result> = r1;
+
+        return;
+    }
+
+    public java.lang.String get()
+    {
+        StringBench.Node r0;
+        java.lang.String $r1;
+
+        r0 := @this: StringBench.Node;
+
+        $r1 = r0.<StringBench.Node: java.lang.String result>;
+
+        return $r1;
+    }
+}

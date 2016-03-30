@@ -1,0 +1,27 @@
+class LinkedList$Node extends java.lang.Object
+{
+    LinkedList$Node next;
+    int value;
+    final LinkedList this$0;
+
+    public void <init>(LinkedList, int)
+    {
+        LinkedList$Node r0;
+        LinkedList r1;
+        int i0;
+
+        r0 := @this: LinkedList$Node;
+
+        r1 := @parameter0: LinkedList;
+
+        i0 := @parameter1: int;
+
+        r0.<LinkedList$Node: LinkedList this$0> = r1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<LinkedList$Node: int value> = i0;
+
+        return;
+    }
+}

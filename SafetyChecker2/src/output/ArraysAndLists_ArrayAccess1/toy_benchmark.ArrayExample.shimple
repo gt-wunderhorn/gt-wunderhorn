@@ -1,0 +1,39 @@
+public class toy_benchmark.ArrayExample extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.ArrayExample r0;
+
+        r0 := @this: toy_benchmark.ArrayExample;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void Error()
+    {
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        int[][][] r1;
+        int[] r2;
+        int[][] $r3;
+
+        r0 := @parameter0: java.lang.String[];
+
+        r1 = newmultiarray (int)[5][5][5];
+
+        r2 = newarray (int)[5];
+
+        $r3 = r1[4];
+
+        $r3[4] = r2;
+
+        return;
+    }
+}

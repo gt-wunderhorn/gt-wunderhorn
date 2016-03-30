@@ -1,0 +1,49 @@
+public class toy_benchmark.ToyBenchmark3 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.ToyBenchmark3 r0;
+
+        r0 := @this: toy_benchmark.ToyBenchmark3;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void test1(int)
+    {
+        int i0;
+        java.lang.String r0, r1, r1_1, r1_2;
+
+        i0 := @parameter0: int;
+
+        r0 = "";
+
+        if i0 <= 10 goto label1;
+
+        r1 = "abcdefg";
+
+(0)     goto label2;
+
+     label1:
+(1)     r1_1 = "abcdefg";
+
+     label2:
+        r1_2 = Phi(r1 #0, r1_1 #1);
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error2(java.lang.String)>(r1_2);
+
+        return;
+    }
+
+    public static int test2(java.lang.String)
+    {
+        java.lang.String r0;
+
+        r0 := @parameter0: java.lang.String;
+
+        return 2;
+    }
+}

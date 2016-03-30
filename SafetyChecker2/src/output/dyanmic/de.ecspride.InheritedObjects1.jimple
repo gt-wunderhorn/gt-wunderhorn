@@ -1,0 +1,74 @@
+public class de.ecspride.InheritedObjects1 extends android.app.Activity
+{
+
+    public void <init>()
+    {
+        de.ecspride.InheritedObjects1 r0;
+
+        r0 := @this: de.ecspride.InheritedObjects1;
+
+        specialinvoke r0.<android.app.Activity: void <init>()>();
+
+        return;
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.ecspride.InheritedObjects1 r0;
+        android.os.Bundle r1;
+        byte b0;
+        android.telephony.TelephonyManager r2;
+        android.telephony.SmsManager r3;
+        java.lang.Object $r4;
+        de.ecspride.VarB $r5;
+        java.lang.String $r6;
+        de.ecspride.VarA $r7;
+        de.ecspride.General r8;
+
+        r0 := @this: de.ecspride.InheritedObjects1;
+
+        r1 := @parameter0: android.os.Bundle;
+
+        specialinvoke r0.<android.app.Activity: void onCreate(android.os.Bundle)>(r1);
+
+        virtualinvoke r0.<de.ecspride.InheritedObjects1: void setContentView(int)>(2130903040);
+
+        b0 = 46;
+
+        $r4 = virtualinvoke r0.<de.ecspride.InheritedObjects1: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        r2 = (android.telephony.TelephonyManager) $r4;
+
+        if b0 != 46 goto label1;
+
+        $r7 = new de.ecspride.VarA;
+
+        specialinvoke $r7.<de.ecspride.VarA: void <init>()>();
+
+        r8 = $r7;
+
+        r8.<de.ecspride.General: android.telephony.TelephonyManager man> = r2;
+
+        goto label2;
+
+     label1:
+        $r5 = new de.ecspride.VarB;
+
+        specialinvoke $r5.<de.ecspride.VarB: void <init>()>();
+
+        r8 = $r5;
+
+        r8.<de.ecspride.General: android.telephony.TelephonyManager man> = r2;
+
+     label2:
+        r3 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+
+        $r6 = virtualinvoke r8.<de.ecspride.General: java.lang.String getInfo()>();
+
+        virtualinvoke r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49 1234", null, $r6, null, null);
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
+        return;
+    }
+}

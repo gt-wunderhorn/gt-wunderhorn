@@ -1,0 +1,15 @@
+public final class edu.mit.array_slice.R$layout extends java.lang.Object
+{
+    public static final int activity_main;
+
+    public void <init>()
+    {
+        edu.mit.array_slice.R$layout r0;
+
+        r0 := @this: edu.mit.array_slice.R$layout;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

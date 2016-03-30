@@ -1,0 +1,34 @@
+public class de.ecspride.MainActivity$StaticInitClass1 extends java.lang.Object
+{
+
+    static void <clinit>()
+    {
+        android.content.Context $r0;
+        java.lang.Object $r1;
+        android.telephony.TelephonyManager $r2;
+        java.lang.String $r3;
+
+        $r0 = <de.ecspride.MainActivity: android.content.Context c>;
+
+        $r1 = virtualinvoke $r0.<android.content.Context: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        $r2 = (android.telephony.TelephonyManager) $r1;
+
+        $r3 = virtualinvoke $r2.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
+
+        <de.ecspride.MainActivity: java.lang.String im> = $r3;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        de.ecspride.MainActivity$StaticInitClass1 r0;
+
+        r0 := @this: de.ecspride.MainActivity$StaticInitClass1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

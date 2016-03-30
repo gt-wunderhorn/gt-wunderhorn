@@ -1,0 +1,93 @@
+public class de.ecspride.FieldSensitivity1 extends android.app.Activity
+{
+    private de.ecspride.Datacontainer d1;
+
+    public void <init>()
+    {
+        de.ecspride.FieldSensitivity1 r0;
+
+        r0 := @this: de.ecspride.FieldSensitivity1;
+
+        specialinvoke r0.<android.app.Activity: void <init>()>();
+
+        return;
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.ecspride.FieldSensitivity1 r0;
+        android.os.Bundle r1;
+        de.ecspride.Datacontainer $r2, $r3;
+
+        r0 := @this: de.ecspride.FieldSensitivity1;
+
+        r1 := @parameter0: android.os.Bundle;
+
+        specialinvoke r0.<android.app.Activity: void onCreate(android.os.Bundle)>(r1);
+
+        virtualinvoke r0.<de.ecspride.FieldSensitivity1: void setContentView(int)>(2130903040);
+
+        $r2 = r0.<de.ecspride.FieldSensitivity1: de.ecspride.Datacontainer d1>;
+
+        $r3 = specialinvoke r0.<de.ecspride.FieldSensitivity1: de.ecspride.Datacontainer setTaint(de.ecspride.Datacontainer)>($r2);
+
+        r0.<de.ecspride.FieldSensitivity1: de.ecspride.Datacontainer d1> = $r3;
+
+        specialinvoke r0.<de.ecspride.FieldSensitivity1: void sendTaint()>();
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
+        return;
+    }
+
+    private de.ecspride.Datacontainer setTaint(de.ecspride.Datacontainer)
+    {
+        de.ecspride.FieldSensitivity1 r0;
+        android.telephony.TelephonyManager r1;
+        de.ecspride.Datacontainer $r2, r5, r6;
+        java.lang.Object $r3;
+        java.lang.String $r4;
+
+        r0 := @this: de.ecspride.FieldSensitivity1;
+
+        r5 := @parameter0: de.ecspride.Datacontainer;
+
+        $r2 = new de.ecspride.Datacontainer;
+
+        specialinvoke $r2.<de.ecspride.Datacontainer: void <init>()>();
+
+        r6 = $r2;
+
+        virtualinvoke r6.<de.ecspride.Datacontainer: void setDescription(java.lang.String)>("abc");
+
+        $r3 = virtualinvoke r0.<de.ecspride.FieldSensitivity1: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        r1 = (android.telephony.TelephonyManager) $r3;
+
+        $r4 = virtualinvoke r1.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>();
+
+        virtualinvoke r6.<de.ecspride.Datacontainer: void setSecret(java.lang.String)>($r4);
+
+        return r6;
+    }
+
+    private void sendTaint()
+    {
+        de.ecspride.FieldSensitivity1 r0;
+        android.telephony.SmsManager r1;
+        de.ecspride.Datacontainer $r2;
+        java.lang.String $r3;
+
+        r0 := @this: de.ecspride.FieldSensitivity1;
+
+        r1 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+
+        $r2 = r0.<de.ecspride.FieldSensitivity1: de.ecspride.Datacontainer d1>;
+
+        $r3 = virtualinvoke $r2.<de.ecspride.Datacontainer: java.lang.String getDescription()>();
+
+        virtualinvoke r1.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49 1234", null, $r3, null, null);
+
+        return;
+    }
+}

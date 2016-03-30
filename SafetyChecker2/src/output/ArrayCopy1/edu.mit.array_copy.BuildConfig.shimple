@@ -1,0 +1,15 @@
+public final class edu.mit.array_copy.BuildConfig extends java.lang.Object
+{
+    public static final boolean DEBUG;
+
+    public void <init>()
+    {
+        edu.mit.array_copy.BuildConfig r0;
+
+        r0 := @this: edu.mit.array_copy.BuildConfig;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

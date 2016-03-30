@@ -1,0 +1,19 @@
+public class toy_benchmark.ErrorFunction extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.ErrorFunction r0;
+
+        r0 := @this: toy_benchmark.ErrorFunction;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void Error()
+    {
+        return;
+    }
+}
