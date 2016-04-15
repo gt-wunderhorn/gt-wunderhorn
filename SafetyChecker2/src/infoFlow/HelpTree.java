@@ -25,9 +25,8 @@ public class HelpTree {
 	private ExceptionalUnitGraph cfg;
 	private Map<Unit, Integer> shortestPath;
 	private Map<Unit, Integer> lowestUnwind;
-	private boolean findReturn;
-	private ArrayList<Unit> returnUnit;
-	private Unit root;
+	private ArrayList<Unit> rootUnit;
+	private Unit rtrn;
 	private Map<String, HelpTree> stores;
 	private boolean ifModified;
 
@@ -36,14 +35,13 @@ public class HelpTree {
 		this.shortestPath = new HashMap<Unit, Integer>();
 		this.lowestUnwind = new HashMap<Unit, Integer>();
 		this.ifModified = false;
-		this.findReturn = false;
-		this.returnUnit = new ArrayList<Unit>();
-		this.root = this.cfg.getHeads().get(0);
+		this.rootUnit = new ArrayList<Unit>();
+		this.rtrn = this.cfg.getTails().get(0);
 		Set<Unit> visited = new HashSet<Unit>();
-		visited.add(this.root);
+		visited.add(this.rtrn);
 		Queue<Unit> expandQueue = new LinkedList<Unit>();
-		expandQueue.add(this.root);
-		this.findReturnUnit(visited, expandQueue);
+		expandQueue.add(this.rtrn);
+		this.findRootUnit(visited, expandQueue);
 		this.ShortestReturnPath();
 		this.UpdateAllZeros();
 	}
@@ -191,24 +189,25 @@ public class HelpTree {
 		}
 	}
 
-	private void findReturnUnit(Set<Unit> visited, Queue<Unit> expandQueue) {
+	private void findRootUnit(Set<Unit> visited, Queue<Unit> expandQueue) {
 		if (expandQueue.isEmpty()) {
 			return;
 		} else {
 			Unit e = expandQueue.remove();
-			if ((e instanceof ReturnStmt) || (e instanceof ReturnVoidStmt)) {
-				this.returnUnit.add(e);
+			
+		        if (this.cfg.getUnexceptionalPredsOf(e).size() == 0) {
+				this.rootUnit.add(e);	
 			} else {
-				List<Unit> successors = this.cfg.getUnexceptionalSuccsOf(e);
+				List<Unit> predicessors = this.cfg.getUnexceptionalPredsOf(e);
 				for (int i = 0; i < successors.size(); i++) {
-					Unit successor = successors.get(i);
-					if (!visited.contains(successor)) {
-						visited.add(successor);
-						expandQueue.add(successor);
+					Unit predicessor = predicessors.get(i);
+					if (!visited.contains(predicessor)) {
+						visited.add(predicessor);
+						expandQueue.add(predicessor);
 					}
 				}
 			}
-			findReturnUnit(visited, expandQueue);
+			findRootUnit(visited, expandQueue);
 		}
 	}
 

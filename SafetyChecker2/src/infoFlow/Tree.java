@@ -13,6 +13,7 @@ import java.util.Stack;
 
 import com.microsoft.z3.InterpolationContext;
 
+import soot.Body;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.AssignStmt;
@@ -24,83 +25,71 @@ import z3_helper.PathSolver;
 import z3_helper.SpecialInvoke;
 
 public class Tree {
+	// OK
 	private ExceptionalUnitGraph cfg;
+	private String signature;
+	private HelpTree helpTree;
+	//private Node root;
+	private HashSet<Node> rootSet;
+	//private Set<Node> Leaf;
+	private Node leaf; // stores either error or return location
+
+	// ????
 	private ArrayList<ArrayList<Node>> returnPaths;
-	private Set<Node> Leaf;
 	private InterpolationContext ictx;
 	private Map<Unit, ArrayList<Node>> UnitNodeCollection;
 	private Map<Unit, ArrayList<Node>> DummyUnitNodeCollection;
 	private ArrayList<ArrayList<Node>> errorPaths;
 	private boolean treeClosed;
 	private boolean allPathUsed;
-	private HelpTree helpTree;
-	private String signature;
-	private Node root;
-	private Node exceptionNode;
-	private Forest theForest;
+	//private Node exceptionNode;
 	private Set<Node> dummyCollection;
-
-	public Tree(ExceptionalUnitGraph cfg, InterpolationContext ictx,
-			HelpTree helpTree, String signature, Forest f1, String actualFunction) {
-		this.cfg = cfg;
-		this.Leaf = new HashSet<Node>();
+/*	 Move the things there is no need  anymore
+	private Forest theForest;
+*/
+	// add news to here
+	private boolean programCorrect = false;
+	private Tree mainFunction;
+	private Tree actualFunction;
+	private HashMap<String, Tree> calleeFunctions;
+	
+	public Tree(Map<String, Body> stores, String mainFunction, String actualFunction) {
+		this.ictx = new InterpolationContext();
+		this.programCorrect = false;
+		this.calleeFunctions = new HashMap<String, Tree>();
+		this.rootSet = new HashSet<Node>(); 
 		this.returnPaths = new ArrayList<ArrayList<Node>>();
-		this.ictx = ictx;
-		this.UnitNodeCollection = new HashMap<Unit, ArrayList<Node>>();
-		this.treeClosed = true;
-		this.allPathUsed = true;
 		this.errorPaths = new ArrayList<ArrayList<Node>>();
-		this.helpTree = helpTree;
-		this.signature = signature;
-		this.theForest = f1;
+		this.UnitNodeCollection = new HashMap<Unit, ArrayList<Node>>();
 
-		// for here, we assume the heads will only be one unit, if we handle
-		// procedure we might
-		// need to change here
-		this.root = Node
-				.getNewNode(cfg.getHeads().get(0), null, this, this.cfg);
-		//this.exceptionNode = Node.getNewNode(cfg.getUnexceptionalPredsOf(cfg.getTails().get(0), null, this, this.cfg);
-		this.Leaf.add(root);
+		// this.subFuntionTree = new HashMap<String, Tree>();
+		// this.latestExtensionTree = new Stack<Tree>();
+
+		for(Entry<String, Body> e: stores.entrySet()) {
+			if(e.getKey().equals(mainFunction)){
+				this.cfg = new ExceptionalUnitGraph(e.getValue());
+				this.helpTree = new HelpTree(cfg);
+			   	this.signature = e.getKey();  		
+				// Assumption is that we have only one ErrorLocation and return point
+				// if we have multiple returns, may be we should have multiple trees.
+				this.leaf = Node.getNewNode(cfg.getTails().get(0), null, this, this.cfg);
+				this.rootSet.add(this.leaf);
+				break;
+			}	
+		}
+		
+		// eski kisim incele ve duzenle......
+		//this.treeClosed = true;
+		//this.allPathUsed = true;
 		
 		this.dummyCollection = new HashSet<Node>();
 		this.DummyUnitNodeCollection = new HashMap<Unit, ArrayList<Node>>();
 	}
 
-	public HelpTree getHelpTree() {
-		return this.helpTree;
-	}
+	private void unwind(Map<String, BOdy) {
 
-	public InterpolationContext getIctx() {
-		return this.ictx;
 	}
-
-	public Node getRoot() {
-		return this.root;
-	}
-
-	public ArrayList<ArrayList<Node>> getAllErrorPath() {
-		return this.errorPaths;
-	}
-
-	public boolean IsTreeClose() {
-		return this.treeClosed;
-	}
-
-	public int sizeOfPath() {
-		return this.returnPaths.size();
-	}
-
-	public ArrayList<Node> getPath(int i) {
-		return this.returnPaths.get(i);
-	}
-
-	public void setAllPathUsed(boolean used) {
-		this.allPathUsed = used;
-	}
-
-	public boolean isAllPathUsed() {
-		return this.allPathUsed;
-	}
+	
 
 	public boolean getNewErrorPath() {
 		this.treeClosed = false;
@@ -302,17 +291,6 @@ public class Tree {
 		}
 	}
 
-	public ExceptionalUnitGraph getCfg() {
-		return this.cfg;
-	}
-
-	public String getSignature() {
-		return this.signature;
-	}
-
-	public Set<Node> getLeaf() {
-		return this.Leaf;
-	}
 
 	private void updateNodeCollection(Node n) {
 		if (!n.ifDummy()) {
@@ -360,7 +338,68 @@ public class Tree {
 		}
 	}
 
-	public Forest getForest() {
-		return this.theForest;
+
+	public HelpTree getHelpTree() {
+		return this.helpTree;
 	}
+
+	public InterpolationContext getIctx() {
+		return this.ictx;
+	}
+
+	public Set<Node> getRoot() {
+		return this.rootSet;
+	}
+
+	public ArrayList<ArrayList<Node>> getAllErrorPath() {
+		return this.errorPaths;
+	}
+
+	public boolean IsTreeClose() {
+		return this.treeClosed;
+	}
+
+	public int sizeOfPath() {
+		return this.returnPaths.size();
+	}
+
+	public ArrayList<Node> getPath(int i) {
+		return this.returnPaths.get(i);
+	}
+
+	public void setAllPathUsed(boolean used) {
+		this.allPathUsed = used;
+	}
+
+	public boolean isAllPathUsed() {
+		return this.allPathUsed;
+	}
+
+	public ExceptionalUnitGraph getCfg() {
+		return this.cfg;
+	}
+
+	public String getSignature() {
+		return this.signature;
+	}
+
+	public Node getLeaf() {
+		return this.leaf;
+	}
+
+
+
+//	public Forest getForest() {
+//		return this.theForest;
+//	}
+	
+	// add new methods after here
+	public boolean isProgramCorrect() {
+		return programCorrect;
+	}
+
+	public void setProgramCorrect(boolean programCorrect) {
+		this.programCorrect = programCorrect;
+	}
+	
 }
