@@ -53,10 +53,10 @@ public class HelpTree {
 	public void getDepth() {
 		this.ifModified = false;
 		ArrayList<Unit> path = new ArrayList<Unit>();
-		for (int i = 0; i < this.returnUnit.size(); i++) {
-			path.add(this.returnUnit.get(i));
-			getDepth1(path, 0);
-		}
+//		for (int i = 0; i < this.returnUnit.size(); i++) {
+//			path.add(this.returnUnit.get(i));
+//			getDepth1(path, 0);
+//		}
 	}
 
 	private void getDepth1(ArrayList<Unit> path, int depth) {
@@ -89,29 +89,29 @@ public class HelpTree {
 	}
 
 	private void ShortestReturnPath() {
-		for (int j = 0; j < this.returnUnit.size(); j++) {
-			Unit returnUnit = this.returnUnit.get(j);
-			Queue<Unit> expandQueue = new LinkedList<Unit>();
-			expandQueue.add(returnUnit);
-			this.updateShortest(returnUnit, 0);
-			Set<Unit> allUnits = this.getAllUnites(returnUnit);
-			Set<Unit> visited = new HashSet<Unit>();
-			while (!allUnits.isEmpty()) {
-				Unit e = expandQueue.remove();
-				allUnits.remove(e);
-				List<Unit> predes = this.cfg.getUnexceptionalPredsOf(e);
-				int length = this.shortestPath.get(e);
-				length++;
-				for (int i = 0; i < predes.size(); i++) {
-					Unit p = predes.get(i);
-					if (!visited.contains(p)) {
-						this.updateShortest(p, length);
-						expandQueue.add(p);
-						visited.add(p);
-					}
-				}
-			}
-		}
+//		for (int j = 0; j < this.returnUnit.size(); j++) {
+//			Unit returnUnit = this.returnUnit.get(j);
+//			Queue<Unit> expandQueue = new LinkedList<Unit>();
+//			expandQueue.add(returnUnit);
+//			this.updateShortest(returnUnit, 0);
+//			Set<Unit> allUnits = this.getAllUnites(returnUnit);
+//			Set<Unit> visited = new HashSet<Unit>();
+//			while (!allUnits.isEmpty()) {
+//				Unit e = expandQueue.remove();
+//				allUnits.remove(e);
+//				List<Unit> predes = this.cfg.getUnexceptionalPredsOf(e);
+//				int length = this.shortestPath.get(e);
+//				length++;
+//				for (int i = 0; i < predes.size(); i++) {
+//					Unit p = predes.get(i);
+//					if (!visited.contains(p)) {
+//						this.updateShortest(p, length);
+//						expandQueue.add(p);
+//						visited.add(p);
+//					}
+//				}
+//			}
+//		}
 	}
 
 	private Set<Unit> getAllUnites(Unit returnUnit) {
@@ -135,22 +135,22 @@ public class HelpTree {
 
 	private Set<Unit> getAllDepthZeroUnites() {
 		Set<Unit> allUnits = new HashSet<Unit>();
-		for (int i = 0; i < this.returnUnit.size(); i++) {
-			allUnits.add(this.returnUnit.get(i));
-			Queue<Unit> expandQueue = new LinkedList<Unit>();
-			expandQueue.add(this.returnUnit.get(i));
-			while (!expandQueue.isEmpty()) {
-				Unit e = expandQueue.remove();
-				List<Unit> predes = this.cfg.getUnexceptionalPredsOf(e);
-				for (int j = 0; j < predes.size(); j++) {
-					Unit p = predes.get(j);
-					if ((!isInvoke(p)) && (!allUnits.contains(p))) {
-						allUnits.add(p);
-						expandQueue.add(p);
-					}
-				}
-			}
-		}
+//		for (int i = 0; i < this.returnUnit.size(); i++) {
+//			allUnits.add(this.returnUnit.get(i));
+//			Queue<Unit> expandQueue = new LinkedList<Unit>();
+//			expandQueue.add(this.returnUnit.get(i));
+//			while (!expandQueue.isEmpty()) {
+//				Unit e = expandQueue.remove();
+//				List<Unit> predes = this.cfg.getUnexceptionalPredsOf(e);
+//				for (int j = 0; j < predes.size(); j++) {
+//					Unit p = predes.get(j);
+//					if ((!isInvoke(p)) && (!allUnits.contains(p))) {
+//						allUnits.add(p);
+//						expandQueue.add(p);
+//					}
+//				}
+//			}
+//		}
 		return allUnits;
 	}
 
@@ -199,28 +199,29 @@ public class HelpTree {
 				this.rootUnit.add(e);	
 			} else {
 				List<Unit> predicessors = this.cfg.getUnexceptionalPredsOf(e);
-				for (int i = 0; i < successors.size(); i++) {
-					Unit predicessor = predicessors.get(i);
-					if (!visited.contains(predicessor)) {
-						visited.add(predicessor);
-						expandQueue.add(predicessor);
-					}
-				}
+//				for (int i = 0; i < successors.size(); i++) {
+//					Unit predicessor = predicessors.get(i);
+//					if (!visited.contains(predicessor)) {
+//						visited.add(predicessor);
+//						expandQueue.add(predicessor);
+//					}
+//				}
 			}
 			findRootUnit(visited, expandQueue);
 		}
 	}
 
 	public boolean IfRootHasDepth() {
-		if (this.lowestUnwind.containsKey(this.root)) {
+//		if (this.lowestUnwind.containsKey(this.root)) {
 			return true;
-		} else {
-			return false;
-		}
+//		} else {
+//			return false;
+//		}
 	}
 
 	public int getRootDepth() {
-		return this.lowestUnwind.get(this.root);
+//		return this.lowestUnwind.get(this.root);
+		return -111;
 	}
 
 	public static boolean isInvoke(Unit u) {
@@ -304,6 +305,7 @@ public class HelpTree {
 	}
 
 	public Unit getRoot() {
-		return this.root;
+//		return this.root;
+		return null;
 	}
 }

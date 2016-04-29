@@ -51,6 +51,8 @@ public class de.ecspride.ImplicitFlow3 extends android.app.Activity
 
         virtualinvoke r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+1 1234567", null, r6_2, null, null);
 
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
         return;
     }
 

@@ -1,0 +1,12 @@
+Entry Point: <de.ecspride.ArrayAccess2: void onCreate(android.os.Bundle)> (Line: de.ecspride.ArrayAccess2 26)
+
+Sink: <android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>
+Lines: 
+Receiver Sources: 
+Arg 2 Sources: 
+	$r1 = virtualinvoke telephonyManager.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>() (UNIQUE_IDENTIFIER)
+
+
+FLOW:<de.ecspride.ArrayAccess2: void onCreate(android.os.Bundle)>|{<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>/SMS_MMS/Line: de.ecspride.ArrayAccess2 35}<={<android.telephony.TelephonyManager: java.lang.String getDeviceId()>/UNIQUE_IDENTIFIER/Line: de.ecspride.ArrayAccess2 31/ARG}
+
+

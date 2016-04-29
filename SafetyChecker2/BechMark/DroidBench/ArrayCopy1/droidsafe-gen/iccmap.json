@@ -1,0 +1,8 @@
+{
+  "indicator-type": "ICC: Resolved Map",
+  "visibility": {
+    "icc_source": true
+  },
+  "display": {},
+  "contents": []
+}

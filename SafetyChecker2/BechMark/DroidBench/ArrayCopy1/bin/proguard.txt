@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:16
+-keep class edu.mit.array_copy.MainActivity { <init>(...); }
+

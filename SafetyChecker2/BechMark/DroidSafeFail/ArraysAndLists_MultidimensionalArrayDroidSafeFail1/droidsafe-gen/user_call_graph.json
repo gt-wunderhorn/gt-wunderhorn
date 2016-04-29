@@ -1,0 +1,92 @@
+{
+  "indicator-type" : "Entry Points",
+  "visibility" :  {
+    "call-chain" : true,
+    "syscall"    : true  },
+  "display"    :  {
+    "calls"      : false,
+    "syscalls"   : false,
+    "score"      : false
+  },
+ "contents"   :  [
+  { "type"       : "entry-point",
+    "link"       : "as_entry_point",
+    "signature"  : "<edu.mit.array_slice.MainActivity: void <init>()>",
+    "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 17},
+    "syscalls"   : 2,
+    "calls"      : 3,
+    "score"      : 0,
+    "contents"   :  [
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.app.Activity: void <init>()>",
+      "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 17},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<java.lang.Object: void finalize()>",
+      "src-loc"    : { "class"      : "java.lang.Object", "line"       : 187},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    }
+  ]},  { "type"       : "entry-point",
+    "link"       : "as_entry_point",
+    "signature"  : "<edu.mit.array_slice.MainActivity: void onCreate(android.os.Bundle)>",
+    "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 21},
+    "syscalls"   : 6,
+    "calls"      : 7,
+    "score"      : 6,
+    "contents"   :  [
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.app.Activity: java.lang.Object getSystemService(java.lang.String)>",
+      "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 24},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.app.Activity: void onCreate(android.os.Bundle)>",
+      "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 21},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.telephony.TelephonyManager: java.lang.String getDeviceId()>",
+      "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 25},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 6
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.util.Log: int i(java.lang.String,java.lang.String)>",
+      "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 31},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 2
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)>",
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<toy_benchmark.ErrorFunction: void Error()>",
+      "src-loc"    : { "class"      : "edu.mit.array_slice.MainActivity", "line"       : 32},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    }
+  ]},  {}
+]}

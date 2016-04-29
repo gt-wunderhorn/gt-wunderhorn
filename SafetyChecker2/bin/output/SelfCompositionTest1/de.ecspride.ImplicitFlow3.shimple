@@ -16,12 +16,11 @@ public class de.ecspride.ImplicitFlow3 extends android.app.Activity
     {
         de.ecspride.ImplicitFlow3 r0;
         android.os.Bundle r1;
-        android.telephony.SmsManager r2;
-        java.lang.String r3, $r7, r9, r9_1, r9_2;
+        java.lang.String r2, r6, r6_1, r6_2;
+        android.telephony.SmsManager r3;
         byte b0;
         java.lang.Object $r4;
         android.telephony.TelephonyManager $r5;
-        java.lang.StringBuilder $r6, $r8;
 
         r0 := @this: de.ecspride.ImplicitFlow3;
 
@@ -35,30 +34,22 @@ public class de.ecspride.ImplicitFlow3 extends android.app.Activity
 
         $r5 = (android.telephony.TelephonyManager) $r4;
 
-        r9 = virtualinvoke $r5.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
+        r2 = virtualinvoke $r5.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
 
-        r2 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+        r3 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
 
-        r3 = "huhu";
+        r6 = "huhu";
 
         b0 = 5;
 
 (0)     if b0 != 5 goto label1;
 
-        $r6 = new java.lang.StringBuilder;
-
-        $r7 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r9);
-
-        specialinvoke $r6.<java.lang.StringBuilder: void <init>(java.lang.String)>($r7);
-
-        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("huhu");
-
-(1)     r9_1 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+(1)     r6_1 = r2;
 
      label1:
-        r9_2 = Phi(r9 #0, r9_1 #1);
+        r6_2 = Phi(r6 #0, r6_1 #1);
 
-        virtualinvoke r2.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+1 1234567", null, r9_2, null, null);
+        virtualinvoke r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+1 1234567", null, r6_2, null, null);
 
         staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
 
