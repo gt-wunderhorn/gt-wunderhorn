@@ -49,7 +49,8 @@ public class NoLeak1 {
 		LogUtils.infoln("SelfCompositionTest.NoLeak1... Test started...");
 	
 		try {	
-			ProgramTree pTree = new ProgramTree(stores, mainFunction, actualFunction);
+			ProgramTree pTree = new ProgramTree(stores, mainFunction, true);
+			pTree.printTree();
 
 		} catch (Exception exp){
 			LogUtils.fatalln("*******************************************");

@@ -5,7 +5,8 @@ public class LogUtils {
 	private static final int DETAIL = 0; 
 	private static final int DEBUG = 1;
 	private static final int INFO = 2;
-	private static final int FATAL = 3;
+	private static final int WARNING = 3;
+	private static final int FATAL = 4;
 
 	private static int currentLevel = DEBUG; 
 
@@ -53,6 +54,14 @@ public class LogUtils {
 		println(DETAIL, objects);
 	}
 
+	public static void warning(Object... objects) {
+		print(WARNING, objects);
+	}
+
+	public static void warningln(Object... objects) {
+		println(WARNING, objects);
+	}
+	
 	public static void nextLine(int printLevel) {
 		if (currentLevel <= printLevel)
 			System.out.println();

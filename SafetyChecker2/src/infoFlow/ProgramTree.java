@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -38,13 +36,14 @@ public class ProgramTree {
 	private HashSet<Vertex> rootSet;
 	private LinkedList<LinkedList<Vertex>> returnPaths;
 	private LinkedList<LinkedList<Vertex>> errorPaths;
-	private String mainFunction;
+	private boolean mainFunctionB;
+	private String functionSignature;
 	private String actualFunction;
 	private ExceptionalUnitGraph cfg;
 	private HelpTree helpTree;
 	private String signature;
 
-	public ProgramTree(Map<String, Body> stores, String mainFunction, String actualFunction)
+	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction)//, String actualFunction)
 			throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		this.iHandler = new InterpolationHandler();
 		this.programCorrect = false;
@@ -52,32 +51,50 @@ public class ProgramTree {
 		this.rootSet = new HashSet<Vertex>();
 		this.returnPaths = new LinkedList<LinkedList<Vertex>>();
 		this.errorPaths = new LinkedList<LinkedList<Vertex>>();
-		this.mainFunction = mainFunction;
+		this.functionSignature = functionSignature;
+		this.mainFunctionB = mainFunction;
 		this.actualFunction = actualFunction;
 		this.stores = stores;
 
-		boolean mainFunctoionFound = findMainFunction();
+		if(mainFunction)
+			LogUtils.debugln("mainFunction = " + functionSignature);
+		else
+			LogUtils.debugln("setSubFunction = " + functionSignature);
 
-		if (mainFunctoionFound)
+		boolean mainFunctionFound = findMainFunction();
+		if (mainFunctionFound)
 			startTest();
 		else
-			throw new MainFunctionNotFoundException(this.mainFunction + " does not exist in the current program");
+			throw new MainFunctionNotFoundException(this.functionSignature + " does not exist in the current program");
 	}
 
-	private void startTest() throws ErrorLocationNotFoundException {
-		boolean errorLocationFound = findErrorLocation(returnLeaf);
-		if (!errorLocationFound)
-			throw new ErrorLocationNotFoundException(this.mainFunction + " does not have any ErrorLocation");
+	private void startTest() throws ErrorLocationNotFoundException, MainFunctionNotFoundException {
+//		boolean errorLocationFound = findErrorLocation(returnLeaf);
+//		if (!errorLocationFound)
+//			throw new ErrorLocationNotFoundException(this.mainFunction + " does not have any ErrorLocation");
+		
+		LogUtils.debugln("Heads:" + cfg.getHeads());
 		// start unwind process
 		unwind();
-		printTree(0, returnLeaf);
-		printTree();
+		//printTree(0, returnLeaf);
+		//printTree();
 	}
 
-	private void printTree() {
+	private void printPath(Vertex v) { 
+		LogUtils.debugln(v.getOutgoingEdge());
+		if(!v.isReturnLocation() && v.getOutgoingEdge().isSubFunction()) { 
+			LogUtils.debugln("--------------->setSubFunction starts");
+			ProgramTree pTree = v.getOutgoingEdge().getProgramTree();	
+			pTree.printTree();
+			LogUtils.debugln("<---------------setSubFunction ends");
+		}
+		if(!v.isReturnLocation()) printPath(v.getNextVertex());
+	}
+
+	public void printTree() {
 		LogUtils.debugln("************");
-		for(Vertex v2 : rootSet) {
-			LogUtils.debugln(v2.getOutgoingEdge());
+		for(Vertex v : rootSet) {
+			printPath(v);
 		}
 	}
 
@@ -119,24 +136,20 @@ public class ProgramTree {
 	}
 
 	private boolean findMainFunction() {
-		for (Entry<String, Body> entry : stores.entrySet()) {
-			if (entry.getKey().equals(mainFunction)) {
-				this.cfg = new ExceptionalUnitGraph(entry.getValue());
-				this.helpTree = new HelpTree(cfg);
-				this.signature = entry.getKey();
-				LogUtils.debugln("findMainFunction : " + signature);
-				// Assumption is that we have only one ErrorLocation and return
-				// point
-				// if we have multiple returns, may be we should have multiple
-				// trees.
-				this.returnLeaf = new Vertex();
-				this.returnLeaf.setReturnLocation(true);
+		if(stores.containsKey(functionSignature)) {
+			this.cfg = new ExceptionalUnitGraph(stores.get(functionSignature));//entry.getValue()
+			this.helpTree = new HelpTree(cfg);
+			this.signature = functionSignature;
+			LogUtils.debugln("findMainFunction : " + signature);
+			// Assumption is that we have only one ErrorLocation and return  point
+			// if we have multiple returns, may be we should have multiple trees.
+			this.returnLeaf = new Vertex();
+			this.returnLeaf.setReturnLocation(true);
 
-				Edge e = new Edge(cfg.getTails().get(0));
-				this.returnLeaf.addIncomingEdge(e);
+			Edge e = new Edge(cfg.getTails().get(0));
+			this.returnLeaf.addIncomingEdge(e);
 
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
@@ -144,11 +157,13 @@ public class ProgramTree {
 	private Stack<Vertex> uncovered = new Stack<Vertex>();
 	private Set<Vertex> covered = new HashSet<Vertex>();
 	private Map<Vertex, Vertex> coveringRelation = new HashMap<Vertex, Vertex>();
-	private void unwind() {
+
+	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
+		LogUtils.warningln("----->Unwind");
 		uncovered.add(returnLeaf);
 		while(!uncovered.isEmpty()) {
 			Vertex v = uncovered.pop();
-			LogUtils.detailln("unwind" + v.getIncomingEdges());
+			LogUtils.warningln("unwind" + v.getIncomingEdges());
 //			for(Vertex v : uncovered) {
 //				for(Edge e : v.getIncomingEdges()) {
 //					for(Unit u : cfg.getUnexceptionalPredsOf(v.get)) {
@@ -157,10 +172,11 @@ public class ProgramTree {
 //				}	
 //			}
 			DFS(v);			
-		}		
+		}	
+		LogUtils.warningln("<----Unwind");	
 	}
 
-	private void DFS(Vertex v) {
+	private void DFS(Vertex v) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("----->DFS : v.incomingEdges=" + v.getIncomingEdges() + " : v.previousVertexSet=" + v.getPreviousVertexSet().size()); 
 		close(v);				
 		if(!v.isCovered()) {
@@ -177,14 +193,13 @@ public class ProgramTree {
 
 	private void close(Vertex v) {}
 
-	private void expand(Vertex w) {
+	private void expand(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("----->expand : w.incomingEdge#" + w.getIncomingEdges().size() + " : w.previousVertexSet#" + w.getPreviousVertexSet().size());
 
 		if (!w.isCovered()) {
 			for (Edge incomingEdge : w.getIncomingEdges()) {
 				if(cfg.getUnexceptionalPredsOf(incomingEdge.getUnit()).size() == 0) {
 			
-					LogUtils.detail("HUHUHUHUHUHUHUHU");
 					Vertex v = new Vertex();
 
 					v.setOutgoingEdge(incomingEdge);
@@ -193,7 +208,6 @@ public class ProgramTree {
 					w.addPreviousVertex(v);
 					this.vertexSet.add(v);
 					
-					uncovered.push(v);
 					rootSet.add(v);
 				}
 
@@ -209,6 +223,8 @@ public class ProgramTree {
 					v.setNextVertex(w);
 					w.addPreviousVertex(v);
 					this.vertexSet.add(v);
+
+					UnitController.analyzeVertex(v, stores);
 
 					//uncovered.push(v);
 				}
@@ -230,11 +246,11 @@ public class ProgramTree {
 
 	}
 
-	public List<Edge> createUniquePathPi(Vertex v) {
+	private List<Edge> createUniquePathPi(Vertex v) {
 
 		return null;
 	}
-
+ 
 	// public Set<Vertex> getVertexSet() { return this.vertexSet; }
 	// public Set<Edge> getEdgeSet() { return this.edgeSet; }
 }

@@ -1,0 +1,576 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+APK	BechMark/DroidBench/ArrayAccess1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidBench/ArrayAccess2/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidBench/ArrayCopy1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidBench/ImplicitFlow3/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidBench/MultidimensionalArray1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+APK	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
+AppBaseTheme	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppBaseTheme	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppBaseTheme	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppBaseTheme	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppBaseTheme	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppBaseTheme	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppBaseTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppBaseTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
+AppTheme	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+AppTheme	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+AppTheme	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+AppTheme	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+AppTheme	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+AppTheme	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+AppTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+AppTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
+ArrayAccess1	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^public class ArrayAccess1 extends Activity {$/;"	c
+ArrayAccess2	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^public class ArrayAccess2 extends Activity {$/;"	c
+ArrayCopy1	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^public class ArrayCopy1 extends Activity {$/;"	c
+ArrayCopy2	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^public class ArrayCopy2 extends Activity {$/;"	c
+ArrayCopy3	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^public class ArrayCopy3 extends Activity {$/;"	c
+ArrayCopy4	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^public class ArrayCopy4 extends Activity {$/;"	c
+BuildConfig	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+BuildConfig	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+BuildConfig	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+BuildConfig	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+BuildConfig	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+BuildConfig	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+BuildConfig	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+BuildConfig	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
+Callbacks_LocationLeak1_DroidSafeFailed	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^public class Callbacks_LocationLeak1_DroidSafeFailed extends Activity {$/;"	c
+Callbacks_LocationLeak1_Original	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^public class Callbacks_LocationLeak1_Original extends Activity {$/;"	c
+ClassA	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public class ClassA implements Interface{$/;"	c	class:FlowTestDroidSafeFailed
+ClassA	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	public class ClassA implements Interface{$/;"	c	class:ImplicitFlow3
+ClassB	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public class ClassB implements Interface{$/;"	c	class:FlowTestDroidSafeFailed
+ClassB	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	public class ClassB implements Interface{$/;"	c	class:ImplicitFlow3
+DEBUG	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
+DEBUG	src/infoFlow/LogUtils.java	/^	private static final int DEBUG = 1;$/;"	f	class:LogUtils	file:
+DETAIL	src/infoFlow/LogUtils.java	/^	private static final int DETAIL = 0; $/;"	f	class:LogUtils	file:
+DFS	src/infoFlow/ProgramTree.java	/^	private void DFS(Vertex v) {$/;"	m	class:ProgramTree	file:
+DataStore	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/DataStore.java	/^public class DataStore {$/;"	c
+Datacontainer	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
+Datacontainer	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
+Datacontainer	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
+Datacontainer	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^    class Datacontainer{$/;"	c	class:FieldSensitivity4
+ERRORFUNCTION	src/infoFlow/UnitController.java	/^	private static final String ERRORFUNCTION = "ErrorFunction";$/;"	f	class:UnitController	file:
+Edge	src/infoFlow/Edge.java	/^	public Edge(Unit unit) { this.unit = unit; }$/;"	m	class:Edge
+Edge	src/infoFlow/Edge.java	/^public class Edge {$/;"	c
+Error	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void Error() {$/;"	m	class:ErrorFunction
+Error1	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void Error1(int a){$/;"	m	class:ErrorFunction
+Error2	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void Error2(String a){$/;"	m	class:ErrorFunction
+Error3	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^     public static void Error3(boolean a){$/;"	m	class:ErrorFunction
+ErrorFunction	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^public class ErrorFunction {$/;"	c
+ErrorLocationNotFoundException	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^	public ErrorLocationNotFoundException(String message) {$/;"	m	class:ErrorLocationNotFoundException
+ErrorLocationNotFoundException	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^public class ErrorLocationNotFoundException extends Exception {$/;"	c
+FATAL	src/infoFlow/LogUtils.java	/^	private static final int FATAL = 4;$/;"	f	class:LogUtils	file:
+FieldSensitivity1	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^public class FieldSensitivity1 extends Activity {$/;"	c
+FieldSensitivity2	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/FieldSensitivity2.java	/^public class FieldSensitivity2 extends Activity {$/;"	c
+FieldSensitivity3	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/FieldSensitivity3.java	/^public class FieldSensitivity3 extends Activity {$/;"	c
+FieldSensitivity4	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^public class FieldSensitivity4 extends Activity {$/;"	c
+FlowTest	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/FlowTest.java	/^public class FlowTest {$/;"	c
+FlowTest	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/FlowTest.java	/^public class FlowTest {$/;"	c
+FlowTestDroidSafeFailed	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^public class FlowTestDroidSafeFailed extends Activity {$/;"	c
+FunctionTree	src/infoFlow/FunctionTree.java	/^public class FunctionTree {$/;"	c
+HelpForest	src/infoFlow/HelpForest.java	/^	public HelpForest(Map<String, Body> stores) {$/;"	m	class:HelpForest
+HelpForest	src/infoFlow/HelpForest.java	/^public class HelpForest {$/;"	c
+HelpTree	src/infoFlow/HelpTree.java	/^	public HelpTree(ExceptionalUnitGraph cfg) {$/;"	m	class:HelpTree
+HelpTree	src/infoFlow/HelpTree.java	/^public class HelpTree {$/;"	c
+INFO	src/infoFlow/LogUtils.java	/^	private static final int INFO = 2;$/;"	f	class:LogUtils	file:
+IfNonAnalysis	src/infoFlow/HelpTree.java	/^	public boolean IfNonAnalysis(Unit u){$/;"	m	class:HelpTree
+IfRootHasDepth	src/infoFlow/HelpTree.java	/^	public boolean IfRootHasDepth() {$/;"	m	class:HelpTree
+ImplicitFlow1	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^public class ImplicitFlow1 extends Activity {$/;"	c
+ImplicitFlow2	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^public class ImplicitFlow2 extends Activity {$/;"	c
+ImplicitFlow3	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^public class ImplicitFlow3 extends Activity {$/;"	c
+ImplicitFlow4	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^public class ImplicitFlow4 extends Activity {$/;"	c
+Interface	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	interface Interface{$/;"	i	class:FlowTestDroidSafeFailed
+Interface	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	interface Interface{$/;"	i	class:ImplicitFlow3
+InterpolationHandler	src/infoFlow/InterpolationHandler.java	/^	public InterpolationHandler() {$/;"	m	class:InterpolationHandler
+InterpolationHandler	src/infoFlow/InterpolationHandler.java	/^public class InterpolationHandler {$/;"	c
+LinkedList	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public LinkedList() {$/;"	m	class:LinkedList
+LinkedList	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^public class LinkedList {$/;"	c
+LinkedList1	BechMark/WeFail/FailLinkedList/src/LinkedList1.java	/^public class LinkedList1 {$/;"	c
+LogUtils	src/infoFlow/LogUtils.java	/^public class LogUtils {$/;"	c
+MainActivity	BechMark/DroidBench/ArrayCopy1/src/edu/mit/array_copy/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
+MainActivity	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
+MainActivity	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
+MainActivity	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
+MainFunctionNotFoundException	src/infoFlow/exception/MainFunctionNotFoundException.java	/^	public MainFunctionNotFoundException(String message) {$/;"	m	class:MainFunctionNotFoundException
+MainFunctionNotFoundException	src/infoFlow/exception/MainFunctionNotFoundException.java	/^public class MainFunctionNotFoundException extends Exception {$/;"	c
+MultiDimensionalArray1_DroidSafeFailed1	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed1.java	/^public class MultiDimensionalArray1_DroidSafeFailed1 extends Activity {$/;"	c
+MultiDimensionalArray1_DroidSafeFailed2	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed2.java	/^public class MultiDimensionalArray1_DroidSafeFailed2 extends Activity {$/;"	c
+MultiDimensionalArray1_Original	BechMark/DroidBench/MultidimensionalArray1/src/edu/mit/array_slice/MultiDimensionalArray1_Original.java	/^public class MultiDimensionalArray1_Original extends Activity {$/;"	c
+MyLocationListener	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^    private class MyLocationListener implements LocationListener {  $/;"	c	class:Callbacks_LocationLeak1_DroidSafeFailed
+MyLocationListener	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^    private class MyLocationListener implements LocationListener {  $/;"	c	class:Callbacks_LocationLeak1_Original
+NAME	BechMark/DroidBench/ArrayAccess1/Makefile	/^NAME := ArrayAccess1$/;"	m
+NAME	BechMark/DroidBench/ArrayAccess2/Makefile	/^NAME := Arraycces2$/;"	m
+NAME	BechMark/DroidBench/ArrayCopy1/Makefile	/^NAME := ArrayCopy1$/;"	m
+NAME	BechMark/DroidBench/ImplicitFlow3/Makefile	/^NAME := ImplicitFlow3$/;"	m
+NAME	BechMark/DroidBench/MultidimensionalArray1/Makefile	/^NAME := MultidimensionalArray1$/;"	m
+NAME	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/Makefile	/^NAME := GTFlowTest$/;"	m
+NAME	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/Makefile	/^NAME := MultidimensionalArray1$/;"	m
+NAME	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/Makefile	/^NAME := MultidimensionalArray1$/;"	m
+NAME	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/Makefile	/^NAME := LocationLeak1$/;"	m
+NAME	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/Makefile	/^NAME := LocationLeak1$/;"	m
+NAME	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/Makefile	/^NAME := GTFlowTest$/;"	m
+NoLeak1	src/SelfCompositionTest/NoLeak1.java	/^public class NoLeak1 {$/;"	c
+Node	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		public Node(int a) {$/;"	m	class:LinkedList.Node
+Node	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	class Node {$/;"	c	class:LinkedList
+OverwiteValue	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/OverwiteValue.java	/^public class OverwiteValue extends Activity {$/;"	c
+ProgramTree	src/infoFlow/ProgramTree.java	/^	public ProgramTree(Map<String, Body> stores, String mainFunction, String actualFunction)$/;"	m	class:ProgramTree
+ProgramTree	src/infoFlow/ProgramTree.java	/^public class ProgramTree {$/;"	c
+R	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+R	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+R	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+R	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+R	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+R	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+R	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+R	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^public final class R {$/;"	c
+RecordPeekMemoryAndTime	src/RecordPeekMemoryAndTime/testDriver.java	/^package RecordPeekMemoryAndTime;$/;"	p
+SafetyInitializerW	src/safetyChecker/SafetyInitializerW.java	/^public class SafetyInitializerW {$/;"	c
+SelfCompositionTest	src/SelfCompositionTest/NoLeak1.java	/^package SelfCompositionTest;$/;"	p
+ShortestReturnPath	src/infoFlow/HelpTree.java	/^	private void ShortestReturnPath() {$/;"	m	class:HelpTree	file:
+StaticInitClass1	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^	public static class StaticInitClass1{$/;"	c	class:MainActivity
+StaticInitClass1	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^	public static class StaticInitClass1{$/;"	c	class:MainActivity
+Test	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^class Test {$/;"	c
+UnitController	src/infoFlow/UnitController.java	/^public class UnitController {$/;"	c
+UnreachableCode	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^public class UnreachableCode extends Activity {$/;"	c
+UpdateAllZeros	src/infoFlow/HelpTree.java	/^	private void UpdateAllZeros() {$/;"	m	class:HelpTree	file:
+Vertex	src/infoFlow/Vertex.java	/^public class Vertex {$/;"	c
+WARNING	src/infoFlow/LogUtils.java	/^	private static final int WARNING = 3;$/;"	f	class:LogUtils	file:
+activity_field_sensitivity2	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity2=0x7f030000;$/;"	f	class:R.layout
+activity_field_sensitivity2	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity2=0x7f060000;$/;"	f	class:R.menu
+activity_field_sensitivity4	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity4=0x7f030000;$/;"	f	class:R.layout
+activity_field_sensitivity4	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity4=0x7f060000;$/;"	f	class:R.menu
+activity_implicit_flow2	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow2=0x7f030000;$/;"	f	class:R.layout
+activity_implicit_flow2	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow2=0x7f060000;$/;"	f	class:R.menu
+activity_implicit_flow4	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow4=0x7f030000;$/;"	f	class:R.layout
+activity_implicit_flow4	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow4=0x7f060000;$/;"	f	class:R.menu
+activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f030000;$/;"	f	class:R.layout
+activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f060000;$/;"	f	class:R.menu
+activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f030000;$/;"	f	class:R.layout
+activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f060000;$/;"	f	class:R.menu
+activity_overwite_value	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_overwite_value=0x7f030000;$/;"	f	class:R.layout
+activity_overwite_value	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_overwite_value=0x7f060000;$/;"	f	class:R.menu
+activity_unreachable_code	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int activity_unreachable_code=0x7f030000;$/;"	f	class:R.layout
+activity_unreachable_code	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int activity_unreachable_code=0x7f060000;$/;"	f	class:R.menu
+actualFunction	src/infoFlow/ProgramTree.java	/^	private String actualFunction;$/;"	f	class:ProgramTree	file:
+add	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public void add(int n) {$/;"	m	class:LinkedList
+addIncomingEdge	src/infoFlow/Vertex.java	/^	public void addIncomingEdge(Edge incomingEdge) { this.incomingEdges.add(incomingEdge); }$/;"	m	class:Vertex
+addPreviousVertex	src/infoFlow/Vertex.java	/^	public void addPreviousVertex(Vertex v) { this.previousVertexSet.add(v); }$/;"	m	class:Vertex
+analyzeVertex	src/infoFlow/UnitController.java	/^	public static void analyzeVertex(Vertex v, Map<String, Body> stores) {$/;"	m	class:UnitController
+app_name	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+app_name	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+app_name	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+app_name	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+app_name	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+app_name	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+app_name	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+app_name	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
+arrayData	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^	public static String[] arrayData;$/;"	f	class:ArrayAccess1
+arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy1	file:
+arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy2	file:
+arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy3	file:
+arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy4	file:
+attr	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+attr	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+attr	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+attr	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+attr	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+attr	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+attr	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+attr	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
+button1	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int button1=0x7f070001;$/;"	f	class:R.id
+button1	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int button1=0x7f070002;$/;"	f	class:R.id
+c	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^	public static Context c;$/;"	f	class:MainActivity
+calculateDepth	src/infoFlow/HelpForest.java	/^	public void calculateDepth() {$/;"	m	class:HelpForest
+calculateIndex	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^	private int calculateIndex(){$/;"	m	class:ArrayAccess2	file:
+calleeFunctions	src/infoFlow/ProgramTree.java	/^	private HashMap<String, ProgramTree> calleeFunctions;$/;"	f	class:ProgramTree	file:
+caller	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/FlowTest.java	/^	public void caller()$/;"	m	class:FlowTest
+caller	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/FlowTest.java	/^	public void caller()$/;"	m	class:FlowTest
+cfg	src/infoFlow/HelpTree.java	/^	private ExceptionalUnitGraph cfg;$/;"	f	class:HelpTree	file:
+cfg	src/infoFlow/ProgramTree.java	/^	private ExceptionalUnitGraph cfg;$/;"	f	class:ProgramTree	file:
+check	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int check=0x7f040002;$/;"	f	class:R.string
+check	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int check=0x7f040002;$/;"	f	class:R.string
+checkPassword	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^    public void checkPassword(View view){$/;"	m	class:ImplicitFlow2
+checkUsernamePassword	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^    public void checkUsernamePassword(View view){$/;"	m	class:ImplicitFlow4
+checkXvalue	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    private void checkXvalue(int x)	{$/;"	m	class:ImplicitFlow1	file:
+close	src/infoFlow/ProgramTree.java	/^	private void close(Vertex v) {}$/;"	m	class:ProgramTree	file:
+com.flow	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^package com.flow;$/;"	p
+com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^package com.flow.arraycopy;$/;"	p
+com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^package com.flow.arraycopy;$/;"	p
+com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^package com.flow.arraycopy;$/;"	p
+com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^package com.flow.arraycopy;$/;"	p
+cover	src/infoFlow/ProgramTree.java	/^	private void cover(Vertex v, Vertex w) {$/;"	m	class:ProgramTree	file:
+covered	src/infoFlow/ProgramTree.java	/^	private Set<Vertex> covered = new HashSet<Vertex>();$/;"	f	class:ProgramTree	file:
+covered	src/infoFlow/Vertex.java	/^	private boolean covered = false;$/;"	f	class:Vertex	file:
+coveringRelation	src/infoFlow/ProgramTree.java	/^	private Map<Vertex, Vertex> coveringRelation = new HashMap<Vertex, Vertex>();$/;"	f	class:ProgramTree	file:
+createInterpolation	src/infoFlow/InterpolationHandler.java	/^	public boolean createInterpolation(List<Edge> path, InterpolationContext ic) {$/;"	m	class:InterpolationHandler
+createUniquePathPi	src/infoFlow/ProgramTree.java	/^	private List<Edge> createUniquePathPi(Vertex v) {$/;"	m	class:ProgramTree	file:
+currentLevel	src/infoFlow/LogUtils.java	/^	private static int currentLevel = DEBUG; $/;"	f	class:LogUtils	file:
+d1	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private Datacontainer d1;$/;"	f	class:FieldSensitivity1	file:
+de.ecspride	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/FieldSensitivity2.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/FieldSensitivity3.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/FlowTest.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/FlowTest.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/DataStore.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/OverwiteValue.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
+de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^package de.ecspride;$/;"	p
+debug	src/infoFlow/LogUtils.java	/^	public static void debug(Object... objects) {$/;"	m	class:LogUtils
+debugln	src/infoFlow/LogUtils.java	/^	public static void debugln(Object... objects) {$/;"	m	class:LogUtils
+description	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	private String description;$/;"	f	class:Datacontainer	file:
+description	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	private String description;$/;"	f	class:Datacontainer	file:
+description	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	private String description;$/;"	f	class:Datacontainer	file:
+detail	src/infoFlow/LogUtils.java	/^	public static void detail(Object... objects) {$/;"	m	class:LogUtils
+detailln	src/infoFlow/LogUtils.java	/^	public static void detailln(Object... objects) {$/;"	m	class:LogUtils
+distance	src/infoFlow/Vertex.java	/^	private int distance = 0;$/;"	f	class:Vertex	file:
+drawable	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+drawable	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+drawable	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+drawable	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+drawable	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+drawable	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+drawable	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+drawable	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
+edgeSet	src/infoFlow/ProgramTree.java	/^	private Set<Edge> edgeSet = new HashSet<Edge>();$/;"	f	class:ProgramTree	file:
+edu.mit.array_copy	BechMark/DroidBench/ArrayCopy1/src/edu/mit/array_copy/MainActivity.java	/^package edu.mit.array_copy;$/;"	p
+edu.mit.array_slice	BechMark/DroidBench/MultidimensionalArray1/src/edu/mit/array_slice/MultiDimensionalArray1_Original.java	/^package edu.mit.array_slice;$/;"	p
+edu.mit.array_slice	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed1.java	/^package edu.mit.array_slice;$/;"	p
+edu.mit.array_slice	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed2.java	/^package edu.mit.array_slice;$/;"	p
+edu.mit.clinit	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^package edu.mit.clinit;$/;"	p
+errorEdge	src/infoFlow/Edge.java	/^	private boolean errorEdge = false;$/;"	f	class:Edge	file:
+errorLocation	src/infoFlow/Vertex.java	/^	private boolean errorLocation = false;$/;"	f	class:Vertex	file:
+errorPaths	src/infoFlow/ProgramTree.java	/^	private LinkedList<LinkedList<Vertex>> errorPaths;$/;"	f	class:ProgramTree	file:
+expand	src/infoFlow/ProgramTree.java	/^	private void expand(Vertex w) {$/;"	m	class:ProgramTree	file:
+fatal	src/infoFlow/LogUtils.java	/^	public static void fatal(Object... objects) {$/;"	m	class:LogUtils
+fatalln	src/infoFlow/LogUtils.java	/^	public static void fatalln(Object... objects) {$/;"	m	class:LogUtils
+field	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/DataStore.java	/^	public String field;$/;"	f	class:DataStore
+findErrorLocation	src/infoFlow/ProgramTree.java	/^	private boolean findErrorLocation(Vertex w) {$/;"	m	class:ProgramTree	file:
+findMainFunction	src/infoFlow/ProgramTree.java	/^	private boolean findMainFunction() {$/;"	m	class:ProgramTree	file:
+findRootUnit	src/infoFlow/HelpTree.java	/^	private void findRootUnit(Set<Unit> visited, Queue<Unit> expandQueue) {$/;"	m	class:HelpTree	file:
+functionTrees	src/infoFlow/HelpForest.java	/^	private Map<String, HelpTree> functionTrees;$/;"	f	class:HelpForest	file:
+get	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public int get(int size) {$/;"	m	class:LinkedList
+getAllDepthZeroUnites	src/infoFlow/HelpTree.java	/^	private Set<Unit> getAllDepthZeroUnites() {$/;"	m	class:HelpTree	file:
+getAllUnites	src/infoFlow/HelpTree.java	/^	private Set<Unit> getAllUnites(Unit returnUnit) {$/;"	m	class:HelpTree	file:
+getDepth	src/infoFlow/HelpTree.java	/^	public void getDepth() {$/;"	m	class:HelpTree
+getDepth1	src/infoFlow/HelpTree.java	/^	private void getDepth1(ArrayList<Unit> path, int depth) {$/;"	m	class:HelpTree	file:
+getDescription	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public String getDescription() {$/;"	m	class:Datacontainer
+getDescription	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public String getDescription() {$/;"	m	class:Datacontainer
+getDescription	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public String getDescription() {$/;"	m	class:Datacontainer
+getDistance	src/infoFlow/Vertex.java	/^	public int getDistance() { return this.distance; }$/;"	m	class:Vertex
+getIncomingEdges	src/infoFlow/Vertex.java	/^	public Set<Edge> getIncomingEdges() { return this.incomingEdges; }$/;"	m	class:Vertex
+getMessage	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^	public String getMessage() {$/;"	m	class:ErrorLocationNotFoundException
+getMessage	src/infoFlow/exception/MainFunctionNotFoundException.java	/^	public String getMessage() {$/;"	m	class:MainFunctionNotFoundException
+getMethodSignature	src/infoFlow/HelpTree.java	/^	public static String getMethodSignature(Unit u) {$/;"	m	class:HelpTree
+getMethodSignature	src/infoFlow/UnitController.java	/^	private static String getMethodSignature(Unit u) {$/;"	m	class:UnitController	file:
+getNextVertex	src/infoFlow/Vertex.java	/^	public Vertex getNextVertex() { return this.nextVertex; }$/;"	m	class:Vertex
+getNodeDepth	src/infoFlow/HelpTree.java	/^	public int getNodeDepth(Unit u) {$/;"	m	class:HelpTree
+getNodeShortest	src/infoFlow/HelpTree.java	/^	public int getNodeShortest(Unit u) {$/;"	m	class:HelpTree
+getOutgoingEdge	src/infoFlow/Vertex.java	/^	public Edge getOutgoingEdge() { return this.outgoingEdge; }$/;"	m	class:Vertex
+getPreviousVertexSet	src/infoFlow/Vertex.java	/^	public Set<Vertex> getPreviousVertexSet() { return this.previousVertexSet; }$/;"	m	class:Vertex
+getResult	src/infoFlow/HelpForest.java	/^	public Map<String,HelpTree> getResult(){$/;"	m	class:HelpForest
+getRoot	src/infoFlow/HelpTree.java	/^	public Unit getRoot() {$/;"	m	class:HelpTree
+getRootDepth	src/infoFlow/HelpTree.java	/^	public int getRootDepth() {$/;"	m	class:HelpTree
+getSecret	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public String getSecret() {$/;"	m	class:Datacontainer
+getSecret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public String getSecret() {$/;"	m	class:Datacontainer
+getSecret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public String getSecret() {$/;"	m	class:Datacontainer
+getUnit	src/infoFlow/Edge.java	/^	public Unit getUnit() { return this.unit; }$/;"	m	class:Edge
+getV	src/infoFlow/Edge.java	/^	public Vertex getV() { return this.v; }$/;"	m	class:Edge
+getW	src/infoFlow/Edge.java	/^	public Vertex getW() { return this.w; }$/;"	m	class:Edge
+head	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	private Node head;$/;"	f	class:LinkedList	file:
+headLocation	src/infoFlow/Vertex.java	/^	private boolean headLocation = false;$/;"	f	class:Vertex	file:
+hello_world	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
+hello_world	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
+hello_world	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
+hello_world	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
+hello_world	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
+hello_world	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
+helpTree	src/infoFlow/ProgramTree.java	/^	private HelpTree helpTree;$/;"	f	class:ProgramTree	file:
+iHandler	src/infoFlow/ProgramTree.java	/^	private InterpolationHandler iHandler;$/;"	f	class:ProgramTree	file:
+ic_launcher	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ic_launcher	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ic_launcher	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ic_launcher	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ic_launcher	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ic_launcher	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ic_launcher	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ic_launcher	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
+ictx	src/infoFlow/InterpolationHandler.java	/^	private InterpolationContext ictx;$/;"	f	class:InterpolationHandler	file:
+id	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+id	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+id	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+id	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+id	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+id	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+id	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+id	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
+ifEnd	src/infoFlow/HelpForest.java	/^	public boolean ifEnd(){$/;"	m	class:HelpForest
+ifModified	src/infoFlow/HelpTree.java	/^	private boolean ifModified;$/;"	f	class:HelpTree	file:
+ifModified	src/infoFlow/HelpTree.java	/^	public boolean ifModified() {$/;"	m	class:HelpTree
+im	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^	public static String im;$/;"	f	class:MainActivity
+im	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^	public static String im;$/;"	f	class:MainActivity
+imei	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^	String imei;$/;"	f	class:ImplicitFlow1
+incomingEdges	src/infoFlow/Vertex.java	/^	private Set<Edge> incomingEdges = new HashSet<Edge>();$/;"	f	class:Vertex	file:
+info	src/infoFlow/LogUtils.java	/^	public static void info(Object... objects) {$/;"	m	class:LogUtils
+infoFlow	src/infoFlow/Edge.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/FunctionTree.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/HelpForest.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/HelpTree.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/InterpolationHandler.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/LogUtils.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/ProgramTree.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/UnitController.java	/^package infoFlow;$/;"	p
+infoFlow	src/infoFlow/Vertex.java	/^package infoFlow;$/;"	p
+infoFlow.exception	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^package infoFlow.exception;$/;"	p
+infoFlow.exception	src/infoFlow/exception/MainFunctionNotFoundException.java	/^package infoFlow.exception;$/;"	p
+infoln	src/infoFlow/LogUtils.java	/^	public static void infoln(Object... objects) {$/;"	m	class:LogUtils
+isCovered	src/infoFlow/Vertex.java	/^        public boolean isCovered() { return this.covered; }$/;"	m	class:Vertex
+isErrorEdge	src/infoFlow/Edge.java	/^	public boolean isErrorEdge() { return this.errorEdge; }$/;"	m	class:Edge
+isErrorLocation	src/infoFlow/Vertex.java	/^	public boolean isErrorLocation() { return this.errorLocation; }$/;"	m	class:Vertex
+isErrorUnit	src/infoFlow/UnitController.java	/^	public static boolean isErrorUnit(Unit u) {$/;"	m	class:UnitController
+isHeadLocation	src/infoFlow/Vertex.java	/^	public boolean isHeadLocation() { return this.headLocation; }$/;"	m	class:Vertex
+isInvoke	src/infoFlow/HelpTree.java	/^	public static boolean isInvoke(Unit u) {$/;"	m	class:HelpTree
+isReturnEdge	src/infoFlow/Edge.java	/^	public boolean isReturnEdge() { return this.returnEdge; }$/;"	m	class:Edge
+isReturnLocation	src/infoFlow/Vertex.java	/^	public boolean isReturnLocation() { return this.returnLocation; }$/;"	m	class:Vertex
+isSigh	src/infoFlow/Vertex.java	/^	public boolean isSigh() { return this.psi; }$/;"	m	class:Vertex
+isSubFunction	src/infoFlow/Edge.java	/^	public boolean isSubFunction() { return this.subFunction; }$/;"	m	class:Edge
+isSubFunction	src/infoFlow/Vertex.java	/^	public boolean isSubFunction() { return this.subFunction; }$/;"	m	class:Vertex
+isSubFunctionUnit	src/infoFlow/UnitController.java	/^	private static boolean isSubFunctionUnit(Unit u, Map<String, Body> stores) {$/;"	m	class:UnitController	file:
+latitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^	private String latitude = "";$/;"	f	class:Callbacks_LocationLeak1_DroidSafeFailed	file:
+latitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^	private String latitude = "";$/;"	f	class:Callbacks_LocationLeak1_Original	file:
+layout	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+layout	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+layout	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+layout	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+layout	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+layout	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+layout	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+layout	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
+leakData	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public void leakData(View view){$/;"	m	class:FlowTestDroidSafeFailed
+leakData	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	public void leakData(View view){$/;"	m	class:ImplicitFlow3
+leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  		public void leakInfo();$/;"	m	interface:FlowTestDroidSafeFailed.Interface
+leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  		public void leakInfo(){$/;"	m	class:FlowTestDroidSafeFailed.ClassA
+leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  		public void leakInfo(){$/;"	m	class:FlowTestDroidSafeFailed.ClassB
+leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  		public void leakInfo();$/;"	m	interface:ImplicitFlow3.Interface
+leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  		public void leakInfo(){$/;"	m	class:ImplicitFlow3.ClassA
+leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  		public void leakInfo(){$/;"	m	class:ImplicitFlow3.ClassB
+leakInformationBit	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	private void leakInformationBit(List list){	$/;"	m	class:FlowTestDroidSafeFailed	file:
+leakInformationBit	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	private void leakInformationBit(List list){	$/;"	m	class:ImplicitFlow3	file:
+lf	src/infoFlow/ProgramTree.java	/^	private Vertex lf;$/;"	f	class:ProgramTree	file:
+liSet	src/infoFlow/ProgramTree.java	/^	private Set<Vertex> liSet;$/;"	f	class:ProgramTree	file:
+longtitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^	private String longtitude = "";$/;"	f	class:Callbacks_LocationLeak1_DroidSafeFailed	file:
+longtitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^	private String longtitude = "";$/;"	f	class:Callbacks_LocationLeak1_Original	file:
+lookup	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^	private boolean lookup(String username, String password) throws Exception{$/;"	m	class:ImplicitFlow4	file:
+lowestUnwind	src/infoFlow/HelpTree.java	/^	private Map<Unit, Integer> lowestUnwind;$/;"	f	class:HelpTree	file:
+main	src/RecordPeekMemoryAndTime/testDriver.java	/^	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {$/;"	m	class:testDriver
+main	src/SelfCompositionTest/NoLeak1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:NoLeak1
+main	src/safetyChecker/SafetyInitializerW.java	/^	public static void main(String args[]) {$/;"	m	class:SafetyInitializerW
+mainFunction	src/infoFlow/ProgramTree.java	/^	private String mainFunction;$/;"	f	class:ProgramTree	file:
+menu	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
+menu_settings	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
+menu_settings	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
+menu_settings	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070002;$/;"	f	class:R.id
+menu_settings	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070003;$/;"	f	class:R.id
+menu_settings	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
+menu_settings	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
+menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
+menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
+menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
+next	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		Node next;$/;"	f	class:LinkedList.Node
+nextLine	src/infoFlow/LogUtils.java	/^	public static void nextLine(int printLevel) {$/;"	m	class:LogUtils
+nextVertex	src/infoFlow/Vertex.java	/^	private Vertex nextVertex;$/;"	f	class:Vertex	file:
+onCreate	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayAccess1
+onCreate	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayAccess2
+onCreate	BechMark/DroidBench/ArrayCopy1/src/edu/mit/array_copy/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
+onCreate	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity1
+onCreate	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/FieldSensitivity2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity2
+onCreate	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/FieldSensitivity3.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity3
+onCreate	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity4
+onCreate	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow2
+onCreate	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FlowTestDroidSafeFailed
+onCreate	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow3
+onCreate	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow4
+onCreate	BechMark/DroidBench/MultidimensionalArray1/src/edu/mit/array_slice/MultiDimensionalArray1_Original.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MultiDimensionalArray1_Original
+onCreate	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/OverwiteValue.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:OverwiteValue
+onCreate	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
+onCreate	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
+onCreate	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
+onCreate	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:UnreachableCode
+onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy1
+onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy2
+onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy3
+onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy4
+onCreate	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MultiDimensionalArray1_DroidSafeFailed1
+onCreate	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MultiDimensionalArray1_DroidSafeFailed2
+onCreate	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed
+onCreate	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:Callbacks_LocationLeak1_Original
+onCreate	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow1
+onLocationChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onLocationChanged(Location loc) {  \/\/source$/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
+onLocationChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onLocationChanged(Location loc) {  \/\/source$/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
+onProviderDisabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onProviderDisabled(String provider) {}  $/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
+onProviderDisabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onProviderDisabled(String provider) {}  $/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
+onProviderEnabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onProviderEnabled(String provider) { }  $/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
+onProviderEnabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onProviderEnabled(String provider) { }  $/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
+onResume	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^    protected void onResume (){$/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed
+onResume	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^    protected void onResume (){$/;"	m	class:Callbacks_LocationLeak1_Original
+onStatusChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onStatusChanged(String provider, int status, Bundle extras) {}  $/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
+onStatusChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onStatusChanged(String provider, int status, Bundle extras) {}  $/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
+outgoingEdge	src/infoFlow/Vertex.java	/^	private Edge outgoingEdge;$/;"	f	class:Vertex	file:
+password	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int password=0x7f070000;$/;"	f	class:R.id
+password	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int password=0x7f070001;$/;"	f	class:R.id
+passwordCorrect	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^	private boolean passwordCorrect = false;$/;"	f	class:ImplicitFlow2	file:
+path	src/infoFlow/ProgramTree.java	/^	private Stack<Edge> path = new Stack<Edge>();$/;"	f	class:ProgramTree	file:
+previousVertexSet	src/infoFlow/Vertex.java	/^	private Set<Vertex> previousVertexSet = new HashSet<Vertex>();$/;"	f	class:Vertex	file:
+print	src/infoFlow/LogUtils.java	/^	private static void print(int printLevel, Object... objects) {$/;"	m	class:LogUtils	file:
+printResult	src/infoFlow/HelpTree.java	/^	public void printResult() {$/;"	m	class:HelpTree
+printResult2	src/infoFlow/HelpTree.java	/^	public void printResult2() {$/;"	m	class:HelpTree
+printTree	src/infoFlow/ProgramTree.java	/^	private void printTree() {$/;"	m	class:ProgramTree	file:
+printTree	src/infoFlow/ProgramTree.java	/^	private void printTree(int indent, Vertex v) {$/;"	m	class:ProgramTree	file:
+println	src/infoFlow/LogUtils.java	/^	private static void println(int printLevel,Object... objects) {$/;"	m	class:LogUtils	file:
+programCorrect	src/infoFlow/ProgramTree.java	/^	private boolean programCorrect = false;$/;"	f	class:ProgramTree	file:
+psi	src/infoFlow/Vertex.java	/^	private boolean psi = false;$/;"	f	class:Vertex	file:
+refine	src/infoFlow/ProgramTree.java	/^	private void refine(Vertex v) {$/;"	m	class:ProgramTree	file:
+returnEdge	src/infoFlow/Edge.java	/^	private boolean returnEdge = false;$/;"	f	class:Edge	file:
+returnLeaf	src/infoFlow/ProgramTree.java	/^	private Vertex returnLeaf;$/;"	f	class:ProgramTree	file:
+returnLocation	src/infoFlow/Vertex.java	/^	private boolean returnLocation = false;$/;"	f	class:Vertex	file:
+returnPaths	src/infoFlow/ProgramTree.java	/^	private LinkedList<LinkedList<Vertex>> returnPaths;$/;"	f	class:ProgramTree	file:
+rootSet	src/infoFlow/ProgramTree.java	/^	private HashSet<Vertex> rootSet;$/;"	f	class:ProgramTree	file:
+rootUnit	src/infoFlow/HelpTree.java	/^	private ArrayList<Unit> rootUnit;$/;"	f	class:HelpTree	file:
+rtrn	src/infoFlow/HelpTree.java	/^	private Unit rtrn;$/;"	f	class:HelpTree	file:
+s	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^    public String s;$/;"	f	class:MainActivity
+safetyChecker	src/safetyChecker/SafetyInitializerW.java	/^package safetyChecker;$/;"	p
+secret	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
+secret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
+secret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
+sendTaint	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private void sendTaint(){$/;"	m	class:FieldSensitivity1	file:
+sendText	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    private void sendText() {$/;"	m	class:ImplicitFlow1	file:
+serialVersionUID	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^	public static final long serialVersionUID = 1L;$/;"	f	class:ErrorLocationNotFoundException
+serialVersionUID	src/infoFlow/exception/MainFunctionNotFoundException.java	/^	public static final long serialVersionUID = 1L;$/;"	f	class:MainFunctionNotFoundException
+setCovered	src/infoFlow/Vertex.java	/^	public void setCovered(boolean covered) { this.covered = covered; }$/;"	m	class:Vertex
+setDescription	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public void setDescription(String description) {$/;"	m	class:Datacontainer
+setDescription	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public void setDescription(String description) {$/;"	m	class:Datacontainer
+setDescription	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public void setDescription(String description) {$/;"	m	class:Datacontainer
+setDistance	src/infoFlow/Vertex.java	/^	public void setDistance(int distance) { this.distance = distance; } 	$/;"	m	class:Vertex
+setErrorEdge	src/infoFlow/Edge.java	/^	public void setErrorEdge(boolean errorEdge) { this.errorEdge = errorEdge; }$/;"	m	class:Edge
+setErrorLocation	src/infoFlow/Vertex.java	/^	public void setErrorLocation(boolean errorLocation) { this.errorLocation = errorLocation; }$/;"	m	class:Vertex
+setHeadLocation	src/infoFlow/Vertex.java	/^	public void setHeadLocation(boolean headLocation) { this.headLocation = headLocation; }$/;"	m	class:Vertex
+setNextVertex	src/infoFlow/Vertex.java	/^	public void setNextVertex(Vertex nextVertex) { this.nextVertex = nextVertex; } $/;"	m	class:Vertex
+setOutgoingEdge	src/infoFlow/Vertex.java	/^	public void setOutgoingEdge(Edge outgoingEdge) { this.outgoingEdge = outgoingEdge;}$/;"	m	class:Vertex
+setReturnEdge	src/infoFlow/Edge.java	/^	public void setReturnEdge(boolean returnEdge) { this.returnEdge = returnEdge; }$/;"	m	class:Edge
+setReturnLocation	src/infoFlow/Vertex.java	/^	public void setReturnLocation(boolean returnLocation) { this.returnLocation = returnLocation; }$/;"	m	class:Vertex
+setSecret	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public void setSecret(String secret) {$/;"	m	class:Datacontainer
+setSecret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public void setSecret(String secret) {$/;"	m	class:Datacontainer
+setSecret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public void setSecret(String secret) {$/;"	m	class:Datacontainer
+setSight	src/infoFlow/Vertex.java	/^	public void setSight(boolean psi) { this.psi = psi; }$/;"	m	class:Vertex
+setStores	src/infoFlow/HelpTree.java	/^	public void setStores(Map<String, HelpTree> stores) {$/;"	m	class:HelpTree
+setSubFunction	src/infoFlow/Edge.java	/^	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }	$/;"	m	class:Edge
+setSubFunction	src/infoFlow/Vertex.java	/^	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }$/;"	m	class:Vertex
+setTaint	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private Datacontainer setTaint(Datacontainer data){$/;"	m	class:FieldSensitivity1	file:
+setUnit	src/infoFlow/Edge.java	/^	public void setUnit(Unit unit) { this.unit = unit; }$/;"	m	class:Edge
+setV	src/infoFlow/Edge.java	/^	public void setV(Vertex v) { this.v = v; }$/;"	m	class:Edge
+setW	src/infoFlow/Edge.java	/^	public void setW(Vertex w) { this.w = w; }$/;"	m	class:Edge
+shortestPath	src/infoFlow/HelpTree.java	/^	private Map<Unit, Integer> shortestPath;$/;"	f	class:HelpTree	file:
+signature	src/infoFlow/ProgramTree.java	/^	private String signature;$/;"	f	class:ProgramTree	file:
+startTest	src/infoFlow/ProgramTree.java	/^	private void startTest() throws ErrorLocationNotFoundException {$/;"	m	class:ProgramTree	file:
+stores	src/SelfCompositionTest/NoLeak1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:NoLeak1
+stores	src/infoFlow/HelpTree.java	/^	private Map<String, HelpTree> stores;$/;"	f	class:HelpTree	file:
+stores	src/infoFlow/ProgramTree.java	/^	private Map<String, Body> stores;$/;"	f	class:ProgramTree	file:
+string	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+string	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+string	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+string	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+string	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+string	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+string	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+string	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
+style	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+style	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+style	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+style	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+style	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+style	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+style	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+style	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
+subFunction	src/infoFlow/Edge.java	/^	private boolean subFunction = false;$/;"	f	class:Edge	file:
+subFunction	src/infoFlow/Vertex.java	/^	private boolean subFunction = false;$/;"	f	class:Vertex	file:
+tail	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	private Node tail;$/;"	f	class:LinkedList	file:
+test	BechMark/WeFail/FailLinkedList/src/LinkedList1.java	/^	static public void test(int length){$/;"	m	class:LinkedList1
+test1	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void test1(int i) {$/;"	m	class:ErrorFunction
+testDriver	src/RecordPeekMemoryAndTime/testDriver.java	/^public class testDriver {$/;"	c
+toString	src/infoFlow/Edge.java	/^	public String toString() { $/;"	m	class:Edge
+uncovered	src/infoFlow/ProgramTree.java	/^	private Stack<Vertex> uncovered = new Stack<Vertex>();$/;"	f	class:ProgramTree	file:
+unit	src/infoFlow/Edge.java	/^	private Unit unit;$/;"	f	class:Edge	file:
+unreachable	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^  	private void unreachable(){$/;"	m	class:UnreachableCode	file:
+unwind	src/infoFlow/ProgramTree.java	/^	private void unwind() {$/;"	m	class:ProgramTree	file:
+updateLowest	src/infoFlow/HelpTree.java	/^	private void updateLowest(Unit e, int depth) {$/;"	m	class:HelpTree	file:
+updateShortest	src/infoFlow/HelpTree.java	/^	private void updateShortest(Unit e, int length) {$/;"	m	class:HelpTree	file:
+username	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int username=0x7f070000;$/;"	f	class:R.id
+v	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^    public static MainActivity v;$/;"	f	class:MainActivity
+v	src/infoFlow/Edge.java	/^	private Vertex v; \/\/ entering vertex$/;"	f	class:Edge	file:
+value	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^		String value = "android";	$/;"	f	class:FieldSensitivity4.Datacontainer
+value	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		int value;$/;"	f	class:LinkedList.Node
+vertexSet	src/infoFlow/ProgramTree.java	/^	private Set<Vertex> vertexSet = new HashSet<Vertex>();$/;"	f	class:ProgramTree	file:
+w	src/infoFlow/Edge.java	/^	private Vertex w; \/\/ exiting vertex$/;"	f	class:Edge	file:
+warning	src/infoFlow/LogUtils.java	/^	public static void warning(Object... objects) {$/;"	m	class:LogUtils
+warningln	src/infoFlow/LogUtils.java	/^	public static void warningln(Object... objects) {$/;"	m	class:LogUtils
+writeToLog	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^	private void writeToLog(String message){$/;"	m	class:ImplicitFlow1	file:
