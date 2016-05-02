@@ -10,6 +10,8 @@ public class Vertex {
 	private boolean headLocation = false;
 	private boolean errorLocation = false;
 	private boolean subFunction = false;
+	private boolean sinkLocation = false;
+	private boolean sourceLocation = false;
 	private Edge outgoingEdge;
 	private Set<Edge> incomingEdges = new HashSet<Edge>();
 	private Vertex nextVertex;
@@ -35,6 +37,12 @@ public class Vertex {
 	public boolean isSubFunction() { return this.subFunction; }
 	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }
 	
+	public boolean isSinkLocation() { return this.sinkLocation; }
+	public void setSinkLocation(boolean sinkLocation) { this.sinkLocation = sinkLocation; }
+
+	public boolean isSourceLocation() { return this.sourceLocation; }
+	public void setSourceLocation(boolean sourceLocation) { this.sourceLocation = sourceLocation; }
+
 	public Edge getOutgoingEdge() { return this.outgoingEdge; }
 	public void setOutgoingEdge(Edge outgoingEdge) { this.outgoingEdge = outgoingEdge;}
 	

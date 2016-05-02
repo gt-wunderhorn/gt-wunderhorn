@@ -8,7 +8,7 @@ public class LogUtils {
 	private static final int WARNING = 3;
 	private static final int FATAL = 4;
 
-	private static int currentLevel = DEBUG; 
+	private static int currentLevel = INFO; 
 
 	private static void print(int printLevel, Object... objects) {
 		if (currentLevel <= printLevel)

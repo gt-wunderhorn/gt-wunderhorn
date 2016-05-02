@@ -12,6 +12,8 @@ public class Edge {
 	private boolean returnEdge = false;
 	private boolean errorEdge = false;
 	private boolean subFunction = false;
+	private boolean sinkEdge = false;
+	private boolean sourceEdge = false;
 
 	public Edge(Unit unit) { this.unit = unit; }
 
@@ -33,6 +35,12 @@ public class Edge {
 	public boolean isSubFunction() { return this.subFunction; }
 	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }	
 	
+	public boolean isSinkEdge() { return this.sinkEdge; }
+	public void setSinkEdge(boolean sinkEdge) { this.sinkEdge = sinkEdge; }
+	
+	public boolean isSourceEdge() { return this.sourceEdge; }
+	public void setSourceEdge(boolean sourceEdge) { this.sourceEdge = sourceEdge; }
+
 	public ProgramTree getProgramTree() { return this.programTree; }
 	public void setProgramTree(ProgramTree programTree) { this.programTree = programTree; }
 

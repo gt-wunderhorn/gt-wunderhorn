@@ -16,11 +16,10 @@ public class de.ecspride.ImplicitFlow3 extends android.app.Activity
     {
         de.ecspride.ImplicitFlow3 r0;
         android.os.Bundle r1;
-        java.lang.String r2, r6, r6_1, r6_2;
+        java.lang.String r2, r4;
         android.telephony.SmsManager r3;
-        byte b0;
-        java.lang.Object $r4;
-        android.telephony.TelephonyManager $r5;
+        java.lang.Object $r5;
+        android.telephony.TelephonyManager $r6;
 
         r0 := @this: de.ecspride.ImplicitFlow3;
 
@@ -30,26 +29,17 @@ public class de.ecspride.ImplicitFlow3 extends android.app.Activity
 
         virtualinvoke r0.<de.ecspride.ImplicitFlow3: void setContentView(int)>(2130903040);
 
-        $r4 = virtualinvoke r0.<de.ecspride.ImplicitFlow3: java.lang.Object getSystemService(java.lang.String)>("phone");
+        $r5 = virtualinvoke r0.<de.ecspride.ImplicitFlow3: java.lang.Object getSystemService(java.lang.String)>("phone");
 
-        $r5 = (android.telephony.TelephonyManager) $r4;
+        $r6 = (android.telephony.TelephonyManager) $r5;
 
-        r2 = virtualinvoke $r5.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
+        r2 = virtualinvoke $r6.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
 
         r3 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
 
-        r6 = "huhu";
+        r4 = "huhu";
 
-        b0 = 5;
-
-(0)     if b0 != 5 goto label1;
-
-(1)     r6_1 = r2;
-
-     label1:
-        r6_2 = Phi(r6 #0, r6_1 #1);
-
-        virtualinvoke r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+1 1234567", null, r6_2, null, null);
+        virtualinvoke r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+1 1234567", null, r2, null, null);
 
         staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
 

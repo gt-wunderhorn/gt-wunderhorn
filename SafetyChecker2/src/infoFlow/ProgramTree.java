@@ -40,7 +40,7 @@ public class ProgramTree {
 	private String functionSignature;
 	private String actualFunction;
 	private ExceptionalUnitGraph cfg;
-	private HelpTree helpTree;
+	//private HelpTree helpTree;
 	private String signature;
 
 	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction)//, String actualFunction)
@@ -138,7 +138,7 @@ public class ProgramTree {
 	private boolean findMainFunction() {
 		if(stores.containsKey(functionSignature)) {
 			this.cfg = new ExceptionalUnitGraph(stores.get(functionSignature));//entry.getValue()
-			this.helpTree = new HelpTree(cfg);
+			//this.helpTree = new HelpTree(cfg);
 			this.signature = functionSignature;
 			LogUtils.debugln("findMainFunction : " + signature);
 			// Assumption is that we have only one ErrorLocation and return  point
@@ -209,6 +209,11 @@ public class ProgramTree {
 					this.vertexSet.add(v);
 					
 					rootSet.add(v);
+					
+					InterpolationHandler itpHandler = new InterpolationHandler();	
+					//itpHandler.createZ3Script(v);
+
+
 				}
 
 				for (Unit action : cfg.getPredsOf(incomingEdge.getUnit())) {
@@ -224,7 +229,8 @@ public class ProgramTree {
 					w.addPreviousVertex(v);
 					this.vertexSet.add(v);
 
-					UnitController.analyzeVertex(v, stores);
+					UnitController.analyzeEdge(e, stores);
+					//UnitController.analyzeVertex(v, stores);
 
 					//uncovered.push(v);
 				}

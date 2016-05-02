@@ -11,9 +11,10 @@ public class InterpolationHandler {
 	public InterpolationHandler() {
 		ictx = new InterpolationContext();
 	}
-
 	
-	public boolean createInterpolation(List<Edge> path, InterpolationContext ic) {
+	public boolean createZ3Script(Edge e) {
+		
+		
 
 
 		return false;
