@@ -1,3 +1,0 @@
-# view AndroidManifest.xml #generated:19
--keep class de.ecspride.ArrayAccess2 { <init>(...); }
-
