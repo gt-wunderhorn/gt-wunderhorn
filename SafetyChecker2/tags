@@ -4,6 +4,8 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+AND_UTIL_LOG_PARAM_NO	src/infoFlow/UnitController.java	/^	private static final Integer AND_UTIL_LOG_PARAM_NO = 1;$/;"	f	class:UnitController	file:
+AND_UTIL_LOG_SIGNATURE	src/infoFlow/UnitController.java	/^	private static final String AND_UTIL_LOG_SIGNATURE = "android.util.Log";$/;"	f	class:UnitController	file:
 APK	BechMark/DroidBench/ArrayAccess1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
 APK	BechMark/DroidBench/ArrayAccess2/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
 APK	BechMark/DroidBench/ArrayCopy1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
@@ -67,7 +69,7 @@ Datacontainer	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontaine
 Datacontainer	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
 Datacontainer	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
 Datacontainer	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^    class Datacontainer{$/;"	c	class:FieldSensitivity4
-ERRORFUNCTION	src/infoFlow/UnitController.java	/^	private static final String ERRORFUNCTION = "ErrorFunction";$/;"	f	class:UnitController	file:
+ERRORFUNCTION	src/infoFlow/UnitController.java	/^	public static final String ERRORFUNCTION = "ErrorFunction";$/;"	f	class:UnitController
 Edge	src/infoFlow/Edge.java	/^	public Edge(Unit unit) { this.unit = unit; }$/;"	m	class:Edge
 Edge	src/infoFlow/Edge.java	/^public class Edge {$/;"	c
 Error	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void Error() {$/;"	m	class:ErrorFunction
@@ -142,12 +144,15 @@ R	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^public final clas
 R	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^public final class R {$/;"	c
 R	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^public final class R {$/;"	c
 RecordPeekMemoryAndTime	src/RecordPeekMemoryAndTime/testDriver.java	/^package RecordPeekMemoryAndTime;$/;"	p
+SEND_TEXT_MESSAGE_PARAM_NO	src/infoFlow/UnitController.java	/^       	private static final Integer SEND_TEXT_MESSAGE_PARAM_NO = 2;$/;"	f	class:UnitController	file:
+SEND_TEXT_MESSAGE_SIGNATURE	src/infoFlow/UnitController.java	/^	private static final String SEND_TEXT_MESSAGE_SIGNATURE = "sendTextMessage";$/;"	f	class:UnitController	file:
 SafetyInitializerW	src/safetyChecker/SafetyInitializerW.java	/^public class SafetyInitializerW {$/;"	c
 SelfCompositionTest	src/SelfCompositionTest/NoLeak1.java	/^package SelfCompositionTest;$/;"	p
 ShortestReturnPath	src/infoFlow/HelpTree.java	/^	private void ShortestReturnPath() {$/;"	m	class:HelpTree	file:
 StaticInitClass1	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^	public static class StaticInitClass1{$/;"	c	class:MainActivity
 StaticInitClass1	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^	public static class StaticInitClass1{$/;"	c	class:MainActivity
 Test	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^class Test {$/;"	c
+UnitController	src/infoFlow/UnitController.java	/^	public UnitController () {$/;"	m	class:UnitController
 UnitController	src/infoFlow/UnitController.java	/^public class UnitController {$/;"	c
 UnreachableCode	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^public class UnreachableCode extends Activity {$/;"	c
 UpdateAllZeros	src/infoFlow/HelpTree.java	/^	private void UpdateAllZeros() {$/;"	m	class:HelpTree	file:
@@ -173,7 +178,8 @@ actualFunction	src/infoFlow/ProgramTree.java	/^	private String actualFunction;$/
 add	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public void add(int n) {$/;"	m	class:LinkedList
 addIncomingEdge	src/infoFlow/Vertex.java	/^	public void addIncomingEdge(Edge incomingEdge) { this.incomingEdges.add(incomingEdge); }$/;"	m	class:Vertex
 addPreviousVertex	src/infoFlow/Vertex.java	/^	public void addPreviousVertex(Vertex v) { this.previousVertexSet.add(v); }$/;"	m	class:Vertex
-analyzeVertex	src/infoFlow/UnitController.java	/^	public static void analyzeVertex(Vertex v, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:UnitController
+analyzeEdge	src/infoFlow/UnitController.java	/^	public void analyzeEdge(Edge e, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:UnitController
+analyzeVertex	src/infoFlow/UnitController.java	/^	public void analyzeVertex(Vertex v, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:UnitController
 app_name	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
 app_name	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
 app_name	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
@@ -216,11 +222,15 @@ com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/
 com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^package com.flow.arraycopy;$/;"	p
 com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^package com.flow.arraycopy;$/;"	p
 com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^package com.flow.arraycopy;$/;"	p
+convertRefLikeValue	src/infoFlow/InterpolationHandler.java	/^	private Expr convertRefLikeValue(Value value, Edge edge) {$/;"	m	class:InterpolationHandler	file:
+convertSinkInvoke2Z3	src/infoFlow/InterpolationHandler.java	/^	private boolean convertSinkInvoke2Z3(Edge e) {$/;"	m	class:InterpolationHandler	file:
+convertValue	src/infoFlow/InterpolationHandler.java	/^	private Expr convertValue(Value value, Edge edge) {$/;"	m	class:InterpolationHandler	file:
 cover	src/infoFlow/ProgramTree.java	/^	private void cover(Vertex v, Vertex w) {$/;"	m	class:ProgramTree	file:
 covered	src/infoFlow/ProgramTree.java	/^	private Set<Vertex> covered = new HashSet<Vertex>();$/;"	f	class:ProgramTree	file:
 covered	src/infoFlow/Vertex.java	/^	private boolean covered = false;$/;"	f	class:Vertex	file:
 coveringRelation	src/infoFlow/ProgramTree.java	/^	private Map<Vertex, Vertex> coveringRelation = new HashMap<Vertex, Vertex>();$/;"	f	class:ProgramTree	file:
 createUniquePathPi	src/infoFlow/ProgramTree.java	/^	private List<Edge> createUniquePathPi(Vertex v) {$/;"	m	class:ProgramTree	file:
+createZ3Object	src/infoFlow/InterpolationHandler.java	/^	private Expr createZ3Object(Local v \/*,  boolean IfAssignLeft *\/, Edge e) {$/;"	m	class:InterpolationHandler	file:
 createZ3Script	src/infoFlow/InterpolationHandler.java	/^	public boolean createZ3Script(Edge e) {$/;"	m	class:InterpolationHandler
 currentLevel	src/infoFlow/LogUtils.java	/^	private static int currentLevel = INFO; $/;"	f	class:LogUtils	file:
 d1	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private Datacontainer d1;$/;"	f	class:FieldSensitivity1	file:
@@ -294,6 +304,8 @@ field	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/DataStore.java	/^	p
 findErrorLocation	src/infoFlow/ProgramTree.java	/^	private boolean findErrorLocation(Vertex w) {$/;"	m	class:ProgramTree	file:
 findMainFunction	src/infoFlow/ProgramTree.java	/^	private boolean findMainFunction() {$/;"	m	class:ProgramTree	file:
 findRootUnit	src/infoFlow/HelpTree.java	/^	private void findRootUnit(Set<Unit> visited, Queue<Unit> expandQueue) {$/;"	m	class:HelpTree	file:
+functionName	src/infoFlow/ProgramTree.java	/^	private String functionName;$/;"	f	class:ProgramTree	file:
+functionNameInvokeCount	src/infoFlow/ProgramTree.java	/^	private static Map<String, Integer> functionNameInvokeCount = new HashMap<String, Integer>();$/;"	f	class:ProgramTree	file:
 functionSignature	src/infoFlow/ProgramTree.java	/^	private String functionSignature;$/;"	f	class:ProgramTree	file:
 functionTrees	src/infoFlow/HelpForest.java	/^	private Map<String, HelpTree> functionTrees;$/;"	f	class:HelpForest	file:
 get	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public int get(int size) {$/;"	m	class:LinkedList
@@ -309,12 +321,13 @@ getIncomingEdges	src/infoFlow/Vertex.java	/^	public Set<Edge> getIncomingEdges()
 getMessage	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^	public String getMessage() {$/;"	m	class:ErrorLocationNotFoundException
 getMessage	src/infoFlow/exception/MainFunctionNotFoundException.java	/^	public String getMessage() {$/;"	m	class:MainFunctionNotFoundException
 getMethodSignature	src/infoFlow/HelpTree.java	/^	public static String getMethodSignature(Unit u) {$/;"	m	class:HelpTree
-getMethodSignature	src/infoFlow/UnitController.java	/^	private static String getMethodSignature(Unit u) {$/;"	m	class:UnitController	file:
+getMethodSignature	src/infoFlow/UnitController.java	/^	public static String getMethodSignature(Unit u) {$/;"	m	class:UnitController
 getNextVertex	src/infoFlow/Vertex.java	/^	public Vertex getNextVertex() { return this.nextVertex; }$/;"	m	class:Vertex
 getNodeDepth	src/infoFlow/HelpTree.java	/^	public int getNodeDepth(Unit u) {$/;"	m	class:HelpTree
 getNodeShortest	src/infoFlow/HelpTree.java	/^	public int getNodeShortest(Unit u) {$/;"	m	class:HelpTree
 getOutgoingEdge	src/infoFlow/Vertex.java	/^	public Edge getOutgoingEdge() { return this.outgoingEdge; }$/;"	m	class:Vertex
 getPreviousVertexSet	src/infoFlow/Vertex.java	/^	public Set<Vertex> getPreviousVertexSet() { return this.previousVertexSet; }$/;"	m	class:Vertex
+getProgramDefinition	src/infoFlow/ProgramTree.java	/^	public String getProgramDefinition() {$/;"	m	class:ProgramTree
 getProgramTree	src/infoFlow/Edge.java	/^	public ProgramTree getProgramTree() { return this.programTree; }$/;"	m	class:Edge
 getResult	src/infoFlow/HelpForest.java	/^	public Map<String,HelpTree> getResult(){$/;"	m	class:HelpForest
 getRoot	src/infoFlow/HelpTree.java	/^	public Unit getRoot() {$/;"	m	class:HelpTree
@@ -325,6 +338,7 @@ getSecret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.ja
 getUnit	src/infoFlow/Edge.java	/^	public Unit getUnit() { return this.unit; }$/;"	m	class:Edge
 getV	src/infoFlow/Edge.java	/^	public Vertex getV() { return this.v; }$/;"	m	class:Edge
 getW	src/infoFlow/Edge.java	/^	public Vertex getW() { return this.w; }$/;"	m	class:Edge
+getZ3	src/infoFlow/Vertex.java	/^	public BoolExpr getZ3() { return this.z3; }$/;"	m	class:Vertex
 head	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	private Node head;$/;"	f	class:LinkedList	file:
 headLocation	src/infoFlow/Vertex.java	/^	private boolean headLocation = false;$/;"	f	class:Vertex	file:
 hello_world	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
@@ -374,21 +388,22 @@ infoln	src/infoFlow/LogUtils.java	/^	public static void infoln(Object... objects
 isCovered	src/infoFlow/Vertex.java	/^        public boolean isCovered() { return this.covered; }$/;"	m	class:Vertex
 isErrorEdge	src/infoFlow/Edge.java	/^	public boolean isErrorEdge() { return this.errorEdge; }$/;"	m	class:Edge
 isErrorLocation	src/infoFlow/Vertex.java	/^	public boolean isErrorLocation() { return this.errorLocation; }$/;"	m	class:Vertex
-isErrorUnit	src/infoFlow/UnitController.java	/^	public static boolean isErrorUnit(Unit u) {$/;"	m	class:UnitController
+isErrorUnit	src/infoFlow/UnitController.java	/^	public boolean isErrorUnit(Unit u) {$/;"	m	class:UnitController
 isHeadLocation	src/infoFlow/Vertex.java	/^	public boolean isHeadLocation() { return this.headLocation; }$/;"	m	class:Vertex
 isInvoke	src/infoFlow/HelpTree.java	/^	public static boolean isInvoke(Unit u) {$/;"	m	class:HelpTree
 isReturnEdge	src/infoFlow/Edge.java	/^	public boolean isReturnEdge() { return this.returnEdge; }$/;"	m	class:Edge
 isReturnLocation	src/infoFlow/Vertex.java	/^	public boolean isReturnLocation() { return this.returnLocation; }$/;"	m	class:Vertex
 isSigh	src/infoFlow/Vertex.java	/^	public boolean isSigh() { return this.psi; }$/;"	m	class:Vertex
 isSinkEdge	src/infoFlow/Edge.java	/^	public boolean isSinkEdge() { return this.sinkEdge; }$/;"	m	class:Edge
-isSinkInvoke	src/infoFlow/UnitController.java	/^	private static boolean isSinkInvoke(Unit u) {$/;"	m	class:UnitController	file:
+isSinkInvoke	src/infoFlow/UnitController.java	/^	private boolean isSinkInvoke(Unit u) {$/;"	m	class:UnitController	file:
 isSinkLocation	src/infoFlow/Vertex.java	/^	public boolean isSinkLocation() { return this.sinkLocation; }$/;"	m	class:Vertex
 isSourceEdge	src/infoFlow/Edge.java	/^	public boolean isSourceEdge() { return this.sourceEdge; }$/;"	m	class:Edge
-isSourceInvoke	src/infoFlow/UnitController.java	/^	private static boolean isSourceInvoke(Unit u) {$/;"	m	class:UnitController	file:
+isSourceInvoke	src/infoFlow/UnitController.java	/^	private boolean isSourceInvoke(Unit u) {$/;"	m	class:UnitController	file:
 isSourceLocation	src/infoFlow/Vertex.java	/^	public boolean isSourceLocation() { return this.sourceLocation; }$/;"	m	class:Vertex
 isSubFunction	src/infoFlow/Edge.java	/^	public boolean isSubFunction() { return this.subFunction; }$/;"	m	class:Edge
 isSubFunction	src/infoFlow/Vertex.java	/^	public boolean isSubFunction() { return this.subFunction; }$/;"	m	class:Vertex
-isSubFunctionUnit	src/infoFlow/UnitController.java	/^	private static boolean isSubFunctionUnit(Unit u, Map<String, Body> stores, Edge e)$/;"	m	class:UnitController	file:
+isSubFunctionUnit	src/infoFlow/UnitController.java	/^	private boolean isSubFunctionUnit(Unit u, Map<String, Body> stores, Edge e)$/;"	m	class:UnitController	file:
+itpHandler	src/infoFlow/UnitController.java	/^	private InterpolationHandler itpHandler = new InterpolationHandler(); $/;"	f	class:UnitController	file:
 latitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^	private String latitude = "";$/;"	f	class:Callbacks_LocationLeak1_DroidSafeFailed	file:
 latitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^	private String latitude = "";$/;"	f	class:Callbacks_LocationLeak1_Original	file:
 layout	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
@@ -443,6 +458,7 @@ menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen
 menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
 menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
 menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
+newSortMap	src/infoFlow/InterpolationHandler.java	/^	private Map<String, Sort> newSortMap = new HashMap<String, Sort>();$/;"	f	class:InterpolationHandler	file:
 next	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		Node next;$/;"	f	class:LinkedList.Node
 nextLine	src/infoFlow/LogUtils.java	/^	public static void nextLine(int printLevel) {$/;"	m	class:LogUtils
 nextVertex	src/infoFlow/Vertex.java	/^	private Vertex nextVertex;$/;"	f	class:Vertex	file:
@@ -513,6 +529,7 @@ secret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	
 secret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
 sendTaint	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private void sendTaint(){$/;"	m	class:FieldSensitivity1	file:
 sendText	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    private void sendText() {$/;"	m	class:ImplicitFlow1	file:
+sensitiveParameterMap	src/infoFlow/UnitController.java	/^	public static final Map<String, Integer> sensitiveParameterMap = new HashMap<String, Integer>();$/;"	f	class:UnitController
 serialVersionUID	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^	public static final long serialVersionUID = 1L;$/;"	f	class:ErrorLocationNotFoundException
 serialVersionUID	src/infoFlow/exception/MainFunctionNotFoundException.java	/^	public static final long serialVersionUID = 1L;$/;"	f	class:MainFunctionNotFoundException
 setCovered	src/infoFlow/Vertex.java	/^	public void setCovered(boolean covered) { this.covered = covered; }$/;"	m	class:Vertex
@@ -543,14 +560,15 @@ setTaint	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1
 setUnit	src/infoFlow/Edge.java	/^	public void setUnit(Unit unit) { this.unit = unit; }$/;"	m	class:Edge
 setV	src/infoFlow/Edge.java	/^	public void setV(Vertex v) { this.v = v; }$/;"	m	class:Edge
 setW	src/infoFlow/Edge.java	/^	public void setW(Vertex w) { this.w = w; }$/;"	m	class:Edge
+setZ3	src/infoFlow/Vertex.java	/^	public void setZ3(BoolExpr z3) { this.z3 = z3; }$/;"	m	class:Vertex
 shortestPath	src/infoFlow/HelpTree.java	/^	private Map<Unit, Integer> shortestPath;$/;"	f	class:HelpTree	file:
 signature	src/infoFlow/ProgramTree.java	/^	private String signature;$/;"	f	class:ProgramTree	file:
 sinkEdge	src/infoFlow/Edge.java	/^	private boolean sinkEdge = false;$/;"	f	class:Edge	file:
 sinkLocation	src/infoFlow/Vertex.java	/^	private boolean sinkLocation = false;$/;"	f	class:Vertex	file:
-sinkSignatureDB	src/infoFlow/UnitController.java	/^	private static final String[] sinkSignatureDB = { "sendTextMessage", "android.util.Log" };$/;"	f	class:UnitController	file:
+sinkSignatureDB	src/infoFlow/UnitController.java	/^	public static final String[] sinkSignatureDB = { SEND_TEXT_MESSAGE_SIGNATURE, AND_UTIL_LOG_SIGNATURE };$/;"	f	class:UnitController
 sourceEdge	src/infoFlow/Edge.java	/^	private boolean sourceEdge = false;$/;"	f	class:Edge	file:
 sourceLocation	src/infoFlow/Vertex.java	/^	private boolean sourceLocation = false;$/;"	f	class:Vertex	file:
-sourceSignatureDB	src/infoFlow/UnitController.java	/^	private static final String[] sourceSignatureDB = {"getSimSerialNumber", "getDeviceId" }; $/;"	f	class:UnitController	file:
+sourceSignatureDB	src/infoFlow/UnitController.java	/^	public static final String[] sourceSignatureDB = {"getSimSerialNumber", "getDeviceId" }; $/;"	f	class:UnitController
 startTest	src/infoFlow/ProgramTree.java	/^	private void startTest() throws ErrorLocationNotFoundException, MainFunctionNotFoundException {$/;"	m	class:ProgramTree	file:
 stores	src/SelfCompositionTest/NoLeak1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:NoLeak1
 stores	src/infoFlow/HelpTree.java	/^	private Map<String, HelpTree> stores;$/;"	f	class:HelpTree	file:
@@ -580,6 +598,7 @@ testDriver	src/RecordPeekMemoryAndTime/testDriver.java	/^public class testDriver
 toString	src/infoFlow/Edge.java	/^	public String toString() { return unit.toString(); }$/;"	m	class:Edge
 uncovered	src/infoFlow/ProgramTree.java	/^	private Stack<Vertex> uncovered = new Stack<Vertex>();$/;"	f	class:ProgramTree	file:
 unit	src/infoFlow/Edge.java	/^	private Unit unit;$/;"	f	class:Edge	file:
+unitController	src/infoFlow/ProgramTree.java	/^	private UnitController unitController;$/;"	f	class:ProgramTree	file:
 unreachable	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^  	private void unreachable(){$/;"	m	class:UnreachableCode	file:
 unwind	src/infoFlow/ProgramTree.java	/^	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:ProgramTree	file:
 updateLowest	src/infoFlow/HelpTree.java	/^	private void updateLowest(Unit e, int depth) {$/;"	m	class:HelpTree	file:
@@ -594,3 +613,4 @@ w	src/infoFlow/Edge.java	/^	private Vertex w; \/\/ exiting vertex$/;"	f	class:Ed
 warning	src/infoFlow/LogUtils.java	/^	public static void warning(Object... objects) {$/;"	m	class:LogUtils
 warningln	src/infoFlow/LogUtils.java	/^	public static void warningln(Object... objects) {$/;"	m	class:LogUtils
 writeToLog	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^	private void writeToLog(String message){$/;"	m	class:ImplicitFlow1	file:
+z3	src/infoFlow/Vertex.java	/^	private BoolExpr z3;$/;"	f	class:Vertex	file:

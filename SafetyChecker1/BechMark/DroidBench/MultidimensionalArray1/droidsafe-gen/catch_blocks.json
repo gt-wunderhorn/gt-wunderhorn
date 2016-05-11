@@ -1,0 +1,15 @@
+{
+  "indicator-type" : "Catch Blocks",
+  "visibility" :  {
+    "direct-call" : true,
+    "call-chain" : false,
+    "syscall"    : true
+  },
+  "display"    :  {
+    "calls"      : false,
+    "syscalls"   : false,
+    "score"      : false
+  },
+ "contents"   :  [
+  {}
+]}

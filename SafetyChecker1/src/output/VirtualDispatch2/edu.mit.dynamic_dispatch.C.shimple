@@ -1,0 +1,23 @@
+class edu.mit.dynamic_dispatch.C extends edu.mit.dynamic_dispatch.A
+{
+
+    void <init>()
+    {
+        edu.mit.dynamic_dispatch.C r0;
+
+        r0 := @this: edu.mit.dynamic_dispatch.C;
+
+        specialinvoke r0.<edu.mit.dynamic_dispatch.A: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String f()
+    {
+        edu.mit.dynamic_dispatch.C r0;
+
+        r0 := @this: edu.mit.dynamic_dispatch.C;
+
+        return "not tainted";
+    }
+}

@@ -1,3 +1,4 @@
 clear
-javac -d bin -sourcepath src -cp ./bin:./lib/* 
-java -cp ./bin:./lib/* SelfCompositionTest.NoLeak1
+echo "Starting...>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+javac -d bin -sourcepath src src/selfCompositionTest/NoLeak1.java -cp ./bin:./lib/* 
+java -cp ./bin:./lib/* selfCompositionTest.NoLeak1

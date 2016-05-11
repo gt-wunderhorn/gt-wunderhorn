@@ -1,0 +1,17 @@
+public final class edu.mit.dynamic_dispatch.R$string extends java.lang.Object
+{
+    public static final int action_settings;
+    public static final int app_name;
+    public static final int hello_world;
+
+    public void <init>()
+    {
+        edu.mit.dynamic_dispatch.R$string r0;
+
+        r0 := @this: edu.mit.dynamic_dispatch.R$string;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

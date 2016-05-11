@@ -1,0 +1,108 @@
+{
+  "indicator-type" : "Entry Points",
+  "visibility" :  {
+    "call-chain" : true,
+    "syscall"    : true  },
+  "display"    :  {
+    "calls"      : false,
+    "syscalls"   : false,
+    "score"      : false
+  },
+ "contents"   :  [
+  { "type"       : "entry-point",
+    "link"       : "as_entry_point",
+    "signature"  : "<de.ecspride.ArrayAccess2: void <init>()>",
+    "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 22},
+    "syscalls"   : 2,
+    "calls"      : 3,
+    "score"      : 0,
+    "contents"   :  [
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.app.Activity: void <init>()>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 22},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<java.lang.Object: void finalize()>",
+      "src-loc"    : { "class"      : "java.lang.Object", "line"       : 187},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    }
+  ]},  { "type"       : "entry-point",
+    "link"       : "as_entry_point",
+    "signature"  : "<de.ecspride.ArrayAccess2: void onCreate(android.os.Bundle)>",
+    "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 26},
+    "syscalls"   : 7,
+    "calls"      : 9,
+    "score"      : 7,
+    "contents"   :  [
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.app.Activity: java.lang.Object getSystemService(java.lang.String)>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 30},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.app.Activity: void onCreate(android.os.Bundle)>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 26},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.telephony.SmsManager: android.telephony.SmsManager getDefault()>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 34},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 35},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 7
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<android.telephony.TelephonyManager: java.lang.String getDeviceId()>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 31},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 6
+    },
+    { "type"       : "call-chain",
+      "link"       : "as_call",
+      "signature"  : "<de.ecspride.ArrayAccess2: int calculateIndex()>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 35},
+      "syscalls"   : 0,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)>",
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    },
+    { "type"       : "syscall",
+      "link"       : "as_call",
+      "signature"  : "<toy_benchmark.ErrorFunction: void Error()>",
+      "src-loc"    : { "class"      : "de.ecspride.ArrayAccess2", "line"       : 36},
+      "syscalls"   : 1,
+      "calls"      : 1,
+      "score"      : 0
+    }
+  ]},  {}
+]}

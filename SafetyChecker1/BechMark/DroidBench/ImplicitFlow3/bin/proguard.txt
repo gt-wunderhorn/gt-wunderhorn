@@ -1,0 +1,6 @@
+# view AndroidManifest.xml #generated:16
+-keep class de.ecspride.ImplicitFlow3 { <init>(...); }
+
+# onClick res/layout/activity_implicit_flow3.xml #generated:29
+-keepclassmembers class * { *** leakData(...); }
+

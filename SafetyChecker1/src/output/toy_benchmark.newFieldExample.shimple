@@ -1,0 +1,34 @@
+public class toy_benchmark.newFieldExample extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.newFieldExample r0;
+
+        r0 := @this: toy_benchmark.newFieldExample;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        int[][][] r1;
+        int[][] r2;
+        int[] $r3;
+
+        r0 := @parameter0: java.lang.String[];
+
+        r1 = newmultiarray (int)[5][5][5];
+
+        r2 = r1[1];
+
+        $r3 = r2[2];
+
+        $r3[3] = 1;
+
+        return;
+    }
+}

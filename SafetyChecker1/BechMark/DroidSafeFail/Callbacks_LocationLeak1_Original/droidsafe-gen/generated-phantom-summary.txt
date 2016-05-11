@@ -1,0 +1,1 @@
+Found call to phantom method <toy_benchmark.ErrorFunction: void Error()> in <de.ecspride.LocationLeak1: void onCreate(android.os.Bundle)>

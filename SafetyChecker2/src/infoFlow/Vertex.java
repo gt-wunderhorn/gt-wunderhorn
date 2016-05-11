@@ -3,6 +3,8 @@ package infoFlow;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.microsoft.z3.BoolExpr;
+
 public class Vertex {
 
 	private boolean covered = false;
@@ -20,7 +22,7 @@ public class Vertex {
 	//private Set<Vertex> uncoveredPreviousVertexSet = new HashSet<Vertex>();
 	private boolean psi = false;
 	private int distance = 0;
-
+	private BoolExpr z3;
 
         public boolean isCovered() { return this.covered; }
 	public void setCovered(boolean covered) { this.covered = covered; }
@@ -61,4 +63,6 @@ public class Vertex {
 	public int getDistance() { return this.distance; }
 	public void setDistance(int distance) { this.distance = distance; } 	
 
+	public BoolExpr getZ3() { return this.z3; }
+	public void setZ3(BoolExpr z3) { this.z3 = z3; }
 }

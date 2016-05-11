@@ -1,0 +1,52 @@
+public class toy_benchmark.Function1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.Function1 r0;
+
+        r0 := @this: toy_benchmark.Function1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        byte b0, b1;
+        toy_benchmark.Node r1, $r3;
+        int[] r2;
+        int i2;
+
+        r0 := @parameter0: java.lang.String[];
+
+        b0 = 5;
+
+        b1 = 7;
+
+        $r3 = new toy_benchmark.Node;
+
+        specialinvoke $r3.<toy_benchmark.Node: void <init>()>();
+
+        r1 = $r3;
+
+        r2 = newarray (int)[10];
+
+        i2 = staticinvoke <toy_benchmark.Function1: int test(int)>(b0);
+
+        return;
+    }
+
+    public static int test(int)
+    {
+        int i0, i1;
+
+        i0 := @parameter0: int;
+
+        i1 = i0;
+
+        return i1;
+    }
+}

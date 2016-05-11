@@ -1,0 +1,25 @@
+Entry Point: <de.ecspride.LocationLeak1: void onResume()> (Line: de.ecspride.LocationLeak1 44)
+
+Sink: <android.util.Log: int d(java.lang.String,java.lang.String)>
+Lines: 
+Receiver Sources: 
+Arg 1 Sources: 
+	lon = virtualinvoke loc.<android.location.Location: double getLongitude()>() (LOCATION)
+	lat = virtualinvoke loc.<android.location.Location: double getLatitude()>() (LOCATION)
+Sink: <android.util.Log: int d_ds_method_clone_2(java.lang.String,java.lang.String)>
+Lines: 
+Receiver Sources: 
+Arg 1 Sources: 
+	lon = virtualinvoke loc.<android.location.Location: double getLongitude()>() (LOCATION)
+	lat = virtualinvoke loc.<android.location.Location: double getLatitude()>() (LOCATION)
+
+
+FLOW:<de.ecspride.LocationLeak1: void onResume()>|{<android.util.Log: int d(java.lang.String,java.lang.String)>/LOG/Line: de.ecspride.LocationLeak1 47}<={<android.location.Location: double getLongitude()>/LOCATION/Line: de.ecspride.LocationLeak1 55/ARG}
+
+FLOW:<de.ecspride.LocationLeak1: void onResume()>|{<android.util.Log: int d(java.lang.String,java.lang.String)>/LOG/Line: de.ecspride.LocationLeak1 47}<={<android.location.Location: double getLatitude()>/LOCATION/Line: de.ecspride.LocationLeak1 54/ARG}
+
+FLOW:<de.ecspride.LocationLeak1: void onResume()>|{<android.util.Log: int d(java.lang.String,java.lang.String)>/LOG/Line: de.ecspride.LocationLeak1 48}<={<android.location.Location: double getLongitude()>/LOCATION/Line: de.ecspride.LocationLeak1 55/ARG}
+
+FLOW:<de.ecspride.LocationLeak1: void onResume()>|{<android.util.Log: int d(java.lang.String,java.lang.String)>/LOG/Line: de.ecspride.LocationLeak1 48}<={<android.location.Location: double getLatitude()>/LOCATION/Line: de.ecspride.LocationLeak1 54/ARG}
+
+

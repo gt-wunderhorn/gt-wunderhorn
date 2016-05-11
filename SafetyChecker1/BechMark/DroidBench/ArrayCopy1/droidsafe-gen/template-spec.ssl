@@ -1,0 +1,33 @@
+Flow Summary {
+	UNIQUE_IDENTIFIER -> LOG
+}
+// Line: edu.mit.array_copy.MainActivity 21
+// InfoFlows: 
+//    receiver:
+//    args:
+//    (Method accesses: UNIQUE_IDENTIFIER)
+//    (Category of Sink:)
+//Receiver types: edu.mit.array_copy.MainActivity 
+{android.app.Activity:{mIntent:{android.content.Intent:{mAction:{string:[android.intent.action.MAIN]}, DSmCategories:{string:[android.intent.category.LAUNCHER]}}}}}: void onCreate({android.os.Bundle:{mMap:<ANYTHING>}}) {
+	// Line: edu.mit.array_copy.MainActivity 25
+	// Requires permission: android.permission.READ_PHONE_STATE
+	// InfoFlows: 
+	//    receiver:
+	//    args:
+	//    (Method accesses: UNIQUE_IDENTIFIER)
+	//    (Category of Sink:)
+	//Receiver types: android.telephony.TelephonyManager 
+	android.telephony.TelephonyManager: java.lang.String getDeviceId();
+
+	// Line: edu.mit.array_copy.MainActivity 31
+	// InfoFlows: 
+	//    args:
+	//	    1
+	//	        UNIQUE_IDENTIFIER: 
+	//	            imei = virtualinvoke mgr.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()
+	//    (Method accesses: UNIQUE_IDENTIFIER)
+	//    (Category of Sink: LOG)
+	android.util.Log: int i("DroidBench", java.lang.String);
+
+}
+

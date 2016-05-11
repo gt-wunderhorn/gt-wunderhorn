@@ -13,6 +13,7 @@ import infoFlow.exception.ErrorLocationNotFoundException;
 import infoFlow.exception.MainFunctionNotFoundException;
 
 import soot.Body;
+import soot.SootMethod;
 import soot.Unit;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 
@@ -32,16 +33,19 @@ public class ProgramTree {
 	// from me
 	private InterpolationHandler iHandler;
 	private boolean programCorrect = false;
+	private boolean mainFunction;
+	private boolean treeClosed;
 	private HashMap<String, ProgramTree> calleeFunctions;
 	private HashSet<Vertex> rootSet;
 	private LinkedList<LinkedList<Vertex>> returnPaths;
 	private LinkedList<LinkedList<Vertex>> errorPaths;
-	private boolean mainFunctionB;
 	private String functionSignature;
-	private String actualFunction;
+	private String functionName;
+	private static Map<String, Integer> functionNameInvokeCount = new HashMap<String, Integer>();
 	private ExceptionalUnitGraph cfg;
 	//private HelpTree helpTree;
 	private String signature;
+	private UnitController unitController;
 
 	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction)//, String actualFunction)
 			throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
@@ -52,11 +56,11 @@ public class ProgramTree {
 		this.returnPaths = new LinkedList<LinkedList<Vertex>>();
 		this.errorPaths = new LinkedList<LinkedList<Vertex>>();
 		this.functionSignature = functionSignature;
-		this.mainFunctionB = mainFunction;
-		this.actualFunction = actualFunction;
 		this.stores = stores;
+		this.unitController = new UnitController();
+		this.mainFunction = mainFunction;
 
-		if(mainFunction)
+		if(this.mainFunction)
 			LogUtils.debugln("mainFunction = " + functionSignature);
 		else
 			LogUtils.debugln("setSubFunction = " + functionSignature);
@@ -73,12 +77,105 @@ public class ProgramTree {
 //		if (!errorLocationFound)
 //			throw new ErrorLocationNotFoundException(this.mainFunction + " does not have any ErrorLocation");
 		
-		LogUtils.debugln("Heads:" + cfg.getHeads());
+		TestCorrect();
+//		LogUtils.debugln("Heads:" + cfg.getHeads());
 		// start unwind process
-		unwind();
+//		unwind();
 		//printTree(0, returnLeaf);
 		//printTree();
 	}
+
+	public void TestCorrect() {
+		boolean ifAllClose = false;
+		while (!ifAllClose) {
+			boolean newErrorPath = false;
+			while (!newErrorPath) {
+				newErrorPath = this.getNewErrorPath();
+				if (newErrorPath) break;
+//				else this.getNewPath();
+			}
+//			ArrayList<ArrayList<Node>> errorPaths = this.mainFunction.getAllErrorPath();
+//			//System.out.println(errorPaths.size());
+//			PathSolver pSolver = new PathSolver(errorPaths, this);
+//			for(int i = 0; i < errorPaths.get(0).size(); i++)
+//				System.out.println("errorpaths = " + errorPaths.get(0).get(i).getStmt());
+//			pSolver.CalResult();
+//			this.ifProgramCorrect = pSolver.ifCorrect();
+//			if (!ifProgramCorrect) break;				
+//			else {
+//				this.test = pSolver.getTest();
+//				this.addAllNewReturn();
+//				this.cover();
+//				if (this.ifAllClosed()) break;
+//			}
+		}
+	}
+
+	public boolean getNewErrorPath() {
+		this.treeClosed = false;
+		Comparator<Node> nodeComparator = new NodeComparator();
+		Queue<Node> expandQueue = new PriorityQueue<Node>(nodeComparator);
+		for (Node leaf : this.Leaf) 
+			if (!leaf.IsCovered()) 
+				expandQueue.add(leaf);
+		
+		if (expandQueue.isEmpty()) 
+			this.treeClosed = true;
+		
+		boolean getNewPath = false;
+		while ((!expandQueue.isEmpty()) && (!getNewPath)) {
+			Node currentNode = expandQueue.remove();
+			currentNode.expand();
+			this.Leaf.remove(currentNode);
+			Unit currentUnit = currentNode.getStmt();
+			if (currentNode.ifDummy()) {
+				String signature = HelpTree.getMethodSignature(currentUnit);
+				Tree nextTree = this.theForest.getTree(signature);
+				if (nextTree.sizeOfPath() == 0) {
+					nextTree.getNewReturnPath();
+					this.theForest.addRelatedTree(nextTree);
+				}
+				int size = nextTree.sizeOfPath();
+				currentNode.setPathUsed(size);
+				for (int i = 0; i < size; i++) {
+					Node returnNode = Node.getNewNode(currentUnit, currentNode,
+					this, this.cfg);
+					currentNode.addSuccessor(returnNode);
+					returnNode.setPath(i);
+					this.updateNodeCollection(returnNode);
+					expandQueue.add(returnNode);
+					this.Leaf.add(returnNode);
+				}
+				continue;
+			}
+			ArrayList<Node> successors = currentNode.successors();
+			for (int i = 0; i < successors.size(); i++) {		
+				Node successor = successors.get(i);
+				Unit theUnit = successor.getStmt();
+				//if this stmt is invoke, we want to add a dummy node
+				if ((HelpTree.isInvoke(theUnit)) && (!successor.ifError())) {
+					if (!successor.getIfNonsense()) {
+						successor.setDummy();
+					}
+				}
+				// according to different Unit, put all nodes into map
+				this.updateNodeCollection(successor);
+				if (successor.ifError()) {
+					ArrayList<Node> errorPath = successor.path();
+					//System.out.println("the new error path");
+					PathCoverter.printPath(errorPath);
+					this.errorPaths.add(errorPath);
+					getNewPath = true;
+				} else {
+					expandQueue.add(successor);
+					this.Leaf.add(successor);
+				}
+			}
+		}
+		return getNewPath;
+	}
+
+
 
 	private void printPath(Vertex v) { 
 		LogUtils.debugln(v.getOutgoingEdge());
@@ -113,7 +210,7 @@ public class ProgramTree {
 		for (Edge incomingEdge : w.getIncomingEdges()) {
 			for (Unit incomingUnit : cfg.getPredsOf(incomingEdge.getUnit())) {
 				LogUtils.debugln("findErrorLocation : " + incomingUnit);
-				if (UnitController.isErrorUnit(incomingUnit)) {
+				if (unitController.isErrorUnit(incomingUnit)) {
 					this.lf = new Vertex();
 					lf.setErrorLocation(true);
 					lf.setNextVertex(w);
@@ -139,8 +236,16 @@ public class ProgramTree {
 		if(stores.containsKey(functionSignature)) {
 			this.cfg = new ExceptionalUnitGraph(stores.get(functionSignature));//entry.getValue()
 			//this.helpTree = new HelpTree(cfg);
+			
+			Body body = stores.get(functionSignature);
+		 	this.functionName = body.getMethod().getName();
+			if(functionNameInvokeCount.containsKey(functionName))
+				functionNameInvokeCount.put(functionName,functionNameInvokeCount.get(functionName)+1);
+			else
+				functionNameInvokeCount.put(functionName, 0);	
+
 			this.signature = functionSignature;
-			LogUtils.debugln("findMainFunction : " + signature);
+			//LogUtils.debugln("findMainFunction : " + signature);
 			// Assumption is that we have only one ErrorLocation and return  point
 			// if we have multiple returns, may be we should have multiple trees.
 			this.returnLeaf = new Vertex();
@@ -222,6 +327,7 @@ public class ProgramTree {
 
 					e.setV(v);
 					e.setW(w);
+					e.setProgramTree(this);
 
 					v.setOutgoingEdge(incomingEdge);
 					v.addIncomingEdge(e);
@@ -229,7 +335,7 @@ public class ProgramTree {
 					w.addPreviousVertex(v);
 					this.vertexSet.add(v);
 
-					UnitController.analyzeEdge(e, stores);
+					unitController.analyzeEdge(e, stores);
 					//UnitController.analyzeVertex(v, stores);
 
 					//uncovered.push(v);
@@ -256,6 +362,10 @@ public class ProgramTree {
 
 		return null;
 	}
+
+	public String getProgramDefinition() {
+		return "_" + this.functionName + "_" + ProgramTree.functionNameInvokeCount.get(this.functionName);		
+	}	
  
 	// public Set<Vertex> getVertexSet() { return this.vertexSet; }
 	// public Set<Edge> getEdgeSet() { return this.edgeSet; }
