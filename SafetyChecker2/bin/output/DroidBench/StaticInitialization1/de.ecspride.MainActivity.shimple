@@ -1,0 +1,51 @@
+public class de.ecspride.MainActivity extends android.app.Activity
+{
+    public static java.lang.String im;
+
+    public void <init>()
+    {
+        de.ecspride.MainActivity r0;
+
+        r0 := @this: de.ecspride.MainActivity;
+
+        specialinvoke r0.<android.app.Activity: void <init>()>();
+
+        return;
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.ecspride.MainActivity r0;
+        android.os.Bundle r1;
+        de.ecspride.MainActivity$StaticInitClass1 r2, $r6;
+        java.lang.Object $r3;
+        android.telephony.TelephonyManager $r4;
+        java.lang.String $r5;
+
+        r0 := @this: de.ecspride.MainActivity;
+
+        r1 := @parameter0: android.os.Bundle;
+
+        specialinvoke r0.<android.app.Activity: void onCreate(android.os.Bundle)>(r1);
+
+        virtualinvoke r0.<de.ecspride.MainActivity: void setContentView(int)>(2130903040);
+
+        $r3 = virtualinvoke r0.<de.ecspride.MainActivity: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        $r4 = (android.telephony.TelephonyManager) $r3;
+
+        $r5 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
+
+        <de.ecspride.MainActivity: java.lang.String im> = $r5;
+
+        $r6 = new de.ecspride.MainActivity$StaticInitClass1;
+
+        specialinvoke $r6.<de.ecspride.MainActivity$StaticInitClass1: void <init>()>();
+
+        r2 = $r6;
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
+        return;
+    }
+}

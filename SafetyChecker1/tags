@@ -57,6 +57,7 @@ CalSelfCompositionResult	src/z3_helper/PathSolver.java	/^	public boolean CalSelf
 CallToZ3	src/z3_helper/InvokeHelper.java	/^	public static BoolExpr CallToZ3(InvokeExpr v, PathHelper thePathHelper,$/;"	m	class:InvokeHelper
 Callbacks_LocationLeak1_DroidSafeFailed	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^public class Callbacks_LocationLeak1_DroidSafeFailed extends Activity {$/;"	c
 Callbacks_LocationLeak1_Original	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^public class Callbacks_LocationLeak1_Original extends Activity {$/;"	c
+CfgConverter	src/dotty/CfgConverter.java	/^public class CfgConverter {$/;"	c
 ClassA	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public class ClassA implements Interface{$/;"	c	class:FlowTestDroidSafeFailed
 ClassA	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	public class ClassA implements Interface{$/;"	c	class:ImplicitFlow3
 ClassB	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public class ClassB implements Interface{$/;"	c	class:FlowTestDroidSafeFailed
@@ -104,8 +105,7 @@ FieldSensitivity4	src/testOriginalDroidBenchDriver/FieldSensitivity4.java	/^publ
 FlowTest	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/FlowTest.java	/^public class FlowTest {$/;"	c
 FlowTest	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/FlowTest.java	/^public class FlowTest {$/;"	c
 FlowTestDroidSafeFailed	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^public class FlowTestDroidSafeFailed extends Activity {$/;"	c
-Forest	src/infoFlow/Forest.java	/^	public Forest(Map<String, Body> stores, String mainFunction) {}$/;"	m	class:Forest
-Forest	src/infoFlow/Forest.java	/^	public Forest(Map<String, Body> stores, String mainFunction, String actualFunction) {$/;"	m	class:Forest
+Forest	src/infoFlow/Forest.java	/^	public Forest(Map<String, Body> stores, String mainFunction) {$/;"	m	class:Forest
 Forest	src/infoFlow/Forest.java	/^public class Forest {$/;"	c
 FunctionHelper	src/z3_helper/FunctionHelper.java	/^public class FunctionHelper {$/;"	c
 GuideIndex	src/z3_helper/PathCoverter.java	/^	private int GuideIndex;$/;"	f	class:PathCoverter	file:
@@ -219,6 +219,7 @@ StringHelper	src/z3_helper/StringHelper.java	/^public class StringHelper {$/;"	c
 Test	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^class Test {$/;"	c
 Test1	src/playWithSoot/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/playWithZ3/Test1.java	/^public class Test1 {$/;"	c
+Test1	src/safetyTestCode/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/testArray/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/testPrimitive/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/testString/Test1.java	/^public class Test1 {$/;"	c
@@ -246,8 +247,8 @@ TestStrategtyFunction	src/testHelperTree/TestStrategtyFunction.java	/^public cla
 TestTree2	src/playWithZ3/TestTree2.java	/^public class TestTree2 {$/;"	c
 TestTreeInterpolant	src/playWithZ3/TestTreeInterpolant.java	/^public class TestTreeInterpolant {$/;"	c
 TestZ3	src/playWithZ3/TestZ3.java	/^public class TestZ3 {$/;"	c
+Tester1	src/safetyTester/Tester1.java	/^public class Tester1 {$/;"	c
 Tree	src/infoFlow/Tree.java	/^	public Tree(ExceptionalUnitGraph cfg, InterpolationContext ictx, HelpTree helpTree, String signature, Forest f1) {$/;"	m	class:Tree
-Tree	src/infoFlow/Tree.java	/^	public Tree(ExceptionalUnitGraph cfg, InterpolationContext ictx, HelpTree helpTree, String signature, Forest f1, String actualFunction) {$/;"	m	class:Tree
 Tree	src/infoFlow/Tree.java	/^public class Tree {$/;"	c
 Type	src/z3_helper/NewSort.java	/^	private Sort Type;$/;"	f	class:NewSort	file:
 UnitNodeCollection	src/infoFlow/Tree.java	/^	private Map<Unit, ArrayList<Node>> UnitNodeCollection;$/;"	f	class:Tree	file:
@@ -393,6 +394,7 @@ description	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.
 directlyCovered	src/infoFlow/Node.java	/^	private boolean directlyCovered;$/;"	f	class:Node	file:
 disprove	src/playWithZ3/JavaExample.java	/^    void disprove(Context ctx, BoolExpr f, boolean useMBQI) $/;"	m	class:JavaExample
 disprove	src/playWithZ3/JavaExample.java	/^    void disprove(Context ctx, BoolExpr f, boolean useMBQI,$/;"	m	class:JavaExample
+dotty	src/dotty/CfgConverter.java	/^package dotty;$/;"	p
 drawable	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
 drawable	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
 drawable	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
@@ -434,6 +436,7 @@ getAllDepthZeroUnites	src/infoFlow/HelpTree.java	/^	private Set<Unit> getAllDept
 getAllErrorPath	src/infoFlow/Tree.java	/^	public ArrayList<ArrayList<Node>> getAllErrorPath() {$/;"	m	class:Tree
 getAllUnites	src/infoFlow/HelpTree.java	/^	private Set<Unit> getAllUnites(Unit returnUnit) {$/;"	m	class:HelpTree	file:
 getArrayName	src/z3_helper/RefHelper.java	/^	static public String getArrayName(Value leftOp){$/;"	m	class:RefHelper
+getBufferedWriter	src/dotty/CfgConverter.java	/^	private static BufferedWriter getBufferedWriter(String fileName) throws IOException {$/;"	m	class:CfgConverter	file:
 getCfg	src/infoFlow/Tree.java	/^	public ExceptionalUnitGraph getCfg() {$/;"	m	class:Tree
 getCover	src/infoFlow/Node.java	/^	public Set<Node> getCover() {$/;"	m	class:Node
 getCoverReesult	src/z3_helper/PathCoverter.java	/^	public ArrayList<ArrayList<BoolExpr>> getCoverReesult() {$/;"	m	class:PathCoverter
@@ -647,6 +650,7 @@ main	src/playWithZ3/TestEntail.java	/^	public static void main(String[] args) {$
 main	src/playWithZ3/TestGetArgFromExpr.java	/^	public static void main(String[] args) {$/;"	m	class:TestGetArgFromExpr
 main	src/playWithZ3/TestTree2.java	/^	public static void main(String[] args) {$/;"	m	class:TestTree2
 main	src/playWithZ3/TestTreeInterpolant.java	/^	public static void main(String[] args) {$/;"	m	class:TestTreeInterpolant
+main	src/safetyTester/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
 main	src/selfCompositionTest/ImplicitFlow3.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:ImplicitFlow3
 main	src/selfCompositionTest/NoLeak1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:NoLeak1
 main	src/testArray/Test1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Test1
@@ -807,9 +811,13 @@ popPara	src/z3_helper/PathCoverter.java	/^	public Expr popPara() {$/;"	m	class:P
 popReturn	src/z3_helper/PathCoverter.java	/^	public Expr popReturn() {$/;"	m	class:PathCoverter
 predecessors	src/infoFlow/Node.java	/^	private ArrayList<Node> predecessors;$/;"	f	class:Node	file:
 predecessors	src/infoFlow/Node.java	/^	public ArrayList<Node> predecessors() {$/;"	m	class:Node
+printAllPaths	src/dotty/CfgConverter.java	/^	public static void printAllPaths(Queue<Vertex> queue, String fileName) {$/;"	m	class:CfgConverter
+printAllPaths2	src/dotty/CfgConverter.java	/^	public static void printAllPaths2(ExceptionalUnitGraph cfg) {$/;"	m	class:CfgConverter
+printCfg	src/dotty/CfgConverter.java	/^	public static void printCfg(ExceptionalUnitGraph cfg) {$/;"	m	class:CfgConverter
 printPath	src/z3_helper/PathCoverter.java	/^	public static void printPath(ArrayList<Node> path) {$/;"	m	class:PathCoverter
 printResult	src/infoFlow/HelpTree.java	/^	public void printResult() {$/;"	m	class:HelpTree
 printResult2	src/infoFlow/HelpTree.java	/^	public void printResult2() {$/;"	m	class:HelpTree
+printSinglePath	src/dotty/CfgConverter.java	/^	private static void printSinglePath(Vertex v, BufferedWriter writer) throws IOException {$/;"	m	class:CfgConverter	file:
 prove	src/playWithZ3/JavaExample.java	/^    void prove(Context ctx, BoolExpr f, boolean useMBQI) throws TestFailedException$/;"	m	class:JavaExample
 prove	src/playWithZ3/JavaExample.java	/^    void prove(Context ctx, BoolExpr f, boolean useMBQI,$/;"	m	class:JavaExample
 proveExample1	src/playWithZ3/JavaExample.java	/^    public void proveExample1(Context ctx) throws TestFailedException$/;"	m	class:JavaExample
@@ -843,6 +851,8 @@ returnUnit	src/infoFlow/HelpTree.java	/^	private ArrayList<Unit> returnUnit;$/;"
 returnVoid	src/z3_helper/InvokeHelper.java	/^	public static void returnVoid(PathCoverter thePathCoverter) {$/;"	m	class:InvokeHelper
 root	src/infoFlow/HelpTree.java	/^	private Unit root;$/;"	f	class:HelpTree	file:
 s	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^    public String s;$/;"	f	class:MainActivity
+safetyTestCode	src/safetyTestCode/Test1.java	/^package safetyTestCode;$/;"	p
+safetyTester	src/safetyTester/Tester1.java	/^package safetyTester;$/;"	p
 secret	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
 secret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
 secret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
@@ -910,6 +920,7 @@ stores	src/playWithSoot/TestInvoke.java	/^	static Map<String, Body> stores = new
 stores	src/playWithSoot/TestObject.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:TestObject
 stores	src/playWithSoot/testErrorFunction.java	/^	static Map<String,Body> stores=new HashMap<String,Body>();$/;"	f	class:testErrorFunction
 stores	src/playWithSoot/testString.java	/^	static Map<String,Body> stores=new HashMap<String,Body>();$/;"	f	class:testString
+stores	src/safetyTester/Tester1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester1
 stores	src/selfCompositionTest/ImplicitFlow3.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:ImplicitFlow3
 stores	src/selfCompositionTest/NoLeak1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:NoLeak1
 stores	src/testArray/Test1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Test1
@@ -987,6 +998,7 @@ sudokuExample	src/playWithZ3/JavaExample.java	/^    void sudokuExample(Context c
 tail	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	private Node tail;$/;"	f	class:LinkedList	file:
 test	BechMark/WeFail/FailLinkedList/src/LinkedList1.java	/^	static public void test(int length){$/;"	m	class:LinkedList1
 test	src/infoFlow/Forest.java	/^	private BoolExpr[] test;$/;"	f	class:Forest	file:
+test	src/safetyTestCode/Test1.java	/^	public void test() {$/;"	m	class:Test1
 test1	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void test1(int i) {$/;"	m	class:ErrorFunction
 test2	src/testObject/test2.java	/^public class test2 {$/;"	c
 testArray	src/testArray/Test1.java	/^package testArray;$/;"	p

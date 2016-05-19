@@ -1,0 +1,69 @@
+# All Reachable Methods in User Classes (including system methods) 
+
+Method <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> in context <ENTRY-CONTEXT>
+	SRCS:
+
+Method <droidsafe.generated.DroidSafeDummies: void dummyInit()> in context <ENTRY-CONTEXT>
+	SRCS:
+	Method <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> in context <ENTRY-CONTEXT>
+
+Method <de.ecspride.ImplicitFlow3: void <init>()> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> in context <ENTRY-CONTEXT>
+
+Method <de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <android.app.Activity: void performCreate(android.os.Bundle,android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <toy_benchmark.ErrorFunction: void Error()> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <droidsafe.generated.ResourcesSoot: android.widget.TextView getView_7f070000(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <droidsafe.generated.ResourcesSoot: android.widget.RelativeLayout getView_10000a3a(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <droidsafe.generated.ResourcesSoot: android.widget.Button getView_7f070002(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <droidsafe.generated.ResourcesSoot: android.widget.EditText getView_7f070001(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	Method <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <de.ecspride.ImplicitFlow3: void leakInformationBit(java.util.List)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	Method <de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	Method <de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+	Method <droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <de.ecspride.ImplicitFlow3$ClassA: void leakInfo()> in context ObjSensAllocNode [InsensitiveAllocNode 8870 new de.ecspride.ImplicitFlow3$ClassA in <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> (8870)][InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <de.ecspride.ImplicitFlow3$ClassB: void leakInfo()> in context ObjSensAllocNode [InsensitiveAllocNode 8871 new de.ecspride.ImplicitFlow3$ClassB in <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> (8871)][InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <de.ecspride.ImplicitFlow3$ClassB: void <init>(de.ecspride.ImplicitFlow3)> in context ObjSensAllocNode [InsensitiveAllocNode 8871 new de.ecspride.ImplicitFlow3$ClassB in <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> (8871)][InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+
+Method <de.ecspride.ImplicitFlow3$ClassA: void <init>(de.ecspride.ImplicitFlow3)> in context ObjSensAllocNode [InsensitiveAllocNode 8870 new de.ecspride.ImplicitFlow3$ClassA in <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> (8870)][InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)]
+	SRCS:
+	Method <de.ecspride.ImplicitFlow3: void leakData(android.view.View)> in context ObjSensAllocNode [InsensitiveAllocNode 2 new de.ecspride.ImplicitFlow3 in <droidsafe.generated.DroidSafeMain: void main(java.lang.String[])> (2)][<ENTRY-CONTEXT> (1545141841)][<NO-CONTEXT> (892395566)]
+

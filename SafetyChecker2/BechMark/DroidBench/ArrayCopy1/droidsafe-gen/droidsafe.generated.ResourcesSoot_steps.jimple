@@ -1,0 +1,41 @@
+class droidsafe.generated.ResourcesSoot { 
+
+	public static <droidsafe.generated.ResourcesSoot: boolean randomCond> 
+	public static <droidsafe.generated.ResourcesSoot: android.app.Activity currentActivity> 
+	public static <droidsafe.generated.ResourcesSoot: android.widget.TextView TextView_1000057d> 
+	public static <droidsafe.generated.ResourcesSoot: android.widget.RelativeLayout RelativeLayout_1000054a> 
+
+	public static <droidsafe.generated.ResourcesSoot: android.widget.TextView getView_1000057d(android.content.Context)> { 
+		android.content.Context _$paramContext 
+		android.widget.TextView _$localView 
+
+		_$paramContext := @parameter0: android.content.Context 
+		_$localView = <droidsafe.generated.ResourcesSoot: android.widget.TextView TextView_1000057d> 
+		if _$localView != null goto return _$localView 
+		_$localView = new android.widget.TextView 
+		specialinvoke _$localView.<android.widget.TextView: void <init>(android.content.Context)>(_$paramContext) 
+		virtualinvoke _$localView.<android.widget.TextView: void setText(java.lang.CharSequence)>("Hello world!") 
+		<droidsafe.generated.ResourcesSoot: android.widget.TextView TextView_1000057d> = _$localView 
+		return _$localView 
+	} 
+	public static <droidsafe.generated.ResourcesSoot: android.widget.RelativeLayout getView_1000054a(android.content.Context)> { 
+		android.content.Context _$paramContext 
+		android.widget.RelativeLayout _$localView 
+
+		_$paramContext := @parameter0: android.content.Context 
+		_$localView = <droidsafe.generated.ResourcesSoot: android.widget.RelativeLayout RelativeLayout_1000054a> 
+		if _$localView != null goto return _$localView 
+		_$localView = new android.widget.RelativeLayout 
+		specialinvoke _$localView.<android.widget.RelativeLayout: void <init>(android.content.Context)>(_$paramContext) 
+		<droidsafe.generated.ResourcesSoot: android.widget.RelativeLayout RelativeLayout_1000054a> = _$localView 
+		return _$localView 
+	} 
+	public static <droidsafe.generated.ResourcesSoot: void initLayout_7f030000(android.content.Context)> { 
+		android.content.Context paramContext 
+
+		paramContext := @parameter0: android.content.Context 
+		staticinvoke <droidsafe.generated.ResourcesSoot: android.widget.TextView getView_1000057d(android.content.Context)>(paramContext) 
+		staticinvoke <droidsafe.generated.ResourcesSoot: android.widget.RelativeLayout getView_1000054a(android.content.Context)>(paramContext) 
+		return 
+	} 
+} 

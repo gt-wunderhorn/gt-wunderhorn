@@ -1,0 +1,242 @@
+public class infoFlow.LogUtils extends java.lang.Object
+{
+    private static final int DETAIL;
+    private static final int DEBUG;
+    private static final int INFO;
+    private static final int WARNING;
+    private static final int FATAL;
+    private static int currentLevel;
+
+    static void <clinit>()
+    {
+        <infoFlow.LogUtils: int currentLevel> = 2;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        infoFlow.LogUtils r0;
+
+        r0 := @this: infoFlow.LogUtils;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static transient void print(int, java.lang.Object[])
+    {
+        int i0, i1, $i2, i3, i3_1, i3_2, i3_3;
+        java.lang.Object[] r0, r2;
+        java.lang.Object r1;
+        java.io.PrintStream $r3;
+
+        i0 := @parameter0: int;
+
+        r0 := @parameter1: java.lang.Object[];
+
+        $i2 = <infoFlow.LogUtils: int currentLevel>;
+
+(0)     if $i2 > i0 goto label3;
+
+        r2 = r0;
+
+        i1 = lengthof r0;
+
+        i3 = 0;
+
+(1)     goto label2;
+
+     label1:
+        r1 = r2[i3_1];
+
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r3.<java.io.PrintStream: void print(java.lang.Object)>(r1);
+
+(2)     i3_2 = i3_1 + 1;
+
+     label2:
+        i3_1 = Phi(i3 #1, i3_2 #2);
+
+(3)     if i3_1 < i1 goto label1;
+
+     label3:
+        i3_3 = Phi(i3 #0, i3_1 #3);
+
+        return;
+    }
+
+    private static transient void println(int, java.lang.Object[])
+    {
+        int i0, i1, $i2, i3, i3_1, i3_2, i3_3;
+        java.lang.Object[] r0, r2;
+        java.lang.Object r1;
+        java.io.PrintStream $r3;
+
+        i0 := @parameter0: int;
+
+        r0 := @parameter1: java.lang.Object[];
+
+        $i2 = <infoFlow.LogUtils: int currentLevel>;
+
+(0)     if $i2 > i0 goto label3;
+
+        r2 = r0;
+
+        i1 = lengthof r0;
+
+        i3 = 0;
+
+(1)     goto label2;
+
+     label1:
+        r1 = r2[i3_1];
+
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r3.<java.io.PrintStream: void println(java.lang.Object)>(r1);
+
+(2)     i3_2 = i3_1 + 1;
+
+     label2:
+        i3_1 = Phi(i3 #1, i3_2 #2);
+
+(3)     if i3_1 < i1 goto label1;
+
+     label3:
+        i3_3 = Phi(i3 #0, i3_1 #3);
+
+        return;
+    }
+
+    public static transient void debug(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void print(int,java.lang.Object[])>(1, r0);
+
+        return;
+    }
+
+    public static transient void debugln(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void println(int,java.lang.Object[])>(1, r0);
+
+        return;
+    }
+
+    public static transient void info(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void print(int,java.lang.Object[])>(2, r0);
+
+        return;
+    }
+
+    public static transient void infoln(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void println(int,java.lang.Object[])>(2, r0);
+
+        return;
+    }
+
+    public static transient void fatal(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void print(int,java.lang.Object[])>(4, r0);
+
+        return;
+    }
+
+    public static transient void fatalln(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void println(int,java.lang.Object[])>(4, r0);
+
+        return;
+    }
+
+    public static transient void detail(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void print(int,java.lang.Object[])>(0, r0);
+
+        return;
+    }
+
+    public static transient void detailln(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void println(int,java.lang.Object[])>(0, r0);
+
+        return;
+    }
+
+    public static transient void warning(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void print(int,java.lang.Object[])>(3, r0);
+
+        return;
+    }
+
+    public static transient void warningln(java.lang.Object[])
+    {
+        java.lang.Object[] r0;
+
+        r0 := @parameter0: java.lang.Object[];
+
+        staticinvoke <infoFlow.LogUtils: void println(int,java.lang.Object[])>(3, r0);
+
+        return;
+    }
+
+    public static void nextLine(int)
+    {
+        int i0, $i1;
+        java.io.PrintStream $r0;
+
+        i0 := @parameter0: int;
+
+        $i1 = <infoFlow.LogUtils: int currentLevel>;
+
+        if $i1 > i0 goto label1;
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+
+     label1:
+        return;
+    }
+}

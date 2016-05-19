@@ -1,0 +1,16 @@
+public final class edu.mit.clinit.R$dimen extends java.lang.Object
+{
+    public static final int activity_horizontal_margin;
+    public static final int activity_vertical_margin;
+
+    public void <init>()
+    {
+        edu.mit.clinit.R$dimen r0;
+
+        r0 := @this: edu.mit.clinit.R$dimen;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

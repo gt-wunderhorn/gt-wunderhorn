@@ -1,0 +1,66 @@
+public class toy_benchmark.Node extends java.lang.Object
+{
+    public int size;
+    public boolean ifRight;
+    public toy_benchmark.Node next;
+    public java.lang.String s;
+    public int[] l;
+
+    public void <init>()
+    {
+        toy_benchmark.Node r0;
+
+        r0 := @this: toy_benchmark.Node;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<toy_benchmark.Node: int size> = 1;
+
+        r0.<toy_benchmark.Node: boolean ifRight> = 1;
+
+        return;
+    }
+
+    public void change(int)
+    {
+        toy_benchmark.Node r0;
+        int i0;
+
+        r0 := @this: toy_benchmark.Node;
+
+        i0 := @parameter0: int;
+
+        r0.<toy_benchmark.Node: int size> = i0;
+
+        return;
+    }
+
+    public void addTen()
+    {
+        toy_benchmark.Node r0;
+        int $i0;
+
+        r0 := @this: toy_benchmark.Node;
+
+        $i0 = r0.<toy_benchmark.Node: int size>;
+
+        if $i0 == 10 goto label1;
+
+        r0.<toy_benchmark.Node: int size> = 10;
+
+     label1:
+        return;
+    }
+
+    public int get()
+    {
+        toy_benchmark.Node r0;
+        int i0;
+
+        r0 := @this: toy_benchmark.Node;
+
+        i0 = r0.<toy_benchmark.Node: int size>;
+
+        return i0;
+    }
+}

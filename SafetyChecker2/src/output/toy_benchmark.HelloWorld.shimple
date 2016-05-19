@@ -1,0 +1,47 @@
+public class toy_benchmark.HelloWorld extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.HelloWorld r0;
+
+        r0 := @this: toy_benchmark.HelloWorld;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        byte b0, b1;
+        int i2, i3, i2_1, i3_1, i2_2, i3_2;
+
+        r0 := @parameter0: java.lang.String[];
+
+        b1 = 1;
+
+        b0 = 1;
+
+        i2 = b1 + b0;
+
+        i3 = 1;
+
+(0)     goto label2;
+
+     label1:
+        i2_2 = i2_1 + 1;
+
+(1)     i3_2 = i3_1 + 1;
+
+     label2:
+        i2_1 = Phi(i2 #0, i2_2 #1);
+
+        i3_1 = Phi(i3 #0, i3_2 #1);
+
+        if i3_1 < 10 goto label1;
+
+        return;
+    }
+}

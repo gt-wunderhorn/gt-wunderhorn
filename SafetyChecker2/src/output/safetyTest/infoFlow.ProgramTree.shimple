@@ -1,0 +1,1053 @@
+public class infoFlow.ProgramTree extends java.lang.Object
+{
+    private infoFlow.Vertex returnLeaf;
+    private java.util.Set liSet;
+    private infoFlow.Vertex lf;
+    private java.util.Map stores;
+    private java.util.Set vertexSet;
+    private java.util.Set edgeSet;
+    private java.util.Stack path;
+    private infoFlow.InterpolationHandler itpHandler;
+    private boolean programCorrect;
+    private boolean mainFunction;
+    private boolean treeClosed;
+    private java.util.HashMap calleeFunctions;
+    private java.util.HashSet errorRootSet;
+    private java.util.Queue errorRootQueue;
+    private java.util.LinkedList returnPaths;
+    private java.util.LinkedList errorPaths;
+    private java.lang.String functionSignature;
+    private java.lang.String functionName;
+    private static java.util.Map functionNameInvokeCount;
+    private soot.toolkits.graph.ExceptionalUnitGraph cfg;
+    private java.lang.String signature;
+    private infoFlow.UnitController unitController;
+    private java.util.Queue uncovered;
+    private java.util.Queue errorSet;
+    private java.util.Set covered;
+    private java.util.Map coveringRelation;
+    private int locationCounter;
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <infoFlow.ProgramTree: java.util.Map functionNameInvokeCount> = $r0;
+
+        return;
+    }
+
+    public void <init>(java.util.Map, java.lang.String, boolean) throws infoFlow.exception.MainFunctionNotFoundException, infoFlow.exception.ErrorLocationNotFoundException
+    {
+        infoFlow.ProgramTree r0;
+        java.util.Map r1;
+        java.lang.String r2, $r23, $r26, $r27, $r29, $r33;
+        boolean z0, z1, $z2;
+        infoFlow.InterpolationHandler r3, $r12, $r19;
+        java.util.HashSet $r4, $r5, $r9, $r14;
+        java.util.Stack $r6;
+        java.util.LinkedList $r7, $r8, $r15, $r16, $r17;
+        java.util.HashMap $r10, $r13;
+        java.lang.Object[] $r11, $r20, $r30;
+        infoFlow.UnitController $r18;
+        java.lang.StringBuilder $r21, $r22, $r25, $r28, $r31, $r32;
+        infoFlow.exception.MainFunctionNotFoundException $r24;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: java.util.Map;
+
+        r2 := @parameter1: java.lang.String;
+
+        z0 := @parameter2: boolean;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r4 = new java.util.HashSet;
+
+        specialinvoke $r4.<java.util.HashSet: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Set vertexSet> = $r4;
+
+        $r5 = new java.util.HashSet;
+
+        specialinvoke $r5.<java.util.HashSet: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Set edgeSet> = $r5;
+
+        $r6 = new java.util.Stack;
+
+        specialinvoke $r6.<java.util.Stack: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Stack path> = $r6;
+
+        r0.<infoFlow.ProgramTree: boolean programCorrect> = 0;
+
+        $r7 = new java.util.LinkedList;
+
+        specialinvoke $r7.<java.util.LinkedList: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Queue uncovered> = $r7;
+
+        $r8 = new java.util.LinkedList;
+
+        specialinvoke $r8.<java.util.LinkedList: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Queue errorSet> = $r8;
+
+        $r9 = new java.util.HashSet;
+
+        specialinvoke $r9.<java.util.HashSet: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Set covered> = $r9;
+
+        $r10 = new java.util.HashMap;
+
+        specialinvoke $r10.<java.util.HashMap: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Map coveringRelation> = $r10;
+
+        r0.<infoFlow.ProgramTree: int locationCounter> = 0;
+
+        $r11 = newarray (java.lang.Object)[1];
+
+        $r11[0] = "------->ProgramTree";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
+
+        $r12 = new infoFlow.InterpolationHandler;
+
+        specialinvoke $r12.<infoFlow.InterpolationHandler: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: infoFlow.InterpolationHandler itpHandler> = $r12;
+
+        r0.<infoFlow.ProgramTree: boolean programCorrect> = 0;
+
+        $r13 = new java.util.HashMap;
+
+        specialinvoke $r13.<java.util.HashMap: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.HashMap calleeFunctions> = $r13;
+
+        $r14 = new java.util.HashSet;
+
+        specialinvoke $r14.<java.util.HashSet: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.HashSet errorRootSet> = $r14;
+
+        $r15 = new java.util.LinkedList;
+
+        specialinvoke $r15.<java.util.LinkedList: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.Queue errorRootQueue> = $r15;
+
+        $r16 = new java.util.LinkedList;
+
+        specialinvoke $r16.<java.util.LinkedList: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.LinkedList returnPaths> = $r16;
+
+        $r17 = new java.util.LinkedList;
+
+        specialinvoke $r17.<java.util.LinkedList: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: java.util.LinkedList errorPaths> = $r17;
+
+        r0.<infoFlow.ProgramTree: java.lang.String functionSignature> = r2;
+
+        r0.<infoFlow.ProgramTree: java.util.Map stores> = r1;
+
+        $r18 = new infoFlow.UnitController;
+
+        specialinvoke $r18.<infoFlow.UnitController: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: infoFlow.UnitController unitController> = $r18;
+
+        $r19 = new infoFlow.InterpolationHandler;
+
+        specialinvoke $r19.<infoFlow.InterpolationHandler: void <init>()>();
+
+        r3 = $r19;
+
+        r0.<infoFlow.ProgramTree: boolean mainFunction> = z0;
+
+        $z2 = r0.<infoFlow.ProgramTree: boolean mainFunction>;
+
+        if $z2 == 0 goto label1;
+
+        $r30 = newarray (java.lang.Object)[1];
+
+        $r31 = new java.lang.StringBuilder;
+
+        specialinvoke $r31.<java.lang.StringBuilder: void <init>(java.lang.String)>("mainFunction = ");
+
+        $r32 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r30[0] = $r33;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r30);
+
+        goto label2;
+
+     label1:
+        $r20 = newarray (java.lang.Object)[1];
+
+        $r21 = new java.lang.StringBuilder;
+
+        specialinvoke $r21.<java.lang.StringBuilder: void <init>(java.lang.String)>("setSubFunction = ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r20[0] = $r23;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r20);
+
+     label2:
+        z1 = specialinvoke r0.<infoFlow.ProgramTree: boolean findMainFunction()>();
+
+        if z1 == 0 goto label3;
+
+        specialinvoke r0.<infoFlow.ProgramTree: void startTest()>();
+
+        goto label4;
+
+     label3:
+        $r24 = new infoFlow.exception.MainFunctionNotFoundException;
+
+        $r25 = new java.lang.StringBuilder;
+
+        $r26 = r0.<infoFlow.ProgramTree: java.lang.String functionSignature>;
+
+        $r27 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r26);
+
+        specialinvoke $r25.<java.lang.StringBuilder: void <init>(java.lang.String)>($r27);
+
+        $r28 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" does not exist in the current program");
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r24.<infoFlow.exception.MainFunctionNotFoundException: void <init>(java.lang.String)>($r29);
+
+        throw $r24;
+
+     label4:
+        return;
+    }
+
+    private void startTest() throws infoFlow.exception.ErrorLocationNotFoundException, infoFlow.exception.MainFunctionNotFoundException
+    {
+        infoFlow.ProgramTree r0;
+        java.lang.Object[] $r1, $r2;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        $r1 = newarray (java.lang.Object)[1];
+
+        $r1[0] = "------------>startTest()";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r1);
+
+        specialinvoke r0.<infoFlow.ProgramTree: void unwind()>();
+
+        $r2 = newarray (java.lang.Object)[1];
+
+        $r2[0] = "<-------------startTest";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r2);
+
+        return;
+    }
+
+    private boolean findErrorLocation(infoFlow.Vertex)
+    {
+        infoFlow.ProgramTree r0;
+        infoFlow.Vertex r1, r7, $r24, $r26, $r27, $r28, $r30, $r31;
+        infoFlow.Edge r2, r8, $r25, $r29, r32;
+        java.util.Iterator r3, r5, r6;
+        soot.Unit r4, $r12, r33;
+        java.util.Set $r9;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.Object $r10, $r14, $r23;
+        soot.toolkits.graph.ExceptionalUnitGraph $r11, $r21;
+        java.util.List $r13, $r22;
+        java.lang.Object[] $r15, $r20;
+        java.lang.StringBuilder $r16, $r17;
+        java.lang.String $r18;
+        infoFlow.UnitController $r19;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        $r9 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getIncomingEdges()>();
+
+        r3 = interfaceinvoke $r9.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label7;
+
+     label1:
+        $r10 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r2 = (infoFlow.Edge) $r10;
+
+        $r11 = r0.<infoFlow.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r12 = virtualinvoke r2.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r13 = virtualinvoke $r11.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getPredsOf(soot.Unit)>($r12);
+
+        r5 = interfaceinvoke $r13.<java.util.List: java.util.Iterator iterator()>();
+
+        goto label6;
+
+     label2:
+        $r14 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (soot.Unit) $r14;
+
+        $r15 = newarray (java.lang.Object)[1];
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>(java.lang.String)>("findErrorLocation : ");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r4);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r15[0] = $r18;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r15);
+
+        $r19 = r0.<infoFlow.ProgramTree: infoFlow.UnitController unitController>;
+
+        $z2 = virtualinvoke $r19.<infoFlow.UnitController: boolean isErrorUnit(soot.Unit)>(r4);
+
+        if $z2 == 0 goto label3;
+
+        $r26 = new infoFlow.Vertex;
+
+        specialinvoke $r26.<infoFlow.Vertex: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: infoFlow.Vertex lf> = $r26;
+
+        $r27 = r0.<infoFlow.ProgramTree: infoFlow.Vertex lf>;
+
+        virtualinvoke $r27.<infoFlow.Vertex: void setErrorLocation(boolean)>(1);
+
+        $r28 = r0.<infoFlow.ProgramTree: infoFlow.Vertex lf>;
+
+        virtualinvoke $r28.<infoFlow.Vertex: void setNextVertex(infoFlow.Vertex)>(r1);
+
+        $r29 = new infoFlow.Edge;
+
+        specialinvoke $r29.<infoFlow.Edge: void <init>(soot.Unit)>(r4);
+
+        r32 = $r29;
+
+        $r30 = r0.<infoFlow.ProgramTree: infoFlow.Vertex lf>;
+
+        virtualinvoke $r30.<infoFlow.Vertex: void addIncomingEdge(infoFlow.Edge)>(r32);
+
+        $r31 = r0.<infoFlow.ProgramTree: infoFlow.Vertex lf>;
+
+        virtualinvoke r1.<infoFlow.Vertex: void addPreviousVertex(infoFlow.Vertex)>($r31);
+
+        return 1;
+
+     label3:
+        $r20 = newarray (java.lang.Object)[1];
+
+        $r20[0] = "else girdi";
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r20);
+
+        $r21 = r0.<infoFlow.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r22 = virtualinvoke $r21.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getPredsOf(soot.Unit)>(r4);
+
+        r6 = interfaceinvoke $r22.<java.util.List: java.util.Iterator iterator()>();
+
+        goto label5;
+
+     label4:
+        $r23 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r33 = (soot.Unit) $r23;
+
+        $r24 = new infoFlow.Vertex;
+
+        specialinvoke $r24.<infoFlow.Vertex: void <init>()>();
+
+        r7 = $r24;
+
+        $r25 = new infoFlow.Edge;
+
+        specialinvoke $r25.<infoFlow.Edge: void <init>(soot.Unit)>(r33);
+
+        r8 = $r25;
+
+        virtualinvoke r7.<infoFlow.Vertex: void addIncomingEdge(infoFlow.Edge)>(r8);
+
+     label5:
+        $z3 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 != 0 goto label4;
+
+     label6:
+        $z1 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 != 0 goto label2;
+
+     label7:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+    }
+
+    private boolean findMainFunction()
+    {
+        infoFlow.ProgramTree r0;
+        soot.Body r1, $r9;
+        infoFlow.Edge r2, $r24;
+        java.lang.String $r3, $r6, $r10, $r14, $r15, $r18, $r21, $r30, $r33;
+        java.util.Map $r4, $r7, $r11, $r16, $r17, $r31, $r32;
+        boolean $z0, $z1;
+        soot.toolkits.graph.ExceptionalUnitGraph $r5, $r25;
+        java.lang.Object $r8, $r12, $r27, $r34;
+        soot.SootMethod $r13;
+        java.lang.Integer $r19, $r35, $r36;
+        infoFlow.Vertex $r22, $r23, $r29;
+        java.util.List $r26;
+        soot.Unit $r28;
+        int $i0, $i1;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        $r4 = r0.<infoFlow.ProgramTree: java.util.Map stores>;
+
+        $r3 = r0.<infoFlow.ProgramTree: java.lang.String functionSignature>;
+
+        $z0 = interfaceinvoke $r4.<java.util.Map: boolean containsKey(java.lang.Object)>($r3);
+
+        if $z0 == 0 goto label3;
+
+        $r5 = new soot.toolkits.graph.ExceptionalUnitGraph;
+
+        $r7 = r0.<infoFlow.ProgramTree: java.util.Map stores>;
+
+        $r6 = r0.<infoFlow.ProgramTree: java.lang.String functionSignature>;
+
+        $r8 = interfaceinvoke $r7.<java.util.Map: java.lang.Object get(java.lang.Object)>($r6);
+
+        $r9 = (soot.Body) $r8;
+
+        specialinvoke $r5.<soot.toolkits.graph.ExceptionalUnitGraph: void <init>(soot.Body)>($r9);
+
+        r0.<infoFlow.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg> = $r5;
+
+        $r11 = r0.<infoFlow.ProgramTree: java.util.Map stores>;
+
+        $r10 = r0.<infoFlow.ProgramTree: java.lang.String functionSignature>;
+
+        $r12 = interfaceinvoke $r11.<java.util.Map: java.lang.Object get(java.lang.Object)>($r10);
+
+        r1 = (soot.Body) $r12;
+
+        $r13 = virtualinvoke r1.<soot.Body: soot.SootMethod getMethod()>();
+
+        $r14 = virtualinvoke $r13.<soot.SootMethod: java.lang.String getName()>();
+
+        r0.<infoFlow.ProgramTree: java.lang.String functionName> = $r14;
+
+        $r16 = <infoFlow.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r15 = r0.<infoFlow.ProgramTree: java.lang.String functionName>;
+
+        $z1 = interfaceinvoke $r16.<java.util.Map: boolean containsKey(java.lang.Object)>($r15);
+
+        if $z1 == 0 goto label1;
+
+        $r32 = <infoFlow.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r33 = r0.<infoFlow.ProgramTree: java.lang.String functionName>;
+
+        $r31 = <infoFlow.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r30 = r0.<infoFlow.ProgramTree: java.lang.String functionName>;
+
+        $r34 = interfaceinvoke $r31.<java.util.Map: java.lang.Object get(java.lang.Object)>($r30);
+
+        $r35 = (java.lang.Integer) $r34;
+
+        $i0 = virtualinvoke $r35.<java.lang.Integer: int intValue()>();
+
+        $i1 = $i0 + 1;
+
+        $r36 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i1);
+
+        interfaceinvoke $r32.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r33, $r36);
+
+        goto label2;
+
+     label1:
+        $r17 = <infoFlow.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r18 = r0.<infoFlow.ProgramTree: java.lang.String functionName>;
+
+        $r19 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(0);
+
+        interfaceinvoke $r17.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r18, $r19);
+
+     label2:
+        $r21 = r0.<infoFlow.ProgramTree: java.lang.String functionSignature>;
+
+        r0.<infoFlow.ProgramTree: java.lang.String signature> = $r21;
+
+        $r22 = new infoFlow.Vertex;
+
+        specialinvoke $r22.<infoFlow.Vertex: void <init>()>();
+
+        r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf> = $r22;
+
+        $r23 = r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf>;
+
+        virtualinvoke $r23.<infoFlow.Vertex: void setReturnLocation(boolean)>(1);
+
+        $r24 = new infoFlow.Edge;
+
+        $r25 = r0.<infoFlow.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r26 = virtualinvoke $r25.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
+
+        $r27 = interfaceinvoke $r26.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r28 = (soot.Unit) $r27;
+
+        specialinvoke $r24.<infoFlow.Edge: void <init>(soot.Unit)>($r28);
+
+        r2 = $r24;
+
+        $r29 = r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf>;
+
+        virtualinvoke $r29.<infoFlow.Vertex: void addIncomingEdge(infoFlow.Edge)>(r2);
+
+        return 1;
+
+     label3:
+        return 0;
+    }
+
+    private void unwind() throws infoFlow.exception.MainFunctionNotFoundException, infoFlow.exception.ErrorLocationNotFoundException
+    {
+        infoFlow.ProgramTree r0;
+        boolean z0, $z2;
+        infoFlow.Vertex r1, $r3, $r28, r31;
+        java.lang.Object[] $r2, $r16, $r21, $r26;
+        java.util.Queue $r4, $r5, $r6, $r9, $r14, $r29;
+        java.lang.Object $r7, $r15;
+        java.lang.StringBuilder $r8, $r11, $r12, $r17, $r19, $r22, $r23;
+        java.util.HashSet $r10, $r18;
+        int $i0, $i1;
+        java.lang.String $r13, $r20, $r24;
+        infoFlow.InterpolationHandler $r25;
+        java.util.LinkedList $r27, r32;
+        java.io.PrintStream $r30;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        $r2 = newarray (java.lang.Object)[1];
+
+        $r2[0] = "----->Unwind";
+
+        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r2);
+
+        $r4 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
+
+        $r3 = r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf>;
+
+        interfaceinvoke $r4.<java.util.Queue: boolean add(java.lang.Object)>($r3);
+
+        goto label2;
+
+     label1:
+        $r6 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Queue: java.lang.Object remove()>();
+
+        r31 = (infoFlow.Vertex) $r7;
+
+        z0 = specialinvoke r0.<infoFlow.ProgramTree: boolean expandBFS(infoFlow.Vertex)>(r31);
+
+        if z0 == 0 goto label2;
+
+        $r9 = r0.<infoFlow.ProgramTree: java.util.Queue errorSet>;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("_error");
+
+        $r10 = r0.<infoFlow.ProgramTree: java.util.HashSet errorRootSet>;
+
+        $i0 = virtualinvoke $r10.<java.util.HashSet: int size()>();
+
+        $r11 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".dot");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <dotty.CfgConverter: void printErrorPaths(java.util.Queue,java.lang.String)>($r9, $r13);
+
+        $r14 = r0.<infoFlow.ProgramTree: java.util.Queue errorRootQueue>;
+
+        $r15 = interfaceinvoke $r14.<java.util.Queue: java.lang.Object remove()>();
+
+        r1 = (infoFlow.Vertex) $r15;
+
+        $r16 = newarray (java.lang.Object)[1];
+
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>(java.lang.String)>("error root # = ");
+
+        $r18 = r0.<infoFlow.ProgramTree: java.util.HashSet errorRootSet>;
+
+        $i1 = virtualinvoke $r18.<java.util.HashSet: int size()>();
+
+        $r19 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r16[0] = $r20;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r16);
+
+        $r21 = newarray (java.lang.Object)[1];
+
+        $r22 = new java.lang.StringBuilder;
+
+        specialinvoke $r22.<java.lang.StringBuilder: void <init>(java.lang.String)>("current error root");
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r21[0] = $r24;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r21);
+
+        $r25 = r0.<infoFlow.ProgramTree: infoFlow.InterpolationHandler itpHandler>;
+
+        virtualinvoke $r25.<infoFlow.InterpolationHandler: void convertPathtoZ3Script(infoFlow.Vertex)>(r1);
+
+        $r26 = newarray (java.lang.Object)[1];
+
+        $r26[0] = "unwind";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r26);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label2:
+        $r5 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
+
+        $z2 = interfaceinvoke $r5.<java.util.Queue: boolean isEmpty()>();
+
+        if $z2 == 0 goto label1;
+
+        $r27 = new java.util.LinkedList;
+
+        specialinvoke $r27.<java.util.LinkedList: void <init>()>();
+
+        r32 = $r27;
+
+        $r28 = r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf>;
+
+        interfaceinvoke r32.<java.util.Queue: boolean add(java.lang.Object)>($r28);
+
+        staticinvoke <dotty.CfgConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r32, "_all.dot");
+
+        $r29 = r0.<infoFlow.ProgramTree: java.util.Queue errorSet>;
+
+        staticinvoke <dotty.CfgConverter: void printErrorPaths(java.util.Queue,java.lang.String)>($r29, "_error.dot");
+
+        $r30 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r30.<java.io.PrintStream: void println(java.lang.String)>("ProgramTree.unwind()");
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+        return;
+    }
+
+    private void DFS(infoFlow.Vertex) throws infoFlow.exception.MainFunctionNotFoundException, infoFlow.exception.ErrorLocationNotFoundException
+    {
+        infoFlow.ProgramTree r0;
+        infoFlow.Vertex r1, r2;
+        java.util.Iterator r3;
+        java.lang.Object[] $r4;
+        java.lang.StringBuilder $r5, $r7, $r8, $r10;
+        java.util.Set $r6, $r9, $r12;
+        int $i0;
+        java.lang.String $r11;
+        boolean $z0, $z1, $z2;
+        java.lang.Object $r13;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        $r4 = newarray (java.lang.Object)[1];
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>(java.lang.String)>("----->DFS : v.incomingEdges=");
+
+        $r6 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getIncomingEdges()>();
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" : v.previousVertexSet=");
+
+        $r9 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getPreviousVertexSet()>();
+
+        $i0 = interfaceinvoke $r9.<java.util.Set: int size()>();
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r4[0] = $r11;
+
+        staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r4);
+
+        specialinvoke r0.<infoFlow.ProgramTree: void close(infoFlow.Vertex)>(r1);
+
+        $z0 = virtualinvoke r1.<infoFlow.Vertex: boolean isCovered()>();
+
+        if $z0 != 0 goto label4;
+
+        $z1 = virtualinvoke r1.<infoFlow.Vertex: boolean isHeadLocation()>();
+
+        if $z1 == 0 goto label1;
+
+        specialinvoke r0.<infoFlow.ProgramTree: void refine(infoFlow.Vertex)>(r1);
+
+     label1:
+        $r12 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getPreviousVertexSet()>();
+
+        r3 = interfaceinvoke $r12.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label3;
+
+     label2:
+        $r13 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r2 = (infoFlow.Vertex) $r13;
+
+        specialinvoke r0.<infoFlow.ProgramTree: void DFS(infoFlow.Vertex)>(r2);
+
+     label3:
+        $z2 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 != 0 goto label2;
+
+     label4:
+        return;
+    }
+
+    private void close(infoFlow.Vertex)
+    {
+        infoFlow.ProgramTree r0;
+        infoFlow.Vertex r1;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        return;
+    }
+
+    private boolean expandBFS(infoFlow.Vertex) throws infoFlow.exception.MainFunctionNotFoundException, infoFlow.exception.ErrorLocationNotFoundException
+    {
+        infoFlow.ProgramTree r0;
+        infoFlow.Vertex r1, r4, $r18;
+        infoFlow.Edge r2, r7, $r13, $r28;
+        java.util.Iterator r3, r6;
+        soot.Unit r5, $r22, $r25;
+        java.lang.Object[] $r8, $r34;
+        java.lang.StringBuilder $r9, $r11, $r12, $r14, $r35, $r37, $r38, $r40;
+        java.util.Set $r10, $r16, $r19, $r36, $r39;
+        java.lang.String $r15, $r41;
+        boolean $z0, $z3, $z4, $z6;
+        java.lang.Object $r17, $r27;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6;
+        java.util.Queue $r20, $r31, $r33;
+        soot.toolkits.graph.ExceptionalUnitGraph $r21, $r24;
+        java.util.List $r23, $r26;
+        java.util.Map $r29;
+        infoFlow.UnitController $r30;
+        java.util.HashSet $r32;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        $r8 = newarray (java.lang.Object)[1];
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>("----->expand : w.incomingEdges");
+
+        $r10 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getIncomingEdges()>();
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(": outgoingedges");
+
+        $r13 = virtualinvoke r1.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r13);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r8[0] = $r15;
+
+        staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r8);
+
+        $r16 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getIncomingEdges()>();
+
+        r3 = interfaceinvoke $r16.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label5;
+
+     label1:
+        $r17 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r2 = (infoFlow.Edge) $r17;
+
+        $r18 = new infoFlow.Vertex;
+
+        specialinvoke $r18.<infoFlow.Vertex: void <init>()>();
+
+        r4 = $r18;
+
+        virtualinvoke r4.<infoFlow.Vertex: void setOutgoingEdge(infoFlow.Edge)>(r2);
+
+        virtualinvoke r2.<infoFlow.Edge: void setSource(infoFlow.Vertex)>(r4);
+
+        virtualinvoke r4.<infoFlow.Vertex: void setNextVertex(infoFlow.Vertex)>(r1);
+
+        $i0 = virtualinvoke r1.<infoFlow.Vertex: int getDistance()>();
+
+        $i1 = $i0 + 1;
+
+        virtualinvoke r4.<infoFlow.Vertex: void setDistance(int)>($i1);
+
+        $i2 = r0.<infoFlow.ProgramTree: int locationCounter>;
+
+        $i3 = $i2 + 1;
+
+        r0.<infoFlow.ProgramTree: int locationCounter> = $i3;
+
+        virtualinvoke r4.<infoFlow.Vertex: void setLocationNumber(int)>($i3);
+
+        virtualinvoke r1.<infoFlow.Vertex: void addPreviousVertex(infoFlow.Vertex)>(r4);
+
+        $r19 = r0.<infoFlow.ProgramTree: java.util.Set vertexSet>;
+
+        interfaceinvoke $r19.<java.util.Set: boolean add(java.lang.Object)>(r4);
+
+        $r20 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
+
+        interfaceinvoke $r20.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+
+        $r21 = r0.<infoFlow.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r22 = virtualinvoke r2.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r23 = virtualinvoke $r21.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r22);
+
+        $i4 = interfaceinvoke $r23.<java.util.List: int size()>();
+
+        if $i4 != 0 goto label2;
+
+        virtualinvoke r4.<infoFlow.Vertex: void setHeadLocation(boolean)>(1);
+
+        $z6 = virtualinvoke r2.<infoFlow.Edge: boolean isInErrorPath()>();
+
+        if $z6 == 0 goto label2;
+
+        $r32 = r0.<infoFlow.ProgramTree: java.util.HashSet errorRootSet>;
+
+        virtualinvoke $r32.<java.util.HashSet: boolean add(java.lang.Object)>(r4);
+
+        $r33 = r0.<infoFlow.ProgramTree: java.util.Queue errorRootQueue>;
+
+        interfaceinvoke $r33.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+
+        return 1;
+
+     label2:
+        $r24 = r0.<infoFlow.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r25 = virtualinvoke r2.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r26 = virtualinvoke $r24.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getPredsOf(soot.Unit)>($r25);
+
+        r6 = interfaceinvoke $r26.<java.util.List: java.util.Iterator iterator()>();
+
+        goto label4;
+
+     label3:
+        $r27 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (soot.Unit) $r27;
+
+        $r28 = new infoFlow.Edge;
+
+        specialinvoke $r28.<infoFlow.Edge: void <init>(soot.Unit)>(r5);
+
+        r7 = $r28;
+
+        virtualinvoke r7.<infoFlow.Edge: void setTarget(infoFlow.Vertex)>(r4);
+
+        virtualinvoke r7.<infoFlow.Edge: void setProgramTree(infoFlow.ProgramTree)>(r0);
+
+        virtualinvoke r4.<infoFlow.Vertex: void addIncomingEdge(infoFlow.Edge)>(r7);
+
+        $r30 = r0.<infoFlow.ProgramTree: infoFlow.UnitController unitController>;
+
+        $r29 = r0.<infoFlow.ProgramTree: java.util.Map stores>;
+
+        virtualinvoke $r30.<infoFlow.UnitController: void analyzeEdge(infoFlow.Edge,java.util.Map)>(r7, $r29);
+
+        $z4 = virtualinvoke r7.<infoFlow.Edge: boolean isErrorEdge()>();
+
+        if $z4 == 0 goto label4;
+
+        $r31 = r0.<infoFlow.ProgramTree: java.util.Queue errorSet>;
+
+        interfaceinvoke $r31.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+
+     label4:
+        $z3 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 != 0 goto label3;
+
+     label5:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 != 0 goto label1;
+
+        $r34 = newarray (java.lang.Object)[1];
+
+        $r35 = new java.lang.StringBuilder;
+
+        specialinvoke $r35.<java.lang.StringBuilder: void <init>(java.lang.String)>("<-----expand : w.incomingEdge#");
+
+        $r36 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getIncomingEdges()>();
+
+        $i5 = interfaceinvoke $r36.<java.util.Set: int size()>();
+
+        $r37 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i5);
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" : w.previousVertexSet#");
+
+        $r39 = virtualinvoke r1.<infoFlow.Vertex: java.util.Set getPreviousVertexSet()>();
+
+        $i6 = interfaceinvoke $r39.<java.util.Set: int size()>();
+
+        $r40 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i6);
+
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r34[0] = $r41;
+
+        staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r34);
+
+        return 0;
+    }
+
+    private void refine(infoFlow.Vertex)
+    {
+        infoFlow.ProgramTree r0;
+        infoFlow.Vertex r1;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        return;
+    }
+
+    private void cover(infoFlow.Vertex, infoFlow.Vertex)
+    {
+        infoFlow.ProgramTree r0;
+        infoFlow.Vertex r1, r2;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        r2 := @parameter1: infoFlow.Vertex;
+
+        return;
+    }
+
+    private java.util.List createUniquePathPi(infoFlow.Vertex)
+    {
+        infoFlow.ProgramTree r0;
+        infoFlow.Vertex r1;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        return null;
+    }
+
+    public java.lang.String getProgramDefinition()
+    {
+        infoFlow.ProgramTree r0;
+        java.lang.StringBuilder $r1, $r3, $r4, $r8;
+        java.lang.String $r2, $r5, $r9;
+        java.util.Map $r6;
+        java.lang.Object $r7;
+
+        r0 := @this: infoFlow.ProgramTree;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>(java.lang.String)>("_");
+
+        $r2 = r0.<infoFlow.ProgramTree: java.lang.String functionName>;
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r6 = <infoFlow.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r5 = r0.<infoFlow.ProgramTree: java.lang.String functionName>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>($r5);
+
+        $r8 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r9;
+    }
+}

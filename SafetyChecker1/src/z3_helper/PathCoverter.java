@@ -265,8 +265,8 @@ public class PathCoverter {
 				}
 				ifReturn = true;
 				BoolExpr thisFormula = result.get(i);
-				BoolExpr middleAnd = this.ictx.mkAnd(thisFormula, interResult);
-				interResult = ictx.MkInterpolant(middleAnd);
+				BoolExpr middleOr = this.ictx.mkOr(thisFormula, interResult);
+				interResult = ictx.MkInterpolant(middleOr);
 			} else {
 				if (ifReturn) {
 					ifReturn = false;
@@ -276,7 +276,7 @@ public class PathCoverter {
 							.getPath());
 					BoolExpr lowLevel = generateInterpolant(nextPath);
 					BoolExpr returnPolicy = result.get(i);
-					BoolExpr andFormula = ictx.mkAnd(interResult, lowLevel,
+					BoolExpr andFormula = ictx.mkOr(interResult, lowLevel,
 							returnPolicy);
 					interResult = ictx.MkInterpolant(andFormula);
 				} else {
@@ -285,14 +285,14 @@ public class PathCoverter {
 						ArrayList<Node> loadPah = loadFunction.getPath(0);
 						BoolExpr lowLevel = generateInterpolant(loadPah);
 						BoolExpr thisFormula = result.get(i);
-						BoolExpr andFormula = ictx.mkAnd(interResult, lowLevel,
+						BoolExpr andFormula = ictx.mkOr(interResult, lowLevel,
 								thisFormula);
 						interResult = ictx.MkInterpolant(andFormula);
 					} else {
 						BoolExpr thisFormula = result.get(i);
-						BoolExpr middleAnd = this.ictx.mkAnd(thisFormula,
+						BoolExpr middleOr = this.ictx.mkOr(thisFormula,
 								interResult);
-						interResult = ictx.MkInterpolant(middleAnd);
+						interResult = ictx.MkInterpolant(middleOr);
 					}
 				}
 			}

@@ -1,0 +1,79 @@
+public class de.ecspride.ArrayAccess2 extends android.app.Activity
+{
+
+    public void <init>()
+    {
+        de.ecspride.ArrayAccess2 r0;
+
+        r0 := @this: de.ecspride.ArrayAccess2;
+
+        specialinvoke r0.<android.app.Activity: void <init>()>();
+
+        return;
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.ecspride.ArrayAccess2 r0;
+        android.os.Bundle r1;
+        java.lang.String[] r2;
+        android.telephony.TelephonyManager r3;
+        android.telephony.SmsManager r4;
+        java.lang.Object $r5;
+        java.lang.String $r6, $r7;
+        int $i0;
+
+        r0 := @this: de.ecspride.ArrayAccess2;
+
+        r1 := @parameter0: android.os.Bundle;
+
+        specialinvoke r0.<android.app.Activity: void onCreate(android.os.Bundle)>(r1);
+
+        virtualinvoke r0.<de.ecspride.ArrayAccess2: void setContentView(int)>(2130903040);
+
+        r2 = newarray (java.lang.String)[10];
+
+        $r5 = virtualinvoke r0.<de.ecspride.ArrayAccess2: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        r3 = (android.telephony.TelephonyManager) $r5;
+
+        $r6 = virtualinvoke r3.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
+
+        r2[5] = $r6;
+
+        r2[4] = "no taint";
+
+        r4 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+
+        $i0 = specialinvoke r0.<de.ecspride.ArrayAccess2: int calculateIndex()>();
+
+        $r7 = r2[$i0];
+
+        virtualinvoke r4.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49 1234", null, $r7, null, null);
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
+        return;
+    }
+
+    private int calculateIndex()
+    {
+        de.ecspride.ArrayAccess2 r0;
+        byte b0;
+        int i1, i2, i3, i4;
+
+        r0 := @this: de.ecspride.ArrayAccess2;
+
+        b0 = 1;
+
+        i1 = b0 + 1;
+
+        i2 = i1 * 5;
+
+        i3 = i2 % 10;
+
+        i4 = i3 + 4;
+
+        return i4;
+    }
+}

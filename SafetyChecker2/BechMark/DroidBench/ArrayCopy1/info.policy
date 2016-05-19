@@ -1,0 +1,2 @@
+source imei <= TelephonyManager.getDeviceId
+sink   Log.i <= String[0] <= imei

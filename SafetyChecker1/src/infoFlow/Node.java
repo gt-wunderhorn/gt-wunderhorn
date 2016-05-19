@@ -102,8 +102,8 @@ public class Node {
 		this.nodesBeCover = new HashSet<Node>();
 		this.CoverBy = new HashSet<Node>();
 		this.id = NumberOfId;
-//		this.invariant = this.theTree.getIctx().mkTrue();
-		this.invariant = this.theTree.getIctx().mkTrue(); //mkFalse();
+//		true();
+		this.invariant = this.theTree.getIctx().mkFalse();
 		this.directlyCovered = false;
 		this.ancestorCovered = false;
 		this.ifDummy = false;
@@ -160,18 +160,24 @@ public class Node {
 
 	//.OK.	
 	public void clearInvariant() {
+		System.out.println("Node.clearInvariant");
+		if(true) throw new RuntimeException();
+		System.exit(0);
 		//CHANGE STARTS
-//		this.invariant = this.theTree.getIctx().mkTrue();
+//		true();
 		this.invariant = this.theTree.getIctx().mkFalse();
 		//CHANGE ENDS
 	}
 
 	//.OK.	
 	public void addInvariant(BoolExpr newInvariant) {
+		System.out.println("Node.addInvariant");
+		if(true) throw new RuntimeException();
+		System.exit(0);
 		BoolExpr currentInvariant = this.invariant;
 		//CHANGE STARTS
-		this.invariant = this.theTree.getIctx().mkAnd(currentInvariant, newInvariant);
-//		this.invariant = this.theTree.getIctx().mkOr(currentInvariant, newInvariant);
+//	 	and	
+		this.invariant = this.theTree.getIctx().mkOr(currentInvariant, newInvariant);
 		//CHANGE ENDS
 		this.ifUpdateIn = true;
 		// System.out.println("Statement:"+this.statment+",Invariant"+newInvariant+"node id"+this.id);

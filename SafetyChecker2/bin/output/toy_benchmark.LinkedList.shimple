@@ -1,0 +1,87 @@
+public class toy_benchmark.LinkedList extends java.lang.Object
+{
+    private toy_benchmark.LinkedList$Node head;
+    private toy_benchmark.LinkedList$Node tail;
+
+    public void <init>()
+    {
+        toy_benchmark.LinkedList r0;
+        toy_benchmark.LinkedList$Node $r1, $r2;
+
+        r0 := @this: toy_benchmark.LinkedList;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new toy_benchmark.LinkedList$Node;
+
+        specialinvoke $r1.<toy_benchmark.LinkedList$Node: void <init>(toy_benchmark.LinkedList,int)>(r0, 0);
+
+        r0.<toy_benchmark.LinkedList: toy_benchmark.LinkedList$Node head> = $r1;
+
+        $r2 = r0.<toy_benchmark.LinkedList: toy_benchmark.LinkedList$Node head>;
+
+        r0.<toy_benchmark.LinkedList: toy_benchmark.LinkedList$Node tail> = $r2;
+
+        return;
+    }
+
+    public void add(int)
+    {
+        toy_benchmark.LinkedList r0;
+        int i0;
+        toy_benchmark.LinkedList$Node r1, $r2, $r3;
+
+        r0 := @this: toy_benchmark.LinkedList;
+
+        i0 := @parameter0: int;
+
+        $r2 = new toy_benchmark.LinkedList$Node;
+
+        specialinvoke $r2.<toy_benchmark.LinkedList$Node: void <init>(toy_benchmark.LinkedList,int)>(r0, i0);
+
+        r1 = $r2;
+
+        $r3 = r0.<toy_benchmark.LinkedList: toy_benchmark.LinkedList$Node tail>;
+
+        $r3.<toy_benchmark.LinkedList$Node: toy_benchmark.LinkedList$Node next> = r1;
+
+        r0.<toy_benchmark.LinkedList: toy_benchmark.LinkedList$Node tail> = r1;
+
+        return;
+    }
+
+    public int get(int)
+    {
+        toy_benchmark.LinkedList r0;
+        int $i0, i1, i2, i3, i3_1, i3_2;
+        toy_benchmark.LinkedList$Node r1, r1_1, r1_2;
+
+        r0 := @this: toy_benchmark.LinkedList;
+
+        i1 := @parameter0: int;
+
+        r1 = r0.<toy_benchmark.LinkedList: toy_benchmark.LinkedList$Node head>;
+
+        i2 = i1 + 1;
+
+        i3 = 0;
+
+(0)     goto label2;
+
+     label1:
+        r1_2 = r1_1.<toy_benchmark.LinkedList$Node: toy_benchmark.LinkedList$Node next>;
+
+(1)     i3_2 = i3_1 + 1;
+
+     label2:
+        r1_1 = Phi(r1 #0, r1_2 #1);
+
+        i3_1 = Phi(i3 #0, i3_2 #1);
+
+        if i3_1 < i2 goto label1;
+
+        $i0 = r1_1.<toy_benchmark.LinkedList$Node: int value>;
+
+        return $i0;
+    }
+}

@@ -1,0 +1,722 @@
+public class dotty.CfgConverter extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        dotty.CfgConverter r0;
+
+        r0 := @this: dotty.CfgConverter;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static java.io.BufferedWriter getBufferedWriter(java.lang.String) throws java.io.IOException
+    {
+        java.lang.String r0;
+        java.io.File r1, $r3;
+        java.io.BufferedWriter r2, $r4;
+        java.io.FileWriter $r5;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r3 = new java.io.File;
+
+        specialinvoke $r3.<java.io.File: void <init>(java.lang.String)>(r0);
+
+        r1 = $r3;
+
+        $r4 = new java.io.BufferedWriter;
+
+        $r5 = new java.io.FileWriter;
+
+        specialinvoke $r5.<java.io.FileWriter: void <init>(java.io.File)>(r1);
+
+        specialinvoke $r4.<java.io.BufferedWriter: void <init>(java.io.Writer)>($r5);
+
+        r2 = $r4;
+
+        return r2;
+    }
+
+    public static void printErrorPaths(java.util.Queue, java.lang.String)
+    {
+        java.util.Queue r0;
+        java.lang.String r1, $r18;
+        infoFlow.Vertex r2, r4, $r10;
+        java.util.Set r3;
+        java.util.Iterator r5;
+        boolean $z0, $z1, $z3;
+        java.lang.Object $r6, $r7;
+        int $i0;
+        infoFlow.Edge $r8, $r15;
+        java.lang.StringBuilder $r9, $r11, $r12, $r13, $r14, $r16, $r17;
+        java.lang.Exception $r19, r21;
+        java.io.BufferedWriter r20;
+
+        r0 := @parameter0: java.util.Queue;
+
+        r1 := @parameter1: java.lang.String;
+
+     label1:
+        r20 = staticinvoke <dotty.CfgConverter: java.io.BufferedWriter getBufferedWriter(java.lang.String)>(r1);
+
+        virtualinvoke r20.<java.io.BufferedWriter: void write(java.lang.String)>("digraph { \n");
+
+        virtualinvoke r20.<java.io.BufferedWriter: void write(java.lang.String)>("\tratio=\"fill\";\n\tsize=\"8.3,11.7!\";\n\tmargin=0;\n");
+
+        goto label6;
+
+     label2:
+        $r6 = interfaceinvoke r0.<java.util.Queue: java.lang.Object remove()>();
+
+        r2 = (infoFlow.Vertex) $r6;
+
+        r3 = virtualinvoke r2.<infoFlow.Vertex: java.util.Set getPreviousVertexSet()>();
+
+        $i0 = virtualinvoke r2.<infoFlow.Vertex: int getDistance()>();
+
+        if $i0 == 0 goto label3;
+
+        $r8 = virtualinvoke r2.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        $z3 = virtualinvoke $r8.<infoFlow.Edge: boolean isInErrorPath()>();
+
+        if $z3 == 0 goto label3;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
+
+        $r10 = virtualinvoke r2.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[label=\"");
+
+        $r15 = virtualinvoke r2.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        $r16 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r15);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"];\n");
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r20.<java.io.BufferedWriter: void write(java.lang.String)>($r18);
+
+     label3:
+        r5 = interfaceinvoke r3.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label5;
+
+     label4:
+        $r7 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (infoFlow.Vertex) $r7;
+
+        interfaceinvoke r0.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+
+     label5:
+        $z1 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 != 0 goto label4;
+
+     label6:
+        $z0 = interfaceinvoke r0.<java.util.Queue: boolean isEmpty()>();
+
+        if $z0 == 0 goto label2;
+
+        virtualinvoke r20.<java.io.BufferedWriter: void write(java.lang.String)>("}");
+
+        virtualinvoke r20.<java.io.BufferedWriter: void flush()>();
+
+        virtualinvoke r20.<java.io.BufferedWriter: void close()>();
+
+     label7:
+        goto label9;
+
+     label8:
+        $r19 := @caughtexception;
+
+        r21 = $r19;
+
+        virtualinvoke r21.<java.lang.Exception: void printStackTrace()>();
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label9:
+        return;
+
+        catch java.lang.Exception from label1 to label7 with label8;
+    }
+
+    public static void printAllPaths(java.util.Queue, java.lang.String)
+    {
+        java.util.Queue r0;
+        java.lang.String r1, $r17;
+        infoFlow.Vertex r2, r4, $r9;
+        java.util.Set r3;
+        java.util.Iterator r5;
+        boolean $z0, $z1;
+        java.lang.Object $r6, $r7;
+        int $i0;
+        java.lang.StringBuilder $r8, $r10, $r11, $r12, $r13, $r15, $r16;
+        infoFlow.Edge $r14;
+        java.lang.Exception $r18, r20;
+        java.io.BufferedWriter r19;
+
+        r0 := @parameter0: java.util.Queue;
+
+        r1 := @parameter1: java.lang.String;
+
+     label1:
+        r19 = staticinvoke <dotty.CfgConverter: java.io.BufferedWriter getBufferedWriter(java.lang.String)>(r1);
+
+        virtualinvoke r19.<java.io.BufferedWriter: void write(java.lang.String)>("digraph { \n");
+
+        virtualinvoke r19.<java.io.BufferedWriter: void write(java.lang.String)>("\tratio=\"fill\";\n\tsize=\"8.3,11.7!\";\n\tmargin=0;\n");
+
+        goto label6;
+
+     label2:
+        $r6 = interfaceinvoke r0.<java.util.Queue: java.lang.Object remove()>();
+
+        r2 = (infoFlow.Vertex) $r6;
+
+        r3 = virtualinvoke r2.<infoFlow.Vertex: java.util.Set getPreviousVertexSet()>();
+
+        $i0 = virtualinvoke r2.<infoFlow.Vertex: int getDistance()>();
+
+        if $i0 == 0 goto label3;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
+
+        $r9 = virtualinvoke r2.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r9);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[label=\"");
+
+        $r14 = virtualinvoke r2.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        $r15 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r14);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"];\n");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r19.<java.io.BufferedWriter: void write(java.lang.String)>($r17);
+
+     label3:
+        r5 = interfaceinvoke r3.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label5;
+
+     label4:
+        $r7 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (infoFlow.Vertex) $r7;
+
+        interfaceinvoke r0.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+
+     label5:
+        $z1 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 != 0 goto label4;
+
+     label6:
+        $z0 = interfaceinvoke r0.<java.util.Queue: boolean isEmpty()>();
+
+        if $z0 == 0 goto label2;
+
+        virtualinvoke r19.<java.io.BufferedWriter: void write(java.lang.String)>("}");
+
+        virtualinvoke r19.<java.io.BufferedWriter: void flush()>();
+
+        virtualinvoke r19.<java.io.BufferedWriter: void close()>();
+
+     label7:
+        goto label9;
+
+     label8:
+        $r18 := @caughtexception;
+
+        r20 = $r18;
+
+        virtualinvoke r20.<java.lang.Exception: void printStackTrace()>();
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label9:
+        return;
+
+        catch java.lang.Exception from label1 to label7 with label8;
+    }
+
+    public static void printAllPaths2(soot.toolkits.graph.ExceptionalUnitGraph)
+    {
+        soot.toolkits.graph.ExceptionalUnitGraph r0;
+        java.util.LinkedList r1, r2, $r7, $r8, $r9, r30;
+        java.util.List r3, $r17, $r19;
+        java.util.Iterator r4, r31, r36;
+        infoFlow.Vertex r5, $r11, $r21, $r23, r33, r35, r38, r41;
+        infoFlow.Edge r6, $r12, $r22, r34, r37;
+        boolean $z0, $z3, $z4, $z5, $z8;
+        java.lang.Object $r10, $r13, $r15, $r20, $r28;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i8_1, i8_2, i8_3, i8_4, i8_5, i8_6, i8_7, i8_8, i9_1, i9_2, i9_3, i8_9, i9_4, i8_10;
+        java.util.Set $r14;
+        soot.Unit $r16, $r18, r32, r39;
+        java.lang.StringBuilder $r24, $r25, $r26;
+        java.lang.String $r27;
+        java.lang.Exception $r29, r42;
+        java.io.BufferedWriter r40;
+
+        r0 := @parameter0: soot.toolkits.graph.ExceptionalUnitGraph;
+
+     label01:
+(0)     $r7 = new java.util.LinkedList;
+
+        specialinvoke $r7.<java.util.LinkedList: void <init>()>();
+
+        r30 = $r7;
+
+        $r8 = new java.util.LinkedList;
+
+        specialinvoke $r8.<java.util.LinkedList: void <init>()>();
+
+        r1 = $r8;
+
+        $r9 = new java.util.LinkedList;
+
+        specialinvoke $r9.<java.util.LinkedList: void <init>()>();
+
+        r2 = $r9;
+
+        i8 = 0;
+
+        r3 = virtualinvoke r0.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
+
+        r31 = interfaceinvoke r3.<java.util.List: java.util.Iterator iterator()>();
+
+(1)     goto label03;
+
+     label02:
+        $r10 = interfaceinvoke r31.<java.util.Iterator: java.lang.Object next()>();
+
+        r32 = (soot.Unit) $r10;
+
+        $r11 = new infoFlow.Vertex;
+
+        specialinvoke $r11.<infoFlow.Vertex: void <init>()>();
+
+        r33 = $r11;
+
+        $r12 = new infoFlow.Edge;
+
+        specialinvoke $r12.<infoFlow.Edge: void <init>(soot.Unit)>(r32);
+
+        r34 = $r12;
+
+        virtualinvoke r33.<infoFlow.Vertex: void addIncomingEdge(infoFlow.Edge)>(r34);
+
+        $i0 = i8_1;
+
+(2)     i8_2 = i8_1 + 1;
+
+        virtualinvoke r33.<infoFlow.Vertex: void setLocationNumber(int)>($i0);
+
+        interfaceinvoke r30.<java.util.Queue: boolean add(java.lang.Object)>(r33);
+
+(3)     interfaceinvoke r1.<java.util.Queue: boolean add(java.lang.Object)>(r33);
+
+     label03:
+        i8_1 = Phi(i8 #1, i8_2 #3);
+
+(4)     $z0 = interfaceinvoke r31.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 != 0 goto label02;
+
+(5)     goto label10;
+
+     label04:
+        $r13 = interfaceinvoke r30.<java.util.Queue: java.lang.Object remove()>();
+
+        r35 = (infoFlow.Vertex) $r13;
+
+        $r14 = virtualinvoke r35.<infoFlow.Vertex: java.util.Set getIncomingEdges()>();
+
+        r36 = interfaceinvoke $r14.<java.util.Set: java.util.Iterator iterator()>();
+
+(6)     goto label09;
+
+     label05:
+        $r15 = interfaceinvoke r36.<java.util.Iterator: java.lang.Object next()>();
+
+        r37 = (infoFlow.Edge) $r15;
+
+        $r16 = virtualinvoke r37.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r17 = virtualinvoke r0.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r16);
+
+        $i1 = interfaceinvoke $r17.<java.util.List: int size()>();
+
+(7)     if $i1 != 0 goto label06;
+
+        $r23 = new infoFlow.Vertex;
+
+        specialinvoke $r23.<infoFlow.Vertex: void <init>()>();
+
+        r38 = $r23;
+
+        virtualinvoke r38.<infoFlow.Vertex: void setOutgoingEdge(infoFlow.Edge)>(r37);
+
+        virtualinvoke r38.<infoFlow.Vertex: void setHeadLocation(boolean)>(1);
+
+        virtualinvoke r38.<infoFlow.Vertex: void setNextVertex(infoFlow.Vertex)>(r35);
+
+        virtualinvoke r35.<infoFlow.Vertex: void addPreviousVertex(infoFlow.Vertex)>(r38);
+
+        $i5 = i8_4;
+
+(8)     i8_5 = i8_4 + 1;
+
+        virtualinvoke r38.<infoFlow.Vertex: void setLocationNumber(int)>($i5);
+
+        $i6 = virtualinvoke r35.<infoFlow.Vertex: int getDistance()>();
+
+        $i7 = $i6 + 1;
+
+        virtualinvoke r38.<infoFlow.Vertex: void setDistance(int)>($i7);
+
+(9)     interfaceinvoke r2.<java.util.Queue: boolean add(java.lang.Object)>(r38);
+
+     label06:
+        i8_6 = Phi(i8_4 #7, i8_5 #9);
+
+(10)    $r18 = virtualinvoke r37.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r19 = virtualinvoke r0.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r18);
+
+        r4 = interfaceinvoke $r19.<java.util.List: java.util.Iterator iterator()>();
+
+(11)    goto label08;
+
+     label07:
+        $r20 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r39 = (soot.Unit) $r20;
+
+        $r21 = new infoFlow.Vertex;
+
+        specialinvoke $r21.<infoFlow.Vertex: void <init>()>();
+
+        r5 = $r21;
+
+        $r22 = new infoFlow.Edge;
+
+        specialinvoke $r22.<infoFlow.Edge: void <init>(soot.Unit)>(r39);
+
+        r6 = $r22;
+
+        virtualinvoke r6.<infoFlow.Edge: void setSource(infoFlow.Vertex)>(r5);
+
+        virtualinvoke r6.<infoFlow.Edge: void setTarget(infoFlow.Vertex)>(r35);
+
+        virtualinvoke r5.<infoFlow.Vertex: void setOutgoingEdge(infoFlow.Edge)>(r37);
+
+        virtualinvoke r5.<infoFlow.Vertex: void addIncomingEdge(infoFlow.Edge)>(r6);
+
+        virtualinvoke r5.<infoFlow.Vertex: void setNextVertex(infoFlow.Vertex)>(r35);
+
+        virtualinvoke r35.<infoFlow.Vertex: void addPreviousVertex(infoFlow.Vertex)>(r5);
+
+        $i2 = virtualinvoke r35.<infoFlow.Vertex: int getDistance()>();
+
+        $i3 = $i2 + 1;
+
+        virtualinvoke r5.<infoFlow.Vertex: void setDistance(int)>($i3);
+
+        $i4 = i8_7;
+
+(12)    i8_8 = i8_7 + 1;
+
+        virtualinvoke r5.<infoFlow.Vertex: void setLocationNumber(int)>($i4);
+
+(13)    interfaceinvoke r30.<java.util.Queue: boolean add(java.lang.Object)>(r5);
+
+     label08:
+        i8_7 = Phi(i8_6 #11, i8_8 #13);
+
+(14)    $z5 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+(15)    if $z5 != 0 goto label07;
+
+     label09:
+        i8_4 = Phi(i8_3 #6, i8_7 #15);
+
+(16)    $z4 = interfaceinvoke r36.<java.util.Iterator: boolean hasNext()>();
+
+(17)    if $z4 != 0 goto label05;
+
+     label10:
+        i8_3 = Phi(i8_1 #5, i8_4 #17);
+
+(18)    $z3 = interfaceinvoke r30.<java.util.Queue: boolean isEmpty()>();
+
+        if $z3 == 0 goto label04;
+
+        staticinvoke <dotty.CfgConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r1, "AllPaths.dot");
+
+        i9 = 0;
+
+(19)    goto label12;
+
+     label11:
+        $r24 = new java.lang.StringBuilder;
+
+        specialinvoke $r24.<java.lang.StringBuilder: void <init>(java.lang.String)>("Path-");
+
+(20)    i9_2 = i9_1 + 1;
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i9_2);
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".dot");
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r40 = staticinvoke <dotty.CfgConverter: java.io.BufferedWriter getBufferedWriter(java.lang.String)>($r27);
+
+        virtualinvoke r40.<java.io.BufferedWriter: void write(java.lang.String)>("digraph { \n");
+
+        $r28 = interfaceinvoke r2.<java.util.Queue: java.lang.Object remove()>();
+
+        r41 = (infoFlow.Vertex) $r28;
+
+        staticinvoke <dotty.CfgConverter: void printSinglePath(infoFlow.Vertex,java.io.BufferedWriter)>(r41, r40);
+
+        virtualinvoke r40.<java.io.BufferedWriter: void write(java.lang.String)>("}");
+
+        virtualinvoke r40.<java.io.BufferedWriter: void flush()>();
+
+(21)    virtualinvoke r40.<java.io.BufferedWriter: void close()>();
+
+     label12:
+        i9_1 = Phi(i9 #19, i9_2 #21);
+
+(22)    $z8 = interfaceinvoke r2.<java.util.Queue: boolean isEmpty()>();
+
+        if $z8 == 0 goto label11;
+
+     label13:
+(23)    goto label15;
+
+     label14:
+        $r29 := @caughtexception;
+
+        i9_3 = Phi(i9 #0, i9_2 #20, i9_1 #22);
+
+        i8_9 = Phi(i8 #0, i8_2 #2, i8_1 #4, i8_5 #8, i8_6 #10, i8_8 #12, i8_7 #14, i8_4 #16, i8_3 #18);
+
+        r42 = $r29;
+
+        virtualinvoke r42.<java.lang.Exception: void printStackTrace()>();
+
+(24)    staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label15:
+        i9_4 = Phi(i9_1 #23, i9_3 #24);
+
+        i8_10 = Phi(i8_3 #23, i8_9 #24);
+
+        return;
+
+        catch java.lang.Exception from label01 to label13 with label14;
+    }
+
+    private static void printSinglePath(infoFlow.Vertex, java.io.BufferedWriter) throws java.io.IOException
+    {
+        infoFlow.Vertex r0, $r2, $r7, $r16, $r17;
+        java.io.BufferedWriter r1;
+        java.lang.StringBuilder $r3, $r5, $r6, $r9, $r10, $r13, $r14;
+        java.lang.String $r4, $r8, $r12, $r15;
+        infoFlow.Edge $r11;
+
+        r0 := @parameter0: infoFlow.Vertex;
+
+        r1 := @parameter1: java.io.BufferedWriter;
+
+        $r2 = virtualinvoke r0.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+        if $r2 != null goto label1;
+
+        return;
+
+     label1:
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
+
+        $r4 = virtualinvoke r0.<infoFlow.Vertex: java.lang.String toString()>();
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
+
+        $r7 = virtualinvoke r0.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+        $r8 = virtualinvoke $r7.<infoFlow.Vertex: java.lang.String toString()>();
+
+        $r9 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[label=\"");
+
+        $r11 = virtualinvoke r0.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        $r12 = virtualinvoke $r11.<infoFlow.Edge: java.lang.String toString()>();
+
+        $r13 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"];\n");
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r1.<java.io.BufferedWriter: void write(java.lang.String)>($r15);
+
+        $r16 = virtualinvoke r0.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+        if $r16 == null goto label2;
+
+        $r17 = virtualinvoke r0.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+        staticinvoke <dotty.CfgConverter: void printSinglePath(infoFlow.Vertex,java.io.BufferedWriter)>($r17, r1);
+
+     label2:
+        return;
+    }
+
+    public static void printCfg(soot.toolkits.graph.ExceptionalUnitGraph)
+    {
+        soot.toolkits.graph.ExceptionalUnitGraph r0;
+        java.util.LinkedList r1, $r5;
+        java.util.List r2, r20;
+        soot.Unit r3, r18, r19;
+        java.util.Iterator r4, r17;
+        boolean $z0, $z2, $z3;
+        java.lang.Object $r6, $r7, $r8;
+        java.lang.StringBuilder $r9, $r10, $r11, $r12, $r13;
+        java.lang.String $r14;
+        java.lang.Exception $r15, r21;
+        java.io.BufferedWriter r16;
+
+        r0 := @parameter0: soot.toolkits.graph.ExceptionalUnitGraph;
+
+     label01:
+        r16 = staticinvoke <dotty.CfgConverter: java.io.BufferedWriter getBufferedWriter(java.lang.String)>("CFG.dot");
+
+        $r5 = new java.util.LinkedList;
+
+        specialinvoke $r5.<java.util.LinkedList: void <init>()>();
+
+        r1 = $r5;
+
+        r2 = virtualinvoke r0.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
+
+        r17 = interfaceinvoke r2.<java.util.List: java.util.Iterator iterator()>();
+
+        goto label03;
+
+     label02:
+        $r6 = interfaceinvoke r17.<java.util.Iterator: java.lang.Object next()>();
+
+        r18 = (soot.Unit) $r6;
+
+        interfaceinvoke r1.<java.util.Queue: boolean add(java.lang.Object)>(r18);
+
+     label03:
+        $z0 = interfaceinvoke r17.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 != 0 goto label02;
+
+        virtualinvoke r16.<java.io.BufferedWriter: void write(java.lang.String)>("digraph { \n");
+
+        goto label07;
+
+     label04:
+        $r7 = interfaceinvoke r1.<java.util.Queue: java.lang.Object remove()>();
+
+        r19 = (soot.Unit) $r7;
+
+        r20 = virtualinvoke r0.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>(r19);
+
+        r4 = interfaceinvoke r20.<java.util.List: java.util.Iterator iterator()>();
+
+        goto label06;
+
+     label05:
+        $r8 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (soot.Unit) $r8;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r19);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r3);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\";\n");
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r16.<java.io.BufferedWriter: void write(java.lang.String)>($r14);
+
+        interfaceinvoke r1.<java.util.Queue: boolean add(java.lang.Object)>(r3);
+
+     label06:
+        $z3 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 != 0 goto label05;
+
+     label07:
+        $z2 = interfaceinvoke r1.<java.util.Queue: boolean isEmpty()>();
+
+        if $z2 == 0 goto label04;
+
+        virtualinvoke r16.<java.io.BufferedWriter: void write(java.lang.String)>("}");
+
+        virtualinvoke r16.<java.io.BufferedWriter: void flush()>();
+
+        virtualinvoke r16.<java.io.BufferedWriter: void close()>();
+
+     label08:
+        goto label10;
+
+     label09:
+        $r15 := @caughtexception;
+
+        r21 = $r15;
+
+        virtualinvoke r21.<java.lang.Exception: void printStackTrace()>();
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label10:
+        return;
+
+        catch java.lang.Exception from label01 to label08 with label09;
+    }
+}

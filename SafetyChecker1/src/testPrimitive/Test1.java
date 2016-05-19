@@ -54,7 +54,6 @@ public class Test1 {
 		Forest forest1 = new Forest(stores,
 				"<toy_benchmark.FunctionP1: int test()>");
 		Tree theTree=forest1.getTree("<toy_benchmark.FunctionP1: int test()>");
-		theTree.getNewErrorPath();
 		ArrayList<Node> errorPath=theTree.getAllErrorPath().get(0);
 		for(int i=0;i<errorPath.size();i++){
 			Node n=errorPath.get(i);

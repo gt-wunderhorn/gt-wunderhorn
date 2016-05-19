@@ -1,0 +1,14 @@
+public final class edu.mit.array_copy.R$attr extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        edu.mit.array_copy.R$attr r0;
+
+        r0 := @this: edu.mit.array_copy.R$attr;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

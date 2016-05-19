@@ -7,31 +7,10 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryPoolMXBean;
 import java.lang.management.MemoryUsage;
 
-import testDroidSafeFailDriver.ArrayCopyDroidSafeFail1;
-import testDroidSafeFailDriver.ArrayCopyDroidSafeFail2;
-import testDroidSafeFailDriver.ArrayCopyDroidSafeFail3;
-import testDroidSafeFailDriver.ArrayCopyDroidSafeFail4;
-import testDroidSafeFailDriver.ImplictFlowDroidSafeFail1;
 import testDroidSafeFailDriver.MultidimensionalArrayDroidSafeFailed2;
-import testOriginalDroidBenchDriver.ArrayAccess1;
-import testOriginalDroidBenchDriver.ArrayAccess2;
-import testOriginalDroidBenchDriver.ArrayCopy1;
-import testOriginalDroidBenchDriver.FieldSensitivity1;
-import testOriginalDroidBenchDriver.FieldSensitivity2;
-import testOriginalDroidBenchDriver.FieldSensitivity3;
-import testOriginalDroidBenchDriver.FieldSensitivity4;
-import testOriginalDroidBenchDriver.ImplicitFlow2;
-import testOriginalDroidBenchDriver.ImplicitFlow4;
-import testOriginalDroidBenchDriver.MultidimensionalArray1;
-import testOriginalDroidBenchDriver.ObjectSensitivity2;
-import testOriginalDroidBenchDriver.StaticInitialization1;
-import testOriginalDroidBenchDriver.StaticInitialization2;
-import testOriginalDroidBenchDriver.StaticInitialization3;
-import testOriginalDroidBenchDriver.UnreachableCode;
 
 
 public class testDriver {
-	private static final ArrayCopyDroidSafeFail1 ImplictFlowDroidSafeFailed2 = null;
 
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		long startTime = System.currentTimeMillis();

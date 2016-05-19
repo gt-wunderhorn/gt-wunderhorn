@@ -92,7 +92,7 @@ public class NoLeak1 {
 		soot.Main.main(sootArgs);
 		System.out.println(stores.size());
 		Forest forest1 = new Forest(stores,
-//				"<de.ecspride.ImplicitFlow3: void tester()>", "<de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)>");
+//				"<de.ecspride.ImplicitFlow3: void tester()>"); //, "<de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)>");
 				"<de.ecspride.ImplicitFlow3: void onCreate(android.os.Bundle)>");
 		forest1.TestCorrect();
 		Tree theMain = forest1.getMainTree();

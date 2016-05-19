@@ -1,0 +1,167 @@
+public class safetyTester.Tester1 extends java.lang.Object
+{
+    static java.util.Map stores;
+
+    public void <init>()
+    {
+        safetyTester.Tester1 r0;
+
+        r0 := @this: safetyTester.Tester1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[]) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException
+    {
+        java.lang.String[] r0, r1, $r6;
+        java.lang.String r2;
+        soot.options.Options $r3, $r4, $r5;
+        soot.PackManager $r7;
+        soot.Pack $r8;
+        java.lang.Object[] $r11, $r14, $r16, $r17, $r18, $r19, $r20, $r22;
+        java.util.Map $r13;
+        java.lang.Exception $r15, r24;
+        java.lang.StackTraceElement[] $r21;
+        infoFlow.ProgramTree r23, r27;
+        safetyTester.Tester1$1 r25;
+        soot.Transform r26;
+        soot.Transformer r28;
+
+        r0 := @parameter0: java.lang.String[];
+
+        $r3 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $r3.<soot.options.Options: void set_src_prec(int)>(1);
+
+        $r4 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $r4.<soot.options.Options: void set_output_format(int)>(3);
+
+        $r5 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $r5.<soot.options.Options: void set_allow_phantom_refs(boolean)>(1);
+
+        $r6 = newarray (java.lang.String)[4];
+
+        $r6[0] = "-process-dir";
+
+        $r6[1] = "/Users/burak/Documents/WHarris/safety-itps/SafetyChecker2/bin";
+
+        $r6[2] = "-output-dir";
+
+        $r6[3] = "src/output/safetyTest";
+
+        r1 = $r6;
+
+        $r7 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        $r8 = virtualinvoke $r7.<soot.PackManager: soot.Pack getPack(java.lang.String)>("stp");
+
+        r26 = new soot.Transform;
+
+        r25 = new safetyTester.Tester1$1;
+
+        specialinvoke r25.<safetyTester.Tester1$1: void <init>()>();
+
+        r28 = (soot.Transformer) r25;
+
+        specialinvoke r26.<soot.Transform: void <init>(java.lang.String,soot.Transformer)>("stp.test", r28);
+
+        virtualinvoke $r8.<soot.Pack: void add(soot.Transform)>(r26);
+
+        staticinvoke <soot.Main: void main(java.lang.String[])>(r1);
+
+        r2 = "<safetyTestCode.Test1: void test()>";
+
+        $r11 = newarray (java.lang.Object)[1];
+
+        $r11[0] = "safetyTester.Tester1... Test started...";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
+
+     label1:
+        r27 = new infoFlow.ProgramTree;
+
+        $r13 = <safetyTester.Tester1: java.util.Map stores>;
+
+        specialinvoke r27.<infoFlow.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>($r13, r2, 1);
+
+        r23 = r27;
+
+     label2:
+        goto label4;
+
+     label3:
+        $r15 := @caughtexception;
+
+        r24 = $r15;
+
+        $r16 = newarray (java.lang.Object)[1];
+
+        $r16[0] = "*******************************************";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r16);
+
+        $r17 = newarray (java.lang.Object)[1];
+
+        $r17[0] = "*********** EXCEPTION OCCURRED ************";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r17);
+
+        $r18 = newarray (java.lang.Object)[1];
+
+        $r18[0] = "*******************************************";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r18);
+
+        $r19 = newarray (java.lang.Object)[1];
+
+        $r19[0] = r24;
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r19);
+
+        $r20 = newarray (java.lang.Object)[1];
+
+        $r20[0] = "******************";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r20);
+
+        $r21 = virtualinvoke r24.<java.lang.Exception: java.lang.StackTraceElement[] getStackTrace()>();
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r21);
+
+        $r22 = newarray (java.lang.Object)[1];
+
+        $r22[0] = "******************";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r22);
+
+        virtualinvoke r24.<java.lang.Exception: void printStackTrace()>();
+
+     label4:
+        $r14 = newarray (java.lang.Object)[1];
+
+        $r14[0] = "safetyTester.Tester1... Test finished...";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r14);
+
+        return;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <safetyTester.Tester1: java.util.Map stores> = $r0;
+
+        return;
+    }
+}

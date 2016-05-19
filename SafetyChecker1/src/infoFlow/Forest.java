@@ -108,15 +108,18 @@ public class Forest {
 			while (!NewErrorPath) {
 				System.out.println(this.mainFunction);
 				NewErrorPath = this.mainFunction.getNewErrorPath();
+				System.out.println(NewErrorPath);
 				if (NewErrorPath) {
 					break;
 				} else {
 					this.getNewPath();
 				}
 			}
+				System.out.println("after getNewErrorPath");
+				System.exit(0);
 			ArrayList<ArrayList<Node>> errorPaths = this.mainFunction
 					.getAllErrorPath();
-//			System.out.println(errorPaths);
+			System.out.println("*********" + errorPaths.size());
 			PathSolver pSolver = new PathSolver(errorPaths, this);
 			pSolver.CalResult();
 			this.ifProgramCorrect = pSolver.ifCorrect();

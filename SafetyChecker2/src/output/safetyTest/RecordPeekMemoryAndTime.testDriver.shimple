@@ -1,0 +1,89 @@
+public class RecordPeekMemoryAndTime.testDriver extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        RecordPeekMemoryAndTime.testDriver r0;
+
+        r0 := @this: RecordPeekMemoryAndTime.testDriver;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[]) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException
+    {
+        java.lang.String[] r0;
+        long l0, l1, l2, $l3, l4, l4_1, l4_2;
+        java.util.List r1;
+        java.lang.management.MemoryPoolMXBean r2;
+        java.util.Iterator r3;
+        java.lang.management.MemoryUsage r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        java.lang.StringBuilder $r6, $r8, $r10, $r12;
+        java.io.PrintStream $r7, $r11;
+        java.lang.String $r9, $r13;
+
+        r0 := @parameter0: java.lang.String[];
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        l2 = l1 - l0;
+
+        l4 = 0L;
+
+        r1 = staticinvoke <java.lang.management.ManagementFactory: java.util.List getMemoryPoolMXBeans()>();
+
+        r3 = interfaceinvoke r1.<java.util.List: java.util.Iterator iterator()>();
+
+(0)     goto label2;
+
+     label1:
+        $r5 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r2 = (java.lang.management.MemoryPoolMXBean) $r5;
+
+        r4 = interfaceinvoke r2.<java.lang.management.MemoryPoolMXBean: java.lang.management.MemoryUsage getPeakUsage()>();
+
+        $l3 = virtualinvoke r4.<java.lang.management.MemoryUsage: long getUsed()>();
+
+(1)     l4_2 = l4_1 + $l3;
+
+     label2:
+        l4_1 = Phi(l4 #0, l4_2 #1);
+
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 != 0 goto label1;
+
+        $r7 = <java.lang.System: java.io.PrintStream out>;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>(java.lang.String)>("peak memory:");
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>(l4_1);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r7.<java.io.PrintStream: void println(java.lang.String)>($r9);
+
+        $r11 = <java.lang.System: java.io.PrintStream out>;
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>(java.lang.String)>("total time:");
+
+        $r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>(l2);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r11.<java.io.PrintStream: void println(java.lang.String)>($r13);
+
+        return;
+    }
+}

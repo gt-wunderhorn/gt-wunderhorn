@@ -1,0 +1,374 @@
+public class infoFlow.Edge extends java.lang.Object
+{
+    private soot.Unit unit;
+    private infoFlow.Vertex v;
+    private infoFlow.Vertex w;
+    private infoFlow.ProgramTree programTree;
+    private boolean returnEdge;
+    private boolean errorEdge;
+    private boolean subFunction;
+    private boolean sinkEdge;
+    private boolean sourceEdge;
+    private boolean objectEdge;
+    private boolean newEdge;
+    private boolean inErrorPath;
+
+    public void <init>(soot.Unit)
+    {
+        infoFlow.Edge r0;
+        soot.Unit r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        r1 := @parameter0: soot.Unit;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<infoFlow.Edge: boolean returnEdge> = 0;
+
+        r0.<infoFlow.Edge: boolean errorEdge> = 0;
+
+        r0.<infoFlow.Edge: boolean subFunction> = 0;
+
+        r0.<infoFlow.Edge: boolean sinkEdge> = 0;
+
+        r0.<infoFlow.Edge: boolean sourceEdge> = 0;
+
+        r0.<infoFlow.Edge: boolean objectEdge> = 0;
+
+        r0.<infoFlow.Edge: boolean newEdge> = 0;
+
+        r0.<infoFlow.Edge: boolean inErrorPath> = 0;
+
+        r0.<infoFlow.Edge: soot.Unit unit> = r1;
+
+        return;
+    }
+
+    public soot.Unit getUnit()
+    {
+        infoFlow.Edge r0;
+        soot.Unit $r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        $r1 = r0.<infoFlow.Edge: soot.Unit unit>;
+
+        return $r1;
+    }
+
+    public void setUnit(soot.Unit)
+    {
+        infoFlow.Edge r0;
+        soot.Unit r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        r1 := @parameter0: soot.Unit;
+
+        r0.<infoFlow.Edge: soot.Unit unit> = r1;
+
+        return;
+    }
+
+    public infoFlow.Vertex getV()
+    {
+        infoFlow.Edge r0;
+        infoFlow.Vertex $r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        $r1 = r0.<infoFlow.Edge: infoFlow.Vertex v>;
+
+        return $r1;
+    }
+
+    public void setV(infoFlow.Vertex)
+    {
+        infoFlow.Edge r0;
+        infoFlow.Vertex r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        r0.<infoFlow.Edge: infoFlow.Vertex v> = r1;
+
+        return;
+    }
+
+    public infoFlow.Vertex getW()
+    {
+        infoFlow.Edge r0;
+        infoFlow.Vertex $r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        $r1 = r0.<infoFlow.Edge: infoFlow.Vertex w>;
+
+        return $r1;
+    }
+
+    public void setW(infoFlow.Vertex)
+    {
+        infoFlow.Edge r0;
+        infoFlow.Vertex r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        r1 := @parameter0: infoFlow.Vertex;
+
+        r0.<infoFlow.Edge: infoFlow.Vertex w> = r1;
+
+        return;
+    }
+
+    public boolean isReturnEdge()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean returnEdge>;
+
+        return $z0;
+    }
+
+    public void setReturnEdge(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean returnEdge> = z0;
+
+        return;
+    }
+
+    public boolean isErrorEdge()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean errorEdge>;
+
+        return $z0;
+    }
+
+    public void setErrorEdge(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean errorEdge> = z0;
+
+        return;
+    }
+
+    public boolean isSubFunction()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean subFunction>;
+
+        return $z0;
+    }
+
+    public void setSubFunction(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean subFunction> = z0;
+
+        return;
+    }
+
+    public boolean isSinkEdge()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean sinkEdge>;
+
+        return $z0;
+    }
+
+    public void setSinkEdge(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean sinkEdge> = z0;
+
+        return;
+    }
+
+    public boolean isSourceEdge()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean sourceEdge>;
+
+        return $z0;
+    }
+
+    public void setSourceEdge(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean sourceEdge> = z0;
+
+        return;
+    }
+
+    public boolean isNewEdge()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean newEdge>;
+
+        return $z0;
+    }
+
+    public void setNewEdge(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean newEdge> = z0;
+
+        return;
+    }
+
+    public boolean isObjectEdge()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean objectEdge>;
+
+        return $z0;
+    }
+
+    public void setObjectEdge(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean objectEdge> = z0;
+
+        return;
+    }
+
+    public infoFlow.ProgramTree getProgramTree()
+    {
+        infoFlow.Edge r0;
+        infoFlow.ProgramTree $r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        $r1 = r0.<infoFlow.Edge: infoFlow.ProgramTree programTree>;
+
+        return $r1;
+    }
+
+    public void setProgramTree(infoFlow.ProgramTree)
+    {
+        infoFlow.Edge r0;
+        infoFlow.ProgramTree r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        r1 := @parameter0: infoFlow.ProgramTree;
+
+        r0.<infoFlow.Edge: infoFlow.ProgramTree programTree> = r1;
+
+        return;
+    }
+
+    public boolean isInErrorPath()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean inErrorPath>;
+
+        return $z0;
+    }
+
+    public void setInErrorPath(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean inErrorPath> = z0;
+
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        infoFlow.Edge r0;
+        soot.Unit $r1;
+        java.lang.String $r2;
+
+        r0 := @this: infoFlow.Edge;
+
+        $r1 = r0.<infoFlow.Edge: soot.Unit unit>;
+
+        $r2 = virtualinvoke $r1.<java.lang.Object: java.lang.String toString()>();
+
+        return $r2;
+    }
+}

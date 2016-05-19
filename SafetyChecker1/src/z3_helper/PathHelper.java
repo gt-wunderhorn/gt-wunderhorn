@@ -167,6 +167,7 @@ public class PathHelper {
 				result.add(alwaysTrue);
 			}
 			if (u instanceof AssignStmt) {
+
 				AssignStmt aStmt = (AssignStmt) u;
 				Value left = aStmt.getLeftOp();
 				Value right = aStmt.getRightOp();
@@ -197,6 +198,7 @@ public class PathHelper {
 					 * result.add(StringHelper.covertString(s, this.theCoverter,
 					 * (ArrayExpr) leftZ3)); continue; }
 					 **/
+
 					Type leftType = left.getType();
 					Expr rightZ3 = null;
 					if (right instanceof InvokeExpr) {
@@ -225,6 +227,7 @@ public class PathHelper {
 					if (n.getIfInput()) {
 						BoolExpr f1 = (BoolExpr) SpecialInvoke.addSensitive(
 								this.theCoverter, rightZ3);
+						// and
 						BoolExpr wholeFormula = this.theCoverter.getIctx()
 								.mkAnd(halfExpr, f1);
 						result.add(wholeFormula);

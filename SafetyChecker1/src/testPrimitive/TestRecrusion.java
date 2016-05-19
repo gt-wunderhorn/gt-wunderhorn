@@ -50,7 +50,6 @@ public class TestRecrusion {
 				"<toy_benchmark.ToyBenchmark1: void test1()>");
 		Map<String, Tree> theTree = forest1.getSubFunctionTree();
 		Tree mainTree=forest1.getMainTree();
-		mainTree.getNewErrorPath();
 		ArrayList<ArrayList<Node>> allErrorPaths=new ArrayList<ArrayList<Node>>();
 		allErrorPaths.add(mainTree.getAllErrorPath().get(1));
 		PathSolver p=new PathSolver(allErrorPaths,forest1);

@@ -1,0 +1,29 @@
+{
+  "indicator-type": "Sensitive Sources",
+  "visibility": {},
+  "display": {
+    "info_kinds": true
+  },
+  "contents": [
+    {
+      "label": "de.ecspride.ImplicitFlow3",
+      "contents": [
+        {
+          "signature": "<de.ecspride.ImplicitFlow3: void leakData(android.view.View)>",
+          "contents": [
+            {
+              "signature": "<android.widget.EditText: android.text.Editable getText()>",
+              "link": "as_call",
+              "info_kinds": "USER_INPUT ",
+              "src-loc": {
+                "class": "de.ecspride.ImplicitFlow3",
+                "line": 48
+              }
+            }
+          ],
+          "link": "as_entry_point"
+        }
+      ]
+    }
+  ]
+}

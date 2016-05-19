@@ -125,6 +125,7 @@ public class Tree {
 	}
 
 	public boolean getNewErrorPath() {
+
 		this.treeClosed = false;
 		Comparator<Node> nodeComparator = new NodeComparator();
 		Queue<Node> expandQueue = new PriorityQueue<Node>(100,nodeComparator);

@@ -1,0 +1,80 @@
+public class toy_benchmark.ToyBenchmark2 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        toy_benchmark.ToyBenchmark2 r0;
+
+        r0 := @this: toy_benchmark.ToyBenchmark2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void test1()
+    {
+        int[][] r0;
+        int i0, $i1, $i2, $i3, $i4, $i5, i6, i6_1, i6_2;
+        int[] r1, r2;
+
+        i6 = 1;
+
+        r0 = newmultiarray (int)[10][10];
+
+        r1 = newarray (int)[10];
+
+        r2 = r0[2];
+
+        r2[4] = 1;
+
+        r2[3] = 1;
+
+(0)     goto label4;
+
+     label1:
+        $i1 = i6_1 % 2;
+
+        if $i1 != 0 goto label2;
+
+        $i4 = r2[4];
+
+        $i5 = $i4 + 1;
+
+        r2[4] = $i5;
+
+        goto label3;
+
+     label2:
+        $i2 = r2[4];
+
+        $i3 = $i2 - 1;
+
+        r2[4] = $i3;
+
+     label3:
+(1)     i6_2 = i6_1 + 1;
+
+     label4:
+        i6_1 = Phi(i6 #0, i6_2 #1);
+
+        if i6_1 < 5 goto label1;
+
+        i0 = r2[4];
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+
+        r0 := @parameter0: java.lang.String[];
+
+        staticinvoke <toy_benchmark.ToyBenchmark2: void test1()>();
+
+        return;
+    }
+}

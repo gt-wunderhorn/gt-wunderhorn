@@ -1,0 +1,19 @@
+public class infoFlow.ErrorLable extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        infoFlow.ErrorLable r0;
+
+        r0 := @this: infoFlow.ErrorLable;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void Error()
+    {
+        return;
+    }
+}

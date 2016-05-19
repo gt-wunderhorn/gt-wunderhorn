@@ -1,0 +1,5 @@
+interface  de.ecspride.FlowTestDroidSafeFailed$Interface extends java.lang.Object
+{
+
+    public abstract void leakInfo();
+}

@@ -1,0 +1,1228 @@
+public class infoFlow.InterpolationHandler extends java.lang.Object
+{
+    private com.microsoft.z3.InterpolationContext ictx;
+    private java.util.Map newSortMap;
+    private java.util.Map sortId;
+    private java.util.Map global;
+    private java.util.Map arrayNameMap;
+    private java.util.Map substitute;
+    private java.util.Stack parameters;
+
+    public void <init>()
+    {
+        infoFlow.InterpolationHandler r0;
+        java.util.HashMap $r1, $r2, $r3, $r4, $r5;
+        java.util.Stack $r6;
+        com.microsoft.z3.InterpolationContext $r7;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<infoFlow.InterpolationHandler: java.util.Map newSortMap> = $r1;
+
+        $r2 = new java.util.HashMap;
+
+        specialinvoke $r2.<java.util.HashMap: void <init>()>();
+
+        r0.<infoFlow.InterpolationHandler: java.util.Map sortId> = $r2;
+
+        $r3 = new java.util.HashMap;
+
+        specialinvoke $r3.<java.util.HashMap: void <init>()>();
+
+        r0.<infoFlow.InterpolationHandler: java.util.Map global> = $r3;
+
+        $r4 = new java.util.HashMap;
+
+        specialinvoke $r4.<java.util.HashMap: void <init>()>();
+
+        r0.<infoFlow.InterpolationHandler: java.util.Map arrayNameMap> = $r4;
+
+        $r5 = new java.util.HashMap;
+
+        specialinvoke $r5.<java.util.HashMap: void <init>()>();
+
+        r0.<infoFlow.InterpolationHandler: java.util.Map substitute> = $r5;
+
+        $r6 = new java.util.Stack;
+
+        specialinvoke $r6.<java.util.Stack: void <init>()>();
+
+        r0.<infoFlow.InterpolationHandler: java.util.Stack parameters> = $r6;
+
+        $r7 = new com.microsoft.z3.InterpolationContext;
+
+        specialinvoke $r7.<com.microsoft.z3.InterpolationContext: void <init>()>();
+
+        r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx> = $r7;
+
+        return;
+    }
+
+    public void convertPathtoZ3Script(infoFlow.Vertex)
+    {
+        infoFlow.InterpolationHandler r0;
+        java.lang.Object[] $r1, $r2;
+        java.lang.StringBuilder $r3, $r4, $r5, $r7;
+        infoFlow.Edge $r6, $r9, $r10;
+        java.lang.String $r8;
+        boolean $z1, z2, z2_1, z2_2;
+        java.lang.RuntimeException $r11;
+        infoFlow.Vertex r12, r12_1, r12_2;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r12 := @parameter0: infoFlow.Vertex;
+
+        z2 = 0;
+
+(0)     goto label3;
+
+     label1:
+        $r1 = newarray (java.lang.Object)[1];
+
+        $r1[0] = "---------------";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r1);
+
+        $r2 = newarray (java.lang.Object)[1];
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>("Vertex=");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r12_1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("---- Unit=");
+
+        $r6 = virtualinvoke r12_1.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r2[0] = $r8;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r2);
+
+        if z2_1 == 0 goto label2;
+
+        goto label4;
+
+     label2:
+        $r9 = virtualinvoke r12_1.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        virtualinvoke r0.<infoFlow.InterpolationHandler: boolean createZ3Script(infoFlow.Edge)>($r9);
+
+        r12_2 = virtualinvoke r12_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+        $r10 = virtualinvoke r12_2.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+
+        $z1 = virtualinvoke $r10.<infoFlow.Edge: boolean isErrorEdge()>();
+
+(1)     if $z1 == 0 goto label3;
+
+(2)     z2_2 = 1;
+
+     label3:
+        r12_1 = Phi(r12 #0, r12_2 #1, r12_2 #2);
+
+        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
+
+        if r12_1 != null goto label1;
+
+     label4:
+        $r11 = new java.lang.RuntimeException;
+
+        specialinvoke $r11.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r11;
+    }
+
+    public boolean createZ3Script(infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        infoFlow.Edge r1;
+        soot.Unit $r2;
+        boolean $z0, $z1, z2, z2_1, z2_2, z2_3, z2_4;
+        java.lang.Object[] $r3, $r4, $r11;
+        java.lang.StringBuilder $r5, $r7, $r8, $r9, $r12, $r14;
+        infoFlow.Vertex $r6;
+        java.lang.String $r10, $r15;
+        com.microsoft.z3.BoolExpr $r13;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: infoFlow.Edge;
+
+        z2 = 0;
+
+        $r2 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $z0 = $r2 instanceof soot.jimple.IdentityStmt;
+
+(0)     if $z0 == 0 goto label1;
+
+(1)     z2_1 = specialinvoke r0.<infoFlow.InterpolationHandler: boolean convertIdentityStmt(infoFlow.Edge)>(r1);
+
+     label1:
+        z2_2 = Phi(z2 #0, z2_1 #1);
+
+        $z1 = virtualinvoke r1.<infoFlow.Edge: boolean isSinkEdge()>();
+
+(2)     if $z1 == 0 goto label2;
+
+(3)     z2_3 = specialinvoke r0.<infoFlow.InterpolationHandler: boolean convertSinkInvoke2Z3(infoFlow.Edge)>(r1);
+
+     label2:
+        z2_4 = Phi(z2_2 #2, z2_3 #3);
+
+        $r3 = newarray (java.lang.Object)[1];
+
+        $r3[0] = "---------------";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r3);
+
+        $r4 = newarray (java.lang.Object)[1];
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>(java.lang.String)>("Vertex=");
+
+        $r6 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("---- Unit=");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r4[0] = $r10;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r4);
+
+        $r11 = newarray (java.lang.Object)[1];
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>(java.lang.String)>("Expr");
+
+        $r13 = virtualinvoke r1.<infoFlow.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r13);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r11[0] = $r15;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
+
+        return z2_4;
+    }
+
+    private boolean convertIdentityStmt(infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        infoFlow.Edge r1;
+        soot.jimple.IdentityStmt r2;
+        soot.Value r3;
+        com.microsoft.z3.Expr r4, r8;
+        soot.Type r5, r9;
+        soot.RefType r6;
+        soot.jimple.internal.JNewExpr r7, $r15;
+        com.microsoft.z3.BoolExpr r10;
+        soot.Unit $r11;
+        infoFlow.Vertex $r12, $r16;
+        int $i0, $i1;
+        java.util.Stack $r13;
+        boolean $z0, $z1;
+        java.lang.RuntimeException $r14;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: infoFlow.Edge;
+
+        $r11 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        r2 = (soot.jimple.IdentityStmt) $r11;
+
+        r3 = interfaceinvoke r2.<soot.jimple.IdentityStmt: soot.Value getLeftOp()>();
+
+        $r12 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i0 = virtualinvoke $r12.<infoFlow.Vertex: int getDistance()>();
+
+        r4 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r3, 1, r1, $i0);
+
+        $r13 = r0.<infoFlow.InterpolationHandler: java.util.Stack parameters>;
+
+        $z0 = virtualinvoke $r13.<java.util.Stack: boolean isEmpty()>();
+
+        if $z0 == 0 goto label1;
+
+        r5 = interfaceinvoke r3.<soot.Value: soot.Type getType()>();
+
+        $z1 = r5 instanceof soot.RefType;
+
+        if $z1 == 0 goto label2;
+
+        r6 = (soot.RefType) r5;
+
+        $r15 = new soot.jimple.internal.JNewExpr;
+
+        specialinvoke $r15.<soot.jimple.internal.JNewExpr: void <init>(soot.RefType)>(r6);
+
+        r7 = $r15;
+
+        r8 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r7, 0, r1, 0);
+
+        r9 = interfaceinvoke r3.<soot.Value: soot.Type getType()>();
+
+        $r16 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i1 = virtualinvoke $r16.<infoFlow.Vertex: int getDistance()>();
+
+        r10 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.BoolExpr convertAssignStmt(com.microsoft.z3.Expr,com.microsoft.z3.Expr,soot.Type,soot.Value,int)>(r8, r4, r9, r3, $i1);
+
+        virtualinvoke r1.<infoFlow.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r10);
+
+        return 1;
+
+     label1:
+        $r14 = new java.lang.RuntimeException;
+
+        specialinvoke $r14.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r14;
+
+     label2:
+        return 0;
+    }
+
+    private boolean convertSinkInvoke2Z3(infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        infoFlow.Edge r1;
+        java.lang.String r2, r3, $r17, $r21;
+        int i0, $i1, i2, i2_1, i2_2;
+        java.lang.String[] r4, $r6;
+        soot.Unit $r5, $r7, $r15;
+        boolean $z0;
+        soot.jimple.InvokeStmt $r8;
+        soot.jimple.InvokeExpr $r9;
+        java.util.Map $r10;
+        java.lang.Object $r11;
+        java.lang.Integer $r12;
+        java.lang.Object[] $r13, $r18;
+        java.lang.StringBuilder $r14, $r16, $r19, $r20;
+        soot.Value r22, r22_1, r22_2, r22_3;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: infoFlow.Edge;
+
+        $r5 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        r2 = staticinvoke <infoFlow.UnitController: java.lang.String getMethodSignature(soot.Unit)>($r5);
+
+        r22 = null;
+
+        $r6 = <infoFlow.UnitController: java.lang.String[] sinkSignatureDB>;
+
+        r4 = $r6;
+
+        i0 = lengthof $r6;
+
+        i2 = 0;
+
+(0)     goto label3;
+
+     label1:
+        r3 = r4[i2_1];
+
+        $z0 = virtualinvoke r2.<java.lang.String: boolean contains(java.lang.CharSequence)>(r3);
+
+(1)     if $z0 == 0 goto label2;
+
+        $r7 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r8 = (soot.jimple.InvokeStmt) $r7;
+
+        $r9 = interfaceinvoke $r8.<soot.jimple.InvokeStmt: soot.jimple.InvokeExpr getInvokeExpr()>();
+
+        $r10 = <infoFlow.UnitController: java.util.Map sensitiveParameterMap>;
+
+        $r11 = interfaceinvoke $r10.<java.util.Map: java.lang.Object get(java.lang.Object)>(r3);
+
+        $r12 = (java.lang.Integer) $r11;
+
+        $i1 = virtualinvoke $r12.<java.lang.Integer: int intValue()>();
+
+(2)     r22_2 = interfaceinvoke $r9.<soot.jimple.InvokeExpr: soot.Value getArg(int)>($i1);
+
+     label2:
+        r22_3 = Phi(r22_1 #1, r22_2 #2);
+
+(3)     i2_2 = i2_1 + 1;
+
+     label3:
+        r22_1 = Phi(r22 #0, r22_3 #3);
+
+        i2_1 = Phi(i2 #0, i2_2 #3);
+
+        if i2_1 < i0 goto label1;
+
+        $r13 = newarray (java.lang.Object)[1];
+
+        $r14 = new java.lang.StringBuilder;
+
+        specialinvoke $r14.<java.lang.StringBuilder: void <init>(java.lang.String)>("Unit : ");
+
+        $r15 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r16 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r15);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r13[0] = $r17;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r13);
+
+        $r18 = newarray (java.lang.Object)[1];
+
+        $r19 = new java.lang.StringBuilder;
+
+        specialinvoke $r19.<java.lang.StringBuilder: void <init>(java.lang.String)>("leakCandidate : ");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r22_1);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r18[0] = $r21;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r18);
+
+        return 0;
+    }
+
+    private com.microsoft.z3.Expr convertValue(soot.Value, boolean, infoFlow.Edge, int)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.Value r1;
+        boolean z0, $z1, $z2;
+        infoFlow.Edge r2;
+        int i0;
+        soot.Type r3;
+        java.lang.Object[] $r5;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.Value;
+
+        z0 := @parameter1: boolean;
+
+        r2 := @parameter2: infoFlow.Edge;
+
+        i0 := @parameter3: int;
+
+        r3 = interfaceinvoke r1.<soot.Value: soot.Type getType()>();
+
+        $z1 = r3 instanceof soot.PrimType;
+
+        if $z1 == 0 goto label1;
+
+        $r5 = newarray (java.lang.Object)[1];
+
+        $r5[0] = "PrimitiveType";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r5);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label1:
+        $z2 = r3 instanceof soot.RefLikeType;
+
+        if $z2 == 0 goto label2;
+
+        specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr convertRefLikeValue(soot.Value,boolean,infoFlow.Edge,int)>(r1, z0, r2, i0);
+
+     label2:
+        return null;
+    }
+
+    private com.microsoft.z3.Expr convertRefLikeValue(soot.Value, boolean, infoFlow.Edge, int)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.Value r1;
+        boolean z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11;
+        infoFlow.Edge r2;
+        int i0;
+        soot.Type r3;
+        soot.Local r4;
+        java.lang.Object[] $r5, $r6, $r13, $r14, $r15, $r16, $r17, $r18, $r21, $r23;
+        java.lang.StringBuilder $r7, $r9, $r10, $r11;
+        soot.Unit $r8;
+        java.lang.String $r12;
+        soot.jimple.AnyNewExpr $r19;
+        com.microsoft.z3.Expr $r20, $r22;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.Value;
+
+        z0 := @parameter1: boolean;
+
+        r2 := @parameter2: infoFlow.Edge;
+
+        i0 := @parameter3: int;
+
+        $z1 = r1 instanceof soot.shimple.PhiExpr;
+
+        if $z1 == 0 goto label01;
+
+        $r23 = newarray (java.lang.Object)[1];
+
+        $r23[0] = "FATAL: PhiExpr is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r23);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label01:
+        $z2 = r1 instanceof soot.Local;
+
+        if $z2 == 0 goto label03;
+
+        r3 = interfaceinvoke r1.<soot.Value: soot.Type getType()>();
+
+        r4 = (soot.Local) r1;
+
+        $z10 = r3 instanceof soot.RefType;
+
+        if $z10 == 0 goto label02;
+
+        $r22 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr createZ3Object(soot.Local,boolean,infoFlow.Edge)>(r4, z0, r2);
+
+        return $r22;
+
+     label02:
+        $z11 = r3 instanceof soot.ArrayType;
+
+        if $z11 == 0 goto label03;
+
+        $r21 = newarray (java.lang.Object)[1];
+
+        $r21[0] = "FATAL: ArrayType is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r21);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label03:
+        $z3 = r1 instanceof soot.jimple.AnyNewExpr;
+
+        if $z3 == 0 goto label04;
+
+        $r19 = (soot.jimple.AnyNewExpr) r1;
+
+        $r20 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr convertAnyNewExpr(soot.jimple.AnyNewExpr,infoFlow.Edge)>($r19, r2);
+
+        return $r20;
+
+     label04:
+        $z4 = r1 instanceof soot.jimple.StringConstant;
+
+        if $z4 == 0 goto label05;
+
+        $r18 = newarray (java.lang.Object)[1];
+
+        $r18[0] = "FATAL: StringConstant. is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r18);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label05:
+        $z5 = r1 instanceof soot.jimple.ArrayRef;
+
+        if $z5 == 0 goto label06;
+
+        $r17 = newarray (java.lang.Object)[1];
+
+        $r17[0] = "FATAL: ArrayRef is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r17);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label06:
+        $z6 = r1 instanceof soot.jimple.InstanceFieldRef;
+
+        if $z6 == 0 goto label07;
+
+        $r16 = newarray (java.lang.Object)[1];
+
+        $r16[0] = "FATAL: InstanceFieldRef is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r16);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label07:
+        $z7 = r1 instanceof soot.jimple.CastExpr;
+
+        if $z7 == 0 goto label08;
+
+        $r15 = newarray (java.lang.Object)[1];
+
+        $r15[0] = "FATAL: CastExpr is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r15);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label08:
+        $z8 = r1 instanceof soot.jimple.StaticFieldRef;
+
+        if $z8 == 0 goto label09;
+
+        $r14 = newarray (java.lang.Object)[1];
+
+        $r14[0] = "FATAL: StaticFieldRef is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r14);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label09:
+        $z9 = r1 instanceof soot.jimple.NullConstant;
+
+        if $z9 == 0 goto label10;
+
+        $r13 = newarray (java.lang.Object)[1];
+
+        $r13[0] = "FATAL: NullConstant is not supported yet!";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r13);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label10:
+        $r5 = newarray (java.lang.Object)[1];
+
+        $r5[0] = "FATAL: Conversion cannot be done";
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r5);
+
+        $r6 = newarray (java.lang.Object)[1];
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>(java.lang.String)>("FATAL: Unit : ");
+
+        $r8 = virtualinvoke r2.<infoFlow.Edge: soot.Unit getUnit()>();
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" - Value : ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r6[0] = $r12;
+
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r6);
+
+        return null;
+    }
+
+    private com.microsoft.z3.Expr createZ3Object(soot.Local, boolean, infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.Local r1;
+        boolean z0, $z1, $z2, $z3;
+        infoFlow.Edge r2;
+        soot.Type r3;
+        java.lang.String r4, $r16, $r17, $r19, $r26, $r27, $r30, r53, r56, r61;
+        java.util.Map $r5, $r9, $r10, $r11, $r13, $r32, $r36, $r44, $r45, $r48, $r49;
+        com.microsoft.z3.InterpolationContext $r6, $r7, $r21, $r33, $r38, $r39, $r41, $r43, $r47;
+        com.microsoft.z3.StringSymbol $r8;
+        java.lang.Object $r12, $r14, $r34, $r37, $r50, r51, r51_1, r51_2;
+        infoFlow.ProgramTree $r18, $r29;
+        java.lang.StringBuilder $r20, $r28, $r31, r64, r65;
+        java.lang.Object[] $r22, $r23, $r24;
+        com.microsoft.z3.Sort $r35, r66, r67;
+        com.microsoft.z3.IntSort $r40, $r42;
+        com.microsoft.z3.ArraySort r52;
+        com.microsoft.z3.Expr r54, r57, r62;
+        infoFlow.NewSort r55, r58, r60, r63;
+        com.microsoft.z3.ArrayExpr r59;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.Local;
+
+        z0 := @parameter1: boolean;
+
+        r2 := @parameter2: infoFlow.Edge;
+
+        r3 = interfaceinvoke r1.<soot.Local: soot.Type getType()>();
+
+        r4 = virtualinvoke r3.<soot.Type: java.lang.String toString()>();
+
+        $r5 = r0.<infoFlow.InterpolationHandler: java.util.Map newSortMap>;
+
+        $z1 = interfaceinvoke $r5.<java.util.Map: boolean containsKey(java.lang.Object)>(r4);
+
+        if $z1 == 0 goto label1;
+
+        $r49 = r0.<infoFlow.InterpolationHandler: java.util.Map newSortMap>;
+
+        $r50 = interfaceinvoke $r49.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r51 = (com.microsoft.z3.Sort) $r50;
+
+(0)     goto label2;
+
+     label1:
+        $r7 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r6 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r8 = virtualinvoke $r6.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.StringSymbol mkSymbol(java.lang.String)>(r4);
+
+        r51_1 = virtualinvoke $r7.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.UninterpretedSort mkUninterpretedSort(com.microsoft.z3.Symbol)>($r8);
+
+        $r9 = r0.<infoFlow.InterpolationHandler: java.util.Map newSortMap>;
+
+(1)     interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r51_1);
+
+     label2:
+        r51_2 = Phi(r51 #0, r51_1 #1);
+
+        $r10 = r0.<infoFlow.InterpolationHandler: java.util.Map global>;
+
+        $z2 = interfaceinvoke $r10.<java.util.Map: boolean containsKey(java.lang.Object)>(r4);
+
+        if $z2 != 0 goto label3;
+
+        $r39 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r38 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r40 = virtualinvoke $r38.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort getIntSort()>();
+
+        $r41 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r42 = virtualinvoke $r41.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort getIntSort()>();
+
+        r52 = virtualinvoke $r39.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArraySort mkArraySort(com.microsoft.z3.Sort,com.microsoft.z3.Sort)>($r40, $r42);
+
+        r53 = specialinvoke r0.<infoFlow.InterpolationHandler: java.lang.String getGlobalName(java.lang.String)>(r4);
+
+        $r43 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        r54 = virtualinvoke $r43.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r53, r52);
+
+        $r44 = r0.<infoFlow.InterpolationHandler: java.util.Map global>;
+
+        interfaceinvoke $r44.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r54);
+
+        $r45 = r0.<infoFlow.InterpolationHandler: java.util.Map substitute>;
+
+        interfaceinvoke $r45.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r53);
+
+        r63 = new infoFlow.NewSort;
+
+        $r47 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        r66 = (com.microsoft.z3.Sort) r51_2;
+
+        specialinvoke r63.<infoFlow.NewSort: void <init>(com.microsoft.z3.Sort,com.microsoft.z3.InterpolationContext)>(r66, $r47);
+
+        r55 = r63;
+
+        $r48 = r0.<infoFlow.InterpolationHandler: java.util.Map sortId>;
+
+        interfaceinvoke $r48.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r55);
+
+     label3:
+        if z0 == 0 goto label5;
+
+        r64 = new java.lang.StringBuilder;
+
+        $r26 = interfaceinvoke r1.<soot.Local: java.lang.String getName()>();
+
+        $r27 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r26);
+
+        specialinvoke r64.<java.lang.StringBuilder: void <init>(java.lang.String)>($r27);
+
+        $r28 = virtualinvoke r64.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r29 = virtualinvoke r2.<infoFlow.Edge: infoFlow.ProgramTree getProgramTree()>();
+
+        $r30 = virtualinvoke $r29.<infoFlow.ProgramTree: java.lang.String getProgramDefinition()>();
+
+        $r31 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r30);
+
+        r56 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r33 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r32 = r0.<infoFlow.InterpolationHandler: java.util.Map newSortMap>;
+
+        $r34 = interfaceinvoke $r32.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        $r35 = (com.microsoft.z3.Sort) $r34;
+
+        r57 = virtualinvoke $r33.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r56, $r35);
+
+        $r36 = r0.<infoFlow.InterpolationHandler: java.util.Map sortId>;
+
+        $r37 = interfaceinvoke $r36.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r58 = (infoFlow.NewSort) $r37;
+
+        $z3 = virtualinvoke r58.<infoFlow.NewSort: boolean ifHasExpr(com.microsoft.z3.Expr)>(r57);
+
+        if $z3 == 0 goto label4;
+
+        return r57;
+
+     label4:
+        virtualinvoke r58.<infoFlow.NewSort: void creatNewOject(com.microsoft.z3.Expr)>(r57);
+
+        return r57;
+
+     label5:
+        $r11 = r0.<infoFlow.InterpolationHandler: java.util.Map global>;
+
+        $r12 = interfaceinvoke $r11.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r59 = (com.microsoft.z3.ArrayExpr) $r12;
+
+        $r13 = r0.<infoFlow.InterpolationHandler: java.util.Map sortId>;
+
+        $r14 = interfaceinvoke $r13.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r60 = (infoFlow.NewSort) $r14;
+
+        r65 = new java.lang.StringBuilder;
+
+        $r16 = interfaceinvoke r1.<soot.Local: java.lang.String getName()>();
+
+        $r17 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r16);
+
+        specialinvoke r65.<java.lang.StringBuilder: void <init>(java.lang.String)>($r17);
+
+        $r18 = virtualinvoke r2.<infoFlow.Edge: infoFlow.ProgramTree getProgramTree()>();
+
+        $r19 = virtualinvoke $r18.<infoFlow.ProgramTree: java.lang.String getProgramDefinition()>();
+
+        $r20 = virtualinvoke r65.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r19);
+
+        r61 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r21 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        r67 = (com.microsoft.z3.Sort) r51_2;
+
+        r62 = virtualinvoke $r21.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r61, r67);
+
+        $r22 = newarray (java.lang.Object)[1];
+
+        $r22[0] = r61;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r22);
+
+        $r23 = newarray (java.lang.Object)[1];
+
+        $r23[0] = r51_2;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r23);
+
+        $r24 = newarray (java.lang.Object)[1];
+
+        $r24[0] = r62;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r24);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+        return null;
+    }
+
+    private java.lang.String getGlobalName(java.lang.String)
+    {
+        infoFlow.InterpolationHandler r0;
+        java.lang.String r1, r12;
+        java.util.Map $r2, $r7, $r9;
+        boolean $z0;
+        java.lang.StringBuilder $r3, $r4, $r5, $r6;
+        java.lang.Integer $r8, $r11;
+        java.lang.Object $r10;
+        int i0, i1, i0_1, i0_2;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 = 1;
+
+        $r2 = r0.<infoFlow.InterpolationHandler: java.util.Map arrayNameMap>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+(0)     if $z0 == 0 goto label1;
+
+        $r9 = r0.<infoFlow.InterpolationHandler: java.util.Map arrayNameMap>;
+
+        $r10 = interfaceinvoke $r9.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r11 = (java.lang.Integer) $r10;
+
+        i1 = virtualinvoke $r11.<java.lang.Integer: int intValue()>();
+
+(1)     i0_1 = i1 + 1;
+
+     label1:
+        i0_2 = Phi(i0 #0, i0_1 #1);
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>("Global_");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0_2);
+
+        r12 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r7 = r0.<infoFlow.InterpolationHandler: java.util.Map arrayNameMap>;
+
+        $r8 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i0_2);
+
+        interfaceinvoke $r7.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, $r8);
+
+        return r12;
+    }
+
+    private com.microsoft.z3.BoolExpr convertAssignStmt(com.microsoft.z3.Expr, com.microsoft.z3.Expr, soot.Type, soot.Value, int)
+    {
+        infoFlow.InterpolationHandler r0;
+        com.microsoft.z3.Expr r1, r2, r7, r8;
+        soot.Type r3;
+        soot.Value r4;
+        int i0;
+        java.lang.String r5, r6;
+        infoFlow.NewSort r9;
+        com.microsoft.z3.BoolExpr r10;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        java.util.Map $r11, $r15, $r16, $r17;
+        java.lang.Object $r12, $r18;
+        com.microsoft.z3.InterpolationContext $r13, $r19, $r22, $r24;
+        com.microsoft.z3.Sort $r14;
+        com.microsoft.z3.ArrayExpr $r20, $r23, r28, r28_1, r28_2;
+        com.microsoft.z3.IntExpr $r21;
+        java.lang.RuntimeException $r25, $r26, $r27;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: com.microsoft.z3.Expr;
+
+        r2 := @parameter1: com.microsoft.z3.Expr;
+
+        r3 := @parameter2: soot.Type;
+
+        r4 := @parameter3: soot.Value;
+
+        i0 := @parameter4: int;
+
+        $z0 = r3 instanceof soot.PrimType;
+
+        if $z0 == 0 goto label1;
+
+        $z6 = r4 instanceof soot.Local;
+
+        if $z6 == 0 goto label1;
+
+        $r27 = new java.lang.RuntimeException;
+
+        specialinvoke $r27.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r27;
+
+     label1:
+        $z1 = r3 instanceof soot.ArrayType;
+
+        if $z1 == 0 goto label2;
+
+        $z5 = r4 instanceof soot.Local;
+
+        if $z5 == 0 goto label2;
+
+        $r26 = new java.lang.RuntimeException;
+
+        specialinvoke $r26.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r26;
+
+     label2:
+        $z2 = r4 instanceof soot.jimple.ArrayRef;
+
+        if $z2 == 0 goto label3;
+
+        $r25 = new java.lang.RuntimeException;
+
+        specialinvoke $r25.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r25;
+
+     label3:
+        r5 = specialinvoke r0.<infoFlow.InterpolationHandler: java.lang.String getArrayName(soot.Value)>(r4);
+
+        r6 = specialinvoke r0.<infoFlow.InterpolationHandler: java.lang.String getGlobalName(java.lang.String)>(r5);
+
+        $r11 = r0.<infoFlow.InterpolationHandler: java.util.Map global>;
+
+        $r12 = interfaceinvoke $r11.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        r7 = (com.microsoft.z3.Expr) $r12;
+
+        $r13 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r14 = virtualinvoke r7.<com.microsoft.z3.Expr: com.microsoft.z3.Sort getSort()>();
+
+        r8 = virtualinvoke $r13.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r6, $r14);
+
+        $r15 = r0.<infoFlow.InterpolationHandler: java.util.Map substitute>;
+
+        interfaceinvoke $r15.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r6, r5);
+
+        $r16 = r0.<infoFlow.InterpolationHandler: java.util.Map global>;
+
+        interfaceinvoke $r16.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r5, r8);
+
+        $r17 = r0.<infoFlow.InterpolationHandler: java.util.Map sortId>;
+
+        $r18 = interfaceinvoke $r17.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        r9 = (infoFlow.NewSort) $r18;
+
+        $z3 = r4 instanceof soot.jimple.FieldRef;
+
+        if $z3 == 0 goto label4;
+
+        $z4 = r4 instanceof soot.jimple.StaticFieldRef;
+
+        if $z4 != 0 goto label4;
+
+        $r24 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r23 = (com.microsoft.z3.ArrayExpr) r7;
+
+        r28 = virtualinvoke $r24.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>($r23, r2, r1);
+
+(0)     goto label5;
+
+     label4:
+        $r19 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r20 = (com.microsoft.z3.ArrayExpr) r7;
+
+        $r21 = virtualinvoke r9.<infoFlow.NewSort: com.microsoft.z3.IntExpr getId(com.microsoft.z3.Expr)>(r2);
+
+(1)     r28_1 = virtualinvoke $r19.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>($r20, $r21, r1);
+
+     label5:
+        r28_2 = Phi(r28 #0, r28_1 #1);
+
+        $r22 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        r10 = virtualinvoke $r22.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r8, r28_2);
+
+        return r10;
+    }
+
+    private com.microsoft.z3.Expr convertAnyNewExpr(soot.jimple.AnyNewExpr, infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.jimple.AnyNewExpr r1;
+        infoFlow.Edge r2;
+        boolean $z0, $z1, $z2;
+        soot.jimple.NewMultiArrayExpr $r3;
+        com.microsoft.z3.Expr $r4, $r6, $r8;
+        soot.jimple.NewArrayExpr $r5;
+        soot.jimple.NewExpr $r7;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.jimple.AnyNewExpr;
+
+        r2 := @parameter1: infoFlow.Edge;
+
+        $z0 = r1 instanceof soot.jimple.NewExpr;
+
+        if $z0 == 0 goto label1;
+
+        $r7 = (soot.jimple.NewExpr) r1;
+
+        $r8 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr convertNewExpr(soot.jimple.NewExpr,infoFlow.Edge)>($r7, r2);
+
+        return $r8;
+
+     label1:
+        $z1 = r1 instanceof soot.jimple.NewArrayExpr;
+
+        if $z1 == 0 goto label2;
+
+        $r5 = (soot.jimple.NewArrayExpr) r1;
+
+        $r6 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr convertNewArrayExpr(soot.jimple.NewArrayExpr,infoFlow.Edge)>($r5, r2);
+
+        return $r6;
+
+     label2:
+        $z2 = r1 instanceof soot.jimple.NewMultiArrayExpr;
+
+        if $z2 == 0 goto label3;
+
+        $r3 = (soot.jimple.NewMultiArrayExpr) r1;
+
+        $r4 = specialinvoke r0.<infoFlow.InterpolationHandler: com.microsoft.z3.Expr convertNewMultiArrayExpr(soot.jimple.NewMultiArrayExpr,infoFlow.Edge)>($r3, r2);
+
+        return $r4;
+
+     label3:
+        return null;
+    }
+
+    private com.microsoft.z3.Expr convertNewExpr(soot.jimple.NewExpr, infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.jimple.NewExpr r1;
+        infoFlow.Edge r2;
+        soot.Type r3;
+        java.lang.String r4;
+        infoFlow.NewSort r5;
+        java.util.Map $r6, $r8;
+        boolean $z0;
+        java.lang.RuntimeException $r7;
+        java.lang.Object $r9;
+        com.microsoft.z3.Expr $r10;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.jimple.NewExpr;
+
+        r2 := @parameter1: infoFlow.Edge;
+
+        r3 = interfaceinvoke r1.<soot.jimple.NewExpr: soot.Type getType()>();
+
+        r4 = virtualinvoke r3.<soot.Type: java.lang.String toString()>();
+
+        $r6 = r0.<infoFlow.InterpolationHandler: java.util.Map sortId>;
+
+        $z0 = interfaceinvoke $r6.<java.util.Map: boolean containsKey(java.lang.Object)>(r4);
+
+        if $z0 == 0 goto label1;
+
+        $r8 = r0.<infoFlow.InterpolationHandler: java.util.Map sortId>;
+
+        $r9 = interfaceinvoke $r8.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r5 = (infoFlow.NewSort) $r9;
+
+        $r10 = virtualinvoke r5.<infoFlow.NewSort: com.microsoft.z3.Expr getNewObject()>();
+
+        return $r10;
+
+     label1:
+        $r7 = new java.lang.RuntimeException;
+
+        specialinvoke $r7.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r7;
+    }
+
+    private com.microsoft.z3.Expr convertNewArrayExpr(soot.jimple.NewArrayExpr, infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.jimple.NewArrayExpr r1;
+        infoFlow.Edge r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.jimple.NewArrayExpr;
+
+        r2 := @parameter1: infoFlow.Edge;
+
+        $r3 = new java.lang.RuntimeException;
+
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r3;
+    }
+
+    private com.microsoft.z3.Expr convertNewMultiArrayExpr(soot.jimple.NewMultiArrayExpr, infoFlow.Edge)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.jimple.NewMultiArrayExpr r1;
+        infoFlow.Edge r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.jimple.NewMultiArrayExpr;
+
+        r2 := @parameter1: infoFlow.Edge;
+
+        $r3 = new java.lang.RuntimeException;
+
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r3;
+    }
+
+    private java.lang.String getArrayName(soot.Value)
+    {
+        infoFlow.InterpolationHandler r0;
+        soot.Value r1;
+        soot.Type r2;
+        boolean $z0;
+        java.lang.RuntimeException $r3;
+        java.lang.String $r4;
+
+        r0 := @this: infoFlow.InterpolationHandler;
+
+        r1 := @parameter0: soot.Value;
+
+        r2 = interfaceinvoke r1.<soot.Value: soot.Type getType()>();
+
+        $z0 = r1 instanceof soot.Local;
+
+        if $z0 == 0 goto label1;
+
+        $r4 = virtualinvoke r2.<soot.Type: java.lang.String toString()>();
+
+        return $r4;
+
+     label1:
+        $r3 = new java.lang.RuntimeException;
+
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>()>();
+
+        throw $r3;
+    }
+}

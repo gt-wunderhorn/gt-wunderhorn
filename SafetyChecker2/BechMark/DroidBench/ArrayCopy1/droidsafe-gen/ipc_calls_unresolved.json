@@ -1,0 +1,8 @@
+{
+  "indicator-type": "ICC: Unresolved Calls",
+  "visibility": {},
+  "display": {
+    "desc": true
+  },
+  "contents": []
+}

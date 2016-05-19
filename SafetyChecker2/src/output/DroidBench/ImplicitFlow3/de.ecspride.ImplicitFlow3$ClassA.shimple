@@ -1,0 +1,31 @@
+public class de.ecspride.ImplicitFlow3$ClassA extends java.lang.Object implements de.ecspride.ImplicitFlow3$Interface
+{
+    final de.ecspride.ImplicitFlow3 this$0;
+
+    public void <init>(de.ecspride.ImplicitFlow3)
+    {
+        de.ecspride.ImplicitFlow3$ClassA r0;
+        de.ecspride.ImplicitFlow3 r1;
+
+        r0 := @this: de.ecspride.ImplicitFlow3$ClassA;
+
+        r1 := @parameter0: de.ecspride.ImplicitFlow3;
+
+        r0.<de.ecspride.ImplicitFlow3$ClassA: de.ecspride.ImplicitFlow3 this$0> = r1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void leakInfo()
+    {
+        de.ecspride.ImplicitFlow3$ClassA r0;
+
+        r0 := @this: de.ecspride.ImplicitFlow3$ClassA;
+
+        staticinvoke <android.util.Log: int i(java.lang.String,java.lang.String)>("INFO", "password correct");
+
+        return;
+    }
+}

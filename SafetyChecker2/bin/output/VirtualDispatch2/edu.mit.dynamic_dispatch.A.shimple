@@ -1,0 +1,23 @@
+class edu.mit.dynamic_dispatch.A extends java.lang.Object
+{
+
+    void <init>()
+    {
+        edu.mit.dynamic_dispatch.A r0;
+
+        r0 := @this: edu.mit.dynamic_dispatch.A;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String f()
+    {
+        edu.mit.dynamic_dispatch.A r0;
+
+        r0 := @this: edu.mit.dynamic_dispatch.A;
+
+        return "untainted";
+    }
+}

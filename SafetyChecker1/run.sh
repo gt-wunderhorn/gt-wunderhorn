@@ -1,4 +1,7 @@
 clear
-rm -R ./bin/*
-javac -d bin -sourcepath src src/selfCompositionTest/NoLeak1.java -cp ./bin:./lib/* 
-java -cp ./bin:./lib/* selfCompositionTest.NoLeak1
+echo "Starting...>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo ">>> Compiling"
+javac -d bin -sourcepath src src/safetyTester/Tester1.java -cp ./bin:./lib/* 
+echo ">>> Executing"
+java -cp ./bin:./lib/* safetyTester.Tester1
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Ended ..."

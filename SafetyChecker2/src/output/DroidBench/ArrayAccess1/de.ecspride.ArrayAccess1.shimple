@@ -1,0 +1,68 @@
+public class de.ecspride.ArrayAccess1 extends android.app.Activity
+{
+    public static java.lang.String[] arrayData;
+
+    public void <init>()
+    {
+        de.ecspride.ArrayAccess1 r0;
+
+        r0 := @this: de.ecspride.ArrayAccess1;
+
+        specialinvoke r0.<android.app.Activity: void <init>()>();
+
+        return;
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.ecspride.ArrayAccess1 r0;
+        android.os.Bundle r1;
+        android.telephony.SmsManager r2;
+        java.lang.String[] $r3, $r4, $r5, $r9, $r10;
+        java.lang.Object $r6;
+        android.telephony.TelephonyManager $r7;
+        java.lang.String $r8, $r11;
+
+        r0 := @this: de.ecspride.ArrayAccess1;
+
+        r1 := @parameter0: android.os.Bundle;
+
+        specialinvoke r0.<android.app.Activity: void onCreate(android.os.Bundle)>(r1);
+
+        virtualinvoke r0.<de.ecspride.ArrayAccess1: void setContentView(int)>(2130903040);
+
+        $r3 = newarray (java.lang.String)[3];
+
+        <de.ecspride.ArrayAccess1: java.lang.String[] arrayData> = $r3;
+
+        $r4 = <de.ecspride.ArrayAccess1: java.lang.String[] arrayData>;
+
+        $r4[0] = "element 1 is tainted:";
+
+        $r5 = <de.ecspride.ArrayAccess1: java.lang.String[] arrayData>;
+
+        $r6 = virtualinvoke r0.<de.ecspride.ArrayAccess1: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        $r7 = (android.telephony.TelephonyManager) $r6;
+
+        $r8 = virtualinvoke $r7.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
+
+        $r5[1] = $r8;
+
+        $r9 = <de.ecspride.ArrayAccess1: java.lang.String[] arrayData>;
+
+        $r9[2] = "neutral text";
+
+        r2 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+
+        $r10 = <de.ecspride.ArrayAccess1: java.lang.String[] arrayData>;
+
+        $r11 = $r10[2];
+
+        virtualinvoke r2.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49 1234", null, $r11, null, null);
+
+        staticinvoke <toy_benchmark.ErrorFunction: void Error()>();
+
+        return;
+    }
+}
