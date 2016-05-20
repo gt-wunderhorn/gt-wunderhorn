@@ -13,7 +13,7 @@ public class Test1 {
 //		else 
 //			z = 0;
 
-		if(x != 5)
+		if(x == 5)
 			ErrorLable.Error();
 	}
 

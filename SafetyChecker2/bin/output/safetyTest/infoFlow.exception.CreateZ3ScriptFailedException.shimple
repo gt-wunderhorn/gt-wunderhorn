@@ -1,0 +1,30 @@
+public class infoFlow.exception.CreateZ3ScriptFailedException extends java.lang.Exception
+{
+    public static final long serialVersionUID;
+
+    public void <init>(java.lang.String)
+    {
+        infoFlow.exception.CreateZ3ScriptFailedException r0;
+        java.lang.String r1;
+
+        r0 := @this: infoFlow.exception.CreateZ3ScriptFailedException;
+
+        r1 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<java.lang.Exception: void <init>(java.lang.String)>(r1);
+
+        return;
+    }
+
+    public java.lang.String getMessage()
+    {
+        infoFlow.exception.CreateZ3ScriptFailedException r0;
+        java.lang.String $r1;
+
+        r0 := @this: infoFlow.exception.CreateZ3ScriptFailedException;
+
+        $r1 = specialinvoke r0.<java.lang.Exception: java.lang.String getMessage()>();
+
+        return $r1;
+    }
+}

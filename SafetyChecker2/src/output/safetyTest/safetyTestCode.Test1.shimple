@@ -21,7 +21,7 @@ public class safetyTestCode.Test1 extends java.lang.Object
 
         b0 = 5;
 
-        if b0 == 5 goto label1;
+        if b0 != 5 goto label1;
 
         staticinvoke <infoFlow.ErrorLable: void Error()>();
 

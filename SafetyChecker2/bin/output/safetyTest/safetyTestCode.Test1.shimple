@@ -16,31 +16,16 @@ public class safetyTestCode.Test1 extends java.lang.Object
     {
         safetyTestCode.Test1 r0;
         byte b0;
-        boolean z0, z1, z2, z3;
 
         r0 := @this: safetyTestCode.Test1;
 
         b0 = 5;
 
-        z0 = 0;
-
-        z1 = 0;
-
-        if z0 != 0 goto label1;
-
-        z2 = 1;
-
-        goto label2;
-
-     label1:
-        z3 = 0;
-
-     label2:
-        if b0 == 5 goto label3;
+        if b0 == 5 goto label1;
 
         staticinvoke <infoFlow.ErrorLable: void Error()>();
 
-     label3:
+     label1:
         return;
     }
 }

@@ -69,7 +69,6 @@ public class Vertex {
 
 	public BoolExpr getInvariant() { return this.invariant; }
 	public void setInvariant(BoolExpr invariant) { this.invariant = invariant; }
-	public void updateInvariant() { LogUtils.infoln("updateInvariant"); System.exit(0); }
 
 	public String toString() { return "L" + locationNumber + "-D" + distance; }
 //	public String toString() { return this.outgoingEdge.toString(); }

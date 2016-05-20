@@ -9,6 +9,9 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
+import com.microsoft.z3.BoolExpr;
+import com.microsoft.z3.InterpolationContext;
+
 import dotty.CfgConverter;
 
 import infoFlow.exception.ErrorLocationNotFoundException;
@@ -32,7 +35,10 @@ public class ProgramTree {
 	private Stack<Edge> path = new Stack<Edge>();
 
 	// from me
-	private InterpolationHandler itpHandler; 
+	private InterpolationContext ictx;
+	private Z3ScriptHandler z3Handler; 
+	private InterpolationHandler itpHandler;
+
 	private boolean programCorrect = false;
 	private boolean mainFunction;
 	private boolean treeClosed;
@@ -50,8 +56,7 @@ public class ProgramTree {
 	private UnitController unitController;
 
 	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.infoln("------->ProgramTree");
-		this.itpHandler = new InterpolationHandler();
+		LogUtils.detailln("------->ProgramTree");
 		this.programCorrect = false;
 		this.calleeFunctions = new HashMap<String, ProgramTree>();
 		this.errorRootSet = new HashSet<Vertex>();
@@ -61,13 +66,15 @@ public class ProgramTree {
 		this.functionSignature = functionSignature;
 		this.stores = stores;
 		this.unitController = new UnitController();
-		InterpolationHandler itpHandler = new InterpolationHandler();	
 		this.mainFunction = mainFunction;
+		this.ictx = new InterpolationContext();
+		this.z3Handler = new Z3ScriptHandler(ictx);
+		this.itpHandler = new InterpolationHandler(ictx);
 
 		if(this.mainFunction)
-			LogUtils.debugln("mainFunction = " + functionSignature);
+			LogUtils.detailln("mainFunction = " + functionSignature);
 		else
-			LogUtils.debugln("setSubFunction = " + functionSignature);
+			LogUtils.detailln("setSubFunction = " + functionSignature);
 
 		boolean mainFunctionFound = findMainFunction();
 		if (mainFunctionFound)
@@ -77,7 +84,7 @@ public class ProgramTree {
 	}
 
 	private void startTest() throws ErrorLocationNotFoundException, MainFunctionNotFoundException {
-		LogUtils.infoln("------------>startTest()");
+		LogUtils.detailln("------------>startTest()");
 //		boolean errorLocationFound = findErrorLocation(returnLeaf);
 //		if (!errorLocationFound)
 //			throw new ErrorLocationNotFoundException(this.mainFunction + " does not have any ErrorLocation");
@@ -87,7 +94,7 @@ public class ProgramTree {
 		// start unwind process
 
 		unwind();
-		LogUtils.infoln("<-------------startTest");
+		LogUtils.detailln("<-------------startTest");
 	}
 
 
@@ -151,19 +158,19 @@ public class ProgramTree {
 	private int locationCounter = 0;
 
 	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.warningln("----->Unwind");
+		LogUtils.detailln("----->Unwind");
 		uncovered.add(returnLeaf);
 		while(!uncovered.isEmpty()) {
 			Vertex v = uncovered.remove();
 			boolean errorPathFound = expandBFS(v);
 
 			if(errorPathFound) {
-				CfgConverter.printErrorPaths(errorSet, "_error" + errorRootSet.size() + ".dot");
 				Vertex errorRoot = errorRootQueue.remove(); 
 
 				LogUtils.infoln("error root # = " + errorRootSet.size());
-				LogUtils.infoln("current error root" + errorRoot);
-				itpHandler.convertPathtoZ3Script(errorRoot); 
+				z3Handler.convertPathtoZ3Script(errorRoot); 
+				BoolExpr interpolant = itpHandler.createInterpolant(errorRootSet);
+				CfgConverter.printErrorPaths(errorSet, "_error" + errorRootSet.size() + ".dot");
 				LogUtils.infoln("unwind");
 				System.exit(0);
 			}
@@ -182,7 +189,7 @@ public class ProgramTree {
 		q.add(returnLeaf);		
 		CfgConverter.printAllPaths(q, "_all.dot");
 		CfgConverter.printErrorPaths(errorSet, "_error.dot");
-		System.out.println("ProgramTree.unwind()");
+		LogUtils.infoln("ProgramTree.unwind()");
 		System.exit(0);
 //		LogUtils.warningln("<----Unwind");	
 	}
@@ -221,6 +228,7 @@ public class ProgramTree {
 
 				if(cfg.getUnexceptionalPredsOf(incomingEdge.getUnit()).size() == 0) {
 					v.setHeadLocation(true);
+					v.setInvariant(itpHandler.getFalseInvariant());
 					if(incomingEdge.isInErrorPath()) { 
 						errorRootSet.add(v);
 						errorRootQueue.add(v);

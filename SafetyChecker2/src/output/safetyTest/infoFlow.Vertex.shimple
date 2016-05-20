@@ -453,24 +453,6 @@ public class infoFlow.Vertex extends java.lang.Object
         return;
     }
 
-    public void updateInvariant()
-    {
-        infoFlow.Vertex r0;
-        java.lang.Object[] $r1;
-
-        r0 := @this: infoFlow.Vertex;
-
-        $r1 = newarray (java.lang.Object)[1];
-
-        $r1[0] = "updateInvariant";
-
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r1);
-
-        staticinvoke <java.lang.System: void exit(int)>(0);
-
-        return;
-    }
-
     public java.lang.String toString()
     {
         infoFlow.Vertex r0;

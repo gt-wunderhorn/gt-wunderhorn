@@ -2,8 +2,11 @@ digraph {
 	ratio="fill";
 	size="8.3,11.7!";
 	margin=0;
-	"L1-D1" -> "L3-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()--null--null"];
-	"L3-D2" -> "L5-D3"[label="if b0 == 5 goto return--null--null"];
-	"L5-D3" -> "L7-D4"[label="b0 = 5--null--null"];
-	"L7-D4" -> "L8-D5"[label="r0 := @this: safetyTestCode.Test1--null--null"];
+	"L1-D1" -> "L2-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()--null--(or (not (not (= b0__test_04 5)))
+    (= b0__test_04 5)
+    (= Global_safetyTestCode.Test1_2 (store Global_safetyTestCode.Test1_1 1 1)))"];
+	"L2-D2" -> "L4-D3"[label="if b0 != 5 goto return--(not (not (= b0__test_04 5)))--(or (= b0__test_04 5)
+    (= Global_safetyTestCode.Test1_2 (store Global_safetyTestCode.Test1_1 1 1)))"];
+	"L4-D3" -> "L6-D4"[label="b0 = 5--(= b0__test_04 5)--(= Global_safetyTestCode.Test1_2 (store Global_safetyTestCode.Test1_1 1 1))"];
+	"L6-D4" -> "L8-D5"[label="r0 := @this: safetyTestCode.Test1--(= Global_safetyTestCode.Test1_2 (store Global_safetyTestCode.Test1_1 1 1))--false"];
 }

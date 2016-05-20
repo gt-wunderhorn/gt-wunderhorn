@@ -14,7 +14,7 @@ public class infoFlow.Vertex extends java.lang.Object
     private boolean psi;
     private int distance;
     private int locationNumber;
-    private com.microsoft.z3.BoolExpr z3;
+    private com.microsoft.z3.BoolExpr invariant;
 
     public void <init>()
     {
@@ -427,19 +427,19 @@ public class infoFlow.Vertex extends java.lang.Object
         return;
     }
 
-    public com.microsoft.z3.BoolExpr getZ3()
+    public com.microsoft.z3.BoolExpr getInvariant()
     {
         infoFlow.Vertex r0;
         com.microsoft.z3.BoolExpr $r1;
 
         r0 := @this: infoFlow.Vertex;
 
-        $r1 = r0.<infoFlow.Vertex: com.microsoft.z3.BoolExpr z3>;
+        $r1 = r0.<infoFlow.Vertex: com.microsoft.z3.BoolExpr invariant>;
 
         return $r1;
     }
 
-    public void setZ3(com.microsoft.z3.BoolExpr)
+    public void setInvariant(com.microsoft.z3.BoolExpr)
     {
         infoFlow.Vertex r0;
         com.microsoft.z3.BoolExpr r1;
@@ -448,7 +448,25 @@ public class infoFlow.Vertex extends java.lang.Object
 
         r1 := @parameter0: com.microsoft.z3.BoolExpr;
 
-        r0.<infoFlow.Vertex: com.microsoft.z3.BoolExpr z3> = r1;
+        r0.<infoFlow.Vertex: com.microsoft.z3.BoolExpr invariant> = r1;
+
+        return;
+    }
+
+    public void updateInvariant()
+    {
+        infoFlow.Vertex r0;
+        java.lang.Object[] $r1;
+
+        r0 := @this: infoFlow.Vertex;
+
+        $r1 = newarray (java.lang.Object)[1];
+
+        $r1[0] = "updateInvariant";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r1);
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
 
         return;
     }
