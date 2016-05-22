@@ -59,7 +59,7 @@ public class Z3ScriptHandler {
 	}
 	
 	public void convertPathtoZ3Script(Vertex v) {
-		LogUtils.infoln(">>>>>>>InterpolationHandler.convertPathtoZ3Script");
+		LogUtils.debugln(">>>>>>> Z3ScriptHandler.convertPathtoZ3Script");
 
 		boolean isError = false;
 		while(v != null) {
@@ -69,7 +69,7 @@ public class Z3ScriptHandler {
 			if(v.getOutgoingEdge().isErrorEdge())
 				isError = true;
 		}
-		LogUtils.infoln("InterpolationHandler.convertPathtoZ3Script");
+		LogUtils.debugln("<<<<<<<< Z3ScriptHandler.convertPathtoZ3Script");
 	}
 
 	public boolean createZ3Script(Edge e) {
@@ -81,12 +81,12 @@ public class Z3ScriptHandler {
 		if(stmt instanceof AssignStmt) converted = convertAssignStmtEdge(e);
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 	
-		LogUtils.infoln("---------------");	
-		LogUtils.infoln("Vertex=" + e.getSource() + "---- Unit=" + e);
-		LogUtils.infoln("Expr" + e.getZ3Expr());
+		LogUtils.debugln("---------------");	
+		LogUtils.debugln("Vertex=" + e.getSource() + "---- Unit=" + e);
+		LogUtils.debugln("Expr" + e.getZ3Expr());
 		if(!converted) {
 			LogUtils.infoln("Converstion failed");
-			LogUtils.infoln("InterpolationHandler.createZ3Script");
+			LogUtils.infoln("Z3ScriptHandler.createZ3Script");
 			System.exit(0);
 		}
 		return converted;
@@ -105,11 +105,11 @@ public class Z3ScriptHandler {
 		Edge nextEdge = edge.getTarget().getOutgoingEdge();
 
 		Unit currentUnit = edge.getUnit();
-		LogUtils.infoln("currentUnit=" + currentUnit);
+		LogUtils.debugln("currentUnit=" + currentUnit);
 		Unit nextUnit = nextEdge.getUnit();
-		LogUtils.infoln("nextUnit=" + nextUnit);
+		LogUtils.debugln("nextUnit=" + nextUnit);
 		Unit targetUnit = ifStmt.getTarget();
-		LogUtils.infoln("targetUnit = " + targetUnit);
+		LogUtils.debugln("targetUnit = " + targetUnit);
 
 		if(targetUnit.equals(nextUnit)) 
 			edge.setZ3Expr(condition);
@@ -192,7 +192,7 @@ public class Z3ScriptHandler {
 			String oldName = local.getName();
 			if(assignLeft) {
 				Type type = value.getType();
-				String newName = oldName + getNameSuffix(edge) + edge.getSource().getDistance();
+				String newName = oldName + getNameSuffix(edge); //+ edge.getSource().getDistance();
 				Expr leftExpr = null;
 				if(type instanceof IntegerType) {
 					leftExpr = ictx.mkIntConst(newName);

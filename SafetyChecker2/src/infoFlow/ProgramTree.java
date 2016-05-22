@@ -39,7 +39,7 @@ public class ProgramTree {
 	private Z3ScriptHandler z3Handler; 
 	private InterpolationHandler itpHandler;
 
-	private boolean programCorrect = false;
+	private boolean errorLocationFeasible = false;
 	private boolean mainFunction;
 	private boolean treeClosed;
 	private HashMap<String, ProgramTree> calleeFunctions;
@@ -57,7 +57,7 @@ public class ProgramTree {
 
 	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("------->ProgramTree");
-		this.programCorrect = false;
+		this.errorLocationFeasible = false;
 		this.calleeFunctions = new HashMap<String, ProgramTree>();
 		this.errorRootSet = new HashSet<Vertex>();
 		this.errorRootQueue = new LinkedList<Vertex>();
@@ -169,29 +169,21 @@ public class ProgramTree {
 
 				LogUtils.infoln("error root # = " + errorRootSet.size());
 				z3Handler.convertPathtoZ3Script(errorRoot); 
-				BoolExpr interpolant = itpHandler.createInterpolant(errorRootSet);
-				CfgConverter.printErrorPaths(errorSet, "_error" + errorRootSet.size() + ".dot");
-				LogUtils.infoln("unwind");
-				System.exit(0);
+				errorLocationFeasible = itpHandler.createInterpolant(errorRootSet);
+//				LogUtils.infoln("sending error size = " + errorSet.size());
+//				CfgConverter.printErrorPaths(errorSet, "_error" + errorRootSet.size() + ".dot");
+				
+				printResult(errorRoot.toString());
+
+				if(errorLocationFeasible)
+					break;
 			}
 
-//			LogUtils.warningln("unwind" + v.getIncomingEdges());
-//			for(Vertex v : uncovered) {
-//				for(Edge e : v.getIncomingEdges()) {
-//					for(Unit u : cfg.getUnexceptionalPredsOf(v.get)) {
-//						close();
-//					}
-//				}	
-//			}
-//			DFS(v);			
 		}	
 		Queue<Vertex> q = new LinkedList<Vertex>();
 		q.add(returnLeaf);		
 		CfgConverter.printAllPaths(q, "_all.dot");
-		CfgConverter.printErrorPaths(errorSet, "_error.dot");
-		LogUtils.infoln("ProgramTree.unwind()");
-		System.exit(0);
-//		LogUtils.warningln("<----Unwind");	
+		CfgConverter.printErrorPaths(errorSet, "_errors.dot");
 	}
 
 	private void DFS(Vertex v) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
@@ -272,7 +264,20 @@ public class ProgramTree {
 	public String getProgramDefinition() {
 		return "_" + this.functionName + "_" + ProgramTree.functionNameInvokeCount.get(this.functionName);		
 	}	
+
+	public void printResult(String function) {
+		LogUtils.printResult(function, errorLocationFeasible);
+//		LogUtils.infoln("********************\n " + function + "\n***********************");
+//		printCurrentStatus();
+	}
  
+//	public void printCurrentStatus() {
+//
+//		if(errorLocationFeasible)
+//			LogUtils.infoln("Error path is feasbile.");
+//		else
+//			LogUtils.infoln("\u001B[34mError patth is not feasbile.");
+//	}
 	// public Set<Vertex> getVertexSet() { return this.vertexSet; }
 	// public Set<Edge> getEdgeSet() { return this.edgeSet; }
 }

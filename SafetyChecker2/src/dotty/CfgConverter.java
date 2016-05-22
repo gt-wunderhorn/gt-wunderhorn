@@ -30,12 +30,12 @@ public class CfgConverter {
 			writer.write("\tratio=\"fill\";\n\tsize=\"8.3,11.7!\";\n\tmargin=0;\n");
 
 			while(!queue.isEmpty()) {
-				Vertex w = queue.remove();	
+				Vertex w = queue.remove();
 				Set<Vertex> vSet = w.getPreviousVertexSet();
 				Edge e = w.getOutgoingEdge();
 				if(w.getDistance()!=0 )
 					if(w.getOutgoingEdge().isInErrorPath()) 
-						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[label=\"" + e + "--" + e.getZ3Expr() + "--" + w.getInvariant() + "\"];\n");
+						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
 				for(Vertex v : vSet) { 
 					queue.add(v);
 				}

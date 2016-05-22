@@ -1,0 +1,46 @@
+public class safetyTestCode.iftest.Test3 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        safetyTestCode.iftest.Test3 r0;
+
+        r0 := @this: safetyTestCode.iftest.Test3;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test()
+    {
+        safetyTestCode.iftest.Test3 r0;
+        byte b0;
+        boolean z0, z1, z2, z3;
+
+        r0 := @this: safetyTestCode.iftest.Test3;
+
+        b0 = 5;
+
+        z0 = 0;
+
+        z1 = 0;
+
+        if b0 != 0 goto label1;
+
+        z2 = 1;
+
+     label1:
+        if b0 == 0 goto label2;
+
+        z3 = 1;
+
+     label2:
+        if b0 != 0 goto label3;
+
+        staticinvoke <infoFlow.ErrorLable: void Error()>();
+
+     label3:
+        return;
+    }
+}

@@ -90,6 +90,8 @@ public class safetyTester.Tester1 extends java.lang.Object
 
         r23 = r27;
 
+        virtualinvoke r23.<infoFlow.ProgramTree: void printResult()>();
+
      label2:
         goto label4;
 

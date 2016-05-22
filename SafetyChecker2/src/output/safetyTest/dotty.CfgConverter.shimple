@@ -110,7 +110,7 @@ public class dotty.CfgConverter extends java.lang.Object
 
         $r19 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r18);
 
-        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n**");
 
         $r21 = virtualinvoke r2.<infoFlow.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 

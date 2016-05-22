@@ -1,0 +1,42 @@
+public class safetyTester.iftest.Tester3 extends java.lang.Object
+{
+    static java.util.Map stores;
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <safetyTester.iftest.Tester3: java.util.Map stores> = $r0;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        safetyTester.iftest.Tester3 r0;
+
+        r0 := @this: safetyTester.iftest.Tester3;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[]) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException
+    {
+        java.lang.String[] r0;
+        java.lang.Error $r1;
+
+        r0 := @parameter0: java.lang.String[];
+
+        $r1 = new java.lang.Error;
+
+        specialinvoke $r1.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problem: \n\tThe method printResult(String) in the type ProgramTree is not applicable for the arguments ()\n");
+
+        throw $r1;
+    }
+}

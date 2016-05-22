@@ -90,9 +90,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r1 = newarray (java.lang.Object)[1];
 
-        $r1[0] = ">>>>>>>InterpolationHandler.convertPathtoZ3Script";
+        $r1[0] = ">>>>>>> Z3ScriptHandler.convertPathtoZ3Script";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r1);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r1);
 
         z2 = 0;
 
@@ -119,18 +119,18 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 (2)     z2_2 = 1;
 
      label3:
-        r5_1 = Phi(r5 #0, r5_2 #1, r5_2 #2);
-
         z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
+
+        r5_1 = Phi(r5 #0, r5_2 #1, r5_2 #2);
 
         if r5_1 != null goto label1;
 
      label4:
         $r4 = newarray (java.lang.Object)[1];
 
-        $r4[0] = "InterpolationHandler.convertPathtoZ3Script";
+        $r4[0] = "<<<<<<<< Z3ScriptHandler.convertPathtoZ3Script";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r4);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         return;
     }
@@ -204,7 +204,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r3[0] = "---------------";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r3);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r3);
 
         $r4 = newarray (java.lang.Object)[1];
 
@@ -224,7 +224,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r4[0] = $r10;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r4);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         $r11 = newarray (java.lang.Object)[1];
 
@@ -240,7 +240,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r11[0] = $r15;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r11);
 
         if z5_10 != 0 goto label6;
 
@@ -252,7 +252,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r17 = newarray (java.lang.Object)[1];
 
-        $r17[0] = "InterpolationHandler.createZ3Script";
+        $r17[0] = "Z3ScriptHandler.createZ3Script";
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r17);
 
@@ -334,7 +334,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r13[0] = $r16;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r13);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r13);
 
         r7 = virtualinvoke r5.<infoFlow.Edge: soot.Unit getUnit()>();
 
@@ -350,7 +350,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r17[0] = $r20;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r17);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r17);
 
         r8 = interfaceinvoke r2.<soot.jimple.IfStmt: soot.jimple.Stmt getTarget()>();
 
@@ -366,7 +366,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r21[0] = $r24;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r21);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r21);
 
         $z0 = virtualinvoke r8.<java.lang.Object: boolean equals(java.lang.Object)>(r7);
 
@@ -588,9 +588,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 (3)     i2_2 = i2_1 + 1;
 
      label3:
-        i2_1 = Phi(i2 #0, i2_2 #3);
-
         r22_1 = Phi(r22 #0, r22_3 #3);
+
+        i2_1 = Phi(i2 #0, i2_2 #3);
 
         if i2_1 < i0 goto label1;
 
@@ -676,22 +676,21 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         soot.Value r1;
         boolean z0, $z1, $z2, $z3, $z4, $z5;
         infoFlow.Edge r2;
-        int i0, $i1, i2;
-        com.microsoft.z3.InterpolationContext $r3, $r17, $r18;
+        int i0, i1;
+        com.microsoft.z3.InterpolationContext $r3, $r15, $r16;
         soot.jimple.BinopExpr $r4;
         com.microsoft.z3.Expr $r5, $r8;
-        java.util.Map $r6, $r15, $r19;
+        java.util.Map $r6, $r13, $r17;
         java.lang.Object $r7;
-        java.lang.StringBuilder $r9, $r12, $r14;
-        java.lang.String $r10, $r11, r23, r25;
-        infoFlow.Vertex $r13;
-        com.microsoft.z3.IntSort $r20;
-        soot.Local r22;
-        soot.Type r24;
-        com.microsoft.z3.IntExpr r26, r26_1, r26_2;
-        soot.jimple.Constant r27;
-        soot.jimple.IntConstant r28;
-        com.microsoft.z3.IntNum r29;
+        java.lang.StringBuilder $r9, $r12;
+        java.lang.String $r10, $r11, r21, r23;
+        com.microsoft.z3.IntSort $r18;
+        soot.Local r20;
+        soot.Type r22;
+        com.microsoft.z3.IntExpr r24, r24_1, r24_2;
+        soot.jimple.Constant r25;
+        soot.jimple.IntConstant r26;
+        com.microsoft.z3.IntNum r27;
 
         r0 := @this: infoFlow.Z3ScriptHandler;
 
@@ -707,17 +706,17 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         if $z1 == 0 goto label3;
 
-        r22 = (soot.Local) r1;
+        r20 = (soot.Local) r1;
 
-        r23 = interfaceinvoke r22.<soot.Local: java.lang.String getName()>();
+        r21 = interfaceinvoke r20.<soot.Local: java.lang.String getName()>();
 
         if z0 == 0 goto label2;
 
-        r24 = interfaceinvoke r1.<soot.Value: soot.Type getType()>();
+        r22 = interfaceinvoke r1.<soot.Value: soot.Type getType()>();
 
         $r9 = new java.lang.StringBuilder;
 
-        $r10 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r23);
+        $r10 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r21);
 
         specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>($r10);
 
@@ -725,45 +724,39 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r12 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
 
-        $r13 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+        r23 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $i1 = virtualinvoke $r13.<infoFlow.Vertex: int getDistance()>();
+        r24 = null;
 
-        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
-
-        r25 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        r26 = null;
-
-        $z5 = r24 instanceof soot.IntegerType;
+        $z5 = r22 instanceof soot.IntegerType;
 
 (0)     if $z5 == 0 goto label1;
 
-        $r17 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r15 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r26_1 = virtualinvoke $r17.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>(r25);
+        r24_1 = virtualinvoke $r15.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>(r23);
 
-        $r19 = r0.<infoFlow.Z3ScriptHandler: java.util.Map substituteSort>;
+        $r17 = r0.<infoFlow.Z3ScriptHandler: java.util.Map substituteSort>;
 
-        $r18 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r16 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r20 = virtualinvoke $r18.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort mkIntSort()>();
+        $r18 = virtualinvoke $r16.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort mkIntSort()>();
 
-(1)     interfaceinvoke $r19.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r25, $r20);
+(1)     interfaceinvoke $r17.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r23, $r18);
 
      label1:
-        r26_2 = Phi(r26 #0, r26_1 #1);
+        r24_2 = Phi(r24 #0, r24_1 #1);
 
-        $r15 = r0.<infoFlow.Z3ScriptHandler: java.util.Map localMap>;
+        $r13 = r0.<infoFlow.Z3ScriptHandler: java.util.Map localMap>;
 
-        interfaceinvoke $r15.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r23, r26_2);
+        interfaceinvoke $r13.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r21, r24_2);
 
-        return r26_2;
+        return r24_2;
 
      label2:
         $r6 = r0.<infoFlow.Z3ScriptHandler: java.util.Map localMap>;
 
-        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r23);
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r21);
 
         $r8 = (com.microsoft.z3.Expr) $r7;
 
@@ -785,21 +778,21 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         if $z3 == 0 goto label5;
 
-        r27 = (soot.jimple.Constant) r1;
+        r25 = (soot.jimple.Constant) r1;
 
-        $z4 = r27 instanceof soot.jimple.IntConstant;
+        $z4 = r25 instanceof soot.jimple.IntConstant;
 
         if $z4 == 0 goto label5;
 
-        r28 = (soot.jimple.IntConstant) r27;
+        r26 = (soot.jimple.IntConstant) r25;
 
-        i2 = r28.<soot.jimple.IntConstant: int value>;
+        i1 = r26.<soot.jimple.IntConstant: int value>;
 
         $r3 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r29 = virtualinvoke $r3.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(i2);
+        r27 = virtualinvoke $r3.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(i1);
 
-        return r29;
+        return r27;
 
      label5:
         return null;

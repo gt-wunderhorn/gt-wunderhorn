@@ -1,12 +1,12 @@
-public class safetyTester.Tester1 extends java.lang.Object
+public class safetyTester.iftest.Tester3 extends java.lang.Object
 {
     static java.util.Map stores;
 
     public void <init>()
     {
-        safetyTester.Tester1 r0;
+        safetyTester.iftest.Tester3 r0;
 
-        r0 := @this: safetyTester.Tester1;
+        r0 := @this: safetyTester.iftest.Tester3;
 
         specialinvoke r0.<java.lang.Object: void <init>()>();
 
@@ -20,14 +20,13 @@ public class safetyTester.Tester1 extends java.lang.Object
         soot.options.Options $r3, $r4, $r5;
         soot.PackManager $r7;
         soot.Pack $r8;
-        java.lang.Object[] $r11, $r14, $r16, $r17, $r18, $r19, $r20, $r22;
+        java.lang.Object[] $r11, $r14, $r16, $r17, $r18, $r19, $r20, $r21;
         java.util.Map $r13;
-        java.lang.Exception $r15, r24;
-        java.lang.StackTraceElement[] $r21;
-        infoFlow.ProgramTree r23, r27;
-        safetyTester.Tester1$1 r25;
-        soot.Transform r26;
-        soot.Transformer r28;
+        java.lang.Exception $r15, r23;
+        infoFlow.ProgramTree r22, r26;
+        safetyTester.iftest.Tester3$1 r24;
+        soot.Transform r25;
+        soot.Transformer r27;
 
         r0 := @parameter0: java.lang.String[];
 
@@ -59,38 +58,38 @@ public class safetyTester.Tester1 extends java.lang.Object
 
         $r8 = virtualinvoke $r7.<soot.PackManager: soot.Pack getPack(java.lang.String)>("stp");
 
-        r26 = new soot.Transform;
+        r25 = new soot.Transform;
 
-        r25 = new safetyTester.Tester1$1;
+        r24 = new safetyTester.iftest.Tester3$1;
 
-        specialinvoke r25.<safetyTester.Tester1$1: void <init>()>();
+        specialinvoke r24.<safetyTester.iftest.Tester3$1: void <init>()>();
 
-        r28 = (soot.Transformer) r25;
+        r27 = (soot.Transformer) r24;
 
-        specialinvoke r26.<soot.Transform: void <init>(java.lang.String,soot.Transformer)>("stp.test", r28);
+        specialinvoke r25.<soot.Transform: void <init>(java.lang.String,soot.Transformer)>("stp.test", r27);
 
-        virtualinvoke $r8.<soot.Pack: void add(soot.Transform)>(r26);
+        virtualinvoke $r8.<soot.Pack: void add(soot.Transform)>(r25);
 
         staticinvoke <soot.Main: void main(java.lang.String[])>(r1);
 
-        r2 = "<safetyTestCode.Test1: void test()>";
+        r2 = "<safetyTestCode.iftest.Test3: void test()>";
 
         $r11 = newarray (java.lang.Object)[1];
 
-        $r11[0] = "safetyTester.Tester1... Test started...";
+        $r11[0] = "safetyTester.iftest.Tester3... Test started...";
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
 
      label1:
-        r27 = new infoFlow.ProgramTree;
+        r26 = new infoFlow.ProgramTree;
 
-        $r13 = <safetyTester.Tester1: java.util.Map stores>;
+        $r13 = <safetyTester.iftest.Tester3: java.util.Map stores>;
 
-        specialinvoke r27.<infoFlow.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>($r13, r2, 1);
+        specialinvoke r26.<infoFlow.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>($r13, r2, 1);
 
-        r23 = r27;
+        r22 = r26;
 
-        virtualinvoke r23.<infoFlow.ProgramTree: void printResult()>();
+        virtualinvoke r22.<infoFlow.ProgramTree: void printResult(java.lang.String)>(r2);
 
      label2:
         goto label4;
@@ -98,7 +97,7 @@ public class safetyTester.Tester1 extends java.lang.Object
      label3:
         $r15 := @caughtexception;
 
-        r24 = $r15;
+        r23 = $r15;
 
         $r16 = newarray (java.lang.Object)[1];
 
@@ -120,7 +119,7 @@ public class safetyTester.Tester1 extends java.lang.Object
 
         $r19 = newarray (java.lang.Object)[1];
 
-        $r19[0] = r24;
+        $r19[0] = r23;
 
         staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r19);
 
@@ -130,22 +129,18 @@ public class safetyTester.Tester1 extends java.lang.Object
 
         staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r20);
 
-        $r21 = virtualinvoke r24.<java.lang.Exception: java.lang.StackTraceElement[] getStackTrace()>();
+        $r21 = newarray (java.lang.Object)[1];
+
+        $r21[0] = "******************";
 
         staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r21);
 
-        $r22 = newarray (java.lang.Object)[1];
-
-        $r22[0] = "******************";
-
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r22);
-
-        virtualinvoke r24.<java.lang.Exception: void printStackTrace()>();
+        virtualinvoke r23.<java.lang.Exception: void printStackTrace()>();
 
      label4:
         $r14 = newarray (java.lang.Object)[1];
 
-        $r14[0] = "safetyTester.Tester1... Test finished...";
+        $r14[0] = "safetyTester.iftest.Tester3... Test finished...";
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r14);
 
@@ -162,7 +157,7 @@ public class safetyTester.Tester1 extends java.lang.Object
 
         specialinvoke $r0.<java.util.HashMap: void <init>()>();
 
-        <safetyTester.Tester1: java.util.Map stores> = $r0;
+        <safetyTester.iftest.Tester3: java.util.Map stores> = $r0;
 
         return;
     }
