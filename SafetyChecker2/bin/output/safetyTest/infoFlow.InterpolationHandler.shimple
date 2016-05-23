@@ -158,9 +158,9 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (5)     r36_3 = virtualinvoke r36_2.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
      label06:
-        r34_2 = Phi(r34_1 #1, r34_5 #5);
-
         r36_2 = Phi(r36_1 #1, r36_3 #5);
+
+        r34_2 = Phi(r34_1 #1, r34_5 #5);
 
         if r36_2 != null goto label02;
 
@@ -176,11 +176,11 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (6)     virtualinvoke $r19.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r33_2);
 
      label08:
+        r36 = Phi(r36 #0, r36_1 #2, r36_2 #6);
+
         r34_1 = Phi(r34 #0, r34_1 #2, r34_2 #6);
 
         r33_1 = Phi(r33 #0, r33_1 #2, r33_2 #6);
-
-        r36 = Phi(r36 #0, r36_1 #2, r36_2 #6);
 
         $z1 = interfaceinvoke r35.<java.util.Iterator: boolean hasNext()>();
 

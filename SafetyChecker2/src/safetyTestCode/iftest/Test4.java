@@ -2,17 +2,18 @@ package safetyTestCode.iftest;
 
 import infoFlow.ErrorLable;
 
-public class Test2 {
+public class Test4 {
 
 	public void test() {
 		int x = 5;
 		int y = 0;
-		int z = 5;
+		int z = 3; 
+		if (y == 0)
+			z = x;
+		else 
+			z = 1;
 
-		if (y != 0) {
-			x = 1;
-			z = 3;
-		}
+		x = 3;
 
 		if(x == z)
 			ErrorLable.Error();

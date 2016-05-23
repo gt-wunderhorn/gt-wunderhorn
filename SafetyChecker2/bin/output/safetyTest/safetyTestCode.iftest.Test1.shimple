@@ -21,7 +21,7 @@ public class safetyTestCode.iftest.Test1 extends java.lang.Object
 
         b0 = 5;
 
-        b1 = 4;
+        b1 = 5;
 
         if b1 != 5 goto label1;
 

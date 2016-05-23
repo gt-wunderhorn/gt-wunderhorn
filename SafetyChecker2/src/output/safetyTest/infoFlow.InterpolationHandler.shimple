@@ -239,13 +239,7 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
     {
         infoFlow.InterpolationHandler r0;
         infoFlow.Vertex r1;
-        com.microsoft.z3.BoolExpr r2, r3, r4, r5;
-        boolean $z0;
-        com.microsoft.z3.BoolExpr[] $r6;
-        com.microsoft.z3.InterpolationContext $r7, $r12;
-        java.lang.Object[] $r8;
-        java.lang.StringBuilder $r9, $r10;
-        java.lang.String $r11;
+        com.microsoft.z3.BoolExpr r2, r3;
 
         r0 := @this: infoFlow.InterpolationHandler;
 
@@ -255,51 +249,8 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         r3 = virtualinvoke r1.<infoFlow.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        if r3 == null goto label1;
-
-        $z0 = r0.<infoFlow.InterpolationHandler: boolean startRefine>;
-
-        if $z0 == 0 goto label2;
-
-     label1:
         virtualinvoke r1.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r2);
 
-        goto label3;
-
-     label2:
-        $r7 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
-
-        $r6 = newarray (com.microsoft.z3.BoolExpr)[2];
-
-        $r6[0] = r2;
-
-        $r6[1] = r3;
-
-        r4 = virtualinvoke $r7.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkOr(com.microsoft.z3.BoolExpr[])>($r6);
-
-        $r8 = newarray (java.lang.Object)[1];
-
-        $r9 = new java.lang.StringBuilder;
-
-        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>("^^^^^ Disjunction ^^^^^ \n");
-
-        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r4);
-
-        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r8[0] = $r11;
-
-        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r8);
-
-        $r12 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
-
-        r5 = virtualinvoke $r12.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr MkInterpolant(com.microsoft.z3.BoolExpr)>(r4);
-
-        virtualinvoke r1.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r5);
-
-        r0.<infoFlow.InterpolationHandler: boolean startRefine> = 1;
-
-     label3:
         return;
     }
 

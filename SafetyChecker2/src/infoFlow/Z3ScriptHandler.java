@@ -1,10 +1,8 @@
 package infoFlow;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Stack;
 
 import com.microsoft.z3.ArrayExpr;
@@ -30,6 +28,7 @@ import soot.jimple.CastExpr;
 import soot.jimple.Constant;
 import soot.jimple.EqExpr;
 import soot.jimple.FieldRef;
+import soot.jimple.GotoStmt;
 import soot.jimple.IdentityStmt;
 import soot.jimple.IfStmt;
 import soot.jimple.InstanceFieldRef;
@@ -83,16 +82,18 @@ public class Z3ScriptHandler {
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
 		Unit stmt = e.getUnit();
 		if(stmt instanceof IfStmt) converted = convertIfStmt(e);
-		if(stmt instanceof IdentityStmt) converted = convertIdentityStmt(e);
+		if(stmt instanceof GotoStmt) converted = convertGotoStmt(e); 
 		if(stmt instanceof AssignStmt) converted = convertAssignStmtEdge(e);
+		// add invoke
+		if(stmt instanceof IdentityStmt) converted = convertIdentityStmt(e);
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 	
 		LogUtils.debugln("---------------");	
 		LogUtils.debugln("Vertex=" + e.getSource() + "---- Unit=" + e);
 		LogUtils.debugln("Expr" + e.getZ3Expr());
 		if(!converted) {
-			LogUtils.infoln("Converstion failed");
-			LogUtils.infoln("Z3ScriptHandler.createZ3Script");
+			LogUtils.fatalln("Converstion failed");
+			LogUtils.fatalln("Z3ScriptHandler.createZ3Script");
 			System.exit(0);
 		}
 		return converted;
@@ -166,6 +167,11 @@ public class Z3ScriptHandler {
 			return false;
 		return true;
 
+	}
+
+	private boolean convertGotoStmt(Edge e) {
+		e.setZ3Expr(this.ictx.mkTrue());
+		return true;
 	}
 
 	private boolean convertSinkInvoke2Z3(Edge e) {

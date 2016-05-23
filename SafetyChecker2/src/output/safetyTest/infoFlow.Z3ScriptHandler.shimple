@@ -130,9 +130,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 (2)     z2_2 = 1;
 
      label3:
-        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
-
         r7_1 = Phi(r7 #0, r7_2 #1, r7_2 #2);
+
+        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
 
         if r7_1 != null goto label1;
 
@@ -151,7 +151,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         infoFlow.Z3ScriptHandler r0;
         infoFlow.Edge r1;
         soot.Unit r2;
-        boolean $z0, $z1, $z2, $z3, $z4, z5, z5_1, z5_2, z5_3, z5_4, z5_5, z5_6, z5_7, z5_8, z5_9, z5_10;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, z6, z6_1, z6_2, z6_3, z6_4, z6_5, z6_6, z6_7, z6_8, z6_9, z6_10, z6_11, z6_12;
         java.lang.Object[] $r3, $r4, $r11, $r16, $r17;
         java.lang.StringBuilder $r5, $r7, $r8, $r9, $r12, $r14;
         infoFlow.Vertex $r6;
@@ -162,16 +162,16 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         r1 := @parameter0: infoFlow.Edge;
 
-        z5 = 0;
+        z6 = 0;
 
         $z0 = virtualinvoke r1.<infoFlow.Edge: boolean isErrorEdge()>();
 
 (0)     if $z0 == 0 goto label1;
 
-(1)     z5_1 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertErrorEdge(infoFlow.Edge)>(r1);
+(1)     z6_1 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertErrorEdge(infoFlow.Edge)>(r1);
 
      label1:
-        z5_2 = Phi(z5 #0, z5_1 #1);
+        z6_2 = Phi(z6 #0, z6_1 #1);
 
         r2 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
 
@@ -179,37 +179,46 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
 (2)     if $z1 == 0 goto label2;
 
-(3)     z5_3 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIfStmt(infoFlow.Edge)>(r1);
+(3)     z6_3 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIfStmt(infoFlow.Edge)>(r1);
 
      label2:
-        z5_4 = Phi(z5_2 #2, z5_3 #3);
+        z6_4 = Phi(z6_2 #2, z6_3 #3);
 
-        $z2 = r2 instanceof soot.jimple.IdentityStmt;
+        $z2 = r2 instanceof soot.jimple.GotoStmt;
 
 (4)     if $z2 == 0 goto label3;
 
-(5)     z5_5 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIdentityStmt(infoFlow.Edge)>(r1);
+(5)     z6_5 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertGotoStmt(infoFlow.Edge)>(r1);
 
      label3:
-        z5_6 = Phi(z5_4 #4, z5_5 #5);
+        z6_6 = Phi(z6_4 #4, z6_5 #5);
 
         $z3 = r2 instanceof soot.jimple.AssignStmt;
 
 (6)     if $z3 == 0 goto label4;
 
-(7)     z5_7 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertAssignStmtEdge(infoFlow.Edge)>(r1);
+(7)     z6_7 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertAssignStmtEdge(infoFlow.Edge)>(r1);
 
      label4:
-        z5_8 = Phi(z5_6 #6, z5_7 #7);
+        z6_8 = Phi(z6_6 #6, z6_7 #7);
 
-        $z4 = virtualinvoke r1.<infoFlow.Edge: boolean isSinkEdge()>();
+        $z4 = r2 instanceof soot.jimple.IdentityStmt;
 
 (8)     if $z4 == 0 goto label5;
 
-(9)     z5_9 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertSinkInvoke2Z3(infoFlow.Edge)>(r1);
+(9)     z6_9 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIdentityStmt(infoFlow.Edge)>(r1);
 
      label5:
-        z5_10 = Phi(z5_8 #8, z5_9 #9);
+        z6_10 = Phi(z6_8 #8, z6_9 #9);
+
+        $z5 = virtualinvoke r1.<infoFlow.Edge: boolean isSinkEdge()>();
+
+(10)    if $z5 == 0 goto label6;
+
+(11)    z6_11 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertSinkInvoke2Z3(infoFlow.Edge)>(r1);
+
+     label6:
+        z6_12 = Phi(z6_10 #10, z6_11 #11);
 
         $r3 = newarray (java.lang.Object)[1];
 
@@ -253,24 +262,24 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r11);
 
-        if z5_10 != 0 goto label6;
+        if z6_12 != 0 goto label7;
 
         $r16 = newarray (java.lang.Object)[1];
 
         $r16[0] = "Converstion failed";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r16);
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r16);
 
         $r17 = newarray (java.lang.Object)[1];
 
         $r17[0] = "Z3ScriptHandler.createZ3Script";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r17);
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r17);
 
         staticinvoke <java.lang.System: void exit(int)>(0);
 
-     label6:
-        return z5_10;
+     label7:
+        return z6_12;
     }
 
     private boolean convertErrorEdge(infoFlow.Edge)
@@ -551,6 +560,26 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         return 0;
 
      label1:
+        return 1;
+    }
+
+    private boolean convertGotoStmt(infoFlow.Edge)
+    {
+        infoFlow.Z3ScriptHandler r0;
+        infoFlow.Edge r1;
+        com.microsoft.z3.InterpolationContext $r2;
+        com.microsoft.z3.BoolExpr $r3;
+
+        r0 := @this: infoFlow.Z3ScriptHandler;
+
+        r1 := @parameter0: infoFlow.Edge;
+
+        $r2 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r3 = virtualinvoke $r2.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkTrue()>();
+
+        virtualinvoke r1.<infoFlow.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>($r3);
+
         return 1;
     }
 

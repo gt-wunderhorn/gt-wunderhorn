@@ -1,12 +1,12 @@
-public class safetyTester.iftest.Tester3 extends java.lang.Object
+public class safetyTester.iftest.Tester4 extends java.lang.Object
 {
     static java.util.Map stores;
 
     public void <init>()
     {
-        safetyTester.iftest.Tester3 r0;
+        safetyTester.iftest.Tester4 r0;
 
-        r0 := @this: safetyTester.iftest.Tester3;
+        r0 := @this: safetyTester.iftest.Tester4;
 
         specialinvoke r0.<java.lang.Object: void <init>()>();
 
@@ -24,7 +24,7 @@ public class safetyTester.iftest.Tester3 extends java.lang.Object
         java.util.Map $r13;
         java.lang.Exception $r15, r23;
         infoFlow.ProgramTree r22, r26;
-        safetyTester.iftest.Tester3$1 r24;
+        safetyTester.iftest.Tester4$1 r24;
         soot.Transform r25;
         soot.Transformer r27;
 
@@ -60,9 +60,9 @@ public class safetyTester.iftest.Tester3 extends java.lang.Object
 
         r25 = new soot.Transform;
 
-        r24 = new safetyTester.iftest.Tester3$1;
+        r24 = new safetyTester.iftest.Tester4$1;
 
-        specialinvoke r24.<safetyTester.iftest.Tester3$1: void <init>()>();
+        specialinvoke r24.<safetyTester.iftest.Tester4$1: void <init>()>();
 
         r27 = (soot.Transformer) r24;
 
@@ -72,18 +72,18 @@ public class safetyTester.iftest.Tester3 extends java.lang.Object
 
         staticinvoke <soot.Main: void main(java.lang.String[])>(r1);
 
-        r2 = "<safetyTestCode.iftest.Test3: void test()>";
+        r2 = "<safetyTestCode.iftest.Test4: void test()>";
 
         $r11 = newarray (java.lang.Object)[1];
 
-        $r11[0] = "safetyTester.iftest.Tester3... Test started...";
+        $r11[0] = "safetyTester.iftest.Tester4... Test started...";
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
 
      label1:
         r26 = new infoFlow.ProgramTree;
 
-        $r13 = <safetyTester.iftest.Tester3: java.util.Map stores>;
+        $r13 = <safetyTester.iftest.Tester4: java.util.Map stores>;
 
         specialinvoke r26.<infoFlow.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>($r13, r2, 1);
 
@@ -140,7 +140,7 @@ public class safetyTester.iftest.Tester3 extends java.lang.Object
      label4:
         $r14 = newarray (java.lang.Object)[1];
 
-        $r14[0] = "safetyTester.iftest.Tester3... Test finished...";
+        $r14[0] = "safetyTester.iftest.Tester4... Test finished...";
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r14);
 
@@ -157,7 +157,7 @@ public class safetyTester.iftest.Tester3 extends java.lang.Object
 
         specialinvoke $r0.<java.util.HashMap: void <init>()>();
 
-        <safetyTester.iftest.Tester3: java.util.Map stores> = $r0;
+        <safetyTester.iftest.Tester4: java.util.Map stores> = $r0;
 
         return;
     }

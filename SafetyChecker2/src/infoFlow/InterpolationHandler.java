@@ -72,7 +72,7 @@ public class InterpolationHandler {
 
 	private void addInvariant(Vertex vertex, BoolExpr interpolant) {
 		BoolExpr currentInvariant = vertex.getInvariant();
-		if(currentInvariant == null || startRefine) {
+		if(true || currentInvariant == null || startRefine) {
 			vertex.setInvariant(interpolant);
 		} else {
 			BoolExpr disjunction = this.ictx.mkOr(interpolant, currentInvariant);

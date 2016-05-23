@@ -16,26 +16,28 @@ public class safetyTestCode.iftest.Test2 extends java.lang.Object
     {
         safetyTestCode.iftest.Test2 r0;
         boolean z0;
-        byte b0, b1, b2, b2_1, b2_2;
+        byte b0, b1, b0_1, b1_1, b0_2, b1_2;
 
         r0 := @this: safetyTestCode.iftest.Test2;
 
-        b1 = 5;
+        b0 = 5;
 
         z0 = 0;
 
-        b0 = 3;
-
-        b2 = 3;
+        b1 = 5;
 
 (0)     if z0 == 0 goto label1;
 
-(1)     b2_1 = 1;
+        b0_1 = 1;
+
+(1)     b1_1 = 3;
 
      label1:
-        b2_2 = Phi(b2 #0, b2_1 #1);
+        b0_2 = Phi(b0 #0, b0_1 #1);
 
-        if b2_2 != b0 goto label2;
+        b1_2 = Phi(b1 #0, b1_1 #1);
+
+        if b0_2 != b1_2 goto label2;
 
         staticinvoke <infoFlow.ErrorLable: void Error()>();
 
