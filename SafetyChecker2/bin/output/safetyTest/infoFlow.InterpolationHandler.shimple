@@ -26,7 +26,7 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
         infoFlow.InterpolationHandler r0;
         java.util.HashSet r1;
         boolean z0, $z1, $z2, $z3, z4;
-        com.microsoft.z3.BoolExpr r2, $r10, r33, r34, r38, r33_1, r34_1, r34_2, r34_3, r34_4, r34_5, r33_2;
+        com.microsoft.z3.BoolExpr r2, $r10, r33, r34, r38, r34_1, r33_1, r34_2, r34_3, r34_4, r34_5, r33_2;
         java.lang.Object[] $r3, $r5, $r11, $r20, $r28, $r32;
         java.lang.Object $r4;
         java.lang.StringBuilder $r6, $r7, $r12, $r13, $r21, $r22, $r29, $r30;
@@ -127,7 +127,7 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         $r11[0] = $r14;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r11);
 
         $z3 = virtualinvoke r36_2.<infoFlow.Vertex: boolean isHeadLocation()>();
 
@@ -158,9 +158,9 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (5)     r36_3 = virtualinvoke r36_2.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
      label06:
-        r36_2 = Phi(r36_1 #1, r36_3 #5);
-
         r34_2 = Phi(r34_1 #1, r34_5 #5);
+
+        r36_2 = Phi(r36_1 #1, r36_3 #5);
 
         if r36_2 != null goto label02;
 
@@ -176,11 +176,11 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (6)     virtualinvoke $r19.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r33_2);
 
      label08:
+        r34_1 = Phi(r34 #0, r34_1 #2, r34_2 #6);
+
         r33_1 = Phi(r33 #0, r33_1 #2, r33_2 #6);
 
         r36 = Phi(r36 #0, r36_1 #2, r36_2 #6);
-
-        r34_1 = Phi(r34 #0, r34_1 #2, r34_2 #6);
 
         $z1 = interfaceinvoke r35.<java.util.Iterator: boolean hasNext()>();
 
@@ -289,7 +289,7 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         $r8[0] = $r11;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r8);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r8);
 
         $r12 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 

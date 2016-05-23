@@ -1,0 +1,72 @@
+digraph { 
+	ratio="fill";
+	size="8.3,11.7!";
+	margin=0;
+	"L1-D1" -> "L2-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()--null
+**(and (not (not (= b2_2__test_0 b0__test_0)))
+     (= b2_2__test_0 b2__test_0)
+     (= z0__test_0 0)
+     (= b2__test_0 3)
+     (= b0__test_0 3)
+     (= z0__test_0 0)
+     (= b1__test_0 5)
+     (= Global_safetyTestCode.iftest.Test2_2
+        (store Global_safetyTestCode.iftest.Test2_1 1 1)))"];
+	"L2-D2" -> "L4-D3"[label="if b2_2 != b0 goto return--(not (not (= b2_2__test_0 b0__test_0)))
+**(and (= b2_2__test_0 b2__test_0)
+     (= z0__test_0 0)
+     (= b2__test_0 3)
+     (= b0__test_0 3)
+     (= z0__test_0 0)
+     (= b1__test_0 5)
+     (= Global_safetyTestCode.iftest.Test2_2
+        (store Global_safetyTestCode.iftest.Test2_1 1 1)))"];
+	"L4-D3" -> "L6-D4"[label="b2_2 = Phi(b2, b2_1)--(= b2_2__test_0 b2__test_0)
+**(and (= z0__test_0 0)
+     (= b2__test_0 3)
+     (= b0__test_0 3)
+     (= z0__test_0 0)
+     (= b1__test_0 5)
+     (= Global_safetyTestCode.iftest.Test2_2
+        (store Global_safetyTestCode.iftest.Test2_1 1 1)))"];
+	"L6-D4" -> "L10-D5"[label="if z0 == 0 goto b2_2 = Phi(b2, b2_1)--(= z0__test_0 0)
+**(and (= b2__test_0 3)
+     (= b0__test_0 3)
+     (= z0__test_0 0)
+     (= b1__test_0 5)
+     (= Global_safetyTestCode.iftest.Test2_2
+        (store Global_safetyTestCode.iftest.Test2_1 1 1)))"];
+	"L6-D4" -> "L9-D5"[label="b2_1 = 1--null
+**null"];
+	"L10-D5" -> "L14-D6"[label="b2 = 3--(= b2__test_0 3)
+**(and (= b0__test_0 3)
+     (= z0__test_0 0)
+     (= b1__test_0 5)
+     (= Global_safetyTestCode.iftest.Test2_2
+        (store Global_safetyTestCode.iftest.Test2_1 1 1)))"];
+	"L9-D5" -> "L13-D6"[label="if z0 == 0 goto b2_2 = Phi(b2, b2_1)--null
+**null"];
+	"L14-D6" -> "L18-D7"[label="b0 = 3--(= b0__test_0 3)
+**(and (= z0__test_0 0)
+     (= b1__test_0 5)
+     (= Global_safetyTestCode.iftest.Test2_2
+        (store Global_safetyTestCode.iftest.Test2_1 1 1)))"];
+	"L13-D6" -> "L17-D7"[label="b2 = 3--null
+**null"];
+	"L18-D7" -> "L22-D8"[label="z0 = 0--(= z0__test_0 0)
+**(and (= b1__test_0 5)
+     (= Global_safetyTestCode.iftest.Test2_2
+        (store Global_safetyTestCode.iftest.Test2_1 1 1)))"];
+	"L17-D7" -> "L21-D8"[label="b0 = 3--null
+**null"];
+	"L22-D8" -> "L26-D9"[label="b1 = 5--(= b1__test_0 5)
+**(= Global_safetyTestCode.iftest.Test2_2
+   (store Global_safetyTestCode.iftest.Test2_1 1 1))"];
+	"L21-D8" -> "L25-D9"[label="z0 = 0--null
+**null"];
+	"L26-D9" -> "L30-D10"[label="r0 := @this: safetyTestCode.iftest.Test2--(= Global_safetyTestCode.iftest.Test2_2
+   (store Global_safetyTestCode.iftest.Test2_1 1 1))
+**false"];
+	"L25-D9" -> "L29-D10"[label="b1 = 5--null
+**null"];
+}

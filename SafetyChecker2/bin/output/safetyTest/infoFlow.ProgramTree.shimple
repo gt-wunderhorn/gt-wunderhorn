@@ -565,15 +565,117 @@ public class infoFlow.ProgramTree extends java.lang.Object
     private void unwind() throws infoFlow.exception.MainFunctionNotFoundException, infoFlow.exception.ErrorLocationNotFoundException
     {
         infoFlow.ProgramTree r0;
-        java.lang.Error $r1;
+        boolean z0, $z2, $z3, $z4;
+        infoFlow.Vertex r1, $r3, $r20, r22;
+        java.lang.Object[] $r2, $r10;
+        java.util.Queue $r4, $r5, $r6, $r8, $r21;
+        java.lang.Object $r7, $r9;
+        java.lang.StringBuilder $r11, $r13;
+        java.util.HashSet $r12, $r16;
+        int $i0;
+        java.lang.String $r14, $r18;
+        infoFlow.Z3ScriptHandler $r15;
+        infoFlow.InterpolationHandler $r17;
+        java.util.LinkedList $r19, r23;
 
         r0 := @this: infoFlow.ProgramTree;
 
-        $r1 = new java.lang.Error;
+        $r2 = newarray (java.lang.Object)[1];
 
-        specialinvoke $r1.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problem: \n\tThe method printResult(String) in the type ProgramTree is not applicable for the arguments ()\n");
+        $r2[0] = "----->Unwind";
 
-        throw $r1;
+        staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r2);
+
+        $r4 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
+
+        $r3 = r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf>;
+
+        interfaceinvoke $r4.<java.util.Queue: boolean add(java.lang.Object)>($r3);
+
+        goto label2;
+
+     label1:
+        $r6 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Queue: java.lang.Object remove()>();
+
+        r22 = (infoFlow.Vertex) $r7;
+
+        z0 = specialinvoke r0.<infoFlow.ProgramTree: boolean expandBFS(infoFlow.Vertex)>(r22);
+
+        if z0 == 0 goto label2;
+
+        $r8 = r0.<infoFlow.ProgramTree: java.util.Queue errorRootQueue>;
+
+        $r9 = interfaceinvoke $r8.<java.util.Queue: java.lang.Object remove()>();
+
+        r1 = (infoFlow.Vertex) $r9;
+
+        $r10 = newarray (java.lang.Object)[1];
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>(java.lang.String)>("error root # = ");
+
+        $r12 = r0.<infoFlow.ProgramTree: java.util.HashSet errorRootSet>;
+
+        $i0 = virtualinvoke $r12.<java.util.HashSet: int size()>();
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r10[0] = $r14;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r10);
+
+        $r15 = r0.<infoFlow.ProgramTree: infoFlow.Z3ScriptHandler z3Handler>;
+
+        virtualinvoke $r15.<infoFlow.Z3ScriptHandler: void convertPathtoZ3Script(infoFlow.Vertex)>(r1);
+
+        $r17 = r0.<infoFlow.ProgramTree: infoFlow.InterpolationHandler itpHandler>;
+
+        $r16 = r0.<infoFlow.ProgramTree: java.util.HashSet errorRootSet>;
+
+        $z3 = virtualinvoke $r17.<infoFlow.InterpolationHandler: boolean createInterpolant(java.util.HashSet)>($r16);
+
+        r0.<infoFlow.ProgramTree: boolean errorLocationFeasible> = $z3;
+
+        $r18 = virtualinvoke r1.<infoFlow.Vertex: java.lang.String toString()>();
+
+        virtualinvoke r0.<infoFlow.ProgramTree: void printResult(java.lang.String)>($r18);
+
+        $z4 = r0.<infoFlow.ProgramTree: boolean errorLocationFeasible>;
+
+        if $z4 == 0 goto label2;
+
+        goto label3;
+
+     label2:
+        $r5 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
+
+        $z2 = interfaceinvoke $r5.<java.util.Queue: boolean isEmpty()>();
+
+        if $z2 == 0 goto label1;
+
+     label3:
+        $r19 = new java.util.LinkedList;
+
+        specialinvoke $r19.<java.util.LinkedList: void <init>()>();
+
+        r23 = $r19;
+
+        $r20 = r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf>;
+
+        interfaceinvoke r23.<java.util.Queue: boolean add(java.lang.Object)>($r20);
+
+        staticinvoke <dotty.CfgConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r23, "_all.dot");
+
+        $r21 = r0.<infoFlow.ProgramTree: java.util.Queue errorSet>;
+
+        staticinvoke <dotty.CfgConverter: void printErrorPaths(java.util.Queue,java.lang.String)>($r21, "_errors.dot");
+
+        return;
     }
 
     private void DFS(infoFlow.Vertex) throws infoFlow.exception.MainFunctionNotFoundException, infoFlow.exception.ErrorLocationNotFoundException
@@ -947,51 +1049,17 @@ public class infoFlow.ProgramTree extends java.lang.Object
     public void printResult(java.lang.String)
     {
         infoFlow.ProgramTree r0;
-        java.lang.String r1, $r6;
-        java.lang.Object[] $r2, $r7, $r8;
-        java.lang.StringBuilder $r3, $r4, $r5;
+        java.lang.String r1;
         boolean $z0;
 
         r0 := @this: infoFlow.ProgramTree;
 
         r1 := @parameter0: java.lang.String;
 
-        $r2 = newarray (java.lang.Object)[1];
-
-        $r3 = new java.lang.StringBuilder;
-
-        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>("********************\n ");
-
-        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
-
-        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n***********************");
-
-        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r2[0] = $r6;
-
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r2);
-
         $z0 = r0.<infoFlow.ProgramTree: boolean errorLocationFeasible>;
 
-        if $z0 == 0 goto label1;
+        staticinvoke <infoFlow.LogUtils: void printResult(java.lang.String,boolean)>(r1, $z0);
 
-        $r8 = newarray (java.lang.Object)[1];
-
-        $r8[0] = "Error path is feasbile.";
-
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r8);
-
-        goto label2;
-
-     label1:
-        $r7 = newarray (java.lang.Object)[1];
-
-        $r7[0] = "Error patth is not feasbile.";
-
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r7);
-
-     label2:
         return;
     }
 }

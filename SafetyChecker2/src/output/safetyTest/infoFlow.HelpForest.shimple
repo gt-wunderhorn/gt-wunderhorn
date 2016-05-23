@@ -5,220 +5,59 @@ public class infoFlow.HelpForest extends java.lang.Object
     public void <init>(java.util.Map)
     {
         infoFlow.HelpForest r0;
-        java.util.Map r1, $r11, $r15, $r19;
-        soot.toolkits.graph.ExceptionalUnitGraph r2, $r7;
-        infoFlow.HelpTree r3, $r10, $r20;
-        java.util.HashMap $r4;
-        java.util.Set $r5, $r16;
-        boolean $z0, $z1;
-        java.lang.Object $r6, $r8, $r12, $r17, $r18;
-        soot.Body $r9;
-        java.lang.String $r13;
-        java.util.Iterator r21, r23;
-        java.util.Map$Entry r22, r24;
+        java.util.Map r1;
+        java.lang.Error $r2;
 
         r0 := @this: infoFlow.HelpForest;
 
         r1 := @parameter0: java.util.Map;
 
-        specialinvoke r0.<java.lang.Object: void <init>()>();
+        $r2 = new java.lang.Error;
 
-        $r4 = new java.util.HashMap;
+        specialinvoke $r2.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problems: \n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n");
 
-        specialinvoke $r4.<java.util.HashMap: void <init>()>();
-
-        r0.<infoFlow.HelpForest: java.util.Map functionTrees> = $r4;
-
-        $r5 = interfaceinvoke r1.<java.util.Map: java.util.Set entrySet()>();
-
-        r21 = interfaceinvoke $r5.<java.util.Set: java.util.Iterator iterator()>();
-
-        goto label2;
-
-     label1:
-        $r6 = interfaceinvoke r21.<java.util.Iterator: java.lang.Object next()>();
-
-        r22 = (java.util.Map$Entry) $r6;
-
-        $r7 = new soot.toolkits.graph.ExceptionalUnitGraph;
-
-        $r8 = interfaceinvoke r22.<java.util.Map$Entry: java.lang.Object getValue()>();
-
-        $r9 = (soot.Body) $r8;
-
-        specialinvoke $r7.<soot.toolkits.graph.ExceptionalUnitGraph: void <init>(soot.Body)>($r9);
-
-        r2 = $r7;
-
-        $r10 = new infoFlow.HelpTree;
-
-        specialinvoke $r10.<infoFlow.HelpTree: void <init>(soot.toolkits.graph.ExceptionalUnitGraph)>(r2);
-
-        r3 = $r10;
-
-        $r11 = r0.<infoFlow.HelpForest: java.util.Map functionTrees>;
-
-        $r12 = interfaceinvoke r22.<java.util.Map$Entry: java.lang.Object getKey()>();
-
-        $r13 = (java.lang.String) $r12;
-
-        interfaceinvoke $r11.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r13, r3);
-
-     label2:
-        $z0 = interfaceinvoke r21.<java.util.Iterator: boolean hasNext()>();
-
-        if $z0 != 0 goto label1;
-
-        $r15 = r0.<infoFlow.HelpForest: java.util.Map functionTrees>;
-
-        $r16 = interfaceinvoke $r15.<java.util.Map: java.util.Set entrySet()>();
-
-        r23 = interfaceinvoke $r16.<java.util.Set: java.util.Iterator iterator()>();
-
-        goto label4;
-
-     label3:
-        $r17 = interfaceinvoke r23.<java.util.Iterator: java.lang.Object next()>();
-
-        r24 = (java.util.Map$Entry) $r17;
-
-        $r18 = interfaceinvoke r24.<java.util.Map$Entry: java.lang.Object getValue()>();
-
-        $r20 = (infoFlow.HelpTree) $r18;
-
-        $r19 = r0.<infoFlow.HelpForest: java.util.Map functionTrees>;
-
-        virtualinvoke $r20.<infoFlow.HelpTree: void setStores(java.util.Map)>($r19);
-
-     label4:
-        $z1 = interfaceinvoke r23.<java.util.Iterator: boolean hasNext()>();
-
-        if $z1 != 0 goto label3;
-
-        return;
+        throw $r2;
     }
 
     public void calculateDepth()
     {
         infoFlow.HelpForest r0;
-        java.util.Map$Entry r1;
-        java.util.Iterator r2;
-        java.util.Map $r3;
-        java.util.Set $r4;
-        boolean $z0, $z1, z2, z2_1, z2_2, z2_3, z2_4;
-        java.lang.Object $r5, $r6, $r8;
-        infoFlow.HelpTree $r7, $r9;
+        java.lang.Error $r1;
 
         r0 := @this: infoFlow.HelpForest;
 
-        z2 = 0;
+        $r1 = new java.lang.Error;
 
-(0)     goto label4;
+        specialinvoke $r1.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problems: \n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n");
 
-     label1:
-        z2_2 = 1;
-
-        $r3 = r0.<infoFlow.HelpForest: java.util.Map functionTrees>;
-
-        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set entrySet()>();
-
-        r2 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
-
-(1)     goto label3;
-
-     label2:
-        $r5 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
-
-        r1 = (java.util.Map$Entry) $r5;
-
-        $r6 = interfaceinvoke r1.<java.util.Map$Entry: java.lang.Object getValue()>();
-
-        $r7 = (infoFlow.HelpTree) $r6;
-
-        virtualinvoke $r7.<infoFlow.HelpTree: void getDepth()>();
-
-        $r8 = interfaceinvoke r1.<java.util.Map$Entry: java.lang.Object getValue()>();
-
-        $r9 = (infoFlow.HelpTree) $r8;
-
-        $z1 = virtualinvoke $r9.<infoFlow.HelpTree: boolean ifModified()>();
-
-(2)     if $z1 == 0 goto label3;
-
-(3)     z2_4 = 0;
-
-     label3:
-        z2_3 = Phi(z2_2 #1, z2_3 #2, z2_4 #3);
-
-        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
-
-(4)     if $z0 != 0 goto label2;
-
-     label4:
-        z2_1 = Phi(z2 #0, z2_3 #4);
-
-        if z2_1 == 0 goto label1;
-
-        return;
+        throw $r1;
     }
 
     public boolean ifEnd()
     {
         infoFlow.HelpForest r0;
-        java.util.Map$Entry r1;
-        java.util.Iterator r2;
-        java.util.Map $r3;
-        java.util.Set $r4;
-        boolean $z0, $z1, z2, z2_1, z2_2;
-        java.lang.Object $r5, $r6;
-        infoFlow.HelpTree $r7;
+        java.lang.Error $r1;
 
         r0 := @this: infoFlow.HelpForest;
 
-        z2 = 1;
+        $r1 = new java.lang.Error;
 
-        $r3 = r0.<infoFlow.HelpForest: java.util.Map functionTrees>;
+        specialinvoke $r1.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problems: \n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n");
 
-        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set entrySet()>();
-
-        r2 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
-
-(0)     goto label2;
-
-     label1:
-        $r5 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
-
-        r1 = (java.util.Map$Entry) $r5;
-
-        $r6 = interfaceinvoke r1.<java.util.Map$Entry: java.lang.Object getValue()>();
-
-        $r7 = (infoFlow.HelpTree) $r6;
-
-        $z1 = virtualinvoke $r7.<infoFlow.HelpTree: boolean IfRootHasDepth()>();
-
-(1)     if $z1 != 0 goto label2;
-
-(2)     z2_2 = 0;
-
-     label2:
-        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
-
-        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
-
-        if $z0 != 0 goto label1;
-
-        return z2_1;
+        throw $r1;
     }
 
     public java.util.Map getResult()
     {
         infoFlow.HelpForest r0;
-        java.util.Map $r1;
+        java.lang.Error $r1;
 
         r0 := @this: infoFlow.HelpForest;
 
-        $r1 = r0.<infoFlow.HelpForest: java.util.Map functionTrees>;
+        $r1 = new java.lang.Error;
 
-        return $r1;
+        specialinvoke $r1.<java.lang.Error: void <init>(java.lang.String)>("Unresolved compilation problems: \n\tHelpTree cannot be resolved to a type\n\tHelpTree cannot be resolved to a type\n");
+
+        throw $r1;
     }
 }

@@ -334,7 +334,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r13[0] = $r16;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r13);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r13);
 
         r7 = virtualinvoke r5.<infoFlow.Edge: soot.Unit getUnit()>();
 
@@ -350,7 +350,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r17[0] = $r20;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r17);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r17);
 
         r8 = interfaceinvoke r2.<soot.jimple.IfStmt: soot.jimple.Stmt getTarget()>();
 
@@ -366,7 +366,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r21[0] = $r24;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r21);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r21);
 
         $z0 = virtualinvoke r8.<java.lang.Object: boolean equals(java.lang.Object)>(r7);
 

@@ -1,7 +1,10 @@
 package infoFlow;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 
 import com.microsoft.z3.ArrayExpr;
@@ -41,6 +44,7 @@ import soot.jimple.StaticFieldRef;
 import soot.jimple.StringConstant;
 import soot.jimple.internal.JNewExpr;
 import soot.shimple.PhiExpr;
+import soot.toolkits.scalar.ValueUnitPair;
 
 public class Z3ScriptHandler {
 	
@@ -53,6 +57,7 @@ public class Z3ScriptHandler {
 	private Map<String, String> substitute = new HashMap<String, String>();
 	private Map<String, Sort> substituteSort = new HashMap<String, Sort>();
 	private Stack<Expr> parameters = new Stack<Expr>();
+	private Vertex errorPathRoot;
 
 	public Z3ScriptHandler(InterpolationContext ictx) {
 		this.ictx = ictx;
@@ -60,10 +65,11 @@ public class Z3ScriptHandler {
 	
 	public void convertPathtoZ3Script(Vertex v) {
 		LogUtils.debugln(">>>>>>> Z3ScriptHandler.convertPathtoZ3Script");
-
+		errorPathRoot = v;
 		boolean isError = false;
 		while(v != null) {
 			if(isError) break;
+			LogUtils.infoln(v.getOutgoingEdge());
 			createZ3Script(v.getOutgoingEdge());
 			v = v.getNextVertex();
 			if(v.getOutgoingEdge().isErrorEdge())
@@ -115,6 +121,7 @@ public class Z3ScriptHandler {
 			edge.setZ3Expr(condition);
 		else
 			edge.setZ3Expr(ictx.mkNot(condition));
+		LogUtils.debugln(edge.getUnit() + "=" + edge.getZ3Expr()); 
 		return true;
 	}
 
@@ -217,6 +224,51 @@ public class Z3ScriptHandler {
 				return exprValue;
 			}
 		}
+		if(value instanceof PhiExpr) {
+			PhiExpr phiExpr = (PhiExpr) value;
+			List<ValueUnitPair> pairList = phiExpr.getArgs();
+			
+			Vertex vertex = edge.getSource();
+			Edge resultEdge = null;
+			Value resultValue = null;
+			boolean shortestResultFound = false;
+
+			for(ValueUnitPair pair : pairList) {
+//				if(resultEdge!=null && resultEdge.getTarget().getDistance()-vertex.getDistance()==0)
+//					break;
+
+				Value valuePair = pair.getValue();
+				LogUtils.warningln("valuePair=" + valuePair);
+				Unit unitPair = pair.getUnit();
+				LogUtils.warningln("unitPair=" + unitPair);
+				
+				Vertex phiEqualityVertex = errorPathRoot;
+				while(phiEqualityVertex != edge.getSource()) {
+					Unit phiEqualityUnit = phiEqualityVertex.getOutgoingEdge().getUnit();	
+					if(phiEqualityUnit.equals(unitPair)) {
+
+						if(resultEdge == null) {
+							resultEdge = phiEqualityVertex.getOutgoingEdge();
+							resultValue = valuePair;
+						} else if(phiEqualityVertex.getDistance() < resultEdge.getSource().getDistance()) {
+							resultEdge = phiEqualityVertex.getOutgoingEdge();
+							resultValue = valuePair;
+						}
+						LogUtils.warningln("phiEqualityUnit=" + phiEqualityUnit + "-- Dist-" + phiEqualityVertex.getDistance());
+						LogUtils.warningln("resultunit=" + resultEdge + " -- Dis=" + resultEdge.getSource().getDistance());
+					}
+					phiEqualityVertex = phiEqualityVertex.getNextVertex();
+					
+				}
+					
+			}
+
+			Expr resultExpr = convertValue(resultValue, false, edge, edge.getSource().getDistance());
+			LogUtils.warningln("resultExpr=" + resultExpr);
+			return resultExpr;
+		}
+		LogUtils.fatalln("returning null");
+		LogUtils.fatalln("Vertex=" + edge.getSource() + "---Edge=" + edge);
 		return null;
 	}
 

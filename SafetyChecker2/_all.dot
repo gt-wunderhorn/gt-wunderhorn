@@ -1,0 +1,35 @@
+digraph { 
+	ratio="fill";
+	size="8.3,11.7!";
+	margin=0;
+	"L0-D0" -> "L1-D1"[label="return"];
+	"L1-D1" -> "L3-D2"[label="if b2_2 != b0 goto return"];
+	"L1-D1" -> "L2-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()"];
+	"L3-D2" -> "L5-D3"[label="b2_2 = Phi(b2, b2_1)"];
+	"L2-D2" -> "L4-D3"[label="if b2_2 != b0 goto return"];
+	"L5-D3" -> "L7-D4"[label="b2_1 = 1"];
+	"L5-D3" -> "L8-D4"[label="if z0 == 0 goto b2_2 = Phi(b2, b2_1)"];
+	"L4-D3" -> "L6-D4"[label="b2_2 = Phi(b2, b2_1)"];
+	"L7-D4" -> "L11-D5"[label="if z0 == 0 goto b2_2 = Phi(b2, b2_1)"];
+	"L8-D4" -> "L12-D5"[label="b2 = 3"];
+	"L6-D4" -> "L10-D5"[label="if z0 == 0 goto b2_2 = Phi(b2, b2_1)"];
+	"L6-D4" -> "L9-D5"[label="b2_1 = 1"];
+	"L11-D5" -> "L15-D6"[label="b2 = 3"];
+	"L12-D5" -> "L16-D6"[label="b0 = 3"];
+	"L10-D5" -> "L14-D6"[label="b2 = 3"];
+	"L9-D5" -> "L13-D6"[label="if z0 == 0 goto b2_2 = Phi(b2, b2_1)"];
+	"L15-D6" -> "L19-D7"[label="b0 = 3"];
+	"L16-D6" -> "L20-D7"[label="z0 = 0"];
+	"L14-D6" -> "L18-D7"[label="b0 = 3"];
+	"L13-D6" -> "L17-D7"[label="b2 = 3"];
+	"L19-D7" -> "L23-D8"[label="z0 = 0"];
+	"L20-D7" -> "L24-D8"[label="b1 = 5"];
+	"L18-D7" -> "L22-D8"[label="z0 = 0"];
+	"L17-D7" -> "L21-D8"[label="b0 = 3"];
+	"L23-D8" -> "L27-D9"[label="b1 = 5"];
+	"L24-D8" -> "L28-D9"[label="r0 := @this: safetyTestCode.iftest.Test2"];
+	"L22-D8" -> "L26-D9"[label="b1 = 5"];
+	"L21-D8" -> "L25-D9"[label="z0 = 0"];
+	"L26-D9" -> "L30-D10"[label="r0 := @this: safetyTestCode.iftest.Test2"];
+	"L25-D9" -> "L29-D10"[label="b1 = 5"];
+}
