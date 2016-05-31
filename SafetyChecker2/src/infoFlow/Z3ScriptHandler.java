@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import com.microsoft.z3.ArithExpr;
 import com.microsoft.z3.ArrayExpr;
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
@@ -20,6 +21,7 @@ import soot.RefType;
 import soot.Type;
 import soot.Unit;
 import soot.Value;
+import soot.jimple.AddExpr;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.ArrayRef;
 import soot.jimple.AssignStmt;
@@ -28,12 +30,16 @@ import soot.jimple.CastExpr;
 import soot.jimple.Constant;
 import soot.jimple.EqExpr;
 import soot.jimple.FieldRef;
+import soot.jimple.GeExpr;
 import soot.jimple.GotoStmt;
+import soot.jimple.GtExpr;
 import soot.jimple.IdentityStmt;
 import soot.jimple.IfStmt;
 import soot.jimple.InstanceFieldRef;
 import soot.jimple.IntConstant;
 import soot.jimple.InvokeStmt;
+import soot.jimple.LeExpr;
+import soot.jimple.LtExpr;
 import soot.jimple.NeExpr;
 import soot.jimple.NewArrayExpr;
 import soot.jimple.NewExpr;
@@ -68,7 +74,7 @@ public class Z3ScriptHandler {
 		boolean isError = false;
 		while(v != null) {
 			if(isError) break;
-			LogUtils.infoln(v.getOutgoingEdge());
+			LogUtils.debugln(v.getOutgoingEdge());
 			createZ3Script(v.getOutgoingEdge());
 			v = v.getNextVertex();
 			if(v.getOutgoingEdge().isErrorEdge())
@@ -108,6 +114,7 @@ public class Z3ScriptHandler {
 		IfStmt ifStmt = (IfStmt) edge.getUnit();
 		Value value = ifStmt.getCondition();
 		BoolExpr condition = (BoolExpr) convertValue(value, false, edge, edge.getSource().getDistance());
+		LogUtils.debugln(value);
 	       	// check whether it is last in path
 		Edge nextEdge = edge.getTarget().getOutgoingEdge();
 
@@ -121,7 +128,7 @@ public class Z3ScriptHandler {
 		if(targetUnit.equals(nextUnit)) 
 			edge.setZ3Expr(condition);
 		else
-			edge.setZ3Expr(ictx.mkNot(condition));
+			edge.setZ3Expr(this.ictx.mkNot(condition));
 		LogUtils.debugln(edge.getUnit() + "=" + edge.getZ3Expr()); 
 		return true;
 	}
@@ -161,6 +168,9 @@ public class Z3ScriptHandler {
 		// rigth invoke expression needs to be added
 		rightZ3 = convertValue(right, false, e, e.getSource().getDistance());
 		Expr leftZ3 = convertValue(left, true, e, e.getSource().getDistance());
+
+		LogUtils.debugln(rightZ3);
+		LogUtils.debugln(leftType);
 		BoolExpr eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, e.getSource().getDistance());
 		e.setZ3Expr(eq);
 		if(eq == null)
@@ -199,13 +209,12 @@ public class Z3ScriptHandler {
 	}
 
 	private Expr convertPrimitiveValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
-
 		if(value instanceof Local) { 
 			Local local = (Local) value;
 			String oldName = local.getName();
 			if(assignLeft) {
 				Type type = value.getType();
-				String newName = oldName + getNameSuffix(edge); //+ edge.getSource().getDistance();
+				String newName = oldName + getNameSuffix(edge);
 				Expr leftExpr = null;
 				if(type instanceof IntegerType) {
 					leftExpr = ictx.mkIntConst(newName);
@@ -215,8 +224,6 @@ public class Z3ScriptHandler {
 				return leftExpr;
 			} else 
 				return localMap.get(oldName);
-			
-
 		}
 		if(value instanceof BinopExpr) {
 			return convertBoolExpr((BinopExpr) value, edge, nodeIndex);
@@ -244,9 +251,9 @@ public class Z3ScriptHandler {
 //					break;
 
 				Value valuePair = pair.getValue();
-				LogUtils.warningln("valuePair=" + valuePair);
+				LogUtils.detailln("valuePair=" + valuePair);
 				Unit unitPair = pair.getUnit();
-				LogUtils.warningln("unitPair=" + unitPair);
+				LogUtils.detailln("unitPair=" + unitPair);
 				
 				Vertex phiEqualityVertex = errorPathRoot;
 				while(phiEqualityVertex != edge.getSource()) {
@@ -260,8 +267,8 @@ public class Z3ScriptHandler {
 							resultEdge = phiEqualityVertex.getOutgoingEdge();
 							resultValue = valuePair;
 						}
-						LogUtils.warningln("phiEqualityUnit=" + phiEqualityUnit + "-- Dist-" + phiEqualityVertex.getDistance());
-						LogUtils.warningln("resultunit=" + resultEdge + " -- Dis=" + resultEdge.getSource().getDistance());
+						LogUtils.detailln("phiEqualityUnit=" + phiEqualityUnit + "-- Dist-" + phiEqualityVertex.getDistance());
+						LogUtils.detailln("resultunit=" + resultEdge + " -- Dis=" + resultEdge.getSource().getDistance());
 					}
 					phiEqualityVertex = phiEqualityVertex.getNextVertex();
 					
@@ -270,7 +277,7 @@ public class Z3ScriptHandler {
 			}
 
 			Expr resultExpr = convertValue(resultValue, false, edge, edge.getSource().getDistance());
-			LogUtils.warningln("resultExpr=" + resultExpr);
+			LogUtils.debugln("resultExpr=" + resultExpr);
 			return resultExpr;
 		}
 		LogUtils.fatalln("returning null");
@@ -473,11 +480,22 @@ public class Z3ScriptHandler {
 	}
 
 	private String getNameSuffix(Edge e) {
-		return "_" + e.getProgramTree().getProgramDefinition();
+		return "_" + e.getProgramTree().getProgramDefinition() + "_" + e.getSource().getDistance();
 	}
 
 	private Expr convertBoolExpr(BinopExpr expr, Edge edge, int nodeIndex) {
 		
+		if(expr instanceof AddExpr) {
+			AddExpr addExpr = (AddExpr) expr;
+
+			Value op1Value = addExpr.getOp1();
+			Value op2Value = addExpr.getOp2();
+
+			Expr op1Expr = convertValue(op1Value, false, edge, edge.getSource().getDistance());
+			Expr op2Expr = convertValue(op2Value, false, edge, edge.getSource().getDistance());
+
+			return ictx.mkAdd((ArithExpr)op1Expr, (ArithExpr)op2Expr);
+		}
 		if(expr instanceof EqExpr) {
 			EqExpr eqExpr = (EqExpr) expr;
 			Value op1Value = eqExpr.getOp1();
@@ -499,6 +517,46 @@ public class Z3ScriptHandler {
 			BoolExpr eqExpr = this.ictx.mkEq(op1Expr, op2Expr);
 			return this.ictx.mkNot(eqExpr);
 			
+		}
+		if(expr instanceof GtExpr) {
+			GtExpr gtExpr = (GtExpr) expr;
+			Value op1Value = gtExpr.getOp1();
+			Value op2Value = gtExpr.getOp2();
+
+			Expr op1Expr = convertValue(op1Value, false, edge, edge.getSource().getDistance());
+			Expr op2Expr = convertValue(op2Value, false, edge, edge.getSource().getDistance());
+
+			return  this.ictx.mkGt((ArithExpr)op1Expr, (ArithExpr)op2Expr);
+		}
+		if(expr instanceof GeExpr) {
+			GeExpr geExpr = (GeExpr) expr;
+			Value op1Value = geExpr.getOp1();
+			Value op2Value = geExpr.getOp2();
+
+			Expr op1Expr = convertValue(op1Value, false, edge, edge.getSource().getDistance());
+			Expr op2Expr = convertValue(op2Value, false, edge, edge.getSource().getDistance());
+
+			return  this.ictx.mkGe((ArithExpr)op1Expr, (ArithExpr)op2Expr);
+		}
+		if(expr instanceof LtExpr) {
+			LtExpr ltExpr = (LtExpr) expr;
+			Value op1Value = ltExpr.getOp1();
+			Value op2Value = ltExpr.getOp2();
+
+			Expr op1Expr = convertValue(op1Value, false, edge, edge.getSource().getDistance());
+			Expr op2Expr = convertValue(op2Value, false, edge, edge.getSource().getDistance());
+
+			return  this.ictx.mkLt((ArithExpr)op1Expr, (ArithExpr)op2Expr);
+		}
+		if(expr instanceof LeExpr) {
+			LeExpr leExpr = (LeExpr) expr;
+			Value op1Value = leExpr.getOp1();
+			Value op2Value = leExpr.getOp2();
+
+			Expr op1Expr = convertValue(op1Value, false, edge, edge.getSource().getDistance());
+			Expr op2Expr = convertValue(op2Value, false, edge, edge.getSource().getDistance());
+
+			return  this.ictx.mkLe((ArithExpr)op1Expr, (ArithExpr)op2Expr);
 		}
 		return null;
 	}

@@ -1,0 +1,139 @@
+[H[JStarting...>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>> clean .dot and .ps files
+>>> Compiling
+>>> Executing
+Soot started on Mon May 23 08:13:55 EDT 2016
+Warning: soot.toolkits.graph.ExceptionalUnitGraph is a phantom class!
+Warning: soot.Unit is a phantom class!
+Warning: com.microsoft.z3.BoolExpr is a phantom class!
+Warning: com.microsoft.z3.InterpolationContext is a phantom class!
+Warning: com.microsoft.z3.enumerations.Z3_lbool is a phantom class!
+Warning: com.microsoft.z3.Params is a phantom class!
+Warning: com.microsoft.z3.InterpolationContext$ComputeInterpolantResult is a phantom class!
+Warning: com.microsoft.z3.Expr is a phantom class!
+Warning: com.microsoft.z3.Sort is a phantom class!
+Warning: com.microsoft.z3.IntExpr is a phantom class!
+Warning: com.microsoft.z3.IntNum is a phantom class!
+Warning: soot.Body is a phantom class!
+Warning: soot.SootMethod is a phantom class!
+Warning: soot.Value is a phantom class!
+Warning: soot.Local is a phantom class!
+Warning: soot.Type is a phantom class!
+Warning: soot.jimple.AnyNewExpr is a phantom class!
+Warning: soot.jimple.NewExpr is a phantom class!
+Warning: soot.jimple.NewArrayExpr is a phantom class!
+Warning: soot.jimple.NewMultiArrayExpr is a phantom class!
+Warning: soot.jimple.BinopExpr is a phantom class!
+Warning: soot.jimple.InvokeStmt is a phantom class!
+Warning: soot.jimple.AssignStmt is a phantom class!
+Warning: soot.jimple.InvokeExpr is a phantom class!
+Warning: soot.jimple.NeExpr is a phantom class!
+Warning: soot.jimple.ArrayRef is a phantom class!
+Warning: soot.RefType is a phantom class!
+Warning: soot.jimple.NullConstant is a phantom class!
+Warning: com.microsoft.z3.Symbol is a phantom class!
+Warning: soot.jimple.FieldRef is a phantom class!
+Warning: soot.jimple.Constant is a phantom class!
+Warning: soot.jimple.GeExpr is a phantom class!
+Warning: soot.jimple.internal.JNewExpr is a phantom class!
+Warning: soot.jimple.LtExpr is a phantom class!
+Warning: soot.jimple.IntConstant is a phantom class!
+Warning: soot.jimple.GotoStmt is a phantom class!
+Warning: soot.jimple.EqExpr is a phantom class!
+Warning: com.microsoft.z3.ArraySort is a phantom class!
+Warning: com.microsoft.z3.UninterpretedSort is a phantom class!
+Warning: com.microsoft.z3.StringSymbol is a phantom class!
+Warning: soot.shimple.PhiExpr is a phantom class!
+Warning: soot.jimple.LeExpr is a phantom class!
+Warning: soot.jimple.CastExpr is a phantom class!
+Warning: soot.toolkits.scalar.ValueUnitPair is a phantom class!
+Warning: com.microsoft.z3.IntSort is a phantom class!
+Warning: soot.jimple.IfStmt is a phantom class!
+Warning: soot.jimple.InstanceFieldRef is a phantom class!
+Warning: soot.jimple.IdentityStmt is a phantom class!
+Warning: com.microsoft.z3.ArithExpr is a phantom class!
+Warning: soot.RefLikeType is a phantom class!
+Warning: soot.ArrayType is a phantom class!
+Warning: soot.IntegerType is a phantom class!
+Warning: soot.jimple.StaticFieldRef is a phantom class!
+Warning: soot.jimple.Stmt is a phantom class!
+Warning: soot.PrimType is a phantom class!
+Warning: com.microsoft.z3.ArrayExpr is a phantom class!
+Warning: soot.jimple.StringConstant is a phantom class!
+Warning: soot.jimple.GtExpr is a phantom class!
+Warning: soot.BodyTransformer is a phantom class!
+Warning: soot.Transform is a phantom class!
+Warning: soot.PackManager is a phantom class!
+Warning: soot.Pack is a phantom class!
+Warning: soot.options.Options is a phantom class!
+Warning: soot.Main is a phantom class!
+Warning: soot.Transformer is a phantom class!
+Transforming dotty.CfgConverter... 
+Transforming infoFlow.Edge... 
+Transforming infoFlow.ErrorLable... 
+Transforming infoFlow.exception.CreateZ3ScriptFailedException... 
+Transforming infoFlow.exception.ErrorLocationNotFoundException... 
+Transforming infoFlow.exception.MainFunctionNotFoundException... 
+Transforming infoFlow.InterpolationHandler... 
+Transforming infoFlow.LogUtils... 
+Transforming infoFlow.NewSort... 
+Transforming infoFlow.ProgramTree... 
+Transforming infoFlow.UnitController... 
+Transforming infoFlow.Vertex... 
+Transforming infoFlow.Z3ScriptHandler... 
+Transforming RecordPeekMemoryAndTime.testDriver... 
+Transforming safetyChecker.SafetyInitializerW... 
+Transforming safetyTestCode.iftest.Test1... 
+Transforming safetyTestCode.iftest.Test2... 
+Transforming safetyTestCode.iftest.Test3... 
+Transforming safetyTestCode.iftest.Test4... 
+Transforming safetyTestCode.whiletest.Test1... 
+Transforming safetyTester.iftest.Tester1$1... 
+Transforming safetyTester.iftest.Tester1... 
+Transforming safetyTester.iftest.Tester2$1... 
+Transforming safetyTester.iftest.Tester2... 
+Transforming safetyTester.iftest.Tester3$1... 
+Transforming safetyTester.iftest.Tester3... 
+Transforming safetyTester.iftest.Tester4$1... 
+Transforming safetyTester.iftest.Tester4... 
+Transforming safetyTester.whiletest.Tester1$1... 
+Transforming safetyTester.whiletest.Tester1... 
+Transforming SelfCompositionTest.NoLeak1$1... 
+Transforming SelfCompositionTest.NoLeak1... 
+Writing to src/output/safetyTest/dotty.CfgConverter.shimple
+Writing to src/output/safetyTest/infoFlow.Edge.shimple
+Writing to src/output/safetyTest/infoFlow.ErrorLable.shimple
+Writing to src/output/safetyTest/infoFlow.exception.CreateZ3ScriptFailedException.shimple
+Writing to src/output/safetyTest/infoFlow.exception.ErrorLocationNotFoundException.shimple
+Writing to src/output/safetyTest/infoFlow.exception.MainFunctionNotFoundException.shimple
+Writing to src/output/safetyTest/infoFlow.InterpolationHandler.shimple
+Writing to src/output/safetyTest/infoFlow.LogUtils.shimple
+Writing to src/output/safetyTest/infoFlow.NewSort.shimple
+Writing to src/output/safetyTest/infoFlow.ProgramTree.shimple
+Writing to src/output/safetyTest/infoFlow.UnitController.shimple
+Writing to src/output/safetyTest/infoFlow.Vertex.shimple
+Writing to src/output/safetyTest/infoFlow.Z3ScriptHandler.shimple
+Writing to src/output/safetyTest/RecordPeekMemoryAndTime.testDriver.shimple
+Writing to src/output/safetyTest/safetyChecker.SafetyInitializerW.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test1.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test2.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test3.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test4.shimple
+Writing to src/output/safetyTest/safetyTestCode.whiletest.Test1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester1$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester2$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester2.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester3$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester3.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester4$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester4.shimple
+Writing to src/output/safetyTest/safetyTester.whiletest.Tester1$1.shimple
+Writing to src/output/safetyTest/safetyTester.whiletest.Tester1.shimple
+Writing to src/output/safetyTest/SelfCompositionTest.NoLeak1$1.shimple
+Writing to src/output/safetyTest/SelfCompositionTest.NoLeak1.shimple
+Soot finished on Mon May 23 08:13:56 EDT 2016
+Soot has run for 0 min. 0 sec.
+[36msafetyTester.whiletest.Tester1... Test started...[0m
+>>> creating .ps files
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Ended ...

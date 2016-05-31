@@ -9,8 +9,8 @@ public class Test2 {
 		int y = 0;
 		int z = 5;
 
-		if (y != 0) {
-			x = 1;
+		if (y == 0) {
+			x = x - 2;
 			z = 3;
 		}
 

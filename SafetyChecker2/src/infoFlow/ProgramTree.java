@@ -3,13 +3,12 @@ package infoFlow;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
-import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.InterpolationContext;
 
 import dotty.CfgConverter;
@@ -23,8 +22,6 @@ import soot.toolkits.graph.ExceptionalUnitGraph;
 
 public class ProgramTree {
 
-	// private Set<ProgramLocation> locations;
-	// private Set<Action> actions;
 	private Vertex returnLeaf;
 	private Set<Vertex> liSet;
 	private Vertex lf;
@@ -54,6 +51,11 @@ public class ProgramTree {
 	//private HelpTree helpTree;
 	private String signature;
 	private UnitController unitController;
+	private CoverRelation coverRelation;
+
+	private Queue<Vertex> uncovered = new LinkedList<Vertex>();
+	private Queue<Vertex> errorSet = new LinkedList<Vertex>();
+	private int locationCounter = 0;
 
 	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("------->ProgramTree");
@@ -68,9 +70,9 @@ public class ProgramTree {
 		this.unitController = new UnitController();
 		this.mainFunction = mainFunction;
 		this.ictx = new InterpolationContext();
-		this.z3Handler = new Z3ScriptHandler(ictx);
-		this.itpHandler = new InterpolationHandler(ictx);
-
+		this.z3Handler = new Z3ScriptHandler(this.ictx);
+		this.itpHandler = new InterpolationHandler(this.ictx);
+		this.coverRelation = new CoverRelation(this.ictx);
 		if(this.mainFunction)
 			LogUtils.detailln("mainFunction = " + functionSignature);
 		else
@@ -85,18 +87,10 @@ public class ProgramTree {
 
 	private void startTest() throws ErrorLocationNotFoundException, MainFunctionNotFoundException {
 		LogUtils.detailln("------------>startTest()");
-//		boolean errorLocationFound = findErrorLocation(returnLeaf);
-//		if (!errorLocationFound)
-//			throw new ErrorLocationNotFoundException(this.mainFunction + " does not have any ErrorLocation");
-		
-//		TestCorrect();
-//		LogUtils.debugln("Heads:" + cfg.getHeads());
-		// start unwind process
 
 		unwind();
 		LogUtils.detailln("<-------------startTest");
 	}
-
 
 	private boolean findErrorLocation(Vertex w) {
 		for (Edge incomingEdge : w.getIncomingEdges()) {
@@ -127,7 +121,6 @@ public class ProgramTree {
 	private boolean findMainFunction() {
 		if(stores.containsKey(functionSignature)) {
 			this.cfg = new ExceptionalUnitGraph(stores.get(functionSignature));//entry.getValue()
-			//this.helpTree = new HelpTree(cfg);
 			
 			Body body = stores.get(functionSignature);
 		 	this.functionName = body.getMethod().getName();
@@ -137,7 +130,7 @@ public class ProgramTree {
 				functionNameInvokeCount.put(functionName, 0);	
 
 			this.signature = functionSignature;
-			//LogUtils.debugln("findMainFunction : " + signature);
+	
 			// Assumption is that we have only one ErrorLocation and return  point
 			// if we have multiple returns, may be we should have multiple trees.
 			this.returnLeaf = new Vertex();
@@ -151,62 +144,56 @@ public class ProgramTree {
 		return false;
 	}
 
-	private Queue<Vertex> uncovered = new LinkedList<Vertex>();
-	private Queue<Vertex> errorSet = new LinkedList<Vertex>();
-	private Set<Vertex> covered = new HashSet<Vertex>();
-	private Map<Vertex, Vertex> coveringRelation = new HashMap<Vertex, Vertex>();
-	private int locationCounter = 0;
-
 	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("----->Unwind");
-		uncovered.add(returnLeaf);
-		while(!uncovered.isEmpty()) {
-			Vertex v = uncovered.remove();
-			boolean errorPathFound = expandBFS(v);
 
+		boolean windingDone = false;
+		this.uncovered.add(returnLeaf);
+
+//		while(!windingDone) {
+//
+//			break;
+//		}
+		int counter = 0;
+		while(!this.uncovered.isEmpty()) {
+//			if(counter++ > 100) { LogUtils.fatalln("counter break"); break; }
+
+			Vertex v = uncovered.remove();
+			if(coverRelation.isCovered(v)) continue;
+
+			boolean errorPathFound = expandBFS(v);
 			if(errorPathFound) {
 				Vertex errorRoot = errorRootQueue.remove(); 
 
 				LogUtils.infoln("error root # = " + errorRootSet.size());
 				z3Handler.convertPathtoZ3Script(errorRoot); 
-				errorLocationFeasible = itpHandler.createInterpolant(errorRootSet);
-//				LogUtils.infoln("sending error size = " + errorSet.size());
-//				CfgConverter.printErrorPaths(errorSet, "_error" + errorRootSet.size() + ".dot");
-				
+				errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
 				printResult(errorRoot.toString());
 
-				if(errorLocationFeasible)
-					break;
+				if(errorLocationFeasible) break;
+				coverRelation.updateCover();
+//				if(errorRootSet.size() == 6)
+//					break;
 			}
-
 		}	
 		Queue<Vertex> q = new LinkedList<Vertex>();
 		q.add(returnLeaf);		
-		CfgConverter.printAllPaths(q, "_all.dot");
-		CfgConverter.printErrorPaths(errorSet, "_errors.dot");
-	}
-
-	private void DFS(Vertex v) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.detailln("----->DFS : v.incomingEdges=" + v.getIncomingEdges() + " : v.previousVertexSet=" + v.getPreviousVertexSet().size()); 
-		close(v);				
-		if(!v.isCovered()) {
-			if(v.isHeadLocation()) {
-				refine(v);
-				// for all w <= v : close(w)
-			}
-			//expand(v);
-			for(Vertex previousVertex : v.getPreviousVertexSet()) { 
-				DFS(previousVertex);
-			}	
+		LogUtils.warningln("coveringVertexMap # " + coverRelation.getCoveringMap().size());
+		LogUtils.warningln("coveredVertexMap # " + coverRelation.getCoveredByMap().size());
+		LogUtils.warningln("unitVertexMap # " + coverRelation.getUnitVertexMap().size());
+		for(Entry<Unit, LinkedList<Vertex>> entry : coverRelation.getUnitVertexMap().entrySet()) {
+			LogUtils.warningln(entry.getKey() + "--" + entry.getValue());
+			LogUtils.infoln("-------------");
 		}
+		CfgConverter.printAllPaths(q, "_all.dot");
+		CfgConverter.printErrorPaths(errorSet, "_errors.dot", coverRelation);
 	}
-
-	private void close(Vertex v) {}
 
 	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("----->expand : w.incomingEdges" + w.getIncomingEdges() + ": outgoingedges" + w.getOutgoingEdge());
 
-//		if (!w.isCovered()) {
+		boolean result = false;
+		if (!coverRelation.isCovered(w)) {
 			for (Edge incomingEdge : w.getIncomingEdges()) {
 				Vertex v = new Vertex();
 				v.setOutgoingEdge(incomingEdge);
@@ -220,11 +207,11 @@ public class ProgramTree {
 
 				if(cfg.getUnexceptionalPredsOf(incomingEdge.getUnit()).size() == 0) {
 					v.setHeadLocation(true);
-					v.setInvariant(itpHandler.getFalseInvariant());
+//					v.setInvariant(itpHandler.getTrueInvariant());
 					if(incomingEdge.isInErrorPath()) { 
 						errorRootSet.add(v);
 						errorRootQueue.add(v);
-						return true;
+						result = true;
 					}
 				}
 				
@@ -233,51 +220,33 @@ public class ProgramTree {
 					e.setTarget(v);
 					e.setProgramTree(this);
 					v.addIncomingEdge(e);
+					coverRelation.updateUnitVertexMap(e);
 					unitController.analyzeEdge(e, stores);
 					if(e.isErrorEdge())
 						errorSet.add(v);
 				}
+
+				if(v.getOutgoingEdge().isErrorEdge()) {
+					this.uncovered.clear();
+					this.uncovered.add(v);
+					LogUtils.fatalln("uncovered set = " + uncovered);
+					continue;
+				}
 			}
-//		}
+		}
 		LogUtils.detailln("<-----expand : w.incomingEdge#" + w.getIncomingEdges().size() + " : w.previousVertexSet#" + w.getPreviousVertexSet().size());
-		return false;
+		return result;
 	}
 
 	private void refine(Vertex v) {
-		// if(v.isHeadLocation() && !v.isSigh()) {
-		// List<Edge> path = createUniquePathPi(v);
-		// if(iHandler.createInterpolation()) {
-		//
-		// }
-		// }
-	}
-
-	private void cover(Vertex v, Vertex w) {
-
-	}
-
-	private List<Edge> createUniquePathPi(Vertex v) {
-
-		return null;
 	}
 
 	public String getProgramDefinition() {
-		return "_" + this.functionName + "_" + ProgramTree.functionNameInvokeCount.get(this.functionName);		
+		return "_" + this.functionName + "_" + ProgramTree.functionNameInvokeCount.get(this.functionName);
 	}	
 
 	public void printResult(String function) {
 		LogUtils.printResult(function, errorLocationFeasible);
-//		LogUtils.infoln("********************\n " + function + "\n***********************");
-//		printCurrentStatus();
 	}
  
-//	public void printCurrentStatus() {
-//
-//		if(errorLocationFeasible)
-//			LogUtils.infoln("Error path is feasbile.");
-//		else
-//			LogUtils.infoln("\u001B[34mError patth is not feasbile.");
-//	}
-	// public Set<Vertex> getVertexSet() { return this.vertexSet; }
-	// public Set<Edge> getEdgeSet() { return this.edgeSet; }
 }

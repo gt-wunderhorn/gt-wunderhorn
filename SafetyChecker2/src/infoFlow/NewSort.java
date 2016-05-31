@@ -34,14 +34,17 @@ public class NewSort {
 		IntExpr iExpr = this.iCtx.mkInt(index);
 		this.index.put(name, iExpr);
 		this.currentId++;
+		LogUtils.debugln("NewSort.creatNewOject**name=" + name + "--iExpr" + iExpr + "--currentId-" + currentId);
 	}
 
 	public IntExpr getId(Expr name) {
 		IntExpr index = this.index.get(name);
+		LogUtils.debugln("NewSort.getID**name=" + name + "--index=" + index);
 		return index;
 	}
 
 	public boolean ifHasExpr(Expr name) {
+		LogUtils.debugln("NewSort.ifHasExpr name=" + name);
 		return this.index.containsKey(name);
 	}
 
@@ -50,6 +53,7 @@ public class NewSort {
 		int index = this.ObejctId;
 		IntExpr newObject = this.iCtx.mkInt(index);
 		this.ObejctId++;
+		LogUtils.debugln("NewSort.getNewObject index=" + index + "-- ObejctId=" + ObejctId); 
 		return newObject;
 	}
 }

@@ -7,7 +7,8 @@ import com.microsoft.z3.BoolExpr;
 
 public class Vertex {
 
-	private boolean covered = false;
+	private boolean coveredBy = false;
+	private boolean covering = false;
 	private boolean returnLocation = false;
 	private boolean headLocation = false;
 	private boolean errorLocation = false;
@@ -25,8 +26,11 @@ public class Vertex {
 	private int locationNumber = 0;
 	private BoolExpr invariant;
 
-        public boolean isCovered() { return this.covered; }
-	public void setCovered(boolean covered) { this.covered = covered; }
+        public boolean isCoveredBy() { return this.coveredBy; }
+	public void setCoveredBy(boolean coveredBy) { this.coveredBy = coveredBy; }
+
+        public boolean isCovering() { return this.covering; }
+	public void setCovering(boolean covering) { this.covering = covering; }
 
 	public boolean isReturnLocation() { return this.returnLocation; }
 	public void setReturnLocation(boolean returnLocation) { this.returnLocation = returnLocation; }

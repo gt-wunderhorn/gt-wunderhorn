@@ -53,9 +53,12 @@ public class infoFlow.NewSort extends java.lang.Object
         com.microsoft.z3.Expr r1;
         java.lang.Integer r2;
         com.microsoft.z3.IntNum r3;
-        int $i0, $i1, $i2, $i3;
+        int $i0, $i1, $i2, $i3, $i4;
         com.microsoft.z3.InterpolationContext $r4;
         java.util.Map $r5;
+        java.lang.Object[] $r7;
+        java.lang.StringBuilder $r8, $r9, $r10, $r11, $r12, $r13;
+        java.lang.String $r14;
 
         r0 := @this: infoFlow.NewSort;
 
@@ -81,6 +84,30 @@ public class infoFlow.NewSort extends java.lang.Object
 
         r0.<infoFlow.NewSort: int currentId> = $i3;
 
+        $r7 = newarray (java.lang.Object)[1];
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("NewSort.creatNewOject**name=");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--iExpr");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r3);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--currentId-");
+
+        $i4 = r0.<infoFlow.NewSort: int currentId>;
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i4);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r7[0] = $r14;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r7);
+
         return;
     }
 
@@ -91,6 +118,9 @@ public class infoFlow.NewSort extends java.lang.Object
         com.microsoft.z3.IntExpr r2;
         java.util.Map $r3;
         java.lang.Object $r4;
+        java.lang.Object[] $r5;
+        java.lang.StringBuilder $r6, $r7, $r8, $r9;
+        java.lang.String $r10;
 
         r0 := @this: infoFlow.NewSort;
 
@@ -102,6 +132,24 @@ public class infoFlow.NewSort extends java.lang.Object
 
         r2 = (com.microsoft.z3.IntExpr) $r4;
 
+        $r5 = newarray (java.lang.Object)[1];
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>(java.lang.String)>("NewSort.getID**name=");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--index=");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r5[0] = $r10;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r5);
+
         return r2;
     }
 
@@ -109,16 +157,33 @@ public class infoFlow.NewSort extends java.lang.Object
     {
         infoFlow.NewSort r0;
         com.microsoft.z3.Expr r1;
-        java.util.Map $r2;
+        java.lang.Object[] $r2;
+        java.lang.StringBuilder $r3, $r4;
+        java.lang.String $r5;
+        java.util.Map $r6;
         boolean $z0;
 
         r0 := @this: infoFlow.NewSort;
 
         r1 := @parameter0: com.microsoft.z3.Expr;
 
-        $r2 = r0.<infoFlow.NewSort: java.util.Map index>;
+        $r2 = newarray (java.lang.Object)[1];
 
-        $z0 = interfaceinvoke $r2.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>("NewSort.ifHasExpr name=");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r2[0] = $r5;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r2);
+
+        $r6 = r0.<infoFlow.NewSort: java.util.Map index>;
+
+        $z0 = interfaceinvoke $r6.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
 
         return $z0;
     }
@@ -126,9 +191,12 @@ public class infoFlow.NewSort extends java.lang.Object
     public com.microsoft.z3.Expr getNewObject()
     {
         infoFlow.NewSort r0;
-        int i0, $i1, $i2;
+        int i0, $i1, $i2, $i3;
         com.microsoft.z3.IntNum r1;
         com.microsoft.z3.InterpolationContext $r2;
+        java.lang.Object[] $r3;
+        java.lang.StringBuilder $r4, $r5, $r6, $r7;
+        java.lang.String $r8;
 
         r0 := @this: infoFlow.NewSort;
 
@@ -143,6 +211,26 @@ public class infoFlow.NewSort extends java.lang.Object
         $i2 = $i1 + 1;
 
         r0.<infoFlow.NewSort: int ObejctId> = $i2;
+
+        $r3 = newarray (java.lang.Object)[1];
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>(java.lang.String)>("NewSort.getNewObject index=");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-- ObejctId=");
+
+        $i3 = r0.<infoFlow.NewSort: int ObejctId>;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r3[0] = $r8;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r3);
 
         return r1;
     }

@@ -113,7 +113,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r2[0] = $r3;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r2);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r2);
 
         $r4 = virtualinvoke r7_1.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
 
@@ -151,7 +151,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         infoFlow.Z3ScriptHandler r0;
         infoFlow.Edge r1;
         soot.Unit r2;
-        boolean $z0, $z1, $z2, $z3, $z4, z5, z5_1, z5_2, z5_3, z5_4, z5_5, z5_6, z5_7, z5_8, z5_9, z5_10;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, z6, z6_1, z6_2, z6_3, z6_4, z6_5, z6_6, z6_7, z6_8, z6_9, z6_10, z6_11, z6_12;
         java.lang.Object[] $r3, $r4, $r11, $r16, $r17;
         java.lang.StringBuilder $r5, $r7, $r8, $r9, $r12, $r14;
         infoFlow.Vertex $r6;
@@ -162,16 +162,16 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         r1 := @parameter0: infoFlow.Edge;
 
-        z5 = 0;
+        z6 = 0;
 
         $z0 = virtualinvoke r1.<infoFlow.Edge: boolean isErrorEdge()>();
 
 (0)     if $z0 == 0 goto label1;
 
-(1)     z5_1 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertErrorEdge(infoFlow.Edge)>(r1);
+(1)     z6_1 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertErrorEdge(infoFlow.Edge)>(r1);
 
      label1:
-        z5_2 = Phi(z5 #0, z5_1 #1);
+        z6_2 = Phi(z6 #0, z6_1 #1);
 
         r2 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
 
@@ -179,37 +179,46 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
 (2)     if $z1 == 0 goto label2;
 
-(3)     z5_3 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIfStmt(infoFlow.Edge)>(r1);
+(3)     z6_3 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIfStmt(infoFlow.Edge)>(r1);
 
      label2:
-        z5_4 = Phi(z5_2 #2, z5_3 #3);
+        z6_4 = Phi(z6_2 #2, z6_3 #3);
 
-        $z2 = r2 instanceof soot.jimple.IdentityStmt;
+        $z2 = r2 instanceof soot.jimple.GotoStmt;
 
 (4)     if $z2 == 0 goto label3;
 
-(5)     z5_5 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIdentityStmt(infoFlow.Edge)>(r1);
+(5)     z6_5 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertGotoStmt(infoFlow.Edge)>(r1);
 
      label3:
-        z5_6 = Phi(z5_4 #4, z5_5 #5);
+        z6_6 = Phi(z6_4 #4, z6_5 #5);
 
         $z3 = r2 instanceof soot.jimple.AssignStmt;
 
 (6)     if $z3 == 0 goto label4;
 
-(7)     z5_7 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertAssignStmtEdge(infoFlow.Edge)>(r1);
+(7)     z6_7 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertAssignStmtEdge(infoFlow.Edge)>(r1);
 
      label4:
-        z5_8 = Phi(z5_6 #6, z5_7 #7);
+        z6_8 = Phi(z6_6 #6, z6_7 #7);
 
-        $z4 = virtualinvoke r1.<infoFlow.Edge: boolean isSinkEdge()>();
+        $z4 = r2 instanceof soot.jimple.IdentityStmt;
 
 (8)     if $z4 == 0 goto label5;
 
-(9)     z5_9 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertSinkInvoke2Z3(infoFlow.Edge)>(r1);
+(9)     z6_9 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertIdentityStmt(infoFlow.Edge)>(r1);
 
      label5:
-        z5_10 = Phi(z5_8 #8, z5_9 #9);
+        z6_10 = Phi(z6_8 #8, z6_9 #9);
+
+        $z5 = virtualinvoke r1.<infoFlow.Edge: boolean isSinkEdge()>();
+
+(10)    if $z5 == 0 goto label6;
+
+(11)    z6_11 = specialinvoke r0.<infoFlow.Z3ScriptHandler: boolean convertSinkInvoke2Z3(infoFlow.Edge)>(r1);
+
+     label6:
+        z6_12 = Phi(z6_10 #10, z6_11 #11);
 
         $r3 = newarray (java.lang.Object)[1];
 
@@ -253,24 +262,24 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r11);
 
-        if z5_10 != 0 goto label6;
+        if z6_12 != 0 goto label7;
 
         $r16 = newarray (java.lang.Object)[1];
 
         $r16[0] = "Converstion failed";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r16);
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r16);
 
         $r17 = newarray (java.lang.Object)[1];
 
         $r17[0] = "Z3ScriptHandler.createZ3Script";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r17);
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r17);
 
         staticinvoke <java.lang.System: void exit(int)>(0);
 
-     label6:
-        return z5_10;
+     label7:
+        return z6_12;
     }
 
     private boolean convertErrorEdge(infoFlow.Edge)
@@ -297,17 +306,17 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         infoFlow.Edge r1, r5;
         soot.jimple.IfStmt r2;
         soot.Value r3;
-        com.microsoft.z3.BoolExpr r4, $r26, $r32;
-        soot.Unit r6, r7, $r9, $r29;
+        com.microsoft.z3.BoolExpr r4, $r27, $r33;
+        soot.Unit r6, r7, $r9, $r30;
         soot.jimple.Stmt r8;
-        infoFlow.Vertex $r10, $r12;
+        infoFlow.Vertex $r10, $r13;
         int $i0;
         com.microsoft.z3.Expr $r11;
-        java.lang.Object[] $r13, $r17, $r21, $r27;
-        java.lang.StringBuilder $r14, $r15, $r18, $r19, $r22, $r23, $r28, $r30, $r31, $r33;
-        java.lang.String $r16, $r20, $r24, $r34;
+        java.lang.Object[] $r12, $r14, $r18, $r22, $r28;
+        java.lang.StringBuilder $r15, $r16, $r19, $r20, $r23, $r24, $r29, $r31, $r32, $r34;
+        java.lang.String $r17, $r21, $r25, $r35;
         boolean $z0;
-        com.microsoft.z3.InterpolationContext $r25;
+        com.microsoft.z3.InterpolationContext $r26;
 
         r0 := @this: infoFlow.Z3ScriptHandler;
 
@@ -327,57 +336,63 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         r4 = (com.microsoft.z3.BoolExpr) $r11;
 
-        $r12 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getTarget()>();
+        $r12 = newarray (java.lang.Object)[1];
 
-        r5 = virtualinvoke $r12.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
+        $r12[0] = r3;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r12);
+
+        $r13 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getTarget()>();
+
+        r5 = virtualinvoke $r13.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
 
         r6 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
 
-        $r13 = newarray (java.lang.Object)[1];
+        $r14 = newarray (java.lang.Object)[1];
 
-        $r14 = new java.lang.StringBuilder;
+        $r15 = new java.lang.StringBuilder;
 
-        specialinvoke $r14.<java.lang.StringBuilder: void <init>(java.lang.String)>("currentUnit=");
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>(java.lang.String)>("currentUnit=");
 
-        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r6);
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r6);
 
-        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r13[0] = $r16;
+        $r14[0] = $r17;
 
-        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r13);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r14);
 
         r7 = virtualinvoke r5.<infoFlow.Edge: soot.Unit getUnit()>();
 
-        $r17 = newarray (java.lang.Object)[1];
+        $r18 = newarray (java.lang.Object)[1];
 
-        $r18 = new java.lang.StringBuilder;
+        $r19 = new java.lang.StringBuilder;
 
-        specialinvoke $r18.<java.lang.StringBuilder: void <init>(java.lang.String)>("nextUnit=");
+        specialinvoke $r19.<java.lang.StringBuilder: void <init>(java.lang.String)>("nextUnit=");
 
-        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r7);
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r7);
 
-        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r17[0] = $r20;
+        $r18[0] = $r21;
 
-        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r17);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r18);
 
         r8 = interfaceinvoke r2.<soot.jimple.IfStmt: soot.jimple.Stmt getTarget()>();
 
-        $r21 = newarray (java.lang.Object)[1];
+        $r22 = newarray (java.lang.Object)[1];
 
-        $r22 = new java.lang.StringBuilder;
+        $r23 = new java.lang.StringBuilder;
 
-        specialinvoke $r22.<java.lang.StringBuilder: void <init>(java.lang.String)>("targetUnit = ");
+        specialinvoke $r23.<java.lang.StringBuilder: void <init>(java.lang.String)>("targetUnit = ");
 
-        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r8);
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r8);
 
-        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r21[0] = $r24;
+        $r22[0] = $r25;
 
-        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r21);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r22);
 
         $z0 = virtualinvoke r8.<java.lang.Object: boolean equals(java.lang.Object)>(r7);
 
@@ -388,34 +403,34 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         goto label2;
 
      label1:
-        $r25 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r26 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r26 = virtualinvoke $r25.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkNot(com.microsoft.z3.BoolExpr)>(r4);
+        $r27 = virtualinvoke $r26.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkNot(com.microsoft.z3.BoolExpr)>(r4);
 
-        virtualinvoke r1.<infoFlow.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>($r26);
+        virtualinvoke r1.<infoFlow.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>($r27);
 
      label2:
-        $r27 = newarray (java.lang.Object)[1];
+        $r28 = newarray (java.lang.Object)[1];
 
-        $r28 = new java.lang.StringBuilder;
+        $r29 = new java.lang.StringBuilder;
 
-        specialinvoke $r28.<java.lang.StringBuilder: void <init>()>();
+        specialinvoke $r29.<java.lang.StringBuilder: void <init>()>();
 
-        $r29 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
+        $r30 = virtualinvoke r1.<infoFlow.Edge: soot.Unit getUnit()>();
 
-        $r30 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r29);
+        $r31 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r30);
 
-        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("=");
+        $r32 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("=");
 
-        $r32 = virtualinvoke r1.<infoFlow.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
+        $r33 = virtualinvoke r1.<infoFlow.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
 
-        $r33 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r32);
+        $r34 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r33);
 
-        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r27[0] = $r34;
+        $r28[0] = $r35;
 
-        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r27);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r28);
 
         return 1;
     }
@@ -506,11 +521,12 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         soot.jimple.AssignStmt r2;
         soot.Value r3, r4;
         soot.Type r5;
-        com.microsoft.z3.Expr r6, r12;
+        com.microsoft.z3.Expr r6, r14;
         com.microsoft.z3.BoolExpr r7;
         soot.Unit $r8;
-        infoFlow.Vertex $r9, $r10, $r11;
+        infoFlow.Vertex $r9, $r10, $r13;
         int $i0, $i1, $i2;
+        java.lang.Object[] $r11, $r12;
 
         r0 := @this: infoFlow.Z3ScriptHandler;
 
@@ -530,7 +546,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $i0 = virtualinvoke $r9.<infoFlow.Vertex: int getDistance()>();
 
-        r12 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r4, 0, r1, $i0);
+        r14 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r4, 0, r1, $i0);
 
         $r10 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
@@ -538,11 +554,23 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         r6 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r3, 1, r1, $i1);
 
-        $r11 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+        $r11 = newarray (java.lang.Object)[1];
 
-        $i2 = virtualinvoke $r11.<infoFlow.Vertex: int getDistance()>();
+        $r11[0] = r14;
 
-        r7 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.BoolExpr convertAssignStmt(com.microsoft.z3.Expr,com.microsoft.z3.Expr,soot.Type,soot.Value,int)>(r12, r6, r5, r3, $i2);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r11);
+
+        $r12 = newarray (java.lang.Object)[1];
+
+        $r12[0] = r5;
+
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r12);
+
+        $r13 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i2 = virtualinvoke $r13.<infoFlow.Vertex: int getDistance()>();
+
+        r7 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.BoolExpr convertAssignStmt(com.microsoft.z3.Expr,com.microsoft.z3.Expr,soot.Type,soot.Value,int)>(r14, r6, r5, r3, $i2);
 
         virtualinvoke r1.<infoFlow.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r7);
 
@@ -551,6 +579,26 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         return 0;
 
      label1:
+        return 1;
+    }
+
+    private boolean convertGotoStmt(infoFlow.Edge)
+    {
+        infoFlow.Z3ScriptHandler r0;
+        infoFlow.Edge r1;
+        com.microsoft.z3.InterpolationContext $r2;
+        com.microsoft.z3.BoolExpr $r3;
+
+        r0 := @this: infoFlow.Z3ScriptHandler;
+
+        r1 := @parameter0: infoFlow.Edge;
+
+        $r2 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r3 = virtualinvoke $r2.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkTrue()>();
+
+        virtualinvoke r1.<infoFlow.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>($r3);
+
         return 1;
     }
 
@@ -621,9 +669,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 (3)     i2_2 = i2_1 + 1;
 
      label3:
-        r22_1 = Phi(r22 #0, r22_3 #3);
-
         i2_1 = Phi(i2 #0, i2_2 #3);
+
+        r22_1 = Phi(r22 #0, r22_3 #3);
 
         if i2_1 < i0 goto label1;
 
@@ -874,7 +922,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r16[0] = $r19;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r16);
+        staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r16);
 
         r5 = virtualinvoke r75.<soot.toolkits.scalar.ValueUnitPair: soot.Unit getUnit()>();
 
@@ -890,7 +938,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r20[0] = $r23;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r20);
+        staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r20);
 
         r76_1 = r0.<infoFlow.Z3ScriptHandler: infoFlow.Vertex errorPathRoot>;
 
@@ -949,7 +997,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r27[0] = $r32;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r27);
+        staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r27);
 
         $r33 = newarray (java.lang.Object)[1];
 
@@ -971,7 +1019,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r33[0] = $r39;
 
-(8)     staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r33);
+(8)     staticinvoke <infoFlow.LogUtils: void detailln(java.lang.Object[])>($r33);
 
      label10:
         r73_6 = Phi(r73_2 #4, r73_5 #8);
@@ -983,9 +1031,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
      label11:
         r73_2 = Phi(r73_1 #3, r73_6 #9);
 
-        r76_2 = Phi(r76_1 #3, r76_3 #9);
-
         r74_2 = Phi(r74_1 #3, r74_6 #9);
+
+        r76_2 = Phi(r76_1 #3, r76_3 #9);
 
         $r24 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
@@ -994,9 +1042,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
      label12:
         r73_1 = Phi(r73 #2, r73_2 #10);
 
-        r76 = Phi(r76 #2, r76_2 #10);
-
         r74_1 = Phi(r74 #2, r74_2 #10);
+
+        r76 = Phi(r76 #2, r76_2 #10);
 
         $z6 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
@@ -1020,7 +1068,7 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r41[0] = $r44;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r41);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r41);
 
         return r77;
 
@@ -1823,9 +1871,11 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
     {
         infoFlow.Z3ScriptHandler r0;
         infoFlow.Edge r1;
-        java.lang.StringBuilder $r2, $r5;
+        java.lang.StringBuilder $r2, $r5, $r6, $r8;
         infoFlow.ProgramTree $r3;
-        java.lang.String $r4, $r6;
+        java.lang.String $r4, $r9;
+        infoFlow.Vertex $r7;
+        int $i0;
 
         r0 := @this: infoFlow.Z3ScriptHandler;
 
@@ -1841,9 +1891,17 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r5 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
 
-        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
 
-        return $r6;
+        $r7 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i0 = virtualinvoke $r7.<infoFlow.Vertex: int getDistance()>();
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r9;
     }
 
     private com.microsoft.z3.Expr convertBoolExpr(soot.jimple.BinopExpr, infoFlow.Edge, int)
@@ -1851,15 +1909,22 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         infoFlow.Z3ScriptHandler r0;
         soot.jimple.BinopExpr r1;
         infoFlow.Edge r2;
-        int i0, $i1, $i2, $i3, $i4;
-        com.microsoft.z3.BoolExpr r3, $r8, $r12;
-        boolean $z0, $z1;
-        infoFlow.Vertex $r4, $r5, $r9, $r10;
-        com.microsoft.z3.InterpolationContext $r6, $r7, $r11;
-        soot.jimple.EqExpr r13;
-        soot.Value r14, r15, r19, r20;
-        com.microsoft.z3.Expr r16, r17, r21, r22;
-        soot.jimple.NeExpr r18;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14;
+        com.microsoft.z3.BoolExpr r3, $r9, $r15, $r21, $r27, $r32, $r36;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        infoFlow.Vertex $r4, $r5, $r10, $r11, $r16, $r17, $r22, $r23, $r28, $r29, $r33, $r34, $r37, $r38;
+        com.microsoft.z3.ArithExpr $r6, $r7, $r12, $r13, $r18, $r19, $r24, $r25, $r40, $r41, $r43;
+        com.microsoft.z3.InterpolationContext $r8, $r14, $r20, $r26, $r30, $r31, $r35, $r42;
+        com.microsoft.z3.ArithExpr[] $r39;
+        soot.jimple.AddExpr r44;
+        soot.Value r45, r46, r50, r51, r55, r56, r60, r61, r65, r66, r70, r71, r75, r76;
+        com.microsoft.z3.Expr r47, r48, r52, r53, r57, r58, r62, r63, r67, r68, r72, r73, r77, r78;
+        soot.jimple.EqExpr r49;
+        soot.jimple.NeExpr r54;
+        soot.jimple.GtExpr r59;
+        soot.jimple.GeExpr r64;
+        soot.jimple.LtExpr r69;
+        soot.jimple.LeExpr r74;
 
         r0 := @this: infoFlow.Z3ScriptHandler;
 
@@ -1869,68 +1934,239 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         i0 := @parameter2: int;
 
-        $z0 = r1 instanceof soot.jimple.EqExpr;
+        $z0 = r1 instanceof soot.jimple.AddExpr;
 
         if $z0 == 0 goto label1;
 
-        r13 = (soot.jimple.EqExpr) r1;
+        r44 = (soot.jimple.AddExpr) r1;
 
-        r14 = interfaceinvoke r13.<soot.jimple.EqExpr: soot.Value getOp1()>();
+        r45 = interfaceinvoke r44.<soot.jimple.AddExpr: soot.Value getOp1()>();
 
-        r15 = interfaceinvoke r13.<soot.jimple.EqExpr: soot.Value getOp2()>();
+        r46 = interfaceinvoke r44.<soot.jimple.AddExpr: soot.Value getOp2()>();
 
-        $r9 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+        $r37 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
-        $i3 = virtualinvoke $r9.<infoFlow.Vertex: int getDistance()>();
+        $i13 = virtualinvoke $r37.<infoFlow.Vertex: int getDistance()>();
 
-        r16 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r14, 0, r2, $i3);
+        r47 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r45, 0, r2, $i13);
 
-        $r10 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+        $r38 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
-        $i4 = virtualinvoke $r10.<infoFlow.Vertex: int getDistance()>();
+        $i14 = virtualinvoke $r38.<infoFlow.Vertex: int getDistance()>();
 
-        r17 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r15, 0, r2, $i4);
+        r48 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r46, 0, r2, $i14);
 
-        $r11 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r42 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r12 = virtualinvoke $r11.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r16, r17);
+        $r39 = newarray (com.microsoft.z3.ArithExpr)[2];
 
-        return $r12;
+        $r40 = (com.microsoft.z3.ArithExpr) r47;
+
+        $r39[0] = $r40;
+
+        $r41 = (com.microsoft.z3.ArithExpr) r48;
+
+        $r39[1] = $r41;
+
+        $r43 = virtualinvoke $r42.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArithExpr mkAdd(com.microsoft.z3.ArithExpr[])>($r39);
+
+        return $r43;
 
      label1:
-        $z1 = r1 instanceof soot.jimple.NeExpr;
+        $z1 = r1 instanceof soot.jimple.EqExpr;
 
         if $z1 == 0 goto label2;
 
-        r18 = (soot.jimple.NeExpr) r1;
+        r49 = (soot.jimple.EqExpr) r1;
 
-        r19 = interfaceinvoke r18.<soot.jimple.NeExpr: soot.Value getOp1()>();
+        r50 = interfaceinvoke r49.<soot.jimple.EqExpr: soot.Value getOp1()>();
 
-        r20 = interfaceinvoke r18.<soot.jimple.NeExpr: soot.Value getOp2()>();
+        r51 = interfaceinvoke r49.<soot.jimple.EqExpr: soot.Value getOp2()>();
+
+        $r33 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i11 = virtualinvoke $r33.<infoFlow.Vertex: int getDistance()>();
+
+        r52 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r50, 0, r2, $i11);
+
+        $r34 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i12 = virtualinvoke $r34.<infoFlow.Vertex: int getDistance()>();
+
+        r53 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r51, 0, r2, $i12);
+
+        $r35 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r36 = virtualinvoke $r35.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r52, r53);
+
+        return $r36;
+
+     label2:
+        $z2 = r1 instanceof soot.jimple.NeExpr;
+
+        if $z2 == 0 goto label3;
+
+        r54 = (soot.jimple.NeExpr) r1;
+
+        r55 = interfaceinvoke r54.<soot.jimple.NeExpr: soot.Value getOp1()>();
+
+        r56 = interfaceinvoke r54.<soot.jimple.NeExpr: soot.Value getOp2()>();
+
+        $r28 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i9 = virtualinvoke $r28.<infoFlow.Vertex: int getDistance()>();
+
+        r57 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r55, 0, r2, $i9);
+
+        $r29 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i10 = virtualinvoke $r29.<infoFlow.Vertex: int getDistance()>();
+
+        r58 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r56, 0, r2, $i10);
+
+        $r30 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        r3 = virtualinvoke $r30.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r57, r58);
+
+        $r31 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r32 = virtualinvoke $r31.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkNot(com.microsoft.z3.BoolExpr)>(r3);
+
+        return $r32;
+
+     label3:
+        $z3 = r1 instanceof soot.jimple.GtExpr;
+
+        if $z3 == 0 goto label4;
+
+        r59 = (soot.jimple.GtExpr) r1;
+
+        r60 = interfaceinvoke r59.<soot.jimple.GtExpr: soot.Value getOp1()>();
+
+        r61 = interfaceinvoke r59.<soot.jimple.GtExpr: soot.Value getOp2()>();
+
+        $r22 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i7 = virtualinvoke $r22.<infoFlow.Vertex: int getDistance()>();
+
+        r62 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r60, 0, r2, $i7);
+
+        $r23 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i8 = virtualinvoke $r23.<infoFlow.Vertex: int getDistance()>();
+
+        r63 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r61, 0, r2, $i8);
+
+        $r26 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r25 = (com.microsoft.z3.ArithExpr) r62;
+
+        $r24 = (com.microsoft.z3.ArithExpr) r63;
+
+        $r27 = virtualinvoke $r26.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkGt(com.microsoft.z3.ArithExpr,com.microsoft.z3.ArithExpr)>($r25, $r24);
+
+        return $r27;
+
+     label4:
+        $z4 = r1 instanceof soot.jimple.GeExpr;
+
+        if $z4 == 0 goto label5;
+
+        r64 = (soot.jimple.GeExpr) r1;
+
+        r65 = interfaceinvoke r64.<soot.jimple.GeExpr: soot.Value getOp1()>();
+
+        r66 = interfaceinvoke r64.<soot.jimple.GeExpr: soot.Value getOp2()>();
+
+        $r16 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i5 = virtualinvoke $r16.<infoFlow.Vertex: int getDistance()>();
+
+        r67 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r65, 0, r2, $i5);
+
+        $r17 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i6 = virtualinvoke $r17.<infoFlow.Vertex: int getDistance()>();
+
+        r68 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r66, 0, r2, $i6);
+
+        $r20 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r19 = (com.microsoft.z3.ArithExpr) r67;
+
+        $r18 = (com.microsoft.z3.ArithExpr) r68;
+
+        $r21 = virtualinvoke $r20.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkGe(com.microsoft.z3.ArithExpr,com.microsoft.z3.ArithExpr)>($r19, $r18);
+
+        return $r21;
+
+     label5:
+        $z5 = r1 instanceof soot.jimple.LtExpr;
+
+        if $z5 == 0 goto label6;
+
+        r69 = (soot.jimple.LtExpr) r1;
+
+        r70 = interfaceinvoke r69.<soot.jimple.LtExpr: soot.Value getOp1()>();
+
+        r71 = interfaceinvoke r69.<soot.jimple.LtExpr: soot.Value getOp2()>();
+
+        $r10 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i3 = virtualinvoke $r10.<infoFlow.Vertex: int getDistance()>();
+
+        r72 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r70, 0, r2, $i3);
+
+        $r11 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
+
+        $i4 = virtualinvoke $r11.<infoFlow.Vertex: int getDistance()>();
+
+        r73 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r71, 0, r2, $i4);
+
+        $r14 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r13 = (com.microsoft.z3.ArithExpr) r72;
+
+        $r12 = (com.microsoft.z3.ArithExpr) r73;
+
+        $r15 = virtualinvoke $r14.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkLt(com.microsoft.z3.ArithExpr,com.microsoft.z3.ArithExpr)>($r13, $r12);
+
+        return $r15;
+
+     label6:
+        $z6 = r1 instanceof soot.jimple.LeExpr;
+
+        if $z6 == 0 goto label7;
+
+        r74 = (soot.jimple.LeExpr) r1;
+
+        r75 = interfaceinvoke r74.<soot.jimple.LeExpr: soot.Value getOp1()>();
+
+        r76 = interfaceinvoke r74.<soot.jimple.LeExpr: soot.Value getOp2()>();
 
         $r4 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
         $i1 = virtualinvoke $r4.<infoFlow.Vertex: int getDistance()>();
 
-        r21 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r19, 0, r2, $i1);
+        r77 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r75, 0, r2, $i1);
 
         $r5 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
         $i2 = virtualinvoke $r5.<infoFlow.Vertex: int getDistance()>();
 
-        r22 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r20, 0, r2, $i2);
+        r78 = specialinvoke r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,infoFlow.Edge,int)>(r76, 0, r2, $i2);
 
-        $r6 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r8 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r3 = virtualinvoke $r6.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r21, r22);
+        $r7 = (com.microsoft.z3.ArithExpr) r77;
 
-        $r7 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r6 = (com.microsoft.z3.ArithExpr) r78;
 
-        $r8 = virtualinvoke $r7.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkNot(com.microsoft.z3.BoolExpr)>(r3);
+        $r9 = virtualinvoke $r8.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkLe(com.microsoft.z3.ArithExpr,com.microsoft.z3.ArithExpr)>($r7, $r6);
 
-        return $r8;
+        return $r9;
 
-     label2:
+     label7:
         return null;
     }
 }

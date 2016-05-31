@@ -6,9 +6,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 
+import infoFlow.CoverRelation;
 import infoFlow.Edge;
 import infoFlow.Vertex;
 
@@ -23,8 +26,10 @@ public class CfgConverter {
 			return writer;
 	}
 
-	public static void printErrorPaths(Queue<Vertex> queue, String fileName) {
+	public static void printErrorPaths(Queue<Vertex> queue, String fileName, CoverRelation coverRelation) {
 		try{
+			Map<Vertex, Set<Vertex>> coveredByMap = coverRelation.getCoveredByMap();
+
 			BufferedWriter writer = getBufferedWriter(fileName);	
 			writer.write("digraph { \n");
 			writer.write("\tratio=\"fill\";\n\tsize=\"8.3,11.7!\";\n\tmargin=0;\n");
@@ -33,13 +38,27 @@ public class CfgConverter {
 				Vertex w = queue.remove();
 				Set<Vertex> vSet = w.getPreviousVertexSet();
 				Edge e = w.getOutgoingEdge();
+
+				String color = "";
+				if(coverRelation.isAncestorCovered(w))
+					color = "color =green, ";
+
 				if(w.getDistance()!=0 )
 					if(w.getOutgoingEdge().isInErrorPath()) 
-						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
+						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
 				for(Vertex v : vSet) { 
 					queue.add(v);
 				}
 			}
+			
+			for(Entry<Vertex, Set<Vertex>> entry : coveredByMap.entrySet()) {
+				Vertex coveredVertex = entry.getKey();
+				Set<Vertex> coveringSet = entry.getValue();
+				for(Vertex coveringVertex : coveringSet) {
+					writer.write("\t\"" + coveredVertex + "\" -> \"" + coveringVertex + "\"[style=dashed, color=red];\n"); 
+				}
+			}
+
 			writer.write("}");
 			writer.flush();
 			writer.close();

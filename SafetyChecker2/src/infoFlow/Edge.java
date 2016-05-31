@@ -1,5 +1,8 @@
 package infoFlow;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.microsoft.z3.BoolExpr;
 
 import soot.Unit;
@@ -20,6 +23,9 @@ public class Edge {
 	private boolean objectEdge = false;
 	private boolean newEdge = false;
 	private boolean inErrorPath = false;
+
+//	private Set<Edge> covers = new HashSet<Edge>();
+//	private Set<Edge> coveredBy = new HashSet<Edge>();
 
 	public Edge(Unit unit) { this.unit = unit; }
 
@@ -60,7 +66,13 @@ public class Edge {
 	public void setInErrorPath(boolean inErrorPath) { this.inErrorPath = inErrorPath; }
 
 	public BoolExpr getZ3Expr() { return this.z3Expr; }
-	public void setZ3Expr(BoolExpr z3Expr) { this.z3Expr = z3Expr; } 
+	public void setZ3Expr(BoolExpr z3Expr) { this.z3Expr = z3Expr; toString(); } 
+
+//	public Set<Edge> getCovers() { return this.covers; }
+//	public void clearCovers() { this.covers = new HashSet<Edge>(); }
+//
+//	public Set<Edge> getCoveredBy() { return this.coveredBy; }
+//     	public void clearCoveredBy() { this.coveredBy = 	
 
 	public String toString() { return unit.toString(); }
 

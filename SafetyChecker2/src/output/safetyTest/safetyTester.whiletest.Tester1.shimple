@@ -1,25 +1,12 @@
-public class safetyTester.iftest.Tester4 extends java.lang.Object
+public class safetyTester.whiletest.Tester1 extends java.lang.Object
 {
     static java.util.Map stores;
 
-    static void <clinit>()
-    {
-        java.util.HashMap $r0;
-
-        $r0 = new java.util.HashMap;
-
-        specialinvoke $r0.<java.util.HashMap: void <init>()>();
-
-        <safetyTester.iftest.Tester4: java.util.Map stores> = $r0;
-
-        return;
-    }
-
     public void <init>()
     {
-        safetyTester.iftest.Tester4 r0;
+        safetyTester.whiletest.Tester1 r0;
 
-        r0 := @this: safetyTester.iftest.Tester4;
+        r0 := @this: safetyTester.whiletest.Tester1;
 
         specialinvoke r0.<java.lang.Object: void <init>()>();
 
@@ -37,7 +24,7 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
         java.util.Map $r13;
         java.lang.Exception $r15, r23;
         infoFlow.ProgramTree r22, r26;
-        safetyTester.iftest.Tester4$1 r24;
+        safetyTester.whiletest.Tester1$1 r24;
         soot.Transform r25;
         soot.Transformer r27;
 
@@ -73,9 +60,9 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
 
         r25 = new soot.Transform;
 
-        r24 = new safetyTester.iftest.Tester4$1;
+        r24 = new safetyTester.whiletest.Tester1$1;
 
-        specialinvoke r24.<safetyTester.iftest.Tester4$1: void <init>()>();
+        specialinvoke r24.<safetyTester.whiletest.Tester1$1: void <init>()>();
 
         r27 = (soot.Transformer) r24;
 
@@ -85,18 +72,18 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
 
         staticinvoke <soot.Main: void main(java.lang.String[])>(r1);
 
-        r2 = "<safetyTestCode.iftest.Test4: void test()>";
+        r2 = "<safetyTestCode.whiletest.Test1: void test()>";
 
         $r11 = newarray (java.lang.Object)[1];
 
-        $r11[0] = "safetyTester.iftest.Tester4... Test started...";
+        $r11[0] = "safetyTester.whiletest.Tester1... Test started...";
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
 
      label1:
         r26 = new infoFlow.ProgramTree;
 
-        $r13 = <safetyTester.iftest.Tester4: java.util.Map stores>;
+        $r13 = <safetyTester.whiletest.Tester1: java.util.Map stores>;
 
         specialinvoke r26.<infoFlow.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>($r13, r2, 1);
 
@@ -153,12 +140,25 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
      label4:
         $r14 = newarray (java.lang.Object)[1];
 
-        $r14[0] = "safetyTester.iftest.Tester4... Test finished...";
+        $r14[0] = "safetyTester.whiletest.Tester1... Test finished...";
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r14);
 
         return;
 
         catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <safetyTester.whiletest.Tester1: java.util.Map stores> = $r0;
+
+        return;
     }
 }

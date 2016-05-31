@@ -6,16 +6,21 @@ public class Test3 {
 
 	public void test() {
 		int x = 5;
-		int y = 0;
-		int z = x; 
-		if (y == 0)
-			z = 1;
+//		int y = 0;
+//		int z = x; 
+		if (x < 6)
+			x = x + 1;
 		
-		if (y != 0)
-			z = 5;
+		if(x != 6)
+			ErrorLable.Error();
 
+		if (x < 6)
+			x = x + 1;
 
-		if(x == z)
+//		x = z ;
+//		z = z + 4;
+
+		if(x != 6)
 			ErrorLable.Error();
 	}
 

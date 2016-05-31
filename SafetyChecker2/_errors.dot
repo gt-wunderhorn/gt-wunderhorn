@@ -3,109 +3,51 @@ digraph {
 	size="8.3,11.7!";
 	margin=0;
 	"L1-D1" -> "L3-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()--null
-**(and (not (not (= b3__test_0 b2_2__test_0)))
-     (= b3__test_0 3)
-     (= b2_2__test_0 b2__test_0)
-     true
-     (= b2__test_0 b0__test_0)
-     (not (not (= z0__test_0 0)))
-     (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L3-D2" -> "L5-D3"[label="if b3 != b2_2 goto return--(not (not (= b3__test_0 b2_2__test_0)))
-**(and (= b3__test_0 3)
-     (= b2_2__test_0 b2__test_0)
-     true
-     (= b2__test_0 b0__test_0)
-     (not (not (= z0__test_0 0)))
-     (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L5-D3" -> "L7-D4"[label="b3 = 3--(= b3__test_0 3)
-**(and (= b2_2__test_0 b2__test_0)
-     true
-     (= b2__test_0 b0__test_0)
-     (not (not (= z0__test_0 0)))
-     (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L7-D4" -> "L10-D5"[label="b2_2 = Phi(b2, b2_1)--(= b2_2__test_0 b2__test_0)
-**(and true
-     (= b2__test_0 b0__test_0)
-     (not (not (= z0__test_0 0)))
-     (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L10-D5" -> "L14-D6"[label="b2_1 = 1--(= b2_1__test_0 1)
-**(and (not (= z0__test_0 0))
-     (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_2
-        (store Global_safetyTestCode.iftest.Test4_1 1 1)))"];
-	"L10-D5" -> "L13-D6"[label="goto [?= b2_2 = Phi(b2, b2_1)]--true
-**(and (= b2__test_0 b0__test_0)
-     (not (not (= z0__test_0 0)))
-     (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L14-D6" -> "L18-D7"[label="if z0 != 0 goto b2_1 = 1--(not (= z0__test_0 0))
-**(and (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_2
-        (store Global_safetyTestCode.iftest.Test4_1 1 1)))"];
-	"L13-D6" -> "L17-D7"[label="b2 = b0--(= b2__test_0 b0__test_0)
-**(and (not (not (= z0__test_0 0)))
-     (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L18-D7" -> "L22-D8"[label="b1 = 3--(= b1__test_0 3)
-**(and (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_2
-        (store Global_safetyTestCode.iftest.Test4_1 1 1)))"];
-	"L17-D7" -> "L21-D8"[label="if z0 != 0 goto b2_1 = 1--(not (not (= z0__test_0 0)))
-**(and (= b1__test_0 3)
-     (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L22-D8" -> "L26-D9"[label="z0 = 0--(= z0__test_0 0)
-**(and (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_2
-        (store Global_safetyTestCode.iftest.Test4_1 1 1)))"];
-	"L21-D8" -> "L25-D9"[label="b1 = 3--(= b1__test_0 3)
-**(and (= z0__test_0 0)
-     (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L26-D9" -> "L30-D10"[label="b0 = 5--(= b0__test_0 5)
-**(= Global_safetyTestCode.iftest.Test4_2
-   (store Global_safetyTestCode.iftest.Test4_1 1 1))"];
-	"L25-D9" -> "L29-D10"[label="z0 = 0--(= z0__test_0 0)
-**(and (= b0__test_0 5)
-     (= Global_safetyTestCode.iftest.Test4_3
-        (store Global_safetyTestCode.iftest.Test4_2 1 2)))"];
-	"L30-D10" -> "L33-D11"[label="r0 := @this: safetyTestCode.iftest.Test4--(= Global_safetyTestCode.iftest.Test4_2
-   (store Global_safetyTestCode.iftest.Test4_1 1 1))
-**false"];
-	"L29-D10" -> "L32-D11"[label="b0 = 5--(= b0__test_0 5)
-**(= Global_safetyTestCode.iftest.Test4_3
-   (store Global_safetyTestCode.iftest.Test4_2 1 2))"];
-	"L32-D11" -> "L34-D12"[label="r0 := @this: safetyTestCode.iftest.Test4--(= Global_safetyTestCode.iftest.Test4_3
-   (store Global_safetyTestCode.iftest.Test4_2 1 2))
-**false"];
+**(or false false)"];
+	"L3-D2" -> "L4-D3"[label="if i1_1 == b0 goto return--(not (= i1_1__test_0_5 b0__test_0_10))
+**(or false false)"];
+	"L4-D3" -> "L5-D4"[label="if i1_1 < 9 goto i1_2 = i1_1 + b0--(not (< i1_1__test_0_5 9))
+**(let ((a!1 (and (<= (- 5) (+ b0__test_0_10 (* (- 1) i1_1__test_0_5)))
+                (<= b0__test_0_10 1))))
+  (or a!1 (<= i1_1__test_0_5 5)))"];
+	"L5-D4" -> "L6-D5"[label="i1_1 = Phi(i1, i1_2)--(= i1_1__test_0_5 i1_2__test_0_6)
+**(let ((a!1 (and (<= (- 5) (+ (* (- 1) i1_2__test_0_6) b0__test_0_10))
+                (<= b0__test_0_10 1))))
+  (or a!1 (= 5 i1__test_0_8)))"];
+	"L6-D5" -> "L7-D6"[label="goto [?= i1_1 = Phi(i1, i1_2)]--true
+**(= 5 i1__test_0_8)"];
+	"L6-D5" -> "L8-D6"[label="i1_2 = i1_1 + b0--(= i1_2__test_0_6 (+ i1_1__test_0_8 b0__test_0_10))
+**(and (<= b0__test_0_10 1) (<= i1_1__test_0_8 5))"];
+	"L7-D6" -> "L9-D7"[label="b0 = 1--(= b0__test_0_7 1)
+**(= 5 i1__test_0_8)"];
+	"L8-D6" -> "L10-D7"[color =green, label="if i1_1 < 9 goto i1_2 = i1_1 + b0--(< i1_1__test_0_8 9)
+**(and (<= b0__test_0_10 1) (<= i1_1__test_0_8 5))"];
+	"L9-D7" -> "L11-D8"[label="i1 = 5--(= i1__test_0_8 5)
+**true"];
+	"L10-D7" -> "L12-D8"[color =green, label="i1_1 = Phi(i1, i1_2)--(= i1_1__test_0_8 i1__test_0_11)
+**(and (<= b0__test_0_10 1) (= 5 i1__test_0_11))"];
+	"L11-D8" -> "L13-D9"[label="r0 := @this: safetyTestCode.whiletest.Test1--(= Global_safetyTestCode.whiletest.Test1_2
+   (store Global_safetyTestCode.whiletest.Test1_1 1 1))
+**null"];
+	"L12-D8" -> "L14-D9"[color =green, label="i1_2 = i1_1 + b0--null
+**null"];
+	"L12-D8" -> "L15-D9"[color =green, label="goto [?= i1_1 = Phi(i1, i1_2)]--true
+**(and (<= b0__test_0_10 1) (= 5 i1__test_0_11))"];
+	"L14-D9" -> "L16-D10"[color =green, label="if i1_1 < 9 goto i1_2 = i1_1 + b0--null
+**null"];
+	"L15-D9" -> "L17-D10"[color =green, label="b0 = 1--(= b0__test_0_10 1)
+**(= 5 i1__test_0_11)"];
+	"L16-D10" -> "L18-D11"[color =green, label="i1_1 = Phi(i1, i1_2)--null
+**null"];
+	"L17-D10" -> "L19-D11"[color =green, label="i1 = 5--(= i1__test_0_11 5)
+**true"];
+	"L18-D11" -> "L21-D12"[color =green, label="i1_2 = i1_1 + b0--null
+**null"];
+	"L18-D11" -> "L20-D12"[color =green, label="goto [?= i1_1 = Phi(i1, i1_2)]--null
+**null"];
+	"L19-D11" -> "L22-D12"[color =green, label="r0 := @this: safetyTestCode.whiletest.Test1--(= Global_safetyTestCode.whiletest.Test1_3
+   (store Global_safetyTestCode.whiletest.Test1_2 2 2))
+**null"];
+	"L19-D11" -> "L11-D8"[style=dashed, color=red];
+	"L8-D6" -> "L4-D3"[style=dashed, color=red];
 }

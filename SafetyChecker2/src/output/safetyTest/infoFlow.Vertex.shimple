@@ -1,6 +1,7 @@
 public class infoFlow.Vertex extends java.lang.Object
 {
-    private boolean covered;
+    private boolean coveredBy;
+    private boolean covering;
     private boolean returnLocation;
     private boolean headLocation;
     private boolean errorLocation;
@@ -25,7 +26,9 @@ public class infoFlow.Vertex extends java.lang.Object
 
         specialinvoke r0.<java.lang.Object: void <init>()>();
 
-        r0.<infoFlow.Vertex: boolean covered> = 0;
+        r0.<infoFlow.Vertex: boolean coveredBy> = 0;
+
+        r0.<infoFlow.Vertex: boolean covering> = 0;
 
         r0.<infoFlow.Vertex: boolean returnLocation> = 0;
 
@@ -60,19 +63,19 @@ public class infoFlow.Vertex extends java.lang.Object
         return;
     }
 
-    public boolean isCovered()
+    public boolean isCoveredBy()
     {
         infoFlow.Vertex r0;
         boolean $z0;
 
         r0 := @this: infoFlow.Vertex;
 
-        $z0 = r0.<infoFlow.Vertex: boolean covered>;
+        $z0 = r0.<infoFlow.Vertex: boolean coveredBy>;
 
         return $z0;
     }
 
-    public void setCovered(boolean)
+    public void setCoveredBy(boolean)
     {
         infoFlow.Vertex r0;
         boolean z0;
@@ -81,7 +84,33 @@ public class infoFlow.Vertex extends java.lang.Object
 
         z0 := @parameter0: boolean;
 
-        r0.<infoFlow.Vertex: boolean covered> = z0;
+        r0.<infoFlow.Vertex: boolean coveredBy> = z0;
+
+        return;
+    }
+
+    public boolean isCovering()
+    {
+        infoFlow.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Vertex;
+
+        $z0 = r0.<infoFlow.Vertex: boolean covering>;
+
+        return $z0;
+    }
+
+    public void setCovering(boolean)
+    {
+        infoFlow.Vertex r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Vertex: boolean covering> = z0;
 
         return;
     }

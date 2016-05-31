@@ -21,28 +21,25 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
         return;
     }
 
-    public boolean createInterpolant(java.util.HashSet)
+    public boolean createInterpolant(infoFlow.Vertex)
     {
         infoFlow.InterpolationHandler r0;
-        java.util.HashSet r1;
-        boolean z0, $z1, $z2, $z3, z4;
-        com.microsoft.z3.BoolExpr r2, $r10, r33, r34, r38, r34_1, r33_1, r34_2, r34_3, r34_4, r34_5, r33_2;
-        java.lang.Object[] $r3, $r5, $r11, $r20, $r28, $r32;
-        java.lang.Object $r4;
-        java.lang.StringBuilder $r6, $r7, $r12, $r13, $r21, $r22, $r29, $r30;
-        java.lang.String $r8, $r14, $r23, $r31;
-        infoFlow.Vertex $r9, $r17, $r19, r36, r36_1, r36_2, r36_3;
-        com.microsoft.z3.BoolExpr[] $r15;
-        com.microsoft.z3.InterpolationContext $r16, $r18, $r24, $r25;
-        com.microsoft.z3.enumerations.Z3_lbool $r26, $r27, r41;
-        java.util.Iterator r35;
-        infoFlow.Edge r37;
-        com.microsoft.z3.Params r39;
-        com.microsoft.z3.InterpolationContext$ComputeInterpolantResult r40;
+        infoFlow.Vertex r1, r31, r31_1, r31_2;
+        com.microsoft.z3.enumerations.Z3_lbool r2, $r23, $r24;
+        java.lang.Object[] $r3, $r7, $r11, $r19, $r20, $r21, $r25, $r29;
+        com.microsoft.z3.InterpolationContext $r4, $r16, $r17, $r18, $r22;
+        infoFlow.Edge $r5, r32;
+        com.microsoft.z3.BoolExpr $r6, r30, r33, r34, r30_1, r30_2;
+        java.lang.StringBuilder $r8, $r9, $r12, $r13, $r26, $r27;
+        java.lang.String $r10, $r14, $r28;
+        boolean $z0, z1, z1_1, z1_2, z1_3;
+        com.microsoft.z3.BoolExpr[] $r15, r37;
+        com.microsoft.z3.Params r35;
+        com.microsoft.z3.InterpolationContext$ComputeInterpolantResult r36;
 
         r0 := @this: infoFlow.InterpolationHandler;
 
-        r1 := @parameter0: java.util.HashSet;
+        r1 := @parameter0: infoFlow.Vertex;
 
         $r3 = newarray (java.lang.Object)[1];
 
@@ -50,70 +47,43 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r3);
 
-        r33 = null;
+        $r4 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        z0 = 1;
+        $r5 = virtualinvoke r1.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
 
-        r34 = null;
+        $r6 = virtualinvoke $r5.<infoFlow.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
 
-        r35 = virtualinvoke r1.<java.util.HashSet: java.util.Iterator iterator()>();
+        r30 = virtualinvoke $r4.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr MkInterpolant(com.microsoft.z3.BoolExpr)>($r6);
 
-(0)     goto label08;
+        $r7 = newarray (java.lang.Object)[1];
 
-     label01:
-        $r4 = interfaceinvoke r35.<java.util.Iterator: java.lang.Object next()>();
+        $r8 = new java.lang.StringBuilder;
 
-        r36_1 = (infoFlow.Vertex) $r4;
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("******root=");
 
-        $r5 = newarray (java.lang.Object)[1];
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
 
-        $r6 = new java.lang.StringBuilder;
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        specialinvoke $r6.<java.lang.StringBuilder: void <init>(java.lang.String)>("******root=");
+        $r7[0] = $r10;
 
-        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r36_1);
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r7);
 
-        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+        r31 = virtualinvoke r1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
-        $r5[0] = $r8;
+(0)     goto label3;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r5);
+     label1:
+        r32 = virtualinvoke r31_1.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
 
-        $r9 = virtualinvoke r36_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+        $z0 = virtualinvoke r32.<infoFlow.Edge: boolean isErrorEdge()>();
 
-        $r10 = virtualinvoke $r9.<infoFlow.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        if $z0 == 0 goto label2;
 
-(1)     if $r10 == null goto label06;
+        goto label4;
 
-        $r20 = newarray (java.lang.Object)[1];
-
-        $r21 = new java.lang.StringBuilder;
-
-        specialinvoke $r21.<java.lang.StringBuilder: void <init>(java.lang.String)>("********passed root = ");
-
-        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r36_1);
-
-        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r20[0] = $r23;
-
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r20);
-
-(2)     goto label08;
-
-     label02:
-        r37 = virtualinvoke r36_2.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
-
-        $z2 = virtualinvoke r37.<infoFlow.Edge: boolean isErrorEdge()>();
-
-        if $z2 == 0 goto label03;
-
-        goto label07;
-
-     label03:
-        r38 = virtualinvoke r36_2.<infoFlow.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
-
-        r2 = virtualinvoke r37.<infoFlow.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
+     label2:
+        r33 = virtualinvoke r32.<infoFlow.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
 
         $r11 = newarray (java.lang.Object)[1];
 
@@ -121,7 +91,7 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         specialinvoke $r12.<java.lang.StringBuilder: void <init>(java.lang.String)>("z3Expr = ");
 
-        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r33);
 
         $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -129,177 +99,203 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r11);
 
-        $z3 = virtualinvoke r36_2.<infoFlow.Vertex: boolean isHeadLocation()>();
-
-        if $z3 == 0 goto label04;
-
-        r34_3 = r2;
-
-(3)     goto label05;
-
-     label04:
         $r16 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
         $r15 = newarray (com.microsoft.z3.BoolExpr)[2];
 
-        $r15[0] = r2;
+        $r15[0] = r33;
 
-        $r15[1] = r38;
+        $r15[1] = r30_1;
 
-(4)     r34_4 = virtualinvoke $r16.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r15);
+        r34 = virtualinvoke $r16.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r15);
 
-     label05:
-        r34_5 = Phi(r34_3 #3, r34_4 #4);
+        $r17 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r17 = virtualinvoke r37.<infoFlow.Edge: infoFlow.Vertex getTarget()>();
+        r30_2 = virtualinvoke $r17.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr MkInterpolant(com.microsoft.z3.BoolExpr)>(r34);
 
-        specialinvoke r0.<infoFlow.InterpolationHandler: void addInvariant(infoFlow.Vertex,com.microsoft.z3.BoolExpr)>($r17, r34_5);
+(1)     r31_2 = virtualinvoke r31_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
-(5)     r36_3 = virtualinvoke r36_2.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+     label3:
+        r30_1 = Phi(r30 #0, r30_2 #1);
 
-     label06:
-        r36_2 = Phi(r36_1 #1, r36_3 #5);
+        r31_1 = Phi(r31 #0, r31_2 #1);
 
-        r34_2 = Phi(r34_1 #1, r34_5 #5);
+        if r31_1 != null goto label1;
 
-        if r36_2 != null goto label02;
-
-     label07:
-        r0.<infoFlow.InterpolationHandler: boolean startRefine> = 0;
-
+     label4:
         $r18 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r33_2 = virtualinvoke $r18.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr MkInterpolant(com.microsoft.z3.BoolExpr)>(r34_2);
+        r35 = virtualinvoke $r18.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Params mkParams()>();
 
-        $r19 = virtualinvoke r36_2.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+        $r19 = newarray (java.lang.Object)[1];
 
-(6)     virtualinvoke $r19.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r33_2);
+        $r19[0] = "------------------pathformula----------------";
 
-     label08:
-        r36 = Phi(r36 #0, r36_1 #2, r36_2 #6);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r19);
 
-        r34_1 = Phi(r34 #0, r34_1 #2, r34_2 #6);
+        $r20 = newarray (java.lang.Object)[1];
 
-        r33_1 = Phi(r33 #0, r33_1 #2, r33_2 #6);
+        $r20[0] = r30_1;
 
-        $z1 = interfaceinvoke r35.<java.util.Iterator: boolean hasNext()>();
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r20);
 
-        if $z1 != 0 goto label01;
+        $r21 = newarray (java.lang.Object)[1];
 
-        $r24 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r21[0] = "------------------pathformula----------------";
 
-        r39 = virtualinvoke $r24.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Params mkParams()>();
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r21);
 
-        $r25 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r22 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r40 = virtualinvoke $r25.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.InterpolationContext$ComputeInterpolantResult ComputeInterpolant(com.microsoft.z3.Expr,com.microsoft.z3.Params)>(r33_1, r39);
+        r36 = virtualinvoke $r22.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.InterpolationContext$ComputeInterpolantResult ComputeInterpolant(com.microsoft.z3.Expr,com.microsoft.z3.Params)>(r30_1, r35);
 
-        r41 = r40.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.enumerations.Z3_lbool status>;
+        r37 = r36.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.BoolExpr[] interp>;
 
-        z4 = 0;
+        specialinvoke r0.<infoFlow.InterpolationHandler: void updateInvariant(infoFlow.Vertex,com.microsoft.z3.BoolExpr[])>(r1, r37);
 
-        $r26 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_FALSE>;
+        r2 = r36.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.enumerations.Z3_lbool status>;
 
-        if r41 != $r26 goto label09;
+        z1 = 0;
 
-        return 0;
+        $r23 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_FALSE>;
 
-     label09:
-        $r27 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_TRUE>;
+        if r2 != $r23 goto label5;
 
-        if r41 != $r27 goto label10;
+        z1_1 = 0;
 
-        return 1;
+(2)     goto label6;
 
-     label10:
-        $r28 = newarray (java.lang.Object)[1];
+     label5:
+        $r24 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_TRUE>;
 
-        $r29 = new java.lang.StringBuilder;
+(3)     if r2 != $r24 goto label6;
 
-        specialinvoke $r29.<java.lang.StringBuilder: void <init>(java.lang.String)>("interpolation result=");
+(4)     z1_2 = 1;
 
-        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>(z4);
+     label6:
+        z1_3 = Phi(z1_1 #2, z1 #3, z1_2 #4);
 
-        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r25 = newarray (java.lang.Object)[1];
 
-        $r28[0] = $r31;
+        $r26 = new java.lang.StringBuilder;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r28);
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>(java.lang.String)>("interpolation result=");
 
-        $r32 = newarray (java.lang.Object)[1];
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>(z1_3);
 
-        $r32[0] = "<<<<<< InterpolationHandler.createInterpolant";
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r32);
+        $r25[0] = $r28;
 
-        return z4;
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r25);
+
+        $r29 = newarray (java.lang.Object)[1];
+
+        $r29[0] = "<<<<<< InterpolationHandler.createInterpolant";
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r29);
+
+        return z1_3;
     }
 
-    private void addInvariant(infoFlow.Vertex, com.microsoft.z3.BoolExpr)
+    private void updateInvariant(infoFlow.Vertex, com.microsoft.z3.BoolExpr[])
     {
         infoFlow.InterpolationHandler r0;
-        infoFlow.Vertex r1;
-        com.microsoft.z3.BoolExpr r2, r3, r4, r5;
-        boolean $z0;
-        com.microsoft.z3.BoolExpr[] $r6;
-        com.microsoft.z3.InterpolationContext $r7, $r12;
-        java.lang.Object[] $r8;
-        java.lang.StringBuilder $r9, $r10;
-        java.lang.String $r11;
+        infoFlow.Vertex r1, r14, r14_1, r14_2, r14_3;
+        com.microsoft.z3.BoolExpr[] r2, $r12;
+        com.microsoft.z3.BoolExpr r3, r4, r5, $r11;
+        java.lang.Object[] $r6, $r7;
+        java.lang.StringBuilder $r8, $r9;
+        int $i0, $i1, i2, i2_1, i2_2, i2_3;
+        java.lang.String $r10;
+        com.microsoft.z3.InterpolationContext $r13;
 
         r0 := @this: infoFlow.InterpolationHandler;
 
         r1 := @parameter0: infoFlow.Vertex;
 
-        r2 := @parameter1: com.microsoft.z3.BoolExpr;
+        r2 := @parameter1: com.microsoft.z3.BoolExpr[];
 
-        r3 = virtualinvoke r1.<infoFlow.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        if r2 == null goto label5;
 
-        if r3 == null goto label1;
+        $r7 = newarray (java.lang.Object)[1];
 
-        $z0 = r0.<infoFlow.InterpolationHandler: boolean startRefine>;
+        $r8 = new java.lang.StringBuilder;
 
-        if $z0 == 0 goto label2;
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("invariantList size is ");
+
+        $i0 = lengthof r2;
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r7[0] = $r10;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r7);
+
+        i2 = 0;
+
+        r14 = virtualinvoke r1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+(0)     goto label4;
 
      label1:
-        virtualinvoke r1.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r2);
+        r3 = virtualinvoke r14_1.<infoFlow.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+
+        r4 = r2[i2_1];
+
+        $r11 = virtualinvoke r14_1.<infoFlow.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+
+        if $r11 != null goto label2;
+
+        virtualinvoke r14_1.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r4);
 
         goto label3;
 
      label2:
-        $r7 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r13 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r6 = newarray (com.microsoft.z3.BoolExpr)[2];
+        $r12 = newarray (com.microsoft.z3.BoolExpr)[2];
 
-        $r6[0] = r2;
+        $r12[0] = r4;
 
-        $r6[1] = r3;
+        $r12[1] = r3;
 
-        r4 = virtualinvoke $r7.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkOr(com.microsoft.z3.BoolExpr[])>($r6);
+        r5 = virtualinvoke $r13.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkOr(com.microsoft.z3.BoolExpr[])>($r12);
 
-        $r8 = newarray (java.lang.Object)[1];
-
-        $r9 = new java.lang.StringBuilder;
-
-        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>("^^^^^ Disjunction ^^^^^ \n");
-
-        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r4);
-
-        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r8[0] = $r11;
-
-        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r8);
-
-        $r12 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
-
-        r5 = virtualinvoke $r12.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr MkInterpolant(com.microsoft.z3.BoolExpr)>(r4);
-
-        virtualinvoke r1.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r5);
-
-        r0.<infoFlow.InterpolationHandler: boolean startRefine> = 1;
+        virtualinvoke r14_1.<infoFlow.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r5);
 
      label3:
+        i2_2 = i2_1 + 1;
+
+(1)     r14_2 = virtualinvoke r14_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
+
+     label4:
+        r14_1 = Phi(r14 #0, r14_2 #1);
+
+        i2_1 = Phi(i2 #0, i2_2 #1);
+
+(2)     if r14_1 == null goto label6;
+
+        $i1 = lengthof r2;
+
+        if i2_1 < $i1 goto label1;
+
+(3)     goto label6;
+
+     label5:
+        $r6 = newarray (java.lang.Object)[1];
+
+        $r6[0] = "invariantList is null";
+
+(4)     staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r6);
+
+     label6:
+        r14_3 = Phi(r14_1 #2, r14_1 #3, r14 #4);
+
+        i2_3 = Phi(i2_1 #2, i2_1 #3, i2 #4);
+
         return;
     }
 
