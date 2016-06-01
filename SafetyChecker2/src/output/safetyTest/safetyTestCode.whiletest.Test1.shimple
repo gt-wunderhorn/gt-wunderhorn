@@ -32,7 +32,7 @@ public class safetyTestCode.whiletest.Test1 extends java.lang.Object
      label2:
         i1_1 = Phi(i1 #0, i1_2 #1);
 
-        if i1_1 < 9 goto label1;
+        if b0 != 9 goto label1;
 
         if i1_1 == b0 goto label3;
 

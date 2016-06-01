@@ -8,8 +8,9 @@ public class Test1 {
 		int x = 5;
 		int y = 1;
 
-		while(x < 9) {
+		while(y != 9) {
 			x = x + y;
+		//	y = y+2;
 		}
 
 //		int y = 0;

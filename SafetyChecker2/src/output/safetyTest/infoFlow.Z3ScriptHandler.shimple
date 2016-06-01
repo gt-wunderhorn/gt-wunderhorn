@@ -1031,9 +1031,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
      label11:
         r73_2 = Phi(r73_1 #3, r73_6 #9);
 
-        r74_2 = Phi(r74_1 #3, r74_6 #9);
-
         r76_2 = Phi(r76_1 #3, r76_3 #9);
+
+        r74_2 = Phi(r74_1 #3, r74_6 #9);
 
         $r24 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
@@ -1042,9 +1042,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
      label12:
         r73_1 = Phi(r73 #2, r73_2 #10);
 
-        r74_1 = Phi(r74 #2, r74_2 #10);
-
         r76 = Phi(r76 #2, r76_2 #10);
+
+        r74_1 = Phi(r74 #2, r74_2 #10);
 
         $z6 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
@@ -1296,20 +1296,20 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
         boolean z0, $z1, $z2, $z3;
         infoFlow.Edge r2;
         soot.Type r3;
-        java.lang.String r4, $r16, $r17, $r19, $r26, $r27, $r28, r51, r54, r59;
-        java.util.Map $r5, $r9, $r10, $r11, $r13, $r30, $r34, $r42, $r43, $r46, $r47;
-        com.microsoft.z3.InterpolationContext $r6, $r7, $r21, $r31, $r36, $r37, $r39, $r41, $r45;
+        java.lang.String r4, $r17, $r18, $r20, $r27, $r28, $r29, r52, r55, r60;
+        java.util.Map $r5, $r9, $r10, $r12, $r14, $r31, $r35, $r43, $r44, $r47, $r48;
+        com.microsoft.z3.InterpolationContext $r6, $r7, $r22, $r32, $r37, $r38, $r40, $r42, $r46;
         com.microsoft.z3.StringSymbol $r8;
-        java.lang.Object $r12, $r14, $r32, $r35, $r48, r49, r49_1, r49_2;
-        infoFlow.ProgramTree $r18;
-        java.lang.StringBuilder $r20, $r29, r62, r63;
-        java.lang.Object[] $r22, $r23, $r24;
-        com.microsoft.z3.Sort $r33, r64, r65;
-        com.microsoft.z3.IntSort $r38, $r40;
-        com.microsoft.z3.ArraySort r50;
-        com.microsoft.z3.Expr r52, r55, r60;
-        infoFlow.NewSort r53, r56, r58, r61;
-        com.microsoft.z3.ArrayExpr r57;
+        java.lang.Object[] $r11, $r23, $r24, $r25;
+        java.lang.Object $r13, $r15, $r33, $r36, $r49, r50, r50_1, r50_2;
+        infoFlow.ProgramTree $r19;
+        java.lang.StringBuilder $r21, $r30, r63, r64;
+        com.microsoft.z3.Sort $r34, r65, r66;
+        com.microsoft.z3.IntSort $r39, $r41;
+        com.microsoft.z3.ArraySort r51;
+        com.microsoft.z3.Expr r53, r56, r61;
+        infoFlow.NewSort r54, r57, r59, r62;
+        com.microsoft.z3.ArrayExpr r58;
 
         r0 := @this: infoFlow.Z3ScriptHandler;
 
@@ -1329,11 +1329,11 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         if $z1 == 0 goto label1;
 
-        $r47 = r0.<infoFlow.Z3ScriptHandler: java.util.Map newSortMap>;
+        $r48 = r0.<infoFlow.Z3ScriptHandler: java.util.Map newSortMap>;
 
-        $r48 = interfaceinvoke $r47.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+        $r49 = interfaceinvoke $r48.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
 
-        r49 = (com.microsoft.z3.Sort) $r48;
+        r50 = (com.microsoft.z3.Sort) $r49;
 
 (0)     goto label2;
 
@@ -1344,14 +1344,14 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         $r8 = virtualinvoke $r6.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.StringSymbol mkSymbol(java.lang.String)>(r4);
 
-        r49_1 = virtualinvoke $r7.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.UninterpretedSort mkUninterpretedSort(com.microsoft.z3.Symbol)>($r8);
+        r50_1 = virtualinvoke $r7.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.UninterpretedSort mkUninterpretedSort(com.microsoft.z3.Symbol)>($r8);
 
         $r9 = r0.<infoFlow.Z3ScriptHandler: java.util.Map newSortMap>;
 
-(1)     interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r49_1);
+(1)     interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r50_1);
 
      label2:
-        r49_2 = Phi(r49 #0, r49_1 #1);
+        r50_2 = Phi(r50 #0, r50_1 #1);
 
         $r10 = r0.<infoFlow.Z3ScriptHandler: java.util.Map global>;
 
@@ -1359,142 +1359,150 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 
         if $z2 != 0 goto label3;
 
+        $r38 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
         $r37 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r36 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r39 = virtualinvoke $r37.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort getIntSort()>();
 
-        $r38 = virtualinvoke $r36.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort getIntSort()>();
+        $r40 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r39 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r41 = virtualinvoke $r40.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort getIntSort()>();
 
-        $r40 = virtualinvoke $r39.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort getIntSort()>();
+        r51 = virtualinvoke $r38.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArraySort mkArraySort(com.microsoft.z3.Sort,com.microsoft.z3.Sort)>($r39, $r41);
 
-        r50 = virtualinvoke $r37.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArraySort mkArraySort(com.microsoft.z3.Sort,com.microsoft.z3.Sort)>($r38, $r40);
+        r52 = specialinvoke r0.<infoFlow.Z3ScriptHandler: java.lang.String getGlobalName(java.lang.String)>(r4);
 
-        r51 = specialinvoke r0.<infoFlow.Z3ScriptHandler: java.lang.String getGlobalName(java.lang.String)>(r4);
+        $r42 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r41 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        r53 = virtualinvoke $r42.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r52, r51);
 
-        r52 = virtualinvoke $r41.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r51, r50);
+        $r43 = r0.<infoFlow.Z3ScriptHandler: java.util.Map global>;
 
-        $r42 = r0.<infoFlow.Z3ScriptHandler: java.util.Map global>;
+        interfaceinvoke $r43.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r53);
 
-        interfaceinvoke $r42.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r52);
+        $r44 = r0.<infoFlow.Z3ScriptHandler: java.util.Map substitute>;
 
-        $r43 = r0.<infoFlow.Z3ScriptHandler: java.util.Map substitute>;
+        interfaceinvoke $r44.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r52);
 
-        interfaceinvoke $r43.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r51);
+        r62 = new infoFlow.NewSort;
 
-        r61 = new infoFlow.NewSort;
+        $r46 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r45 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        r65 = (com.microsoft.z3.Sort) r50_2;
 
-        r64 = (com.microsoft.z3.Sort) r49_2;
+        specialinvoke r62.<infoFlow.NewSort: void <init>(com.microsoft.z3.Sort,com.microsoft.z3.InterpolationContext)>(r65, $r46);
 
-        specialinvoke r61.<infoFlow.NewSort: void <init>(com.microsoft.z3.Sort,com.microsoft.z3.InterpolationContext)>(r64, $r45);
+        r54 = r62;
 
-        r53 = r61;
+        $r47 = r0.<infoFlow.Z3ScriptHandler: java.util.Map sortId>;
 
-        $r46 = r0.<infoFlow.Z3ScriptHandler: java.util.Map sortId>;
-
-        interfaceinvoke $r46.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r53);
+        interfaceinvoke $r47.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r54);
 
      label3:
         if z0 == 0 goto label5;
 
-        r62 = new java.lang.StringBuilder;
+        r63 = new java.lang.StringBuilder;
 
-        $r26 = interfaceinvoke r1.<soot.Local: java.lang.String getName()>();
+        $r27 = interfaceinvoke r1.<soot.Local: java.lang.String getName()>();
 
-        $r27 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r26);
+        $r28 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r27);
 
-        specialinvoke r62.<java.lang.StringBuilder: void <init>(java.lang.String)>($r27);
+        specialinvoke r63.<java.lang.StringBuilder: void <init>(java.lang.String)>($r28);
 
-        $r28 = specialinvoke r0.<infoFlow.Z3ScriptHandler: java.lang.String getNameSuffix(infoFlow.Edge)>(r2);
+        $r29 = specialinvoke r0.<infoFlow.Z3ScriptHandler: java.lang.String getNameSuffix(infoFlow.Edge)>(r2);
 
-        $r29 = virtualinvoke r62.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r28);
+        $r30 = virtualinvoke r63.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r29);
 
-        r54 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.String toString()>();
+        r55 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r31 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r32 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r30 = r0.<infoFlow.Z3ScriptHandler: java.util.Map newSortMap>;
+        $r31 = r0.<infoFlow.Z3ScriptHandler: java.util.Map newSortMap>;
 
-        $r32 = interfaceinvoke $r30.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+        $r33 = interfaceinvoke $r31.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
 
-        $r33 = (com.microsoft.z3.Sort) $r32;
+        $r34 = (com.microsoft.z3.Sort) $r33;
 
-        r55 = virtualinvoke $r31.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r54, $r33);
+        r56 = virtualinvoke $r32.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r55, $r34);
 
-        $r34 = r0.<infoFlow.Z3ScriptHandler: java.util.Map sortId>;
+        $r35 = r0.<infoFlow.Z3ScriptHandler: java.util.Map sortId>;
 
-        $r35 = interfaceinvoke $r34.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+        $r36 = interfaceinvoke $r35.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
 
-        r56 = (infoFlow.NewSort) $r35;
+        r57 = (infoFlow.NewSort) $r36;
 
-        $z3 = virtualinvoke r56.<infoFlow.NewSort: boolean ifHasExpr(com.microsoft.z3.Expr)>(r55);
+        $z3 = virtualinvoke r57.<infoFlow.NewSort: boolean ifHasExpr(com.microsoft.z3.Expr)>(r56);
 
         if $z3 == 0 goto label4;
 
-        return r55;
+        return r56;
 
      label4:
-        virtualinvoke r56.<infoFlow.NewSort: void creatNewOject(com.microsoft.z3.Expr)>(r55);
+        virtualinvoke r57.<infoFlow.NewSort: void creatNewOject(com.microsoft.z3.Expr)>(r56);
 
-        return r55;
+        return r56;
 
      label5:
-        $r11 = r0.<infoFlow.Z3ScriptHandler: java.util.Map global>;
+        $r11 = newarray (java.lang.Object)[1];
 
-        $r12 = interfaceinvoke $r11.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+        $r11[0] = "Z3ScriptHandler.createZ3Object";
 
-        r57 = (com.microsoft.z3.ArrayExpr) $r12;
+        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r11);
 
-        $r13 = r0.<infoFlow.Z3ScriptHandler: java.util.Map sortId>;
+        staticinvoke <java.lang.System: void exit(int)>(0);
 
-        $r14 = interfaceinvoke $r13.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+        $r12 = r0.<infoFlow.Z3ScriptHandler: java.util.Map global>;
 
-        r58 = (infoFlow.NewSort) $r14;
+        $r13 = interfaceinvoke $r12.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
 
-        r63 = new java.lang.StringBuilder;
+        r58 = (com.microsoft.z3.ArrayExpr) $r13;
 
-        $r16 = interfaceinvoke r1.<soot.Local: java.lang.String getName()>();
+        $r14 = r0.<infoFlow.Z3ScriptHandler: java.util.Map sortId>;
 
-        $r17 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r16);
+        $r15 = interfaceinvoke $r14.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
 
-        specialinvoke r63.<java.lang.StringBuilder: void <init>(java.lang.String)>($r17);
+        r59 = (infoFlow.NewSort) $r15;
 
-        $r18 = virtualinvoke r2.<infoFlow.Edge: infoFlow.ProgramTree getProgramTree()>();
+        r64 = new java.lang.StringBuilder;
 
-        $r19 = virtualinvoke $r18.<infoFlow.ProgramTree: java.lang.String getProgramDefinition()>();
+        $r17 = interfaceinvoke r1.<soot.Local: java.lang.String getName()>();
 
-        $r20 = virtualinvoke r63.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r19);
+        $r18 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r17);
 
-        r59 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+        specialinvoke r64.<java.lang.StringBuilder: void <init>(java.lang.String)>($r18);
 
-        $r21 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r19 = virtualinvoke r2.<infoFlow.Edge: infoFlow.ProgramTree getProgramTree()>();
 
-        r65 = (com.microsoft.z3.Sort) r49_2;
+        $r20 = virtualinvoke $r19.<infoFlow.ProgramTree: java.lang.String getProgramDefinition()>();
 
-        r60 = virtualinvoke $r21.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r59, r65);
+        $r21 = virtualinvoke r64.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r20);
 
-        $r22 = newarray (java.lang.Object)[1];
+        r60 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r22[0] = r59;
+        $r22 = r0.<infoFlow.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r22);
+        r66 = (com.microsoft.z3.Sort) r50_2;
+
+        r61 = virtualinvoke $r22.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r60, r66);
 
         $r23 = newarray (java.lang.Object)[1];
 
-        $r23[0] = r49_2;
+        $r23[0] = r60;
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r23);
 
         $r24 = newarray (java.lang.Object)[1];
 
-        $r24[0] = r60;
+        $r24[0] = r50_2;
 
         staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r24);
+
+        $r25 = newarray (java.lang.Object)[1];
+
+        $r25[0] = r61;
+
+        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r25);
 
         staticinvoke <java.lang.System: void exit(int)>(0);
 

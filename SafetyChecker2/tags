@@ -450,15 +450,16 @@ infoFlow.exception	src/infoFlow/exception/ErrorLocationNotFoundException.java	/^
 infoFlow.exception	src/infoFlow/exception/MainFunctionNotFoundException.java	/^package infoFlow.exception;$/;"	p
 infoln	src/infoFlow/LogUtils.java	/^	public static void infoln(Object... objects) {$/;"	m	class:LogUtils
 invariant	src/infoFlow/Vertex.java	/^	private BoolExpr invariant;$/;"	f	class:Vertex	file:
-isAncestorCovered	src/infoFlow/CoverRelation.java	/^	private boolean isAncestorCovered(Vertex vertex) {$/;"	m	class:CoverRelation	file:
-isCovered	src/infoFlow/CoverRelation.java	/^	private boolean isCovered(Vertex vertex) {$/;"	m	class:CoverRelation	file:
+isAncestorCovered	src/infoFlow/CoverRelation.java	/^	public boolean isAncestorCovered(Vertex vertex) {$/;"	m	class:CoverRelation
+isCovered	src/infoFlow/CoverRelation.java	/^	public boolean isCovered(Vertex vertex) {$/;"	m	class:CoverRelation
 isCoveredBy	src/infoFlow/Vertex.java	/^        public boolean isCoveredBy() { return this.coveredBy; }$/;"	m	class:Vertex
 isCovering	src/infoFlow/Vertex.java	/^        public boolean isCovering() { return this.covering; }$/;"	m	class:Vertex
-isDirectlyCovered	src/infoFlow/CoverRelation.java	/^	private boolean isDirectlyCovered(Vertex vertex) {$/;"	m	class:CoverRelation	file:
+isDirectlyCovered	src/infoFlow/CoverRelation.java	/^	public boolean isDirectlyCovered(Vertex vertex) {$/;"	m	class:CoverRelation
 isDone	src/infoFlow/CoverRelation.java	/^	private void isDone(Vertex v) {$/;"	m	class:CoverRelation	file:
 isErrorEdge	src/infoFlow/Edge.java	/^	public boolean isErrorEdge() { return this.errorEdge; }$/;"	m	class:Edge
 isErrorLocation	src/infoFlow/Vertex.java	/^	public boolean isErrorLocation() { return this.errorLocation; }$/;"	m	class:Vertex
 isErrorUnit	src/infoFlow/UnitController.java	/^	public boolean isErrorUnit(Unit u) {$/;"	m	class:UnitController
+isFalseImpliesAnything	src/infoFlow/CoverRelation.java	/^	private boolean isFalseImpliesAnything(BoolExpr boolExpr) {$/;"	m	class:CoverRelation	file:
 isHeadLocation	src/infoFlow/Vertex.java	/^	public boolean isHeadLocation() { return this.headLocation; }$/;"	m	class:Vertex
 isInErrorPath	src/infoFlow/Edge.java	/^	public boolean isInErrorPath() { return this.inErrorPath; }$/;"	m	class:Edge
 isInvoke	src/infoFlow/UnitController.java	/^	public boolean isInvoke(Unit u) {$/;"	m	class:UnitController
@@ -598,7 +599,7 @@ print	src/infoFlow/LogUtils.java	/^	private static void print(int printLevel, Ob
 printAllPaths	src/dotty/CfgConverter.java	/^	public static void printAllPaths(Queue<Vertex> queue, String fileName) {$/;"	m	class:CfgConverter
 printAllPaths2	src/dotty/CfgConverter.java	/^	public static void printAllPaths2(ExceptionalUnitGraph cfg) {$/;"	m	class:CfgConverter
 printCfg	src/dotty/CfgConverter.java	/^	public static void printCfg(ExceptionalUnitGraph cfg) {$/;"	m	class:CfgConverter
-printErrorPaths	src/dotty/CfgConverter.java	/^	public static void printErrorPaths(Queue<Vertex> queue, String fileName, Map<Vertex, Set<Vertex>> coveredByMap) {$/;"	m	class:CfgConverter
+printErrorPaths	src/dotty/CfgConverter.java	/^	public static void printErrorPaths(Queue<Vertex> queue, String fileName, CoverRelation coverRelation) {$/;"	m	class:CfgConverter
 printResult	src/infoFlow/LogUtils.java	/^	public static void printResult(String functionName, boolean result) {$/;"	m	class:LogUtils
 printResult	src/infoFlow/ProgramTree.java	/^	public void printResult(String function) {$/;"	m	class:ProgramTree
 printSinglePath	src/dotty/CfgConverter.java	/^	private static void printSinglePath(Vertex v, BufferedWriter writer) throws IOException {$/;"	m	class:CfgConverter	file:
@@ -724,7 +725,7 @@ unitController	src/infoFlow/ProgramTree.java	/^	private UnitController unitContr
 unitVertexMap	src/infoFlow/CoverRelation.java	/^	private Map<Unit, LinkedList<Vertex>> unitVertexMap;$/;"	f	class:CoverRelation	file:
 unreachable	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^  	private void unreachable(){$/;"	m	class:UnreachableCode	file:
 unwind	src/infoFlow/ProgramTree.java	/^	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:ProgramTree	file:
-updateCover	src/infoFlow/CoverRelation.java	/^	public void updateCover(Vertex errorVertex) {$/;"	m	class:CoverRelation
+updateCover	src/infoFlow/CoverRelation.java	/^	public void updateCover() {$/;"	m	class:CoverRelation
 updateInvariant	src/infoFlow/InterpolationHandler.java	/^	private void updateInvariant(Vertex errorRootVertex, BoolExpr[] invariantList) {$/;"	m	class:InterpolationHandler	file:
 updateUnitVertexMap	src/infoFlow/CoverRelation.java	/^	public void updateUnitVertexMap(Edge edge) {$/;"	m	class:CoverRelation
 username	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int username=0x7f070000;$/;"	f	class:R.id

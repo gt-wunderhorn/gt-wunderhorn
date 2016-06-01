@@ -130,9 +130,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 (2)     z2_2 = 1;
 
      label3:
-        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
-
         r7_1 = Phi(r7 #0, r7_2 #1, r7_2 #2);
+
+        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
 
         if r7_1 != null goto label1;
 
@@ -669,9 +669,9 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 (3)     i2_2 = i2_1 + 1;
 
      label3:
-        i2_1 = Phi(i2 #0, i2_2 #3);
-
         r22_1 = Phi(r22 #0, r22_3 #3);
+
+        i2_1 = Phi(i2 #0, i2_2 #3);
 
         if i2_1 < i0 goto label1;
 
@@ -1029,22 +1029,22 @@ public class infoFlow.Z3ScriptHandler extends java.lang.Object
 (9)     r76_3 = virtualinvoke r76_2.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
      label11:
+        r76_2 = Phi(r76_1 #3, r76_3 #9);
+
         r73_2 = Phi(r73_1 #3, r73_6 #9);
 
         r74_2 = Phi(r74_1 #3, r74_6 #9);
-
-        r76_2 = Phi(r76_1 #3, r76_3 #9);
 
         $r24 = virtualinvoke r2.<infoFlow.Edge: infoFlow.Vertex getSource()>();
 
 (10)    if r76_2 != $r24 goto label07;
 
      label12:
+        r76 = Phi(r76 #2, r76_2 #10);
+
         r73_1 = Phi(r73 #2, r73_2 #10);
 
         r74_1 = Phi(r74 #2, r74_2 #10);
-
-        r76 = Phi(r76 #2, r76_2 #10);
 
         $z6 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 

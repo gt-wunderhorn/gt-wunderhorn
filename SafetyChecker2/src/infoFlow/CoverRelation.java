@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.InterpolationContext;
+import com.microsoft.z3.Log;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Status;
 
@@ -43,7 +44,7 @@ public class CoverRelation {
 	}
 
 	public void updateCover() {
-		LogUtils.infoln(">>>>>>>>>>CoverRelation.updateCover");
+		LogUtils.debugln(">>>>>>>>>>CoverRelation.updateCover");
 		clearCovers();		
 		cover();
 	}
@@ -55,7 +56,7 @@ public class CoverRelation {
 	}
 
 	private void cover() {
-		LogUtils.warningln(">>>>>>>>>CoverRelation.cover");
+		LogUtils.debugln(">>>>>>>>>CoverRelation.cover");
 		for(Entry<Unit, LinkedList<Vertex>> entry : this.unitVertexMap.entrySet()) {
 
 			LinkedList<Vertex> vertexList = entry.getValue();
@@ -70,10 +71,11 @@ public class CoverRelation {
 						continue;
 
 					boolean coveredByResult = checkCoveredBy(weakerVertex, strongerVertex);
+					LogUtils.debugln("coveredByResult=" + coveredByResult);
 					if(coveredByResult) {
-						LogUtils.warningln("----------");
-						LogUtils.infoln("weakerVertex=" + weakerVertex + "-" + weakerVertex.getInvariant());
-						LogUtils.infoln("strongerVertex=" + strongerVertex + "-" + strongerVertex.getInvariant());
+						LogUtils.debugln("----------");
+						LogUtils.debugln("weakerVertex=" + weakerVertex + "-" + weakerVertex.getInvariant());
+						LogUtils.debugln("strongerVertex=" + strongerVertex + "-" + strongerVertex.getInvariant());
 						boolean ancestorCovered = isAncestorCovered(strongerVertex);
 						// if one of ancesstors of stronger (covering) vertex is 
 						// covered by other vertex. it cannot cover other nodes.
@@ -97,10 +99,13 @@ public class CoverRelation {
 	}
 
 	private boolean isStrongerThan(BoolExpr strongerInvariant, BoolExpr weakerInvariant) {
-		LogUtils.detailln("weakaer = " + weakerInvariant);
+		LogUtils.debugln("weakaer = " + weakerInvariant);
 		BoolExpr notWeakerInvariant = this.ictx.mkNot(weakerInvariant);
-		LogUtils.detailln("not weaker = " + notWeakerInvariant);
+		LogUtils.debugln("not weaker = " + notWeakerInvariant);
 		BoolExpr entailmentExpr = this.ictx.mkAnd(strongerInvariant, notWeakerInvariant);
+		LogUtils.debugln("stronger = " + strongerInvariant);
+
+		if(isFalseImpliesAnything(strongerInvariant)) return false;	
 
 		Solver solver = this.ictx.mkSolver();
 		solver.reset();
@@ -111,6 +116,43 @@ public class CoverRelation {
 			return true;
 		else 
 			return false;
+	}
+
+	private boolean isFalseImpliesAnything(BoolExpr boolExpr) {
+		if(!boolExpr.toString().contains("false")) return false;
+		String s = boolExpr.toString();
+		String[] sa = s.split("\\s+");
+		for(String ss : sa) {
+			if(!(ss.equals("(or") || ss.equals("false") || ss.equals("false)"))) {
+				return false;
+			}
+		}
+		if(true) return true;
+
+
+		LogUtils.debugln("CoverRelation.isFalseImpliesAnything");
+		LogUtils.infoln("boolExpr = " + boolExpr);
+//		BoolExpr alwaysFalse = this.ictx.mkFalse();
+		BoolExpr notBoolExpr = this.ictx.mkNot(boolExpr);
+		BoolExpr falseImpliesAnything = this.ictx.mkAnd(boolExpr, notBoolExpr);
+
+		Solver solver = this.ictx.mkSolver();
+		solver.reset();
+		solver.add(falseImpliesAnything);
+		
+		Status status = solver.check();
+		LogUtils.debugln(status);
+		System.exit(0);
+		boolean result = false;
+		if(status == Status.UNSATISFIABLE)
+			result = false;
+		else
+			result = true;
+		
+		LogUtils.debugln("false implies expr = " + boolExpr + "-- result = " + result);
+
+		return result;
+			
 	}
 
 	public boolean isCovered(Vertex vertex) {
@@ -129,12 +171,12 @@ public class CoverRelation {
 	}
 
 	private void addCoverRelation(Vertex weakerVertex, Vertex strongerVertex) {
-		LogUtils.infoln(">>>>>CoverRelation.addCoverRelation");
+		LogUtils.debugln(">>>>>CoverRelation.addCoverRelation");
 
 		if(coveredByMap.containsKey(weakerVertex)) {
 			coveredByMap.get(weakerVertex).add(strongerVertex);
-			if(coveredByMap.get(weakerVertex).size() == 1) 
-				throw new RuntimeException("size must be greater than 1: fix addCoverRelation.");
+//			if(coveredByMap.get(weakerVertex).size() == 1) 
+//				throw new RuntimeException("size must be greater than 1: fix addCoverRelation.");
 		} else {
 			Set<Vertex> ll = new HashSet<Vertex>();
 			ll.add(strongerVertex);
@@ -153,7 +195,7 @@ public class CoverRelation {
 			ll.add(weakerVertex);
 			coveringMap.put(strongerVertex, ll);
 		}
-		
+		LogUtils.debugln("<<<<<CoverRelation.addCoverRelation");
 	}
 	
 	private void clearCoverRelation(Vertex vertex) {
@@ -169,7 +211,7 @@ public class CoverRelation {
 	}
 
 	private void uncoverDescendants(Vertex vertex) {
-		LogUtils.fatalln(">>>>>>>>>CoverRelation.uncoverDescendants = " + vertex);
+		LogUtils.debugln(">>>>>>>>>CoverRelation.uncoverDescendants = " + vertex);
        		for(Vertex prevVertex : vertex.getPreviousVertexSet()) {
 			ancestorCoveredSet.remove(prevVertex);
 			uncoverDescendants(prevVertex);
@@ -177,7 +219,7 @@ public class CoverRelation {
 	}
 	
 	private void coverDescendants(Vertex vertex) {
-		LogUtils.warningln(">>>>>>>>CoverRelation.coverDescendants = " + vertex);
+		LogUtils.debugln(">>>>>>>>CoverRelation.coverDescendants = " + vertex);
 		for(Vertex prevVertex : vertex.getPreviousVertexSet()) {
 			ancestorCoveredSet.add(prevVertex);
 			coverDescendants(prevVertex);

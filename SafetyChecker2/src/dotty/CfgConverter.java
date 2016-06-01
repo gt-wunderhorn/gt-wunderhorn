@@ -32,7 +32,7 @@ public class CfgConverter {
 
 			BufferedWriter writer = getBufferedWriter(fileName);	
 			writer.write("digraph { \n");
-			writer.write("\tratio=\"fill\";\n\tsize=\"8.3,11.7!\";\n\tmargin=0;\n");
+			writer.write("\tratio=\"fill\";\n\tsize=\"4.3,5.7!\";\n\tmargin=0;\n");
 
 			while(!queue.isEmpty()) {
 				Vertex w = queue.remove();

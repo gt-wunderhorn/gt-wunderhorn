@@ -365,6 +365,8 @@ public class Z3ScriptHandler {
 				return a;
 			}
 		} else {
+			LogUtils.fatalln("Z3ScriptHandler.createZ3Object");	
+			System.exit(0);
 			ArrayExpr oldArray = (ArrayExpr) global.get(TypeName);
 			NewSort s2 = sortId.get(TypeName);
 			String valueName = v.getName() + e.getProgramTree().getProgramDefinition(); 

@@ -20,7 +20,7 @@ public class InterpolationHandler {
 	}
 
 	public boolean createInterpolant(Vertex errorRoot) { 
-		LogUtils.infoln(">>>>>> InterpolationHandler.createInterpolant");
+		LogUtils.debugln(">>>>>> InterpolationHandler.createInterpolant");
 
 		BoolExpr pathFormula = this.ictx.MkInterpolant(errorRoot.getOutgoingEdge().getZ3Expr());
 				// this.ictx.mkAnd(errorRoot.getOutgoingEdge().getZ3Expr(), 
@@ -59,14 +59,14 @@ public class InterpolationHandler {
 		else if(status == Z3_lbool.Z3_L_TRUE)
 			result = true;
 
-		LogUtils.infoln("interpolation result=" + result);
-		LogUtils.infoln("<<<<<< InterpolationHandler.createInterpolant");
+		LogUtils.debugln("interpolation result=" + result);
+		LogUtils.debugln("<<<<<< InterpolationHandler.createInterpolant");
 		return result;
 	}
 
 	private void updateInvariant(Vertex errorRootVertex, BoolExpr[] invariantList) {
 		if(invariantList != null) {
-			LogUtils.infoln("invariantList size is " + invariantList.length);
+			LogUtils.debugln("invariantList size is " + invariantList.length);
 			int index = 0;
 			Vertex vertex = errorRootVertex.getNextVertex();
 			while(vertex != null && index < invariantList.length) { 

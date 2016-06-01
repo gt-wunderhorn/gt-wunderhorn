@@ -561,23 +561,23 @@ public class infoFlow.ProgramTree extends java.lang.Object
     private void unwind() throws infoFlow.exception.MainFunctionNotFoundException, infoFlow.exception.ErrorLocationNotFoundException
     {
         infoFlow.ProgramTree r0;
-        boolean z0, z1, $z3, $z4, $z5, $z6, $z8, z9;
-        java.lang.Object[] $r1, $r10, $r21, $r27, $r33, $r43, $r51, $r54;
-        infoFlow.Vertex $r2, $r20, r58, r59;
+        boolean z0, $z2, $z3, $z4, $z5, $z7, z8;
+        java.lang.Object[] $r1, $r10, $r21, $r27, $r33, $r43, $r51;
+        infoFlow.Vertex $r2, $r20, r54, r55;
         java.util.Queue $r3, $r4, $r5, $r8, $r53;
         java.lang.Object $r6, $r9, $r42, $r45, $r48;
         infoFlow.CoverRelation $r7, $r18, $r23, $r29, $r35, $r39, $r52;
-        java.lang.StringBuilder $r11, $r13, $r22, $r25, $r28, $r31, $r34, $r37, $r44, $r46, $r47, $r49, $r55, $r56;
+        java.lang.StringBuilder $r11, $r13, $r22, $r25, $r28, $r31, $r34, $r37, $r44, $r46, $r47, $r49;
         java.util.HashSet $r12;
         int $i0, $i1, $i2, $i3;
-        java.lang.String $r14, $r17, $r26, $r32, $r38, $r50, $r57;
+        java.lang.String $r14, $r17, $r26, $r32, $r38, $r50;
         infoFlow.Z3ScriptHandler $r15;
         infoFlow.InterpolationHandler $r16;
-        java.util.LinkedList $r19, r60;
+        java.util.LinkedList $r19, r56;
         java.util.Map $r24, $r30, $r36, $r40;
         java.util.Set $r41;
-        java.util.Iterator r61;
-        java.util.Map$Entry r62;
+        java.util.Iterator r57;
+        java.util.Map$Entry r58;
 
         r0 := @this: infoFlow.ProgramTree;
 
@@ -595,8 +595,6 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         interfaceinvoke $r3.<java.util.Queue: boolean add(java.lang.Object)>($r2);
 
-        z1 = 0;
-
         goto label4;
 
      label1:
@@ -604,40 +602,26 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         $r6 = interfaceinvoke $r5.<java.util.Queue: java.lang.Object remove()>();
 
-        r58 = (infoFlow.Vertex) $r6;
+        r54 = (infoFlow.Vertex) $r6;
 
         $r7 = r0.<infoFlow.ProgramTree: infoFlow.CoverRelation coverRelation>;
 
-        $z4 = virtualinvoke $r7.<infoFlow.CoverRelation: boolean isCovered(infoFlow.Vertex)>(r58);
+        $z3 = virtualinvoke $r7.<infoFlow.CoverRelation: boolean isCovered(infoFlow.Vertex)>(r54);
 
-        if $z4 == 0 goto label2;
-
-        $r54 = newarray (java.lang.Object)[1];
-
-        $r55 = new java.lang.StringBuilder;
-
-        specialinvoke $r55.<java.lang.StringBuilder: void <init>(java.lang.String)>("unwind -- vertex = ");
-
-        $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r58);
-
-        $r57 = virtualinvoke $r56.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r54[0] = $r57;
-
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r54);
+        if $z3 == 0 goto label2;
 
         goto label4;
 
      label2:
-        z9 = specialinvoke r0.<infoFlow.ProgramTree: boolean expandBFS(infoFlow.Vertex)>(r58);
+        z8 = specialinvoke r0.<infoFlow.ProgramTree: boolean expandBFS(infoFlow.Vertex)>(r54);
 
-        if z9 == 0 goto label4;
+        if z8 == 0 goto label4;
 
         $r8 = r0.<infoFlow.ProgramTree: java.util.Queue errorRootQueue>;
 
         $r9 = interfaceinvoke $r8.<java.util.Queue: java.lang.Object remove()>();
 
-        r59 = (infoFlow.Vertex) $r9;
+        r55 = (infoFlow.Vertex) $r9;
 
         $r10 = newarray (java.lang.Object)[1];
 
@@ -659,21 +643,21 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         $r15 = r0.<infoFlow.ProgramTree: infoFlow.Z3ScriptHandler z3Handler>;
 
-        virtualinvoke $r15.<infoFlow.Z3ScriptHandler: void convertPathtoZ3Script(infoFlow.Vertex)>(r59);
+        virtualinvoke $r15.<infoFlow.Z3ScriptHandler: void convertPathtoZ3Script(infoFlow.Vertex)>(r55);
 
         $r16 = r0.<infoFlow.ProgramTree: infoFlow.InterpolationHandler itpHandler>;
 
-        $z5 = virtualinvoke $r16.<infoFlow.InterpolationHandler: boolean createInterpolant(infoFlow.Vertex)>(r59);
+        $z4 = virtualinvoke $r16.<infoFlow.InterpolationHandler: boolean createInterpolant(infoFlow.Vertex)>(r55);
 
-        r0.<infoFlow.ProgramTree: boolean errorLocationFeasible> = $z5;
+        r0.<infoFlow.ProgramTree: boolean errorLocationFeasible> = $z4;
 
-        $r17 = virtualinvoke r59.<infoFlow.Vertex: java.lang.String toString()>();
+        $r17 = virtualinvoke r55.<infoFlow.Vertex: java.lang.String toString()>();
 
         virtualinvoke r0.<infoFlow.ProgramTree: void printResult(java.lang.String)>($r17);
 
-        $z6 = r0.<infoFlow.ProgramTree: boolean errorLocationFeasible>;
+        $z5 = r0.<infoFlow.ProgramTree: boolean errorLocationFeasible>;
 
-        if $z6 == 0 goto label3;
+        if $z5 == 0 goto label3;
 
         goto label5;
 
@@ -685,20 +669,20 @@ public class infoFlow.ProgramTree extends java.lang.Object
      label4:
         $r4 = r0.<infoFlow.ProgramTree: java.util.Queue uncovered>;
 
-        $z3 = interfaceinvoke $r4.<java.util.Queue: boolean isEmpty()>();
+        $z2 = interfaceinvoke $r4.<java.util.Queue: boolean isEmpty()>();
 
-        if $z3 == 0 goto label1;
+        if $z2 == 0 goto label1;
 
      label5:
         $r19 = new java.util.LinkedList;
 
         specialinvoke $r19.<java.util.LinkedList: void <init>()>();
 
-        r60 = $r19;
+        r56 = $r19;
 
         $r20 = r0.<infoFlow.ProgramTree: infoFlow.Vertex returnLeaf>;
 
-        interfaceinvoke r60.<java.util.Queue: boolean add(java.lang.Object)>($r20);
+        interfaceinvoke r56.<java.util.Queue: boolean add(java.lang.Object)>($r20);
 
         $r21 = newarray (java.lang.Object)[1];
 
@@ -718,7 +702,7 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         $r21[0] = $r26;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r21);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r21);
 
         $r27 = newarray (java.lang.Object)[1];
 
@@ -738,7 +722,7 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         $r27[0] = $r32;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r27);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r27);
 
         $r33 = newarray (java.lang.Object)[1];
 
@@ -758,7 +742,7 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         $r33[0] = $r38;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r33);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r33);
 
         $r39 = r0.<infoFlow.ProgramTree: infoFlow.CoverRelation coverRelation>;
 
@@ -766,14 +750,14 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         $r41 = interfaceinvoke $r40.<java.util.Map: java.util.Set entrySet()>();
 
-        r61 = interfaceinvoke $r41.<java.util.Set: java.util.Iterator iterator()>();
+        r57 = interfaceinvoke $r41.<java.util.Set: java.util.Iterator iterator()>();
 
         goto label7;
 
      label6:
-        $r42 = interfaceinvoke r61.<java.util.Iterator: java.lang.Object next()>();
+        $r42 = interfaceinvoke r57.<java.util.Iterator: java.lang.Object next()>();
 
-        r62 = (java.util.Map$Entry) $r42;
+        r58 = (java.util.Map$Entry) $r42;
 
         $r43 = newarray (java.lang.Object)[1];
 
@@ -781,13 +765,13 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         specialinvoke $r44.<java.lang.StringBuilder: void <init>()>();
 
-        $r45 = interfaceinvoke r62.<java.util.Map$Entry: java.lang.Object getKey()>();
+        $r45 = interfaceinvoke r58.<java.util.Map$Entry: java.lang.Object getKey()>();
 
         $r46 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r45);
 
         $r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
 
-        $r48 = interfaceinvoke r62.<java.util.Map$Entry: java.lang.Object getValue()>();
+        $r48 = interfaceinvoke r58.<java.util.Map$Entry: java.lang.Object getValue()>();
 
         $r49 = virtualinvoke $r47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r48);
 
@@ -795,20 +779,20 @@ public class infoFlow.ProgramTree extends java.lang.Object
 
         $r43[0] = $r50;
 
-        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r43);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r43);
 
         $r51 = newarray (java.lang.Object)[1];
 
         $r51[0] = "-------------";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r51);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r51);
 
      label7:
-        $z8 = interfaceinvoke r61.<java.util.Iterator: boolean hasNext()>();
+        $z7 = interfaceinvoke r57.<java.util.Iterator: boolean hasNext()>();
 
-        if $z8 != 0 goto label6;
+        if $z7 != 0 goto label6;
 
-        staticinvoke <dotty.CfgConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r60, "_all.dot");
+        staticinvoke <dotty.CfgConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r56, "_all.dot");
 
         $r53 = r0.<infoFlow.ProgramTree: java.util.Queue errorSet>;
 

@@ -154,7 +154,7 @@ public class ProgramTree {
 //
 //			break;
 //		}
-		int counter = 0;
+//		int counter = 0;
 		while(!this.uncovered.isEmpty()) {
 //			if(counter++ > 100) { LogUtils.fatalln("counter break"); break; }
 
@@ -178,12 +178,12 @@ public class ProgramTree {
 		}	
 		Queue<Vertex> q = new LinkedList<Vertex>();
 		q.add(returnLeaf);		
-		LogUtils.warningln("coveringVertexMap # " + coverRelation.getCoveringMap().size());
-		LogUtils.warningln("coveredVertexMap # " + coverRelation.getCoveredByMap().size());
-		LogUtils.warningln("unitVertexMap # " + coverRelation.getUnitVertexMap().size());
+		LogUtils.debugln("coveringVertexMap # " + coverRelation.getCoveringMap().size());
+		LogUtils.debugln("coveredVertexMap # " + coverRelation.getCoveredByMap().size());
+		LogUtils.debugln("unitVertexMap # " + coverRelation.getUnitVertexMap().size());
 		for(Entry<Unit, LinkedList<Vertex>> entry : coverRelation.getUnitVertexMap().entrySet()) {
-			LogUtils.warningln(entry.getKey() + "--" + entry.getValue());
-			LogUtils.infoln("-------------");
+			LogUtils.debugln(entry.getKey() + "--" + entry.getValue());
+			LogUtils.debugln("-------------");
 		}
 		CfgConverter.printAllPaths(q, "_all.dot");
 		CfgConverter.printErrorPaths(errorSet, "_errors.dot", coverRelation);
