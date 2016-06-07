@@ -116,9 +116,9 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (1)     r31_2 = virtualinvoke r31_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
      label3:
-        r31_1 = Phi(r31 #0, r31_2 #1);
-
         r30_1 = Phi(r30 #0, r30_2 #1);
+
+        r31_1 = Phi(r31 #0, r31_2 #1);
 
         if r31_1 != null goto label1;
 
@@ -272,9 +272,9 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (1)     r14_2 = virtualinvoke r14_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
      label4:
-        r14_1 = Phi(r14 #0, r14_2 #1);
-
         i2_1 = Phi(i2 #0, i2_2 #1);
+
+        r14_1 = Phi(r14 #0, r14_2 #1);
 
 (2)     if r14_1 == null goto label6;
 
@@ -292,9 +292,9 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (4)     staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r6);
 
      label6:
-        r14_3 = Phi(r14_1 #2, r14_1 #3, r14 #4);
-
         i2_3 = Phi(i2_1 #2, i2_1 #3, i2 #4);
+
+        r14_3 = Phi(r14_1 #2, r14_1 #3, r14 #4);
 
         return;
     }

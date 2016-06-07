@@ -97,24 +97,6 @@ public class InterpolationHandler {
 		}
 	}	
 
-//	private void addInvariant(Vertex vertex, BoolExpr interpolant) {
-//		BoolExpr currentInvariant = vertex.getInvariant();
-//		if(true || currentInvariant == null || startRefine) {
-//			vertex.setInvariant(interpolant);
-//		} else {
-//			BoolExpr disjunction = this.ictx.mkOr(interpolant, currentInvariant);
-//			LogUtils.debugln("^^^^^ Disjunction ^^^^^ \n" + disjunction);
-//			BoolExpr currentInterpolant = this.ictx.MkInterpolant(disjunction); 
-//			vertex.setInvariant(currentInterpolant);	
-//			startRefine = true;
-//		}
-//
-//	}
-
 	public BoolExpr getTrueInvariant() { return this.ictx.mkTrue(); }
 	public BoolExpr getFalseInvariant() { return this.ictx.mkFalse(); }
-
-
-	
-
 }

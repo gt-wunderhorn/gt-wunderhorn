@@ -45,7 +45,7 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         $r3[0] = ">>>>>> InterpolationHandler.createInterpolant";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r3);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r3);
 
         $r4 = r0.<infoFlow.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
@@ -116,9 +116,9 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (1)     r31_2 = virtualinvoke r31_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
      label3:
-        r31_1 = Phi(r31 #0, r31_2 #1);
-
         r30_1 = Phi(r30 #0, r30_2 #1);
+
+        r31_1 = Phi(r31 #0, r31_2 #1);
 
         if r31_1 != null goto label1;
 
@@ -187,13 +187,13 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         $r25[0] = $r28;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r25);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r25);
 
         $r29 = newarray (java.lang.Object)[1];
 
         $r29[0] = "<<<<<< InterpolationHandler.createInterpolant";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r29);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r29);
 
         return z1_3;
     }
@@ -232,7 +232,7 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 
         $r7[0] = $r10;
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r7);
+        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r7);
 
         i2 = 0;
 

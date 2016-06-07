@@ -37,6 +37,7 @@ import soot.jimple.IdentityStmt;
 import soot.jimple.IfStmt;
 import soot.jimple.InstanceFieldRef;
 import soot.jimple.IntConstant;
+import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.LeExpr;
 import soot.jimple.LtExpr;
@@ -47,6 +48,7 @@ import soot.jimple.NewMultiArrayExpr;
 import soot.jimple.NullConstant;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.StringConstant;
+import soot.jimple.VirtualInvokeExpr;
 import soot.jimple.internal.JNewExpr;
 import soot.shimple.PhiExpr;
 import soot.toolkits.scalar.ValueUnitPair;
@@ -59,10 +61,13 @@ public class Z3ScriptHandler {
 	private Map<String, Expr> global = new HashMap<String, Expr>();
 	private Map<String, Expr> localMap = new HashMap<String, Expr>();
 	private Map<String, Integer> arrayNameMap = new HashMap<String, Integer>();
+	private Map<String, Integer> realArraySize = new HashMap<String, Integer>();
 	private Map<String, String> substitute = new HashMap<String, String>();
 	private Map<String, Sort> substituteSort = new HashMap<String, Sort>();
 	private Stack<Expr> parameters = new Stack<Expr>();
+	private Z3ArrayHandler arrayHandler = new Z3ArrayHandler();
 	private Vertex errorPathRoot;
+	private Edge currentEdge;
 
 	public Z3ScriptHandler(InterpolationContext ictx) {
 		this.ictx = ictx;
@@ -84,20 +89,24 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
+		LogUtils.warning(">>>>>>>>>>>");
+		LogUtils.infoln("Z3ScriptHandler.createZ3Script edge = " + e);
 		boolean converted = false;
+		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
 		Unit stmt = e.getUnit();
 		if(stmt instanceof IfStmt) converted = convertIfStmt(e);
 		if(stmt instanceof GotoStmt) converted = convertGotoStmt(e); 
 		if(stmt instanceof AssignStmt) converted = convertAssignStmtEdge(e);
+//		if(e.isReturnEdge()) converted = convertReturnStmt(e);
 		// add invoke
 		if(stmt instanceof IdentityStmt) converted = convertIdentityStmt(e);
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 	
-		LogUtils.debugln("---------------");	
-		LogUtils.debugln("Vertex=" + e.getSource() + "---- Unit=" + e);
-		LogUtils.debugln("Expr" + e.getZ3Expr());
 		if(!converted) {
+			LogUtils.warningln("---------------");	
+			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
+			LogUtils.warningln("Expr" + e.getZ3Expr());
 			LogUtils.fatalln("Converstion failed");
 			LogUtils.fatalln("Z3ScriptHandler.createZ3Script");
 			System.exit(0);
@@ -166,13 +175,28 @@ public class Z3ScriptHandler {
 		Type leftType = left.getType();
 		Expr rightZ3 = null;
 		// rigth invoke expression needs to be added
-		rightZ3 = convertValue(right, false, e, e.getSource().getDistance());
-		Expr leftZ3 = convertValue(left, true, e, e.getSource().getDistance());
+		if(right instanceof VirtualInvokeExpr) 
+			rightZ3 = this.ictx.mkIntConst("virtualinvoke_" + this.getRealArraySize("virtualinvoke_"));
+		else
+			rightZ3 = convertValue(right, false, e, e.getSource().getDistance());
+		LogUtils.warningln("rightZ3=" + rightZ3);
 
-		LogUtils.debugln(rightZ3);
-		LogUtils.debugln(leftType);
+		Expr leftZ3 = convertValue(left, true, e, e.getSource().getDistance());
+		LogUtils.warningln("leftZ3=" + leftZ3);
+
 		BoolExpr eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, e.getSource().getDistance());
-		e.setZ3Expr(eq);
+
+		if(right instanceof AnyNewExpr) {
+			if(right instanceof NewArrayExpr) { 
+				BoolExpr realArray = arrayHandler.newArrayExpr(rightZ3, right.getType(), this);
+			        BoolExpr arrayExpr = this.ictx.mkAnd(eq, realArray);
+				e.setZ3Expr(arrayExpr);		
+				LogUtils.warningln("eq=" + arrayExpr);
+			}
+		} else {
+			e.setZ3Expr(eq);
+			LogUtils.warningln("eq2=" + eq);
+		}
 		if(eq == null)
 			return false;
 		return true;
@@ -197,18 +221,20 @@ public class Z3ScriptHandler {
 		return false;
 	}
 
-	private Expr convertValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
+	protected Expr convertValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
 		
 		Type type = value.getType();
 		if(type instanceof PrimType) {
 			return convertPrimitiveValue(value, assignLeft, edge, nodeIndex);
 		}
-		if(type instanceof RefLikeType) 
+		if(type instanceof RefLikeType) { 
 			return convertRefLikeValue(value, assignLeft, edge, nodeIndex);
+		}
 		return null;
 	}
 
 	private Expr convertPrimitiveValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
+		LogUtils.debugln("Z3ScriptHandler.convertPrimitiveValue=" + edge);
 		if(value instanceof Local) { 
 			Local local = (Local) value;
 			String oldName = local.getName();
@@ -271,7 +297,6 @@ public class Z3ScriptHandler {
 						LogUtils.detailln("resultunit=" + resultEdge + " -- Dis=" + resultEdge.getSource().getDistance());
 					}
 					phiEqualityVertex = phiEqualityVertex.getNextVertex();
-					
 				}
 					
 			}
@@ -280,12 +305,25 @@ public class Z3ScriptHandler {
 			LogUtils.debugln("resultExpr=" + resultExpr);
 			return resultExpr;
 		}
+		if(value instanceof InvokeExpr) {
+			if(edge.isSubFunction()) {
+				LogUtils.warningln(value);
+				
+			}
+		}
+		if(value instanceof ArrayRef) {
+			ArrayRef arrayRef = (ArrayRef) value;
+			return arrayHandler.z3ArrayRef(arrayRef, this, edge);
+
+		}
 		LogUtils.fatalln("returning null");
 		LogUtils.fatalln("Vertex=" + edge.getSource() + "---Edge=" + edge);
+		LogUtils.fatalln("Z3ScriptHandler.convertPrimitiveValue");
 		return null;
 	}
 
 	private Expr convertRefLikeValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
+		LogUtils.debugln("Z3ScriptHandler.convertRefLikeValue=" + edge);
 		if(value instanceof PhiExpr) {
 			LogUtils.fatalln("FATAL: PhiExpr is not supported yet!");
 			System.exit(0);
@@ -297,8 +335,8 @@ public class Z3ScriptHandler {
 				return createZ3Object(local, assignLeft,  edge);	
 			}
 			if(type instanceof ArrayType) {
-				LogUtils.fatalln("FATAL: ArrayType is not supported yet!");
-				System.exit(0);
+				Expr result = this.arrayHandler.z3Local(local, assignLeft, nodeIndex, this); 
+				return result;
 			}
 		}
 		if(value instanceof AnyNewExpr) {
@@ -331,6 +369,7 @@ public class Z3ScriptHandler {
 			
 		LogUtils.fatalln("FATAL: Conversion cannot be done");
 		LogUtils.fatalln("FATAL: Unit : " + edge.getUnit() + " - Value : " + value);
+		LogUtils.fatalln("Z3ScriptHandler.convertRefLikeValue");
 		return null;
 	}
 
@@ -377,13 +416,14 @@ public class Z3ScriptHandler {
 			LogUtils.infoln(valueName);
 			LogUtils.infoln(newSort);
 			LogUtils.infoln(a);
+			LogUtils.fatalln("Z3ScriptHandler.createZ3Object");	
 			System.exit(0);
 			return null;
 			//return result;
 		}
 	}
 
-	private String getGlobalName(String name) {
+	public String getGlobalName(String name) {
 		String globalName = null;
 		int index = 1;
 		if(arrayNameMap.containsKey(name)) {
@@ -397,37 +437,33 @@ public class Z3ScriptHandler {
 		return globalName;
 	}	
 
-	private BoolExpr convertAssignStmt(Expr rightZ3, Expr leftZ3, Type leftType, Value left, int i) {
+	private BoolExpr convertAssignStmt(Expr rightZ3, Expr leftZ3, Type leftType, Value left, int distance) {
 		if ((leftType instanceof PrimType) && (left instanceof Local)) {
 			BoolExpr leftEqRight = ictx.mkEq(leftZ3, rightZ3);
 			return leftEqRight;
 		}
 		if ((leftType instanceof ArrayType) && (left instanceof Local)) {
-			throw new RuntimeException();
-//			String typeName = leftType.toString();
-//			String virtualName = typeName + "Path" + theCoverter.getPathNumber() + "level" + level;
-//			String newName = virtualName + "index" + i;
-//			ArrayExpr latestArray = (ArrayExpr) this.latestLocal.get(virtualName);
-//			ArrayExpr newArray = (ArrayExpr) this.theCoverter.getIctx().mkConst(newName, latestArray.getSort());
-//			theCoverter.addSubstitute(newName, virtualName);
-//			theCoverter.updateSubstituteSort(newName, newArray.getSort());
-//			if (this.latestLocal.containsKey(virtualName)) {
-//				this.latestLocal.remove(virtualName);
-//				this.latestLocal.put(virtualName, newArray);
-//			} else {
-//				this.latestLocal.put(virtualName, newArray);
-//			}
-//			String sortName = typeName + "virtual" + "level" + level;
-//			NewSort s = this.theCoverter.getSortId().get(sortName);
-//			Expr afterStore = iCtx.mkStore((ArrayExpr) latestArray,
-//			s.getId(leftZ3), rightZ3);
-//			BoolExpr newArrayEqOldArray = iCtx.mkEq(newArray, afterStore);
-//			return newArrayEqOldArray;
+			String typeName = leftType.toString();
+			String virtualName = typeName;
+			String newName = virtualName + this.getNameSuffix();
+
+			ArrayExpr latestArray = (ArrayExpr) this.localMap.get(virtualName);
+			ArrayExpr newArray = (ArrayExpr) this.ictx.mkConst(newName, latestArray.getSort());
+			this.substitute.put(newName, virtualName);
+			this.substituteSort.put(newName, newArray.getSort());
+			this.localMap.put(virtualName, newArray);
+
+			String sortName = typeName + this.getArraySortSuffix();
+			NewSort s = sortId.get(sortName);
+
+			Expr afterStore = ictx.mkStore((ArrayExpr) latestArray, s.getId(leftZ3), rightZ3);
+			BoolExpr newArrayEqOldArray = ictx.mkEq(newArray, afterStore);
+			return newArrayEqOldArray;
 		}
 		if (left instanceof ArrayRef) {
-			throw new RuntimeException();
-//			ArrayRef leftV = (ArrayRef) left;
-//			return ArrayHelper.updateArrayRef(leftV, theCoverter, this, rightZ3);
+			ArrayRef leftRef = (ArrayRef) left;
+			BoolExpr result = arrayHandler.updateArrayRef(leftRef, this, rightZ3, currentEdge);
+			return result;
 		} else {
 			String oldName = getArrayName(left);
 			String newName = getGlobalName(oldName);
@@ -443,6 +479,7 @@ public class Z3ScriptHandler {
 			else 
 				afterStore = ictx.mkStore((ArrayExpr) latestArray, s.getId(leftZ3), rightZ3);
 		
+			LogUtils.fatalln("afterStore=" + afterStore);
 			BoolExpr newArrayEqOldArray = ictx.mkEq(newArray, afterStore);
 			return newArrayEqOldArray;
 		}	
@@ -466,7 +503,24 @@ public class Z3ScriptHandler {
 	}
 
 	private Expr convertNewArrayExpr(NewArrayExpr ne, Edge e) {
-		throw new RuntimeException();
+		Type type = ne.getType();
+		String virtualName = type.toString();
+		
+		if(sortId.containsKey(virtualName)) {
+			NewSort ns = sortId.get(virtualName);
+			return ns.getNewObject();
+		} else {
+			Sort newSort = null;
+			if(newSortMap.containsKey(virtualName)) {
+				newSort = newSortMap.get(virtualName);
+			} else {
+				newSort = this.ictx.mkUninterpretedSort(virtualName);
+				newSortMap.put(virtualName, newSort);
+			}
+			NewSort ns = new NewSort(newSort, this.ictx);
+			sortId.put(virtualName, ns);
+			return ns.getNewObject();
+		}
 	}
 	
 	private Expr convertNewMultiArrayExpr(NewMultiArrayExpr ne, Edge e) {
@@ -483,6 +537,31 @@ public class Z3ScriptHandler {
 
 	private String getNameSuffix(Edge e) {
 		return "_" + e.getProgramTree().getProgramDefinition() + "_" + e.getSource().getDistance();
+	}
+
+	protected String getNameSuffix() {
+		return "_" + currentEdge.getProgramTree().getProgramDefinition() + "_" + currentEdge.getSource().getDistance();
+	}
+
+	protected String getArrayNameSuffix() {
+		return "_" + currentEdge.getProgramTree().getProgramDefinition(); 
+	}
+
+	protected String getArraySortSuffix() {
+		return "_arraySort";
+	}
+
+	protected int getRealArraySize(String name) {
+		if(this.realArraySize.containsKey(name)) {
+			int size = this.realArraySize.get(name);
+			this.realArraySize.put(name, ++size);
+			return size;
+		} else {
+			int size = 1;
+			this.realArraySize.put(name, size);
+			return size;
+		}
+
 	}
 
 	private Expr convertBoolExpr(BinopExpr expr, Edge edge, int nodeIndex) {
@@ -562,5 +641,14 @@ public class Z3ScriptHandler {
 		}
 		return null;
 	}
+	
+	public InterpolationContext getIctx() { return this.ictx; }
+	public Map<String, Expr> getGlobal() { return this.global; }
+	public Map<String, String> getSubstitute() { return this.substitute; }
+	public Map<String, Sort> getSubstituteSort() { return this.substituteSort; }
+	public Map<String, Integer> getArrayNameMap() { return this.arrayNameMap; }
+	public Map<String, Expr> getLocalMap() { return this.localMap; }
+	public Map<String, NewSort> getSortId() { return this.sortId; }
+	public Map<String, Sort> getNewSortMap() { return this.newSortMap; }
 
 }

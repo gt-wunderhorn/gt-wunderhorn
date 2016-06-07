@@ -72,7 +72,7 @@ public class dotty.CfgConverter extends java.lang.Object
 
         virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>("digraph { \n");
 
-        virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>("\tratio=\"fill\";\n\tsize=\"8.3,11.7!\";\n\tmargin=0;\n");
+        virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>("\tratio=\"fill\";\n\tsize=\"4.3,5.7!\";\n\tmargin=0;\n");
 
 (1)     goto label07;
 

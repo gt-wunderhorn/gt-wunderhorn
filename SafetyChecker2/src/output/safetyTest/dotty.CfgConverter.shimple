@@ -369,7 +369,7 @@ public class dotty.CfgConverter extends java.lang.Object
         infoFlow.Edge r6, $r12, $r22, r34, r37;
         boolean $z0, $z3, $z4, $z5, $z8;
         java.lang.Object $r10, $r13, $r15, $r20, $r28;
-        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i8_1, i8_2, i8_3, i8_4, i8_5, i8_6, i8_7, i8_8, i9_1, i9_2, i9_3, i8_9, i9_4, i8_10;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i8_1, i8_2, i8_3, i8_4, i8_5, i8_6, i8_7, i8_8, i9_1, i9_2, i8_9, i9_3, i8_10, i9_4;
         java.util.Set $r14;
         soot.Unit $r16, $r18, r32, r39;
         java.lang.StringBuilder $r24, $r25, $r26;
@@ -619,9 +619,9 @@ public class dotty.CfgConverter extends java.lang.Object
      label14:
         $r29 := @caughtexception;
 
-        i9_3 = Phi(i9 #0, i9_2 #20, i9_1 #22);
-
         i8_9 = Phi(i8 #0, i8_2 #2, i8_1 #4, i8_5 #8, i8_6 #10, i8_8 #12, i8_7 #14, i8_4 #16, i8_3 #18);
+
+        i9_3 = Phi(i9 #0, i9_2 #20, i9_1 #22);
 
         r42 = $r29;
 
@@ -630,9 +630,9 @@ public class dotty.CfgConverter extends java.lang.Object
 (24)    staticinvoke <java.lang.System: void exit(int)>(0);
 
      label15:
-        i9_4 = Phi(i9_1 #23, i9_3 #24);
-
         i8_10 = Phi(i8_3 #23, i8_9 #24);
+
+        i9_4 = Phi(i9_1 #23, i9_3 #24);
 
         return;
 

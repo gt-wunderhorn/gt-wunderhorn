@@ -13,6 +13,7 @@ import soot.jimple.AssignStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.NewExpr;
+import soot.jimple.internal.JAssignStmt;
 
 public class UnitController {
 
@@ -39,27 +40,17 @@ public class UnitController {
 	
 	public void analyzeEdge(Edge e, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		Unit u = e.getUnit();
-		e.setErrorEdge(isErrorUnit(u));
-		e.setSubFunction(isSubFunctionUnit(u, stores, e));
-		e.setSinkEdge(isSinkInvoke(u));
-		e.setSourceEdge(isSourceInvoke(u));
-		e.setObjectEdge(isObjectInvoke(u));
-		e.setNewEdge(isNewInvoke(u));
+		e.setErrorEdge(this.isErrorUnit(u));
+		e.setSubFunction(this.isSubFunctionUnit(u, stores, e));
+		e.setSinkEdge(this.isSinkInvoke(u));
+		e.setSourceEdge(this.isSourceInvoke(u));
+		e.setObjectEdge(this.isObjectInvoke(u));
+		e.setNewEdge(this.isNewInvoke(u));
 
 		if(e.isErrorEdge() || (e.getTarget().getOutgoingEdge() != null && e.getTarget().getOutgoingEdge().isInErrorPath())){
 			e.setInErrorPath(true);
 		}
 
-	}
-
-	public void analyzeVertex(Vertex v, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		for(Edge e : v.getIncomingEdges()) { 
-			Unit u = e.getUnit();
-			if(isErrorUnit(u)) { v.setErrorLocation(true); e.setErrorEdge(true); }
-			if(isSubFunctionUnit(u, stores, e)) { v.setSubFunction(true); e.setSubFunction(true); }
-			if(isSinkInvoke(u)) { v.setSinkLocation(true); e.setSinkEdge(true); }
-			if(isSourceInvoke(u)) { v.setSourceLocation(true); e.setSourceEdge(true); } 
-		}
 	}
 
 	private boolean isSourceInvoke(Unit u) {
@@ -79,15 +70,12 @@ public class UnitController {
 		return false;
 	}
 
-	private boolean isSubFunctionUnit(Unit u, Map<String, Body> stores, Edge e)
-			throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
+	private boolean isSubFunctionUnit(Unit u, Map<String, Body> stores, Edge e) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		if(isInvoke(u)) {
 			String sign = getMethodSignature(u);
 			if(!sign.contains(ERRORLABEL) && stores.containsKey(sign)) {
-				//LogUtils.detailln("SubFunction found : " + sign);
-				//ExceptionalUnitGraph cfg = new ExceptionalUnitGraph(stores.get(sign));
-				//HelpTree helpTree = new HelpTree(cfg);
-				new ProgramTree(stores, sign, false);
+				LogUtils.debugln("SubFunction found : " + sign);
+				e.setProgramTree(new ProgramTree(stores, sign, false));
 				return true;							
 			}					
 		}	
@@ -104,7 +92,7 @@ public class UnitController {
 	}
 	
 	public boolean isObjectInvoke(Unit u) {
-		if(isInvoke(u)) {
+		if(isInvoke(u) && !(u instanceof JAssignStmt)) {
 			InvokeStmt istmt = (InvokeStmt) u;
 			String signature = istmt.getInvokeExpr().getMethod().getSignature();
 			if(signature.contains(OBJECTINVOKE))
@@ -134,6 +122,13 @@ public class UnitController {
 		return false;
 	}
 
+	private boolean isCalleeFunction(Unit u) {
+		if(isInvoke(u) && u instanceof AssignStmt) {
+			String sign = this.getMethodSignature(u);
+		}	
+		return false;
+	}
+
 	public boolean isInvoke(Unit u) {
 		String sign = getMethodSignature(u);
 		if(u instanceof InvokeStmt && !sign.equals(NOTINVOKESIGNATURE)) {
@@ -157,4 +152,14 @@ public class UnitController {
 		}
 		return sign;
 	}
+
+//	public void analyzeVertex(Vertex v, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
+//		for(Edge e : v.getIncomingEdges()) { 
+//			Unit u = e.getUnit();
+//			if(isErrorUnit(u)) { v.setErrorLocation(true); e.setErrorEdge(true); }
+//			if(isSubFunctionUnit(u, stores, e)) { v.setSubFunction(true); e.setSubFunction(true); }
+//			if(isSinkInvoke(u)) { v.setSinkLocation(true); e.setSinkEdge(true); }
+//			if(isSourceInvoke(u)) { v.setSourceLocation(true); e.setSourceEdge(true); } 
+//		}
+//	}
 }

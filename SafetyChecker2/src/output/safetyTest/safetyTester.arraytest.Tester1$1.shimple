@@ -1,11 +1,11 @@
-class safetyTester.whiletest.Tester1$1 extends soot.BodyTransformer
+final class safetyTester.arraytest.Tester1$1 extends soot.BodyTransformer
 {
 
     void <init>()
     {
-        safetyTester.whiletest.Tester1$1 r0;
+        safetyTester.arraytest.Tester1$1 r0;
 
-        r0 := @this: safetyTester.whiletest.Tester1$1;
+        r0 := @this: safetyTester.arraytest.Tester1$1;
 
         specialinvoke r0.<soot.BodyTransformer: void <init>()>();
 
@@ -14,13 +14,13 @@ class safetyTester.whiletest.Tester1$1 extends soot.BodyTransformer
 
     protected void internalTransform(soot.Body, java.lang.String, java.util.Map)
     {
-        safetyTester.whiletest.Tester1$1 r0;
+        safetyTester.arraytest.Tester1$1 r0;
         soot.Body r1;
         java.lang.String r2, r5;
         java.util.Map r3, $r6;
         soot.SootMethod r4;
 
-        r0 := @this: safetyTester.whiletest.Tester1$1;
+        r0 := @this: safetyTester.arraytest.Tester1$1;
 
         r1 := @parameter0: soot.Body;
 
@@ -32,7 +32,7 @@ class safetyTester.whiletest.Tester1$1 extends soot.BodyTransformer
 
         r5 = virtualinvoke r4.<soot.SootMethod: java.lang.String getSignature()>();
 
-        $r6 = <safetyTester.whiletest.Tester1: java.util.Map stores>;
+        $r6 = <safetyTester.arraytest.Tester1: java.util.Map stores>;
 
         interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r5, r1);
 

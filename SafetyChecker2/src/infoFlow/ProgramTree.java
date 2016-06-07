@@ -39,9 +39,10 @@ public class ProgramTree {
 	private boolean errorLocationFeasible = false;
 	private boolean mainFunction;
 	private boolean treeClosed;
-	private HashMap<String, ProgramTree> calleeFunctions;
+	private LinkedList<Edge> subFunctionList;
 	private HashSet<Vertex> errorRootSet;
 	private Queue<Vertex> errorRootQueue;
+	private Queue<Vertex> returnRootQueue;
 	private LinkedList<LinkedList<Vertex>> returnPaths;
 	private LinkedList<LinkedList<Vertex>> errorPaths;
 	private String functionSignature;
@@ -60,9 +61,10 @@ public class ProgramTree {
 	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("------->ProgramTree");
 		this.errorLocationFeasible = false;
-		this.calleeFunctions = new HashMap<String, ProgramTree>();
+		this.subFunctionList = new LinkedList<Edge>();
 		this.errorRootSet = new HashSet<Vertex>();
 		this.errorRootQueue = new LinkedList<Vertex>();
+		this.returnRootQueue = new LinkedList<Vertex>();
 		this.returnPaths = new LinkedList<LinkedList<Vertex>>();
 		this.errorPaths = new LinkedList<LinkedList<Vertex>>();
 		this.functionSignature = functionSignature;
@@ -76,12 +78,12 @@ public class ProgramTree {
 		if(this.mainFunction)
 			LogUtils.detailln("mainFunction = " + functionSignature);
 		else
-			LogUtils.detailln("setSubFunction = " + functionSignature);
+			LogUtils.detailln("subFunction = " + functionSignature);
 
 		boolean mainFunctionFound = findMainFunction();
-		if (mainFunctionFound)
+		if (mainFunctionFound && this.mainFunction)
 			startTest();
-		else
+		else if(this.mainFunction)
 			throw new MainFunctionNotFoundException(this.functionSignature + " does not exist in the current program");
 	}
 
@@ -138,31 +140,62 @@ public class ProgramTree {
 
 			Edge e = new Edge(cfg.getTails().get(0));
 			this.returnLeaf.addIncomingEdge(e);
+			this.uncovered.add(this.returnLeaf);
 
 			return true;
 		}
 		return false;
 	}
 
+	public boolean getNewReturnPath() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
+		LogUtils.warningln(">>>>>>>> ProgramTree.getNewReturnPath");
+		while(!this.uncovered.isEmpty()) {
+			Vertex v = uncovered.remove();
+			LogUtils.infoln(v.getIncomingEdges());
+			boolean returnPathFound = expandBFS(v);
+			if(returnRootQueue.size() > 0) {
+				Vertex returnRoot = returnRootQueue.peek();
+				z3Handler.convertPathtoZ3Script(returnRoot);
+				LogUtils.infoln("HUHU");
+				System.exit(0);
+				return true;
+			}
+		}
+		LogUtils.warningln("<<<<<<<<< ProgramTree.getNewReturnPath");
+		return false;
+	}
+
+	public Vertex getNewReturnRoot() {
+		if(!returnRootQueue.isEmpty()) {
+			Vertex returnRoot = returnRootQueue.remove();
+			LogUtils.warningln("returnRoot=" + returnRoot);
+		//	z3Handler.convertPathtoZ3Script(returnRoot);
+			return returnRoot;
+		}
+		return null;
+	}
+
+	public boolean isTreeDone() { 
+		boolean result = true;
+		if(!uncovered.isEmpty()) {
+			
+		}
+		return result;
+	}
+
 	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.detailln("----->Unwind");
 
 		boolean windingDone = false;
-		this.uncovered.add(returnLeaf);
 
-//		while(!windingDone) {
-//
-//			break;
-//		}
-//		int counter = 0;
 		while(!this.uncovered.isEmpty()) {
 //			if(counter++ > 100) { LogUtils.fatalln("counter break"); break; }
-
 			Vertex v = uncovered.remove();
 			if(coverRelation.isCovered(v)) continue;
 
 			boolean errorPathFound = expandBFS(v);
-			if(errorPathFound) {
+			if(!errorRootQueue.isEmpty()) {
+				LogUtils.infoln("errorRootQueue = " + errorRootQueue);
 				Vertex errorRoot = errorRootQueue.remove(); 
 
 				LogUtils.infoln("error root # = " + errorRootSet.size());
@@ -206,12 +239,17 @@ public class ProgramTree {
 				this.uncovered.add(v);
 
 				if(cfg.getUnexceptionalPredsOf(incomingEdge.getUnit()).size() == 0) {
+					LogUtils.infoln("size == 0");
+
 					v.setHeadLocation(true);
 //					v.setInvariant(itpHandler.getTrueInvariant());
 					if(incomingEdge.isInErrorPath()) { 
 						errorRootSet.add(v);
 						errorRootQueue.add(v);
 						result = true;
+					} else { 
+						returnRootQueue.add(v);
+						result = true;		
 					}
 				}
 				
@@ -222,6 +260,15 @@ public class ProgramTree {
 					v.addIncomingEdge(e);
 					coverRelation.updateUnitVertexMap(e);
 					unitController.analyzeEdge(e, stores);
+
+					if(e.isSubFunction()) {
+						subFunctionList.add(e);
+						e.getProgramTree().getNewReturnPath();
+						LogUtils.fatalln("HAHAHA");
+						System.exit(0);
+					}
+					
+
 					if(e.isErrorEdge())
 						errorSet.add(v);
 				}
@@ -229,7 +276,6 @@ public class ProgramTree {
 				if(v.getOutgoingEdge().isErrorEdge()) {
 					this.uncovered.clear();
 					this.uncovered.add(v);
-					LogUtils.fatalln("uncovered set = " + uncovered);
 					continue;
 				}
 			}
