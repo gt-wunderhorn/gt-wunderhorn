@@ -13,6 +13,7 @@ public class infoFlow.Edge extends java.lang.Object
     private boolean objectEdge;
     private boolean newEdge;
     private boolean inErrorPath;
+    private boolean arrayCopy;
 
     public void <init>(soot.Unit)
     {
@@ -40,6 +41,8 @@ public class infoFlow.Edge extends java.lang.Object
         r0.<infoFlow.Edge: boolean newEdge> = 0;
 
         r0.<infoFlow.Edge: boolean inErrorPath> = 0;
+
+        r0.<infoFlow.Edge: boolean arrayCopy> = 0;
 
         r0.<infoFlow.Edge: soot.Unit unit> = r1;
 
@@ -302,6 +305,32 @@ public class infoFlow.Edge extends java.lang.Object
         z0 := @parameter0: boolean;
 
         r0.<infoFlow.Edge: boolean objectEdge> = z0;
+
+        return;
+    }
+
+    public boolean isArrayCopyEdge()
+    {
+        infoFlow.Edge r0;
+        boolean $z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        $z0 = r0.<infoFlow.Edge: boolean arrayCopy>;
+
+        return $z0;
+    }
+
+    public void setArrayCopyEdge(boolean)
+    {
+        infoFlow.Edge r0;
+        boolean z0;
+
+        r0 := @this: infoFlow.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<infoFlow.Edge: boolean arrayCopy> = z0;
 
         return;
     }

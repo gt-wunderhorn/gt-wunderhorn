@@ -72,7 +72,7 @@ public class safetyTester.arraytest.Tester1 extends java.lang.Object
 
         staticinvoke <soot.Main: void main(java.lang.String[])>(r1);
 
-        r2 = "<safetyTestCode.arraytest.Test1: void test2(int, int)>";
+        r2 = "<safetyTestCode.arraytest.Test1: void test()>";
 
         $r11 = newarray (java.lang.Object)[1];
 

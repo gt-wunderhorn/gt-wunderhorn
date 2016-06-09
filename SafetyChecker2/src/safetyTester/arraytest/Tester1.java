@@ -36,8 +36,8 @@ public class Tester1 {
 						// hack here
 						SootMethod method = body.getMethod();
 						String methodSig = method.getSignature();
-						if(methodSig.contains("void test")
-							LogUtils(.methodSig);
+//						if(methodSig.contains("void test"));
+//							LogUtils.infoln(methodSig);
 						
 						stores.put(methodSig, body);
 					}
@@ -45,7 +45,7 @@ public class Tester1 {
 		soot.Main.main(sootArgs);
 		//System.out.println(stores.size());
 
-		String mainFunction ="<safetyTestCode.arraytest.Test1: void test2(int, int)>";
+		String mainFunction ="<safetyTestCode.arraytest.Test1: void test()>";
 		LogUtils.infoln("safetyTester.arraytest.Tester1... Test started...");
 	
 		try {	

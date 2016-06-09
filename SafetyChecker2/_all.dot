@@ -1,0 +1,20 @@
+digraph { 
+	ratio="fill";
+	size="8.3,11.7!";
+	margin=0;
+	"L0-D0" -> "L1-D1"[label="return"];
+	"L1-D1" -> "L3-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()"];
+	"L1-D1" -> "L2-D2"[label="if $i1 != 40 goto return"];
+	"L3-D2" -> "L4-D3"[label="if $i1 != 40 goto return"];
+	"L4-D3" -> "L5-D4"[label="$i1 = r2[1]"];
+	"L5-D4" -> "L6-D5"[label="staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r1, 0, r2, 0, 2)"];
+	"L6-D5" -> "L7-D6"[label="r2[1] = 40"];
+	"L7-D6" -> "L8-D7"[label="r2[0] = 30"];
+	"L8-D7" -> "L9-D8"[label="r2 = newarray (int)[2]"];
+	"L9-D8" -> "L10-D9"[label="r1[1] = 20"];
+	"L10-D9" -> "L11-D10"[label="r1[0] = 15"];
+	"L11-D10" -> "L12-D11"[label="r1[0] = 10"];
+	"L12-D11" -> "L13-D12"[label="r1 = newarray (int)[2]"];
+	"L13-D12" -> "L14-D13"[label="b0 = 3"];
+	"L14-D13" -> "L15-D14"[label="r0 := @this: safetyTestCode.arraytest.Test1"];
+}

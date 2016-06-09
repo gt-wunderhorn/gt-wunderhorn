@@ -11,10 +11,13 @@ import soot.Local;
 import soot.Type;
 import soot.Value;
 import soot.jimple.ArrayRef;
+import soot.jimple.IntConstant;
+import soot.jimple.InvokeExpr;
+import soot.jimple.InvokeStmt;
 
 public class Z3ArrayHandler {
 
-	public static Expr z3Local(Local local, boolean assignLeft, int nodeIndex, Z3ScriptHandler z3Handler) {
+	public Expr z3Local(Local local, boolean assignLeft, int nodeIndex, Z3ScriptHandler z3Handler) {
 		InterpolationContext ictx = z3Handler.getIctx();
 		Type type = local.getType();
 		String typeString = type.toString();
@@ -130,8 +133,97 @@ public class Z3ArrayHandler {
 		return ictx.mkAnd(newArrayEq, currentEq);
 	}
 
+	private int argSrcIndex = 0;
+	private int argSrcStartIndex = 1;
+	private int argDtcIndex = 2;
+	private int argDtcStartIndex = 3;
+	private int argLengthIndex = 4;
+
+	public BoolExpr z3ArrayCopy(Edge edge, Z3ScriptHandler z3Handler) {
+		InterpolationContext ictx = z3Handler.getIctx();
+		InvokeStmt iStmt = (InvokeStmt) edge.getUnit(); 
+		InvokeExpr iExpr = iStmt.getInvokeExpr();
+		
+		Value srcValue = iExpr.getArg(this.argSrcIndex);
+		Value srcStartValue = iExpr.getArg(this.argSrcStartIndex);
+		IntConstant srcStartIC = (IntConstant) srcStartValue;
+		int srcStart = srcStartIC.value;
+
+		Value dtcValue = iExpr.getArg(this.argDtcIndex);
+		Value dtcStartValue = iExpr.getArg(this.argDtcStartIndex);
+		IntConstant dtcStartIC = (IntConstant) dtcStartValue;
+		int dtcStart = dtcStartIC.value;
+
+		Value lengthValue = iExpr.getArg(this.argLengthIndex);
+		IntConstant lengthIC = (IntConstant) lengthValue;
+		int length = lengthIC.value;
+		if(length <= 0) 
+			return ictx.mkTrue(); 
+
+		Local srcLocal = (Local) srcValue;
+		Local dtcLocal = (Local) dtcValue;
+
+		ArrayExpr srcArray = getRealArray(srcLocal, edge, z3Handler); 
+
+		Type type = srcLocal.getType();
+		String typeName = type.toString();
+		String oldName = this.getArrayPrefix() + typeName;
+
+
+		BoolExpr[] constraints = new BoolExpr[length];
+		ArrayExpr arrayExpr = null;
+		for(int i = 0; i < length; i++) {
+			ArrayExpr dtcArray = this.getRealArray(dtcLocal, edge, z3Handler); 
+			int arraySize = z3Handler.getRealArraySize(oldName);
+			arrayExpr = ictx.mkArrayConst("array_" + arraySize, ictx.getIntSort(), ictx.getIntSort());
+			IntExpr srcIndex = ictx.mkInt(srcStart);
+			IntExpr dtcIndex = ictx.mkInt(dtcStart);
+			srcStart++;
+			dtcStart++;
+
+			Expr selectExpr = ictx.mkSelect(srcArray, srcIndex);
+			Expr storeExpr = ictx.mkStore(dtcArray, dtcIndex, selectExpr);
+			BoolExpr arrayEq = ictx.mkEq(arrayExpr, storeExpr);
+			LogUtils.debugln("dtcArray=" + dtcArray);
+
+			String realName = this.getArrayPrefix() + typeName;
+			ArrayExpr realArray = (ArrayExpr) z3Handler.getGlobal().get(realName);
+			String newName = z3Handler.getGlobalName(realName);
+			LogUtils.debugln(">>>>>>>>>>>>>NewName=" + newName);
+			ArrayExpr newGlobalArray = (ArrayExpr) ictx.mkConst(newName, realArray.getSort());
+			Expr dtcExpr = z3Handler.convertValue(dtcLocal, false, edge, edge.getSource().getDistance());
+			Expr dtcExpr2 = this.z3Local(dtcLocal,false, 0, z3Handler); 
+			Expr oldStore = ictx.mkStore(realArray, dtcExpr, arrayExpr);
+			BoolExpr newGlobalEq = ictx.mkEq(newGlobalArray, oldStore);
+			z3Handler.getGlobal().put(realName, newGlobalArray);
+			constraints[i] = ictx.mkAnd(arrayEq, newGlobalEq);
+			LogUtils.debugln(constraints[i]);
+//
+		}
+//		String realName = this.getArrayPrefix() + typeName;
+//		ArrayExpr realArray = (ArrayExpr) z3Handler.getGlobal().get(realName);
+//		String newName = z3Handler.getGlobalName(realName);
+//		ArrayExpr newGlobalArray = (ArrayExpr) ictx.mkConst(newName, realArray.getSort());
+//		Expr dtcExpr = z3Handler.convertValue(dtcStartValue, false, edge, edge.getSource().getDistance());
+//		Expr oldStore = ictx.mkStore(realArray, dtcExpr, arrayExpr);
+//		BoolExpr newGlobalEq = ictx.mkEq(newGlobalArray, oldStore);
+//		z3Handler.getGlobal().put(realName, newGlobalArray);
+		BoolExpr allConstraints = ictx.mkAnd(constraints);
+		return allConstraints;
+//		return ictx.mkAnd(allConstraints, newGlobalEq);
+	}
+
+	private ArrayExpr getRealArray(Local local, Edge edge, Z3ScriptHandler z3Handler) {
+		Expr baseZ3 = z3Handler.convertValue(local, false, edge, edge.getSource().getDistance());
+		Type type = local.getType();
+		String typeName = type.toString();
+		String realName = this.getArrayPrefix() + typeName;
+		ArrayExpr realArray = (ArrayExpr) z3Handler.getGlobal().get(realName);
+		ArrayExpr resultArray = (ArrayExpr) z3Handler.getIctx().mkSelect(realArray, baseZ3);
+		return resultArray;
+	}
+
 	private String getArrayPrefix() {
 		return "realArray_";
 	}
-
 }

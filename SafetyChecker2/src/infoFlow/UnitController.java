@@ -29,6 +29,8 @@ public class UnitController {
 	private static final String AND_UTIL_LOG_SIGNATURE = "android.util.Log";
 	private static final Integer AND_UTIL_LOG_PARAM_NO = 1;
 
+	private static final String SYSTEM_ARRAYCOPY_SIGNATURE = "<java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>";
+
 	public static final String[] sinkSignatureDB = { SEND_TEXT_MESSAGE_SIGNATURE, AND_UTIL_LOG_SIGNATURE };
 	public static final String[] sourceSignatureDB = {"getSimSerialNumber", "getDeviceId" }; 
 	public static final Map<String, Integer> sensitiveParameterMap = new HashMap<String, Integer>();
@@ -46,11 +48,17 @@ public class UnitController {
 		e.setSourceEdge(this.isSourceInvoke(u));
 		e.setObjectEdge(this.isObjectInvoke(u));
 		e.setNewEdge(this.isNewInvoke(u));
+		e.setArrayCopyEdge(this.isArrayCopyInvoke(u));
 
 		if(e.isErrorEdge() || (e.getTarget().getOutgoingEdge() != null && e.getTarget().getOutgoingEdge().isInErrorPath())){
 			e.setInErrorPath(true);
 		}
+	}
 
+	private boolean isArrayCopyInvoke(Unit u) {
+		if(u instanceof InvokeStmt && this.getMethodSignature(u).equals(this.SYSTEM_ARRAYCOPY_SIGNATURE)) 
+			return true;
+		return false;
 	}
 
 	private boolean isSourceInvoke(Unit u) {

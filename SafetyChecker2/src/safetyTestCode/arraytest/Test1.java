@@ -1,5 +1,7 @@
 package safetyTestCode.arraytest;
 
+import java.util.Arrays;
+
 import infoFlow.ErrorLable;
 
 public class Test1 {
@@ -9,16 +11,28 @@ public class Test1 {
 		int x = 3;
 		int[] intArray = new int[2];
 		intArray[0] = 10;
+		intArray[0] = 15;
 		intArray[1] = 20;
 
+//		int[] intArray2 = new int[2];
+//		intArray2[0] = intArray[0];
+//		intArray2[1] = intArray[1];
+//		intArray[0] = 3;
+//		intArray2[1] = 0;
+
+
 		int[] intArray2 = new int[2];
-		intArray2[0] = intArray[0];
-		intArray2[1] = intArray[1];
-		intArray[0] = 3;
+//		x = intArray2[0];
+//		intArray2[0] = intArray[0];
+//		intArray2[1] = intArray[1];
+//
+		intArray2[0] = 30;
+		intArray2[1] = 40;
+		System.arraycopy(intArray, 0, intArray2, 0, 2);
+//		System.arraycopy(intArray2, 0, intArray, 0, 2);
 
-		x = intArray2[0];
 
-		if(!intArray2.equals(intArray))
+		if(intArray2[1] == 40)
 			ErrorLable.Error();
 	}
 

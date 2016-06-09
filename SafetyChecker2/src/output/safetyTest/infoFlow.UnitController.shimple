@@ -8,6 +8,7 @@ public class infoFlow.UnitController extends java.lang.Object
     private static final java.lang.Integer SEND_TEXT_MESSAGE_PARAM_NO;
     private static final java.lang.String AND_UTIL_LOG_SIGNATURE;
     private static final java.lang.Integer AND_UTIL_LOG_PARAM_NO;
+    private static final java.lang.String SYSTEM_ARRAYCOPY_SIGNATURE;
     public static final java.lang.String[] sinkSignatureDB;
     public static final java.lang.String[] sourceSignatureDB;
     public static final java.util.Map sensitiveParameterMap;
@@ -82,7 +83,7 @@ public class infoFlow.UnitController extends java.lang.Object
         infoFlow.Edge r1, $r5, $r7;
         java.util.Map r2;
         soot.Unit r3;
-        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8;
         infoFlow.Vertex $r4, $r6;
 
         r0 := @this: infoFlow.UnitController;
@@ -117,9 +118,13 @@ public class infoFlow.UnitController extends java.lang.Object
 
         virtualinvoke r1.<infoFlow.Edge: void setNewEdge(boolean)>($z5);
 
-        $z6 = virtualinvoke r1.<infoFlow.Edge: boolean isErrorEdge()>();
+        $z6 = specialinvoke r0.<infoFlow.UnitController: boolean isArrayCopyInvoke(soot.Unit)>(r3);
 
-        if $z6 != 0 goto label1;
+        virtualinvoke r1.<infoFlow.Edge: void setArrayCopyEdge(boolean)>($z6);
+
+        $z7 = virtualinvoke r1.<infoFlow.Edge: boolean isErrorEdge()>();
+
+        if $z7 != 0 goto label1;
 
         $r4 = virtualinvoke r1.<infoFlow.Edge: infoFlow.Vertex getTarget()>();
 
@@ -131,15 +136,42 @@ public class infoFlow.UnitController extends java.lang.Object
 
         $r7 = virtualinvoke $r6.<infoFlow.Vertex: infoFlow.Edge getOutgoingEdge()>();
 
-        $z7 = virtualinvoke $r7.<infoFlow.Edge: boolean isInErrorPath()>();
+        $z8 = virtualinvoke $r7.<infoFlow.Edge: boolean isInErrorPath()>();
 
-        if $z7 == 0 goto label2;
+        if $z8 == 0 goto label2;
 
      label1:
         virtualinvoke r1.<infoFlow.Edge: void setInErrorPath(boolean)>(1);
 
      label2:
         return;
+    }
+
+    private boolean isArrayCopyInvoke(soot.Unit)
+    {
+        infoFlow.UnitController r0;
+        soot.Unit r1;
+        boolean $z0, $z1;
+        java.lang.String $r2;
+
+        r0 := @this: infoFlow.UnitController;
+
+        r1 := @parameter0: soot.Unit;
+
+        $z0 = r1 instanceof soot.jimple.InvokeStmt;
+
+        if $z0 == 0 goto label1;
+
+        $r2 = staticinvoke <infoFlow.UnitController: java.lang.String getMethodSignature(soot.Unit)>(r1);
+
+        $z1 = virtualinvoke $r2.<java.lang.String: boolean equals(java.lang.Object)>("<java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>");
+
+        if $z1 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
     }
 
     private boolean isSourceInvoke(soot.Unit)

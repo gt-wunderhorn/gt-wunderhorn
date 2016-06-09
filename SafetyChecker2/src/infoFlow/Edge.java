@@ -20,6 +20,7 @@ public class Edge {
 	private boolean objectEdge = false;
 	private boolean newEdge = false;
 	private boolean inErrorPath = false;
+	private boolean arrayCopy = false;
 ///	private boolean calleeFunction = false;
 
 	public Edge(Unit unit) { this.unit = unit; }
@@ -53,6 +54,9 @@ public class Edge {
 
 	public boolean isObjectEdge() { return this.objectEdge; }
 	public void setObjectEdge(boolean objectEdge) { this.objectEdge = objectEdge; }
+
+	public boolean isArrayCopyEdge() { return this.arrayCopy; }
+	public void setArrayCopyEdge(boolean arrayCopy) { this.arrayCopy = arrayCopy; }
 
 	public ProgramTree getProgramTree() { return this.programTree; }
 	public void setProgramTree(ProgramTree programTree) { this.programTree = programTree; }

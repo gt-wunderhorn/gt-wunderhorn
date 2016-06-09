@@ -89,8 +89,8 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
-		LogUtils.warning(">>>>>>>>>>>");
-		LogUtils.infoln("Z3ScriptHandler.createZ3Script edge = " + e);
+		LogUtils.fatal(">>>>>>");
+		LogUtils.infoln(e);
 		boolean converted = false;
 		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
@@ -102,6 +102,7 @@ public class Z3ScriptHandler {
 		// add invoke
 		if(stmt instanceof IdentityStmt) converted = convertIdentityStmt(e);
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
+		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 	
 		if(!converted) {
 			LogUtils.warningln("---------------");	
@@ -112,6 +113,15 @@ public class Z3ScriptHandler {
 			System.exit(0);
 		}
 		return converted;
+	}
+
+	private boolean convertArrayCopy(Edge edge) {
+		BoolExpr arrayCopyExpr = arrayHandler.z3ArrayCopy(edge, this);	
+		edge.setZ3Expr(arrayCopyExpr);
+		LogUtils.debugln("arrayCopy=" + arrayCopyExpr);
+		if(arrayCopyExpr != null) 
+			return true;
+		return false;
 	}
 
 	private boolean convertErrorEdge(Edge edge) {
@@ -176,13 +186,13 @@ public class Z3ScriptHandler {
 		Expr rightZ3 = null;
 		// rigth invoke expression needs to be added
 		if(right instanceof VirtualInvokeExpr) 
-			rightZ3 = this.ictx.mkIntConst("virtualinvoke_" + this.getRealArraySize("virtualinvoke_"));
+			rightZ3 = this.ictx.mkIntConst("virtualinvoke_" +this.getRealArraySize("virtualinvoke_"));
 		else
 			rightZ3 = convertValue(right, false, e, e.getSource().getDistance());
-		LogUtils.warningln("rightZ3=" + rightZ3);
+		LogUtils.infoln("rightZ3=" + rightZ3);
 
 		Expr leftZ3 = convertValue(left, true, e, e.getSource().getDistance());
-		LogUtils.warningln("leftZ3=" + leftZ3);
+		LogUtils.infoln("leftZ3=" + leftZ3);
 
 		BoolExpr eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, e.getSource().getDistance());
 
@@ -386,7 +396,7 @@ public class Z3ScriptHandler {
 		}
 		if (!global.containsKey(TypeName)) {
 			Sort newArraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
-			String arrayName = getGlobalName(TypeName);
+			String arrayName = this.getGlobalName(TypeName);
 			Expr newArray = ictx.mkConst(arrayName, newArraySort);
 			global.put(TypeName, newArray); //theCoverter.updateGlobal(TypeName, newArray);
 			substitute.put(TypeName, arrayName);
@@ -461,6 +471,7 @@ public class Z3ScriptHandler {
 			return newArrayEqOldArray;
 		}
 		if (left instanceof ArrayRef) {
+			LogUtils.infoln("left instanceof ArrayRef");
 			ArrayRef leftRef = (ArrayRef) left;
 			BoolExpr result = arrayHandler.updateArrayRef(leftRef, this, rightZ3, currentEdge);
 			return result;

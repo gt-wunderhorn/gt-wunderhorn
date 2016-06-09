@@ -15,38 +15,33 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
     public void test()
     {
         safetyTestCode.arraytest.Test1 r0;
+        byte b0;
         int[] r1, r2;
-        int $i0, $i1, i3;
-        boolean $z0;
-        byte b2;
+        int $i1;
 
         r0 := @this: safetyTestCode.arraytest.Test1;
 
-        b2 = 3;
+        b0 = 3;
 
         r1 = newarray (int)[2];
 
         r1[0] = 10;
 
+        r1[0] = 15;
+
         r1[1] = 20;
 
         r2 = newarray (int)[2];
 
-        $i0 = r1[0];
+        r2[0] = 30;
 
-        r2[0] = $i0;
+        r2[1] = 40;
 
-        $i1 = r1[1];
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r1, 0, r2, 0, 2);
 
-        r2[1] = $i1;
+        $i1 = r2[1];
 
-        r1[0] = 3;
-
-        i3 = r2[0];
-
-        $z0 = virtualinvoke r2.<java.lang.Object: boolean equals(java.lang.Object)>(r1);
-
-        if $z0 != 0 goto label1;
+        if $i1 != 40 goto label1;
 
         staticinvoke <infoFlow.ErrorLable: void Error()>();
 
