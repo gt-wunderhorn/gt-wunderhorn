@@ -2,18 +2,19 @@ digraph {
 	ratio="fill";
 	size="4.3,5.7!";
 	margin=0;
-	"L1-D1" -> "L3-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()--null
-**false"];
-	"L3-D2" -> "L4-D3"[label="if $i1 != 40 goto return--(not (not (= $i1__test_0_4 40)))
-**(not (= 40 $i1__test_0_4))"];
-	"L4-D3" -> "L5-D4"[label="$i1 = r2[1]--(= $i1__test_0_4
-   (select (select |Global_realArray_int[]_10| (select |int[]__test_0_8| 2)) 1))
-**(let ((a!1 (= 40
-              (select (select |Global_realArray_int[]_10|
-                              (select |int[]__test_0_8| 2))
-                      1))))
-  (not a!1))"];
-	"L5-D4" -> "L6-D5"[label="staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r1, 0, r2, 0, 2)--(let ((a!1 (store (select |Global_realArray_int[]_8|
+	"L1-D1" -> "L2-D2"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()--null
+**null"];
+	"L2-D2" -> "L4-D3"[label="if $z0 == 0 goto return--(not (= $z0__test_0_4 0))
+**null"];
+	"L4-D3" -> "L6-D4"[label="$z0 = staticinvoke <java.util.Arrays: boolean equals(int[],int[])>(r1, r2)--(let ((a!1 (ite (= (select |Global_realArray_int[]_10|
+                           (select |int[]__test_0_8| 1))
+                   (select |Global_realArray_int[]_10|
+                           (select |int[]__test_0_8| 2)))
+                1
+                0)))
+  (= $z0__test_0_4 a!1))
+**null"];
+	"L6-D4" -> "L8-D5"[label="staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r1, 0, r2, 0, 2)--(let ((a!1 (store (select |Global_realArray_int[]_8|
                           (select |int[]__test_0_8| 2))
                   0
                   (select (select |Global_realArray_int[]_8|
@@ -35,46 +36,33 @@ digraph {
           (store |Global_realArray_int[]_9|
                  (select |int[]__test_0_8| 2)
                  array_9))))
-**(= 20
-   (select (select |Global_realArray_int[]_8| (select |int[]__test_0_8| 1)) 1))"];
-	"L6-D5" -> "L7-D6"[label="r2[1] = 40--(let ((a!1 (= array_7
+**null"];
+	"L8-D5" -> "L10-D6"[label="r2[1] = 30--(let ((a!1 (= array_7
               (store (select |Global_realArray_int[]_7|
                              (select |int[]__test_0_8| 2))
                      1
-                     40))))
+                     30))))
   (and a!1
        (= |Global_realArray_int[]_8|
           (store |Global_realArray_int[]_7|
                  (select |int[]__test_0_8| 2)
                  array_7))))
-**(let ((a!1 (= 20
-              (select (select |Global_realArray_int[]_7|
-                              (select |int[]__test_0_8| 1))
-                      1))))
-  (and a!1 (not (= (select |int[]__test_0_8| 2) (select |int[]__test_0_8| 1)))))"];
-	"L7-D6" -> "L8-D7"[label="r2[0] = 30--(let ((a!1 (= array_6
+**null"];
+	"L10-D6" -> "L12-D7"[label="r2[0] = 25--(let ((a!1 (= array_6
               (store (select |Global_realArray_int[]_6|
                              (select |int[]__test_0_8| 2))
                      0
-                     30))))
+                     25))))
   (and a!1
        (= |Global_realArray_int[]_7|
           (store |Global_realArray_int[]_6|
                  (select |int[]__test_0_8| 2)
                  array_6))))
-**(let ((a!1 (= 20
-              (select (select |Global_realArray_int[]_6|
-                              (select |int[]__test_0_8| 1))
-                      1))))
-  (and a!1 (not (= (select |int[]__test_0_8| 2) (select |int[]__test_0_8| 1)))))"];
-	"L8-D7" -> "L9-D8"[label="r2 = newarray (int)[2]--(and (= |int[]__test_0_8| (store |int[]__test_0_12| 2 2))
+**null"];
+	"L12-D7" -> "L14-D8"[label="r2 = newarray (int)[2]--(and (= |int[]__test_0_8| (store |int[]__test_0_12| 2 2))
      (= |Global_realArray_int[]_6| (store |Global_realArray_int[]_5| 2 array_5)))
-**(let ((a!1 (= 20
-              (select (select |Global_realArray_int[]_5|
-                              (select |int[]__test_0_12| 1))
-                      1))))
-  (and a!1 (= 1 (select |int[]__test_0_12| 1))))"];
-	"L9-D8" -> "L10-D9"[label="r1[1] = 20--(let ((a!1 (= array_4
+**null"];
+	"L14-D8" -> "L16-D9"[label="r1[1] = 20--(let ((a!1 (= array_4
               (store (select |Global_realArray_int[]_4|
                              (select |int[]__test_0_12| 1))
                      1
@@ -84,8 +72,8 @@ digraph {
           (store |Global_realArray_int[]_4|
                  (select |int[]__test_0_12| 1)
                  array_4))))
-**(= 1 (select |int[]__test_0_12| 1))"];
-	"L10-D9" -> "L11-D10"[label="r1[0] = 15--(let ((a!1 (= array_3
+**null"];
+	"L16-D9" -> "L18-D10"[label="r1[0] = 15--(let ((a!1 (= array_3
               (store (select |Global_realArray_int[]_3|
                              (select |int[]__test_0_12| 1))
                      0
@@ -95,8 +83,8 @@ digraph {
           (store |Global_realArray_int[]_3|
                  (select |int[]__test_0_12| 1)
                  array_3))))
-**(= 1 (select |int[]__test_0_12| 1))"];
-	"L11-D10" -> "L12-D11"[label="r1[0] = 10--(let ((a!1 (= array_2
+**null"];
+	"L18-D10" -> "L20-D11"[label="r1[0] = 10--(let ((a!1 (= array_2
               (store (select |Global_realArray_int[]_2|
                              (select |int[]__test_0_12| 1))
                      0
@@ -106,13 +94,13 @@ digraph {
           (store |Global_realArray_int[]_2|
                  (select |int[]__test_0_12| 1)
                  array_2))))
-**(= 1 (select |int[]__test_0_12| 1))"];
-	"L12-D11" -> "L13-D12"[label="r1 = newarray (int)[2]--(and (= |int[]__test_0_12| (store |int[]| 1 1))
+**null"];
+	"L20-D11" -> "L22-D12"[label="r1 = newarray (int)[2]--(and (= |int[]__test_0_12| (store |int[]| 1 1))
      (= |Global_realArray_int[]_2| (store |Global_realArray_int[]_1| 1 array_1)))
-**true"];
-	"L13-D12" -> "L14-D13"[label="b0 = 3--(= b0__test_0_13 3)
-**true"];
-	"L14-D13" -> "L15-D14"[label="r0 := @this: safetyTestCode.arraytest.Test1--(= Global_safetyTestCode.arraytest.Test1_2
+**null"];
+	"L22-D12" -> "L24-D13"[label="b0 = 3--(= b0__test_0_13 3)
+**null"];
+	"L24-D13" -> "L26-D14"[label="r0 := @this: safetyTestCode.arraytest.Test1--(= Global_safetyTestCode.arraytest.Test1_2
    (store Global_safetyTestCode.arraytest.Test1_1 1 1))
 **null"];
 }

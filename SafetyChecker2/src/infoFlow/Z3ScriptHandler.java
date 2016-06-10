@@ -62,6 +62,7 @@ public class Z3ScriptHandler {
 	private Map<String, Expr> localMap = new HashMap<String, Expr>();
 	private Map<String, Integer> arrayNameMap = new HashMap<String, Integer>();
 	private Map<String, Integer> realArraySize = new HashMap<String, Integer>();
+	private Map<String, Integer> maxArraySize = new HashMap<String, Integer>();
 	private Map<String, String> substitute = new HashMap<String, String>();
 	private Map<String, Sort> substituteSort = new HashMap<String, Sort>();
 	private Stack<Expr> parameters = new Stack<Expr>();
@@ -240,6 +241,7 @@ public class Z3ScriptHandler {
 		if(type instanceof RefLikeType) { 
 			return convertRefLikeValue(value, assignLeft, edge, nodeIndex);
 		}
+		LogUtils.fatalln("not a primtype or a refliketype");
 		return null;
 	}
 
@@ -326,6 +328,12 @@ public class Z3ScriptHandler {
 			return arrayHandler.z3ArrayRef(arrayRef, this, edge);
 
 		}
+		if(UnitController.isArraysEqualsInvoke(value)) {
+			Expr expr = arrayHandler.z3ArraysEqual(value, this, edge);
+			return expr;
+		}
+
+
 		LogUtils.fatalln("returning null");
 		LogUtils.fatalln("Vertex=" + edge.getSource() + "---Edge=" + edge);
 		LogUtils.fatalln("Z3ScriptHandler.convertPrimitiveValue");
@@ -490,7 +498,7 @@ public class Z3ScriptHandler {
 			else 
 				afterStore = ictx.mkStore((ArrayExpr) latestArray, s.getId(leftZ3), rightZ3);
 		
-			LogUtils.fatalln("afterStore=" + afterStore);
+			LogUtils.debugln("afterStore=" + afterStore);
 			BoolExpr newArrayEqOldArray = ictx.mkEq(newArray, afterStore);
 			return newArrayEqOldArray;
 		}	
@@ -661,5 +669,6 @@ public class Z3ScriptHandler {
 	public Map<String, Expr> getLocalMap() { return this.localMap; }
 	public Map<String, NewSort> getSortId() { return this.sortId; }
 	public Map<String, Sort> getNewSortMap() { return this.newSortMap; }
+	public Map<String, Integer> getMaxArraySize() { return this.maxArraySize; }
 
 }

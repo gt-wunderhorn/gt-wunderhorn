@@ -30,6 +30,7 @@ public class UnitController {
 	private static final Integer AND_UTIL_LOG_PARAM_NO = 1;
 
 	private static final String SYSTEM_ARRAYCOPY_SIGNATURE = "<java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>";
+	private static final String ARRAYS_EQUALS_SIGNATURE = "<java.util.Arrays: boolean equals(int[],int[])>";
 
 	public static final String[] sinkSignatureDB = { SEND_TEXT_MESSAGE_SIGNATURE, AND_UTIL_LOG_SIGNATURE };
 	public static final String[] sourceSignatureDB = {"getSimSerialNumber", "getDeviceId" }; 
@@ -160,6 +161,15 @@ public class UnitController {
 		}
 		return sign;
 	}
+
+	public static boolean isArraysEqualsInvoke(Value right) {
+		if(right instanceof InvokeExpr) {
+			String sign = ((InvokeExpr) right).getMethod().getSignature();
+			if(sign.equals(ARRAYS_EQUALS_SIGNATURE))
+				return true;
+		}	
+		return false;
+	}	
 
 //	public void analyzeVertex(Vertex v, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 //		for(Edge e : v.getIncomingEdges()) { 

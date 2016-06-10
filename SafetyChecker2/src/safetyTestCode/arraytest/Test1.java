@@ -26,13 +26,12 @@ public class Test1 {
 //		intArray2[0] = intArray[0];
 //		intArray2[1] = intArray[1];
 //
-		intArray2[0] = 30;
-		intArray2[1] = 40;
+		intArray2[0] = 25;
+		intArray2[1] = 30;
 		System.arraycopy(intArray, 0, intArray2, 0, 2);
 //		System.arraycopy(intArray2, 0, intArray, 0, 2);
 
-
-		if(intArray2[1] == 40)
+		if(Arrays.equals(intArray, intArray2))
 			ErrorLable.Error();
 	}
 
