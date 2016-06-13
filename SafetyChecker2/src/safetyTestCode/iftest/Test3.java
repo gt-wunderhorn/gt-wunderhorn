@@ -11,8 +11,6 @@ public class Test3 {
 		if (x < 6)
 			x = x + 1;
 		
-		if(x != 6)
-			ErrorLable.Error();
 
 		if (x < 6)
 			x = x + 1;

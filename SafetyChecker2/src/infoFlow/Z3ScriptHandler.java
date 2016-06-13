@@ -10,6 +10,7 @@ import com.microsoft.z3.ArrayExpr;
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.InterpolationContext;
+import com.microsoft.z3.Log;
 import com.microsoft.z3.Sort;
 
 import soot.ArrayType;
@@ -192,16 +193,25 @@ public class Z3ScriptHandler {
 			rightZ3 = convertValue(right, false, e, e.getSource().getDistance());
 		LogUtils.infoln("rightZ3=" + rightZ3);
 
-		Expr leftZ3 = convertValue(left, true, e, e.getSource().getDistance());
+		Expr leftZ3 = this.convertValue(left, true, e, e.getSource().getDistance());
 		LogUtils.infoln("leftZ3=" + leftZ3);
 
-		BoolExpr eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, e.getSource().getDistance());
+		BoolExpr eq = null; 
+//		if(UnitController.isArraysEqualsInvoke(right)) {
+//			BoolExpr eq1 = this.ictx.mkIff((BoolExpr)rightZ3, this.ictx.mkEq(leftZ3, this.ictx.mkInt(1)));
+//			BoolExpr eq2 = this.ictx.mkIff(this.ictx.mkNot((BoolExpr)rightZ3), this.ictx.mkEq(leftZ3, this.ictx.mkInt(0)));
+//			eq = this.ictx.mkAnd(eq1, eq2);
+//		} else 
+		eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, e.getSource().getDistance());
 
 		if(right instanceof AnyNewExpr) {
 			if(right instanceof NewArrayExpr) { 
 				BoolExpr realArray = arrayHandler.newArrayExpr(rightZ3, right.getType(), this);
 			        BoolExpr arrayExpr = this.ictx.mkAnd(eq, realArray);
 				e.setZ3Expr(arrayExpr);		
+				Value sizeValue = ((NewArrayExpr) right).getSize();
+				IntConstant sizeIC = (IntConstant) sizeValue;
+				this.maxArraySize.put(left.toString(), sizeIC.value);
 				LogUtils.warningln("eq=" + arrayExpr);
 			}
 		} else {
@@ -479,7 +489,6 @@ public class Z3ScriptHandler {
 			return newArrayEqOldArray;
 		}
 		if (left instanceof ArrayRef) {
-			LogUtils.infoln("left instanceof ArrayRef");
 			ArrayRef leftRef = (ArrayRef) left;
 			BoolExpr result = arrayHandler.updateArrayRef(leftRef, this, rightZ3, currentEdge);
 			return result;
@@ -505,6 +514,7 @@ public class Z3ScriptHandler {
 	}
 
 	private Expr convertAnyNewExpr(AnyNewExpr ane, Edge e) {
+		LogUtils.debugln("Z3ScriptHandler.convertAnyNewExpr");
 		if(ane instanceof NewExpr) return convertNewExpr((NewExpr)ane, e);
 		if(ane instanceof NewArrayExpr) return convertNewArrayExpr((NewArrayExpr)ane, e);
 		if(ane instanceof NewMultiArrayExpr) return convertNewMultiArrayExpr((NewMultiArrayExpr)ane, e);

@@ -1,11 +1,15 @@
 package infoFlow;
 
+import java.util.Map.Entry;
+
 import com.microsoft.z3.ArrayExpr;
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.IntExpr;
 import com.microsoft.z3.InterpolationContext;
+import com.microsoft.z3.Log;
 import com.microsoft.z3.Sort;
+import com.microsoft.z3.Symbol;
 
 import soot.Local;
 import soot.Type;
@@ -72,8 +76,6 @@ public class Z3ArrayHandler {
 		InterpolationContext ictx = z3Handler.getIctx();
 		String typeName = type.toString();
 		String oldName = this.getArrayPrefix() + typeName;
-		LogUtils.fatalln(oldName);
-		LogUtils.fatalln(rightZ3);
 
 		if(!z3Handler.getGlobal().containsKey(oldName)) {
 			Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
@@ -217,24 +219,50 @@ public class Z3ArrayHandler {
 		Value firstBase = iExpr.getArg(this.argArray1);
 		Value secondBase = iExpr.getArg(this.argArray2);
 
+		int firstMaxArraySize = z3Handler.getMaxArraySize().get(firstBase.toString()); 
+		int secondMaxArraySize = z3Handler.getMaxArraySize().get(secondBase.toString()); 
+		BoolExpr maxSizeEq = ictx.mkEq(ictx.mkInt(firstMaxArraySize), ictx.mkInt(secondMaxArraySize));
+
 //		Expr firstExpr = z3Handler.convertValue(firstBase, false, edge, edge.getSource().getDistance());
 //		Expr secondExpr = z3Handler.convertValue(secondBase, false, edge, edge.getSource().getDistance());
 
 		ArrayExpr firstArray = this.getRealArray((Local)firstBase, edge, z3Handler); 
 		ArrayExpr secondArray = this.getRealArray((Local)secondBase, edge, z3Handler); 
+		BoolExpr arrayEq = ictx.mkEq(firstArray, secondArray);
+		
+		BoolExpr wholeExpr = null;
+		for(int i=0; i < Math.min(firstMaxArraySize, secondMaxArraySize); i++) {
+			Expr firstSelect = ictx.mkSelect(firstArray, ictx.mkInt(i));
+			Expr secondSelect = ictx.mkSelect(secondArray, ictx.mkInt(i));
+			BoolExpr selectEq = ictx.mkEq(firstSelect, secondSelect);
 
-		BoolExpr eq = ictx.mkEq(firstArray, secondArray);
-		Expr cond = ictx.mkITE(eq, ictx.mkInt(1), ictx.mkInt(0));
-		LogUtils.warningln(cond);
+			if(wholeExpr == null)
+				wholeExpr = ictx.mkAnd(maxSizeEq, selectEq);
+			else
+				wholeExpr = ictx.mkAnd(wholeExpr, selectEq);
+		}
 
-//		LogUtils.fatalln(firstBase);
-//		LogUtils.fatalln(firstExpr);
-//		LogUtils.fatalln(firstArray);
-//		LogUtils.warningln("-----------");
-//		LogUtils.fatalln(secondBase);
-//		LogUtils.fatalln(secondExpr);
-//		LogUtils.fatalln(secondArray);
-//		System.exit(0);
+		IntExpr i = ictx.mkIntConst("i");
+		Expr firstSelect = ictx.mkSelect(firstArray, i);
+		LogUtils.detailln("firstSelect=" + firstSelect);
+		Expr secondSelect = ictx.mkSelect(secondArray, i);
+		LogUtils.detailln("secondSelect=" + secondSelect);
+		BoolExpr eq = ictx.mkEq(firstSelect, secondSelect);
+		BoolExpr notEq = ictx.mkNot(ictx.mkEq(firstSelect, secondSelect));
+		LogUtils.detailln("notEq=" + notEq);
+
+		IntExpr[] xs2 = new IntExpr[1];
+		xs2[0] = i;
+
+		BoolExpr forall = ictx.mkForall(xs2, eq, 1, null, null, null, null);
+		//BoolExpr exists = ictx.mkExists(xs2, notEq, 0, null, null, null, null);
+		//Expr arrayExt = ictx.mkArrayExt(firstSelect, secondSelect);
+
+		Expr cond = ictx.mkITE(wholeExpr, ictx.mkInt(1), ictx.mkInt(0));
+		LogUtils.detailln(cond);
+
+		/////////////////////////////
+
 
 		return cond;
 	}
@@ -252,4 +280,66 @@ public class Z3ArrayHandler {
 	private String getArrayPrefix() {
 		return "realArray_";
 	}
+
+	private void forAllTest(InterpolationContext ictx, ArrayExpr firstArray, ArrayExpr secondArray) {
+		Sort[] types = new Sort[3];
+	        IntExpr[] xs = new IntExpr[3];
+	        Symbol[] names = new Symbol[3];
+	        IntExpr[] vars = new IntExpr[3];
+
+	        for (int j = 0; j < 3; j++)
+	        {
+			types[j] = ictx.getIntSort();
+		        names[j] = ictx.mkSymbol("x_" + Integer.toString(j));
+		        xs[j] = (IntExpr) ictx.mkConst(names[j], types[j]);
+		        vars[j] = (IntExpr) ictx.mkBound(2 - j, types[j]); // <-- vars
+		                                                         // reversed!
+			LogUtils.fatal("types=" + types[j]);
+			LogUtils.fatal("---names=" + names[j]);
+			LogUtils.fatal("---xs=" + xs[j]);
+			LogUtils.fatalln("---vars=" + vars[j]);
+	        }
+
+		Expr body_vars = ictx.mkAnd(ictx.mkEq(ictx.mkAdd(vars[0], ictx.mkInt(1)), ictx.mkInt(2)),
+				           ictx.mkEq(ictx.mkAdd(vars[1], ictx.mkInt(2)),
+					   ictx.mkAdd(vars[2], ictx.mkInt(3))));
+		LogUtils.warningln("body_vars=" + body_vars);
+
+
+		Expr body_const = ictx.mkAnd(
+                	ictx.mkEq(ictx.mkAdd(xs[0], ictx.mkInt(1)), ictx.mkInt(2)),
+	                ictx.mkEq(ictx.mkAdd(xs[1], ictx.mkInt(2)),
+                        ictx.mkAdd(xs[2], ictx.mkInt(3))));
+		LogUtils.warningln("body_const=" + body_const);
+
+
+		Expr x = ictx.mkForall(types, names, body_vars, 1, null, null,
+		                ictx.mkSymbol("Q1"), ictx.mkSymbol("skid1"));
+		LogUtils.warningln("x=" + x);
+
+		Expr y = ictx.mkForall(xs, body_const, 1, null, null,
+		                ictx.mkSymbol("Q2"), ictx.mkSymbol("skid2"));
+		LogUtils.infoln("y=" + y);
+
+
+		IntExpr i = ictx.mkIntConst("i");
+		Expr firstSelect = ictx.mkSelect(firstArray, i);
+		LogUtils.fatalln("firstSelect=" + firstSelect);
+		Expr secondSelect = ictx.mkSelect(secondArray, i);
+		LogUtils.fatalln("secondSelect=" + secondSelect);
+		Expr eq = ictx.mkEq(firstSelect, secondSelect);
+		LogUtils.fatalln("eq=" + eq);
+
+		IntExpr[] xs2 = new IntExpr[1];
+		xs2[0] = i;
+
+		Expr forall = ictx.mkForall(xs2, eq, 1, null, null, null, null);
+	       	LogUtils.warningln("forall=" + forall);	
+
+
+
+
+  		 System.exit(0);
+	}
+
 }

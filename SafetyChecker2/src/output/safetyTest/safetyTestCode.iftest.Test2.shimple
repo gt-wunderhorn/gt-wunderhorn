@@ -34,11 +34,11 @@ public class safetyTestCode.iftest.Test2 extends java.lang.Object
 (1)     b1_1 = 3;
 
      label1:
-        b1_2 = Phi(b1 #0, b1_1 #1);
-
         i0_2 = Phi(i0 #0, i0_1 #1);
 
-        if i0_2 != b1_2 goto label2;
+        b1_2 = Phi(b1 #0, b1_1 #1);
+
+        if i0_2 == b1_2 goto label2;
 
         staticinvoke <infoFlow.ErrorLable: void Error()>();
 

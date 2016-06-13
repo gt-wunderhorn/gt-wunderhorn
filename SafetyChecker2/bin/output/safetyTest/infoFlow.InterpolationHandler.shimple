@@ -116,9 +116,9 @@ public class infoFlow.InterpolationHandler extends java.lang.Object
 (1)     r31_2 = virtualinvoke r31_1.<infoFlow.Vertex: infoFlow.Vertex getNextVertex()>();
 
      label3:
-        r31_1 = Phi(r31 #0, r31_2 #1);
-
         r30_1 = Phi(r30 #0, r30_2 #1);
+
+        r31_1 = Phi(r31 #0, r31_2 #1);
 
         if r31_1 != null goto label1;
 
