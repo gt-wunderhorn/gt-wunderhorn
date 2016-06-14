@@ -8,7 +8,5 @@ Example Test Codes to check if error path is feasible are in the safetyTestCode 
 
 The codes to run safety checker are in the safetyTester package.
 
-
-To run the examples, you need to execute  sh files iftest*.sh, array*.sh and leetcode/*.sh files. To run leetcode examples, first copy the sh file under SafetyChecker2 file.
+To run the app, you need to run the code in the safetyTester/* packages. There are also sh files prepared to execute the examples -- iftest*.sh, array*.sh and leetcode/*.sh files. To run leetcode examples, first copy the sh file under SafetyChecker2 file.
  
-
