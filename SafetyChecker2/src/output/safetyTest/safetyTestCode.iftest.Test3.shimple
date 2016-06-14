@@ -37,7 +37,7 @@ public class safetyTestCode.iftest.Test3 extends java.lang.Object
 
         if i0_4 == 6 goto label3;
 
-        staticinvoke <infoFlow.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label3:
         return;

@@ -92,7 +92,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test2 extends java.lang.Obje
 
         if $i7 != 8 goto label5;
 
-        staticinvoke <infoFlow.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label5:
         $i8 = i0 - 1;

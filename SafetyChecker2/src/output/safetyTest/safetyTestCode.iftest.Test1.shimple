@@ -15,15 +15,15 @@ public class safetyTestCode.iftest.Test1 extends java.lang.Object
     public void test()
     {
         safetyTestCode.iftest.Test1 r0;
-        int i0;
+        byte b0;
 
         r0 := @this: safetyTestCode.iftest.Test1;
 
-        i0 = virtualinvoke r0.<safetyTestCode.iftest.Test1: int callee()>();
+        b0 = 3;
 
-        if i0 == 3 goto label1;
+        if b0 == 3 goto label1;
 
-        staticinvoke <infoFlow.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label1:
         return;

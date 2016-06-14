@@ -1,0 +1,512 @@
+public class safetyChecker.Vertex extends java.lang.Object
+{
+    private boolean coveredBy;
+    private boolean covering;
+    private boolean returnLocation;
+    private boolean headLocation;
+    private boolean errorLocation;
+    private boolean subFunction;
+    private boolean sinkLocation;
+    private boolean sourceLocation;
+    private safetyChecker.Edge outgoingEdge;
+    private java.util.Set incomingEdges;
+    private safetyChecker.Vertex nextVertex;
+    private java.util.Set previousVertexSet;
+    private boolean psi;
+    private int distance;
+    private int locationNumber;
+    private com.microsoft.z3.BoolExpr invariant;
+
+    public void <init>()
+    {
+        safetyChecker.Vertex r0;
+        java.util.HashSet $r1, $r2;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<safetyChecker.Vertex: boolean coveredBy> = 0;
+
+        r0.<safetyChecker.Vertex: boolean covering> = 0;
+
+        r0.<safetyChecker.Vertex: boolean returnLocation> = 0;
+
+        r0.<safetyChecker.Vertex: boolean headLocation> = 0;
+
+        r0.<safetyChecker.Vertex: boolean errorLocation> = 0;
+
+        r0.<safetyChecker.Vertex: boolean subFunction> = 0;
+
+        r0.<safetyChecker.Vertex: boolean sinkLocation> = 0;
+
+        r0.<safetyChecker.Vertex: boolean sourceLocation> = 0;
+
+        $r1 = new java.util.HashSet;
+
+        specialinvoke $r1.<java.util.HashSet: void <init>()>();
+
+        r0.<safetyChecker.Vertex: java.util.Set incomingEdges> = $r1;
+
+        $r2 = new java.util.HashSet;
+
+        specialinvoke $r2.<java.util.HashSet: void <init>()>();
+
+        r0.<safetyChecker.Vertex: java.util.Set previousVertexSet> = $r2;
+
+        r0.<safetyChecker.Vertex: boolean psi> = 0;
+
+        r0.<safetyChecker.Vertex: int distance> = 0;
+
+        r0.<safetyChecker.Vertex: int locationNumber> = 0;
+
+        return;
+    }
+
+    public boolean isCoveredBy()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean coveredBy>;
+
+        return $z0;
+    }
+
+    public void setCoveredBy(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean coveredBy> = z0;
+
+        return;
+    }
+
+    public boolean isCovering()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean covering>;
+
+        return $z0;
+    }
+
+    public void setCovering(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean covering> = z0;
+
+        return;
+    }
+
+    public boolean isReturnLocation()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean returnLocation>;
+
+        return $z0;
+    }
+
+    public void setReturnLocation(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean returnLocation> = z0;
+
+        return;
+    }
+
+    public boolean isHeadLocation()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean headLocation>;
+
+        return $z0;
+    }
+
+    public void setHeadLocation(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean headLocation> = z0;
+
+        return;
+    }
+
+    public boolean isErrorLocation()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean errorLocation>;
+
+        return $z0;
+    }
+
+    public void setErrorLocation(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean errorLocation> = z0;
+
+        return;
+    }
+
+    public boolean isSubFunction()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean subFunction>;
+
+        return $z0;
+    }
+
+    public void setSubFunction(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean subFunction> = z0;
+
+        return;
+    }
+
+    public boolean isSinkLocation()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean sinkLocation>;
+
+        return $z0;
+    }
+
+    public void setSinkLocation(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean sinkLocation> = z0;
+
+        return;
+    }
+
+    public boolean isSourceLocation()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean sourceLocation>;
+
+        return $z0;
+    }
+
+    public void setSourceLocation(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean sourceLocation> = z0;
+
+        return;
+    }
+
+    public safetyChecker.Edge getOutgoingEdge()
+    {
+        safetyChecker.Vertex r0;
+        safetyChecker.Edge $r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = r0.<safetyChecker.Vertex: safetyChecker.Edge outgoingEdge>;
+
+        return $r1;
+    }
+
+    public void setOutgoingEdge(safetyChecker.Edge)
+    {
+        safetyChecker.Vertex r0;
+        safetyChecker.Edge r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        r1 := @parameter0: safetyChecker.Edge;
+
+        r0.<safetyChecker.Vertex: safetyChecker.Edge outgoingEdge> = r1;
+
+        return;
+    }
+
+    public java.util.Set getIncomingEdges()
+    {
+        safetyChecker.Vertex r0;
+        java.util.Set $r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = r0.<safetyChecker.Vertex: java.util.Set incomingEdges>;
+
+        return $r1;
+    }
+
+    public void addIncomingEdge(safetyChecker.Edge)
+    {
+        safetyChecker.Vertex r0;
+        safetyChecker.Edge r1;
+        java.util.Set $r2;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        r1 := @parameter0: safetyChecker.Edge;
+
+        $r2 = r0.<safetyChecker.Vertex: java.util.Set incomingEdges>;
+
+        interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public safetyChecker.Vertex getNextVertex()
+    {
+        safetyChecker.Vertex r0, $r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = r0.<safetyChecker.Vertex: safetyChecker.Vertex nextVertex>;
+
+        return $r1;
+    }
+
+    public void setNextVertex(safetyChecker.Vertex)
+    {
+        safetyChecker.Vertex r0, r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        r1 := @parameter0: safetyChecker.Vertex;
+
+        r0.<safetyChecker.Vertex: safetyChecker.Vertex nextVertex> = r1;
+
+        return;
+    }
+
+    public java.util.Set getPreviousVertexSet()
+    {
+        safetyChecker.Vertex r0;
+        java.util.Set $r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = r0.<safetyChecker.Vertex: java.util.Set previousVertexSet>;
+
+        return $r1;
+    }
+
+    public void addPreviousVertex(safetyChecker.Vertex)
+    {
+        safetyChecker.Vertex r0, r1;
+        java.util.Set $r2;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        r1 := @parameter0: safetyChecker.Vertex;
+
+        $r2 = r0.<safetyChecker.Vertex: java.util.Set previousVertexSet>;
+
+        interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public boolean isSigh()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean psi>;
+
+        return $z0;
+    }
+
+    public void setSight(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean psi> = z0;
+
+        return;
+    }
+
+    public int getDistance()
+    {
+        safetyChecker.Vertex r0;
+        int $i0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $i0 = r0.<safetyChecker.Vertex: int distance>;
+
+        return $i0;
+    }
+
+    public void setDistance(int)
+    {
+        safetyChecker.Vertex r0;
+        int i0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        i0 := @parameter0: int;
+
+        r0.<safetyChecker.Vertex: int distance> = i0;
+
+        return;
+    }
+
+    public int getLocationNumber()
+    {
+        safetyChecker.Vertex r0;
+        int $i0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $i0 = r0.<safetyChecker.Vertex: int locationNumber>;
+
+        return $i0;
+    }
+
+    public void setLocationNumber(int)
+    {
+        safetyChecker.Vertex r0;
+        int i0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        i0 := @parameter0: int;
+
+        r0.<safetyChecker.Vertex: int locationNumber> = i0;
+
+        return;
+    }
+
+    public com.microsoft.z3.BoolExpr getInvariant()
+    {
+        safetyChecker.Vertex r0;
+        com.microsoft.z3.BoolExpr $r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = r0.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr invariant>;
+
+        return $r1;
+    }
+
+    public void setInvariant(com.microsoft.z3.BoolExpr)
+    {
+        safetyChecker.Vertex r0;
+        com.microsoft.z3.BoolExpr r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        r1 := @parameter0: com.microsoft.z3.BoolExpr;
+
+        r0.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr invariant> = r1;
+
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        safetyChecker.Vertex r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r4;
+        int $i0, $i1;
+        java.lang.String $r5;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>(java.lang.String)>("L");
+
+        $i0 = r0.<safetyChecker.Vertex: int locationNumber>;
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-D");
+
+        $i1 = r0.<safetyChecker.Vertex: int distance>;
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+}

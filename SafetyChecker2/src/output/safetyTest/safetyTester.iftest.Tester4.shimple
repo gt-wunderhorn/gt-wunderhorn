@@ -2,19 +2,6 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
 {
     static java.util.Map stores;
 
-    static void <clinit>()
-    {
-        java.util.HashMap $r0;
-
-        $r0 = new java.util.HashMap;
-
-        specialinvoke $r0.<java.util.HashMap: void <init>()>();
-
-        <safetyTester.iftest.Tester4: java.util.Map stores> = $r0;
-
-        return;
-    }
-
     public void <init>()
     {
         safetyTester.iftest.Tester4 r0;
@@ -36,7 +23,7 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
         java.lang.Object[] $r11, $r14, $r16, $r17, $r18, $r19, $r20, $r21;
         java.util.Map $r13;
         java.lang.Exception $r15, r23;
-        infoFlow.ProgramTree r22, r26;
+        safetyChecker.ProgramTree r22, r26;
         safetyTester.iftest.Tester4$1 r24;
         soot.Transform r25;
         soot.Transformer r27;
@@ -91,18 +78,18 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
 
         $r11[0] = "safetyTester.iftest.Tester4... Test started...";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r11);
+        staticinvoke <safetyChecker.LogUtils: void infoln(java.lang.Object[])>($r11);
 
      label1:
-        r26 = new infoFlow.ProgramTree;
+        r26 = new safetyChecker.ProgramTree;
 
         $r13 = <safetyTester.iftest.Tester4: java.util.Map stores>;
 
-        specialinvoke r26.<infoFlow.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>($r13, r2, 1);
+        specialinvoke r26.<safetyChecker.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>($r13, r2, 1);
 
         r22 = r26;
 
-        virtualinvoke r22.<infoFlow.ProgramTree: void printResult(java.lang.String)>(r2);
+        virtualinvoke r22.<safetyChecker.ProgramTree: void printResult(java.lang.String)>(r2);
 
      label2:
         goto label4;
@@ -116,37 +103,37 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
 
         $r16[0] = "*******************************************";
 
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r16);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r16);
 
         $r17 = newarray (java.lang.Object)[1];
 
         $r17[0] = "*********** EXCEPTION OCCURRED ************";
 
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r17);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r17);
 
         $r18 = newarray (java.lang.Object)[1];
 
         $r18[0] = "*******************************************";
 
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r18);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r18);
 
         $r19 = newarray (java.lang.Object)[1];
 
         $r19[0] = r23;
 
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r19);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r19);
 
         $r20 = newarray (java.lang.Object)[1];
 
         $r20[0] = "******************";
 
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r20);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r20);
 
         $r21 = newarray (java.lang.Object)[1];
 
         $r21[0] = "******************";
 
-        staticinvoke <infoFlow.LogUtils: void fatalln(java.lang.Object[])>($r21);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r21);
 
         virtualinvoke r23.<java.lang.Exception: void printStackTrace()>();
 
@@ -155,10 +142,23 @@ public class safetyTester.iftest.Tester4 extends java.lang.Object
 
         $r14[0] = "safetyTester.iftest.Tester4... Test finished...";
 
-        staticinvoke <infoFlow.LogUtils: void infoln(java.lang.Object[])>($r14);
+        staticinvoke <safetyChecker.LogUtils: void infoln(java.lang.Object[])>($r14);
 
         return;
 
         catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <safetyTester.iftest.Tester4: java.util.Map stores> = $r0;
+
+        return;
     }
 }

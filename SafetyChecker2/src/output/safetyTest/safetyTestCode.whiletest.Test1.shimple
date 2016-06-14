@@ -36,7 +36,7 @@ public class safetyTestCode.whiletest.Test1 extends java.lang.Object
 
         if i1_1 == b0 goto label3;
 
-        staticinvoke <infoFlow.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label3:
         return;

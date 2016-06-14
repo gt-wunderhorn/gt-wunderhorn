@@ -2,75 +2,47 @@ digraph {
 	ratio="fill";
 	size="4.3,5.7!";
 	margin=0;
-	"L7-D3" -> "L10-D4"[label="staticinvoke <infoFlow.ErrorLable: void Error()>()--null
+	"L1-D1" -> "L3-D2"[label="staticinvoke <safetyChecker.ErrorLable: void Error()>()--null
+**(or false false)"];
+	"L3-D2" -> "L4-D3"[label="if i1_1 == b0 goto return--(not (= i1_1__test_0_5 b0__test_0_10))
+**(or false false)"];
+	"L4-D3" -> "L5-D4"[label="if b0 != 9 goto i1_2 = i1_1 + b0--(not (not (= b0__test_0_10 9)))
+**(or (not (= 9 b0__test_0_10)) (= 1 b0__test_0_7))"];
+	"L5-D4" -> "L6-D5"[label="i1_1 = Phi(i1, i1_2)--(= i1_1__test_0_5 i1_2__test_0_6)
+**(or (not (= 9 b0__test_0_10)) (= 1 b0__test_0_7))"];
+	"L6-D5" -> "L8-D6"[label="goto [?= i1_1 = Phi(i1, i1_2)]--true
+**(= 1 b0__test_0_7)"];
+	"L6-D5" -> "L7-D6"[label="i1_2 = i1_1 + b0--(= i1_2__test_0_6 (+ i1_1__test_0_8 b0__test_0_10))
+**(not (= 9 b0__test_0_10))"];
+	"L8-D6" -> "L10-D7"[label="b0 = 1--(= b0__test_0_7 1)
+**true"];
+	"L7-D6" -> "L9-D7"[label="if b0 != 9 goto i1_2 = i1_1 + b0--(not (= b0__test_0_10 9))
+**true"];
+	"L10-D7" -> "L12-D8"[label="i1 = 5--(= i1__test_0_8 5)
+**true"];
+	"L9-D7" -> "L11-D8"[color =green, label="i1_1 = Phi(i1, i1_2)--(= i1_1__test_0_8 i1__test_0_11)
+**true"];
+	"L12-D8" -> "L15-D9"[label="r0 := @this: safetyTestCode.whiletest.Test1--(= Global_safetyTestCode.whiletest.Test1_2
+   (store Global_safetyTestCode.whiletest.Test1_1 1 1))
 **null"];
-	"L10-D4" -> "L12-D5"[label="if $i7 != 8 goto $i8 = i0 - 1--(not (not (= $i7__climbStairs_0_6 8)))
+	"L11-D8" -> "L14-D9"[color =green, label="i1_2 = i1_1 + b0--null
 **null"];
-	"L12-D5" -> "L14-D6"[label="$i7 = r1[$i6]--(= $i7__climbStairs_0_6
-   (select (select |Global_realArray_int[]_4|
-                   (select |int[]__climbStairs_0_14| 1))
-           $i6__climbStairs_0_7))
+	"L11-D8" -> "L13-D9"[color =green, label="goto [?= i1_1 = Phi(i1, i1_2)]--true
+**true"];
+	"L14-D9" -> "L17-D10"[color =green, label="if b0 != 9 goto i1_2 = i1_1 + b0--null
 **null"];
-	"L14-D6" -> "L16-D7"[label="$i6 = i0 - 1--(= $i6__climbStairs_0_7 (- i0__climbStairs_0_17 1))
+	"L13-D9" -> "L16-D10"[color =green, label="b0 = 1--(= b0__test_0_10 1)
+**true"];
+	"L17-D10" -> "L19-D11"[color =green, label="i1_1 = Phi(i1, i1_2)--null
 **null"];
-	"L16-D7" -> "L18-D8"[label="if i10_1 < i0 goto $i1 = i10_1 - 1--(not (< i10_1__climbStairs_0_9 i0__climbStairs_0_17))
+	"L16-D10" -> "L18-D11"[color =green, label="i1 = 5--(= i1__test_0_11 5)
+**true"];
+	"L18-D11" -> "L20-D12"[color =green, label="r0 := @this: safetyTestCode.whiletest.Test1--(= Global_safetyTestCode.whiletest.Test1_3
+   (store Global_safetyTestCode.whiletest.Test1_2 2 2))
 **null"];
-	"L18-D8" -> "L20-D9"[label="i10_1 = Phi(i10, i10_2)--(= i10_1__climbStairs_0_9 i10__climbStairs_0_11)
-**null"];
-	"L20-D9" -> "L23-D10"[label="i10_2 = i10_1 + 1--null
-**null"];
-	"L20-D9" -> "L24-D10"[label="goto [?= i10_1 = Phi(i10, i10_2)]--true
-**null"];
-	"L23-D10" -> "L27-D11"[label="r1[i10_1] = $i5--null
-**null"];
-	"L24-D10" -> "L28-D11"[label="i10 = 2--(= i10__climbStairs_0_11 2)
-**null"];
-	"L27-D11" -> "L31-D12"[label="$i5 = $i4 + $i3--null
-**null"];
-	"L28-D11" -> "L32-D12"[label="r1[1] = 2--(let ((a!1 (= array_3
-              (store (select |Global_realArray_int[]_3|
-                             (select |int[]__climbStairs_0_14| 1))
-                     1
-                     2))))
-  (and a!1
-       (= |Global_realArray_int[]_4|
-          (store |Global_realArray_int[]_3|
-                 (select |int[]__climbStairs_0_14| 1)
-                 array_3))))
-**null"];
-	"L31-D12" -> "L35-D13"[label="$i3 = r1[$i2]--null
-**null"];
-	"L32-D12" -> "L36-D13"[label="r1[0] = 1--(let ((a!1 (= array_2
-              (store (select |Global_realArray_int[]_2|
-                             (select |int[]__climbStairs_0_14| 1))
-                     0
-                     1))))
-  (and a!1
-       (= |Global_realArray_int[]_3|
-          (store |Global_realArray_int[]_2|
-                 (select |int[]__climbStairs_0_14| 1)
-                 array_2))))
-**null"];
-	"L35-D13" -> "L39-D14"[label="$i2 = i10_1 - 2--null
-**null"];
-	"L36-D13" -> "L40-D14"[label="r1 = newarray (int)[i0]--(and (= |int[]__climbStairs_0_14| (store |int[]| 1 1))
-     (= |Global_realArray_int[]_2| (store |Global_realArray_int[]_1| 1 array_1)))
-**null"];
-	"L39-D14" -> "L43-D15"[label="$i4 = r1[$i1]--null
-**null"];
-	"L40-D14" -> "L44-D15"[label="if i0 != 1 goto r1 = newarray (int)[i0]--(not (= i0__climbStairs_0_17 1))
-**null"];
-	"L43-D15" -> "L47-D16"[label="$i1 = i10_1 - 1--null
-**null"];
-	"L44-D15" -> "L48-D16"[label="if i0 >= 0 goto (branch)--(>= i0__climbStairs_0_17 0)
-**null"];
-	"L47-D16" -> "L51-D17"[label="if i10_1 < i0 goto $i1 = i10_1 - 1--null
-**null"];
-	"L48-D16" -> "L52-D17"[label="i0 := @parameter0: int--true
-**null"];
-	"L51-D17" -> "L55-D18"[label="i10_1 = Phi(i10, i10_2)--null
-**null"];
-	"L52-D17" -> "L56-D18"[label="r0 := @this: safetyTestCode.leetCode.climbingStairs.Test2--(= Global_safetyTestCode.leetCode.climbingStairs.Test2_2
-   (store Global_safetyTestCode.leetCode.climbingStairs.Test2_1 1 1))
-**null"];
+	"L9-D7" -> "L5-D4"[style=dashed, color=red];
+	"L11-D8" -> "L6-D5"[style=dashed, color=red];
+	"L16-D10" -> "L10-D7"[style=dashed, color=red];
+	"L13-D9" -> "L8-D6"[style=dashed, color=red];
+	"L18-D11" -> "L12-D8"[style=dashed, color=red];
 }
