@@ -1,2 +1,0 @@
-source userInputPassword <= EditText.getText
-sink   Log.i <= info about whether password is correct or not

@@ -1,0 +1,89 @@
+public class safetyTestCode.leetCode.Test1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        safetyTestCode.leetCode.Test1 r0;
+
+        r0 := @this: safetyTestCode.leetCode.Test1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        safetyTestCode.leetCode.Test1 r1, $r2;
+        int i0;
+        java.io.PrintStream $r3;
+
+        r0 := @parameter0: java.lang.String[];
+
+        $r2 = new safetyTestCode.leetCode.Test1;
+
+        specialinvoke $r2.<safetyTestCode.leetCode.Test1: void <init>()>();
+
+        r1 = $r2;
+
+        i0 = virtualinvoke r1.<safetyTestCode.leetCode.Test1: int climbStairs(int)>(7);
+
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r3.<java.io.PrintStream: void println(int)>(i0);
+
+        return;
+    }
+
+    public int climbStairs(int)
+    {
+        safetyTestCode.leetCode.Test1 r0;
+        int i0, i1, i2, i3, i4, i3_1, i2_1, i4_1, i3_2, i2_2, i4_2;
+
+        r0 := @this: safetyTestCode.leetCode.Test1;
+
+        i0 := @parameter0: int;
+
+        if i0 == 1 goto label1;
+
+        if i0 != 0 goto label2;
+
+     label1:
+        return i0;
+
+     label2:
+        i2 = 1;
+
+        i3 = 1;
+
+        i4 = 2;
+
+(0)     goto label4;
+
+     label3:
+        i1 = i3_1;
+
+        i3_2 = i1 + i2_1;
+
+        i2_2 = i1;
+
+(1)     i4_2 = i4_1 + 1;
+
+     label4:
+        i3_1 = Phi(i3 #0, i3_2 #1);
+
+        i2_1 = Phi(i2 #0, i2_2 #1);
+
+        i4_1 = Phi(i4 #0, i4_2 #1);
+
+        if i4_1 <= i0 goto label3;
+
+        if i3_1 <= 3 goto label5;
+
+        staticinvoke <infoFlow.ErrorLable: void Error()>();
+
+     label5:
+        return i3_1;
+    }
+}

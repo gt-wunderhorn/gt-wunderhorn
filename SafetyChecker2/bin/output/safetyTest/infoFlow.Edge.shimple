@@ -14,11 +14,13 @@ public class infoFlow.Edge extends java.lang.Object
     private boolean newEdge;
     private boolean inErrorPath;
     private boolean arrayCopy;
+    private java.util.List parameterList;
 
     public void <init>(soot.Unit)
     {
         infoFlow.Edge r0;
         soot.Unit r1;
+        java.util.LinkedList $r2;
 
         r0 := @this: infoFlow.Edge;
 
@@ -43,6 +45,12 @@ public class infoFlow.Edge extends java.lang.Object
         r0.<infoFlow.Edge: boolean inErrorPath> = 0;
 
         r0.<infoFlow.Edge: boolean arrayCopy> = 0;
+
+        $r2 = new java.util.LinkedList;
+
+        specialinvoke $r2.<java.util.LinkedList: void <init>()>();
+
+        r0.<infoFlow.Edge: java.util.List parameterList> = $r2;
 
         r0.<infoFlow.Edge: soot.Unit unit> = r1;
 
@@ -409,6 +417,51 @@ public class infoFlow.Edge extends java.lang.Object
         r1 := @parameter0: com.microsoft.z3.BoolExpr;
 
         r0.<infoFlow.Edge: com.microsoft.z3.BoolExpr z3Expr> = r1;
+
+        return;
+    }
+
+    public java.util.List getParameterList()
+    {
+        infoFlow.Edge r0;
+        java.util.List $r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        $r1 = r0.<infoFlow.Edge: java.util.List parameterList>;
+
+        return $r1;
+    }
+
+    public void addParameter(com.microsoft.z3.Expr)
+    {
+        infoFlow.Edge r0;
+        com.microsoft.z3.Expr r1;
+        java.util.List $r2;
+
+        r0 := @this: infoFlow.Edge;
+
+        r1 := @parameter0: com.microsoft.z3.Expr;
+
+        $r2 = r0.<infoFlow.Edge: java.util.List parameterList>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void cleanParameterList()
+    {
+        infoFlow.Edge r0;
+        java.util.LinkedList $r1;
+
+        r0 := @this: infoFlow.Edge;
+
+        $r1 = new java.util.LinkedList;
+
+        specialinvoke $r1.<java.util.LinkedList: void <init>()>();
+
+        r0.<infoFlow.Edge: java.util.List parameterList> = $r1;
 
         return;
     }

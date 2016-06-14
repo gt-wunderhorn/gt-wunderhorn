@@ -12,7 +12,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
         return;
     }
 
-    public void test2(int, int)
+    public int test2(int, int)
     {
         safetyTestCode.arraytest.Test1 r0;
         int i0, i1, i2, i2_1, i2_2;
@@ -26,7 +26,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         z0 = 0;
 
-        if i0 <= i1 goto label1;
+        if i0 < 100 goto label1;
 
         i2 = i0;
 
@@ -38,11 +38,28 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
      label2:
         i2_2 = Phi(i2 #0, i2_1 #1);
 
-        if i2_2 >= i0 goto label3;
+        return i2_2;
+    }
+
+    public void test1()
+    {
+        safetyTestCode.arraytest.Test1 r0;
+        byte b0, b1;
+        int i2;
+
+        r0 := @this: safetyTestCode.arraytest.Test1;
+
+        b0 = 16;
+
+        b1 = 3;
+
+        i2 = virtualinvoke r0.<safetyTestCode.arraytest.Test1: int test2(int,int)>(b0, b1);
+
+        if i2 != b0 goto label1;
 
         staticinvoke <infoFlow.ErrorLable: void Error()>();
 
-     label3:
+     label1:
         return;
     }
 
@@ -59,11 +76,19 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         r1 = newarray (int)[2];
 
-        r2 = newarray (int)[1];
+        r2 = newarray (int)[2];
 
-        r1[0] = 15;
+        r1[0] = 25;
+
+        r1[1] = 20;
+
+        r1[2] = 15;
 
         r2[0] = 15;
+
+        r2[1] = 20;
+
+        r2[2] = 25;
 
         $z0 = staticinvoke <java.util.Arrays: boolean equals(int[],int[])>(r1, r2);
 

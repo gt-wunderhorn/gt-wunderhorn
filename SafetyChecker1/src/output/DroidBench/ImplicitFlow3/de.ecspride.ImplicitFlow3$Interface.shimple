@@ -1,5 +1,0 @@
-interface  de.ecspride.ImplicitFlow3$Interface extends java.lang.Object
-{
-
-    public abstract void leakInfo();
-}

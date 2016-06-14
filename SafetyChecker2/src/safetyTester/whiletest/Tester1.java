@@ -5,8 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import infoFlow.LogUtils;
-import infoFlow.ProgramTree;
+import safetyChecker.LogUtils;
+import safetyChecker.ProgramTree;
 
 import soot.Body;
 import soot.BodyTransformer;

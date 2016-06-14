@@ -2,27 +2,36 @@ package safetyTestCode.arraytest;
 
 import java.util.Arrays;
 
-import infoFlow.ErrorLable;
+import safetyChecker.ErrorLable;
 
 public class Test1 {
 
-	public void test2(int x, int y) {
+	public int test2(int x, int y) {
 		int t = 0;
-		if(x > y) t = x;
-		else t = y;
+		if(x >= 100)
+		       	t = x;
+		else 
+			t = y;
+		return t;
+	}
 
-		if(t < x) ErrorLable.Error();
+	public void test1() {
+		int h = 16;
+		int l = 3;
+		int o = test2(h,l);
+		if(o == h)
+			ErrorLable.Error();
 	}
 
 	public void test() {
 
 		int x = 3;
 		int[] intArray = new int[2];
-		int[] intArray2 = new int[1];
+		int[] intArray2 = new int[2];
 
-		intArray[0] = 15;
-//		intArray[1] = 20;
-//		intArray[2] = 25;
+		intArray[0] = 25;
+		intArray[1] = 20;
+		intArray[2] = 15;
 
 //		int[] intArray2 = new int[2];
 //		intArray2[0] = intArray[0];
@@ -36,8 +45,8 @@ public class Test1 {
 //		intArray2[1] = intArray[1];
 //
 		intArray2[0] = 15;
-//		intArray2[1] = 20;
-//		intArray2[2] = 25;
+		intArray2[1] = 20;
+		intArray2[2] = 25;
 //		System.arraycopy(intArray, 0, intArray2, 0, 3);
 //		System.arraycopy(intArray2, 0, intArray, 0, 2);
 

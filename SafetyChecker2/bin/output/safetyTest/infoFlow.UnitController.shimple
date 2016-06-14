@@ -334,7 +334,7 @@ public class infoFlow.UnitController extends java.lang.Object
 
         $r5[0] = $r8;
 
-        staticinvoke <infoFlow.LogUtils: void debugln(java.lang.Object[])>($r5);
+        staticinvoke <infoFlow.LogUtils: void warningln(java.lang.Object[])>($r5);
 
         $r9 = new infoFlow.ProgramTree;
 

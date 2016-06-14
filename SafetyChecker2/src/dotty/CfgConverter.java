@@ -11,9 +11,9 @@ import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 
-import infoFlow.CoverRelation;
-import infoFlow.Edge;
-import infoFlow.Vertex;
+import safetyChecker.CoverRelation;
+import safetyChecker.Edge;
+import safetyChecker.Vertex;
 
 import soot.Unit;
 import soot.toolkits.graph.ExceptionalUnitGraph;

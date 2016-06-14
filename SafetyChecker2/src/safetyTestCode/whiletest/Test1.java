@@ -1,6 +1,6 @@
 package safetyTestCode.whiletest;
 
-import infoFlow.ErrorLable;
+import safetyChecker.ErrorLable;
 
 public class Test1 {
 

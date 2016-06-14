@@ -1,6 +1,6 @@
 package safetyTestCode.iftest;
 
-import infoFlow.ErrorLable;
+import safetyChecker.ErrorLable;
 
 public class Test2 {
 

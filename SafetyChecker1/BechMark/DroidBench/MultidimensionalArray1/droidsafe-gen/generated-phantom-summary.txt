@@ -1,1 +1,0 @@
-Found call to phantom method <toy_benchmark.ErrorFunction: void Error()> in <edu.mit.array_slice.MainActivity: void onCreate(android.os.Bundle)>
