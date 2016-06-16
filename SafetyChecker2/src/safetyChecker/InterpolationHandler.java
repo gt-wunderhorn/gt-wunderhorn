@@ -1,22 +1,27 @@
 package safetyChecker;
 
-import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.microsoft.z3.BoolExpr;
+import com.microsoft.z3.Expr;
 import com.microsoft.z3.InterpolationContext;
 import com.microsoft.z3.InterpolationContext.ComputeInterpolantResult;
 import com.microsoft.z3.Params;
+import com.microsoft.z3.Sort;
 import com.microsoft.z3.enumerations.Z3_lbool;
-
-import soot.jimple.IfStmt;
 
 public class InterpolationHandler {
 
 	private InterpolationContext ictx;
-	private boolean startRefine = false;
+	private Z3ScriptHandler z3Handler;
 
-	public InterpolationHandler(InterpolationContext ictx) { 
+	Expr[] from = null;
+	Expr[] to = null;
+
+	public InterpolationHandler(InterpolationContext ictx, Z3ScriptHandler z3Handler) { 
 		this.ictx = ictx;
+		this.z3Handler = z3Handler;
 	}
 
 	public boolean createInterpolant(Vertex errorRoot) { 
@@ -50,7 +55,8 @@ public class InterpolationHandler {
 		LogUtils.debugln("------------------pathformula----------------");
 		ComputeInterpolantResult interpolantResult = this.ictx.ComputeInterpolant(pathFormula, params);
 		BoolExpr[] invariantList = interpolantResult.interp;
-		updateInvariant(errorRoot, invariantList);
+		this.generateNameMapping();
+		this.updateInvariant(errorRoot, invariantList);
 
 		Z3_lbool status = interpolantResult.status;
 		boolean result = false;
@@ -71,16 +77,8 @@ public class InterpolationHandler {
 			Vertex vertex = errorRootVertex.getNextVertex();
 			while(vertex != null && index < invariantList.length) { 
 				BoolExpr currentInvariant = vertex.getInvariant();
-				BoolExpr newInvariant = invariantList[index];
-//				LogUtils.info(vertex.getOutgoingEdge());
-//				LogUtils.fatal("****");
-//				LogUtils.info(vertex.getOutgoingEdge().getZ3Expr());
-//			        LogUtils.fatal("****");
-//				if(newInvariant.toString().equals("false")) 
-//			        	LogUtils.warningln(newInvariant);
-//				else
-//					LogUtils.infoln(newInvariant);
-
+				BoolExpr invariant = invariantList[index];
+				BoolExpr newInvariant = (BoolExpr) invariant.substitute(this.from, this.to);
 
 				if(vertex.getInvariant() == null) {
 					vertex.setInvariant(newInvariant);
@@ -96,6 +94,29 @@ public class InterpolationHandler {
 			LogUtils.warningln("invariantList is null");
 		}
 	}	
+
+	private void generateNameMapping() {
+		Map<String, String> substitute = this.z3Handler.getSubstitute();
+		Map<String, Sort> substituteSort = this.z3Handler.getSubstituteSort();
+		this.from = new Expr[substitute.size()];
+		this.to = new Expr[substitute.size()];
+
+		int i = 0;
+		for(Entry<String, String> entry : substitute.entrySet()) {
+			String fromStr = entry.getKey();
+			String toStr = entry.getValue();
+
+			Sort sort = substituteSort.get(fromStr);
+			if(sort == null) {
+				LogUtils.debugln("sort is null for " + fromStr);
+				sort = this.ictx.mkIntSort();
+			}
+
+			from[i] = this.ictx.mkConst(fromStr, sort);
+			to[i] = this.ictx.mkConst(toStr, sort);
+			i++;
+		}	
+	}
 
 	public BoolExpr getTrueInvariant() { return this.ictx.mkTrue(); }
 	public BoolExpr getFalseInvariant() { return this.ictx.mkFalse(); }

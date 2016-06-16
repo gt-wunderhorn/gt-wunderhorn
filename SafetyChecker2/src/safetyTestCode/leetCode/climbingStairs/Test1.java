@@ -6,13 +6,12 @@ public class Test1 {
 
 	public static void main(String[] args) {
 		Test1 t1 = new Test1();
-		int result = t1.climbStairs(7);
+		int result = t1.climbStairs(4);
 		System.out.println(result);
 	}
 
 	public int climbStairs(int n) {
 
-//		int n = 7;
 		if (n == 1 || n == 0)
 			return n;
 
@@ -23,10 +22,9 @@ public class Test1 {
 			int temp = count2;
 			count2 = temp + count1;
 			count1 = temp;
-//			System.out.println(count2);
 		}
 		
-		if(count2 > 3)
+		if(count2 == 89)
 			ErrorLable.Error();
 
 		return count2;

@@ -32,7 +32,7 @@ public class CfgConverter {
 
 			BufferedWriter writer = getBufferedWriter(fileName);	
 			writer.write("digraph { \n");
-			writer.write("\tratio=\"fill\";\n\tsize=\"4.3,5.7!\";\n\tmargin=0;\n");
+			writer.write("\tratio=\"fill\";\n\tsize=\"8.3,10.7!\";\n\tmargin=0;\n");
 
 			while(!queue.isEmpty()) {
 				Vertex w = queue.remove();
@@ -45,7 +45,7 @@ public class CfgConverter {
 
 				if(w.getDistance()!=0 )
 					if(w.getOutgoingEdge().isInErrorPath()) 
-						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
+						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + /*"--" + e.getZ3Expr() +*/ "\n**" + w.getInvariant() + "\"];\n");
 				for(Vertex v : vSet) { 
 					queue.add(v);
 				}
@@ -55,7 +55,8 @@ public class CfgConverter {
 				Vertex coveredVertex = entry.getKey();
 				Set<Vertex> coveringSet = entry.getValue();
 				for(Vertex coveringVertex : coveringSet) {
-					writer.write("\t\"" + coveredVertex + "\" -> \"" + coveringVertex + "\"[style=dashed, color=red];\n"); 
+//					writer.write("\t\"" + coveredVertex + "\" -> \"" + coveringVertex + "\"[style=dashed, color=red];\n"); 
+					writer.write("\t\"" + coveredVertex + "\" -> \"" + coveringVertex + "\"[color=red];\n"); 
 				}
 			}
 

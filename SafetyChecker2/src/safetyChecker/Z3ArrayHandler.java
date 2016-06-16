@@ -119,11 +119,63 @@ public class Z3ArrayHandler {
 		return result;
 	}
 
+	public BoolExpr updateDefaultValue(Value left, int maxSize, Z3ScriptHandler z3Handler, Edge edge) {
+		Expr zero = z3Handler.getIctx().mkInt(0);
+
+		BoolExpr result = null;
+		for(int i = 0; i < maxSize; i++) {
+			BoolExpr update = this.updateArrayRef(left, z3Handler, zero, edge, i);
+			if(result == null)
+				result = update;
+			else 
+				result = z3Handler.getIctx().mkAnd(result, update);
+		}
+		return result;
+	}
+
+	private Expr z3ArrayRef(Value array, Z3ScriptHandler z3Handler, Edge edge, int index) {
+		Expr baseZ3 = z3Handler.convertValue(array, false, edge, edge.getSource().getDistance());
+
+		IntExpr z3Index = (IntExpr) z3Handler.getIctx().mkInt(index);
+		Type type = array.getType();
+		String typeName = type.toString();
+		String arrayName = this.getArrayPrefix() + typeName;
+		ArrayExpr arrayExpr = (ArrayExpr) z3Handler.getGlobal().get(arrayName);
+		ArrayExpr selectExpr = (ArrayExpr) z3Handler.getIctx().mkSelect(arrayExpr, baseZ3);
+		Expr result = z3Handler.getIctx().mkSelect(selectExpr, z3Index);	
+
+		return result;
+	}
+
+	private BoolExpr updateArrayRef(Value arrayBase, Z3ScriptHandler z3Handler, Expr rightZ3, Edge edge, int index) {
+		InterpolationContext ictx = z3Handler.getIctx();
+
+		Expr baseZ3 = z3Handler.convertValue(arrayBase, false, edge, edge.getSource().getDistance());
+		IntExpr z3Index = (IntExpr) z3Handler.getIctx().mkInt(index);
+		Type type = arrayBase.getType();
+		String typeName = type.toString();
+		String arrayName = getArrayPrefix() + typeName;
+		ArrayExpr arrayExpr = (ArrayExpr) z3Handler.getGlobal().get(arrayName);
+		ArrayExpr selectExpr = (ArrayExpr) ictx.mkSelect(arrayExpr, baseZ3);
+		ArrayExpr storeExpr = ictx.mkStore(selectExpr, z3Index, rightZ3);
+
+		int arraySize = z3Handler.getRealArraySize(arrayName);
+		ArrayExpr newArray = ictx.mkArrayConst("array_" + arraySize, ictx.getIntSort(), ictx.getIntSort());
+		BoolExpr newArrayEq = ictx.mkEq(newArray, storeExpr);
+		ArrayExpr oldArray = (ArrayExpr) z3Handler.getGlobal().get(arrayName);
+		String newName = z3Handler.getGlobalName(arrayName);
+		ArrayExpr currentArray = (ArrayExpr) ictx.mkConst(newName, oldArray.getSort());
+		Expr storeNewArray = ictx.mkStore(oldArray, baseZ3, newArray);
+		BoolExpr currentEq = ictx.mkEq(currentArray, storeNewArray); 
+
+		z3Handler.getGlobal().put(arrayName, currentArray);
+		return ictx.mkAnd(newArrayEq, currentEq);
+	}
+
 	public BoolExpr updateArrayRef(ArrayRef arrayRef, Z3ScriptHandler z3Handler, Expr rightZ3, Edge edge) {
 		InterpolationContext ictx = z3Handler.getIctx();
 		Value arrayBase = arrayRef.getBase();
 		Value index = arrayRef.getIndex();
-		LogUtils.fatalln(arrayBase);
 
 		Expr baseZ3 = z3Handler.convertValue(arrayBase, false, edge, edge.getSource().getDistance());
 		IntExpr z3Index = (IntExpr) z3Handler.convertValue(index, false, edge, edge.getSource().getDistance());

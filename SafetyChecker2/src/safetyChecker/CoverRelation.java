@@ -7,9 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.microsoft.z3.ArithExpr;
 import com.microsoft.z3.BoolExpr;
+import com.microsoft.z3.IntExpr;
 import com.microsoft.z3.InterpolationContext;
-import com.microsoft.z3.Log;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Status;
 
@@ -45,7 +46,7 @@ public class CoverRelation {
 
 	public void updateCover() {
 		LogUtils.debugln(">>>>>>>>>>CoverRelation.updateCover");
-		clearCovers();		
+	//	clearCovers();		
 		cover();
 	}
 
@@ -99,6 +100,7 @@ public class CoverRelation {
 	}
 
 	private boolean isStrongerThan(BoolExpr strongerInvariant, BoolExpr weakerInvariant) {
+		
 		LogUtils.debugln("weakaer = " + weakerInvariant);
 		BoolExpr notWeakerInvariant = this.ictx.mkNot(weakerInvariant);
 		LogUtils.debugln("not weaker = " + notWeakerInvariant);
@@ -112,10 +114,13 @@ public class CoverRelation {
 		solver.add(entailmentExpr);
 		Status status = solver.check();
 	
+		boolean result = false;
 		if(status == Status.UNSATISFIABLE) 
-			return true;
+			result =  true;
 		else 
-			return false;
+			result = false;
+		LogUtils.debugln("result=" + result);
+		return result;
 	}
 
 	private boolean isFalseImpliesAnything(BoolExpr boolExpr) {

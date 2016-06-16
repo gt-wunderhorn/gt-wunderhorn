@@ -27,7 +27,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test2 extends java.lang.Obje
 
         r1 = $r2;
 
-        i0 = virtualinvoke r1.<safetyTestCode.leetCode.climbingStairs.Test1: int climbStairs(int)>(7);
+        i0 = virtualinvoke r1.<safetyTestCode.leetCode.climbingStairs.Test1: int climbStairs(int)>(4);
 
         $r3 = <java.lang.System: java.io.PrintStream out>;
 
@@ -39,7 +39,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test2 extends java.lang.Obje
     public int climbStairs(int)
     {
         safetyTestCode.leetCode.climbingStairs.Test2 r0;
-        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, i10, i10_1, i10_2;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, i9, i9_1, i9_2;
         int[] r1;
 
         r0 := @this: safetyTestCode.leetCode.climbingStairs.Test2;
@@ -62,43 +62,41 @@ public class safetyTestCode.leetCode.climbingStairs.Test2 extends java.lang.Obje
 
         r1[1] = 2;
 
-        i10 = 2;
+        i9 = 2;
 
 (0)     goto label4;
 
      label3:
-        $i1 = i10_1 - 1;
+        $i1 = i9_1 - 1;
 
         $i4 = r1[$i1];
 
-        $i2 = i10_1 - 2;
+        $i2 = i9_1 - 2;
 
         $i3 = r1[$i2];
 
         $i5 = $i4 + $i3;
 
-        r1[i10_1] = $i5;
+        r1[i9_1] = $i5;
 
-(1)     i10_2 = i10_1 + 1;
+(1)     i9_2 = i9_1 + 1;
 
      label4:
-        i10_1 = Phi(i10 #0, i10_2 #1);
+        i9_1 = Phi(i9 #0, i9_2 #1);
 
-        if i10_1 < i0 goto label3;
+        if i9_1 < i0 goto label3;
 
-        $i6 = i0 - 1;
+        $i6 = r1[5];
 
-        $i7 = r1[$i6];
-
-        if $i7 != 8 goto label5;
+        if $i6 != 13 goto label5;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label5:
-        $i8 = i0 - 1;
+        $i7 = i0 - 1;
 
-        $i9 = r1[$i8];
+        $i8 = r1[$i7];
 
-        return $i9;
+        return $i8;
     }
 }

@@ -110,6 +110,7 @@ public class Z3ScriptHandler {
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 	
+		LogUtils.debugln(e.getZ3Expr());
 		if(!converted) {
 			LogUtils.warningln("---------------");	
 			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
@@ -159,7 +160,7 @@ public class Z3ScriptHandler {
 	}
 
 	private boolean convertIdentityStmt(Edge edge) { 
-		LogUtils.warningln("Z3ScriptHandler.convertIdentityStmt=" + edge);
+		LogUtils.debugln("Z3ScriptHandler.convertIdentityStmt=" + edge);
 		IdentityStmt iStmt = (IdentityStmt) edge.getUnit();
 		Value left = iStmt.getLeftOp();
 		Expr leftZ3 = convertValue(left, true, edge, edge.getSource().getDistance());
@@ -176,8 +177,6 @@ public class Z3ScriptHandler {
 					return false;
 				return true;	
 			} else { 
-				LogUtils.warningln("mktrue for identitystmt");
-
 				edge.setZ3Expr(this.ictx.mkTrue());
 				return true;
 			}
@@ -204,10 +203,10 @@ public class Z3ScriptHandler {
 		else
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		
-		LogUtils.infoln("rightZ3=" + rightZ3);
+		LogUtils.debugln("rightZ3=" + rightZ3);
 
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
-		LogUtils.infoln("leftZ3=" + leftZ3);
+		LogUtils.debugln("leftZ3=" + leftZ3);
 
 		BoolExpr eq = null; 
 //		if(UnitController.isArraysEqualsInvoke(right)) {
@@ -220,20 +219,26 @@ public class Z3ScriptHandler {
 		if(right instanceof AnyNewExpr) {
 			if(right instanceof NewArrayExpr) { 
 				BoolExpr realArray = arrayHandler.newArrayExpr(rightZ3, right.getType(), this);
-				LogUtils.fatalln("realArray=" + realArray);
-				LogUtils.fatalln("eq=" + eq);
+				LogUtils.infoln("realArray=" + realArray);
+				LogUtils.debugln("eq=" + eq);
 			        BoolExpr arrayExpr = this.ictx.mkAnd(eq, realArray);
-				edge.setZ3Expr(arrayExpr);		
 				// rest is to use for checking array equality.
 				// if size value is not integer this for now.
 				Value sizeValue = ((NewArrayExpr) right).getSize();
+				int maxSize = 0;
 				if(sizeValue instanceof Local) {
 					// handle for non integer values
+					maxSize = 10;//Integer.MAX_VALUE;
 				} else if(sizeValue instanceof IntConstant) {
 					IntConstant sizeIC = (IntConstant) sizeValue;
-					this.maxArraySize.put(left.toString(), sizeIC.value);
+					maxSize = sizeIC.value;
+					this.maxArraySize.put(left.toString(), maxSize);
 				}
-				LogUtils.debugln("eq=" + arrayExpr);
+				// assign 0 as default value.
+				BoolExpr defaultValues = arrayHandler.updateDefaultValue(left, maxSize, this, edge);
+				arrayExpr = this.ictx.mkAnd(arrayExpr, defaultValues);
+				edge.setZ3Expr(arrayExpr);		
+				//LogUtils.debugln("eq=" + arrayExpr);
 			}
 		} else if(edge.isSubFunction()) {
 			for(Value parameterValue : ((InvokeExpr) right).getArgs()) {	
@@ -308,7 +313,8 @@ public class Z3ScriptHandler {
 				Expr leftExpr = null;
 				if(type instanceof IntegerType) {
 					leftExpr = ictx.mkIntConst(newName);
-					substituteSort.put(newName, ictx.mkIntSort());
+					this.substitute.put(newName, oldName); // + "_" + edge.getProgramTree().getProgramDefinition());
+					this.substituteSort.put(newName, ictx.mkIntSort());
 				}
 				localMap.put(oldName, leftExpr);
 				return leftExpr;

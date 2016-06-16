@@ -15,26 +15,31 @@ public class safetyTestCode.whiletest.Test1 extends java.lang.Object
     public void test()
     {
         safetyTestCode.whiletest.Test1 r0;
-        byte b0;
-        int i1, i1_1, i1_2;
+        int $i0, i1, i2, i2_1, i1_1, i1_2, i2_2;
 
         r0 := @this: safetyTestCode.whiletest.Test1;
 
         i1 = 5;
 
-        b0 = 1;
+        i2 = 1;
 
 (0)     goto label2;
 
      label1:
-(1)     i1_2 = i1_1 + b0;
+        i1_2 = i1_1 + i2_1;
+
+(1)     i2_2 = i2_1 + 2;
 
      label2:
+        i2_1 = Phi(i2 #0, i2_2 #1);
+
         i1_1 = Phi(i1 #0, i1_2 #1);
 
-        if b0 != 9 goto label1;
+        if i2_1 != 5 goto label1;
 
-        if i1_1 == b0 goto label3;
+        $i0 = i2_1 + 4;
+
+        if i1_1 != $i0 goto label3;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

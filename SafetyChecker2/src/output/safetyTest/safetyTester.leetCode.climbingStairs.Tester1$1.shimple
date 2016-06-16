@@ -1,4 +1,4 @@
-class safetyTester.leetCode.climbingStairs.Tester1$1 extends soot.BodyTransformer
+final class safetyTester.leetCode.climbingStairs.Tester1$1 extends soot.BodyTransformer
 {
 
     void <init>()

@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import com.microsoft.z3.InterpolationContext;
+import com.microsoft.z3.Log;
 
 import dotty.CfgConverter;
 
@@ -73,7 +74,7 @@ public class ProgramTree {
 		this.mainFunction = mainFunction;
 		this.ictx = new InterpolationContext();
 		this.z3Handler = new Z3ScriptHandler(this.ictx);
-		this.itpHandler = new InterpolationHandler(this.ictx);
+		this.itpHandler = new InterpolationHandler(this.ictx, this.z3Handler);
 		this.coverRelation = new CoverRelation(this.ictx);
 		if(this.mainFunction)
 			LogUtils.detailln("mainFunction = " + functionSignature);
@@ -138,8 +139,6 @@ public class ProgramTree {
 			this.returnLeaf = new Vertex();
 			this.returnLeaf.setReturnLocation(true);
 			
-			if(cfg.getTails().size() > 1)
-				LogUtils.fatalln(cfg.getTails().size() + " bigger than 1");
 			for(int i = 0; i < cfg.getTails().size(); i++) {	
 				Edge e = new Edge(cfg.getTails().get(i));
 				this.returnLeaf.addIncomingEdge(e);
@@ -193,16 +192,18 @@ public class ProgramTree {
 		boolean windingDone = false;
 
 		while(!this.uncovered.isEmpty()) {
-//			if(counter++ > 100) { LogUtils.fatalln("counter break"); break; }
 			Vertex v = uncovered.remove();
 			if(coverRelation.isCovered(v)) continue;
 
+			LogUtils.warningln("expandBFS is being called");
 			boolean errorPathFound = expandBFS(v);
+			LogUtils.warningln("expandBFS has been done");
 			
-			if(errorRootSet.size() > 20) {
-			 	LogUtils.fatalln("Error Root Size has reached to 20 and stopped manually");      
-				break;
-			}
+//			if(errorRootSet.size() >  7) {
+//			 	LogUtils.fatalln("Error Root Size has reached to 10 and stopped manually");      
+//				break;
+//			}
+
 			if(!errorRootQueue.isEmpty()) {
 				LogUtils.infoln("errorRootQueue = " + errorRootQueue);
 				Vertex errorRoot = errorRootQueue.remove(); 
@@ -210,12 +211,12 @@ public class ProgramTree {
 				LogUtils.infoln("error root # = " + errorRootSet.size());
 				z3Handler.convertPathtoZ3Script(errorRoot); 
 				errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
+				LogUtils.warningln("printing result path");
 				printResult(errorRoot.toString());
 
 				if(errorLocationFeasible) break;
+
 				coverRelation.updateCover();
-//				if(errorRootSet.size() == 6)
-//					break;
 			}
 		}	
 		Queue<Vertex> q = new LinkedList<Vertex>();
@@ -232,10 +233,12 @@ public class ProgramTree {
 	}
 
 	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.detailln("----->expand : w.incomingEdges" + w.getIncomingEdges() + ": outgoingedges" + w.getOutgoingEdge());
+		LogUtils.infoln("----->expand : " + w + "--" + w.getOutgoingEdge() + "--" + coverRelation.isCovered(w));
 
 		boolean result = false;
 		if (!coverRelation.isCovered(w)) {
+			LogUtils.warningln("if (!coverRelation.isCovered(w))---" + w.getOutgoingEdge()); 
+
 			for (Edge incomingEdge : w.getIncomingEdges()) {
 				Vertex v = new Vertex();
 				v.setOutgoingEdge(incomingEdge);
@@ -285,7 +288,7 @@ public class ProgramTree {
 				}
 			}
 		}
-		LogUtils.detailln("<-----expand : w.incomingEdge#" + w.getIncomingEdges().size() + " : w.previousVertexSet#" + w.getPreviousVertexSet().size());
+		LogUtils.infoln("<-----expand : w.incomingEdge#" + w.getIncomingEdges().size() + " : w.previousVertexSet#" + w.getPreviousVertexSet().size());
 		return result;
 	}
 
@@ -295,6 +298,10 @@ public class ProgramTree {
 	public String getProgramDefinition() {
 		return "_" + this.functionName + "_" + ProgramTree.functionNameInvokeCount.get(this.functionName);
 	}	
+
+	public String getFunctionName() {
+		return this.functionName;
+	}
 
 	public void printResult(String function) {
 		LogUtils.printResult(function, errorLocationFeasible);

@@ -119,8 +119,6 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r1);
 
-        specialinvoke r0.<safetyChecker.CoverRelation: void clearCovers()>();
-
         specialinvoke r0.<safetyChecker.CoverRelation: void cover()>();
 
         return;
@@ -372,12 +370,12 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         com.microsoft.z3.BoolExpr r1, r2, r3, r4;
         com.microsoft.z3.Solver r5;
         com.microsoft.z3.Status r6, $r24;
-        java.lang.Object[] $r7, $r12, $r18;
-        java.lang.StringBuilder $r8, $r9, $r13, $r14, $r19, $r20;
-        java.lang.String $r10, $r15, $r21;
+        java.lang.Object[] $r7, $r12, $r18, $r25;
+        java.lang.StringBuilder $r8, $r9, $r13, $r14, $r19, $r20, $r26, $r27;
+        java.lang.String $r10, $r15, $r21, $r28;
         com.microsoft.z3.InterpolationContext $r11, $r17, $r22;
         com.microsoft.z3.BoolExpr[] $r16, $r23;
-        boolean $z0;
+        boolean $z0, z1, z2, z2_1, z2_2;
 
         r0 := @this: safetyChecker.CoverRelation;
 
@@ -462,14 +460,37 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         r6 = virtualinvoke r5.<com.microsoft.z3.Solver: com.microsoft.z3.Status check()>();
 
+        z1 = 0;
+
         $r24 = <com.microsoft.z3.Status: com.microsoft.z3.Status UNSATISFIABLE>;
 
         if r6 != $r24 goto label2;
 
-        return 1;
+        z2 = 1;
+
+(0)     goto label3;
 
      label2:
-        return 0;
+(1)     z2_1 = 0;
+
+     label3:
+        z2_2 = Phi(z2 #0, z2_1 #1);
+
+        $r25 = newarray (java.lang.Object)[1];
+
+        $r26 = new java.lang.StringBuilder;
+
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>(java.lang.String)>("result=");
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>(z2_2);
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r25[0] = $r28;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r25);
+
+        return z2_2;
     }
 
     private boolean isFalseImpliesAnything(com.microsoft.z3.BoolExpr)

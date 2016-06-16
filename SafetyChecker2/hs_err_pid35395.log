@@ -1,0 +1,138 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x0000000106475d02, pid=35395, tid=23811
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_60-b27) (build 1.8.0_60-b27)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.60-b23 mixed mode bsd-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.dylib+0x475d02]
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fdd422bd000):  JavaThread "SIGINT handler" daemon [_thread_blocked, id=23811, stack(0x0000700001aeb000,0x0000700001beb000)]
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x000000010000000a
+
+Registers:
+RAX=0x000000010000000a, RBX=0x00007fdd422bd000, RCX=0x0000080000000000, RDX=0x00007fdd419f9848
+RSP=0x0000700001bea680, RBP=0x0000700001bea6e0, RSI=0x00007fdd422bd000, RDI=0x00007fe36a02dd58
+R8 =0x00000000fffffffc, R9 =0x00007fdd419f9840, R10=0x00000000ffffffff, R11=0xffffffff00000000
+R12=0x00000000000003e8, R13=0x00000001068d4b06, R14=0x00007fe36a02dd58, R15=0x00007fe36a02dda8
+RIP=0x0000000106475d02, EFLAGS=0x0000000000010206, ERR=0x0000000000000006
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x0000700001bea680)
+0x0000700001bea680:   0000000000000000 0000000000000bad
+0x0000700001bea690:   00007fdd422bd000 00000001064771bc
+0x0000700001bea6a0:   00007fdd419f9800 0000000500000000
+0x0000700001bea6b0:   0000700001bea6e0 00007fdd422bd000
+0x0000700001bea6c0:   00007fdd41b87120 0000000000000002
+0x0000700001bea6d0:   00007fe36a02dd58 00007fe36a02ddd0
+0x0000700001bea6e0:   0000700001bea780 0000000106476916
+0x0000700001bea6f0:   0000700001bea820 00007fdd422bd000
+0x0000700001bea700:   0000000700000005 00007fdd422bd000
+0x0000700001bea710:   0000700001bea801 00007fdd419f9f60
+0x0000700001bea720:   00007fdd422bd000 00007fdd422bd000
+0x0000700001bea730:   0000000000000000 0000000000000000
+0x0000700001bea740:   0000700001bea7d8 00007fdd419f94b8
+0x0000700001bea750:   0000700001bea780 0000700001bea7d8
+0x0000700001bea760:   0000000000000000 000000011fc2f460
+0x0000700001bea770:   00007fdd422bd000 000000076f83ef08
+0x0000700001bea780:   0000700001bea7c0 00000001062e5873
+0x0000700001bea790:   0000000000000000 00007fdd422bd000
+0x0000700001bea7a0:   00007fdd422bd000 00000000000000c2
+0x0000700001bea7b0:   0000700001bea858 00007fdd422bd000
+0x0000700001bea7c0:   0000700001bea828 0000000106fac16f
+0x0000700001bea7d0:   0000000106fac12d 0000000000000003
+0x0000700001bea7e0:   000000076f83ef08 0000700001bea7d8
+0x0000700001bea7f0:   000000011fc2f460 0000700001bea858
+0x0000700001bea800:   000000011fc2f740 0000000000000000
+0x0000700001bea810:   000000011fc2f508 0000000000000000
+0x0000700001bea820:   0000700001bea858 0000700001bea8a0
+0x0000700001bea830:   0000000106f90c4d 0000000000000000
+0x0000700001bea840:   0000000000000000 000000076f83ef08
+0x0000700001bea850:   0000000000000000 0000000000000082
+0x0000700001bea860:   0000700001bea860 000000011fa0e5d8
+0x0000700001bea870:   0000700001bea8b8 000000011fa0e6c8 
+
+Instructions: (pc=0x0000000106475d02)
+0x0000000106475ce2:   00 4c 89 f7 48 89 de e8 72 e7 ff ff 85 c0 7f 33
+0x0000000106475cf2:   48 8b 05 0f 86 46 00 48 85 c0 74 07 48 8b 40 28
+0x0000000106475d02:   48 ff 00 f6 05 d8 11 3b 00 01 0f 84 e9 fe ff ff
+0x0000000106475d12:   4c 89 f7 48 89 de e8 8d f2 ff ff 85 c0 0f 8e d6 
+
+Register to memory mapping:
+
+RAX=0x000000010000000a is an unknown value
+RBX=0x00007fdd422bd000 is a thread
+RCX=0x0000080000000000 is an unknown value
+RDX=0x00007fdd419f9848 is an unknown value
+RSP=0x0000700001bea680 is pointing into the stack for thread: 0x00007fdd422bd000
+RBP=0x0000700001bea6e0 is pointing into the stack for thread: 0x00007fdd422bd000
+RSI=0x00007fdd422bd000 is a thread
+RDI=0x00007fe36a02dd58 is an unknown value
+R8 =0x00000000fffffffc is an unknown value
+R9 =0x00007fdd419f9840 is an unknown value
+R10=0x00000000ffffffff is an unknown value
+R11=0xffffffff00000000 is an unknown value
+R12=0x00000000000003e8 is an unknown value
+R13=0x00000001068d4b06: AssumeMP+0 in /Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre/lib/server/libjvm.dylib at 0x0000000106000000
+R14=0x00007fe36a02dd58 is an unknown value
+R15=0x00007fe36a02dda8 is an unknown value
+
+
+Stack: [0x0000700001aeb000,0x0000700001beb000],  sp=0x0000700001bea680,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.dylib+0x475d02]
+V  [libjvm.dylib+0x476916]
+V  [libjvm.dylib+0x2e5873]
+j  java.lang.Shutdown.exit(I)V+8
+j  java.lang.Terminator$1.handle(Lsun/misc/Signal;)V+8
+j  sun.misc.Signal$1.run()V+8
+j  java.lang.Thread.run()V+11
+v  ~StubRoutines::call_stub
+V  [libjvm.dylib+0x2eab0e]
+V  [libjvm.dylib+0x2eb29c]
+V  [libjvm.dylib+0x2eb448]
+V  [libjvm.dylib+0x345965]
+V  [libjvm.dylib+0x5612d3]
+V  [libjvm.dylib+0x5629ce]
+V  [libjvm.dylib+0x48343a]
+C  [libsystem_pthread.dylib+0x399d]  _pthread_body+0x83
+C  [libsystem_pthread.dylib+0x391a]  _pthread_body+0x0
+C  [libsystem_pthread.dylib+0x1351]  thread_start+0xd
+C  0x0000000000000000
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  java.lang.Shutdown.exit(I)V+8
+j  java.lang.Terminator$1.handle(Lsun/misc/Signal;)V+8
+j  sun.misc.Signal$1.run()V+8
+j  java.lang.Thread.run()V+11
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007fdd4125b000 JavaThread "SIGINT handler" daemon [_thread_blocked, id=20999, stack(0x00007000014d9000,0x00007000015d9000)]
+=>0x00007fdd422bd000 JavaThread "SIGINT handler" daemon [_thread_blocked, id=23811, stack(0x0000700001aeb000,0x0000700001beb000)]
+  0x00007fdd422ba800 JavaThread "SIGINT handler" daemon [_thread_blocked, id=23299, stack(0x00007000019e8000,0x0000700001ae8000)]
+  0x00007fdd3e4f1000 JavaThread "SIGINT handler" daemon [_thread_blocked, id=22787, stack(0x00007000018e5000,0x00007000019e5000)]
+  0x00007fdd3e4ef000 JavaThread "SIGINT handler" daemon [_thread_blocked, id=22051, stack(0x00007000017e2000,0x00007000018e2000)]
+  0x00007fdd4123d000 JavaThread "SIGINT handler" daemon [_thread_blocked, id=15879, stack(0x00007000016df000,0x00007000017df000)]
+  0x00007fdd4123c000 JavaThread "SIGINT handler" daemon [_thread_blocked, id=17727, stack(0x00007000015dc000,0x00007000016dc000)]
+  0x00007fdd3e598000 JavaThread "SIGINT handler" daemon [_thread_blocked, id=15263, stack(0x0000700000d3e000,0x0000700000e3e000)]
+  0x00007fe368829000 JavaThread "Service Thread" daemon [_thread_blocked, id=20483, stack(0x00007000013d6000,0x00007000014d6000)]
+  0x00007fe36884b800 JavaThread "C1 CompilerThread3" daemon [_thread_blocked, id=19971, stack(0x00007000012d3000,0x00007000013d3000)]
+  0x00007fe36a035000 JavaThread "C2 CompilerThread2" daemon [_thread_blocked, id=19459, stack(0x00007000011d0000,0x00007000012d0000)]
+  0x00007fe36884b000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=18947, stack(0x00007000010cd000,0x00007000011cd000)]
+  0x00007fe36a001000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=18699, stack(0x0000700000fca000,0x00007000010ca000)]
+  0x00007fe36a031800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=15371, stack(0x0000700000ec7000,0x0000700000fc7000)]
+  0x00007fe369808000 JavaThread "Finalizer" daemon [_thread_blocked, id=14339, stack(0x0000700000c3b000,0x0000700000d3b000)]
+  0x00007fe368816800 JavaThread "Reference Handler" daemon [_thread_blocked

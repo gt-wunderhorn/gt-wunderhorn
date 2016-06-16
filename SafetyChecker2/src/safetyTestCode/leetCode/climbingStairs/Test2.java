@@ -6,7 +6,7 @@ public class Test2 {
 
 	public static void main(String[] args) {
 		Test1 t1 = new Test1();
-		int result = t1.climbStairs(7);
+		int result = t1.climbStairs(4);
 		System.out.println(result);
 	}
 
@@ -25,7 +25,7 @@ public class Test2 {
 		for (int i = 2; i < n; ++i)
 			store[i] = store[i - 1] + store[i - 2];
 
-		if(store[n-1] == 8)
+		if(store[5] == 13)
 			ErrorLable.Error();
 
 		return store[n - 1];
