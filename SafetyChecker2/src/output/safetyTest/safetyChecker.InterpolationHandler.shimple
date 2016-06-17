@@ -33,205 +33,258 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
     public boolean createInterpolant(safetyChecker.Vertex)
     {
         safetyChecker.InterpolationHandler r0;
-        safetyChecker.Vertex r1, r29, r29_1, r29_2;
-        com.microsoft.z3.enumerations.Z3_lbool r2, $r21, $r22;
-        java.lang.Object[] $r3, $r5, $r9, $r17, $r18, $r19, $r23, $r27;
-        safetyChecker.Edge $r4, r30;
-        java.lang.StringBuilder $r6, $r7, $r10, $r11, $r24, $r25;
-        java.lang.String $r8, $r12, $r26;
-        boolean $z0, $z1, z2, z2_1, z2_2, z2_3;
-        com.microsoft.z3.BoolExpr[] $r13, r35;
-        com.microsoft.z3.InterpolationContext $r14, $r15, $r16, $r20;
-        com.microsoft.z3.BoolExpr r28, r31, r32, r28_1, r28_2, r28_3, r28_4;
-        com.microsoft.z3.Params r33;
-        com.microsoft.z3.InterpolationContext$ComputeInterpolantResult r34;
+        safetyChecker.Vertex r1, r33, r33_1, r33_2;
+        int i0, $i1, i2, i2_1, i2_2, i2_3;
+        com.microsoft.z3.Params r2;
+        com.microsoft.z3.enumerations.Z3_lbool r3, $r19, $r20, $r24, $r25, r39;
+        java.lang.Object[] $r4, $r6, $r11, $r21, $r22, $r23, $r26, $r30;
+        safetyChecker.Edge $r5, r35;
+        java.lang.StringBuilder $r7, $r8, $r12, $r13, $r27, $r28;
+        java.lang.String $r9, $r14, $r29;
+        com.microsoft.z3.InterpolationContext $r10, $r16, $r17, $r18, $r31;
+        boolean $z0, $z1, z2, z3, z2_1, z2_2, z3_1, z3_2, z3_3;
+        com.microsoft.z3.BoolExpr[] $r15, r38;
+        com.microsoft.z3.BoolExpr r32, r36, r37, r32_1, r32_2, r32_3, r32_4, r32_5;
+        com.microsoft.z3.InterpolationContext$ComputeInterpolantResult r34, r34_1, r34_2, r34_3, r34_4, r34_5, r34_6;
 
         r0 := @this: safetyChecker.InterpolationHandler;
 
         r1 := @parameter0: safetyChecker.Vertex;
 
-        $r3 = newarray (java.lang.Object)[1];
+        $r4 = newarray (java.lang.Object)[1];
 
-        $r3[0] = ">>>>>> InterpolationHandler.createInterpolant";
+        $r4[0] = ">>>>>> InterpolationHandler.createInterpolant";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r3);
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r4);
 
-        $r4 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r5 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        r28 = virtualinvoke $r4.<safetyChecker.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
+        r32 = virtualinvoke $r5.<safetyChecker.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
 
-        $r5 = newarray (java.lang.Object)[1];
+        $r6 = newarray (java.lang.Object)[1];
 
-        $r6 = new java.lang.StringBuilder;
+        $r7 = new java.lang.StringBuilder;
 
-        specialinvoke $r6.<java.lang.StringBuilder: void <init>(java.lang.String)>("******root=");
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>(java.lang.String)>("******root=");
 
-        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
 
-        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r5[0] = $r8;
+        $r6[0] = $r9;
 
-        staticinvoke <safetyChecker.LogUtils: void infoln(java.lang.Object[])>($r5);
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r6);
 
-        r29 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
+        r33 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
-(0)     goto label5;
+        i0 = virtualinvoke r1.<safetyChecker.Vertex: int getDistance()>();
 
-     label1:
-        r30 = virtualinvoke r29_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        i2 = i0 / 2;
 
-        $z0 = virtualinvoke r30.<safetyChecker.Edge: boolean isErrorEdge()>();
+        z2 = 1;
 
-        if $z0 == 0 goto label2;
+        r34 = null;
 
-        goto label6;
+        $r10 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-     label2:
-        r31 = virtualinvoke r30.<safetyChecker.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
+        r2 = virtualinvoke $r10.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Params mkParams()>();
 
-        $r9 = newarray (java.lang.Object)[1];
+(0)     goto label06;
 
-        $r10 = new java.lang.StringBuilder;
+     label01:
+        r35 = virtualinvoke r33_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        specialinvoke $r10.<java.lang.StringBuilder: void <init>(java.lang.String)>("z3Expr = ");
+        $z0 = virtualinvoke r35.<safetyChecker.Edge: boolean isErrorEdge()>();
 
-        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r31);
+        if $z0 == 0 goto label02;
 
-        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+(1)     goto label07;
 
-        $r9[0] = $r12;
+     label02:
+        r36 = virtualinvoke r35.<safetyChecker.Edge: com.microsoft.z3.BoolExpr getZ3Expr()>();
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r9);
+        $r11 = newarray (java.lang.Object)[1];
 
-        $r14 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r12 = new java.lang.StringBuilder;
 
-        $r13 = newarray (com.microsoft.z3.BoolExpr)[2];
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>(java.lang.String)>("z3Expr = ");
 
-        $r13[0] = r31;
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r36);
 
-        $r13[1] = r28_1;
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        r32 = virtualinvoke $r14.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r13);
+        $r11[0] = $r14;
 
-        $z1 = virtualinvoke r30.<safetyChecker.Edge: boolean isControlLocation()>();
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r11);
 
-        if $z1 == 0 goto label3;
-
-        $r15 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
-
-        r28_2 = virtualinvoke $r15.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr MkInterpolant(com.microsoft.z3.BoolExpr)>(r32);
-
-(1)     goto label4;
-
-     label3:
-(2)     r28_3 = r32;
-
-     label4:
-        r28_4 = Phi(r28_2 #1, r28_3 #2);
-
-(3)     r29_2 = virtualinvoke r29_1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
-
-     label5:
-        r29_1 = Phi(r29 #0, r29_2 #3);
-
-        r28_1 = Phi(r28 #0, r28_4 #3);
-
-        if r29_1 != null goto label1;
-
-     label6:
         $r16 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r33 = virtualinvoke $r16.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Params mkParams()>();
+        $r15 = newarray (com.microsoft.z3.BoolExpr)[2];
 
-        $r17 = newarray (java.lang.Object)[1];
+        $r15[0] = r36;
 
-        $r17[0] = "------------------pathformula----------------";
+        $r15[1] = r32_1;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r17);
+        r37 = virtualinvoke $r16.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r15);
 
-        $r18 = newarray (java.lang.Object)[1];
+        $z1 = virtualinvoke r35.<safetyChecker.Edge: boolean isControlLocation()>();
 
-        $r18[0] = r28_1;
+        if $z1 == 0 goto label04;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r18);
+        $r17 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r19 = newarray (java.lang.Object)[1];
+        r32_2 = virtualinvoke $r17.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr MkInterpolant(com.microsoft.z3.BoolExpr)>(r37);
 
-        $r19[0] = "------------------pathformula----------------";
+        $i1 = virtualinvoke r33_1.<safetyChecker.Vertex: int getDistance()>();
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r19);
+(2)     if $i1 > i2_1 goto label05;
 
-        $r20 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r18 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r34 = virtualinvoke $r20.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.InterpolationContext$ComputeInterpolantResult ComputeInterpolant(com.microsoft.z3.Expr,com.microsoft.z3.Params)>(r28_1, r33);
+        r34_2 = virtualinvoke $r18.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.InterpolationContext$ComputeInterpolantResult ComputeInterpolant(com.microsoft.z3.Expr,com.microsoft.z3.Params)>(r32_2, r2);
 
-        r35 = r34.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.BoolExpr[] interp>;
+        r3 = r34_2.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.enumerations.Z3_lbool status>;
 
-        specialinvoke r0.<safetyChecker.InterpolationHandler: void generateNameMapping()>();
+        $r19 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_TRUE>;
 
-        specialinvoke r0.<safetyChecker.InterpolationHandler: void updateInvariant(safetyChecker.Vertex,com.microsoft.z3.BoolExpr[])>(r1, r35);
+        if r3 != $r19 goto label03;
 
-        r2 = r34.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.enumerations.Z3_lbool status>;
+        i2_2 = i2_1 / 2;
 
-        z2 = 0;
+(3)     goto label05;
 
-        $r21 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_FALSE>;
+     label03:
+        $r20 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_FALSE>;
 
-        if r2 != $r21 goto label7;
+(4)     if r3 != $r20 goto label05;
 
         z2_1 = 0;
 
-(4)     goto label8;
+(5)     goto label07;
 
-     label7:
-        $r22 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_TRUE>;
+     label04:
+(6)     r32_3 = r37;
 
-(5)     if r2 != $r22 goto label8;
+     label05:
+        r34_3 = Phi(r34_1 #2, r34_2 #3, r34_2 #4, r34_1 #6);
 
-(6)     z2_2 = 1;
+        i2_3 = Phi(i2_1 #2, i2_2 #3, i2_1 #4, i2_1 #6);
 
-     label8:
-        z2_3 = Phi(z2_1 #4, z2 #5, z2_2 #6);
+        r32_4 = Phi(r32_2 #2, r32_2 #3, r32_2 #4, r32_3 #6);
+
+(7)     r33_2 = virtualinvoke r33_1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
+
+     label06:
+        r34_1 = Phi(r34 #0, r34_3 #7);
+
+        i2_1 = Phi(i2 #0, i2_3 #7);
+
+        r32_1 = Phi(r32 #0, r32_4 #7);
+
+        r33_1 = Phi(r33 #0, r33_2 #7);
+
+(8)     if r33_1 != null goto label01;
+
+     label07:
+        r34_4 = Phi(r34_1 #1, r34_2 #5, r34_1 #8);
+
+        z2_2 = Phi(z2 #1, z2_1 #5, z2 #8);
+
+        r32_5 = Phi(r32_1 #1, r32_2 #5, r32_1 #8);
+
+        $r21 = newarray (java.lang.Object)[1];
+
+        $r21[0] = "------------------pathformula----------------";
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r21);
+
+        $r22 = newarray (java.lang.Object)[1];
+
+        $r22[0] = r32_5;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r22);
 
         $r23 = newarray (java.lang.Object)[1];
 
-        $r24 = new java.lang.StringBuilder;
-
-        specialinvoke $r24.<java.lang.StringBuilder: void <init>(java.lang.String)>("interpolation result=");
-
-        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>(z2_3);
-
-        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r23[0] = $r26;
+        $r23[0] = "------------------pathformula----------------";
 
         staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r23);
 
-        $r27 = newarray (java.lang.Object)[1];
+(9)     if z2_2 == 0 goto label08;
 
-        $r27[0] = "<<<<<< InterpolationHandler.createInterpolant";
+        $r31 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r27);
+(10)    r34_5 = virtualinvoke $r31.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.InterpolationContext$ComputeInterpolantResult ComputeInterpolant(com.microsoft.z3.Expr,com.microsoft.z3.Params)>(r32_5, r2);
 
-        return z2_3;
+     label08:
+        r34_6 = Phi(r34_4 #9, r34_5 #10);
+
+        r38 = r34_6.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.BoolExpr[] interp>;
+
+        specialinvoke r0.<safetyChecker.InterpolationHandler: void generateNameMapping()>();
+
+        specialinvoke r0.<safetyChecker.InterpolationHandler: void updateInvariant(safetyChecker.Vertex,com.microsoft.z3.BoolExpr[],boolean)>(r1, r38, z2_2);
+
+        r39 = r34_6.<com.microsoft.z3.InterpolationContext$ComputeInterpolantResult: com.microsoft.z3.enumerations.Z3_lbool status>;
+
+        z3 = 0;
+
+        $r24 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_FALSE>;
+
+        if r39 != $r24 goto label09;
+
+        z3_1 = 0;
+
+(11)    goto label10;
+
+     label09:
+        $r25 = <com.microsoft.z3.enumerations.Z3_lbool: com.microsoft.z3.enumerations.Z3_lbool Z3_L_TRUE>;
+
+(12)    if r39 != $r25 goto label10;
+
+(13)    z3_2 = 1;
+
+     label10:
+        z3_3 = Phi(z3_1 #11, z3 #12, z3_2 #13);
+
+        $r26 = newarray (java.lang.Object)[1];
+
+        $r27 = new java.lang.StringBuilder;
+
+        specialinvoke $r27.<java.lang.StringBuilder: void <init>(java.lang.String)>("interpolation result=");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>(z3_3);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r26[0] = $r29;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r26);
+
+        $r30 = newarray (java.lang.Object)[1];
+
+        $r30[0] = "<<<<<< InterpolationHandler.createInterpolant";
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r30);
+
+        return z3_3;
     }
 
-    private void updateInvariant(safetyChecker.Vertex, com.microsoft.z3.BoolExpr[])
+    private void updateInvariant(safetyChecker.Vertex, com.microsoft.z3.BoolExpr[], boolean)
     {
         safetyChecker.InterpolationHandler r0;
-        safetyChecker.Vertex r1, r20, r20_1, r20_2, r20_3;
-        com.microsoft.z3.BoolExpr[] r2, $r18;
-        com.microsoft.z3.BoolExpr r3, r4, r5, r6, $r17;
-        java.lang.Object[] $r7, $r8;
+        safetyChecker.Vertex r1, r22, r22_1, r22_2, r22_3;
+        com.microsoft.z3.BoolExpr[] r2, $r19;
+        boolean z0, $z1;
+        com.microsoft.z3.BoolExpr r3, r4, r5, r6, $r18, r23, r23_1, r23_2, r23_3, r23_4, r23_5, r23_6;
+        java.lang.Object[] $r7, $r8, $r21;
         java.lang.StringBuilder $r9, $r10;
-        int $i0, i1, i1_1, i1_2, i1_3, i1_4;
+        int $i0, $i1, $i2, i3, i3_1, i3_2, i3_3, i3_4;
         java.lang.String $r11;
-        safetyChecker.Edge $r12, $r13;
-        boolean $z0;
-        com.microsoft.z3.Expr[] $r14, $r15;
-        com.microsoft.z3.Expr $r16;
-        com.microsoft.z3.InterpolationContext $r19;
+        com.microsoft.z3.InterpolationContext $r12, $r20;
+        safetyChecker.Edge $r13, $r14;
+        com.microsoft.z3.Expr[] $r15, $r16;
+        com.microsoft.z3.Expr $r17;
 
         r0 := @this: safetyChecker.InterpolationHandler;
 
@@ -239,7 +292,9 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         r2 := @parameter1: com.microsoft.z3.BoolExpr[];
 
-        if r2 == null goto label6;
+        z0 := @parameter2: boolean;
+
+        if r2 == null goto label09;
 
         $r8 = newarray (java.lang.Object)[1];
 
@@ -257,82 +312,123 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r8);
 
-        r20 = r1;
+        r22 = r1;
 
-        i1 = 0;
+        i3 = 0;
 
-(0)     goto label5;
+        $r12 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-     label1:
-        $r13 = virtualinvoke r20_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        r3 = virtualinvoke $r12.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkFalse()>();
 
-        $z0 = virtualinvoke $r13.<safetyChecker.Edge: boolean isControlLocation()>();
+(0)     goto label08;
 
-(1)     if $z0 == 0 goto label4;
+     label01:
+        $r14 = virtualinvoke r22_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        r3 = virtualinvoke r20_1.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $z1 = virtualinvoke $r14.<safetyChecker.Edge: boolean isControlLocation()>();
 
-        r4 = r2[i1_1];
+(1)     if $z1 == 0 goto label07;
 
-        $r15 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.Expr[] 'from'>;
+        r4 = virtualinvoke r22_1.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        $r14 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.Expr[] 'to'>;
+        r23_1 = null;
 
-        $r16 = virtualinvoke r4.<com.microsoft.z3.BoolExpr: com.microsoft.z3.Expr substitute(com.microsoft.z3.Expr[],com.microsoft.z3.Expr[])>($r15, $r14);
+        $i1 = lengthof r2;
 
-        r5 = (com.microsoft.z3.BoolExpr) $r16;
+        if i3_1 < $i1 goto label02;
 
-        $r17 = virtualinvoke r20_1.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        if z0 != 0 goto label02;
 
-        if $r17 != null goto label2;
+        r23_2 = r3;
 
-        virtualinvoke r20_1.<safetyChecker.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r5);
+(2)     goto label04;
 
-        goto label3;
+     label02:
+        $i2 = lengthof r2;
 
-     label2:
-        $r19 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+        if i3_1 < $i2 goto label03;
 
-        $r18 = newarray (com.microsoft.z3.BoolExpr)[2];
+        if z0 == 0 goto label03;
 
-        $r18[0] = r5;
+        $r21 = newarray (java.lang.Object)[1];
 
-        $r18[1] = r3;
+        $r21[0] = "Check the invariant list";
 
-        r6 = virtualinvoke $r19.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkOr(com.microsoft.z3.BoolExpr[])>($r18);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r21);
 
-        virtualinvoke r20_1.<safetyChecker.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r6);
+(3)     goto label04;
 
-     label3:
-(2)     i1_2 = i1_1 + 1;
+     label03:
+(4)     r23_3 = r2[i3_1];
 
-     label4:
-        i1_3 = Phi(i1_1 #1, i1_2 #2);
+     label04:
+        r23_4 = Phi(r23_2 #2, r23_1 #3, r23_3 #4);
 
-(3)     r20_2 = virtualinvoke r20_1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
+        $r16 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.Expr[] 'from'>;
 
-     label5:
-        r20_1 = Phi(r20 #0, r20_2 #3);
+        $r15 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.Expr[] 'to'>;
 
-        i1_1 = Phi(i1 #0, i1_3 #3);
+        $r17 = virtualinvoke r23_4.<com.microsoft.z3.BoolExpr: com.microsoft.z3.Expr substitute(com.microsoft.z3.Expr[],com.microsoft.z3.Expr[])>($r16, $r15);
 
-        $r12 = virtualinvoke r20_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        r5 = (com.microsoft.z3.BoolExpr) $r17;
 
-        if $r12 != null goto label1;
+        $r18 = virtualinvoke r22_1.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-(4)     goto label7;
+        if $r18 != null goto label05;
 
-     label6:
+        virtualinvoke r22_1.<safetyChecker.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r5);
+
+        goto label06;
+
+     label05:
+        $r20 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r19 = newarray (com.microsoft.z3.BoolExpr)[2];
+
+        $r19[0] = r5;
+
+        $r19[1] = r4;
+
+        r6 = virtualinvoke $r20.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkOr(com.microsoft.z3.BoolExpr[])>($r19);
+
+        virtualinvoke r22_1.<safetyChecker.Vertex: void setInvariant(com.microsoft.z3.BoolExpr)>(r6);
+
+     label06:
+(5)     i3_2 = i3_1 + 1;
+
+     label07:
+        i3_3 = Phi(i3_1 #1, i3_2 #5);
+
+        r23_5 = Phi(r23 #1, r23_4 #5);
+
+(6)     r22_2 = virtualinvoke r22_1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
+
+     label08:
+        i3_1 = Phi(i3 #0, i3_3 #6);
+
+        r22_1 = Phi(r22 #0, r22_2 #6);
+
+        r23 = Phi(r23 #0, r23_5 #6);
+
+        $r13 = virtualinvoke r22_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+
+        if $r13 != null goto label01;
+
+(7)     goto label10;
+
+     label09:
         $r7 = newarray (java.lang.Object)[1];
 
         $r7[0] = "invariantList is null";
 
-(5)     staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r7);
+(8)     staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r7);
 
-     label7:
-        r20_3 = Phi(r20_1 #4, r20 #5);
+     label10:
+        i3_4 = Phi(i3_1 #7, i3 #8);
 
-        i1_4 = Phi(i1_1 #4, i1 #5);
+        r22_3 = Phi(r22_1 #7, r22 #8);
+
+        r23_6 = Phi(r23 #7, r23 #8);
 
         return;
     }
@@ -449,9 +545,9 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 (3)     i2_2 = i2_1 + 1;
 
      label3:
-        i2_1 = Phi(i2 #0, i2_2 #3);
-
         r27 = Phi(r27 #0, r27_3 #3);
+
+        i2_1 = Phi(i2 #0, i2_2 #3);
 
         $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
 

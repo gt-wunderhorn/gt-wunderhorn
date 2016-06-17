@@ -41,7 +41,7 @@ public class safetyTestCode.iftest.Test4 extends java.lang.Object
 
         i3 = b2_2 + 4;
 
-        if b0 == i3 goto label3;
+        if b0 != i3 goto label3;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

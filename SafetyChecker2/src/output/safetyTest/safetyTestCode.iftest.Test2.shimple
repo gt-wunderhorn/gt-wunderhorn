@@ -38,7 +38,7 @@ public class safetyTestCode.iftest.Test2 extends java.lang.Object
 
         b1_2 = Phi(b1 #0, b1_1 #1);
 
-        if i0_2 != b1_2 goto label2;
+        if i0_2 == b1_2 goto label2;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

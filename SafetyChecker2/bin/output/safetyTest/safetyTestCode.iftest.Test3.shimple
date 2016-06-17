@@ -35,7 +35,7 @@ public class safetyTestCode.iftest.Test3 extends java.lang.Object
      label2:
         i0_4 = Phi(i0_2 #2, i0_3 #3);
 
-        if i0_4 == 6 goto label3;
+        if i0_4 != 6 goto label3;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

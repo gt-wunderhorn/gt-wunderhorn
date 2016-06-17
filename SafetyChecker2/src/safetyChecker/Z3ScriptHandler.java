@@ -95,8 +95,8 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
-		LogUtils.warning(">>>>>>");
-		LogUtils.infoln(e);
+		LogUtils.debug(">>>>>>");
+		LogUtils.debugln(e);
 		boolean converted = false;
 		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 

@@ -21,7 +21,7 @@ public class safetyTestCode.iftest.Test1 extends java.lang.Object
 
         b0 = 3;
 
-        if b0 == 3 goto label1;
+        if b0 != 3 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

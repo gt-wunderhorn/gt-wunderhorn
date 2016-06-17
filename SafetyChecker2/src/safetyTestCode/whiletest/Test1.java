@@ -19,7 +19,7 @@ public class Test1 {
 //		if(y == 5) 
 //			x = 5;
 
-		if(x != y+4)
+		if(x == y+4)
 			ErrorLable.Error();
 	}
 

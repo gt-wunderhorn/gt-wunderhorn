@@ -193,28 +193,31 @@ public class ProgramTree {
 
 		while(!this.uncovered.isEmpty()) {
 			Vertex v = uncovered.remove();
+			LogUtils.debugln(v.getOutgoingEdge() + "---" + v + "--" + coverRelation.isCovered(v));
 			if(coverRelation.isCovered(v)) continue;
 
 			boolean errorPathFound = expandBFS(v);
 			
-//			if(errorRootSet.size() >  7) {
-//			 	LogUtils.fatalln("Error Root Size has reached to 10 and stopped manually");      
-//				break;
-//			}
+			if(errorRootSet.size() >  100) {
+			 	LogUtils.fatalln("Error Root Size has reached to 100 and stopped manually");      
+				break;
+			}
 
 			if(!errorRootQueue.isEmpty()) {
-				LogUtils.infoln("errorRootQueue = " + errorRootQueue);
+				LogUtils.debugln("errorRootQueue = " + errorRootQueue);
 				Vertex errorRoot = errorRootQueue.remove(); 
 
 				LogUtils.fatalln("error root # = " + errorRootSet.size());
 				z3Handler.convertPathtoZ3Script(errorRoot); 
 				errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
-				LogUtils.warningln("printing result path");
+				LogUtils.debugln("printing result path");
 				printResult(errorRoot.toString());
 
 				if(errorLocationFeasible) break;
 
+				LogUtils.debugln("updatecover is calling");
 				coverRelation.updateCover();
+				LogUtils.debugln("updateCover is done");
 			}
 		}	
 		Queue<Vertex> q = new LinkedList<Vertex>();
@@ -241,6 +244,9 @@ public class ProgramTree {
 				Vertex v = new Vertex();
 				v.setOutgoingEdge(incomingEdge);
 				incomingEdge.setSource(v);
+				if(incomingEdge.isControlLocation())
+					coverRelation.updateUnitVertexMap(incomingEdge);
+
 				v.setNextVertex(w);
 				v.setDistance(w.getDistance()+1);
 				v.setLocationNumber(++locationCounter);
@@ -267,8 +273,8 @@ public class ProgramTree {
 					e.setProgramTree(this);
 					v.addIncomingEdge(e);
 					unitController.analyzeEdge(e, stores);
-					if(e.isControlLocation()) 
-						coverRelation.updateUnitVertexMap(e);
+//					if(e.isControlLocation()) 
+//						coverRelation.updateUnitVertexMap(e);
 
 					if(e.isSubFunction()) {
 						subFunctionList.add(e);

@@ -1,0 +1,29 @@
+digraph { 
+	ratio="fill";
+	size="8.3,11.7!";
+	margin=0;
+	"L0-D0" -> "L1-D1"[label="return"];
+	"L1-D1" -> "L2-D2"[label="if i1_1 != $i0 goto return"];
+	"L1-D1" -> "L3-D2"[label="staticinvoke <safetyChecker.ErrorLable: void Error()>()"];
+	"L3-D2" -> "L4-D3"[label="if i1_1 != $i0 goto return"];
+	"L4-D3" -> "L5-D4"[label="$i0 = i2_1 + 4"];
+	"L5-D4" -> "L6-D5"[label="if i2_1 != 5 goto i1_2 = i1_1 + i2_1"];
+	"L6-D5" -> "L7-D6"[label="i2_1 = Phi(i2, i2_2)"];
+	"L7-D6" -> "L8-D7"[label="i1_1 = Phi(i1, i1_2)"];
+	"L8-D7" -> "L9-D8"[label="goto [?= i1_1 = Phi(i1, i1_2)]"];
+	"L8-D7" -> "L10-D8"[label="i2_2 = i2_1 + 2"];
+	"L9-D8" -> "L11-D9"[label="i2 = 1"];
+	"L10-D8" -> "L12-D9"[label="i1_2 = i1_1 + i2_1"];
+	"L11-D9" -> "L13-D10"[label="i1 = 5"];
+	"L12-D9" -> "L14-D10"[label="if i2_1 != 5 goto i1_2 = i1_1 + i2_1"];
+	"L13-D10" -> "L15-D11"[label="r0 := @this: safetyTestCode.whiletest.Test1"];
+	"L14-D10" -> "L16-D11"[label="i2_1 = Phi(i2, i2_2)"];
+	"L16-D11" -> "L17-D12"[label="i1_1 = Phi(i1, i1_2)"];
+	"L17-D12" -> "L19-D13"[label="i2_2 = i2_1 + 2"];
+	"L17-D12" -> "L18-D13"[label="goto [?= i1_1 = Phi(i1, i1_2)]"];
+	"L19-D13" -> "L21-D14"[label="i1_2 = i1_1 + i2_1"];
+	"L18-D13" -> "L20-D14"[label="i2 = 1"];
+	"L21-D14" -> "L23-D15"[label="if i2_1 != 5 goto i1_2 = i1_1 + i2_1"];
+	"L20-D14" -> "L22-D15"[label="i1 = 5"];
+	"L22-D15" -> "L24-D16"[label="r0 := @this: safetyTestCode.whiletest.Test1"];
+}

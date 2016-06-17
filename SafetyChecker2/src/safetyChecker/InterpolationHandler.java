@@ -27,13 +27,17 @@ public class InterpolationHandler {
 	public boolean createInterpolant(Vertex errorRoot) { 
 		LogUtils.debugln(">>>>>> InterpolationHandler.createInterpolant");
 
-//		BoolExpr pathFormula = this.ictx.MkInterpolant(errorRoot.getOutgoingEdge().getZ3Expr());
+//	BoolExpr pathFormula=this.ictx.MkInterpolant(errorRoot.getOutgoingEdge().getZ3Expr());
 		BoolExpr pathFormula = errorRoot.getOutgoingEdge().getZ3Expr();
-				// this.ictx.mkAnd(errorRoot.getOutgoingEdge().getZ3Expr(), 
-				//	this.ictx.mkTrue())); 
 
-		LogUtils.infoln("******root=" + errorRoot);
+		LogUtils.debugln("******root=" + errorRoot);
 		Vertex currentVertex = errorRoot.getNextVertex();
+		int rootDistance = errorRoot.getDistance();
+		int halfDistance = rootDistance / 2;
+		boolean isFeasible = true;
+		ComputeInterpolantResult interpolantResult = null;
+		Params params = this.ictx.mkParams();
+
 		while(currentVertex != null) {
 			Edge edge = currentVertex.getOutgoingEdge();
 			if(edge.isErrorEdge()) 
@@ -41,26 +45,34 @@ public class InterpolationHandler {
 
 			BoolExpr z3Epxr = edge.getZ3Expr();
 			LogUtils.debugln("z3Expr = " + z3Epxr);
-//			if(currentVertex.isHeadLocation())
-//				conjunction = this.ictx.mkAnd(z3Epxr, currentVertex.getInvariant());
-//			else
+
 			BoolExpr conjunction = this.ictx.mkAnd(z3Epxr, pathFormula);
-			if(edge.isControlLocation())  
+			if(edge.isControlLocation()) { 
 				pathFormula = this.ictx.MkInterpolant(conjunction);
-			else
+				if(currentVertex.getDistance() <= halfDistance) {
+					interpolantResult = this.ictx.ComputeInterpolant(pathFormula, params);
+					Z3_lbool status = interpolantResult.status;
+					if(status == Z3_lbool.Z3_L_TRUE) {
+						halfDistance = halfDistance / 2;
+					} else if (status == Z3_lbool.Z3_L_FALSE) {
+						isFeasible = false;
+						break;
+					}
+				}
+			} else
 				pathFormula = conjunction;
 
 			currentVertex = currentVertex.getNextVertex();
 		}
 
-		Params params = this.ictx.mkParams();
 		LogUtils.debugln("------------------pathformula----------------");
 		LogUtils.debugln(pathFormula);
 		LogUtils.debugln("------------------pathformula----------------");
-		ComputeInterpolantResult interpolantResult = this.ictx.ComputeInterpolant(pathFormula, params);
+		if(isFeasible)
+			interpolantResult = this.ictx.ComputeInterpolant(pathFormula, params);
 		BoolExpr[] invariantList = interpolantResult.interp;
 		this.generateNameMapping();
-		this.updateInvariant(errorRoot, invariantList);
+		this.updateInvariant(errorRoot, invariantList, isFeasible);
 
 		Z3_lbool status = interpolantResult.status;
 		boolean result = false;
@@ -74,15 +86,22 @@ public class InterpolationHandler {
 		return result;
 	}
 
-	private void updateInvariant(Vertex errorRootVertex, BoolExpr[] invariantList) {
+	private void updateInvariant(Vertex errorRootVertex, BoolExpr[] invariantList, boolean isFeasible) {
 		if(invariantList != null) {
 			LogUtils.debugln("invariantList size is " + invariantList.length);
 			Vertex vertex = errorRootVertex;//.getNextVertex();
 			int index = 0;
+			BoolExpr falseExpr = this.ictx.mkFalse();
 			while(vertex.getOutgoingEdge() != null) {
 				if(vertex.getOutgoingEdge().isControlLocation()) {
 					BoolExpr currentInvariant = vertex.getInvariant();
-					BoolExpr z3Invariant = invariantList[index];
+					BoolExpr z3Invariant = null;
+					if(index >= invariantList.length && !isFeasible)
+						z3Invariant = falseExpr;
+					else if (index >= invariantList.length && isFeasible)
+						LogUtils.fatalln("Check the invariant list");
+					else 
+						z3Invariant = invariantList[index];
 					BoolExpr newInvariant = (BoolExpr) z3Invariant.substitute(this.from, this.to);
 					
 					if(vertex.getInvariant() == null)
@@ -98,26 +117,6 @@ public class InterpolationHandler {
 			}
 		} else 
 			LogUtils.warningln("invariantList is null");
-
-//			int index = 0;
-//			while(vertex != null && index < invariantList.length) { 
-//				BoolExpr currentInvariant = vertex.getInvariant();
-//				BoolExpr invariant = invariantList[index];
-//				BoolExpr newInvariant = (BoolExpr) invariant.substitute(this.from, this.to);
-//
-//				if(vertex.getInvariant() == null) {
-//					vertex.setInvariant(newInvariant);
-//				} else {
-//					BoolExpr disjunction = this.ictx.mkOr(newInvariant, currentInvariant);
-////					BoolExpr currentInterpolant = this.ictx.MkInterpolant(disjunction); 
-//					vertex.setInvariant(disjunction);	
-//				}
-//				index++;
-//				vertex = vertex.getNextVertex();
-//			}
-//		} else {
-//			LogUtils.warningln("invariantList is null");
-//		}
 	}	
 
 	private void generateNameMapping() {

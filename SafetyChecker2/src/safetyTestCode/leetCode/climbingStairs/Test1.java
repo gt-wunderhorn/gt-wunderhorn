@@ -24,7 +24,7 @@ public class Test1 {
 			count1 = temp;
 		}
 		
-		if(count2 == 4)
+		if(count2 == 9)
 			ErrorLable.Error();
 
 		return count2;

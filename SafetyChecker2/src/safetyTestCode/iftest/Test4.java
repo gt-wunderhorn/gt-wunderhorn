@@ -15,7 +15,7 @@ public class Test4 {
 
 		z = z + 4;
 
-		if(x != z)
+		if(x == z)
 			ErrorLable.Error();
 	}
 

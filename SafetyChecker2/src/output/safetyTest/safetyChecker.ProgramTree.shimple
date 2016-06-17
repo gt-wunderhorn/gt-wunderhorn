@@ -745,23 +745,24 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     private void unwind() throws safetyChecker.exception.MainFunctionNotFoundException, safetyChecker.exception.ErrorLocationNotFoundException
     {
         safetyChecker.ProgramTree r0;
-        boolean z0, $z1, $z2, $z3, $z4, $z5, $z7;
-        java.lang.Object[] $r1, $r7, $r14, $r21, $r26, $r32, $r38, $r48, $r56;
-        java.util.Queue $r2, $r3, $r6, $r9, $r12, $r58;
-        java.lang.Object $r4, $r13, $r47, $r50, $r53;
-        safetyChecker.CoverRelation $r5, $r23, $r28, $r34, $r40, $r44, $r57;
-        java.lang.StringBuilder $r8, $r10, $r15, $r17, $r27, $r30, $r33, $r36, $r39, $r42, $r49, $r51, $r52, $r54;
-        java.lang.String $r11, $r18, $r22, $r31, $r37, $r43, $r55;
-        java.util.HashSet $r16;
-        int $i0, $i1, $i2, $i3;
-        safetyChecker.Z3ScriptHandler $r19;
-        safetyChecker.InterpolationHandler $r20;
-        java.util.LinkedList $r24, r61;
-        safetyChecker.Vertex $r25, r59, r60;
-        java.util.Map $r29, $r35, $r41, $r45;
-        java.util.Set $r46;
-        java.util.Iterator r62;
-        java.util.Map$Entry r63;
+        boolean z0, $z1, $z2, $z3, $z4, $z5, $z6, $z8;
+        java.lang.Object[] $r1, $r5, $r18, $r25, $r32, $r34, $r36, $r39, $r45, $r51, $r61, $r69, $r72;
+        java.util.Queue $r2, $r3, $r17, $r20, $r23, $r71;
+        java.lang.Object $r4, $r24, $r60, $r63, $r66;
+        java.lang.StringBuilder $r6, $r8, $r9, $r10, $r11, $r13, $r19, $r21, $r26, $r28, $r40, $r43, $r46, $r49, $r52, $r55, $r62, $r64, $r65, $r67;
+        safetyChecker.Edge $r7;
+        safetyChecker.CoverRelation $r12, $r15, $r35, $r41, $r47, $r53, $r57, $r70;
+        java.lang.String $r14, $r22, $r29, $r33, $r44, $r50, $r56, $r68;
+        java.util.HashSet $r16, $r27;
+        int $i0, $i1, $i2, $i3, $i4;
+        safetyChecker.Z3ScriptHandler $r30;
+        safetyChecker.InterpolationHandler $r31;
+        java.util.LinkedList $r37, r75;
+        safetyChecker.Vertex $r38, r73, r74;
+        java.util.Map $r42, $r48, $r54, $r58;
+        java.util.Set $r59;
+        java.util.Iterator r76;
+        java.util.Map$Entry r77;
 
         r0 := @this: safetyChecker.ProgramTree;
 
@@ -773,236 +774,291 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         z0 = 0;
 
-        goto label4;
+        goto label5;
 
      label1:
         $r3 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
         $r4 = interfaceinvoke $r3.<java.util.Queue: java.lang.Object remove()>();
 
-        r59 = (safetyChecker.Vertex) $r4;
+        r73 = (safetyChecker.Vertex) $r4;
 
-        $r5 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+        $r5 = newarray (java.lang.Object)[1];
 
-        $z2 = virtualinvoke $r5.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r59);
+        $r6 = new java.lang.StringBuilder;
 
-        if $z2 == 0 goto label2;
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
 
-        goto label4;
+        $r7 = virtualinvoke r73.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("---");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r73);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+
+        $r12 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+
+        $z2 = virtualinvoke $r12.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r73);
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>($z2);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r5[0] = $r14;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r5);
+
+        $r15 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+
+        $z3 = virtualinvoke $r15.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r73);
+
+        if $z3 == 0 goto label2;
+
+        goto label5;
 
      label2:
-        specialinvoke r0.<safetyChecker.ProgramTree: boolean expandBFS(safetyChecker.Vertex)>(r59);
-
-        $r6 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
-
-        $z3 = interfaceinvoke $r6.<java.util.Queue: boolean isEmpty()>();
-
-        if $z3 != 0 goto label4;
-
-        $r7 = newarray (java.lang.Object)[1];
-
-        $r8 = new java.lang.StringBuilder;
-
-        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("errorRootQueue = ");
-
-        $r9 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
-
-        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r9);
-
-        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r7[0] = $r11;
-
-        staticinvoke <safetyChecker.LogUtils: void infoln(java.lang.Object[])>($r7);
-
-        $r12 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
-
-        $r13 = interfaceinvoke $r12.<java.util.Queue: java.lang.Object remove()>();
-
-        r60 = (safetyChecker.Vertex) $r13;
-
-        $r14 = newarray (java.lang.Object)[1];
-
-        $r15 = new java.lang.StringBuilder;
-
-        specialinvoke $r15.<java.lang.StringBuilder: void <init>(java.lang.String)>("error root # = ");
+        specialinvoke r0.<safetyChecker.ProgramTree: boolean expandBFS(safetyChecker.Vertex)>(r73);
 
         $r16 = r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet>;
 
         $i0 = virtualinvoke $r16.<java.util.HashSet: int size()>();
 
-        $r17 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+        if $i0 <= 100 goto label3;
 
-        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r72 = newarray (java.lang.Object)[1];
 
-        $r14[0] = $r18;
+        $r72[0] = "Error Root Size has reached to 100 and stopped manually";
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r14);
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r72);
 
-        $r19 = r0.<safetyChecker.ProgramTree: safetyChecker.Z3ScriptHandler z3Handler>;
-
-        virtualinvoke $r19.<safetyChecker.Z3ScriptHandler: void convertPathtoZ3Script(safetyChecker.Vertex)>(r60);
-
-        $r20 = r0.<safetyChecker.ProgramTree: safetyChecker.InterpolationHandler itpHandler>;
-
-        $z4 = virtualinvoke $r20.<safetyChecker.InterpolationHandler: boolean createInterpolant(safetyChecker.Vertex)>(r60);
-
-        r0.<safetyChecker.ProgramTree: boolean errorLocationFeasible> = $z4;
-
-        $r21 = newarray (java.lang.Object)[1];
-
-        $r21[0] = "printing result path";
-
-        staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r21);
-
-        $r22 = virtualinvoke r60.<safetyChecker.Vertex: java.lang.String toString()>();
-
-        virtualinvoke r0.<safetyChecker.ProgramTree: void printResult(java.lang.String)>($r22);
-
-        $z5 = r0.<safetyChecker.ProgramTree: boolean errorLocationFeasible>;
-
-        if $z5 == 0 goto label3;
-
-        goto label5;
+        goto label6;
 
      label3:
-        $r23 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+        $r17 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
 
-        virtualinvoke $r23.<safetyChecker.CoverRelation: void updateCover()>();
+        $z4 = interfaceinvoke $r17.<java.util.Queue: boolean isEmpty()>();
+
+        if $z4 != 0 goto label5;
+
+        $r18 = newarray (java.lang.Object)[1];
+
+        $r19 = new java.lang.StringBuilder;
+
+        specialinvoke $r19.<java.lang.StringBuilder: void <init>(java.lang.String)>("errorRootQueue = ");
+
+        $r20 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
+
+        $r21 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r20);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r18[0] = $r22;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r18);
+
+        $r23 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
+
+        $r24 = interfaceinvoke $r23.<java.util.Queue: java.lang.Object remove()>();
+
+        r74 = (safetyChecker.Vertex) $r24;
+
+        $r25 = newarray (java.lang.Object)[1];
+
+        $r26 = new java.lang.StringBuilder;
+
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>(java.lang.String)>("error root # = ");
+
+        $r27 = r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet>;
+
+        $i1 = virtualinvoke $r27.<java.util.HashSet: int size()>();
+
+        $r28 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r25[0] = $r29;
+
+        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r25);
+
+        $r30 = r0.<safetyChecker.ProgramTree: safetyChecker.Z3ScriptHandler z3Handler>;
+
+        virtualinvoke $r30.<safetyChecker.Z3ScriptHandler: void convertPathtoZ3Script(safetyChecker.Vertex)>(r74);
+
+        $r31 = r0.<safetyChecker.ProgramTree: safetyChecker.InterpolationHandler itpHandler>;
+
+        $z5 = virtualinvoke $r31.<safetyChecker.InterpolationHandler: boolean createInterpolant(safetyChecker.Vertex)>(r74);
+
+        r0.<safetyChecker.ProgramTree: boolean errorLocationFeasible> = $z5;
+
+        $r32 = newarray (java.lang.Object)[1];
+
+        $r32[0] = "printing result path";
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r32);
+
+        $r33 = virtualinvoke r74.<safetyChecker.Vertex: java.lang.String toString()>();
+
+        virtualinvoke r0.<safetyChecker.ProgramTree: void printResult(java.lang.String)>($r33);
+
+        $z6 = r0.<safetyChecker.ProgramTree: boolean errorLocationFeasible>;
+
+        if $z6 == 0 goto label4;
+
+        goto label6;
 
      label4:
+        $r34 = newarray (java.lang.Object)[1];
+
+        $r34[0] = "updatecover is calling";
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r34);
+
+        $r35 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+
+        virtualinvoke $r35.<safetyChecker.CoverRelation: void updateCover()>();
+
+        $r36 = newarray (java.lang.Object)[1];
+
+        $r36[0] = "updateCover is done";
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r36);
+
+     label5:
         $r2 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
         $z1 = interfaceinvoke $r2.<java.util.Queue: boolean isEmpty()>();
 
         if $z1 == 0 goto label1;
 
-     label5:
-        $r24 = new java.util.LinkedList;
-
-        specialinvoke $r24.<java.util.LinkedList: void <init>()>();
-
-        r61 = $r24;
-
-        $r25 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex returnLeaf>;
-
-        interfaceinvoke r61.<java.util.Queue: boolean add(java.lang.Object)>($r25);
-
-        $r26 = newarray (java.lang.Object)[1];
-
-        $r27 = new java.lang.StringBuilder;
-
-        specialinvoke $r27.<java.lang.StringBuilder: void <init>(java.lang.String)>("coveringVertexMap # ");
-
-        $r28 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
-
-        $r29 = virtualinvoke $r28.<safetyChecker.CoverRelation: java.util.Map getCoveringMap()>();
-
-        $i1 = interfaceinvoke $r29.<java.util.Map: int size()>();
-
-        $r30 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
-
-        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r26[0] = $r31;
-
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r26);
-
-        $r32 = newarray (java.lang.Object)[1];
-
-        $r33 = new java.lang.StringBuilder;
-
-        specialinvoke $r33.<java.lang.StringBuilder: void <init>(java.lang.String)>("coveredVertexMap # ");
-
-        $r34 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
-
-        $r35 = virtualinvoke $r34.<safetyChecker.CoverRelation: java.util.Map getCoveredByMap()>();
-
-        $i2 = interfaceinvoke $r35.<java.util.Map: int size()>();
-
-        $r36 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i2);
-
-        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r32[0] = $r37;
-
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r32);
-
-        $r38 = newarray (java.lang.Object)[1];
-
-        $r39 = new java.lang.StringBuilder;
-
-        specialinvoke $r39.<java.lang.StringBuilder: void <init>(java.lang.String)>("unitVertexMap # ");
-
-        $r40 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
-
-        $r41 = virtualinvoke $r40.<safetyChecker.CoverRelation: java.util.Map getUnitVertexMap()>();
-
-        $i3 = interfaceinvoke $r41.<java.util.Map: int size()>();
-
-        $r42 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
-
-        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r38[0] = $r43;
-
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r38);
-
-        $r44 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
-
-        $r45 = virtualinvoke $r44.<safetyChecker.CoverRelation: java.util.Map getUnitVertexMap()>();
-
-        $r46 = interfaceinvoke $r45.<java.util.Map: java.util.Set entrySet()>();
-
-        r62 = interfaceinvoke $r46.<java.util.Set: java.util.Iterator iterator()>();
-
-        goto label7;
-
      label6:
-        $r47 = interfaceinvoke r62.<java.util.Iterator: java.lang.Object next()>();
+        $r37 = new java.util.LinkedList;
 
-        r63 = (java.util.Map$Entry) $r47;
+        specialinvoke $r37.<java.util.LinkedList: void <init>()>();
 
-        $r48 = newarray (java.lang.Object)[1];
+        r75 = $r37;
 
-        $r49 = new java.lang.StringBuilder;
+        $r38 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex returnLeaf>;
 
-        specialinvoke $r49.<java.lang.StringBuilder: void <init>()>();
+        interfaceinvoke r75.<java.util.Queue: boolean add(java.lang.Object)>($r38);
 
-        $r50 = interfaceinvoke r63.<java.util.Map$Entry: java.lang.Object getKey()>();
+        $r39 = newarray (java.lang.Object)[1];
 
-        $r51 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r50);
+        $r40 = new java.lang.StringBuilder;
 
-        $r52 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+        specialinvoke $r40.<java.lang.StringBuilder: void <init>(java.lang.String)>("coveringVertexMap # ");
 
-        $r53 = interfaceinvoke r63.<java.util.Map$Entry: java.lang.Object getValue()>();
+        $r41 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
-        $r54 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r53);
+        $r42 = virtualinvoke $r41.<safetyChecker.CoverRelation: java.util.Map getCoveringMap()>();
 
-        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.String toString()>();
+        $i2 = interfaceinvoke $r42.<java.util.Map: int size()>();
 
-        $r48[0] = $r55;
+        $r43 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i2);
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r48);
+        $r44 = virtualinvoke $r43.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r56 = newarray (java.lang.Object)[1];
+        $r39[0] = $r44;
 
-        $r56[0] = "-------------";
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r39);
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r56);
+        $r45 = newarray (java.lang.Object)[1];
 
-     label7:
-        $z7 = interfaceinvoke r62.<java.util.Iterator: boolean hasNext()>();
+        $r46 = new java.lang.StringBuilder;
 
-        if $z7 != 0 goto label6;
+        specialinvoke $r46.<java.lang.StringBuilder: void <init>(java.lang.String)>("coveredVertexMap # ");
 
-        staticinvoke <dotty.CfgConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r61, "_all.dot");
+        $r47 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
-        $r58 = r0.<safetyChecker.ProgramTree: java.util.Queue errorSet>;
+        $r48 = virtualinvoke $r47.<safetyChecker.CoverRelation: java.util.Map getCoveredByMap()>();
+
+        $i3 = interfaceinvoke $r48.<java.util.Map: int size()>();
+
+        $r49 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
+
+        $r50 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r45[0] = $r50;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r45);
+
+        $r51 = newarray (java.lang.Object)[1];
+
+        $r52 = new java.lang.StringBuilder;
+
+        specialinvoke $r52.<java.lang.StringBuilder: void <init>(java.lang.String)>("unitVertexMap # ");
+
+        $r53 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+
+        $r54 = virtualinvoke $r53.<safetyChecker.CoverRelation: java.util.Map getUnitVertexMap()>();
+
+        $i4 = interfaceinvoke $r54.<java.util.Map: int size()>();
+
+        $r55 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i4);
+
+        $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r51[0] = $r56;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r51);
 
         $r57 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
-        staticinvoke <dotty.CfgConverter: void printErrorPaths(java.util.Queue,java.lang.String,safetyChecker.CoverRelation)>($r58, "_errors.dot", $r57);
+        $r58 = virtualinvoke $r57.<safetyChecker.CoverRelation: java.util.Map getUnitVertexMap()>();
+
+        $r59 = interfaceinvoke $r58.<java.util.Map: java.util.Set entrySet()>();
+
+        r76 = interfaceinvoke $r59.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label8;
+
+     label7:
+        $r60 = interfaceinvoke r76.<java.util.Iterator: java.lang.Object next()>();
+
+        r77 = (java.util.Map$Entry) $r60;
+
+        $r61 = newarray (java.lang.Object)[1];
+
+        $r62 = new java.lang.StringBuilder;
+
+        specialinvoke $r62.<java.lang.StringBuilder: void <init>()>();
+
+        $r63 = interfaceinvoke r77.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r64 = virtualinvoke $r62.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r63);
+
+        $r65 = virtualinvoke $r64.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+
+        $r66 = interfaceinvoke r77.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r67 = virtualinvoke $r65.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r66);
+
+        $r68 = virtualinvoke $r67.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r61[0] = $r68;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r61);
+
+        $r69 = newarray (java.lang.Object)[1];
+
+        $r69[0] = "-------------";
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r69);
+
+     label8:
+        $z8 = interfaceinvoke r76.<java.util.Iterator: boolean hasNext()>();
+
+        if $z8 != 0 goto label7;
+
+        staticinvoke <dotty.CfgConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r75, "_all.dot");
+
+        $r71 = r0.<safetyChecker.ProgramTree: java.util.Queue errorSet>;
+
+        $r70 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+
+        staticinvoke <dotty.CfgConverter: void printErrorPaths(java.util.Queue,java.lang.String,safetyChecker.CoverRelation)>($r71, "_errors.dot", $r70);
 
         return;
     }
@@ -1011,24 +1067,24 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     {
         safetyChecker.ProgramTree r0;
         safetyChecker.Vertex r1, r4, $r34;
-        safetyChecker.Edge r2, r7, $r12, $r29, $r44, $r50;
+        safetyChecker.Edge r2, r7, $r12, $r29, $r44, $r49;
         java.util.Iterator r3, r6;
         soot.Unit r5, $r38, $r41;
         java.lang.Object[] $r8, $r19, $r27;
         java.lang.StringBuilder $r9, $r10, $r11, $r13, $r14, $r16, $r20, $r22, $r23, $r25, $r28, $r30;
-        safetyChecker.CoverRelation $r15, $r18, $r49;
-        boolean $z0, $z1, $z2, $z5, $z6, $z7, $z8, $z11, $z13, z17, z17_1, z17_2, z17_3, z17_4, z17_5;
+        safetyChecker.CoverRelation $r15, $r18, $r55;
+        boolean $z0, $z1, $z2, $z3, $z6, $z7, $z8, $z11, $z13, z17, z17_1, z17_2, z17_3, z17_4, z17_5;
         java.lang.String $r17, $r26, $r31;
         java.util.Set $r21, $r24, $r32, $r35;
         int $i0, $i1, $i2, $i3, $i4, $i5, $i6;
         java.lang.Object $r33, $r43;
-        java.util.Queue $r36, $r47, $r51, $r52, $r53, $r55;
+        java.util.Queue $r36, $r47, $r50, $r51, $r52, $r54;
         soot.toolkits.graph.ExceptionalUnitGraph $r37, $r40;
         java.util.List $r39, $r42;
         java.util.Map $r45;
         safetyChecker.UnitController $r46;
         java.util.LinkedList $r48;
-        java.util.HashSet $r54;
+        java.util.HashSet $r53;
 
         r0 := @this: safetyChecker.ProgramTree;
 
@@ -1107,6 +1163,15 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         virtualinvoke r2.<safetyChecker.Edge: void setSource(safetyChecker.Vertex)>(r4);
 
+        $z3 = virtualinvoke r2.<safetyChecker.Edge: boolean isControlLocation()>();
+
+        if $z3 == 0 goto label2;
+
+        $r55 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+
+        virtualinvoke $r55.<safetyChecker.CoverRelation: void updateUnitVertexMap(safetyChecker.Edge)>(r2);
+
+     label2:
         virtualinvoke r4.<safetyChecker.Vertex: void setNextVertex(safetyChecker.Vertex)>(r1);
 
         $i2 = virtualinvoke r1.<safetyChecker.Vertex: int getDistance()>();
@@ -1141,34 +1206,34 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $i6 = interfaceinvoke $r39.<java.util.List: int size()>();
 
-(2)     if $i6 != 0 goto label3;
+(2)     if $i6 != 0 goto label4;
 
         virtualinvoke r4.<safetyChecker.Vertex: void setHeadLocation(boolean)>(1);
 
         $z13 = virtualinvoke r2.<safetyChecker.Edge: boolean isInErrorPath()>();
 
-        if $z13 == 0 goto label2;
+        if $z13 == 0 goto label3;
 
-        $r54 = r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet>;
+        $r53 = r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet>;
 
-        virtualinvoke $r54.<java.util.HashSet: boolean add(java.lang.Object)>(r4);
+        virtualinvoke $r53.<java.util.HashSet: boolean add(java.lang.Object)>(r4);
 
-        $r55 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
+        $r54 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
 
-        interfaceinvoke $r55.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+        interfaceinvoke $r54.<java.util.Queue: boolean add(java.lang.Object)>(r4);
 
         z17_2 = 1;
 
-(3)     goto label3;
+(3)     goto label4;
 
-     label2:
-        $r53 = r0.<safetyChecker.ProgramTree: java.util.Queue returnRootQueue>;
+     label3:
+        $r52 = r0.<safetyChecker.ProgramTree: java.util.Queue returnRootQueue>;
 
-        interfaceinvoke $r53.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+        interfaceinvoke $r52.<java.util.Queue: boolean add(java.lang.Object)>(r4);
 
 (4)     z17_3 = 1;
 
-     label3:
+     label4:
         z17_4 = Phi(z17_1 #2, z17_2 #3, z17_3 #4);
 
         $r40 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
@@ -1181,7 +1246,7 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         goto label7;
 
-     label4:
+     label5:
         $r43 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
 
         r5 = (soot.Unit) $r43;
@@ -1204,15 +1269,6 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         virtualinvoke $r46.<safetyChecker.UnitController: void analyzeEdge(safetyChecker.Edge,java.util.Map)>(r7, $r45);
 
-        $z6 = virtualinvoke r7.<safetyChecker.Edge: boolean isControlLocation()>();
-
-        if $z6 == 0 goto label5;
-
-        $r49 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
-
-        virtualinvoke $r49.<safetyChecker.CoverRelation: void updateUnitVertexMap(safetyChecker.Edge)>(r7);
-
-     label5:
         $z7 = virtualinvoke r7.<safetyChecker.Edge: boolean isSubFunction()>();
 
         if $z7 == 0 goto label6;
@@ -1231,23 +1287,23 @@ public class safetyChecker.ProgramTree extends java.lang.Object
         interfaceinvoke $r47.<java.util.Queue: boolean add(java.lang.Object)>(r4);
 
      label7:
-        $z5 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+        $z6 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
 
-        if $z5 != 0 goto label4;
+        if $z6 != 0 goto label5;
 
-        $r50 = virtualinvoke r4.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r49 = virtualinvoke r4.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $z11 = virtualinvoke $r50.<safetyChecker.Edge: boolean isErrorEdge()>();
+        $z11 = virtualinvoke $r49.<safetyChecker.Edge: boolean isErrorEdge()>();
 
 (5)     if $z11 == 0 goto label8;
 
+        $r50 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
+
+        interfaceinvoke $r50.<java.util.Queue: void clear()>();
+
         $r51 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
-        interfaceinvoke $r51.<java.util.Queue: void clear()>();
-
-        $r52 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
-
-(6)     interfaceinvoke $r52.<java.util.Queue: boolean add(java.lang.Object)>(r4);
+(6)     interfaceinvoke $r51.<java.util.Queue: boolean add(java.lang.Object)>(r4);
 
      label8:
         z17_1 = Phi(z17 #1, z17_4 #5, z17_4 #6);
