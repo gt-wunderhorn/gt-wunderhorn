@@ -10,6 +10,7 @@ import soot.Body;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.AssignStmt;
+import soot.jimple.IfStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.NewExpr;
@@ -50,6 +51,7 @@ public class UnitController {
 		e.setObjectEdge(this.isObjectInvoke(u));
 		e.setNewEdge(this.isNewInvoke(u));
 		e.setArrayCopyEdge(this.isArrayCopyInvoke(u));
+		e.setControlLocation(this.isControlLocation(u));
 
 		if(e.isErrorEdge() || (e.getTarget().getOutgoingEdge() != null && e.getTarget().getOutgoingEdge().isInErrorPath())){
 			e.setInErrorPath(true);
@@ -170,6 +172,12 @@ public class UnitController {
 		}	
 		return false;
 	}	
+
+	public static boolean isControlLocation(Unit unit) {
+		if(unit instanceof IfStmt)
+			return true;
+		return false;	
+	}
 
 //	public void analyzeVertex(Vertex v, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 //		for(Edge e : v.getIncomingEdges()) { 

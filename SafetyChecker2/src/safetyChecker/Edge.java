@@ -25,6 +25,8 @@ public class Edge {
 	private boolean newEdge = false;
 	private boolean inErrorPath = false;
 	private boolean arrayCopy = false;
+	private boolean controlLocation = false;
+	
 ///	private boolean calleeFunction = false;
 	private List<Expr> parameterList = new LinkedList<Expr>();
 
@@ -62,6 +64,9 @@ public class Edge {
 
 	public boolean isArrayCopyEdge() { return this.arrayCopy; }
 	public void setArrayCopyEdge(boolean arrayCopy) { this.arrayCopy = arrayCopy; }
+
+	public boolean isControlLocation() { return this.controlLocation; }
+	public void setControlLocation(boolean controlLocation) { this.controlLocation = controlLocation; }
 
 	public ProgramTree getProgramTree() { return this.programTree; }
 	public void setProgramTree(ProgramTree programTree) { this.programTree = programTree; }

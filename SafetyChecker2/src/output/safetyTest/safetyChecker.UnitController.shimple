@@ -84,7 +84,7 @@ public class safetyChecker.UnitController extends java.lang.Object
         safetyChecker.Edge r1, $r5, $r7;
         java.util.Map r2;
         soot.Unit r3;
-        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9;
         safetyChecker.Vertex $r4, $r6;
 
         r0 := @this: safetyChecker.UnitController;
@@ -123,9 +123,13 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         virtualinvoke r1.<safetyChecker.Edge: void setArrayCopyEdge(boolean)>($z6);
 
-        $z7 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
+        $z7 = staticinvoke <safetyChecker.UnitController: boolean isControlLocation(soot.Unit)>(r3);
 
-        if $z7 != 0 goto label1;
+        virtualinvoke r1.<safetyChecker.Edge: void setControlLocation(boolean)>($z7);
+
+        $z8 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
+
+        if $z8 != 0 goto label1;
 
         $r4 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getTarget()>();
 
@@ -137,9 +141,9 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         $r7 = virtualinvoke $r6.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $z8 = virtualinvoke $r7.<safetyChecker.Edge: boolean isInErrorPath()>();
+        $z9 = virtualinvoke $r7.<safetyChecker.Edge: boolean isInErrorPath()>();
 
-        if $z8 == 0 goto label2;
+        if $z9 == 0 goto label2;
 
      label1:
         virtualinvoke r1.<safetyChecker.Edge: void setInErrorPath(boolean)>(1);
@@ -626,6 +630,23 @@ public class safetyChecker.UnitController extends java.lang.Object
         $z1 = virtualinvoke r1.<java.lang.String: boolean equals(java.lang.Object)>("<java.util.Arrays: boolean equals(int[],int[])>");
 
         if $z1 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    public static boolean isControlLocation(soot.Unit)
+    {
+        soot.Unit r0;
+        boolean $z0;
+
+        r0 := @parameter0: soot.Unit;
+
+        $z0 = r0 instanceof soot.jimple.IfStmt;
+
+        if $z0 == 0 goto label1;
 
         return 1;
 

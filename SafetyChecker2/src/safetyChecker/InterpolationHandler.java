@@ -27,7 +27,8 @@ public class InterpolationHandler {
 	public boolean createInterpolant(Vertex errorRoot) { 
 		LogUtils.debugln(">>>>>> InterpolationHandler.createInterpolant");
 
-		BoolExpr pathFormula = this.ictx.MkInterpolant(errorRoot.getOutgoingEdge().getZ3Expr());
+//		BoolExpr pathFormula = this.ictx.MkInterpolant(errorRoot.getOutgoingEdge().getZ3Expr());
+		BoolExpr pathFormula = errorRoot.getOutgoingEdge().getZ3Expr();
 				// this.ictx.mkAnd(errorRoot.getOutgoingEdge().getZ3Expr(), 
 				//	this.ictx.mkTrue())); 
 
@@ -44,8 +45,11 @@ public class InterpolationHandler {
 //				conjunction = this.ictx.mkAnd(z3Epxr, currentVertex.getInvariant());
 //			else
 			BoolExpr conjunction = this.ictx.mkAnd(z3Epxr, pathFormula);
+			if(edge.isControlLocation())  
+				pathFormula = this.ictx.MkInterpolant(conjunction);
+			else
+				pathFormula = conjunction;
 
-			pathFormula = this.ictx.MkInterpolant(conjunction);
 			currentVertex = currentVertex.getNextVertex();
 		}
 
@@ -73,26 +77,47 @@ public class InterpolationHandler {
 	private void updateInvariant(Vertex errorRootVertex, BoolExpr[] invariantList) {
 		if(invariantList != null) {
 			LogUtils.debugln("invariantList size is " + invariantList.length);
+			Vertex vertex = errorRootVertex;//.getNextVertex();
 			int index = 0;
-			Vertex vertex = errorRootVertex.getNextVertex();
-			while(vertex != null && index < invariantList.length) { 
-				BoolExpr currentInvariant = vertex.getInvariant();
-				BoolExpr invariant = invariantList[index];
-				BoolExpr newInvariant = (BoolExpr) invariant.substitute(this.from, this.to);
-
-				if(vertex.getInvariant() == null) {
-					vertex.setInvariant(newInvariant);
-				} else {
-					BoolExpr disjunction = this.ictx.mkOr(newInvariant, currentInvariant);
-//					BoolExpr currentInterpolant = this.ictx.MkInterpolant(disjunction); 
-					vertex.setInvariant(disjunction);	
+			while(vertex.getOutgoingEdge() != null) {
+				if(vertex.getOutgoingEdge().isControlLocation()) {
+					BoolExpr currentInvariant = vertex.getInvariant();
+					BoolExpr z3Invariant = invariantList[index];
+					BoolExpr newInvariant = (BoolExpr) z3Invariant.substitute(this.from, this.to);
+					
+					if(vertex.getInvariant() == null)
+						vertex.setInvariant(newInvariant);
+					else {
+						BoolExpr disjunction = this.ictx.mkOr(newInvariant, currentInvariant);
+						vertex.setInvariant(disjunction);
+					}
+					index++; 
 				}
-				index++;
+
 				vertex = vertex.getNextVertex();
 			}
-		} else {
+		} else 
 			LogUtils.warningln("invariantList is null");
-		}
+
+//			int index = 0;
+//			while(vertex != null && index < invariantList.length) { 
+//				BoolExpr currentInvariant = vertex.getInvariant();
+//				BoolExpr invariant = invariantList[index];
+//				BoolExpr newInvariant = (BoolExpr) invariant.substitute(this.from, this.to);
+//
+//				if(vertex.getInvariant() == null) {
+//					vertex.setInvariant(newInvariant);
+//				} else {
+//					BoolExpr disjunction = this.ictx.mkOr(newInvariant, currentInvariant);
+////					BoolExpr currentInterpolant = this.ictx.MkInterpolant(disjunction); 
+//					vertex.setInvariant(disjunction);	
+//				}
+//				index++;
+//				vertex = vertex.getNextVertex();
+//			}
+//		} else {
+//			LogUtils.warningln("invariantList is null");
+//		}
 	}	
 
 	private void generateNameMapping() {

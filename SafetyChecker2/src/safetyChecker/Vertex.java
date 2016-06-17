@@ -15,6 +15,7 @@ public class Vertex {
 	private boolean subFunction = false;
 	private boolean sinkLocation = false;
 	private boolean sourceLocation = false;
+
 	private Edge outgoingEdge;
 	private Set<Edge> incomingEdges = new HashSet<Edge>();
 	private Vertex nextVertex;

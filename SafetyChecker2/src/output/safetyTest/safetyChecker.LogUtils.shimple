@@ -19,7 +19,7 @@ public class safetyChecker.LogUtils extends java.lang.Object
 
     static void <clinit>()
     {
-        <safetyChecker.LogUtils: int currentLevel> = 2;
+        <safetyChecker.LogUtils: int currentLevel> = 4;
 
         return;
     }

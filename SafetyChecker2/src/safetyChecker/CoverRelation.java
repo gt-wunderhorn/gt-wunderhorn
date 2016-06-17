@@ -100,7 +100,27 @@ public class CoverRelation {
 	}
 
 	private boolean isStrongerThan(BoolExpr strongerInvariant, BoolExpr weakerInvariant) {
-		
+		IntExpr one = this.ictx.mkInt(1);
+		IntExpr two = this.ictx.mkInt(2);
+		IntExpr five = this.ictx.mkInt(5);
+		IntExpr eight = this.ictx.mkInt(8);
+		IntExpr twenyone = this.ictx.mkInt(21);
+
+		IntExpr i3 = this.ictx.mkIntConst("i3");
+		IntExpr i2 = this.ictx.mkIntConst("i2");		
+		BoolExpr oneEqi3 = this.ictx.mkEq(one, i3);
+		BoolExpr oneEqi2 = this.ictx.mkEq(one, i2);
+		weakerInvariant = this.ictx.mkAnd(oneEqi3, oneEqi2);
+//
+//		IntExpr i3_2 = this.ictx.mkIntConst("i3_2");
+//		IntExpr i2_2 = this.ictx.mkIntConst("i2_2");		
+//		ArithExpr fiveMuli2_2 = this.ictx.mkMul(five, i2_2);
+//	        ArithExpr eightMuli3_2 = this.ictx.mkMul(eight, i3_2);
+//		ArithExpr sum = this.ictx.mkAdd(eightMuli3_2, fiveMuli2_2);
+//		strongerInvariant = this.ictx.mkLe(twenyone, sum);
+//		strongerInvariant = this.ictx.mkAnd(strongerInvariant, weakerInvariant);
+		strongerInvariant = this.ictx.mkFalse();
+
 		LogUtils.debugln("weakaer = " + weakerInvariant);
 		BoolExpr notWeakerInvariant = this.ictx.mkNot(weakerInvariant);
 		LogUtils.debugln("not weaker = " + notWeakerInvariant);

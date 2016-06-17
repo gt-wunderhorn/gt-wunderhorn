@@ -18,7 +18,7 @@ public class Test3 {
 //		x = z ;
 //		z = z + 4;
 
-		if(x != 6)
+		if(x == 6)
 			ErrorLable.Error();
 	}
 

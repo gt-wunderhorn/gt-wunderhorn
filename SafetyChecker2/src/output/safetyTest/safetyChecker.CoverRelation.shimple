@@ -367,104 +367,156 @@ public class safetyChecker.CoverRelation extends java.lang.Object
     private boolean isStrongerThan(com.microsoft.z3.BoolExpr, com.microsoft.z3.BoolExpr)
     {
         safetyChecker.CoverRelation r0;
-        com.microsoft.z3.BoolExpr r1, r2, r3, r4;
-        com.microsoft.z3.Solver r5;
-        com.microsoft.z3.Status r6, $r24;
-        java.lang.Object[] $r7, $r12, $r18, $r25;
-        java.lang.StringBuilder $r8, $r9, $r13, $r14, $r19, $r20, $r26, $r27;
-        java.lang.String $r10, $r15, $r21, $r28;
-        com.microsoft.z3.InterpolationContext $r11, $r17, $r22;
-        com.microsoft.z3.BoolExpr[] $r16, $r23;
+        com.microsoft.z3.IntNum r1;
+        com.microsoft.z3.IntExpr r6, r7;
+        com.microsoft.z3.BoolExpr r8, r9, r10, r11, r48, r49, r50, r51;
+        com.microsoft.z3.Solver r12;
+        com.microsoft.z3.Status r13, $r43;
+        com.microsoft.z3.InterpolationContext $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r24, $r25, $r30, $r36, $r41;
+        com.microsoft.z3.BoolExpr[] $r23, $r35, $r42;
+        java.lang.Object[] $r26, $r31, $r37, $r44;
+        java.lang.StringBuilder $r27, $r28, $r32, $r33, $r38, $r39, $r45, $r46;
+        java.lang.String $r29, $r34, $r40, $r47;
         boolean $z0, z1, z2, z2_1, z2_2;
 
         r0 := @this: safetyChecker.CoverRelation;
 
-        r1 := @parameter0: com.microsoft.z3.BoolExpr;
+        r48 := @parameter0: com.microsoft.z3.BoolExpr;
 
-        r2 := @parameter1: com.microsoft.z3.BoolExpr;
+        r49 := @parameter1: com.microsoft.z3.BoolExpr;
 
-        $r7 = newarray (java.lang.Object)[1];
+        $r14 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r8 = new java.lang.StringBuilder;
+        r1 = virtualinvoke $r14.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(1);
 
-        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("weakaer = ");
+        $r15 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+        virtualinvoke $r15.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(2);
 
-        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r16 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r7[0] = $r10;
-
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r7);
-
-        $r11 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
-
-        r3 = virtualinvoke $r11.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkNot(com.microsoft.z3.BoolExpr)>(r2);
-
-        $r12 = newarray (java.lang.Object)[1];
-
-        $r13 = new java.lang.StringBuilder;
-
-        specialinvoke $r13.<java.lang.StringBuilder: void <init>(java.lang.String)>("not weaker = ");
-
-        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r3);
-
-        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r12[0] = $r15;
-
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r12);
+        virtualinvoke $r16.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(5);
 
         $r17 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r16 = newarray (com.microsoft.z3.BoolExpr)[2];
+        virtualinvoke $r17.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(8);
 
-        $r16[0] = r1;
+        $r18 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r16[1] = r3;
+        virtualinvoke $r18.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(21);
 
-        r4 = virtualinvoke $r17.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r16);
+        $r19 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r18 = newarray (java.lang.Object)[1];
+        r6 = virtualinvoke $r19.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>("i3");
 
-        $r19 = new java.lang.StringBuilder;
+        $r20 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        specialinvoke $r19.<java.lang.StringBuilder: void <init>(java.lang.String)>("stronger = ");
+        r7 = virtualinvoke $r20.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>("i2");
 
-        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+        $r21 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+        r8 = virtualinvoke $r21.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r1, r6);
 
-        $r18[0] = $r21;
+        $r22 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r18);
+        r9 = virtualinvoke $r22.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r1, r7);
 
-        $z0 = specialinvoke r0.<safetyChecker.CoverRelation: boolean isFalseImpliesAnything(com.microsoft.z3.BoolExpr)>(r1);
+        $r24 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r23 = newarray (com.microsoft.z3.BoolExpr)[2];
+
+        $r23[0] = r8;
+
+        $r23[1] = r9;
+
+        r50 = virtualinvoke $r24.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r23);
+
+        $r25 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
+
+        r51 = virtualinvoke $r25.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkFalse()>();
+
+        $r26 = newarray (java.lang.Object)[1];
+
+        $r27 = new java.lang.StringBuilder;
+
+        specialinvoke $r27.<java.lang.StringBuilder: void <init>(java.lang.String)>("weakaer = ");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r50);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r26[0] = $r29;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r26);
+
+        $r30 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
+
+        r10 = virtualinvoke $r30.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkNot(com.microsoft.z3.BoolExpr)>(r50);
+
+        $r31 = newarray (java.lang.Object)[1];
+
+        $r32 = new java.lang.StringBuilder;
+
+        specialinvoke $r32.<java.lang.StringBuilder: void <init>(java.lang.String)>("not weaker = ");
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r10);
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r31[0] = $r34;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r31);
+
+        $r36 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r35 = newarray (com.microsoft.z3.BoolExpr)[2];
+
+        $r35[0] = r51;
+
+        $r35[1] = r10;
+
+        r11 = virtualinvoke $r36.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r35);
+
+        $r37 = newarray (java.lang.Object)[1];
+
+        $r38 = new java.lang.StringBuilder;
+
+        specialinvoke $r38.<java.lang.StringBuilder: void <init>(java.lang.String)>("stronger = ");
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r51);
+
+        $r40 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r37[0] = $r40;
+
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r37);
+
+        $z0 = specialinvoke r0.<safetyChecker.CoverRelation: boolean isFalseImpliesAnything(com.microsoft.z3.BoolExpr)>(r51);
 
         if $z0 == 0 goto label1;
 
         return 0;
 
      label1:
-        $r22 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
+        $r41 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
-        r5 = virtualinvoke $r22.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Solver mkSolver()>();
+        r12 = virtualinvoke $r41.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Solver mkSolver()>();
 
-        virtualinvoke r5.<com.microsoft.z3.Solver: void reset()>();
+        virtualinvoke r12.<com.microsoft.z3.Solver: void reset()>();
 
-        $r23 = newarray (com.microsoft.z3.BoolExpr)[1];
+        $r42 = newarray (com.microsoft.z3.BoolExpr)[1];
 
-        $r23[0] = r4;
+        $r42[0] = r11;
 
-        virtualinvoke r5.<com.microsoft.z3.Solver: void add(com.microsoft.z3.BoolExpr[])>($r23);
+        virtualinvoke r12.<com.microsoft.z3.Solver: void add(com.microsoft.z3.BoolExpr[])>($r42);
 
-        r6 = virtualinvoke r5.<com.microsoft.z3.Solver: com.microsoft.z3.Status check()>();
+        r13 = virtualinvoke r12.<com.microsoft.z3.Solver: com.microsoft.z3.Status check()>();
 
         z1 = 0;
 
-        $r24 = <com.microsoft.z3.Status: com.microsoft.z3.Status UNSATISFIABLE>;
+        $r43 = <com.microsoft.z3.Status: com.microsoft.z3.Status UNSATISFIABLE>;
 
-        if r6 != $r24 goto label2;
+        if r13 != $r43 goto label2;
 
         z2 = 1;
 
@@ -476,19 +528,19 @@ public class safetyChecker.CoverRelation extends java.lang.Object
      label3:
         z2_2 = Phi(z2 #0, z2_1 #1);
 
-        $r25 = newarray (java.lang.Object)[1];
+        $r44 = newarray (java.lang.Object)[1];
 
-        $r26 = new java.lang.StringBuilder;
+        $r45 = new java.lang.StringBuilder;
 
-        specialinvoke $r26.<java.lang.StringBuilder: void <init>(java.lang.String)>("result=");
+        specialinvoke $r45.<java.lang.StringBuilder: void <init>(java.lang.String)>("result=");
 
-        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>(z2_2);
+        $r46 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>(z2_2);
 
-        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r25[0] = $r28;
+        $r44[0] = $r47;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r25);
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r44);
 
         return z2_2;
     }

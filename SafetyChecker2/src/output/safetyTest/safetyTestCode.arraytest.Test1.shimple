@@ -74,7 +74,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         b0 = 3;
 
-        r1 = newarray (int)[2];
+        r1 = newarray (int)[3];
 
         r2 = newarray (int)[2];
 
@@ -84,11 +84,11 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         r1[2] = 15;
 
-        r2[0] = 15;
+        r2[0] = 25;
 
         r2[1] = 20;
 
-        r2[2] = 25;
+        r2[2] = 15;
 
         $z0 = staticinvoke <java.util.Arrays: boolean equals(int[],int[])>(r1, r2);
 

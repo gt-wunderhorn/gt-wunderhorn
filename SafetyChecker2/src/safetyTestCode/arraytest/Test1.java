@@ -26,7 +26,7 @@ public class Test1 {
 	public void test() {
 
 		int x = 3;
-		int[] intArray = new int[2];
+		int[] intArray = new int[3];
 		int[] intArray2 = new int[2];
 
 		intArray[0] = 25;
@@ -44,9 +44,9 @@ public class Test1 {
 //		intArray2[0] = intArray[0];
 //		intArray2[1] = intArray[1];
 //
-		intArray2[0] = 15;
+		intArray2[0] = 25;
 		intArray2[1] = 20;
-		intArray2[2] = 25;
+		intArray2[2] = 15;
 //		System.arraycopy(intArray, 0, intArray2, 0, 3);
 //		System.arraycopy(intArray2, 0, intArray, 0, 2);
 

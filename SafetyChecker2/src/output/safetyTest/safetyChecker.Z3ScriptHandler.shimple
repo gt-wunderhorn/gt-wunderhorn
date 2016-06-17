@@ -189,7 +189,7 @@ public class safetyChecker.Z3ScriptHandler extends java.lang.Object
 
         $r3[0] = ">>>>>>";
 
-        staticinvoke <safetyChecker.LogUtils: void fatal(java.lang.Object[])>($r3);
+        staticinvoke <safetyChecker.LogUtils: void warning(java.lang.Object[])>($r3);
 
         $r4 = newarray (java.lang.Object)[1];
 
@@ -1540,22 +1540,22 @@ public class safetyChecker.Z3ScriptHandler extends java.lang.Object
 (9)     r87_3 = virtualinvoke r87_2.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
      label11:
-        r87_2 = Phi(r87_1 #3, r87_3 #9);
-
         r84_2 = Phi(r84_1 #3, r84_6 #9);
 
         r85_2 = Phi(r85_1 #3, r85_6 #9);
+
+        r87_2 = Phi(r87_1 #3, r87_3 #9);
 
         $r33 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
 (10)    if r87_2 != $r33 goto label07;
 
      label12:
-        r87 = Phi(r87 #2, r87_2 #10);
-
         r84_1 = Phi(r84 #2, r84_2 #10);
 
         r85_1 = Phi(r85 #2, r85_2 #10);
+
+        r87 = Phi(r87 #2, r87_2 #10);
 
         $z10 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 

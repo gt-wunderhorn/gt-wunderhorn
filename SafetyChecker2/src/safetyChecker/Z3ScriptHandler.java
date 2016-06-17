@@ -95,7 +95,7 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
-		LogUtils.fatal(">>>>>>");
+		LogUtils.warning(">>>>>>");
 		LogUtils.infoln(e);
 		boolean converted = false;
 		currentEdge = e;
@@ -156,6 +156,7 @@ public class Z3ScriptHandler {
 		else
 			edge.setZ3Expr(this.ictx.mkNot(condition));
 		LogUtils.debugln(edge.getUnit() + "=" + edge.getZ3Expr()); 
+		
 		return true;
 	}
 

@@ -195,9 +195,7 @@ public class ProgramTree {
 			Vertex v = uncovered.remove();
 			if(coverRelation.isCovered(v)) continue;
 
-			LogUtils.warningln("expandBFS is being called");
 			boolean errorPathFound = expandBFS(v);
-			LogUtils.warningln("expandBFS has been done");
 			
 //			if(errorRootSet.size() >  7) {
 //			 	LogUtils.fatalln("Error Root Size has reached to 10 and stopped manually");      
@@ -208,7 +206,7 @@ public class ProgramTree {
 				LogUtils.infoln("errorRootQueue = " + errorRootQueue);
 				Vertex errorRoot = errorRootQueue.remove(); 
 
-				LogUtils.infoln("error root # = " + errorRootSet.size());
+				LogUtils.fatalln("error root # = " + errorRootSet.size());
 				z3Handler.convertPathtoZ3Script(errorRoot); 
 				errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
 				LogUtils.warningln("printing result path");
@@ -233,11 +231,11 @@ public class ProgramTree {
 	}
 
 	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.infoln("----->expand : " + w + "--" + w.getOutgoingEdge() + "--" + coverRelation.isCovered(w));
+		LogUtils.debugln("----->expand : " + w + "--" + w.getOutgoingEdge() + "--" + coverRelation.isCovered(w));
 
 		boolean result = false;
 		if (!coverRelation.isCovered(w)) {
-			LogUtils.warningln("if (!coverRelation.isCovered(w))---" + w.getOutgoingEdge()); 
+			LogUtils.debugln("if (!coverRelation.isCovered(w))---" + w.getOutgoingEdge()); 
 
 			for (Edge incomingEdge : w.getIncomingEdges()) {
 				Vertex v = new Vertex();
@@ -268,8 +266,9 @@ public class ProgramTree {
 					e.setTarget(v);
 					e.setProgramTree(this);
 					v.addIncomingEdge(e);
-					coverRelation.updateUnitVertexMap(e);
 					unitController.analyzeEdge(e, stores);
+					if(e.isControlLocation()) 
+						coverRelation.updateUnitVertexMap(e);
 
 					if(e.isSubFunction()) {
 						subFunctionList.add(e);
@@ -288,7 +287,7 @@ public class ProgramTree {
 				}
 			}
 		}
-		LogUtils.infoln("<-----expand : w.incomingEdge#" + w.getIncomingEdges().size() + " : w.previousVertexSet#" + w.getPreviousVertexSet().size());
+		LogUtils.debugln("<-----expand : w.incomingEdge#" + w.getIncomingEdges().size() + " : w.previousVertexSet#" + w.getPreviousVertexSet().size());
 		return result;
 	}
 

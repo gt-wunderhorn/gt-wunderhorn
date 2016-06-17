@@ -828,7 +828,7 @@ public class safetyChecker.Z3ArrayHandler extends java.lang.Object
         soot.jimple.InvokeExpr r5;
         soot.Value r6, r7, r9, r10, r12;
         soot.jimple.IntConstant r8, r11, r13;
-        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i10, i10_1, i8_1, i9_1, i8_2, i9_2, i10_2;
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i10, i9_1, i10_1, i8_1, i8_2, i9_2, i10_2;
         soot.Local r14, r15;
         com.microsoft.z3.ArrayExpr r16, r21, r25, r28, r30, r32, r67;
         soot.Type r17;
@@ -1051,11 +1051,11 @@ public class safetyChecker.Z3ArrayHandler extends java.lang.Object
 (1)     i10_2 = i10_1 + 1;
 
      label3:
+        i9_1 = Phi(i9 #0, i9_2 #1);
+
         i10_1 = Phi(i10 #0, i10_2 #1);
 
         i8_1 = Phi(i8 #0, i8_2 #1);
-
-        i9_1 = Phi(i9 #0, i9_2 #1);
 
         if i10_1 < i0 goto label2;
 
@@ -1188,9 +1188,9 @@ public class safetyChecker.Z3ArrayHandler extends java.lang.Object
 (3)     i5_2 = i5_1 + 1;
 
      label4:
-        r48_1 = Phi(r48 #0, r48_4 #3);
-
         i5_1 = Phi(i5 #0, i5_2 #3);
+
+        r48_1 = Phi(r48 #0, r48_4 #3);
 
         $i4 = staticinvoke <java.lang.Math: int min(int,int)>(i0, i1);
 
