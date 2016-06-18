@@ -45,7 +45,7 @@ public class CfgConverter {
 
 				if(w.getDistance()!=0 )
 					if(w.getOutgoingEdge().isInErrorPath()) 
-						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + /*"--" + e.getZ3Expr() +*/ "\n**" + w.getInvariant() + "\"];\n");
+						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
 				for(Vertex v : vSet) { 
 					queue.add(v);
 				}

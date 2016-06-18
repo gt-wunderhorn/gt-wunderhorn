@@ -1,0 +1,606 @@
+[H[JStarting...>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>> clean .dot and .ps files
+>>> Compiling
+>>> Executing
+Soot started on Fri Jun 17 18:32:19 EDT 2016
+Warning: soot.toolkits.graph.ExceptionalUnitGraph is a phantom class!
+Warning: com.microsoft.z3.BoolExpr is a phantom class!
+Warning: soot.Unit is a phantom class!
+Warning: com.microsoft.z3.Expr is a phantom class!
+Warning: com.microsoft.z3.InterpolationContext is a phantom class!
+Warning: com.microsoft.z3.Solver is a phantom class!
+Warning: com.microsoft.z3.Status is a phantom class!
+Warning: com.microsoft.z3.IntSort is a phantom class!
+Warning: com.microsoft.z3.Sort is a phantom class!
+Warning: com.microsoft.z3.enumerations.Z3_lbool is a phantom class!
+Warning: com.microsoft.z3.Params is a phantom class!
+Warning: com.microsoft.z3.InterpolationContext$ComputeInterpolantResult is a phantom class!
+Warning: soot.Value is a phantom class!
+Warning: soot.Local is a phantom class!
+Warning: soot.Type is a phantom class!
+Warning: soot.jimple.AnyNewExpr is a phantom class!
+Warning: soot.jimple.NewExpr is a phantom class!
+Warning: soot.jimple.NewArrayExpr is a phantom class!
+Warning: soot.jimple.NewMultiArrayExpr is a phantom class!
+Warning: soot.jimple.BinopExpr is a phantom class!
+Warning: com.microsoft.z3.IntExpr is a phantom class!
+Warning: com.microsoft.z3.IntNum is a phantom class!
+Warning: soot.Body is a phantom class!
+Warning: soot.SootMethod is a phantom class!
+Warning: soot.jimple.internal.JAssignStmt is a phantom class!
+Warning: soot.jimple.InvokeStmt is a phantom class!
+Warning: soot.jimple.IfStmt is a phantom class!
+Warning: soot.jimple.AssignStmt is a phantom class!
+Warning: soot.jimple.InvokeExpr is a phantom class!
+Warning: soot.jimple.ArrayRef is a phantom class!
+Warning: com.microsoft.z3.ArrayExpr is a phantom class!
+Warning: com.microsoft.z3.Symbol is a phantom class!
+Warning: com.microsoft.z3.Quantifier is a phantom class!
+Warning: com.microsoft.z3.ArithExpr is a phantom class!
+Warning: soot.jimple.IntConstant is a phantom class!
+Warning: com.microsoft.z3.ArraySort is a phantom class!
+Warning: com.microsoft.z3.StringSymbol is a phantom class!
+Warning: soot.jimple.NeExpr is a phantom class!
+Warning: soot.RefType is a phantom class!
+Warning: soot.jimple.NullConstant is a phantom class!
+Warning: soot.jimple.FieldRef is a phantom class!
+Warning: soot.jimple.Constant is a phantom class!
+Warning: soot.jimple.GeExpr is a phantom class!
+Warning: soot.jimple.MulExpr is a phantom class!
+Warning: soot.jimple.internal.JNewExpr is a phantom class!
+Warning: soot.jimple.LtExpr is a phantom class!
+Warning: soot.jimple.DivExpr is a phantom class!
+Warning: soot.jimple.GotoStmt is a phantom class!
+Warning: soot.jimple.EqExpr is a phantom class!
+Warning: soot.jimple.SubExpr is a phantom class!
+Warning: com.microsoft.z3.UninterpretedSort is a phantom class!
+Warning: soot.jimple.VirtualInvokeExpr is a phantom class!
+Warning: soot.shimple.PhiExpr is a phantom class!
+Warning: soot.jimple.LeExpr is a phantom class!
+Warning: soot.jimple.CastExpr is a phantom class!
+Warning: soot.toolkits.scalar.ValueUnitPair is a phantom class!
+Warning: soot.jimple.InstanceFieldRef is a phantom class!
+Warning: soot.jimple.IdentityStmt is a phantom class!
+Warning: soot.RefLikeType is a phantom class!
+Warning: soot.ArrayType is a phantom class!
+Warning: soot.IntegerType is a phantom class!
+Warning: soot.jimple.StaticFieldRef is a phantom class!
+Warning: soot.jimple.Stmt is a phantom class!
+Warning: soot.VoidType is a phantom class!
+Warning: soot.PrimType is a phantom class!
+Warning: soot.jimple.StringConstant is a phantom class!
+Warning: soot.jimple.AddExpr is a phantom class!
+Warning: soot.jimple.GtExpr is a phantom class!
+Warning: soot.BodyTransformer is a phantom class!
+Warning: soot.Transform is a phantom class!
+Warning: soot.PackManager is a phantom class!
+Warning: soot.Pack is a phantom class!
+Warning: soot.options.Options is a phantom class!
+Warning: soot.Main is a phantom class!
+Warning: soot.Transformer is a phantom class!
+Transforming dotty.CfgConverter... 
+Transforming RecordPeekMemoryAndTime.testDriver... 
+Transforming safetyChecker.CoverRelation... 
+Transforming safetyChecker.Edge... 
+Transforming safetyChecker.ErrorLable... 
+Transforming safetyChecker.exception.CreateZ3ScriptFailedException... 
+Transforming safetyChecker.exception.ErrorLocationNotFoundException... 
+Transforming safetyChecker.exception.MainFunctionNotFoundException... 
+Transforming safetyChecker.InterpolationHandler... 
+Transforming safetyChecker.LogUtils... 
+Transforming safetyChecker.NewSort... 
+Transforming safetyChecker.ProgramTree... 
+Transforming safetyChecker.SafetyInitializerW... 
+Transforming safetyChecker.UnitController... 
+Transforming safetyChecker.Vertex... 
+Transforming safetyChecker.Z3ArrayHandler... 
+Transforming safetyChecker.Z3ScriptHandler... 
+Transforming safetyTestCode.arraytest.Test1... 
+Transforming safetyTestCode.iftest.Test1... 
+Transforming safetyTestCode.iftest.Test2... 
+Transforming safetyTestCode.iftest.Test3... 
+Transforming safetyTestCode.iftest.Test4... 
+Transforming safetyTestCode.leetCode.climbingStairs.Test1... 
+Transforming safetyTestCode.leetCode.climbingStairs.Test2... 
+Transforming safetyTestCode.whiletest.Test1... 
+Transforming safetyTestCode.whiletest.Test2... 
+Transforming safetyTester.arraytest.Tester1$1... 
+Transforming safetyTester.arraytest.Tester1... 
+Transforming safetyTester.iftest.Tester1$1... 
+Transforming safetyTester.iftest.Tester1... 
+Transforming safetyTester.iftest.Tester2$1... 
+Transforming safetyTester.iftest.Tester2... 
+Transforming safetyTester.iftest.Tester3$1... 
+Transforming safetyTester.iftest.Tester3... 
+Transforming safetyTester.iftest.Tester4$1... 
+Transforming safetyTester.iftest.Tester4... 
+Transforming safetyTester.leetCode.climbingStairs.Tester1$1... 
+Transforming safetyTester.leetCode.climbingStairs.Tester1... 
+Transforming safetyTester.leetCode.climbingStairs.Tester2$1... 
+Transforming safetyTester.leetCode.climbingStairs.Tester2... 
+Transforming safetyTester.whiletest.Tester1$1... 
+Transforming safetyTester.whiletest.Tester1... 
+Transforming safetyTester.whiletest.Tester2$1... 
+Transforming safetyTester.whiletest.Tester2... 
+Writing to src/output/safetyTest/dotty.CfgConverter.shimple
+Writing to src/output/safetyTest/RecordPeekMemoryAndTime.testDriver.shimple
+Writing to src/output/safetyTest/safetyChecker.CoverRelation.shimple
+Writing to src/output/safetyTest/safetyChecker.Edge.shimple
+Writing to src/output/safetyTest/safetyChecker.ErrorLable.shimple
+Writing to src/output/safetyTest/safetyChecker.exception.CreateZ3ScriptFailedException.shimple
+Writing to src/output/safetyTest/safetyChecker.exception.ErrorLocationNotFoundException.shimple
+Writing to src/output/safetyTest/safetyChecker.exception.MainFunctionNotFoundException.shimple
+Writing to src/output/safetyTest/safetyChecker.InterpolationHandler.shimple
+Writing to src/output/safetyTest/safetyChecker.LogUtils.shimple
+Writing to src/output/safetyTest/safetyChecker.NewSort.shimple
+Writing to src/output/safetyTest/safetyChecker.ProgramTree.shimple
+Writing to src/output/safetyTest/safetyChecker.SafetyInitializerW.shimple
+Writing to src/output/safetyTest/safetyChecker.UnitController.shimple
+Writing to src/output/safetyTest/safetyChecker.Vertex.shimple
+Writing to src/output/safetyTest/safetyChecker.Z3ArrayHandler.shimple
+Writing to src/output/safetyTest/safetyChecker.Z3ScriptHandler.shimple
+Writing to src/output/safetyTest/safetyTestCode.arraytest.Test1.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test1.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test2.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test3.shimple
+Writing to src/output/safetyTest/safetyTestCode.iftest.Test4.shimple
+Writing to src/output/safetyTest/safetyTestCode.leetCode.climbingStairs.Test1.shimple
+Writing to src/output/safetyTest/safetyTestCode.leetCode.climbingStairs.Test2.shimple
+Writing to src/output/safetyTest/safetyTestCode.whiletest.Test1.shimple
+Writing to src/output/safetyTest/safetyTestCode.whiletest.Test2.shimple
+Writing to src/output/safetyTest/safetyTester.arraytest.Tester1$1.shimple
+Writing to src/output/safetyTest/safetyTester.arraytest.Tester1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester1$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester2$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester2.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester3$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester3.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester4$1.shimple
+Writing to src/output/safetyTest/safetyTester.iftest.Tester4.shimple
+Writing to src/output/safetyTest/safetyTester.leetCode.climbingStairs.Tester1$1.shimple
+Writing to src/output/safetyTest/safetyTester.leetCode.climbingStairs.Tester1.shimple
+Writing to src/output/safetyTest/safetyTester.leetCode.climbingStairs.Tester2$1.shimple
+Writing to src/output/safetyTest/safetyTester.leetCode.climbingStairs.Tester2.shimple
+Writing to src/output/safetyTest/safetyTester.whiletest.Tester1$1.shimple
+Writing to src/output/safetyTest/safetyTester.whiletest.Tester1.shimple
+Writing to src/output/safetyTest/safetyTester.whiletest.Tester2$1.shimple
+Writing to src/output/safetyTest/safetyTester.whiletest.Tester2.shimple
+Soot finished on Fri Jun 17 18:32:20 EDT 2016
+Soot has run for 0 min. 1 sec.
+[36msafetyTester.whiletest.Tester2... Test started...[0m
+[36m----->Unwind[0m
+[36m----->expand : L0-D0--null--false[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L1-D1--return--false[0m
+[33mfalse[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L2-D2--staticinvoke <safetyChecker.ErrorLable: void Error()>()--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L4-D3--if b0 != 5 goto return--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L5-D4--if i2_1 < 3 goto i3_1 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L6-D5--i2_1 = Phi(i2, i2_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L7-D6--i3 = Phi(i3, i3_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L8-D7--i1_1 = Phi(i1, i1_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L9-D8--goto [?= i1_1 = Phi(i1, i1_2)]--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L10-D8--i2_2 = i2_1 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L11-D9--i2 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L12-D9--if i3_2 < 3 goto i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L13-D10--i1 = 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L14-D10--i3_2 = Phi(i3_1, i3_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L15-D11--b0 = 5--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[31merror root # = 1[0m
+[33m>>>>>>[0m[36mr0 := @this: safetyTestCode.whiletest.Test2[0m
+[33m(= Global_safetyTestCode.whiletest.Test2_2
+   (store Global_safetyTestCode.whiletest.Test2_1 1 1))[0m
+[33m>>>>>>[0m[36mb0 = 5[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=b0 = 5[0m
+[33mrightZ3=5[0m
+[33mleftZ3=b0__test_0_11[0m
+[33m(= b0__test_0_11 5)[0m
+[33m>>>>>>[0m[36mi1 = 1[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1 = 1[0m
+[33mrightZ3=1[0m
+[33mleftZ3=i1__test_0_10[0m
+[33m(= i1__test_0_10 1)[0m
+[33m>>>>>>[0m[36mi2 = 0[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2 = 0[0m
+[33mrightZ3=0[0m
+[33mleftZ3=i2__test_0_9[0m
+[33m(= i2__test_0_9 0)[0m
+[33m>>>>>>[0m[36mgoto [?= i1_1 = Phi(i1, i1_2)][0m
+[33mtrue[0m
+[33m>>>>>>[0m[36mi1_1 = Phi(i1, i1_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_1 = Phi(i1, i1_2)[0m
+[33mrightZ3=i1__test_0_10[0m
+[33mleftZ3=i1_1__test_0_7[0m
+[33m(= i1_1__test_0_7 i1__test_0_10)[0m
+[33m>>>>>>[0m[36mi3 = Phi(i3, i3_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3 = Phi(i3, i3_2)[0m
+[33mrightZ3=0[0m
+[33mleftZ3=i3__test_0_6[0m
+[33m(= i3__test_0_6 0)[0m
+[33m>>>>>>[0m[36mi2_1 = Phi(i2, i2_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2_1 = Phi(i2, i2_2)[0m
+[33mrightZ3=i2__test_0_9[0m
+[33mleftZ3=i2_1__test_0_5[0m
+[33m(= i2_1__test_0_5 i2__test_0_9)[0m
+[33m>>>>>>[0m[36mif i2_1 < 3 goto i3_1 = 0[0m
+[33m(not (< i2_1__test_0_5 3))[0m
+[33m>>>>>>[0m[36mif b0 != 5 goto return[0m
+[33m(not (not (= b0__test_0_11 5)))[0m
+[32m********************
+ L17-D12[0m
+[32mError path is not feasible.[0m
+[32m********************[0m
+[36mupdateCover is done[0m
+[36m----->expand : L16-D11--i1_2 = Phi(i1_1, i1_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L17-D12--r0 := @this: safetyTestCode.whiletest.Test2--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L18-D12--goto [?= i1_2 = Phi(i1_1, i1_3)]--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L19-D12--i3_3 = i3_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L20-D13--i3_1 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L21-D13--i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L22-D14--if i2_1 < 3 goto i3_1 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L23-D14--if i3_2 < 3 goto i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L24-D15--i2_1 = Phi(i2, i2_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L25-D15--i3_2 = Phi(i3_1, i3_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L26-D16--i3 = Phi(i3, i3_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L27-D16--i1_2 = Phi(i1_1, i1_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L28-D17--i1_1 = Phi(i1, i1_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L29-D17--goto [?= i1_2 = Phi(i1_1, i1_3)]--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L30-D17--i3_3 = i3_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L31-D18--i2_2 = i2_1 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L32-D18--goto [?= i1_1 = Phi(i1, i1_2)]--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L33-D18--i3_1 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L34-D18--i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L35-D19--if i3_2 < 3 goto i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L36-D19--i2 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L37-D19--if i2_1 < 3 goto i3_1 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L38-D19--if i3_2 < 3 goto i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L39-D20--i3_2 = Phi(i3_1, i3_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L40-D20--i1 = 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L41-D20--i2_1 = Phi(i2, i2_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L42-D20--i3_2 = Phi(i3_1, i3_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L43-D21--i1_2 = Phi(i1_1, i1_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L44-D21--b0 = 5--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[31merror root # = 2[0m
+[33m>>>>>>[0m[36mr0 := @this: safetyTestCode.whiletest.Test2[0m
+[33m(= Global_safetyTestCode.whiletest.Test2_3
+   (store Global_safetyTestCode.whiletest.Test2_2 2 2))[0m
+[33m>>>>>>[0m[36mb0 = 5[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=b0 = 5[0m
+[33mrightZ3=5[0m
+[33mleftZ3=b0__test_0_21[0m
+[33m(= b0__test_0_21 5)[0m
+[33m>>>>>>[0m[36mi1 = 1[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1 = 1[0m
+[33mrightZ3=1[0m
+[33mleftZ3=i1__test_0_20[0m
+[33m(= i1__test_0_20 1)[0m
+[33m>>>>>>[0m[36mi2 = 0[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2 = 0[0m
+[33mrightZ3=0[0m
+[33mleftZ3=i2__test_0_19[0m
+[33m(= i2__test_0_19 0)[0m
+[33m>>>>>>[0m[36mgoto [?= i1_1 = Phi(i1, i1_2)][0m
+[33mtrue[0m
+[33m>>>>>>[0m[36mi1_1 = Phi(i1, i1_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_1 = Phi(i1, i1_2)[0m
+[33mrightZ3=i1__test_0_20[0m
+[33mleftZ3=i1_1__test_0_17[0m
+[33m(= i1_1__test_0_17 i1__test_0_20)[0m
+[33m>>>>>>[0m[36mi3 = Phi(i3, i3_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3 = Phi(i3, i3_2)[0m
+[33mrightZ3=i3__test_0_6[0m
+[33mleftZ3=i3__test_0_16[0m
+[33m(= i3__test_0_16 i3__test_0_6)[0m
+[33m>>>>>>[0m[36mi2_1 = Phi(i2, i2_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2_1 = Phi(i2, i2_2)[0m
+[33mrightZ3=i2__test_0_19[0m
+[33mleftZ3=i2_1__test_0_15[0m
+[33m(= i2_1__test_0_15 i2__test_0_19)[0m
+[33m>>>>>>[0m[36mif i2_1 < 3 goto i3_1 = 0[0m
+[33m(< i2_1__test_0_15 3)[0m
+[33m>>>>>>[0m[36mi3_1 = 0[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3_1 = 0[0m
+[33mrightZ3=0[0m
+[33mleftZ3=i3_1__test_0_13[0m
+[33m(= i3_1__test_0_13 0)[0m
+[33m>>>>>>[0m[36mgoto [?= i1_2 = Phi(i1_1, i1_3)][0m
+[33mtrue[0m
+[33m>>>>>>[0m[36mi1_2 = Phi(i1_1, i1_3)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_2 = Phi(i1_1, i1_3)[0m
+[33mrightZ3=i1_1__test_0_17[0m
+[33mleftZ3=i1_2__test_0_11[0m
+[33m(= i1_2__test_0_11 i1_1__test_0_17)[0m
+[33m>>>>>>[0m[36mi3_2 = Phi(i3_1, i3_3)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3_2 = Phi(i3_1, i3_3)[0m
+[33mrightZ3=i3_1__test_0_13[0m
+[33mleftZ3=i3_2__test_0_10[0m
+[33m(= i3_2__test_0_10 i3_1__test_0_13)[0m
+[33m>>>>>>[0m[36mif i3_2 < 3 goto i1_3 = i1_2 + 1[0m
+[33m(not (< i3_2__test_0_10 3))[0m
+[33m>>>>>>[0m[36mi2_2 = i2_1 + 1[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2_2 = i2_1 + 1[0m
+[33mrightZ3=(+ i2_1__test_0_15 1)[0m
+[33mleftZ3=i2_2__test_0_8[0m
+[33m(= i2_2__test_0_8 (+ i2_1__test_0_15 1))[0m
+[33m>>>>>>[0m[36mi1_1 = Phi(i1, i1_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_1 = Phi(i1, i1_2)[0m
+[33mrightZ3=i1_2__test_0_11[0m
+[33mleftZ3=i1_1__test_0_7[0m
+[33m(= i1_1__test_0_7 i1_2__test_0_11)[0m
+[33m>>>>>>[0m[36mi3 = Phi(i3, i3_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3 = Phi(i3, i3_2)[0m
+[33mrightZ3=i3_2__test_0_10[0m
+[33mleftZ3=i3__test_0_6[0m
+[33m(= i3__test_0_6 i3_2__test_0_10)[0m
+[33m>>>>>>[0m[36mi2_1 = Phi(i2, i2_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2_1 = Phi(i2, i2_2)[0m
+[33mrightZ3=i2_2__test_0_8[0m
+[33mleftZ3=i2_1__test_0_5[0m
+[33m(= i2_1__test_0_5 i2_2__test_0_8)[0m
+[33m>>>>>>[0m[36mif i2_1 < 3 goto i3_1 = 0[0m
+[33m(not (< i2_1__test_0_5 3))[0m
+[33m>>>>>>[0m[36mif b0 != 5 goto return[0m
+[33m(not (not (= b0__test_0_21 5)))[0m
+[32m********************
+ L49-D22[0m
+[32mError path is not feasible.[0m
+[32m********************[0m
+[36mupdateCover is done[0m
+[36m----->expand : L45-D21--i3 = Phi(i3, i3_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L46-D21--i1_2 = Phi(i1_1, i1_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L50-D22--i1_1 = Phi(i1, i1_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L51-D22--i3_3 = i3_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L52-D22--goto [?= i1_2 = Phi(i1_1, i1_3)]--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L53-D23--i2_2 = i2_1 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L54-D23--goto [?= i1_1 = Phi(i1, i1_2)]--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L55-D23--i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L56-D23--i3_1 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L57-D24--if i3_2 < 3 goto i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L58-D24--i2 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L59-D24--if i3_2 < 3 goto i1_3 = i1_2 + 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L60-D24--if i2_1 < 3 goto i3_1 = 0--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L61-D25--i3_2 = Phi(i3_1, i3_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L62-D25--i1 = 1--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L63-D25--i3_2 = Phi(i3_1, i3_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L64-D25--i2_1 = Phi(i2, i2_2)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L65-D26--i1_2 = Phi(i1_1, i1_3)--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[36m----->expand : L66-D26--b0 = 5--false[0m
+[33mtrue[0m
+[33mexpandBFs is done[0m
+[31merror root # = 3[0m
+[33m>>>>>>[0m[36mr0 := @this: safetyTestCode.whiletest.Test2[0m
+[33m(= Global_safetyTestCode.whiletest.Test2_4
+   (store Global_safetyTestCode.whiletest.Test2_3 3 3))[0m
+[33m>>>>>>[0m[36mb0 = 5[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=b0 = 5[0m
+[33mrightZ3=5[0m
+[33mleftZ3=b0__test_0_26[0m
+[33m(= b0__test_0_26 5)[0m
+[33m>>>>>>[0m[36mi1 = 1[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1 = 1[0m
+[33mrightZ3=1[0m
+[33mleftZ3=i1__test_0_25[0m
+[33m(= i1__test_0_25 1)[0m
+[33m>>>>>>[0m[36mi2 = 0[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2 = 0[0m
+[33mrightZ3=0[0m
+[33mleftZ3=i2__test_0_24[0m
+[33m(= i2__test_0_24 0)[0m
+[33m>>>>>>[0m[36mgoto [?= i1_1 = Phi(i1, i1_2)][0m
+[33mtrue[0m
+[33m>>>>>>[0m[36mi1_1 = Phi(i1, i1_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_1 = Phi(i1, i1_2)[0m
+[33mrightZ3=i1__test_0_25[0m
+[33mleftZ3=i1_1__test_0_22[0m
+[33m(= i1_1__test_0_22 i1__test_0_25)[0m
+[33m>>>>>>[0m[36mi3 = Phi(i3, i3_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3 = Phi(i3, i3_2)[0m
+[33mrightZ3=i3__test_0_6[0m
+[33mleftZ3=i3__test_0_21[0m
+[33m(= i3__test_0_21 i3__test_0_6)[0m
+[33m>>>>>>[0m[36mi2_1 = Phi(i2, i2_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2_1 = Phi(i2, i2_2)[0m
+[33mrightZ3=i2__test_0_24[0m
+[33mleftZ3=i2_1__test_0_20[0m
+[33m(= i2_1__test_0_20 i2__test_0_24)[0m
+[33m>>>>>>[0m[36mif i2_1 < 3 goto i3_1 = 0[0m
+[33m(< i2_1__test_0_20 3)[0m
+[33m>>>>>>[0m[36mi3_1 = 0[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3_1 = 0[0m
+[33mrightZ3=0[0m
+[33mleftZ3=i3_1__test_0_18[0m
+[33m(= i3_1__test_0_18 0)[0m
+[33m>>>>>>[0m[36mgoto [?= i1_2 = Phi(i1_1, i1_3)][0m
+[33mtrue[0m
+[33m>>>>>>[0m[36mi1_2 = Phi(i1_1, i1_3)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_2 = Phi(i1_1, i1_3)[0m
+[33mrightZ3=i1_1__test_0_22[0m
+[33mleftZ3=i1_2__test_0_16[0m
+[33m(= i1_2__test_0_16 i1_1__test_0_22)[0m
+[33m>>>>>>[0m[36mi3_2 = Phi(i3_1, i3_3)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3_2 = Phi(i3_1, i3_3)[0m
+[33mrightZ3=i3_1__test_0_18[0m
+[33mleftZ3=i3_2__test_0_15[0m
+[33m(= i3_2__test_0_15 i3_1__test_0_18)[0m
+[33m>>>>>>[0m[36mif i3_2 < 3 goto i1_3 = i1_2 + 1[0m
+[33m(< i3_2__test_0_15 3)[0m
+[33m>>>>>>[0m[36mi1_3 = i1_2 + 1[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_3 = i1_2 + 1[0m
+[33mrightZ3=(+ i1_2__test_0_16 1)[0m
+[33mleftZ3=i1_3__test_0_13[0m
+[33m(= i1_3__test_0_13 (+ i1_2__test_0_16 1))[0m
+[33m>>>>>>[0m[36mi3_3 = i3_2 + 1[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3_3 = i3_2 + 1[0m
+[33mrightZ3=(+ i3_2__test_0_15 1)[0m
+[33mleftZ3=i3_3__test_0_12[0m
+[33m(= i3_3__test_0_12 (+ i3_2__test_0_15 1))[0m
+[33m>>>>>>[0m[36mi1_2 = Phi(i1_1, i1_3)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_2 = Phi(i1_1, i1_3)[0m
+[33mrightZ3=i1_3__test_0_13[0m
+[33mleftZ3=i1_2__test_0_11[0m
+[33m(= i1_2__test_0_11 i1_3__test_0_13)[0m
+[33m>>>>>>[0m[36mi3_2 = Phi(i3_1, i3_3)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3_2 = Phi(i3_1, i3_3)[0m
+[33mrightZ3=i3_3__test_0_12[0m
+[33mleftZ3=i3_2__test_0_10[0m
+[33m(= i3_2__test_0_10 i3_3__test_0_12)[0m
+[33m>>>>>>[0m[36mif i3_2 < 3 goto i1_3 = i1_2 + 1[0m
+[33m(not (< i3_2__test_0_10 3))[0m
+[33m>>>>>>[0m[36mi2_2 = i2_1 + 1[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2_2 = i2_1 + 1[0m
+[33mrightZ3=(+ i2_1__test_0_20 1)[0m
+[33mleftZ3=i2_2__test_0_8[0m
+[33m(= i2_2__test_0_8 (+ i2_1__test_0_20 1))[0m
+[33m>>>>>>[0m[36mi1_1 = Phi(i1, i1_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i1_1 = Phi(i1, i1_2)[0m
+[33mrightZ3=i1_2__test_0_11[0m
+[33mleftZ3=i1_1__test_0_7[0m
+[33m(= i1_1__test_0_7 i1_2__test_0_11)[0m
+[33m>>>>>>[0m[36mi3 = Phi(i3, i3_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i3 = Phi(i3, i3_2)[0m
+[33mrightZ3=i3_2__test_0_10[0m
+[33mleftZ3=i3__test_0_6[0m
+[33m(= i3__test_0_6 i3_2__test_0_10)[0m
+[33m>>>>>>[0m[36mi2_1 = Phi(i2, i2_2)[0m
+[36mZ3ScriptHandler.convertAssignStmtEdge=i2_1 = Phi(i2, i2_2)[0m
+[33mrightZ3=i2_2__test_0_8[0m
+[33mleftZ3=i2_1__test_0_5[0m
+[33m(= i2_1__test_0_5 i2_2__test_0_8)[0m
+[33m>>>>>>[0m[36mif i2_1 < 3 goto i3_1 = 0[0m
+[33m(not (< i2_1__test_0_5 3))[0m
+[33m>>>>>>[0m[36mif b0 != 5 goto return[0m
+[33m(not (not (= b0__test_0_26 5)))[0m
+[32m********************
+ L71-D27[0m
+[32mError path is not feasible.[0m
+[32m********************[0m
+[36mupdateCover is done[0m
+[32m********************
+ <safetyTestCode.whiletest.Test2: void test()>[0m
+[32mError path is not feasible.[0m
+[32m********************[0m
+[36msafetyTester.whiletest.Tester2... Test finished...[0m
+>>> creating .ps files
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Ended ...

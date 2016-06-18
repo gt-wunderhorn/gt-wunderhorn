@@ -1,4 +1,4 @@
-package safetyTester.arraytest;
+package safetyTester.whiletest;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -15,7 +15,7 @@ import soot.SootMethod;
 import soot.Transform;
 import soot.options.Options;
 
-public class Tester1 {
+public class Tester2 {
 	static Map<String, Body> stores = new HashMap<String, Body>();
 
 	public static void main(String[] args) throws FileNotFoundException,
@@ -36,8 +36,7 @@ public class Tester1 {
 						// hack here
 						SootMethod method = body.getMethod();
 						String methodSig = method.getSignature();
-//						if(methodSig.contains("void test"));
-//							LogUtils.infoln(methodSig);
+						//System.out.println(methodSig);
 						
 						stores.put(methodSig, body);
 					}
@@ -45,8 +44,8 @@ public class Tester1 {
 		soot.Main.main(sootArgs);
 		//System.out.println(stores.size());
 
-		String mainFunction ="<safetyTestCode.arraytest.Test1: void test(int)>";
-		LogUtils.infoln("safetyTester.arraytest.Tester1... Test started...");
+		String mainFunction ="<safetyTestCode.whiletest.Test2: void test()>";
+		LogUtils.infoln("safetyTester.whiletest.Tester2... Test started...");
 	
 		try {	
 			ProgramTree pTree = new ProgramTree(stores, mainFunction, true);
@@ -63,7 +62,7 @@ public class Tester1 {
 			exp.printStackTrace();
 		}
 
-		LogUtils.infoln("safetyTester.arraytest.Tester1... Test finished...");
+		LogUtils.infoln("safetyTester.whiletest.Tester2... Test finished...");
 		/// There will no need to forest anymore....
 //		Forest forest1 = new Forest(stores,
 //				"<de.ecspride.ImplicitFlow3: void tester()>", "<de.ecspride.ImplicitFlow3: void onCreate2(android.os.Bundle)>");

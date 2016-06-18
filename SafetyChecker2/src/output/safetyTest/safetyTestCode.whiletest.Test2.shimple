@@ -1,0 +1,68 @@
+public class safetyTestCode.whiletest.Test2 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        safetyTestCode.whiletest.Test2 r0;
+
+        r0 := @this: safetyTestCode.whiletest.Test2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test()
+    {
+        safetyTestCode.whiletest.Test2 r0;
+        byte b0;
+        int $i1, i2, i3, i4, i3_1, i2_1, i4_1, i2_2, i4_2, i2_3, i4_3, i3_2;
+
+        r0 := @this: safetyTestCode.whiletest.Test2;
+
+        b0 = 5;
+
+        i2 = 1;
+
+        i3 = 0;
+
+(0)     goto label4;
+
+     label1:
+        i4_1 = 0;
+
+(1)     goto label3;
+
+     label2:
+        i2_3 = i2_2 + 1;
+
+(2)     i4_3 = i4_2 + 1;
+
+     label3:
+        i2_2 = Phi(i2_1 #1, i2_3 #2);
+
+        i4_2 = Phi(i4_1 #1, i4_3 #2);
+
+        if i4_2 < 2 goto label2;
+
+(3)     i3_2 = i3_1 + 1;
+
+     label4:
+        i3_1 = Phi(i3 #0, i3_2 #3);
+
+        i2_1 = Phi(i2 #0, i2_2 #3);
+
+        i4 = Phi(i4 #0, i4_2 #3);
+
+        if i3_1 < 3 goto label1;
+
+        $i1 = b0 + 2;
+
+        if i2_1 != $i1 goto label5;
+
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+
+     label5:
+        return;
+    }
+}

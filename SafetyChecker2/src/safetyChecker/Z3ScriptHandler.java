@@ -31,6 +31,7 @@ import soot.jimple.AssignStmt;
 import soot.jimple.BinopExpr;
 import soot.jimple.CastExpr;
 import soot.jimple.Constant;
+import soot.jimple.DivExpr;
 import soot.jimple.EqExpr;
 import soot.jimple.FieldRef;
 import soot.jimple.GeExpr;
@@ -196,6 +197,7 @@ public class Z3ScriptHandler {
 		
 		Type leftType = left.getType();
 		Expr rightZ3 = null;
+
 		// rigth invoke expression needs to be added
 		if(edge.isSubFunction() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
 			rightZ3 = this.ictx.mkIntConst("return_" + this.getRealArraySize("return_"));
@@ -205,7 +207,6 @@ public class Z3ScriptHandler {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		
 		LogUtils.debugln("rightZ3=" + rightZ3);
-
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
 		LogUtils.debugln("leftZ3=" + leftZ3);
 
@@ -220,7 +221,7 @@ public class Z3ScriptHandler {
 		if(right instanceof AnyNewExpr) {
 			if(right instanceof NewArrayExpr) { 
 				BoolExpr realArray = arrayHandler.newArrayExpr(rightZ3, right.getType(), this);
-				LogUtils.infoln("realArray=" + realArray);
+				LogUtils.debugln("realArray=" + realArray);
 				LogUtils.debugln("eq=" + eq);
 			        BoolExpr arrayExpr = this.ictx.mkAnd(eq, realArray);
 				// rest is to use for checking array equality.
@@ -236,12 +237,13 @@ public class Z3ScriptHandler {
 					this.maxArraySize.put(left.toString(), maxSize);
 				}
 				// assign 0 as default value.
-				BoolExpr defaultValues = arrayHandler.updateDefaultValue(left, maxSize, this, edge);
-				arrayExpr = this.ictx.mkAnd(arrayExpr, defaultValues);
+//				BoolExpr defaultValues = arrayHandler.updateDefaultValue(left, maxSize, this, edge);
+//				arrayExpr = this.ictx.mkAnd(arrayExpr, defaultValues);
 				edge.setZ3Expr(arrayExpr);		
 				//LogUtils.debugln("eq=" + arrayExpr);
 			}
 		} else if(edge.isSubFunction()) {
+			LogUtils.warningln("subfunction is nt complete yet");
 			for(Value parameterValue : ((InvokeExpr) right).getArgs()) {	
 				Expr parameterExpr = this.localMap.get(parameterValue.toString());
 				if(parameterExpr == null) {
@@ -346,17 +348,16 @@ public class Z3ScriptHandler {
 			for(ValueUnitPair pair : pairList) {
 //				if(resultEdge!=null && resultEdge.getTarget().getDistance()-vertex.getDistance()==0)
 //					break;
-
+			
 				Value valuePair = pair.getValue();
-				LogUtils.detailln("valuePair=" + valuePair);
+				LogUtils.debugln("valuePair=" + valuePair);
 				Unit unitPair = pair.getUnit();
-				LogUtils.detailln("unitPair=" + unitPair);
+				LogUtils.debugln("unitPair=" + unitPair);
 				
 				Vertex phiEqualityVertex = errorPathRoot;
 				while(phiEqualityVertex != edge.getSource()) {
 					Unit phiEqualityUnit = phiEqualityVertex.getOutgoingEdge().getUnit();	
 					if(phiEqualityUnit.equals(unitPair)) {
-
 						if(resultEdge == null) {
 							resultEdge = phiEqualityVertex.getOutgoingEdge();
 							resultValue = valuePair;
@@ -371,8 +372,10 @@ public class Z3ScriptHandler {
 				}
 					
 			}
-
+			
 			Expr resultExpr = convertValue(resultValue, false, edge, edge.getSource().getDistance());
+			if(resultExpr == null)
+				resultExpr = this.ictx.mkInt(0);
 			LogUtils.debugln("resultExpr=" + resultExpr);
 			return resultExpr;
 		}
@@ -525,7 +528,9 @@ public class Z3ScriptHandler {
 			String newName = virtualName + this.getNameSuffix();
 
 			ArrayExpr latestArray = (ArrayExpr) this.localMap.get(virtualName);
+			LogUtils.debugln("latestArray="+latestArray);
 			ArrayExpr newArray = (ArrayExpr) this.ictx.mkConst(newName, latestArray.getSort());
+			LogUtils.debugln("newArray=" + newArray);
 			this.substitute.put(newName, virtualName);
 			this.substituteSort.put(newName, newArray.getSort());
 			this.localMap.put(virtualName, newArray);
@@ -534,6 +539,7 @@ public class Z3ScriptHandler {
 			NewSort s = sortId.get(sortName);
 
 			Expr afterStore = ictx.mkStore((ArrayExpr) latestArray, s.getId(leftZ3), rightZ3);
+			LogUtils.debugln("afterStore="+afterStore);
 			BoolExpr newArrayEqOldArray = ictx.mkEq(newArray, afterStore);
 			return newArrayEqOldArray;
 		}
@@ -673,6 +679,17 @@ public class Z3ScriptHandler {
 			Expr op2Expr = convertValue(op2Value, false, edge, nodeIndex);
 
 			return this.ictx.mkMul((ArithExpr) op1Expr, (ArithExpr) op2Expr);	
+
+		}
+		if(expr instanceof DivExpr) {
+			DivExpr divExpr = (DivExpr) expr;
+			Value op1Value = divExpr.getOp1();
+			Value op2Value = divExpr.getOp2();
+
+			Expr op1Expr = convertValue(op1Value, false, edge, nodeIndex);
+			Expr op2Expr = convertValue(op2Value, false, edge, nodeIndex);
+
+			return this.ictx.mkDiv((ArithExpr) op1Expr, (ArithExpr) op2Expr);	
 
 		}
 		if(expr instanceof EqExpr) {

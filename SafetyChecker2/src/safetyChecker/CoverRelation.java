@@ -126,7 +126,7 @@ public class CoverRelation {
 		BoolExpr entailmentExpr = this.ictx.mkAnd(strongerInvariant, notWeakerInvariant);
 		LogUtils.debugln("stronger = " + strongerInvariant);
 
-		//if(isFalseImpliesAnything(strongerInvariant)) return false;	
+		if(isFalseImpliesAnything(strongerInvariant)) return false;	
 
 		Solver solver = this.ictx.mkSolver();
 		solver.reset();

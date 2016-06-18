@@ -48,6 +48,7 @@ public class Z3ArrayHandler {
 		if(!z3Handler.getLocalMap().containsKey(arrayName)) {
 			Sort newArraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
 			Expr newArray = ictx.mkConst(arrayName, newArraySort);
+//			Expr newArray = ictx.mkConstArray(ictx.getIntSort(), ictx.mkInt(13));
 			z3Handler.getLocalMap().put(arrayName, newArray);
 			NewSort ns = new NewSort(newSort, ictx);
 			z3Handler.getSortId().put(sortName, ns);	
@@ -83,13 +84,15 @@ public class Z3ArrayHandler {
 
 			String globalName = z3Handler.getGlobalName(oldName);  
 			Expr arrayCellConst = ictx.mkConst(globalName, arrayCell);
+			LogUtils.warningln("arrayCellConst=" + arrayCellConst);
 
 			z3Handler.getSubstitute().put(globalName, oldName);
 			z3Handler.getGlobal().put(oldName, arrayCellConst);
 		}
 
 		int arraySize = z3Handler.getRealArraySize(oldName);
-		ArrayExpr arrayConst = ictx.mkArrayConst("array_" + arraySize, ictx.getIntSort(), ictx.getIntSort());
+//		ArrayExpr arrayConst = ictx.mkArrayConst("array_" + arraySize, ictx.getIntSort(), ictx.getIntSort());
+		ArrayExpr arrayConst = ictx.mkConstArray(ictx.getIntSort(), ictx.mkInt(0));
 		ArrayExpr oldArray = (ArrayExpr) z3Handler.getGlobal().get(oldName);
 
 		String newName = z3Handler.getGlobalName(oldName);
@@ -100,6 +103,11 @@ public class Z3ArrayHandler {
 
 		Expr afterStore = ictx.mkStore(oldArray, rightZ3, arrayConst);
 		BoolExpr newArrayEq = ictx.mkEq(newArray, afterStore);
+		  
+
+		Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
+		ArrayExpr constArray = ictx.mkConstArray(ictx.getIntSort(), ictx.mkInt(0));
+		ArrayExpr constArray2 = ictx.mkConstArray(arraySort, ictx.mkInt(0));
 		return newArrayEq;
 	}
 

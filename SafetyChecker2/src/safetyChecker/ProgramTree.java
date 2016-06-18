@@ -197,9 +197,10 @@ public class ProgramTree {
 			if(coverRelation.isCovered(v)) continue;
 
 			boolean errorPathFound = expandBFS(v);
+			LogUtils.debugln("expandBFs is done");
 			
-			if(errorRootSet.size() >  100) {
-			 	LogUtils.fatalln("Error Root Size has reached to 100 and stopped manually");      
+			if(errorRootSet.size() >  2000) {
+			 	LogUtils.fatalln("Error Root Size has reached to 2000 and stopped manually");      
 				break;
 			}
 
@@ -235,6 +236,7 @@ public class ProgramTree {
 
 	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.debugln("----->expand : " + w + "--" + w.getOutgoingEdge() + "--" + coverRelation.isCovered(w));
+//		if(w.getOutgoingEdge() != null)	LogUtils.warningln(w.getOutgoingEdge().isInErrorPath());
 
 		boolean result = false;
 		if (!coverRelation.isCovered(w)) {
@@ -252,6 +254,9 @@ public class ProgramTree {
 				v.setLocationNumber(++locationCounter);
 				w.addPreviousVertex(v);
 				this.vertexSet.add(v);
+
+				if(!incomingEdge.isInErrorPath() && !errorSet.isEmpty())
+					continue;	
 				this.uncovered.add(v);
 
 				if(cfg.getUnexceptionalPredsOf(incomingEdge.getUnit()).size() == 0) {

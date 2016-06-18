@@ -15,7 +15,7 @@ public class safetyTestCode.whiletest.Test1 extends java.lang.Object
     public void test()
     {
         safetyTestCode.whiletest.Test1 r0;
-        int $i0, i1, i2, i1_1, i2_1, i1_2, i2_2;
+        int $i0, i1, i2, i2_1, i1_1, i1_2, i2_2;
 
         r0 := @this: safetyTestCode.whiletest.Test1;
 
@@ -31,9 +31,9 @@ public class safetyTestCode.whiletest.Test1 extends java.lang.Object
 (1)     i2_2 = i2_1 + 2;
 
      label2:
-        i1_1 = Phi(i1 #0, i1_2 #1);
-
         i2_1 = Phi(i2 #0, i2_2 #1);
+
+        i1_1 = Phi(i1 #0, i1_2 #1);
 
         if i2_1 != 5 goto label1;
 
