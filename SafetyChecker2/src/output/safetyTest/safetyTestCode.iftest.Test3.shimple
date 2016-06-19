@@ -19,7 +19,7 @@ public class safetyTestCode.iftest.Test3 extends java.lang.Object
 
         r0 := @this: safetyTestCode.iftest.Test3;
 
-        i0 = 5;
+        i0 = 4;
 
 (0)     if i0 >= 6 goto label1;
 

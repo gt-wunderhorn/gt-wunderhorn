@@ -108,7 +108,8 @@ public class InterpolationHandler {
 						vertex.setInvariant(newInvariant);
 					else {
 						BoolExpr disjunction = this.ictx.mkOr(newInvariant, currentInvariant);
-						vertex.setInvariant(disjunction);
+						BoolExpr simplified = (BoolExpr) disjunction.simplify();
+						vertex.setInvariant(simplified);
 					}
 					index++; 
 				}

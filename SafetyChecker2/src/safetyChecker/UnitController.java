@@ -59,7 +59,7 @@ public class UnitController {
 	}
 
 	private boolean isArrayCopyInvoke(Unit u) {
-		if(u instanceof InvokeStmt && this.getMethodSignature(u).equals(this.SYSTEM_ARRAYCOPY_SIGNATURE)) 
+		if(u instanceof InvokeStmt && UnitController.getMethodSignature(u).equals(UnitController.SYSTEM_ARRAYCOPY_SIGNATURE)) 
 			return true;
 		return false;
 	}
@@ -135,18 +135,18 @@ public class UnitController {
 
 	private boolean isCalleeFunction(Unit u) {
 		if(isInvoke(u) && u instanceof AssignStmt) {
-			String sign = this.getMethodSignature(u);
+			String sign = UnitController.getMethodSignature(u);
 		}	
 		return false;
 	}
 
 	public boolean isInvoke(Unit u) {
-		String sign = this.getMethodSignature(u);
-		if(u instanceof InvokeStmt && !sign.equals(this.NOTINVOKESIGNATURE)) {
+		String sign = UnitController.getMethodSignature(u);
+		if(u instanceof InvokeStmt && !sign.equals(UnitController.NOTINVOKESIGNATURE)) {
 			return true;
 		} else if (u instanceof AssignStmt) {
 			Value right = ((AssignStmt)u).getRightOp();
-			if(right instanceof InvokeExpr && !sign.equals(this.NOTINVOKESIGNATURE))
+			if(right instanceof InvokeExpr && !sign.equals(UnitController.NOTINVOKESIGNATURE))
 				return true;
 		}
 		return false;
@@ -173,19 +173,10 @@ public class UnitController {
 		return false;
 	}	
 
-	public static boolean isControlLocation(Unit unit) {
+	public boolean isControlLocation(Unit unit) {
 		if(unit instanceof IfStmt)
 			return true;
 		return false;	
 	}
 
-//	public void analyzeVertex(Vertex v, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-//		for(Edge e : v.getIncomingEdges()) { 
-//			Unit u = e.getUnit();
-//			if(isErrorUnit(u)) { v.setErrorLocation(true); e.setErrorEdge(true); }
-//			if(isSubFunctionUnit(u, stores, e)) { v.setSubFunction(true); e.setSubFunction(true); }
-//			if(isSinkInvoke(u)) { v.setSinkLocation(true); e.setSinkEdge(true); }
-//			if(isSourceInvoke(u)) { v.setSourceLocation(true); e.setSourceEdge(true); } 
-//		}
-//	}
 }

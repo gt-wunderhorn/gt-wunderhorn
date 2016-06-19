@@ -6,7 +6,7 @@ import safetyChecker.ErrorLable;
 
 public class Test1 {
 
-	public void test(int n) {
+	public void test4(int n) {
 		int[] intArray = new int[2];
 		int[] intArray2 = new int[2];
 
@@ -67,6 +67,22 @@ public class Test1 {
 		
 //		if(Arrays.equals(intArray, intArray2))
 		if(11 == intArray2[0])
+			ErrorLable.Error();
+	}
+
+	public void test(int n) {
+		int[] a1 = new int[n];
+		int[] a2 = new int[n];
+
+		for(int i = 0; i < 10; i++) {
+			a1[i] = i;
+			a2[i] = i;
+		}	
+		a2[9] = 9;
+		 
+		
+
+		if(Arrays.equals(a1,a2))
 			ErrorLable.Error();
 	}
 }

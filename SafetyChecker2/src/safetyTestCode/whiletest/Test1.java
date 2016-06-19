@@ -5,13 +5,10 @@ import safetyChecker.ErrorLable;
 public class Test1 {
 
 	public void test() {
-		int x = 5;
-		int y = 1;
+		int x = 0;
 
-		while(y != 5) {
-			x = x + y;
-			y = y+2;
-		}
+		while(x < 2) 
+			x++;
 
 //		int y = 0;
 //		if(y == 0)
@@ -19,7 +16,7 @@ public class Test1 {
 //		if(y == 5) 
 //			x = 5;
 
-		if(x == y+4)
+		if(x == 2)
 			ErrorLable.Error();
 	}
 

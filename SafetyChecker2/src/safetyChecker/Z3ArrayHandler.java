@@ -1,13 +1,10 @@
 package safetyChecker;
 
-import java.util.Map.Entry;
-
 import com.microsoft.z3.ArrayExpr;
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.IntExpr;
 import com.microsoft.z3.InterpolationContext;
-import com.microsoft.z3.Log;
 import com.microsoft.z3.Sort;
 import com.microsoft.z3.Symbol;
 
@@ -260,7 +257,6 @@ public class Z3ArrayHandler {
 			LogUtils.debugln(">>>>>>>>>>>>>NewName=" + newName);
 			ArrayExpr newGlobalArray = (ArrayExpr) ictx.mkConst(newName, realArray.getSort());
 			Expr dtcExpr = z3Handler.convertValue(dtcLocal, false, edge, edge.getSource().getDistance());
-			Expr dtcExpr2 = this.z3Local(dtcLocal,false, 0, z3Handler); 
 			Expr oldStore = ictx.mkStore(realArray, dtcExpr, arrayExpr);
 			BoolExpr newGlobalEq = ictx.mkEq(newGlobalArray, oldStore);
 			z3Handler.getGlobal().put(realName, newGlobalArray);
@@ -279,28 +275,32 @@ public class Z3ArrayHandler {
 		Value firstBase = iExpr.getArg(this.argArray1);
 		Value secondBase = iExpr.getArg(this.argArray2);
 
-		int firstMaxArraySize = z3Handler.getMaxArraySize().get(firstBase.toString()); 
-		int secondMaxArraySize = z3Handler.getMaxArraySize().get(secondBase.toString()); 
-		BoolExpr maxSizeEq = ictx.mkEq(ictx.mkInt(firstMaxArraySize), ictx.mkInt(secondMaxArraySize));
+//		int firstMaxArraySize = z3Handler.getMaxArraySize().get(firstBase.toString()); 
+//		int secondMaxArraySize = z3Handler.getMaxArraySize().get(secondBase.toString()); 
+//		BoolExpr maxSizeEq = ictx.mkEq(ictx.mkInt(firstMaxArraySize), ictx.mkInt(secondMaxArraySize));
 
 //		Expr firstExpr = z3Handler.convertValue(firstBase, false, edge, edge.getSource().getDistance());
 //		Expr secondExpr = z3Handler.convertValue(secondBase, false, edge, edge.getSource().getDistance());
 
 		ArrayExpr firstArray = this.getRealArray((Local)firstBase, edge, z3Handler); 
 		ArrayExpr secondArray = this.getRealArray((Local)secondBase, edge, z3Handler); 
-		BoolExpr arrayEq = ictx.mkEq(firstArray, secondArray);
+//		BoolExpr arrayEq = ictx.mkEq(firstArray, secondArray);
 		
-		BoolExpr wholeExpr = null;
-		for(int i=0; i < Math.min(firstMaxArraySize, secondMaxArraySize); i++) {
-			Expr firstSelect = ictx.mkSelect(firstArray, ictx.mkInt(i));
-			Expr secondSelect = ictx.mkSelect(secondArray, ictx.mkInt(i));
-			BoolExpr selectEq = ictx.mkEq(firstSelect, secondSelect);
+		
+		Expr extIndex = ictx.mkArrayExt(firstArray, secondArray);
+		BoolExpr firstEqSecond = ictx.mkEq(firstArray, secondArray);
 
-			if(wholeExpr == null)
-				wholeExpr = ictx.mkAnd(maxSizeEq, selectEq);
-			else
-				wholeExpr = ictx.mkAnd(wholeExpr, selectEq);
-		}
+//		BoolExpr wholeExpr = null;
+//		for(int i=0; i < Math.min(firstMaxArraySize, secondMaxArraySize); i++) {
+//			Expr firstSelect = ictx.mkSelect(firstArray, ictx.mkInt(i));
+//			Expr secondSelect = ictx.mkSelect(secondArray, ictx.mkInt(i));
+//			BoolExpr selectEq = ictx.mkEq(firstSelect, secondSelect);
+//
+//			if(wholeExpr == null)
+//				wholeExpr = ictx.mkAnd(maxSizeEq, selectEq);
+//			else
+//				wholeExpr = ictx.mkAnd(wholeExpr, selectEq);
+//		}
 
 		IntExpr i = ictx.mkIntConst("i");
 		Expr firstSelect = ictx.mkSelect(firstArray, i);
@@ -314,11 +314,12 @@ public class Z3ArrayHandler {
 		IntExpr[] xs2 = new IntExpr[1];
 		xs2[0] = i;
 
-		BoolExpr forall = ictx.mkForall(xs2, eq, 1, null, null, null, null);
+//		BoolExpr forall = ictx.mkForall(xs2, eq, 1, null, null, null, null);
 		//BoolExpr exists = ictx.mkExists(xs2, notEq, 0, null, null, null, null);
 		//Expr arrayExt = ictx.mkArrayExt(firstSelect, secondSelect);
 
-		Expr cond = ictx.mkITE(wholeExpr, ictx.mkInt(1), ictx.mkInt(0));
+//		Expr cond = ictx.mkITE(wholeExpr, ictx.mkInt(1), ictx.mkInt(0));
+		Expr cond = ictx.mkITE(firstEqSecond, ictx.mkInt(1), ictx.mkInt(0));
 		LogUtils.detailln(cond);
 
 		/////////////////////////////
@@ -341,6 +342,7 @@ public class Z3ArrayHandler {
 		return "realArray_";
 	}
 
+	// delete after tests are complete
 	private void forAllTest(InterpolationContext ictx, ArrayExpr firstArray, ArrayExpr secondArray) {
 		Sort[] types = new Sort[3];
 	        IntExpr[] xs = new IntExpr[3];
@@ -395,9 +397,6 @@ public class Z3ArrayHandler {
 
 		Expr forall = ictx.mkForall(xs2, eq, 1, null, null, null, null);
 	       	LogUtils.warningln("forall=" + forall);	
-
-
-
 
   		 System.exit(0);
 	}

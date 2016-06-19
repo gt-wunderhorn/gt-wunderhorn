@@ -20,8 +20,7 @@ public class Vertex {
 	private Set<Edge> incomingEdges = new HashSet<Edge>();
 	private Vertex nextVertex;
 	private Set<Vertex> previousVertexSet = new HashSet<Vertex>();
-	//private Set<Vertex> coveredPreviousVertexSet = new HashSet<Vertex>();
-	//private Set<Vertex> uncoveredPreviousVertexSet = new HashSet<Vertex>();
+
 	private boolean psi = false;
 	private int distance = 0;
 	private int locationNumber = 0;
@@ -76,5 +75,4 @@ public class Vertex {
 	public void setInvariant(BoolExpr invariant) { this.invariant = invariant; }
 
 	public String toString() { return "L" + locationNumber + "-D" + distance; }
-//	public String toString() { return this.outgoingEdge.toString(); }
 }

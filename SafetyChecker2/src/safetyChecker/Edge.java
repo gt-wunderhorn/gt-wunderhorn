@@ -27,7 +27,6 @@ public class Edge {
 	private boolean arrayCopy = false;
 	private boolean controlLocation = false;
 	
-///	private boolean calleeFunction = false;
 	private List<Expr> parameterList = new LinkedList<Expr>();
 
 	public Edge(Unit unit) { this.unit = unit; }
@@ -80,9 +79,6 @@ public class Edge {
 	public List<Expr> getParameterList() { return this.parameterList; }
 	public void addParameter(Expr parameter) { this.parameterList.add(parameter); }
 	public void cleanParameterList() { this.parameterList = new LinkedList<Expr>(); }
-
-//	public boolean isCalleeFunction() { return this.calleeFunction; }
-//	public void setCalleeFunction(boolean calleeFunction) { this.calleeFunction = calleeFunction; }
 
 	public String toString() { return unit.toString(); }
 
