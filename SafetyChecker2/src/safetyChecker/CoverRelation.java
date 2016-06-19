@@ -46,7 +46,7 @@ public class CoverRelation {
 
 	public void updateCover() {
 	//	clearCovers();		
-	//	cover();
+		cover();
 	}
 
 	private void clearCovers() {
