@@ -36,7 +36,7 @@ public class Test1 {
 			ErrorLable.Error();
 	}
 
-	public void test3(int n) {
+	public void test(int n) {
 
 		int x = 3;
 		int[] intArray = new int[3];
@@ -65,12 +65,11 @@ public class Test1 {
 
 //		if(Arrays.equals(intArray, intArray2))
 		
-//		if(Arrays.equals(intArray, intArray2))
-		if(11 == intArray2[0])
+		if(Arrays.equals(intArray, intArray2))
 			ErrorLable.Error();
 	}
 
-	public void test(int n) {
+	public void test5(int n) {
 		int[] a1 = new int[n];
 		int[] a2 = new int[n];
 
@@ -78,7 +77,7 @@ public class Test1 {
 			a1[i] = i;
 			a2[i] = i;
 		}	
-		a2[9] = 9;
+		a2[10] = 12;
 		 
 		
 

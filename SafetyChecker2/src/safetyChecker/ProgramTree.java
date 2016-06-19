@@ -199,10 +199,10 @@ public class ProgramTree {
 			boolean errorPathFound = expandBFS(v);
 			LogUtils.debugln("expandBFs is done");
 			
-			if(errorRootSet.size() >  2000) {
-			 	LogUtils.fatalln("Error Root Size has reached to 2000 and stopped manually");      
-				break;
-			}
+//			if(errorRootSet.size() >  2000) {
+//			 	LogUtils.fatalln("Error Root Size has reached to 2000 and stopped manually");      
+//				break;
+//			}
 
 			if(!errorRootQueue.isEmpty()) {
 				LogUtils.debugln("errorRootQueue = " + errorRootQueue);

@@ -150,7 +150,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         java.util.Map $r7;
         java.util.Set $r8;
         java.lang.Object $r9, $r10, $r11, $r13;
-        int $i0, i1, i2, i1_1, i1_2, i2_1, i2_2, i2_3, i2_4, i2_5, i1_3;
+        int $i0, i1, i2, i1_1, i2_1, i1_2, i2_2, i2_3, i2_4, i2_5, i1_3;
         com.microsoft.z3.BoolExpr $r12, $r14, $r24, $r31;
         java.lang.StringBuilder $r16, $r17, $r21, $r22, $r23, $r25, $r28, $r29, $r30, $r32;
         java.lang.String $r18, $r26, $r33;
@@ -298,16 +298,16 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 (6)     i1_3 = i1_2 + -1;
 
      label09:
-        i1_2 = Phi(i1_1 #1, i1_3 #6);
-
         i2_1 = Phi(i2 #1, i2_5 #6);
+
+        i1_2 = Phi(i1_1 #1, i1_3 #6);
 
 (7)     if i1_2 >= 0 goto label02;
 
      label10:
-        i1 = Phi(i1 #0, i1_2 #7);
-
         i2 = Phi(i2 #0, i2_1 #7);
+
+        i1 = Phi(i1 #0, i1_2 #7);
 
         $z2 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
 
