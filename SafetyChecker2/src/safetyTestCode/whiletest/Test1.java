@@ -7,7 +7,7 @@ public class Test1 {
 	public void test() {
 		int x = 0;
 
-		while(x < 2) 
+		while(x < 4) 
 			x++;
 
 //		int y = 0;
@@ -16,7 +16,7 @@ public class Test1 {
 //		if(y == 5) 
 //			x = 5;
 
-		if(x == 2)
+		if(x == 4) 
 			ErrorLable.Error();
 	}
 

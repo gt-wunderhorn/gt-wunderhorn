@@ -48,59 +48,82 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         return;
     }
 
-    public void updateUnitVertexMap(safetyChecker.Edge)
+    public void updateUnitVertexMap(safetyChecker.Vertex)
     {
         safetyChecker.CoverRelation r0;
-        safetyChecker.Edge r1;
-        soot.Unit r2, $r7, $r10;
-        java.util.Map $r3, $r6, $r9;
+        safetyChecker.Vertex r1, $r12, $r19;
+        safetyChecker.Edge r2;
+        soot.Unit r3, $r14, $r17;
+        java.lang.Object[] $r4;
+        java.lang.StringBuilder $r5, $r6, $r7, $r8;
+        java.lang.String $r9;
+        java.util.Map $r10, $r13, $r16;
         boolean $z0;
-        java.util.LinkedList $r4, r13, r14;
-        safetyChecker.Vertex $r5, $r12;
-        java.lang.Object $r11;
+        java.util.LinkedList $r11, r20, r21;
+        java.lang.Object $r18;
 
         r0 := @this: safetyChecker.CoverRelation;
 
-        r1 := @parameter0: safetyChecker.Edge;
+        r1 := @parameter0: safetyChecker.Vertex;
 
-        r2 = virtualinvoke r1.<safetyChecker.Edge: soot.Unit getUnit()>();
+        r2 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $r3 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
+        r3 = virtualinvoke r2.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-        $z0 = interfaceinvoke $r3.<java.util.Map: boolean containsKey(java.lang.Object)>(r2);
+        $r4 = newarray (java.lang.Object)[1];
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>(java.lang.String)>("add ");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r3);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r4[0] = $r9;
+
+        staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r4);
+
+        $r10 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
+
+        $z0 = interfaceinvoke $r10.<java.util.Map: boolean containsKey(java.lang.Object)>(r3);
 
         if $z0 == 0 goto label1;
 
-        $r9 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
+        $r16 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
 
-        $r10 = virtualinvoke r1.<safetyChecker.Edge: soot.Unit getUnit()>();
+        $r17 = virtualinvoke r2.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-        $r11 = interfaceinvoke $r9.<java.util.Map: java.lang.Object get(java.lang.Object)>($r10);
+        $r18 = interfaceinvoke $r16.<java.util.Map: java.lang.Object get(java.lang.Object)>($r17);
 
-        r13 = (java.util.LinkedList) $r11;
+        r20 = (java.util.LinkedList) $r18;
 
-        $r12 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
+        $r19 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        virtualinvoke r13.<java.util.LinkedList: boolean add(java.lang.Object)>($r12);
+        virtualinvoke r20.<java.util.LinkedList: boolean add(java.lang.Object)>($r19);
 
         goto label2;
 
      label1:
-        $r4 = new java.util.LinkedList;
+        $r11 = new java.util.LinkedList;
 
-        specialinvoke $r4.<java.util.LinkedList: void <init>()>();
+        specialinvoke $r11.<java.util.LinkedList: void <init>()>();
 
-        r14 = $r4;
+        r21 = $r11;
 
-        $r5 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
+        $r12 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        virtualinvoke r14.<java.util.LinkedList: boolean add(java.lang.Object)>($r5);
+        virtualinvoke r21.<java.util.LinkedList: boolean add(java.lang.Object)>($r12);
 
-        $r6 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
+        $r13 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
 
-        $r7 = virtualinvoke r1.<safetyChecker.Edge: soot.Unit getUnit()>();
+        $r14 = virtualinvoke r2.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-        interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r7, r14);
+        interfaceinvoke $r13.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r14, r21);
 
      label2:
         return;
@@ -111,6 +134,8 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         safetyChecker.CoverRelation r0;
 
         r0 := @this: safetyChecker.CoverRelation;
+
+        specialinvoke r0.<safetyChecker.CoverRelation: void cover()>();
 
         return;
     }
@@ -150,7 +175,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         java.util.Map $r7;
         java.util.Set $r8;
         java.lang.Object $r9, $r10, $r11, $r13;
-        int $i0, i1, i2, i1_1, i2_1, i1_2, i2_2, i2_3, i2_4, i2_5, i1_3;
+        int $i0, i1, i2, i1_1, i1_2, i2_1, i2_2, i2_3, i2_4, i2_5, i1_3;
         com.microsoft.z3.BoolExpr $r12, $r14, $r24, $r31;
         java.lang.StringBuilder $r16, $r17, $r21, $r22, $r23, $r25, $r28, $r29, $r30, $r32;
         java.lang.String $r18, $r26, $r33;
@@ -298,16 +323,16 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 (6)     i1_3 = i1_2 + -1;
 
      label09:
-        i2_1 = Phi(i2 #1, i2_5 #6);
-
         i1_2 = Phi(i1_1 #1, i1_3 #6);
+
+        i2_1 = Phi(i2 #1, i2_5 #6);
 
 (7)     if i1_2 >= 0 goto label02;
 
      label10:
-        i2 = Phi(i2 #0, i2_1 #7);
-
         i1 = Phi(i1 #0, i1_2 #7);
+
+        i2 = Phi(i2 #0, i2_1 #7);
 
         $z2 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
 

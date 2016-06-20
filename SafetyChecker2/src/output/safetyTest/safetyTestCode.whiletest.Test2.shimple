@@ -15,41 +15,26 @@ public class safetyTestCode.whiletest.Test2 extends java.lang.Object
     public void test()
     {
         safetyTestCode.whiletest.Test2 r0;
-        byte b0;
-        boolean z0;
-        int i1, i2, i1_1, i2_1, i2_2, i2_3, i1_2;
+        boolean z0, z1;
+        int i0, i0_1, i0_2;
 
         r0 := @this: safetyTestCode.whiletest.Test2;
 
-        b0 = 5;
+        i0 = 5;
 
         z0 = 1;
 
-        i1 = 0;
+        z1 = 1;
 
-(0)     goto label4;
+(0)     goto label2;
 
      label1:
-        i2_1 = 0;
-
-(1)     goto label3;
+(1)     i0_2 = i0_1 + 1;
 
      label2:
-(2)     i2_3 = i2_2 + 1;
+        i0_1 = Phi(i0 #0, i0_2 #1);
 
-     label3:
-        i2_2 = Phi(i2_1 #1, i2_3 #2);
-
-        if i2_2 < 100 goto label2;
-
-(3)     i1_2 = i1_1 + 1;
-
-     label4:
-        i1_1 = Phi(i1 #0, i1_2 #3);
-
-        i2 = Phi(i2 #0, i2_2 #3);
-
-        if i1_1 < 100 goto label1;
+        if z1 != 0 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

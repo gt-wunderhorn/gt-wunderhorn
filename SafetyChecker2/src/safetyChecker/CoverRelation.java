@@ -32,8 +32,10 @@ public class CoverRelation {
 
 	}
 
-	public void updateUnitVertexMap(Edge edge) {
+	public void updateUnitVertexMap(Vertex vertex) {
+		Edge edge = vertex.getOutgoingEdge();
 		Unit unit = edge.getUnit();
+		LogUtils.warningln("add " + vertex + "--" + unit);
 		if(this.unitVertexMap.containsKey(unit)) {
 			LinkedList<Vertex> vertexList = unitVertexMap.get(edge.getUnit());
 			vertexList.add(edge.getSource());	

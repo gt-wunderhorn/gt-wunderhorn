@@ -8,9 +8,12 @@ public class Test2 {
 		int x = 5;
 		int y = 1;
 
+		boolean a = true;
+		while(a)
+			x++;
 
-//		for(int i = 0; i < 3; i++)
-//			for(int j = 0; j < 2; j++)
+//		for(int i = 0; i < 2; i++)
+//			for(int j = 0; j < 1; j++)
 //				y++;
 					    
 //		int y = 0;
@@ -20,8 +23,8 @@ public class Test2 {
 //			x = 5;
 
 
-		for(int i = 0; i < 100; i++)
-			for(int j = 0; j < 100; j++) {}		
+//		for(int i = 0; i < 2; i++)
+//			for(int j = 0; j < 5; j++) {}		
 
 	//	if(y == x+2)
 			ErrorLable.Error();

@@ -199,10 +199,11 @@ public class ProgramTree {
 			boolean errorPathFound = expandBFS(v);
 			LogUtils.debugln("expandBFs is done");
 			
-//			if(errorRootSet.size() >  2000) {
-//			 	LogUtils.fatalln("Error Root Size has reached to 2000 and stopped manually");      
-//				break;
-//			}
+			int hardLimit = 10;
+			if(errorRootSet.size() >  hardLimit) {
+			 	LogUtils.fatalln("Error Root Size has reached to hard limit " + hardLimit);
+				break;
+			}
 
 			if(!errorRootQueue.isEmpty()) {
 				LogUtils.debugln("errorRootQueue = " + errorRootQueue);
@@ -246,10 +247,11 @@ public class ProgramTree {
 				Vertex v = new Vertex();
 				v.setOutgoingEdge(incomingEdge);
 				incomingEdge.setSource(v);
-				if(incomingEdge.isControlLocation())
-					coverRelation.updateUnitVertexMap(incomingEdge);
 
 				v.setNextVertex(w);
+				if(incomingEdge.isControlLocation())
+					coverRelation.updateUnitVertexMap(w);
+
 				v.setDistance(w.getDistance()+1);
 				v.setLocationNumber(++locationCounter);
 				w.addPreviousVertex(v);

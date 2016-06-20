@@ -39,11 +39,14 @@ public class Test1 {
 	public void test(int n) {
 
 		int x = 3;
-		int[] intArray = new int[3];
-		int[] intArray2 = new int[2];
+//		int[] intArray = new int[3];
+//		int[] intArray2 = new int[2];
+		int[][] intArray3 = new int[2][4];
+		intArray3[1][3] = 3;
+		int a = intArray3[0][2];
 
-		intArray[0] = 25;
-		intArray[1] = 20;
+//		intArray[0] = 25;
+//		intArray[1] = 20;
 //		intArray[2] = 15;
 
 //		int[] intArray2 = new int[2];
@@ -65,7 +68,7 @@ public class Test1 {
 
 //		if(Arrays.equals(intArray, intArray2))
 		
-		if(Arrays.equals(intArray, intArray2))
+//		if(Arrays.equals(intArray, intArray2))
 			ErrorLable.Error();
 	}
 

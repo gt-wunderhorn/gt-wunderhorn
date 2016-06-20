@@ -35,28 +35,72 @@ public class CfgConverter {
 			writer.write("\tratio=\"fill\";\n\tsize=\"8.3,10.7!\";\n\tmargin=0;\n");
 
 			while(!queue.isEmpty()) {
-				Vertex w = queue.remove();
-				Set<Vertex> vSet = w.getPreviousVertexSet();
-				Edge e = w.getOutgoingEdge();
+				Vertex v = queue.remove();
+				Set<Vertex> vSet = v.getPreviousVertexSet();
+				Edge e = v.getOutgoingEdge();
 
 				String color = "";
-				if(coverRelation.isAncestorCovered(w))
+				if(coverRelation.isAncestorCovered(v))
 					color = "color =green, ";
 
-				if(w.getDistance()!=0 )
-					if(w.getOutgoingEdge().isInErrorPath()) 
-						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
-				for(Vertex v : vSet) { 
-					queue.add(v);
+				if(v.getDistance()!=0 )
+					if(v.getOutgoingEdge().isInErrorPath()) { 
+						Vertex w = v.getNextVertex();
+						String source = v.toString();
+						String target = w.toString();
+
+						String inv4Edge = "";
+						if(v.getInvariant() != null) {
+							String inv = "**";
+							if(!v.getInvariant().toString().contains("\n"))
+								inv = v.getInvariant().toString();
+							else
+								inv4Edge = "\n** " + v.getInvariant().toString(); 
+
+						       	source += "--" + inv;
+							writer.write("\t\"" + source + "\"[shape=polygon, sides=5, peripheries=2, color=turquoise, style=filled]");
+						} 
+						if(w.getInvariant() != null) {
+							String inv = "**";
+							if(!w.getInvariant().toString().contains("\n"))
+								inv = w.getInvariant().toString();
+							target += "--" + inv;
+						}
+
+						writer.write("\t\"" + source + "\" -> \"" + target + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + inv4Edge  + "\"];\n");
+
+//						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
+						
+					}
+				for(Vertex v2 : vSet) { 
+					queue.add(v2);
 				}
 			}
 			
 			for(Entry<Vertex, Set<Vertex>> entry : coveredByMap.entrySet()) {
 				Vertex coveredVertex = entry.getKey();
 				Set<Vertex> coveringSet = entry.getValue();
+
 				for(Vertex coveringVertex : coveringSet) {
-//					writer.write("\t\"" + coveredVertex + "\" -> \"" + coveringVertex + "\"[style=dashed, color=red];\n"); 
-					writer.write("\t\"" + coveredVertex + "\" -> \"" + coveringVertex + "\"[color=red];\n"); 
+					
+					String source = coveredVertex.toString();
+					String target = coveringVertex.toString();
+
+					if(coveredVertex.getInvariant() != null) { 
+						String inv = "**";
+						if(!coveredVertex.getInvariant().toString().contains("\n"))
+							inv = coveredVertex.getInvariant().toString();
+
+					       	source += "--" + inv;
+					} 
+					if(coveringVertex.getInvariant() != null) {
+						String inv = "**";
+						if(!coveringVertex.getInvariant().toString().contains("\n"))
+							inv = coveringVertex.getInvariant().toString();
+						target += "--" + inv;
+					}
+
+					writer.write("\t\"" + source + "\" -> \"" + target + "\"[color=red];\n"); 
 				}
 			}
 

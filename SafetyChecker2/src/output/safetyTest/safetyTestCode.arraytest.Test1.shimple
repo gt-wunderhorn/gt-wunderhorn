@@ -94,10 +94,10 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
     public void test(int)
     {
         safetyTestCode.arraytest.Test1 r0;
-        int i0;
+        int i0, i2;
         byte b1;
-        int[] r1, r2;
-        boolean $z0;
+        int[][] r1;
+        int[] $r2, $r3;
 
         r0 := @this: safetyTestCode.arraytest.Test1;
 
@@ -105,21 +105,18 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         b1 = 3;
 
-        r1 = newarray (int)[3];
+        r1 = newmultiarray (int)[2][4];
 
-        r2 = newarray (int)[2];
+        $r2 = r1[1];
 
-        r1[0] = 25;
+        $r2[3] = 3;
 
-        r1[1] = 20;
+        $r3 = r1[0];
 
-        $z0 = staticinvoke <java.util.Arrays: boolean equals(int[],int[])>(r1, r2);
-
-        if $z0 == 0 goto label1;
+        i2 = $r3[2];
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
-     label1:
         return;
     }
 
