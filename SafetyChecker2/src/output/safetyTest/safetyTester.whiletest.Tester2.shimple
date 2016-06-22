@@ -72,7 +72,7 @@ public class safetyTester.whiletest.Tester2 extends java.lang.Object
 
         staticinvoke <soot.Main: void main(java.lang.String[])>(r1);
 
-        r2 = "<safetyTestCode.whiletest.Test2: void test()>";
+        r2 = "<safetyTestCode.whiletest.Test2: void test(int)>";
 
         $r11 = newarray (java.lang.Object)[1];
 

@@ -5,45 +5,51 @@ public class safetyChecker.CoverRelation extends java.lang.Object
     private java.util.Map coveredByMap;
     private java.util.Set ancestorCoveredSet;
     private java.util.Map unitVertexMap;
+    private safetyChecker.ProgramTree programTree;
 
-    public void <init>(com.microsoft.z3.InterpolationContext)
+    public void <init>(com.microsoft.z3.InterpolationContext, safetyChecker.ProgramTree)
     {
         safetyChecker.CoverRelation r0;
         com.microsoft.z3.InterpolationContext r1;
-        java.util.HashMap $r2, $r3, $r5;
-        java.util.HashSet $r4;
+        safetyChecker.ProgramTree r2;
+        java.util.HashMap $r3, $r4, $r6;
+        java.util.HashSet $r5;
 
         r0 := @this: safetyChecker.CoverRelation;
 
         r1 := @parameter0: com.microsoft.z3.InterpolationContext;
 
+        r2 := @parameter1: safetyChecker.ProgramTree;
+
         specialinvoke r0.<java.lang.Object: void <init>()>();
 
         r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx> = r1;
 
-        $r2 = new java.util.HashMap;
-
-        specialinvoke $r2.<java.util.HashMap: void <init>()>();
-
-        r0.<safetyChecker.CoverRelation: java.util.Map coveringMap> = $r2;
+        r0.<safetyChecker.CoverRelation: safetyChecker.ProgramTree programTree> = r2;
 
         $r3 = new java.util.HashMap;
 
         specialinvoke $r3.<java.util.HashMap: void <init>()>();
 
-        r0.<safetyChecker.CoverRelation: java.util.Map coveredByMap> = $r3;
+        r0.<safetyChecker.CoverRelation: java.util.Map coveringMap> = $r3;
 
-        $r4 = new java.util.HashSet;
+        $r4 = new java.util.HashMap;
 
-        specialinvoke $r4.<java.util.HashSet: void <init>()>();
+        specialinvoke $r4.<java.util.HashMap: void <init>()>();
 
-        r0.<safetyChecker.CoverRelation: java.util.Set ancestorCoveredSet> = $r4;
+        r0.<safetyChecker.CoverRelation: java.util.Map coveredByMap> = $r4;
 
-        $r5 = new java.util.HashMap;
+        $r5 = new java.util.HashSet;
 
-        specialinvoke $r5.<java.util.HashMap: void <init>()>();
+        specialinvoke $r5.<java.util.HashSet: void <init>()>();
 
-        r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap> = $r5;
+        r0.<safetyChecker.CoverRelation: java.util.Set ancestorCoveredSet> = $r5;
+
+        $r6 = new java.util.HashMap;
+
+        specialinvoke $r6.<java.util.HashMap: void <init>()>();
+
+        r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap> = $r6;
 
         return;
     }
@@ -86,7 +92,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r4[0] = $r9;
 
-        staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r4);
+        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         $r10 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
 
@@ -140,29 +146,6 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         return;
     }
 
-    private void clearCovers()
-    {
-        safetyChecker.CoverRelation r0;
-        java.util.Map $r1, $r2;
-        java.util.Set $r3;
-
-        r0 := @this: safetyChecker.CoverRelation;
-
-        $r1 = r0.<safetyChecker.CoverRelation: java.util.Map coveringMap>;
-
-        interfaceinvoke $r1.<java.util.Map: void clear()>();
-
-        $r2 = r0.<safetyChecker.CoverRelation: java.util.Map coveredByMap>;
-
-        interfaceinvoke $r2.<java.util.Map: void clear()>();
-
-        $r3 = r0.<safetyChecker.CoverRelation: java.util.Set ancestorCoveredSet>;
-
-        interfaceinvoke $r3.<java.util.Set: void clear()>();
-
-        return;
-    }
-
     private void cover()
     {
         safetyChecker.CoverRelation r0;
@@ -170,12 +153,12 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         java.util.Iterator r2;
         java.util.LinkedList r3;
         safetyChecker.Vertex r4, r5;
-        boolean z0, z1, $z2;
+        boolean z0, z1, $z2, $z3, $z4;
         java.lang.Object[] $r6, $r15, $r19, $r20, $r27;
         java.util.Map $r7;
         java.util.Set $r8;
         java.lang.Object $r9, $r10, $r11, $r13;
-        int $i0, i1, i2, i1_1, i1_2, i2_1, i2_2, i2_3, i2_4, i2_5, i1_3;
+        int $i0, i1, i2, i1_1, i2_1, i1_2, i2_2, i2_3, i2_4, i2_5, i1_3;
         com.microsoft.z3.BoolExpr $r12, $r14, $r24, $r31;
         java.lang.StringBuilder $r16, $r17, $r21, $r22, $r23, $r25, $r28, $r29, $r30, $r32;
         java.lang.String $r18, $r26, $r33;
@@ -194,7 +177,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         r2 = interfaceinvoke $r8.<java.util.Set: java.util.Iterator iterator()>();
 
-(0)     goto label10;
+(0)     goto label12;
 
      label01:
         $r9 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
@@ -209,7 +192,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         i1_1 = $i0 - 1;
 
-(1)     goto label09;
+(1)     goto label11;
 
      label02:
         $r11 = virtualinvoke r3.<java.util.LinkedList: java.lang.Object get(int)>(i1_2);
@@ -220,25 +203,39 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         if $r12 != null goto label03;
 
-(2)     goto label08;
+(2)     goto label10;
 
      label03:
-        i2_2 = 0;
+        $z3 = virtualinvoke r0.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r4);
 
-(3)     goto label07;
+        if $z3 == 0 goto label04;
+
+(3)     goto label10;
 
      label04:
+        i2_2 = 0;
+
+(4)     goto label09;
+
+     label05:
         $r13 = virtualinvoke r3.<java.util.LinkedList: java.lang.Object get(int)>(i2_3);
 
         r5 = (safetyChecker.Vertex) $r13;
 
+        $z4 = virtualinvoke r0.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r5);
+
+        if $z4 == 0 goto label06;
+
+        goto label08;
+
+     label06:
         $r14 = virtualinvoke r5.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        if $r14 != null goto label05;
+        if $r14 != null goto label07;
 
-        goto label06;
+        goto label08;
 
-     label05:
+     label07:
         z0 = specialinvoke r0.<safetyChecker.CoverRelation: boolean checkCoveredBy(safetyChecker.Vertex,safetyChecker.Vertex)>(r4, r5);
 
         $r15 = newarray (java.lang.Object)[1];
@@ -255,7 +252,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r15);
 
-        if z0 == 0 goto label06;
+        if z0 == 0 goto label08;
 
         $r19 = newarray (java.lang.Object)[1];
 
@@ -305,34 +302,34 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         z1 = virtualinvoke r0.<safetyChecker.CoverRelation: boolean isAncestorCovered(safetyChecker.Vertex)>(r5);
 
-        if z1 != 0 goto label06;
+        if z1 != 0 goto label08;
 
         specialinvoke r0.<safetyChecker.CoverRelation: void addCoverRelation(safetyChecker.Vertex,safetyChecker.Vertex)>(r4, r5);
 
-     label06:
-(4)     i2_4 = i2_3 + 1;
-
-     label07:
-        i2_3 = Phi(i2_2 #3, i2_4 #4);
-
-(5)     if i2_3 < i1_2 goto label04;
-
      label08:
-        i2_5 = Phi(i2_1 #2, i2_3 #5);
-
-(6)     i1_3 = i1_2 + -1;
+(5)     i2_4 = i2_3 + 1;
 
      label09:
-        i1_2 = Phi(i1_1 #1, i1_3 #6);
+        i2_3 = Phi(i2_2 #4, i2_4 #5);
 
-        i2_1 = Phi(i2 #1, i2_5 #6);
-
-(7)     if i1_2 >= 0 goto label02;
+(6)     if i2_3 < i1_2 goto label05;
 
      label10:
-        i1 = Phi(i1 #0, i1_2 #7);
+        i2_5 = Phi(i2_1 #2, i2_1 #3, i2_3 #6);
 
-        i2 = Phi(i2 #0, i2_1 #7);
+(7)     i1_3 = i1_2 + -1;
+
+     label11:
+        i2_1 = Phi(i2 #1, i2_5 #7);
+
+        i1_2 = Phi(i1_1 #1, i1_3 #7);
+
+(8)     if i1_2 >= 0 goto label02;
+
+     label12:
+        i2 = Phi(i2 #0, i2_1 #8);
+
+        i1 = Phi(i1 #0, i1_2 #8);
 
         $z2 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
 
@@ -628,7 +625,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r19);
 
-        specialinvoke r0.<safetyChecker.CoverRelation: void clearCoverRelation(safetyChecker.Vertex)>(r1);
+        virtualinvoke r0.<safetyChecker.CoverRelation: void clearCoverRelation(safetyChecker.Vertex)>(r1);
 
         $z2 = virtualinvoke r0.<safetyChecker.CoverRelation: boolean isAncestorCovered(safetyChecker.Vertex)>(r1);
 
@@ -676,7 +673,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         return;
     }
 
-    private void clearCoverRelation(safetyChecker.Vertex)
+    protected void clearCoverRelation(safetyChecker.Vertex)
     {
         safetyChecker.CoverRelation r0;
         safetyChecker.Vertex r1, r3;
@@ -710,6 +707,8 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         $r8 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
 
         r3 = (safetyChecker.Vertex) $r8;
+
+        specialinvoke r0.<safetyChecker.CoverRelation: void add2UncoveredMap(safetyChecker.Vertex)>(r3);
 
         $r9 = r0.<safetyChecker.CoverRelation: java.util.Map coveredByMap>;
 
@@ -777,6 +776,8 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         r2 = (safetyChecker.Vertex) $r9;
 
+        specialinvoke r0.<safetyChecker.CoverRelation: void add2UncoveredMap(safetyChecker.Vertex)>(r2);
+
         $r10 = r0.<safetyChecker.CoverRelation: java.util.Set ancestorCoveredSet>;
 
         interfaceinvoke $r10.<java.util.Set: boolean remove(java.lang.Object)>(r2);
@@ -788,6 +789,35 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         if $z0 != 0 goto label1;
 
+        return;
+    }
+
+    private void add2UncoveredMap(safetyChecker.Vertex)
+    {
+        safetyChecker.CoverRelation r0;
+        safetyChecker.Vertex r1;
+        java.util.Set $r2;
+        boolean $z0;
+        safetyChecker.ProgramTree $r3;
+        java.util.Queue $r4;
+
+        r0 := @this: safetyChecker.CoverRelation;
+
+        r1 := @parameter0: safetyChecker.Vertex;
+
+        $r2 = virtualinvoke r1.<safetyChecker.Vertex: java.util.Set getPreviousVertexSet()>();
+
+        $z0 = interfaceinvoke $r2.<java.util.Set: boolean isEmpty()>();
+
+        if $z0 == 0 goto label1;
+
+        $r3 = r0.<safetyChecker.CoverRelation: safetyChecker.ProgramTree programTree>;
+
+        $r4 = virtualinvoke $r3.<safetyChecker.ProgramTree: java.util.Queue getUncovered()>();
+
+        interfaceinvoke $r4.<java.util.Queue: boolean add(java.lang.Object)>(r1);
+
+     label1:
         return;
     }
 

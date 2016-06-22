@@ -86,8 +86,10 @@ public class Z3ScriptHandler {
 		boolean isError = false;
 		while(v != null) {
 			if(isError) break;
-			LogUtils.debugln(v.getOutgoingEdge());
+			LogUtils.debug("^^^^^");
+			LogUtils.debugln(v + " *** " + v.getOutgoingEdge() + "***" + v.getOutgoingEdge().getSource() + "***" + v.getNextVertex() + "***" + v.getOutgoingEdge().getTarget());
 			createZ3Script(v.getOutgoingEdge());
+	
 			v = v.getNextVertex();
 			if(v.getOutgoingEdge().isErrorEdge())
 				isError = true;
@@ -97,7 +99,7 @@ public class Z3ScriptHandler {
 
 	public boolean createZ3Script(Edge e) {
 		LogUtils.debug(">>>>>>");
-		LogUtils.debugln(e);
+		LogUtils.debugln(e.getSource() + "***" + e);
 		boolean converted = false;
 		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
@@ -189,7 +191,7 @@ public class Z3ScriptHandler {
 	}	
 
 	private boolean convertAssignStmtEdge(Edge edge) {
-		LogUtils.debugln("Z3ScriptHandler.convertAssignStmtEdge=" + edge);
+		LogUtils.debug("Z3ScriptHandler.convertAssignStmtEdge=" + edge.getSource() + "***"  + edge);
 		AssignStmt aStmt = (AssignStmt) edge.getUnit();
 		Value left = aStmt.getLeftOp();
 		Value right = aStmt.getRightOp();

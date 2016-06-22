@@ -74,8 +74,8 @@ public class ProgramTree {
 		this.mainFunction = mainFunction;
 		this.ictx = new InterpolationContext();
 		this.z3Handler = new Z3ScriptHandler(this.ictx);
-		this.itpHandler = new InterpolationHandler(this.ictx, this.z3Handler);
-		this.coverRelation = new CoverRelation(this.ictx);
+		this.coverRelation = new CoverRelation(this.ictx, this);
+		this.itpHandler = new InterpolationHandler(this.ictx, this.z3Handler, this.coverRelation);
 		if(this.mainFunction)
 			LogUtils.detailln("mainFunction = " + functionSignature);
 		else
@@ -199,11 +199,11 @@ public class ProgramTree {
 			boolean errorPathFound = expandBFS(v);
 			LogUtils.debugln("expandBFs is done");
 			
-			int hardLimit = 10;
-			if(errorRootSet.size() >  hardLimit) {
-			 	LogUtils.fatalln("Error Root Size has reached to hard limit " + hardLimit);
-				break;
-			}
+//			int hardLimit = 10;
+//			if(errorRootSet.size() >  hardLimit) {
+//			 	LogUtils.fatalln("Error Root Size has reached to hard limit " + hardLimit);
+//				break;
+//			}
 
 			if(!errorRootQueue.isEmpty()) {
 				LogUtils.debugln("errorRootQueue = " + errorRootQueue);
@@ -244,6 +244,9 @@ public class ProgramTree {
 			LogUtils.debugln("if (!coverRelation.isCovered(w))---" + w.getOutgoingEdge()); 
 
 			for (Edge incomingEdge : w.getIncomingEdges()) {
+
+				if(incomingEdge.getSource() != null) continue;
+
 				Vertex v = new Vertex();
 				v.setOutgoingEdge(incomingEdge);
 				incomingEdge.setSource(v);
@@ -318,5 +321,7 @@ public class ProgramTree {
 	public void printResult(String function) {
 		LogUtils.printResult(function, errorLocationFeasible);
 	}
+
+	public Queue<Vertex> getUncovered() { return this.uncovered; }
  
 }

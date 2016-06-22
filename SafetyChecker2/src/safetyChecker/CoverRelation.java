@@ -22,9 +22,11 @@ public class CoverRelation {
 	private Map<Vertex, Set<Vertex>> coveredByMap;
 	private Set<Vertex> ancestorCoveredSet;
 	private Map<Unit, LinkedList<Vertex>> unitVertexMap;
+	private ProgramTree programTree;
 
-	public CoverRelation(InterpolationContext ictx) {
+	public CoverRelation(InterpolationContext ictx, ProgramTree programTree) {
 		this.ictx = ictx;
+		this.programTree = programTree;
 		coveringMap = new HashMap<Vertex, Set<Vertex>>();
 		coveredByMap = new HashMap<Vertex, Set<Vertex>>();
 		ancestorCoveredSet = new HashSet<Vertex>();
@@ -35,7 +37,7 @@ public class CoverRelation {
 	public void updateUnitVertexMap(Vertex vertex) {
 		Edge edge = vertex.getOutgoingEdge();
 		Unit unit = edge.getUnit();
-		LogUtils.warningln("add " + vertex + "--" + unit);
+		LogUtils.debugln("add " + vertex + "--" + unit);
 		if(this.unitVertexMap.containsKey(unit)) {
 			LinkedList<Vertex> vertexList = unitVertexMap.get(edge.getUnit());
 			vertexList.add(edge.getSource());	
@@ -51,11 +53,11 @@ public class CoverRelation {
 		cover();
 	}
 
-	private void clearCovers() {
-		coveringMap.clear();
-		coveredByMap.clear();
-		ancestorCoveredSet.clear();
-	}
+//	private void clearCovers() {
+//		coveringMap.clear();
+//		coveredByMap.clear();
+//		ancestorCoveredSet.clear();
+//	}
 
 	private void cover() {
 		LogUtils.debugln(">>>>>>>>>CoverRelation.cover");
@@ -67,8 +69,15 @@ public class CoverRelation {
 				if(weakerVertex.getInvariant() == null) 
 					continue;
 
+				if(this.isCovered(weakerVertex))
+					continue;
+
 				for(int strongerIndex = 0; strongerIndex < weakerIndex; strongerIndex++) {
 					Vertex strongerVertex = vertexList.get(strongerIndex);
+
+					if(this.isCovered(strongerVertex))
+							continue;
+
 					if(strongerVertex.getInvariant() == null) 
 						continue;
 
@@ -165,10 +174,11 @@ public class CoverRelation {
 		LogUtils.debugln("<<<<<CoverRelation.addCoverRelation");
 	}
 	
-	private void clearCoverRelation(Vertex vertex) {
+	protected void clearCoverRelation(Vertex vertex) {
 		if(coveringMap.containsKey(vertex)) {
 			Set<Vertex> ll = coveringMap.get(vertex);
 			for(Vertex coveredVertex : ll) {
+				this.add2UncoveredMap(coveredVertex);
 				coveredByMap.get(coveredVertex).remove(vertex);
 				if(!isAncestorCovered(coveredVertex))  
 					uncoverDescendants(coveredVertex);	
@@ -180,9 +190,16 @@ public class CoverRelation {
 	private void uncoverDescendants(Vertex vertex) {
 		LogUtils.debugln(">>>>>>>>>CoverRelation.uncoverDescendants = " + vertex);
        		for(Vertex prevVertex : vertex.getPreviousVertexSet()) {
+			this.add2UncoveredMap(prevVertex);
 			ancestorCoveredSet.remove(prevVertex);
 			uncoverDescendants(prevVertex);
 		}
+	}
+
+	private void add2UncoveredMap(Vertex vertex) {
+		if(vertex.getPreviousVertexSet().isEmpty())
+			this.programTree.getUncovered().add(vertex);
+
 	}
 	
 	private void coverDescendants(Vertex vertex) {

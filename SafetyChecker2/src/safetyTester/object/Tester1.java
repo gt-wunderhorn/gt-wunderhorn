@@ -1,4 +1,4 @@
-package safetyTester.whiletest;
+package safetyTester.object;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -15,7 +15,7 @@ import soot.SootMethod;
 import soot.Transform;
 import soot.options.Options;
 
-public class Tester2 {
+public class Tester1 {
 	static Map<String, Body> stores = new HashMap<String, Body>();
 
 	public static void main(String[] args) throws FileNotFoundException,
@@ -44,8 +44,8 @@ public class Tester2 {
 		soot.Main.main(sootArgs);
 		//System.out.println(stores.size());
 
-		String mainFunction ="<safetyTestCode.whiletest.Test2: void test(int)>";
-		LogUtils.infoln("safetyTester.whiletest.Tester2... Test started...");
+		String mainFunction ="<safetyTestCode.object.Test1: void test()>";
+		LogUtils.infoln("safetyTester.object.Tester1... Test started...");
 	
 		try {	
 			ProgramTree pTree = new ProgramTree(stores, mainFunction, true);
@@ -62,7 +62,7 @@ public class Tester2 {
 			exp.printStackTrace();
 		}
 
-		LogUtils.infoln("safetyTester.whiletest.Tester2... Test finished...");
+		LogUtils.infoln("safetyTester.object.Tester1... Test finished...");
 		/// There will no need to forest anymore....
 //		Forest forest1 = new Forest(stores,
 //				"<de.ecspride.ImplicitFlow3: void tester()>", "<de.ecspride.ImplicitFlow3: void onCreate2(android.os.Bundle)>");

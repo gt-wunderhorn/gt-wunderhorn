@@ -4,7 +4,7 @@ import safetyChecker.ErrorLable;
 
 public class Test2 {
 
-	public void test() {
+	public void test2() {
 		int x = 5;
 		int y = 1;
 
@@ -29,5 +29,13 @@ public class Test2 {
 	//	if(y == x+2)
 			ErrorLable.Error();
 	}
+
+	public void test(int n) {
+		for(int i = 0; i < 2; i++) {
+			for(int j = 0; j < 2; j++) {}
+		}
+		ErrorLable.Error();
+	}
+
 
 }

@@ -67,7 +67,7 @@ public class CfgConverter {
 							target += "--" + inv;
 						}
 
-						writer.write("\t\"" + source + "\" -> \"" + target + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + inv4Edge  + "\"];\n");
+						writer.write("\t\"" + source + "\" -> \"" + target + "\"[" + color + "label=\"" + e + "--" /*+ e.getZ3Expr()*/ + inv4Edge  + "\"];\n");
 
 //						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
 						

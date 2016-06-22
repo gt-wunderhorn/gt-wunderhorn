@@ -1,0 +1,16 @@
+public class safetyTestCode.object.Obj extends java.lang.Object
+{
+    int access1;
+    int access2;
+
+    public void <init>()
+    {
+        safetyTestCode.object.Obj r0;
+
+        r0 := @this: safetyTestCode.object.Obj;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

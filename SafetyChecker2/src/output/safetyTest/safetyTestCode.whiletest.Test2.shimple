@@ -12,7 +12,7 @@ public class safetyTestCode.whiletest.Test2 extends java.lang.Object
         return;
     }
 
-    public void test()
+    public void test2()
     {
         safetyTestCode.whiletest.Test2 r0;
         boolean z0, z1;
@@ -35,6 +35,46 @@ public class safetyTestCode.whiletest.Test2 extends java.lang.Object
         i0_1 = Phi(i0 #0, i0_2 #1);
 
         if z1 != 0 goto label1;
+
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+
+        return;
+    }
+
+    public void test(int)
+    {
+        safetyTestCode.whiletest.Test2 r0;
+        int i0, i1, i2, i1_1, i2_1, i2_2, i2_3, i1_2;
+
+        r0 := @this: safetyTestCode.whiletest.Test2;
+
+        i0 := @parameter0: int;
+
+        i1 = 0;
+
+(0)     goto label4;
+
+     label1:
+        i2_1 = 0;
+
+(1)     goto label3;
+
+     label2:
+(2)     i2_3 = i2_2 + 1;
+
+     label3:
+        i2_2 = Phi(i2_1 #1, i2_3 #2);
+
+        if i2_2 < 2 goto label2;
+
+(3)     i1_2 = i1_1 + 1;
+
+     label4:
+        i2 = Phi(i2 #0, i2_2 #3);
+
+        i1_1 = Phi(i1 #0, i1_2 #3);
+
+        if i1_1 < 2 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

@@ -15,13 +15,15 @@ public class InterpolationHandler {
 
 	private InterpolationContext ictx;
 	private Z3ScriptHandler z3Handler;
+	private CoverRelation coverRelation;
 
 	Expr[] from = null;
 	Expr[] to = null;
 
-	public InterpolationHandler(InterpolationContext ictx, Z3ScriptHandler z3Handler) { 
+	public InterpolationHandler(InterpolationContext ictx, Z3ScriptHandler z3Handler, CoverRelation coverRelation) { 
 		this.ictx = ictx;
 		this.z3Handler = z3Handler;
+		this.coverRelation = coverRelation;
 	}
 
 	public boolean createInterpolant(Vertex errorRoot) { 
@@ -111,6 +113,8 @@ public class InterpolationHandler {
 						BoolExpr disjunction = this.ictx.mkOr(newInvariant, currentInvariant);
 						BoolExpr simplified = (BoolExpr) disjunction.simplify();
 						nextLocation.setInvariant(simplified);
+						// vertex invariant is weakedned clear the vertexes covered by weakened invariants
+						coverRelation.clearCoverRelation(nextLocation);
 					}
 					index++; 
 				}

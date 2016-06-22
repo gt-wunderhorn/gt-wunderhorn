@@ -22,7 +22,7 @@ public class UnitController {
 	public static final String ERRORLABEL = "ErrorLable";
 	public static final String OBJECTINVOKE = "<java.lang.Object: void <init>";
 	public static final String NONSENSCOMPARE = "java.lang.String: boolean equals";
-	public static final String NOTINVOKESIGNATURE = "java.lang.Object: void <init>()>";
+	public static final String NOTINVOKESIGNATURE = "void <init>()>"; //java.lang.Object: void <init>()>";
 
 	private static final String SEND_TEXT_MESSAGE_SIGNATURE = "sendTextMessage";
        	private static final Integer SEND_TEXT_MESSAGE_PARAM_NO = 2;
@@ -117,7 +117,8 @@ public class UnitController {
 			AssignStmt aStmt = (AssignStmt) u;
 			Value right = aStmt.getRightOp();
 			if(right instanceof NewExpr) {
-				System.out.println("UnitController.isNewInvoke is not completed yet.");
+				LogUtils.fatalln(right);
+				LogUtils.warningln("UnitController.isNewInvoke is not completed yet.");
 				System.exit(0);				
 			}
 		}
@@ -142,7 +143,7 @@ public class UnitController {
 
 	public boolean isInvoke(Unit u) {
 		String sign = UnitController.getMethodSignature(u);
-		if(u instanceof InvokeStmt && !sign.equals(UnitController.NOTINVOKESIGNATURE)) {
+		if(u instanceof InvokeStmt && !sign.endsWith(UnitController.NOTINVOKESIGNATURE)) {
 			return true;
 		} else if (u instanceof AssignStmt) {
 			Value right = ((AssignStmt)u).getRightOp();

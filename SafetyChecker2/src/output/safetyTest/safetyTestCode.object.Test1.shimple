@@ -1,0 +1,40 @@
+public class safetyTestCode.object.Test1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        safetyTestCode.object.Test1 r0;
+
+        r0 := @this: safetyTestCode.object.Test1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void test()
+    {
+        safetyTestCode.object.Test1 r0;
+        safetyTestCode.object.Obj r1, $r2;
+        int i0;
+
+        r0 := @this: safetyTestCode.object.Test1;
+
+        $r2 = new safetyTestCode.object.Obj;
+
+        specialinvoke $r2.<safetyTestCode.object.Obj: void <init>()>();
+
+        r1 = $r2;
+
+        r1.<safetyTestCode.object.Obj: int access1> = 1;
+
+        i0 = r1.<safetyTestCode.object.Obj: int access1>;
+
+        if i0 != 3 goto label1;
+
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+
+     label1:
+        return;
+    }
+}
