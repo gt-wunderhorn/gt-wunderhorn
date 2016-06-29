@@ -2,6 +2,19 @@ public class safetyTester.leetCode.climbingStairs.Tester2 extends java.lang.Obje
 {
     static java.util.Map stores;
 
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <safetyTester.leetCode.climbingStairs.Tester2: java.util.Map stores> = $r0;
+
+        return;
+    }
+
     public void <init>()
     {
         safetyTester.leetCode.climbingStairs.Tester2 r0;
@@ -147,18 +160,5 @@ public class safetyTester.leetCode.climbingStairs.Tester2 extends java.lang.Obje
         return;
 
         catch java.lang.Exception from label1 to label2 with label3;
-    }
-
-    static void <clinit>()
-    {
-        java.util.HashMap $r0;
-
-        $r0 = new java.util.HashMap;
-
-        specialinvoke $r0.<java.util.HashMap: void <init>()>();
-
-        <safetyTester.leetCode.climbingStairs.Tester2: java.util.Map stores> = $r0;
-
-        return;
     }
 }

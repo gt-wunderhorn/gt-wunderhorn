@@ -15,17 +15,24 @@ public class safetyTestCode.iftest.Test1 extends java.lang.Object
     public void test()
     {
         safetyTestCode.iftest.Test1 r0;
-        byte b0;
+        byte b0, b0_1, b0_2;
 
         r0 := @this: safetyTestCode.iftest.Test1;
 
         b0 = 3;
 
-        if b0 != 3 goto label1;
+(0)     if b0 == 3 goto label1;
+
+(1)     b0_1 = 4;
+
+     label1:
+        b0_2 = Phi(b0 #0, b0_1 #1);
+
+        if b0_2 != 3 goto label2;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
-     label1:
+     label2:
         return;
     }
 

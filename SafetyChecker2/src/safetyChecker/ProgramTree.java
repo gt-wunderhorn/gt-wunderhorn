@@ -203,20 +203,10 @@ public class ProgramTree {
 
 			boolean errorPathFound = expandBFS(v);
 			
-//			int hardLimit = 10;
-//			if(errorRootSet.size() >  hardLimit) {
-//			 	LogUtils.fatalln("Error Root Size has reached to hard limit " + hardLimit);
-//				break;
-//			}
-
 			if(!errorRootQueue.isEmpty()) {
 				LogUtils.debugln("errorRootQueue = " + errorRootQueue);
 				Vertex errorRoot = errorRootQueue.remove(); 
-//				Vertex vv = errorRoot;
-//				while(vv != null) {
-//					LogUtils.fatalln(vv.getOutgoingEdge() + "--" + vv.getPreviousVertexSet().size() + "--" + vv.getIncomingEdges().size() +"--" +vv.getNextVertex());
-//					vv = vv.getNextVertex();
-//				}
+				
 				LogUtils.infoln("error root #" + errorRootSet.size() + "=" + errorRoot);
 				z3Handler.convertPathtoZ3Script(errorRoot); 
 				errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
@@ -230,18 +220,6 @@ public class ProgramTree {
 
 		Queue<Vertex> q = new LinkedList<Vertex>();
 		q.add(root);		
-
-		LogUtils.debugln("coveringVertexMap # " + coverRelation.getCoveringMap().size());
-		LogUtils.debugln("coveredVertexMap # " + coverRelation.getCoveredByMap().size());
-		int count = 0;
-		for(Entry<Unit, LinkedList<Vertex>> entry : coverRelation.getUnitVertexMap().entrySet())
-			count += entry.getValue().size();
-		LogUtils.infoln("unitVertexMap # " + count);
-
-		for(Entry<Unit, LinkedList<Vertex>> entry : coverRelation.getUnitVertexMap().entrySet()) {
-			LogUtils.debugln(entry.getKey() + "--" + entry.getValue());
-			LogUtils.debugln("-------------");
-		}
 
 		CfgConverter.printAllPaths(q, "_all.dot");
 		LogUtils.warningln("errorSet size = " + errorSet.size());

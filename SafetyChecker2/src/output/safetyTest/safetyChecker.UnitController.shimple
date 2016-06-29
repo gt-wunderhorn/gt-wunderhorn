@@ -85,7 +85,7 @@ public class safetyChecker.UnitController extends java.lang.Object
         java.util.Map r2;
         soot.toolkits.graph.ExceptionalUnitGraph r3;
         soot.Unit r4;
-        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12;
         safetyChecker.Vertex $r5, $r6;
 
         r0 := @this: safetyChecker.UnitController;
@@ -134,21 +134,25 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         virtualinvoke r1.<safetyChecker.Edge: void setEntryLocation(boolean)>($z8);
 
+        $z9 = virtualinvoke r0.<safetyChecker.UnitController: boolean isInitInvoke(soot.Unit)>(r4);
+
+        virtualinvoke r1.<safetyChecker.Edge: void setInitInvoke(boolean)>($z9);
+
         $r5 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $z9 = virtualinvoke r1.<safetyChecker.Edge: boolean isEntryLocation()>();
+        $z10 = virtualinvoke r1.<safetyChecker.Edge: boolean isEntryLocation()>();
 
-        virtualinvoke $r5.<safetyChecker.Vertex: void setEntryLocation(boolean)>($z9);
+        virtualinvoke $r5.<safetyChecker.Vertex: void setEntryLocation(boolean)>($z10);
 
         $r6 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $z10 = virtualinvoke r1.<safetyChecker.Edge: boolean isInErrorPath()>();
+        $z11 = virtualinvoke r1.<safetyChecker.Edge: boolean isInErrorPath()>();
 
-        virtualinvoke $r6.<safetyChecker.Vertex: void setInErrorPath(boolean)>($z10);
+        virtualinvoke $r6.<safetyChecker.Vertex: void setInErrorPath(boolean)>($z11);
 
-        $z11 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
+        $z12 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
 
-        if $z11 == 0 goto label1;
+        if $z12 == 0 goto label1;
 
         virtualinvoke r1.<safetyChecker.Edge: void setInErrorPath(boolean)>(1);
 
@@ -430,7 +434,6 @@ public class safetyChecker.UnitController extends java.lang.Object
         soot.jimple.AssignStmt r2;
         soot.Value r3;
         boolean $z0, $z1;
-        java.lang.Object[] $r4, $r5;
 
         r0 := @this: safetyChecker.UnitController;
 
@@ -448,19 +451,7 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         if $z1 == 0 goto label1;
 
-        $r4 = newarray (java.lang.Object)[1];
-
-        $r4[0] = r3;
-
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r4);
-
-        $r5 = newarray (java.lang.Object)[1];
-
-        $r5[0] = "UnitController.isNewInvoke is not completed yet.";
-
-        staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r5);
-
-        staticinvoke <java.lang.System: void exit(int)>(0);
+        return 1;
 
      label1:
         return 0;
@@ -514,6 +505,54 @@ public class safetyChecker.UnitController extends java.lang.Object
         staticinvoke <safetyChecker.UnitController: java.lang.String getMethodSignature(soot.Unit)>(r1);
 
      label1:
+        return 0;
+    }
+
+    public boolean isInitInvoke(soot.Unit)
+    {
+        safetyChecker.UnitController r0;
+        soot.Unit r1;
+        java.lang.String r2;
+        soot.Value r3;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        soot.jimple.AssignStmt $r4;
+
+        r0 := @this: safetyChecker.UnitController;
+
+        r1 := @parameter0: soot.Unit;
+
+        r2 = staticinvoke <safetyChecker.UnitController: java.lang.String getMethodSignature(soot.Unit)>(r1);
+
+        $z0 = r1 instanceof soot.jimple.InvokeStmt;
+
+        if $z0 == 0 goto label1;
+
+        $z4 = virtualinvoke r2.<java.lang.String: boolean endsWith(java.lang.String)>("void <init>()>");
+
+        if $z4 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $z1 = r1 instanceof soot.jimple.AssignStmt;
+
+        if $z1 == 0 goto label2;
+
+        $r4 = (soot.jimple.AssignStmt) r1;
+
+        r3 = interfaceinvoke $r4.<soot.jimple.AssignStmt: soot.Value getRightOp()>();
+
+        $z2 = r3 instanceof soot.jimple.InvokeExpr;
+
+        if $z2 == 0 goto label2;
+
+        $z3 = virtualinvoke r2.<java.lang.String: boolean equals(java.lang.Object)>("void <init>()>");
+
+        if $z3 == 0 goto label2;
+
+        return 1;
+
+     label2:
         return 0;
     }
 

@@ -2,19 +2,6 @@ public class safetyTester.object.Tester1 extends java.lang.Object
 {
     static java.util.Map stores;
 
-    static void <clinit>()
-    {
-        java.util.HashMap $r0;
-
-        $r0 = new java.util.HashMap;
-
-        specialinvoke $r0.<java.util.HashMap: void <init>()>();
-
-        <safetyTester.object.Tester1: java.util.Map stores> = $r0;
-
-        return;
-    }
-
     public void <init>()
     {
         safetyTester.object.Tester1 r0;
@@ -160,5 +147,18 @@ public class safetyTester.object.Tester1 extends java.lang.Object
         return;
 
         catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <safetyTester.object.Tester1: java.util.Map stores> = $r0;
+
+        return;
     }
 }

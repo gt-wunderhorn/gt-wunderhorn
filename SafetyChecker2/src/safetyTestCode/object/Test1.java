@@ -6,10 +6,13 @@ public class Test1 {
 
 	public void test() {
 		Obj o = new Obj();
-		o.access1 = 1;
+		int a = 3;
+		int b = 4;
+		o.access1 = a;
+		o.access2 = b;
 		int x = o.access1;
 
-		if(x == 3)
+		if(o.access1 == o.access2-1)
 			ErrorLable.Error();
 	}
 }

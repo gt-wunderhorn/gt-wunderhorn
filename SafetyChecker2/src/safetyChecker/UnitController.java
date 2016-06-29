@@ -55,6 +55,7 @@ public class UnitController {
 		e.setArrayCopyEdge(this.isArrayCopyInvoke(u));
 		e.setControlLocation(this.isControlLocation(u));
 		e.setEntryLocation(this.isEntryLocation(u, cfg));
+		e.setInitInvoke(this.isInitInvoke(u));
 
 		e.getSource().setEntryLocation(e.isEntryLocation());
 		e.getSource().setInErrorPath(e.isInErrorPath());
@@ -123,9 +124,7 @@ public class UnitController {
 			AssignStmt aStmt = (AssignStmt) u;
 			Value right = aStmt.getRightOp();
 			if(right instanceof NewExpr) {
-				LogUtils.fatalln(right);
-				LogUtils.warningln("UnitController.isNewInvoke is not completed yet.");
-				System.exit(0);				
+				return true;
 			}
 		}
 		return false;
@@ -144,6 +143,18 @@ public class UnitController {
 		if(isInvoke(u) && u instanceof AssignStmt) {
 			String sign = UnitController.getMethodSignature(u);
 		}	
+		return false;
+	}
+
+	public boolean isInitInvoke(Unit u) {
+		String sign = UnitController.getMethodSignature(u);
+		if(u instanceof InvokeStmt && sign.endsWith(UnitController.NOTINVOKESIGNATURE)) {
+			return true;
+		} else if (u instanceof AssignStmt) {
+			Value right = ((AssignStmt)u).getRightOp();
+			if(right instanceof InvokeExpr && sign.equals(UnitController.NOTINVOKESIGNATURE))
+				return true;
+		}
 		return false;
 	}
 

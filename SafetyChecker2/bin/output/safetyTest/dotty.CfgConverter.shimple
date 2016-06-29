@@ -43,21 +43,21 @@ public class dotty.CfgConverter extends java.lang.Object
     public static void printErrorPaths(java.util.Queue, java.lang.String, safetyChecker.CoverRelation)
     {
         java.util.Queue r0;
-        java.lang.String r1, $r20, $r22, $r24, $r29, $r32, $r35, $r41, $r55, $r57, $r59, $r64, $r66, r75, r77, r78, r79, r80, r81, r90, r91, r92, r93, r75_1, r75_2, r75_3, r77_1, r78_1, r79_1, r80_1, r80_2, r79_2, r79_3, r80_3, r77_2, r79_4, r80_4, r77_3, r81_1, r81_2, r81_3, r78_2, r81_4, r78_3, r79_5, r80_5, r81_5, r78_4, r77_4, r92_1, r91_1, r93_1, r90_1, r90_2, r91_2, r92_2, r92_3, r92_4, r90_3, r92_5, r90_4, r93_2, r93_3, r93_4, r91_3, r91_4, r93_5, r92_6, r79_6, r80_6, r75_4, r81_6, r91_5, r93_6, r90_5, r78_5, r77_5, r92_7, r79_7, r80_7, r75_5, r81_7, r91_6, r93_7, r90_6, r78_6, r77_6;
+        java.lang.String r1, $r21, $r25, $r27, $r29, $r34, $r37, $r40, $r46, $r59, $r61, $r63, $r68, $r70, r79, r81, r82, r83, r84, r85, r92, r93, r94, r95, r79_1, r79_2, r79_3, r81_1, r82_1, r83_1, r84_1, r84_2, r83_2, r83_3, r84_3, r81_2, r83_4, r81_3, r84_4, r85_1, r85_2, r85_3, r82_2, r85_4, r82_3, r83_5, r81_4, r85_5, r84_5, r82_4, r92_1, r93_1, r94_1, r94_2, r94_3, r92_2, r94_4, r92_3, r95_1, r95_2, r95_3, r93_2, r95_4, r93_3, r79_4, r83_6, r81_5, r95_5, r85_6, r94_5, r93_4, r92_4, r84_6, r82_5, r79_5, r83_7, r81_6, r95_6, r85_7, r94_6, r93_5, r92_5, r84_7, r82_6;
         safetyChecker.CoverRelation r2;
         java.io.BufferedWriter r3;
-        boolean $z0, $z1, $z2, $z4, $z5, $z6, $z7, $z8, $z9, $z10;
-        java.lang.Object $r4, $r5, $r44, $r45, $r46, $r47;
-        int $i0;
-        safetyChecker.Edge $r6, r74;
-        com.microsoft.z3.BoolExpr $r7, $r8, $r21, $r27, $r28, $r31, $r42, $r48, $r49, $r56, $r62, $r63, $r69;
-        java.lang.StringBuilder $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r23, $r25, $r26, $r30, $r33, $r34, $r36, $r37, $r38, $r39, $r40, $r50, $r51, $r52, $r53, $r54, $r58, $r60, $r61, $r65, $r67, $r68;
-        java.util.Set $r43, r73, r87;
-        java.lang.Exception $r70, r94;
-        java.util.Map r71;
-        safetyChecker.Vertex r72, r76, r83, r86, r89;
-        java.util.Iterator r82, r84, r88;
-        java.util.Map$Entry r85;
+        boolean $z0, $z1, $z2, $z4, $z5, $z6, $z7, $z8, $z9;
+        java.lang.Object $r4, $r5, $r49, $r50, $r51;
+        int $i0, $i1;
+        safetyChecker.Edge $r6, r78;
+        com.microsoft.z3.BoolExpr $r7, $r8, $r26, $r32, $r33, $r36, $r47, $r52, $r53, $r60, $r66, $r67, $r73;
+        java.util.Set $r9, $r48, r77;
+        java.lang.StringBuilder $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r22, $r23, $r24, $r28, $r30, $r31, $r35, $r38, $r39, $r41, $r42, $r43, $r44, $r45, $r54, $r55, $r56, $r57, $r58, $r62, $r64, $r65, $r69, $r71, $r72;
+        java.lang.Exception $r74, r96;
+        java.util.Map r75;
+        safetyChecker.Vertex r76, r80, r87, r90, r91;
+        java.util.Iterator r86, r88;
+        java.util.Map$Entry r89;
 
         r0 := @parameter0: java.util.Queue;
 
@@ -66,7 +66,7 @@ public class dotty.CfgConverter extends java.lang.Object
 (0)     r2 := @parameter2: safetyChecker.CoverRelation;
 
      label01:
-        r71 = virtualinvoke r2.<safetyChecker.CoverRelation: java.util.Map getCoveredByMap()>();
+        r75 = virtualinvoke r2.<safetyChecker.CoverRelation: java.util.Map getCoveredByMap()>();
 
         r3 = staticinvoke <dotty.CfgConverter: java.io.BufferedWriter getBufferedWriter(java.lang.String)>(r1);
 
@@ -74,374 +74,371 @@ public class dotty.CfgConverter extends java.lang.Object
 
         virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>("\tratio=\"fill\";\n\tsize=\"8.3,10.7!\";\n\tmargin=0;\n");
 
-(1)     goto label12;
+(1)     goto label13;
 
      label02:
         $r4 = interfaceinvoke r0.<java.util.Queue: java.lang.Object remove()>();
 
-        r72 = (safetyChecker.Vertex) $r4;
+        r76 = (safetyChecker.Vertex) $r4;
 
-        r73 = virtualinvoke r72.<safetyChecker.Vertex: java.util.Set getPreviousVertexSet()>();
+        r77 = virtualinvoke r76.<safetyChecker.Vertex: java.util.Set getPreviousVertexSet()>();
 
-        r74 = virtualinvoke r72.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        r78 = virtualinvoke r76.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-(2)     r75_1 = "";
+(2)     r79_1 = "";
 
-        $z1 = virtualinvoke r2.<safetyChecker.CoverRelation: boolean isAncestorCovered(safetyChecker.Vertex)>(r72);
+        $z1 = virtualinvoke r2.<safetyChecker.CoverRelation: boolean isAncestorCovered(safetyChecker.Vertex)>(r76);
 
 (3)     if $z1 == 0 goto label03;
 
-(4)     r75_2 = "color =green, ";
+(4)     r79_2 = "color =green, ";
 
      label03:
-        r75_3 = Phi(r75_1 #3, r75_2 #4);
+        r79_3 = Phi(r79_1 #3, r79_2 #4);
 
-(5)     $i0 = virtualinvoke r72.<safetyChecker.Vertex: int getDistance()>();
+(5)     $i0 = virtualinvoke r76.<safetyChecker.Vertex: int getDistance()>();
 
-(6)     if $i0 == 0 goto label09;
+(6)     if $i0 == 0 goto label10;
 
-        $r6 = virtualinvoke r72.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r6 = virtualinvoke r76.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
         $z4 = virtualinvoke $r6.<safetyChecker.Edge: boolean isInErrorPath()>();
 
-(7)     if $z4 == 0 goto label09;
+(7)     if $z4 == 0 goto label10;
 
-        r76 = virtualinvoke r72.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
+        r80 = virtualinvoke r76.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
-(8)     r77_1 = virtualinvoke r72.<safetyChecker.Vertex: java.lang.String toString()>();
+(8)     r81_1 = virtualinvoke r76.<safetyChecker.Vertex: java.lang.String toString()>();
 
-(9)     r78_1 = virtualinvoke r76.<safetyChecker.Vertex: java.lang.String toString()>();
+(9)     r82_1 = virtualinvoke r80.<safetyChecker.Vertex: java.lang.String toString()>();
 
-(10)    r79_1 = "";
+(10)    r83_1 = "";
 
-        $r7 = virtualinvoke r72.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r7 = virtualinvoke r76.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
 (11)    if $r7 == null goto label06;
 
-(12)    r80_1 = "**";
+(12)    r84_1 = "**";
 
-        $r28 = virtualinvoke r72.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r33 = virtualinvoke r76.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        $r29 = virtualinvoke $r28.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+        $r34 = virtualinvoke $r33.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
-        $z6 = virtualinvoke $r29.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
+        $z6 = virtualinvoke $r34.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
 
         if $z6 != 0 goto label04;
 
-        $r42 = virtualinvoke r72.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r47 = virtualinvoke r76.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-(13)    r80_2 = virtualinvoke $r42.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+(13)    r84_2 = virtualinvoke $r47.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
 (14)    goto label05;
 
      label04:
-        $r30 = new java.lang.StringBuilder;
+        $r35 = new java.lang.StringBuilder;
 
-        specialinvoke $r30.<java.lang.StringBuilder: void <init>(java.lang.String)>("\n** ");
+        specialinvoke $r35.<java.lang.StringBuilder: void <init>(java.lang.String)>("\n** ");
 
-        $r31 = virtualinvoke r72.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r36 = virtualinvoke r76.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        $r32 = virtualinvoke $r31.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+        $r37 = virtualinvoke $r36.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
-        $r33 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r32);
+        $r38 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r37);
 
-(15)    r79_2 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
+(15)    r83_2 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.String toString()>();
 
      label05:
-        r79_3 = Phi(r79_1 #14, r79_2 #15);
+        r83_3 = Phi(r83_1 #14, r83_2 #15);
 
-        r80_3 = Phi(r80_2 #14, r80_1 #15);
+        r84_3 = Phi(r84_2 #14, r84_1 #15);
 
-(16)    $r34 = new java.lang.StringBuilder;
+(16)    $r39 = new java.lang.StringBuilder;
 
-        $r35 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r77_1);
+        $r40 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r81_1);
 
-        specialinvoke $r34.<java.lang.StringBuilder: void <init>(java.lang.String)>($r35);
+        specialinvoke $r39.<java.lang.StringBuilder: void <init>(java.lang.String)>($r40);
 
-        $r36 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+        $r41 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
 
-        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r80_3);
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r84_3);
 
-(17)    r77_2 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.String toString()>();
+(17)    r81_2 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r38 = new java.lang.StringBuilder;
+        $r43 = new java.lang.StringBuilder;
 
-        specialinvoke $r38.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
+        specialinvoke $r43.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
 
-        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r77_2);
+        $r44 = virtualinvoke $r43.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r81_2);
 
-        $r40 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[shape=polygon, sides=5, peripheries=2, color=turquoise, style=filled]");
+        $r45 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[shape=polygon, sides=5, peripheries=2, color=turquoise, style=filled]");
 
-        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r46 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.String toString()>();
 
-(18)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r41);
+(18)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r46);
 
      label06:
-        r79_4 = Phi(r79_1 #11, r79_3 #18);
+        r83_4 = Phi(r83_1 #11, r83_3 #18);
 
-        r80_4 = Phi(r80 #11, r80_3 #18);
+        r81_3 = Phi(r81_1 #11, r81_2 #18);
 
-        r77_3 = Phi(r77_1 #11, r77_2 #18);
+        r84_4 = Phi(r84 #11, r84_3 #18);
 
-(19)    $r8 = virtualinvoke r76.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+(19)    $r8 = virtualinvoke r80.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
 (20)    if $r8 == null goto label08;
 
-(21)    r81_1 = "**";
+(21)    r85_1 = "**";
 
-        $r21 = virtualinvoke r76.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r26 = virtualinvoke r80.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        $r22 = virtualinvoke $r21.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+        $r27 = virtualinvoke $r26.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
-        $z5 = virtualinvoke $r22.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
+        $z5 = virtualinvoke $r27.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
 
 (22)    if $z5 != 0 goto label07;
 
-        $r27 = virtualinvoke r76.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r32 = virtualinvoke r80.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-(23)    r81_2 = virtualinvoke $r27.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+(23)    r85_2 = virtualinvoke $r32.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
      label07:
-        r81_3 = Phi(r81_1 #22, r81_2 #23);
+        r85_3 = Phi(r85_1 #22, r85_2 #23);
 
-(24)    $r23 = new java.lang.StringBuilder;
+(24)    $r28 = new java.lang.StringBuilder;
 
-        $r24 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r78_1);
+        $r29 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r82_1);
 
-        specialinvoke $r23.<java.lang.StringBuilder: void <init>(java.lang.String)>($r24);
+        specialinvoke $r28.<java.lang.StringBuilder: void <init>(java.lang.String)>($r29);
 
-        $r25 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+        $r30 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
 
-        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r81_3);
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r85_3);
 
-(25)    r78_2 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.String toString()>();
+(25)    r82_2 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.String toString()>();
 
      label08:
-        r81_4 = Phi(r81 #20, r81_3 #25);
+        r85_4 = Phi(r85 #20, r85_3 #25);
 
-        r78_3 = Phi(r78_1 #20, r78_2 #25);
+        r82_3 = Phi(r82_1 #20, r82_2 #25);
 
-(26)    $r9 = new java.lang.StringBuilder;
+(26)    $r9 = virtualinvoke r76.<safetyChecker.Vertex: java.util.Set getPreviousVertexSet()>();
 
-        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
+        $i1 = interfaceinvoke $r9.<java.util.Set: int size()>();
 
-        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r77_3);
+        if $i1 != 0 goto label09;
 
-        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
+        $r22 = new java.lang.StringBuilder;
 
-        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r78_3);
+        specialinvoke $r22.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
 
-        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[");
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r81_3);
 
-        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r75_3);
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[shape=rectangle, color=sandybrown, style=filled]");
 
-        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("label=\"");
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r74);
-
-        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
-
-        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r79_4);
-
-        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"];\n");
-
-        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
-
-(27)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r20);
+        virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r25);
 
      label09:
-        r79_5 = Phi(r79 #6, r79 #7, r79_4 #27);
+        $r10 = new java.lang.StringBuilder;
 
-        r80_5 = Phi(r80 #6, r80 #7, r80_4 #27);
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
 
-        r81_5 = Phi(r81 #6, r81 #7, r81_4 #27);
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r81_3);
 
-        r78_4 = Phi(r78 #6, r78 #7, r78_3 #27);
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
 
-        r77_4 = Phi(r77 #6, r77 #7, r77_3 #27);
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r82_3);
 
-(28)    r82 = interfaceinvoke r73.<java.util.Set: java.util.Iterator iterator()>();
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[");
 
-        goto label11;
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r79_3);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("label=\"");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r78);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r83_4);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"];\n");
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+(27)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r21);
 
      label10:
-        $r5 = interfaceinvoke r82.<java.util.Iterator: java.lang.Object next()>();
+        r83_5 = Phi(r83 #6, r83 #7, r83_4 #27);
 
-        r83 = (safetyChecker.Vertex) $r5;
+        r81_4 = Phi(r81 #6, r81 #7, r81_3 #27);
 
-        interfaceinvoke r0.<java.util.Queue: boolean add(java.lang.Object)>(r83);
+        r85_5 = Phi(r85 #6, r85 #7, r85_4 #27);
+
+        r84_5 = Phi(r84 #6, r84 #7, r84_4 #27);
+
+        r82_4 = Phi(r82 #6, r82 #7, r82_3 #27);
+
+(28)    r86 = interfaceinvoke r77.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label12;
 
      label11:
-        $z2 = interfaceinvoke r82.<java.util.Iterator: boolean hasNext()>();
+        $r5 = interfaceinvoke r86.<java.util.Iterator: java.lang.Object next()>();
 
-(29)    if $z2 != 0 goto label10;
+        r87 = (safetyChecker.Vertex) $r5;
+
+        interfaceinvoke r0.<java.util.Queue: boolean add(java.lang.Object)>(r87);
 
      label12:
-        r79 = Phi(r79 #1, r79_5 #29);
+        $z2 = interfaceinvoke r86.<java.util.Iterator: boolean hasNext()>();
 
-        r80 = Phi(r80 #1, r80_5 #29);
+(29)    if $z2 != 0 goto label11;
 
-        r75 = Phi(r75 #1, r75_3 #29);
+     label13:
+        r79 = Phi(r79 #1, r79_3 #29);
 
-        r81 = Phi(r81 #1, r81_5 #29);
+        r83 = Phi(r83 #1, r83_5 #29);
 
-        r78 = Phi(r78 #1, r78_4 #29);
+        r81 = Phi(r81 #1, r81_4 #29);
 
-        r77 = Phi(r77 #1, r77_4 #29);
+        r85 = Phi(r85 #1, r85_5 #29);
+
+        r84 = Phi(r84 #1, r84_5 #29);
+
+        r82 = Phi(r82 #1, r82_4 #29);
 
         $z0 = interfaceinvoke r0.<java.util.Queue: boolean isEmpty()>();
 
         if $z0 == 0 goto label02;
 
-        $r43 = interfaceinvoke r71.<java.util.Map: java.util.Set entrySet()>();
+        $r48 = interfaceinvoke r75.<java.util.Map: java.util.Set entrySet()>();
 
-        r84 = interfaceinvoke $r43.<java.util.Set: java.util.Iterator iterator()>();
+        r88 = interfaceinvoke $r48.<java.util.Set: java.util.Iterator iterator()>();
 
-(30)    goto label20;
-
-     label13:
-        $r44 = interfaceinvoke r84.<java.util.Iterator: java.lang.Object next()>();
-
-        r85 = (java.util.Map$Entry) $r44;
-
-        $r45 = interfaceinvoke r85.<java.util.Map$Entry: java.lang.Object getKey()>();
-
-        r86 = (safetyChecker.Vertex) $r45;
-
-        $r46 = interfaceinvoke r85.<java.util.Map$Entry: java.lang.Object getValue()>();
-
-        r87 = (java.util.Set) $r46;
-
-        r88 = interfaceinvoke r87.<java.util.Set: java.util.Iterator iterator()>();
-
-(31)    goto label19;
+(30)    goto label19;
 
      label14:
-        $r47 = interfaceinvoke r88.<java.util.Iterator: java.lang.Object next()>();
+        $r49 = interfaceinvoke r88.<java.util.Iterator: java.lang.Object next()>();
 
-        r89 = (safetyChecker.Vertex) $r47;
+        r89 = (java.util.Map$Entry) $r49;
 
-(32)    r90_2 = virtualinvoke r86.<safetyChecker.Vertex: java.lang.String toString()>();
+        $r50 = interfaceinvoke r89.<java.util.Map$Entry: java.lang.Object getKey()>();
 
-(33)    r91_2 = virtualinvoke r89.<safetyChecker.Vertex: java.lang.String toString()>();
+        r90 = (safetyChecker.Vertex) $r50;
 
-        $r48 = virtualinvoke r86.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r51 = interfaceinvoke r89.<java.util.Map$Entry: java.lang.Object getValue()>();
 
-(34)    if $r48 == null goto label16;
+        r91 = (safetyChecker.Vertex) $r51;
 
-(35)    r92_2 = "**";
+(31)    r92_1 = virtualinvoke r90.<safetyChecker.Vertex: java.lang.String toString()>();
 
-        $r63 = virtualinvoke r86.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+(32)    r93_1 = virtualinvoke r91.<safetyChecker.Vertex: java.lang.String toString()>();
 
-        $r64 = virtualinvoke $r63.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+        $r52 = virtualinvoke r90.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        $z10 = virtualinvoke $r64.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
+(33)    if $r52 == null goto label16;
 
-(36)    if $z10 != 0 goto label15;
+(34)    r94_1 = "**";
 
-        $r69 = virtualinvoke r86.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r67 = virtualinvoke r90.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-(37)    r92_3 = virtualinvoke $r69.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+        $r68 = virtualinvoke $r67.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+
+        $z9 = virtualinvoke $r68.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
+
+(35)    if $z9 != 0 goto label15;
+
+        $r73 = virtualinvoke r90.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+
+(36)    r94_2 = virtualinvoke $r73.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
      label15:
-        r92_4 = Phi(r92_2 #36, r92_3 #37);
+        r94_3 = Phi(r94_1 #35, r94_2 #36);
 
-(38)    $r65 = new java.lang.StringBuilder;
+(37)    $r69 = new java.lang.StringBuilder;
 
-        $r66 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r90_2);
+        $r70 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r92_1);
 
-        specialinvoke $r65.<java.lang.StringBuilder: void <init>(java.lang.String)>($r66);
+        specialinvoke $r69.<java.lang.StringBuilder: void <init>(java.lang.String)>($r70);
 
-        $r67 = virtualinvoke $r65.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+        $r71 = virtualinvoke $r69.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
 
-        $r68 = virtualinvoke $r67.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r92_4);
+        $r72 = virtualinvoke $r71.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r94_3);
 
-(39)    r90_3 = virtualinvoke $r68.<java.lang.StringBuilder: java.lang.String toString()>();
+(38)    r92_2 = virtualinvoke $r72.<java.lang.StringBuilder: java.lang.String toString()>();
 
      label16:
-        r92_5 = Phi(r92_1 #34, r92_4 #39);
+        r94_4 = Phi(r94 #33, r94_3 #38);
 
-        r90_4 = Phi(r90_2 #34, r90_3 #39);
+        r92_3 = Phi(r92_1 #33, r92_2 #38);
 
-(40)    $r49 = virtualinvoke r89.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+(39)    $r53 = virtualinvoke r91.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-(41)    if $r49 == null goto label18;
+(40)    if $r53 == null goto label18;
 
-(42)    r93_2 = "**";
+(41)    r95_1 = "**";
 
-        $r56 = virtualinvoke r89.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r60 = virtualinvoke r91.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-        $r57 = virtualinvoke $r56.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+        $r61 = virtualinvoke $r60.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
-        $z9 = virtualinvoke $r57.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
+        $z8 = virtualinvoke $r61.<java.lang.String: boolean contains(java.lang.CharSequence)>("\n");
 
-(43)    if $z9 != 0 goto label17;
+(42)    if $z8 != 0 goto label17;
 
-        $r62 = virtualinvoke r89.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
+        $r66 = virtualinvoke r91.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
-(44)    r93_3 = virtualinvoke $r62.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
+(43)    r95_2 = virtualinvoke $r66.<com.microsoft.z3.BoolExpr: java.lang.String toString()>();
 
      label17:
-        r93_4 = Phi(r93_2 #43, r93_3 #44);
+        r95_3 = Phi(r95_1 #42, r95_2 #43);
 
-(45)    $r58 = new java.lang.StringBuilder;
+(44)    $r62 = new java.lang.StringBuilder;
 
-        $r59 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r91_2);
+        $r63 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r93_1);
 
-        specialinvoke $r58.<java.lang.StringBuilder: void <init>(java.lang.String)>($r59);
+        specialinvoke $r62.<java.lang.StringBuilder: void <init>(java.lang.String)>($r63);
 
-        $r60 = virtualinvoke $r58.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
+        $r64 = virtualinvoke $r62.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
 
-        $r61 = virtualinvoke $r60.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r93_4);
+        $r65 = virtualinvoke $r64.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r95_3);
 
-(46)    r91_3 = virtualinvoke $r61.<java.lang.StringBuilder: java.lang.String toString()>();
+(45)    r93_2 = virtualinvoke $r65.<java.lang.StringBuilder: java.lang.String toString()>();
 
      label18:
-        r91_4 = Phi(r91_2 #41, r91_3 #46);
+        r95_4 = Phi(r95 #40, r95_3 #45);
 
-        r93_5 = Phi(r93_1 #41, r93_4 #46);
+        r93_3 = Phi(r93_1 #40, r93_2 #45);
 
-(47)    $r50 = new java.lang.StringBuilder;
+(46)    $r54 = new java.lang.StringBuilder;
 
-        specialinvoke $r50.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
+        specialinvoke $r54.<java.lang.StringBuilder: void <init>(java.lang.String)>("\t\"");
 
-        $r51 = virtualinvoke $r50.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r90_4);
+        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r92_3);
 
-        $r52 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
+        $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" -> \"");
 
-        $r53 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r91_4);
+        $r57 = virtualinvoke $r56.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r93_3);
 
-        $r54 = virtualinvoke $r53.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[color=red];\n");
+        $r58 = virtualinvoke $r57.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"[color=red];\n");
 
-        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r59 = virtualinvoke $r58.<java.lang.StringBuilder: java.lang.String toString()>();
 
-(48)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r55);
+(47)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r59);
 
      label19:
-        r92_1 = Phi(r92 #31, r92_5 #48);
+        r95 = Phi(r95 #30, r95_4 #47);
 
-        r91_1 = Phi(r91 #31, r91_4 #48);
+        r94 = Phi(r94 #30, r94_4 #47);
 
-        r93_1 = Phi(r93 #31, r93_5 #48);
+        r93 = Phi(r93 #30, r93_3 #47);
 
-        r90_1 = Phi(r90 #31, r90_4 #48);
+        r92 = Phi(r92 #30, r92_3 #47);
 
-(49)    $z8 = interfaceinvoke r88.<java.util.Iterator: boolean hasNext()>();
+        $z7 = interfaceinvoke r88.<java.util.Iterator: boolean hasNext()>();
 
-(50)    if $z8 != 0 goto label14;
-
-     label20:
-        r92 = Phi(r92 #30, r92_1 #50);
-
-        r91 = Phi(r91 #30, r91_1 #50);
-
-        r93 = Phi(r93 #30, r93_1 #50);
-
-        r90 = Phi(r90 #30, r90_1 #50);
-
-        $z7 = interfaceinvoke r84.<java.util.Iterator: boolean hasNext()>();
-
-        if $z7 != 0 goto label13;
+        if $z7 != 0 goto label14;
 
         virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>("}");
 
@@ -449,62 +446,62 @@ public class dotty.CfgConverter extends java.lang.Object
 
         virtualinvoke r3.<java.io.BufferedWriter: void close()>();
 
+     label20:
+(48)    goto label22;
+
      label21:
-(51)    goto label23;
+        $r74 := @caughtexception;
+
+        r79_4 = Phi(r79 #0, r79_1 #2, r79_2 #4, r79_3 #5);
+
+        r83_6 = Phi(r83 #0, r83_1 #10, r83_2 #15, r83_3 #16, r83_4 #19, r83_5 #28);
+
+        r81_5 = Phi(r81 #0, r81_1 #8, r81_2 #17, r81_3 #19, r81_4 #28);
+
+        r95_5 = Phi(r95 #0, r95_1 #41, r95_2 #43, r95_3 #44, r95_4 #46);
+
+        r85_6 = Phi(r85 #0, r85_1 #21, r85_2 #23, r85_3 #24, r85_4 #26, r85_5 #28);
+
+        r94_5 = Phi(r94 #0, r94_1 #34, r94_2 #36, r94_3 #37, r94_4 #39);
+
+        r93_4 = Phi(r93 #0, r93_1 #32, r93_2 #45, r93_3 #46);
+
+        r92_4 = Phi(r92 #0, r92_1 #31, r92_2 #38, r92_3 #39);
+
+        r84_6 = Phi(r84 #0, r84_1 #12, r84_2 #13, r84_3 #16, r84_4 #19, r84_5 #28);
+
+        r82_5 = Phi(r82 #0, r82_1 #9, r82_2 #25, r82_3 #26, r82_4 #28);
+
+        r96 = $r74;
+
+        virtualinvoke r96.<java.lang.Exception: void printStackTrace()>();
+
+(49)    staticinvoke <java.lang.System: void exit(int)>(0);
 
      label22:
-        $r70 := @caughtexception;
+        r79_5 = Phi(r79 #48, r79_4 #49);
 
-        r92_6 = Phi(r92 #0, r92_2 #35, r92_3 #37, r92_4 #38, r92_5 #40, r92_1 #49);
+        r83_7 = Phi(r83 #48, r83_6 #49);
 
-        r79_6 = Phi(r79 #0, r79_1 #10, r79_2 #15, r79_3 #16, r79_4 #19, r79_5 #28);
+        r81_6 = Phi(r81 #48, r81_5 #49);
 
-        r80_6 = Phi(r80 #0, r80_1 #12, r80_2 #13, r80_3 #16, r80_4 #19, r80_5 #28);
+        r95_6 = Phi(r95 #48, r95_5 #49);
 
-        r75_4 = Phi(r75 #0, r75_1 #2, r75_2 #4, r75_3 #5);
+        r85_7 = Phi(r85 #48, r85_6 #49);
 
-        r81_6 = Phi(r81 #0, r81_1 #21, r81_2 #23, r81_3 #24, r81_4 #26, r81_5 #28);
+        r94_6 = Phi(r94 #48, r94_5 #49);
 
-        r91_5 = Phi(r91 #0, r91_2 #33, r91_3 #46, r91_4 #47, r91_1 #49);
+        r93_5 = Phi(r93 #48, r93_4 #49);
 
-        r93_6 = Phi(r93 #0, r93_2 #42, r93_3 #44, r93_4 #45, r93_5 #47, r93_1 #49);
+        r92_5 = Phi(r92 #48, r92_4 #49);
 
-        r90_5 = Phi(r90 #0, r90_2 #32, r90_3 #39, r90_4 #40, r90_1 #49);
+        r84_7 = Phi(r84 #48, r84_6 #49);
 
-        r78_5 = Phi(r78 #0, r78_1 #9, r78_2 #25, r78_3 #26, r78_4 #28);
-
-        r77_5 = Phi(r77 #0, r77_1 #8, r77_2 #17, r77_3 #19, r77_4 #28);
-
-        r94 = $r70;
-
-        virtualinvoke r94.<java.lang.Exception: void printStackTrace()>();
-
-(52)    staticinvoke <java.lang.System: void exit(int)>(0);
-
-     label23:
-        r92_7 = Phi(r92 #51, r92_6 #52);
-
-        r79_7 = Phi(r79 #51, r79_6 #52);
-
-        r80_7 = Phi(r80 #51, r80_6 #52);
-
-        r75_5 = Phi(r75 #51, r75_4 #52);
-
-        r81_7 = Phi(r81 #51, r81_6 #52);
-
-        r91_6 = Phi(r91 #51, r91_5 #52);
-
-        r93_7 = Phi(r93 #51, r93_6 #52);
-
-        r90_6 = Phi(r90 #51, r90_5 #52);
-
-        r78_6 = Phi(r78 #51, r78_5 #52);
-
-        r77_6 = Phi(r77 #51, r77_5 #52);
+        r82_6 = Phi(r82 #48, r82_5 #49);
 
         return;
 
-        catch java.lang.Exception from label01 to label21 with label22;
+        catch java.lang.Exception from label01 to label20 with label21;
     }
 
     public static void printAllPaths(java.util.Queue, java.lang.String)
@@ -626,7 +623,7 @@ public class dotty.CfgConverter extends java.lang.Object
         safetyChecker.Edge r6, $r12, $r22, r34, r37;
         boolean $z0, $z3, $z4, $z5, $z8;
         java.lang.Object $r10, $r13, $r15, $r20, $r28;
-        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i8_1, i8_2, i8_3, i8_4, i8_5, i8_6, i8_7, i8_8, i9_1, i9_2, i8_9, i9_3, i8_10, i9_4;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i8_1, i8_2, i8_3, i8_4, i8_5, i8_6, i8_7, i8_8, i9_1, i9_2, i9_3, i8_9, i9_4, i8_10;
         java.util.Set $r14;
         soot.Unit $r16, $r18, r32, r39;
         java.lang.StringBuilder $r24, $r25, $r26;
@@ -732,8 +729,6 @@ public class dotty.CfgConverter extends java.lang.Object
         r38 = $r23;
 
         virtualinvoke r38.<safetyChecker.Vertex: void setOutgoingEdge(safetyChecker.Edge)>(r37);
-
-        virtualinvoke r38.<safetyChecker.Vertex: void setHeadLocation(boolean)>(1);
 
         virtualinvoke r38.<safetyChecker.Vertex: void setNextVertex(safetyChecker.Vertex)>(r35);
 
@@ -876,9 +871,9 @@ public class dotty.CfgConverter extends java.lang.Object
      label14:
         $r29 := @caughtexception;
 
-        i8_9 = Phi(i8 #0, i8_2 #2, i8_1 #4, i8_5 #8, i8_6 #10, i8_8 #12, i8_7 #14, i8_4 #16, i8_3 #18);
-
         i9_3 = Phi(i9 #0, i9_2 #20, i9_1 #22);
+
+        i8_9 = Phi(i8 #0, i8_2 #2, i8_1 #4, i8_5 #8, i8_6 #10, i8_8 #12, i8_7 #14, i8_4 #16, i8_3 #18);
 
         r42 = $r29;
 
@@ -887,9 +882,9 @@ public class dotty.CfgConverter extends java.lang.Object
 (24)    staticinvoke <java.lang.System: void exit(int)>(0);
 
      label15:
-        i8_10 = Phi(i8_3 #23, i8_9 #24);
-
         i9_4 = Phi(i9_1 #23, i9_3 #24);
+
+        i8_10 = Phi(i8_3 #23, i8_9 #24);
 
         return;
 
