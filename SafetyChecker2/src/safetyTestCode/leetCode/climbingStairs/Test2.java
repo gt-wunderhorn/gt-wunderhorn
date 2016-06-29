@@ -25,7 +25,7 @@ public class Test2 {
 		for (int i = 2; i < n; ++i)
 			store[i] = store[i - 1] + store[i - 2];
 
-		if(store[n-1] == 89)
+		if(store[n-1] == 7)
 			ErrorLable.Error();
 
 		return store[n - 1];

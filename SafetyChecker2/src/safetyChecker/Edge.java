@@ -26,6 +26,7 @@ public class Edge {
 	private boolean inErrorPath = false;
 	private boolean arrayCopy = false;
 	private boolean controlLocation = false;
+	private boolean entryLocation = false;
 	
 	private List<Expr> parameterList = new LinkedList<Expr>();
 
@@ -72,6 +73,9 @@ public class Edge {
 
 	public boolean isInErrorPath() { return this.inErrorPath; }
 	public void setInErrorPath(boolean inErrorPath) { this.inErrorPath = inErrorPath; }
+
+	public boolean isEntryLocation() { return this.entryLocation; }
+	public void setEntryLocation(boolean entryLocation) { this.entryLocation = entryLocation; }
 
 	public BoolExpr getZ3Expr() { return this.z3Expr; }
 	public void setZ3Expr(BoolExpr z3Expr) { this.z3Expr = z3Expr; } 

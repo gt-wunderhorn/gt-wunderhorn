@@ -3,6 +3,7 @@ package safetyChecker;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
@@ -10,7 +11,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import com.microsoft.z3.InterpolationContext;
-import com.microsoft.z3.Log;
 
 import dotty.CfgConverter;
 
@@ -23,12 +23,11 @@ import soot.toolkits.graph.ExceptionalUnitGraph;
 
 public class ProgramTree {
 
-	private Vertex returnLeaf;
+	private Vertex root;
 	private Set<Vertex> liSet;
 	private Vertex lf;
 	private Map<String, Body> stores;
 	// for algorithm
-	private Set<Vertex> vertexSet = new HashSet<Vertex>();
 	private Set<Edge> edgeSet = new HashSet<Edge>();
 	private Stack<Edge> path = new Stack<Edge>();
 
@@ -131,20 +130,19 @@ public class ProgramTree {
 				functionNameInvokeCount.put(functionName,functionNameInvokeCount.get(functionName)+1);
 			else
 				functionNameInvokeCount.put(functionName, 0);	
-
 			this.signature = functionSignature;
 	
 			// Assumption is that we have only one ErrorLocation and return  point
 			// if we have multiple returns, may be we should have multiple trees.
-			this.returnLeaf = new Vertex();
-			this.returnLeaf.setReturnLocation(true);
-			
+			this.root = new Vertex();
 			for(int i = 0; i < cfg.getTails().size(); i++) {	
-				Edge e = new Edge(cfg.getTails().get(i));
-				this.returnLeaf.addIncomingEdge(e);
+				Edge returnEdge = new Edge(cfg.getTails().get(i));
+				returnEdge.setReturnEdge(true);
+				boolean unDoneFlag = (cfg.getUnexceptionalPredsOf(returnEdge.getUnit()).size() > 1) ? true : false; 
+				Vertex returnVertex = this.addVertex(root, returnEdge, unDoneFlag);
+				returnVertex.setReturnLocation(true);
+//				this.unDoneLeaves.add(returnVertex);
 			}
-			this.uncovered.add(this.returnLeaf);
-
 			return true;
 		}
 		return false;
@@ -159,7 +157,7 @@ public class ProgramTree {
 			if(returnRootQueue.size() > 0) {
 				Vertex returnRoot = returnRootQueue.peek();
 				z3Handler.convertPathtoZ3Script(returnRoot);
-				LogUtils.infoln("HUHU");
+				LogUtils.infoln("inside if");
 				System.exit(0);
 				return true;
 			}
@@ -186,6 +184,10 @@ public class ProgramTree {
 		return result;
 	}
 
+	private HashMap<Vertex, Vertex> candidate2BeInPath = new HashMap<Vertex, Vertex>();
+	private HashMap<Vertex, Vertex> treeConnection = new HashMap<Vertex, Vertex>();
+//	private Queue<Vertex> unDoneLeaves = new LinkedList<Vertex>();
+
 	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.infoln("----->Unwind");
 
@@ -193,11 +195,13 @@ public class ProgramTree {
 
 		while(!this.uncovered.isEmpty()) {
 			Vertex v = uncovered.remove();
+			if(this.isConnectionCovered(v))
+				continue;
+
 			LogUtils.debugln(v.getOutgoingEdge() + "---" + v + "--" + coverRelation.isCovered(v));
 			if(coverRelation.isCovered(v)) continue;
 
 			boolean errorPathFound = expandBFS(v);
-			LogUtils.debugln("expandBFs is done");
 			
 //			int hardLimit = 10;
 //			if(errorRootSet.size() >  hardLimit) {
@@ -208,103 +212,163 @@ public class ProgramTree {
 			if(!errorRootQueue.isEmpty()) {
 				LogUtils.debugln("errorRootQueue = " + errorRootQueue);
 				Vertex errorRoot = errorRootQueue.remove(); 
-
-				LogUtils.fatalln("error root # = " + errorRootSet.size());
+//				Vertex vv = errorRoot;
+//				while(vv != null) {
+//					LogUtils.fatalln(vv.getOutgoingEdge() + "--" + vv.getPreviousVertexSet().size() + "--" + vv.getIncomingEdges().size() +"--" +vv.getNextVertex());
+//					vv = vv.getNextVertex();
+//				}
+				LogUtils.infoln("error root #" + errorRootSet.size() + "=" + errorRoot);
 				z3Handler.convertPathtoZ3Script(errorRoot); 
 				errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
 				LogUtils.debugln("printing result path");
-				printResult(errorRoot.toString());
+				this.printResult(errorRoot.toString());
 
 				if(errorLocationFeasible) break;
-
-				LogUtils.debugln("updatecover is calling");
 				coverRelation.updateCover();
-				LogUtils.debugln("updateCover is done");
 			}
 		}	
+
 		Queue<Vertex> q = new LinkedList<Vertex>();
-		q.add(returnLeaf);		
+		q.add(root);		
+
 		LogUtils.debugln("coveringVertexMap # " + coverRelation.getCoveringMap().size());
 		LogUtils.debugln("coveredVertexMap # " + coverRelation.getCoveredByMap().size());
-		LogUtils.debugln("unitVertexMap # " + coverRelation.getUnitVertexMap().size());
+		int count = 0;
+		for(Entry<Unit, LinkedList<Vertex>> entry : coverRelation.getUnitVertexMap().entrySet())
+			count += entry.getValue().size();
+		LogUtils.infoln("unitVertexMap # " + count);
+
 		for(Entry<Unit, LinkedList<Vertex>> entry : coverRelation.getUnitVertexMap().entrySet()) {
 			LogUtils.debugln(entry.getKey() + "--" + entry.getValue());
 			LogUtils.debugln("-------------");
 		}
+
 		CfgConverter.printAllPaths(q, "_all.dot");
+		LogUtils.warningln("errorSet size = " + errorSet.size());
 		CfgConverter.printErrorPaths(errorSet, "_errors.dot", coverRelation);
+		LogUtils.infoln("<------unwind");
 	}
 
 	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.debugln("----->expand : " + w + "--" + w.getOutgoingEdge() + "--" + coverRelation.isCovered(w));
-//		if(w.getOutgoingEdge() != null)	LogUtils.warningln(w.getOutgoingEdge().isInErrorPath());
+		LogUtils.debugln("----->expand : " + w + "--" + w.getOutgoingEdge() + "--" + coverRelation.isCovered(w) + "**" + w.getOutgoingEdge().isInErrorPath());
+		for(Edge ee : w.getIncomingEdges())
+			LogUtils.warningln(ee);
 
 		boolean result = false;
 		if (!coverRelation.isCovered(w)) {
 			LogUtils.debugln("if (!coverRelation.isCovered(w))---" + w.getOutgoingEdge()); 
+			List<Unit> unitList = cfg.getUnexceptionalPredsOf(w.getOutgoingEdge().getUnit());
+			boolean unDoneFlag = false;
+			if(unitList.size() > 1)
+				unDoneFlag = true;;
+			for (Unit unit : unitList) {
+				
+				Edge edge = new Edge(unit);
+				edge.setProgramTree(this);
+				edge.setInErrorPath(w.getOutgoingEdge().isInErrorPath());
+				Vertex v = addVertex(w, edge, unDoneFlag);
 
-			for (Edge incomingEdge : w.getIncomingEdges()) {
-
-				if(incomingEdge.getSource() != null) continue;
-
-				Vertex v = new Vertex();
-				v.setOutgoingEdge(incomingEdge);
-				incomingEdge.setSource(v);
-
-				v.setNextVertex(w);
-				if(incomingEdge.isControlLocation())
-					coverRelation.updateUnitVertexMap(w);
-
-				v.setDistance(w.getDistance()+1);
-				v.setLocationNumber(++locationCounter);
-				w.addPreviousVertex(v);
-				this.vertexSet.add(v);
-
-				if(!incomingEdge.isInErrorPath() && !errorSet.isEmpty())
-					continue;	
-				this.uncovered.add(v);
-
-				if(cfg.getUnexceptionalPredsOf(incomingEdge.getUnit()).size() == 0) {
-					v.setHeadLocation(true);
-//					v.setInvariant(itpHandler.getTrueInvariant());
-					if(incomingEdge.isInErrorPath()) { 
-						errorRootSet.add(v);
-						errorRootQueue.add(v);
+				unitController.analyzeEdge(edge, stores, cfg);
+				if(!edge.isInErrorPath() && !errorSet.isEmpty()) continue;
+				if(edge.isControlLocation()) coverRelation.updateUnitVertexMap(v);
+				if(edge.isErrorEdge()) errorSet.add(w);
+				if(edge.isSubFunction()) subFunctionList.add(edge);
+				if(edge.isEntryLocation()) {
+					if(edge.isInErrorPath()) {
+						this.addErrorEntryLocation(v);
 						result = true;
-					} else { 
-						returnRootQueue.add(v);
-						result = true;		
+					} else {
+						this.returnRootQueue.add(v);
+						result = false;
 					}
 				}
 				
-				for (Unit action : cfg.getPredsOf(incomingEdge.getUnit())) {
-					Edge e = new Edge(action);
-					e.setTarget(v);
-					e.setProgramTree(this);
-					v.addIncomingEdge(e);
-					unitController.analyzeEdge(e, stores);
-//					if(e.isControlLocation()) 
-//						coverRelation.updateUnitVertexMap(e);
-
-					if(e.isSubFunction()) {
-						subFunctionList.add(e);
-//						e.getProgramTree().getNewReturnPath();
-					}
-					
-
-					if(e.isErrorEdge())
-						errorSet.add(v);
-				}
-
 				if(v.getOutgoingEdge().isErrorEdge()) {
+//					this.unDoneLeaves.clear();
+					this.treeConnection.clear();
+					this.candidate2BeInPath.clear();
 					this.uncovered.clear();
 					this.uncovered.add(v);
+
+					v.setNextVertex(w);
+					w.addPreviousVertex(v);
+					edge.setTarget(w);
+					w.addIncomingEdge(edge);
+
 					continue;
 				}
 			}
 		}
 		LogUtils.debugln("<-----expand : w.incomingEdge#" + w.getIncomingEdges().size() + " : w.previousVertexSet#" + w.getPreviousVertexSet().size());
 		return result;
+	}
+
+	private boolean isConnectionCovered(Vertex vertex) {
+		while(this.candidate2BeInPath.containsKey(vertex)) {
+			Vertex connection = this.candidate2BeInPath.get(vertex);
+			Vertex unDoneLeaf = this.treeConnection.get(connection);
+			
+			if(coverRelation.isCovered(unDoneLeaf)) return true;
+			vertex = unDoneLeaf;
+		}	
+		return false;
+	}
+
+	private void addErrorEntryLocation(Vertex entryVertex) {
+		this.errorRootSet.add(entryVertex);
+		this.errorRootQueue.add(entryVertex);
+		
+		while(this.candidate2BeInPath.containsKey(entryVertex)) {
+			Vertex connection = this.candidate2BeInPath.get(entryVertex);
+			Vertex undoneLeaf = this.treeConnection.get(connection);
+			
+			connection.setNextVertex(undoneLeaf);
+			connection.getOutgoingEdge().setTarget(undoneLeaf);
+	
+			undoneLeaf.addIncomingEdge(connection.getOutgoingEdge());
+			undoneLeaf.addPreviousVertex(connection);
+	
+//			int noOfCurrentPreds = undoneLeaf.getPreviousVertexSet().size();
+//			int noOfMaxPreds = this.cfg.getUnexceptionalPredsOf(undoneLeaf.getOutgoingEdge().getUnit()).size();
+
+//			if(noOfCurrentPreds == noOfMaxPreds)
+//				this.unDoneLeaves.remove(undoneLeaf);
+//			if(noOfCurrentPreds < noOfMaxPreds)
+//				this.uncovered.add(undoneLeaf);
+			
+			entryVertex = undoneLeaf;
+		}
+	}	
+
+	private Vertex addVertex(Vertex nextVertex, Edge edge, boolean unDoneFlag) {
+		Vertex prevVertex = new Vertex();
+		prevVertex.setOutgoingEdge(edge);
+
+		if(!unDoneFlag) {
+			prevVertex.setNextVertex(nextVertex);
+	
+			nextVertex.addIncomingEdge(edge);
+			nextVertex.addPreviousVertex(prevVertex);
+	
+			edge.setTarget(nextVertex);
+
+			if(this.candidate2BeInPath.containsKey(nextVertex)) {
+				Vertex nv = this.candidate2BeInPath.get(nextVertex);
+				this.candidate2BeInPath.put(prevVertex, nv);
+				this.candidate2BeInPath.remove(nextVertex);
+			}
+		} else { 
+//			this.unDoneLeaves.add(nextVertex);
+			this.treeConnection.put(prevVertex, nextVertex);
+			this.candidate2BeInPath.put(prevVertex, prevVertex);
+		}
+
+		edge.setSource(prevVertex);
+		prevVertex.setDistance(nextVertex.getDistance()+1);
+		this.uncovered.add(prevVertex);
+		prevVertex.setLocationNumber(++locationCounter);
+		return prevVertex;
+
 	}
 
 	private void refine(Vertex v) {
@@ -322,6 +386,7 @@ public class ProgramTree {
 		LogUtils.printResult(function, errorLocationFeasible);
 	}
 
-	public Queue<Vertex> getUncovered() { return this.uncovered; }
+	protected Queue<Vertex> getUncovered() { return this.uncovered; }
+	protected ExceptionalUnitGraph getCfg() { return this.cfg; }
  
 }

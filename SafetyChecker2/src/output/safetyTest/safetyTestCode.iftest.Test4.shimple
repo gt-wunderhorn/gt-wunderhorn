@@ -27,7 +27,7 @@ public class safetyTestCode.iftest.Test4 extends java.lang.Object
 
         b1 = 3;
 
-        if z0 == 0 goto label1;
+        if z0 != 0 goto label1;
 
         b2 = b0;
 

@@ -65,16 +65,16 @@ public class safetyTestCode.whiletest.Test2 extends java.lang.Object
      label3:
         i2_2 = Phi(i2_1 #1, i2_3 #2);
 
-        if i2_2 < 2 goto label2;
+        if i2_2 < 5 goto label2;
 
 (3)     i1_2 = i1_1 + 1;
 
      label4:
-        i2 = Phi(i2 #0, i2_2 #3);
-
         i1_1 = Phi(i1 #0, i1_2 #3);
 
-        if i1_1 < 2 goto label1;
+        i2 = Phi(i2 #0, i2_2 #3);
+
+        if i1_1 < 5 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

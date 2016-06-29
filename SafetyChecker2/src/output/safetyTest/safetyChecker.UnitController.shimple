@@ -78,14 +78,15 @@ public class safetyChecker.UnitController extends java.lang.Object
         return;
     }
 
-    public void analyzeEdge(safetyChecker.Edge, java.util.Map) throws safetyChecker.exception.MainFunctionNotFoundException, safetyChecker.exception.ErrorLocationNotFoundException
+    public void analyzeEdge(safetyChecker.Edge, java.util.Map, soot.toolkits.graph.ExceptionalUnitGraph) throws safetyChecker.exception.MainFunctionNotFoundException, safetyChecker.exception.ErrorLocationNotFoundException
     {
         safetyChecker.UnitController r0;
-        safetyChecker.Edge r1, $r5, $r7;
+        safetyChecker.Edge r1;
         java.util.Map r2;
-        soot.Unit r3;
-        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9;
-        safetyChecker.Vertex $r4, $r6;
+        soot.toolkits.graph.ExceptionalUnitGraph r3;
+        soot.Unit r4;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11;
+        safetyChecker.Vertex $r5, $r6;
 
         r0 := @this: safetyChecker.UnitController;
 
@@ -93,62 +94,65 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         r2 := @parameter1: java.util.Map;
 
-        r3 = virtualinvoke r1.<safetyChecker.Edge: soot.Unit getUnit()>();
+        r3 := @parameter2: soot.toolkits.graph.ExceptionalUnitGraph;
 
-        $z0 = virtualinvoke r0.<safetyChecker.UnitController: boolean isErrorUnit(soot.Unit)>(r3);
+        r4 = virtualinvoke r1.<safetyChecker.Edge: soot.Unit getUnit()>();
+
+        $z0 = virtualinvoke r0.<safetyChecker.UnitController: boolean isErrorUnit(soot.Unit)>(r4);
 
         virtualinvoke r1.<safetyChecker.Edge: void setErrorEdge(boolean)>($z0);
 
-        $z1 = specialinvoke r0.<safetyChecker.UnitController: boolean isSubFunctionUnit(soot.Unit,java.util.Map,safetyChecker.Edge)>(r3, r2, r1);
+        $z1 = specialinvoke r0.<safetyChecker.UnitController: boolean isSubFunctionUnit(soot.Unit,java.util.Map,safetyChecker.Edge)>(r4, r2, r1);
 
         virtualinvoke r1.<safetyChecker.Edge: void setSubFunction(boolean)>($z1);
 
-        $z2 = specialinvoke r0.<safetyChecker.UnitController: boolean isSinkInvoke(soot.Unit)>(r3);
+        $z2 = specialinvoke r0.<safetyChecker.UnitController: boolean isSinkInvoke(soot.Unit)>(r4);
 
         virtualinvoke r1.<safetyChecker.Edge: void setSinkEdge(boolean)>($z2);
 
-        $z3 = specialinvoke r0.<safetyChecker.UnitController: boolean isSourceInvoke(soot.Unit)>(r3);
+        $z3 = specialinvoke r0.<safetyChecker.UnitController: boolean isSourceInvoke(soot.Unit)>(r4);
 
         virtualinvoke r1.<safetyChecker.Edge: void setSourceEdge(boolean)>($z3);
 
-        $z4 = virtualinvoke r0.<safetyChecker.UnitController: boolean isObjectInvoke(soot.Unit)>(r3);
+        $z4 = virtualinvoke r0.<safetyChecker.UnitController: boolean isObjectInvoke(soot.Unit)>(r4);
 
         virtualinvoke r1.<safetyChecker.Edge: void setObjectEdge(boolean)>($z4);
 
-        $z5 = virtualinvoke r0.<safetyChecker.UnitController: boolean isNewInvoke(soot.Unit)>(r3);
+        $z5 = virtualinvoke r0.<safetyChecker.UnitController: boolean isNewInvoke(soot.Unit)>(r4);
 
         virtualinvoke r1.<safetyChecker.Edge: void setNewEdge(boolean)>($z5);
 
-        $z6 = specialinvoke r0.<safetyChecker.UnitController: boolean isArrayCopyInvoke(soot.Unit)>(r3);
+        $z6 = specialinvoke r0.<safetyChecker.UnitController: boolean isArrayCopyInvoke(soot.Unit)>(r4);
 
         virtualinvoke r1.<safetyChecker.Edge: void setArrayCopyEdge(boolean)>($z6);
 
-        $z7 = virtualinvoke r0.<safetyChecker.UnitController: boolean isControlLocation(soot.Unit)>(r3);
+        $z7 = virtualinvoke r0.<safetyChecker.UnitController: boolean isControlLocation(soot.Unit)>(r4);
 
         virtualinvoke r1.<safetyChecker.Edge: void setControlLocation(boolean)>($z7);
 
-        $z8 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
+        $z8 = virtualinvoke r0.<safetyChecker.UnitController: boolean isEntryLocation(soot.Unit,soot.toolkits.graph.ExceptionalUnitGraph)>(r4, r3);
 
-        if $z8 != 0 goto label1;
+        virtualinvoke r1.<safetyChecker.Edge: void setEntryLocation(boolean)>($z8);
 
-        $r4 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getTarget()>();
+        $r5 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $r5 = virtualinvoke $r4.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $z9 = virtualinvoke r1.<safetyChecker.Edge: boolean isEntryLocation()>();
 
-        if $r5 == null goto label2;
+        virtualinvoke $r5.<safetyChecker.Vertex: void setEntryLocation(boolean)>($z9);
 
-        $r6 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getTarget()>();
+        $r6 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $r7 = virtualinvoke $r6.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $z10 = virtualinvoke r1.<safetyChecker.Edge: boolean isInErrorPath()>();
 
-        $z9 = virtualinvoke $r7.<safetyChecker.Edge: boolean isInErrorPath()>();
+        virtualinvoke $r6.<safetyChecker.Vertex: void setInErrorPath(boolean)>($z10);
 
-        if $z9 == 0 goto label2;
+        $z11 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
 
-     label1:
+        if $z11 == 0 goto label1;
+
         virtualinvoke r1.<safetyChecker.Edge: void setInErrorPath(boolean)>(1);
 
-     label2:
+     label1:
         return;
     }
 
@@ -663,5 +667,39 @@ public class safetyChecker.UnitController extends java.lang.Object
 
      label1:
         return 0;
+    }
+
+    public boolean isEntryLocation(soot.Unit, soot.toolkits.graph.ExceptionalUnitGraph)
+    {
+        safetyChecker.UnitController r0;
+        soot.Unit r1;
+        soot.toolkits.graph.ExceptionalUnitGraph r2;
+        java.util.List $r3;
+        int $i0;
+        boolean $z0, $z0_1, $z0_2;
+
+        r0 := @this: safetyChecker.UnitController;
+
+        r1 := @parameter0: soot.Unit;
+
+        r2 := @parameter1: soot.toolkits.graph.ExceptionalUnitGraph;
+
+        $r3 = virtualinvoke r2.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>(r1);
+
+        $i0 = interfaceinvoke $r3.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $z0 = 1;
+
+(0)     goto label2;
+
+     label1:
+(1)     $z0_1 = 0;
+
+     label2:
+        $z0_2 = Phi($z0 #0, $z0_1 #1);
+
+        return $z0_2;
     }
 }

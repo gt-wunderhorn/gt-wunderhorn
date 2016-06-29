@@ -90,7 +90,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test2 extends java.lang.Obje
 
         $i7 = r1[$i6];
 
-        if $i7 != 89 goto label5;
+        if $i7 != 7 goto label5;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

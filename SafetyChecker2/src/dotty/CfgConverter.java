@@ -13,6 +13,7 @@ import java.util.Set;
 
 import safetyChecker.CoverRelation;
 import safetyChecker.Edge;
+import safetyChecker.LogUtils;
 import safetyChecker.Vertex;
 
 import soot.Unit;
@@ -28,7 +29,7 @@ public class CfgConverter {
 
 	public static void printErrorPaths(Queue<Vertex> queue, String fileName, CoverRelation coverRelation) {
 		try{
-			Map<Vertex, Set<Vertex>> coveredByMap = coverRelation.getCoveredByMap();
+			Map<Vertex, Vertex> coveredByMap = coverRelation.getCoveredByMap();
 
 			BufferedWriter writer = getBufferedWriter(fileName);	
 			writer.write("digraph { \n");
@@ -66,6 +67,9 @@ public class CfgConverter {
 								inv = w.getInvariant().toString();
 							target += "--" + inv;
 						}
+						if(v.getPreviousVertexSet().size()==0) {
+							writer.write("\t\"" + source + "\"[shape=rectangle, color=sandybrown, style=filled]");
+						}
 
 						writer.write("\t\"" + source + "\" -> \"" + target + "\"[" + color + "label=\"" + e + "--" /*+ e.getZ3Expr()*/ + inv4Edge  + "\"];\n");
 
@@ -77,31 +81,29 @@ public class CfgConverter {
 				}
 			}
 			
-			for(Entry<Vertex, Set<Vertex>> entry : coveredByMap.entrySet()) {
+			for(Entry<Vertex, Vertex> entry : coveredByMap.entrySet()) {
 				Vertex coveredVertex = entry.getKey();
-				Set<Vertex> coveringSet = entry.getValue();
+				Vertex coveringVertex = entry.getValue();
 
-				for(Vertex coveringVertex : coveringSet) {
-					
-					String source = coveredVertex.toString();
-					String target = coveringVertex.toString();
+				
+				String source = coveredVertex.toString();
+				String target = coveringVertex.toString();
 
-					if(coveredVertex.getInvariant() != null) { 
-						String inv = "**";
-						if(!coveredVertex.getInvariant().toString().contains("\n"))
-							inv = coveredVertex.getInvariant().toString();
+				if(coveredVertex.getInvariant() != null) { 
+					String inv = "**";
+					if(!coveredVertex.getInvariant().toString().contains("\n"))
+						inv = coveredVertex.getInvariant().toString();
 
-					       	source += "--" + inv;
-					} 
-					if(coveringVertex.getInvariant() != null) {
-						String inv = "**";
-						if(!coveringVertex.getInvariant().toString().contains("\n"))
-							inv = coveringVertex.getInvariant().toString();
-						target += "--" + inv;
-					}
-
-					writer.write("\t\"" + source + "\" -> \"" + target + "\"[color=red];\n"); 
+				       	source += "--" + inv;
+				} 
+				if(coveringVertex.getInvariant() != null) {
+					String inv = "**";
+					if(!coveringVertex.getInvariant().toString().contains("\n"))
+						inv = coveringVertex.getInvariant().toString();
+					target += "--" + inv;
 				}
+
+				writer.write("\t\"" + source + "\" -> \"" + target + "\"[color=red];\n"); 
 			}
 
 			writer.write("}");
@@ -166,7 +168,6 @@ public class CfgConverter {
 						Vertex v = new Vertex();
 	
 						v.setOutgoingEdge(incoming);
-						v.setHeadLocation(true);
 						v.setNextVertex(w);
 						w.addPreviousVertex(v);
 						v.setLocationNumber(counter++);

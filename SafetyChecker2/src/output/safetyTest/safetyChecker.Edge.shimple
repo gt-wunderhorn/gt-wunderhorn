@@ -15,6 +15,7 @@ public class safetyChecker.Edge extends java.lang.Object
     private boolean inErrorPath;
     private boolean arrayCopy;
     private boolean controlLocation;
+    private boolean entryLocation;
     private java.util.List parameterList;
 
     public void <init>(soot.Unit)
@@ -48,6 +49,8 @@ public class safetyChecker.Edge extends java.lang.Object
         r0.<safetyChecker.Edge: boolean arrayCopy> = 0;
 
         r0.<safetyChecker.Edge: boolean controlLocation> = 0;
+
+        r0.<safetyChecker.Edge: boolean entryLocation> = 0;
 
         $r2 = new java.util.LinkedList;
 
@@ -420,6 +423,32 @@ public class safetyChecker.Edge extends java.lang.Object
         z0 := @parameter0: boolean;
 
         r0.<safetyChecker.Edge: boolean inErrorPath> = z0;
+
+        return;
+    }
+
+    public boolean isEntryLocation()
+    {
+        safetyChecker.Edge r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Edge;
+
+        $z0 = r0.<safetyChecker.Edge: boolean entryLocation>;
+
+        return $z0;
+    }
+
+    public void setEntryLocation(boolean)
+    {
+        safetyChecker.Edge r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Edge: boolean entryLocation> = z0;
 
         return;
     }

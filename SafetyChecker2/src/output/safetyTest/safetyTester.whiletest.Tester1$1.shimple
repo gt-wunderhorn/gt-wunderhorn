@@ -1,4 +1,4 @@
-class safetyTester.whiletest.Tester1$1 extends soot.BodyTransformer
+final class safetyTester.whiletest.Tester1$1 extends soot.BodyTransformer
 {
 
     void <init>()

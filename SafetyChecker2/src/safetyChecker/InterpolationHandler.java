@@ -32,7 +32,7 @@ public class InterpolationHandler {
 //	BoolExpr pathFormula=this.ictx.MkInterpolant(errorRoot.getOutgoingEdge().getZ3Expr());
 		BoolExpr pathFormula = errorRoot.getOutgoingEdge().getZ3Expr();
 
-		LogUtils.debugln("******root=" + errorRoot);
+		LogUtils.debugln("******root=" + errorRoot.getOutgoingEdge());
 		Vertex currentVertex = errorRoot.getNextVertex();
 		int rootDistance = errorRoot.getDistance();
 		int halfDistance = rootDistance / 2;
@@ -46,10 +46,11 @@ public class InterpolationHandler {
 				break;
 
 			BoolExpr z3Epxr = edge.getZ3Expr();
+			LogUtils.debugln("edge=" + edge);
 			LogUtils.debugln("z3Expr = " + z3Epxr);
 
 			BoolExpr conjunction = this.ictx.mkAnd(z3Epxr, pathFormula);
-			if(edge.isControlLocation()) { 
+			if(currentVertex.getNextVertex().getOutgoingEdge().isControlLocation()) { 
 				pathFormula = this.ictx.MkInterpolant(conjunction);
 				if(currentVertex.getDistance() <= halfDistance) {
 					interpolantResult = this.ictx.ComputeInterpolant(pathFormula, params);
@@ -83,6 +84,7 @@ public class InterpolationHandler {
 		else if(status == Z3_lbool.Z3_L_TRUE)
 			result = true;
 
+		this.ictx.dispose();
 		LogUtils.debugln("interpolation result=" + result);
 		LogUtils.debugln("<<<<<< InterpolationHandler.createInterpolant");
 		return result;
@@ -91,13 +93,16 @@ public class InterpolationHandler {
 	private void updateInvariant(Vertex errorRootVertex, BoolExpr[] invariantList, boolean isFeasible) {
 		if(invariantList != null) {
 			LogUtils.debugln("invariantList size is " + invariantList.length);
+			LogUtils.debugln("errorRootVertex=" + errorRootVertex);
 			Vertex vertex = errorRootVertex;//.getNextVertex();
 			int index = 0;
 			BoolExpr falseExpr = this.ictx.mkFalse();
-			while(vertex.getOutgoingEdge() != null) {
+//			while(vertex.getOutgoingEdge() != null) {
+			while(vertex != null && vertex.getOutgoingEdge() != null) {
 				if(vertex.getOutgoingEdge().isControlLocation()) {
-					Vertex nextLocation = vertex.getNextVertex();
-					BoolExpr currentInvariant = nextLocation.getInvariant();
+					LogUtils.debugln("isControlLocation=" + vertex.getOutgoingEdge());
+//					Vertex nextLocation = vertex.getNextVertex();
+					BoolExpr currentInvariant = vertex.getInvariant();
 					BoolExpr z3Invariant = null;
 					if(index >= invariantList.length && !isFeasible)
 						z3Invariant = falseExpr;
@@ -107,14 +112,14 @@ public class InterpolationHandler {
 						z3Invariant = invariantList[index];
 					BoolExpr newInvariant = (BoolExpr) z3Invariant.substitute(this.from, this.to);
 					
-					if(nextLocation.getInvariant() == null)
-						nextLocation.setInvariant(newInvariant);
+					if(vertex.getInvariant() == null)
+						vertex.setInvariant(newInvariant);
 					else {
 						BoolExpr disjunction = this.ictx.mkOr(newInvariant, currentInvariant);
 						BoolExpr simplified = (BoolExpr) disjunction.simplify();
-						nextLocation.setInvariant(simplified);
+						vertex.setInvariant(simplified);
 						// vertex invariant is weakedned clear the vertexes covered by weakened invariants
-						coverRelation.clearCoverRelation(nextLocation);
+						coverRelation.checkHoldsAndClearCoverRelation(vertex);
 					}
 					index++; 
 				}
@@ -122,19 +127,22 @@ public class InterpolationHandler {
 				vertex = vertex.getNextVertex();
 			}
 		} else { 
-			LogUtils.warningln("invariantList is null");
+			LogUtils.debugln("invariantList is null");
 			Vertex vertex = errorRootVertex;
-			while(vertex.getOutgoingEdge() != null) {
+//			while(vertex.getOutgoingEdge() != null) {
+			while(vertex != null) {
+				if(vertex.isReturnLocation()) break;
+				
 				if(vertex.getOutgoingEdge().isControlLocation()) {
 					BoolExpr trueExpr = this.ictx.mkTrue();
-					Vertex nextLocation = vertex.getNextVertex();
-					BoolExpr currentInvariant = nextLocation.getInvariant();
+//					Vertex nextLocation = vertex.getNextVertex();
+					BoolExpr currentInvariant = vertex.getInvariant();
 					if(currentInvariant == null)
-						nextLocation.setInvariant(trueExpr);
+						vertex.setInvariant(trueExpr);
 					else {
 						BoolExpr disjunction = this.ictx.mkOr(trueExpr, currentInvariant);
 			//			BoolExpr simplified = (BoolExpr) disjunction.simplify();
-					       nextLocation.setInvariant(disjunction);	
+ 					        vertex.setInvariant(disjunction);	
 					}
 				}
 				vertex = vertex.getNextVertex();

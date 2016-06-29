@@ -14,7 +14,9 @@ import soot.jimple.IfStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.NewExpr;
+import soot.jimple.ReturnStmt;
 import soot.jimple.internal.JAssignStmt;
+import soot.toolkits.graph.ExceptionalUnitGraph;
 
 public class UnitController {
 
@@ -42,7 +44,7 @@ public class UnitController {
 		sensitiveParameterMap.put(AND_UTIL_LOG_SIGNATURE, AND_UTIL_LOG_PARAM_NO);
 	}
 	
-	public void analyzeEdge(Edge e, Map<String, Body> stores) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
+	public void analyzeEdge(Edge e, Map<String, Body> stores, ExceptionalUnitGraph cfg) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		Unit u = e.getUnit();
 		e.setErrorEdge(this.isErrorUnit(u));
 		e.setSubFunction(this.isSubFunctionUnit(u, stores, e));
@@ -52,8 +54,12 @@ public class UnitController {
 		e.setNewEdge(this.isNewInvoke(u));
 		e.setArrayCopyEdge(this.isArrayCopyInvoke(u));
 		e.setControlLocation(this.isControlLocation(u));
+		e.setEntryLocation(this.isEntryLocation(u, cfg));
 
-		if(e.isErrorEdge() || (e.getTarget().getOutgoingEdge() != null && e.getTarget().getOutgoingEdge().isInErrorPath())){
+		e.getSource().setEntryLocation(e.isEntryLocation());
+		e.getSource().setInErrorPath(e.isInErrorPath());
+
+		if(e.isErrorEdge()){ // || (e.getTarget().getOutgoingEdge() != null && e.getTarget().getOutgoingEdge().isInErrorPath())){
 			e.setInErrorPath(true);
 		}
 	}
@@ -178,6 +184,10 @@ public class UnitController {
 		if(unit instanceof IfStmt)
 			return true;
 		return false;	
+	}
+
+	public boolean isEntryLocation(Unit unit, ExceptionalUnitGraph cfg) {
+		return (cfg.getUnexceptionalPredsOf(unit).size() == 0) ? true : false;
 	}
 
 }

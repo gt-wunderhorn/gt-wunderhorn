@@ -15,7 +15,7 @@ public class safetyTestCode.iftest.Test3 extends java.lang.Object
     public void test()
     {
         safetyTestCode.iftest.Test3 r0;
-        int i0, i0_1, i0_2, i0_3, i0_4;
+        int i0, i0_1, i0_2, i0_3, i0_4, i0_5, i0_6;
 
         r0 := @this: safetyTestCode.iftest.Test3;
 
@@ -35,11 +35,18 @@ public class safetyTestCode.iftest.Test3 extends java.lang.Object
      label2:
         i0_4 = Phi(i0_2 #2, i0_3 #3);
 
-        if i0_4 != 6 goto label3;
+(4)     if i0_4 >= 6 goto label3;
+
+(5)     i0_5 = i0_4 + 1;
+
+     label3:
+        i0_6 = Phi(i0_4 #4, i0_5 #5);
+
+        if i0_6 == 6 goto label4;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
-     label3:
+     label4:
         return;
     }
 }

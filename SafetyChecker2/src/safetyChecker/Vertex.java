@@ -7,14 +7,14 @@ import com.microsoft.z3.BoolExpr;
 
 public class Vertex {
 
-	private boolean coveredBy = false;
-	private boolean covering = false;
 	private boolean returnLocation = false;
-	private boolean headLocation = false;
+	private boolean entryLocation = false;
 	private boolean errorLocation = false;
 	private boolean subFunction = false;
 	private boolean sinkLocation = false;
 	private boolean sourceLocation = false;
+	private boolean isInErrorPath = false; 
+	private boolean vertexDone = false;
 
 	private Edge outgoingEdge;
 	private Set<Edge> incomingEdges = new HashSet<Edge>();
@@ -24,19 +24,14 @@ public class Vertex {
 	private boolean psi = false;
 	private int distance = 0;
 	private int locationNumber = 0;
+	private int rootNumber = 0;
 	private BoolExpr invariant;
-
-        public boolean isCoveredBy() { return this.coveredBy; }
-	public void setCoveredBy(boolean coveredBy) { this.coveredBy = coveredBy; }
-
-        public boolean isCovering() { return this.covering; }
-	public void setCovering(boolean covering) { this.covering = covering; }
 
 	public boolean isReturnLocation() { return this.returnLocation; }
 	public void setReturnLocation(boolean returnLocation) { this.returnLocation = returnLocation; }
 	
-	public boolean isHeadLocation() { return this.headLocation; }
-	public void setHeadLocation(boolean headLocation) { this.headLocation = headLocation; }
+	public boolean isEntryLocation() { return this.entryLocation; }
+	public void setEntryLocation(boolean entryLocation) { this.entryLocation = entryLocation; }
 	
 	public boolean isErrorLocation() { return this.errorLocation; }
 	public void setErrorLocation(boolean errorLocation) { this.errorLocation = errorLocation; }
@@ -49,6 +44,12 @@ public class Vertex {
 
 	public boolean isSourceLocation() { return this.sourceLocation; }
 	public void setSourceLocation(boolean sourceLocation) { this.sourceLocation = sourceLocation; }
+
+	public boolean isInErrorPath() { return this.isInErrorPath; }
+	public void setInErrorPath(boolean isInErrorPath) { this.isInErrorPath = isInErrorPath; }
+
+	public boolean isVertexDone() { return this.vertexDone; }
+	public void setVertexDone(boolean vertexDone) { this.vertexDone = vertexDone; }	
 
 	public Edge getOutgoingEdge() { return this.outgoingEdge; }
 	public void setOutgoingEdge(Edge outgoingEdge) { this.outgoingEdge = outgoingEdge;}

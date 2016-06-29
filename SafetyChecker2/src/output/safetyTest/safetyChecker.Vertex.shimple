@@ -1,13 +1,13 @@
 public class safetyChecker.Vertex extends java.lang.Object
 {
-    private boolean coveredBy;
-    private boolean covering;
     private boolean returnLocation;
-    private boolean headLocation;
+    private boolean entryLocation;
     private boolean errorLocation;
     private boolean subFunction;
     private boolean sinkLocation;
     private boolean sourceLocation;
+    private boolean isInErrorPath;
+    private boolean vertexDone;
     private safetyChecker.Edge outgoingEdge;
     private java.util.Set incomingEdges;
     private safetyChecker.Vertex nextVertex;
@@ -15,6 +15,7 @@ public class safetyChecker.Vertex extends java.lang.Object
     private boolean psi;
     private int distance;
     private int locationNumber;
+    private int rootNumber;
     private com.microsoft.z3.BoolExpr invariant;
 
     public void <init>()
@@ -26,13 +27,9 @@ public class safetyChecker.Vertex extends java.lang.Object
 
         specialinvoke r0.<java.lang.Object: void <init>()>();
 
-        r0.<safetyChecker.Vertex: boolean coveredBy> = 0;
-
-        r0.<safetyChecker.Vertex: boolean covering> = 0;
-
         r0.<safetyChecker.Vertex: boolean returnLocation> = 0;
 
-        r0.<safetyChecker.Vertex: boolean headLocation> = 0;
+        r0.<safetyChecker.Vertex: boolean entryLocation> = 0;
 
         r0.<safetyChecker.Vertex: boolean errorLocation> = 0;
 
@@ -41,6 +38,10 @@ public class safetyChecker.Vertex extends java.lang.Object
         r0.<safetyChecker.Vertex: boolean sinkLocation> = 0;
 
         r0.<safetyChecker.Vertex: boolean sourceLocation> = 0;
+
+        r0.<safetyChecker.Vertex: boolean isInErrorPath> = 0;
+
+        r0.<safetyChecker.Vertex: boolean vertexDone> = 0;
 
         $r1 = new java.util.HashSet;
 
@@ -60,57 +61,7 @@ public class safetyChecker.Vertex extends java.lang.Object
 
         r0.<safetyChecker.Vertex: int locationNumber> = 0;
 
-        return;
-    }
-
-    public boolean isCoveredBy()
-    {
-        safetyChecker.Vertex r0;
-        boolean $z0;
-
-        r0 := @this: safetyChecker.Vertex;
-
-        $z0 = r0.<safetyChecker.Vertex: boolean coveredBy>;
-
-        return $z0;
-    }
-
-    public void setCoveredBy(boolean)
-    {
-        safetyChecker.Vertex r0;
-        boolean z0;
-
-        r0 := @this: safetyChecker.Vertex;
-
-        z0 := @parameter0: boolean;
-
-        r0.<safetyChecker.Vertex: boolean coveredBy> = z0;
-
-        return;
-    }
-
-    public boolean isCovering()
-    {
-        safetyChecker.Vertex r0;
-        boolean $z0;
-
-        r0 := @this: safetyChecker.Vertex;
-
-        $z0 = r0.<safetyChecker.Vertex: boolean covering>;
-
-        return $z0;
-    }
-
-    public void setCovering(boolean)
-    {
-        safetyChecker.Vertex r0;
-        boolean z0;
-
-        r0 := @this: safetyChecker.Vertex;
-
-        z0 := @parameter0: boolean;
-
-        r0.<safetyChecker.Vertex: boolean covering> = z0;
+        r0.<safetyChecker.Vertex: int rootNumber> = 0;
 
         return;
     }
@@ -141,19 +92,19 @@ public class safetyChecker.Vertex extends java.lang.Object
         return;
     }
 
-    public boolean isHeadLocation()
+    public boolean isEntryLocation()
     {
         safetyChecker.Vertex r0;
         boolean $z0;
 
         r0 := @this: safetyChecker.Vertex;
 
-        $z0 = r0.<safetyChecker.Vertex: boolean headLocation>;
+        $z0 = r0.<safetyChecker.Vertex: boolean entryLocation>;
 
         return $z0;
     }
 
-    public void setHeadLocation(boolean)
+    public void setEntryLocation(boolean)
     {
         safetyChecker.Vertex r0;
         boolean z0;
@@ -162,7 +113,7 @@ public class safetyChecker.Vertex extends java.lang.Object
 
         z0 := @parameter0: boolean;
 
-        r0.<safetyChecker.Vertex: boolean headLocation> = z0;
+        r0.<safetyChecker.Vertex: boolean entryLocation> = z0;
 
         return;
     }
@@ -267,6 +218,58 @@ public class safetyChecker.Vertex extends java.lang.Object
         z0 := @parameter0: boolean;
 
         r0.<safetyChecker.Vertex: boolean sourceLocation> = z0;
+
+        return;
+    }
+
+    public boolean isInErrorPath()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean isInErrorPath>;
+
+        return $z0;
+    }
+
+    public void setInErrorPath(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean isInErrorPath> = z0;
+
+        return;
+    }
+
+    public boolean isVertexDone()
+    {
+        safetyChecker.Vertex r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $z0 = r0.<safetyChecker.Vertex: boolean vertexDone>;
+
+        return $z0;
+    }
+
+    public void setVertexDone(boolean)
+    {
+        safetyChecker.Vertex r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Vertex: boolean vertexDone> = z0;
 
         return;
     }

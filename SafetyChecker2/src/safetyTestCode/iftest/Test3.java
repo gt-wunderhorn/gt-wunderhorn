@@ -12,14 +12,14 @@ public class Test3 {
 			x = x + 1;
 		if (x < 6)
 			x = x + 1;
-//		if (x < 6)
-//			x = x + 1;
+		if (x < 6)
+			x = x + 1;
 
 
 //		x = z ;
 //		z = z + 4;
 
-		if(x == 6)
+		if(x != 6)
 			ErrorLable.Error();
 	}
 
