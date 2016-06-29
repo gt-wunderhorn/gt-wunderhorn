@@ -16,6 +16,7 @@ import com.microsoft.z3.Sort;
 import soot.ArrayType;
 import soot.IntegerType;
 import soot.Local;
+import soot.LongType;
 import soot.PrimType;
 import soot.RefLikeType;
 import soot.RefType;
@@ -30,6 +31,7 @@ import soot.jimple.ArrayRef;
 import soot.jimple.AssignStmt;
 import soot.jimple.BinopExpr;
 import soot.jimple.CastExpr;
+import soot.jimple.CmpExpr;
 import soot.jimple.Constant;
 import soot.jimple.DivExpr;
 import soot.jimple.EqExpr;
@@ -44,6 +46,7 @@ import soot.jimple.IntConstant;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.LeExpr;
+import soot.jimple.LongConstant;
 import soot.jimple.LtExpr;
 import soot.jimple.MulExpr;
 import soot.jimple.NeExpr;
@@ -114,7 +117,6 @@ public class Z3ScriptHandler {
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 		if(e.isInitInvoke()) converted = convertInitInvoke(e);
 	
-		LogUtils.fatalln("Z3Exr==" + e.getZ3Expr());
 		LogUtils.debugln(e.getZ3Expr());
 		if(!converted) {
 			LogUtils.warningln("---------------");	
@@ -198,7 +200,7 @@ public class Z3ScriptHandler {
 	}	
 
 	private boolean convertAssignStmtEdge(Edge edge) {
-		LogUtils.infoln("Z3ScriptHandler.convertAssignStmtEdge=" + edge.getSource() + "***"  + edge);
+		LogUtils.debugln("Z3ScriptHandler.convertAssignStmtEdge=" + edge.getSource() + "***"  + edge);
 		AssignStmt aStmt = (AssignStmt) edge.getUnit();
 		Value left = aStmt.getLeftOp();
 		Value right = aStmt.getRightOp();
@@ -215,9 +217,9 @@ public class Z3ScriptHandler {
 		else
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		
-		LogUtils.warningln("rightZ3=" + rightZ3);
+		LogUtils.debugln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
-		LogUtils.warningln("leftZ3=" + leftZ3);
+		LogUtils.debugln("leftZ3=" + leftZ3);
 
 		BoolExpr eq = null; 
 //		if(UnitController.isArraysEqualsInvoke(right)) {
@@ -326,9 +328,15 @@ public class Z3ScriptHandler {
 				String newName = oldName + getNameSuffix(edge);
 				Expr leftExpr = null;
 				if(type instanceof IntegerType) {
+					LogUtils.warningln("IntegerType");
 					leftExpr = ictx.mkIntConst(newName);
 					this.substitute.put(newName, oldName); // + "_" + edge.getProgramTree().getProgramDefinition());
 					this.substituteSort.put(newName, ictx.mkIntSort());
+				} if (type instanceof LongType) {
+					LogUtils.warningln("LongType");
+					leftExpr = this.ictx.mkIntConst(newName);
+					this.substitute.put(newName, oldName);
+					this.substituteSort.put(newName, this.ictx.mkIntSort());
 				}
 				localMap.put(oldName, leftExpr);
 				return leftExpr;
@@ -346,7 +354,21 @@ public class Z3ScriptHandler {
 				Expr exprValue = ictx.mkInt(intValue);
 				return exprValue;
 			}
+			if(constant instanceof LongConstant) {
+				LogUtils.infoln("LongConstant");
+				LongConstant LongConstant = (LongConstant) constant;
+				long longValue = LongConstant.value;
+				Expr exprValue = ictx.mkInt(longValue);
+				return exprValue;
+
+			}
+			
 		}
+		if(value instanceof CastExpr) {
+			CastExpr castExpr = (CastExpr) value;
+			Value uncasted = castExpr.getOp();
+			return this.convertValue(uncasted, assignLeft, edge, nodeIndex);  
+		}	       
 		if(value instanceof PhiExpr) {
 			PhiExpr phiExpr = (PhiExpr) value;
 			List<ValueUnitPair> pairList = phiExpr.getArgs();
@@ -777,6 +799,16 @@ public class Z3ScriptHandler {
 			Expr op2Expr = convertValue(op2Value, false, edge, edge.getSource().getDistance());
 
 			return  this.ictx.mkLe((ArithExpr)op1Expr, (ArithExpr)op2Expr);
+		}
+		if(expr instanceof CmpExpr) {
+			CmpExpr cmpExpr = (CmpExpr) expr;
+			Value op1Value = cmpExpr.getOp1();
+			Value op2Value = cmpExpr.getOp2();
+
+			Expr op1Expr = this.convertValue(op1Value, false, edge, edge.getSource().getDistance());
+			Expr op2Expr = this.convertValue(op2Value, false, edge, edge.getSource().getDistance());
+
+			return this.ictx.mkSub((ArithExpr) op1Expr, (ArithExpr) op2Expr);
 		}
 
 

@@ -6,13 +6,16 @@ public class Test1 {
 
 	public void test() {
 		Obj o = new Obj();
-		int a = 3;
-		int b = 4;
-		o.access1 = a;
-		o.access2 = b;
-		int x = o.access1;
+		byte b = 3;
+		short s = 2;
+		int i = b;
+		long l1 = 23;
+		long l = i;
+//		o.access1 = a;
+//		o.access2 = b;
+//		int x = o.access1;
 
-		if(o.access1 == o.access2-1)
+		if(l == l1-20)
 			ErrorLable.Error();
 	}
 }

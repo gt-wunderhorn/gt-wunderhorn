@@ -16,8 +16,8 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
     {
         safetyTestCode.object.Test1 r0;
         safetyTestCode.object.Obj r1, $r2;
-        byte b0, b1;
-        int i2, $i3, $i4, $i5;
+        byte b0, b1, b2, $b6;
+        long l3, l4, $l5;
 
         r0 := @this: safetyTestCode.object.Test1;
 
@@ -29,21 +29,19 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         b0 = 3;
 
-        b1 = 4;
+        b1 = 2;
 
-        r1.<safetyTestCode.object.Obj: int access1> = b0;
+        b2 = b0;
 
-        r1.<safetyTestCode.object.Obj: int access2> = b1;
+        l3 = 23L;
 
-        i2 = r1.<safetyTestCode.object.Obj: int access1>;
+        l4 = (long) b2;
 
-        $i5 = r1.<safetyTestCode.object.Obj: int access1>;
+        $l5 = l3 - 20L;
 
-        $i3 = r1.<safetyTestCode.object.Obj: int access2>;
+        $b6 = l4 cmp $l5;
 
-        $i4 = $i3 - 1;
-
-        if $i5 != $i4 goto label1;
+        if $b6 != 0 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
