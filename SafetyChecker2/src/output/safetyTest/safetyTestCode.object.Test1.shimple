@@ -16,8 +16,9 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
     {
         safetyTestCode.object.Test1 r0;
         safetyTestCode.object.Obj r1, $r2;
-        byte b0, b1, b2, $b6;
-        long l3, l4, $l5;
+        byte b0, b1, $b6, b7, b8;
+        long l2, l3, $l5;
+        int $i4;
 
         r0 := @this: safetyTestCode.object.Test1;
 
@@ -27,25 +28,94 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         r1 = $r2;
 
-        b0 = 3;
+        b7 = 3;
 
-        b1 = 2;
+        b0 = 2;
 
-        b2 = b0;
+        b1 = b7;
 
-        l3 = 23L;
+        l2 = 23L;
 
-        l4 = (long) b2;
+        l3 = (long) b1;
 
-        $l5 = l3 - 20L;
+        $i4 = (int) l2;
 
-        $b6 = l4 cmp $l5;
+        b8 = (byte) $i4;
+
+        $l5 = l2 - 20L;
+
+        $b6 = l3 cmp $l5;
 
         if $b6 != 0 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label1:
+        return;
+    }
+
+    public static void main(java.lang.String[]) throws java.io.IOException
+    {
+        java.lang.String[] r0;
+        java.io.BufferedReader r1, $r3;
+        java.io.PrintWriter r2, $r6;
+        java.io.InputStreamReader $r4;
+        java.io.InputStream $r5;
+        java.io.PrintStream $r7;
+        java.lang.String $r8, $r9;
+        int $i0, i1, i2, i2_1, i1_1, i1_2, i2_2;
+
+        r0 := @parameter0: java.lang.String[];
+
+        $r3 = new java.io.BufferedReader;
+
+        $r4 = new java.io.InputStreamReader;
+
+        $r5 = <java.lang.System: java.io.InputStream in>;
+
+        specialinvoke $r4.<java.io.InputStreamReader: void <init>(java.io.InputStream)>($r5);
+
+        specialinvoke $r3.<java.io.BufferedReader: void <init>(java.io.Reader)>($r4);
+
+        r1 = $r3;
+
+        $r6 = new java.io.PrintWriter;
+
+        $r7 = <java.lang.System: java.io.PrintStream out>;
+
+        specialinvoke $r6.<java.io.PrintWriter: void <init>(java.io.OutputStream)>($r7);
+
+        r2 = $r6;
+
+        $r8 = virtualinvoke r1.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.String: java.lang.String trim()>();
+
+        i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r9);
+
+        i2 = 2;
+
+(0)     goto label2;
+
+     label1:
+(1)     i2_2 = i2_1 + i1_2;
+
+     label2:
+        i2_1 = Phi(i2 #0, i2_2 #1);
+
+        i1_1 = Phi(i1 #0, i1_2 #1);
+
+        $i0 = i1_1;
+
+        i1_2 = i1_1 + -1;
+
+        if $i0 > 0 goto label1;
+
+        if i2_1 != 13 goto label3;
+
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+
+     label3:
         return;
     }
 }

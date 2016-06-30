@@ -59,6 +59,7 @@ import soot.jimple.StringConstant;
 import soot.jimple.SubExpr;
 import soot.jimple.VirtualInvokeExpr;
 import soot.jimple.internal.JNewExpr;
+import soot.jimple.internal.JimpleLocal;
 import soot.shimple.PhiExpr;
 import soot.toolkits.scalar.ValueUnitPair;
 
@@ -76,6 +77,7 @@ public class Z3ScriptHandler {
 	private Map<String, Sort> substituteSort = new HashMap<String, Sort>();
 	private Stack<Expr> parameters = new Stack<Expr>();
 	private Z3ArrayHandler arrayHandler = new Z3ArrayHandler();
+	private Z3ObjectFieldHandler objFieldHandler = new Z3ObjectFieldHandler();
 	private Vertex errorPathRoot;
 	private Edge currentEdge;
 
@@ -117,7 +119,7 @@ public class Z3ScriptHandler {
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 		if(e.isInitInvoke()) converted = convertInitInvoke(e);
 	
-		LogUtils.debugln(e.getZ3Expr());
+		LogUtils.infoln("z3Expr=" + e.getZ3Expr());
 		if(!converted) {
 			LogUtils.warningln("---------------");	
 			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
@@ -206,15 +208,20 @@ public class Z3ScriptHandler {
 		Value right = aStmt.getRightOp();
 		//nonsense and dummy parts needs to be added
 		
+		if(left.getType() instanceof RefType && right instanceof VirtualInvokeExpr) {
+			right = new JNewExpr((RefType) left.getType()); 
+		}
+
 		Type leftType = left.getType();
 		Expr rightZ3 = null;
 
 		// rigth invoke expression needs to be added
+		LogUtils.warningln("right=" + right);
 		if(edge.isSubFunction() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
 			rightZ3 = this.ictx.mkIntConst("return_" + this.getRealArraySize("return_"));
-		} else if(right instanceof VirtualInvokeExpr) 
-			rightZ3 = this.ictx.mkIntConst("virtualinvoke_" +this.getRealArraySize("virtualinvoke_"));
-		else
+		} else if(right instanceof InvokeExpr && !edge.isSubFunction()) { 
+			rightZ3 = this.ictx.mkIntConst("nonSubFunction_" +this.getRealArraySize("nonSubFunction_"));
+		} else
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		
 		LogUtils.debugln("rightZ3=" + rightZ3);
@@ -442,6 +449,7 @@ public class Z3ScriptHandler {
 
 	private Expr convertRefLikeValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
 		LogUtils.debugln("Z3ScriptHandler.convertRefLikeValue=" + edge);
+		LogUtils.detailln("type  fo the value is " + value.getClass().getName());
 		if(value instanceof PhiExpr) {
 			LogUtils.fatalln("FATAL: PhiExpr is not supported yet!");
 			System.exit(0);
@@ -478,8 +486,11 @@ public class Z3ScriptHandler {
 			System.exit(0);
 		}
 		if(value instanceof StaticFieldRef) {
-			LogUtils.fatalln("FATAL: StaticFieldRef is not supported yet!");
-			System.exit(0);
+			StaticFieldRef sfRef = (StaticFieldRef) value;
+			SootField field = sfRef.getField();
+			String name = field.getName();
+			Local newLocal = new JimpleLocal(name, field.getType());
+			return objFieldHandler.handleStaticFieldRef(newLocal, assignLeft, this);			
 		}
 		if(value instanceof NullConstant) {
 			LogUtils.fatalln("FATAL: NullConstant is not supported yet!");

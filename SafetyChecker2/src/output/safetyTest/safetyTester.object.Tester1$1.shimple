@@ -17,8 +17,9 @@ final class safetyTester.object.Tester1$1 extends soot.BodyTransformer
         safetyTester.object.Tester1$1 r0;
         soot.Body r1;
         java.lang.String r2, r5;
-        java.util.Map r3, $r6;
+        java.util.Map r3, $r7;
         soot.SootMethod r4;
+        java.io.PrintStream $r6;
 
         r0 := @this: safetyTester.object.Tester1$1;
 
@@ -32,9 +33,13 @@ final class safetyTester.object.Tester1$1 extends soot.BodyTransformer
 
         r5 = virtualinvoke r4.<soot.SootMethod: java.lang.String getSignature()>();
 
-        $r6 = <safetyTester.object.Tester1: java.util.Map stores>;
+        $r6 = <java.lang.System: java.io.PrintStream out>;
 
-        interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r5, r1);
+        virtualinvoke $r6.<java.io.PrintStream: void println(java.lang.String)>(r5);
+
+        $r7 = <safetyTester.object.Tester1: java.util.Map stores>;
+
+        interfaceinvoke $r7.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r5, r1);
 
         return;
     }

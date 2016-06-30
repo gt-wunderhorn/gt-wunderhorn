@@ -36,7 +36,7 @@ public class Tester1 {
 						// hack here
 						SootMethod method = body.getMethod();
 						String methodSig = method.getSignature();
-						//System.out.println(methodSig);
+						System.out.println(methodSig);
 						
 						stores.put(methodSig, body);
 					}
@@ -44,7 +44,8 @@ public class Tester1 {
 		soot.Main.main(sootArgs);
 		//System.out.println(stores.size());
 
-		String mainFunction ="<safetyTestCode.object.Test1: void test()>";
+//		String mainFunction ="<safetyTestCode.object.Test1: void test()>";
+		String mainFunction ="<safetyTestCode.object.Test1: void main(java.lang.String[])>";
 		LogUtils.infoln("safetyTester.object.Tester1... Test started...");
 	
 		try {	

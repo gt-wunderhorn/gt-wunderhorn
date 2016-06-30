@@ -24,7 +24,7 @@ public class UnitController {
 	public static final String ERRORLABEL = "ErrorLable";
 	public static final String OBJECTINVOKE = "<java.lang.Object: void <init>";
 	public static final String NONSENSCOMPARE = "java.lang.String: boolean equals";
-	public static final String NOTINVOKESIGNATURE = "void <init>()>"; //java.lang.Object: void <init>()>";
+	public static final String NOTINVOKESIGNATURE = "void <init>"; //java.lang.Object: void <init>()>";
 
 	private static final String SEND_TEXT_MESSAGE_SIGNATURE = "sendTextMessage";
        	private static final Integer SEND_TEXT_MESSAGE_PARAM_NO = 2;
@@ -148,11 +148,11 @@ public class UnitController {
 
 	public boolean isInitInvoke(Unit u) {
 		String sign = UnitController.getMethodSignature(u);
-		if(u instanceof InvokeStmt && sign.endsWith(UnitController.NOTINVOKESIGNATURE)) {
+		if(u instanceof InvokeStmt && sign.contains(UnitController.NOTINVOKESIGNATURE)) {
 			return true;
 		} else if (u instanceof AssignStmt) {
 			Value right = ((AssignStmt)u).getRightOp();
-			if(right instanceof InvokeExpr && sign.equals(UnitController.NOTINVOKESIGNATURE))
+			if(right instanceof InvokeExpr && sign.contains(UnitController.NOTINVOKESIGNATURE))
 				return true;
 		}
 		return false;
@@ -160,11 +160,11 @@ public class UnitController {
 
 	public boolean isInvoke(Unit u) {
 		String sign = UnitController.getMethodSignature(u);
-		if(u instanceof InvokeStmt && !sign.endsWith(UnitController.NOTINVOKESIGNATURE)) {
+		if(u instanceof InvokeStmt && !sign.contains(UnitController.NOTINVOKESIGNATURE)) {
 			return true;
 		} else if (u instanceof AssignStmt) {
 			Value right = ((AssignStmt)u).getRightOp();
-			if(right instanceof InvokeExpr && !sign.equals(UnitController.NOTINVOKESIGNATURE))
+			if(right instanceof InvokeExpr && !sign.contains(UnitController.NOTINVOKESIGNATURE))
 				return true;
 		}
 		return false;

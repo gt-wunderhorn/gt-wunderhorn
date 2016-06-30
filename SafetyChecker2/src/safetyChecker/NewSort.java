@@ -38,6 +38,8 @@ public class NewSort {
 	}
 
 	public IntExpr getId(Expr name) {
+		if(!this.index.containsKey(name))
+			this.creatNewOject(name);
 		IntExpr index = this.index.get(name);
 		LogUtils.debugln("NewSort.getID**name=" + name + "--index=" + index);
 		return index;

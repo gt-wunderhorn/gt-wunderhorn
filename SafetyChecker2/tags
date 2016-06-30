@@ -196,6 +196,7 @@ UnreachableCode	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableC
 Vertex	src/safetyChecker/Vertex.java	/^public class Vertex {$/;"	c
 WARNING	src/safetyChecker/LogUtils.java	/^	private static final int WARNING = 3;$/;"	f	class:LogUtils	file:
 Z3ArrayHandler	src/safetyChecker/Z3ArrayHandler.java	/^public class Z3ArrayHandler {$/;"	c
+Z3ObjectFieldHandler	src/safetyChecker/Z3ObjectFieldHandler.java	/^public class Z3ObjectFieldHandler {$/;"	c
 Z3ScriptHandler	src/safetyChecker/Z3ScriptHandler.java	/^	public Z3ScriptHandler(InterpolationContext ictx) {$/;"	m	class:Z3ScriptHandler
 Z3ScriptHandler	src/safetyChecker/Z3ScriptHandler.java	/^public class Z3ScriptHandler {$/;"	c
 access1	src/safetyTestCode/object/Obj.java	/^	int access1;$/;"	f	class:Obj
@@ -269,12 +270,13 @@ cfg	src/safetyChecker/ProgramTree.java	/^	private ExceptionalUnitGraph cfg;$/;"	
 check	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int check=0x7f040002;$/;"	f	class:R.string
 check	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int check=0x7f040002;$/;"	f	class:R.string
 checkCoveredBy	src/safetyChecker/CoverRelation.java	/^	private boolean checkCoveredBy(Vertex weakerVertex, Vertex strongerVertex) {$/;"	m	class:CoverRelation	file:
+checkHoldsAndClearCoverRelation	src/safetyChecker/CoverRelation.java	/^	protected void checkHoldsAndClearCoverRelation(Vertex vertex) {$/;"	m	class:CoverRelation
 checkPassword	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^    public void checkPassword(View view){$/;"	m	class:ImplicitFlow2
 checkUsernamePassword	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^    public void checkUsernamePassword(View view){$/;"	m	class:ImplicitFlow4
 checkXvalue	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    private void checkXvalue(int x)	{$/;"	m	class:ImplicitFlow1	file:
 check_call	PngCreator.py	/^from subprocess import check_call$/;"	i
 cleanParameterList	src/safetyChecker/Edge.java	/^	public void cleanParameterList() { this.parameterList = new LinkedList<Expr>(); }$/;"	m	class:Edge
-clearCoverRelation	src/safetyChecker/CoverRelation.java	/^	protected void clearCoverRelation(Vertex vertex) {$/;"	m	class:CoverRelation
+clearCoverRelation	src/safetyChecker/CoverRelation.java	/^	private void clearCoverRelation(Vertex vertex) {$/;"	m	class:CoverRelation	file:
 climbStairs	src/safetyTestCode/leetCode/climbingStairs/Test1.java	/^	public int climbStairs(int n) {$/;"	m	class:Test1
 climbStairs	src/safetyTestCode/leetCode/climbingStairs/Test2.java	/^	public int climbStairs(int n) {$/;"	m	class:Test2
 com.flow	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^package com.flow;$/;"	p
@@ -292,6 +294,7 @@ convertErrorEdge	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean conve
 convertGotoStmt	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertGotoStmt(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 convertIdentityStmt	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertIdentityStmt(Edge edge) { $/;"	m	class:Z3ScriptHandler	file:
 convertIfStmt	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertIfStmt(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
+convertInitInvoke	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertInitInvoke(Edge edge){$/;"	m	class:Z3ScriptHandler	file:
 convertNewArrayExpr	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertNewArrayExpr(NewArrayExpr ne, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 convertNewExpr	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertNewExpr(NewExpr ne, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 convertNewMultiArrayExpr	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertNewMultiArrayExpr(NewMultiArrayExpr ne, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
@@ -300,6 +303,7 @@ convertPrimitiveValue	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr con
 convertRefLikeValue	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertRefLikeValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler	file:
 convertSinkInvoke2Z3	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertSinkInvoke2Z3(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 convertValue	src/safetyChecker/Z3ScriptHandler.java	/^	protected Expr convertValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler
+counter	src/safetyChecker/CoverRelation.java	/^	int counter =0;$/;"	f	class:CoverRelation
 cover	src/safetyChecker/CoverRelation.java	/^	private void cover() {$/;"	m	class:CoverRelation	file:
 coverDescendants	src/safetyChecker/CoverRelation.java	/^	private void coverDescendants(Vertex vertex) {$/;"	m	class:CoverRelation	file:
 coverRelation	src/safetyChecker/InterpolationHandler.java	/^	private CoverRelation coverRelation;$/;"	f	class:InterpolationHandler	file:
@@ -405,6 +409,7 @@ getArrayNameSuffix	src/safetyChecker/Z3ScriptHandler.java	/^	protected String ge
 getArrayPrefix	src/safetyChecker/Z3ArrayHandler.java	/^	private String getArrayPrefix() {$/;"	m	class:Z3ArrayHandler	file:
 getArraySortSuffix	src/safetyChecker/Z3ScriptHandler.java	/^	protected String getArraySortSuffix() {$/;"	m	class:Z3ScriptHandler
 getBufferedWriter	src/dotty/CfgConverter.java	/^	private static BufferedWriter getBufferedWriter(String fileName) throws IOException {$/;"	m	class:CfgConverter	file:
+getCfg	src/safetyChecker/ProgramTree.java	/^	protected ExceptionalUnitGraph getCfg() { return this.cfg; }$/;"	m	class:ProgramTree
 getCoveredByMap	src/safetyChecker/CoverRelation.java	/^	public Map<Vertex, Vertex> getCoveredByMap() { return this.coveredByMap; }$/;"	m	class:CoverRelation
 getCoveringMap	src/safetyChecker/CoverRelation.java	/^	public Map<Vertex, Set<Vertex>> getCoveringMap() { return this.coveringMap; }$/;"	m	class:CoverRelation
 getDescription	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public String getDescription() {$/;"	m	class:Datacontainer
@@ -450,11 +455,12 @@ getSubstitute	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Strin
 getSubstituteSort	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Sort> getSubstituteSort() { return this.substituteSort; }$/;"	m	class:Z3ScriptHandler
 getTarget	src/safetyChecker/Edge.java	/^	public Vertex getTarget() { return this.target; }$/;"	m	class:Edge
 getTrueInvariant	src/safetyChecker/InterpolationHandler.java	/^	public BoolExpr getTrueInvariant() { return this.ictx.mkTrue(); }$/;"	m	class:InterpolationHandler
-getUncovered	src/safetyChecker/ProgramTree.java	/^	public Queue<Vertex> getUncovered() { return this.uncovered; }$/;"	m	class:ProgramTree
+getUncovered	src/safetyChecker/ProgramTree.java	/^	protected Queue<Vertex> getUncovered() { return this.uncovered; }$/;"	m	class:ProgramTree
 getUnit	src/safetyChecker/Edge.java	/^	public Unit getUnit() { return this.unit; }$/;"	m	class:Edge
 getUnitVertexMap	src/safetyChecker/CoverRelation.java	/^	public Map<Unit, LinkedList<Vertex>> getUnitVertexMap() { return this.unitVertexMap; } $/;"	m	class:CoverRelation
 getZ3Expr	src/safetyChecker/Edge.java	/^	public BoolExpr getZ3Expr() { return this.z3Expr; }$/;"	m	class:Edge
 global	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Expr> global = new HashMap<String, Expr>();$/;"	f	class:Z3ScriptHandler	file:
+handleStaticFieldRef	src/safetyChecker/Z3ObjectFieldHandler.java	/^	protected Expr handleStaticFieldRef(Local local, boolean assignLeft, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ObjectFieldHandler
 head	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	private Node head;$/;"	f	class:LinkedList	file:
 hello_world	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
 hello_world	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
@@ -492,6 +498,7 @@ incomingEdges	src/safetyChecker/Vertex.java	/^	private Set<Edge> incomingEdges =
 index	src/safetyChecker/NewSort.java	/^	private Map<Expr, IntExpr> index;$/;"	f	class:NewSort	file:
 info	src/safetyChecker/LogUtils.java	/^	public static void info(Object... objects) {$/;"	m	class:LogUtils
 infoln	src/safetyChecker/LogUtils.java	/^	public static void infoln(Object... objects) {$/;"	m	class:LogUtils
+initInvoke	src/safetyChecker/Edge.java	/^	private boolean initInvoke = false;$/;"	f	class:Edge	file:
 invariant	src/safetyChecker/Vertex.java	/^	private BoolExpr invariant;$/;"	f	class:Vertex	file:
 isAncestorCovered	src/safetyChecker/CoverRelation.java	/^	public boolean isAncestorCovered(Vertex vertex) {$/;"	m	class:CoverRelation
 isArrayCopyEdge	src/safetyChecker/Edge.java	/^	public boolean isArrayCopyEdge() { return this.arrayCopy; }$/;"	m	class:Edge
@@ -512,6 +519,8 @@ isErrorUnit	src/safetyChecker/UnitController.java	/^	public boolean isErrorUnit(
 isInErrorPath	src/safetyChecker/Edge.java	/^	public boolean isInErrorPath() { return this.inErrorPath; }$/;"	m	class:Edge
 isInErrorPath	src/safetyChecker/Vertex.java	/^	private boolean isInErrorPath = false; $/;"	f	class:Vertex	file:
 isInErrorPath	src/safetyChecker/Vertex.java	/^	public boolean isInErrorPath() { return this.isInErrorPath; }$/;"	m	class:Vertex
+isInitInvoke	src/safetyChecker/Edge.java	/^	public boolean  isInitInvoke() { return this.initInvoke; }$/;"	m	class:Edge
+isInitInvoke	src/safetyChecker/UnitController.java	/^	public boolean isInitInvoke(Unit u) {$/;"	m	class:UnitController
 isInvoke	src/safetyChecker/UnitController.java	/^	public boolean isInvoke(Unit u) {$/;"	m	class:UnitController
 isNewEdge	src/safetyChecker/Edge.java	/^	public boolean isNewEdge() { return this.newEdge; }$/;"	m	class:Edge
 isNewInvoke	src/safetyChecker/UnitController.java	/^	public boolean isNewInvoke(Unit u) {$/;"	m	class:UnitController
@@ -568,6 +577,7 @@ main	src/RecordPeekMemoryAndTime/testDriver.java	/^	public static void main(Stri
 main	src/safetyChecker/SafetyInitializerW.java	/^	public static void main(String args[]) {$/;"	m	class:SafetyInitializerW
 main	src/safetyTestCode/leetCode/climbingStairs/Test1.java	/^	public static void main(String[] args) {$/;"	m	class:Test1
 main	src/safetyTestCode/leetCode/climbingStairs/Test2.java	/^	public static void main(String[] args) {$/;"	m	class:Test2
+main	src/safetyTestCode/object/Test1.java	/^        public static void main(String[] args) throws IOException {$/;"	m	class:Test1
 main	src/safetyTester/arraytest/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
 main	src/safetyTester/iftest/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
 main	src/safetyTester/iftest/Tester2.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester2
@@ -610,6 +620,7 @@ newSortMap	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Sort> n
 next	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		Node next;$/;"	f	class:LinkedList.Node
 nextLine	src/safetyChecker/LogUtils.java	/^	public static void nextLine(int printLevel) {$/;"	m	class:LogUtils
 nextVertex	src/safetyChecker/Vertex.java	/^	private Vertex nextVertex;$/;"	f	class:Vertex	file:
+objFieldHandler	src/safetyChecker/Z3ScriptHandler.java	/^	private Z3ObjectFieldHandler objFieldHandler = new Z3ObjectFieldHandler();$/;"	f	class:Z3ScriptHandler	file:
 objectEdge	src/safetyChecker/Edge.java	/^	private boolean objectEdge = false;$/;"	f	class:Edge	file:
 onCreate	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayAccess1
 onCreate	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayAccess2
@@ -689,6 +700,7 @@ safetyChecker	src/safetyChecker/SafetyInitializerW.java	/^package safetyChecker;
 safetyChecker	src/safetyChecker/UnitController.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/Vertex.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/Z3ArrayHandler.java	/^package safetyChecker;$/;"	p
+safetyChecker	src/safetyChecker/Z3ObjectFieldHandler.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/Z3ScriptHandler.java	/^package safetyChecker;$/;"	p
 safetyChecker.exception	src/safetyChecker/exception/CreateZ3ScriptFailedException.java	/^package safetyChecker.exception;$/;"	p
 safetyChecker.exception	src/safetyChecker/exception/ErrorLocationNotFoundException.java	/^package safetyChecker.exception;$/;"	p
@@ -735,6 +747,7 @@ setErrorEdge	src/safetyChecker/Edge.java	/^	public void setErrorEdge(boolean err
 setErrorLocation	src/safetyChecker/Vertex.java	/^	public void setErrorLocation(boolean errorLocation) { this.errorLocation = errorLocation; }$/;"	m	class:Vertex
 setInErrorPath	src/safetyChecker/Edge.java	/^	public void setInErrorPath(boolean inErrorPath) { this.inErrorPath = inErrorPath; }$/;"	m	class:Edge
 setInErrorPath	src/safetyChecker/Vertex.java	/^	public void setInErrorPath(boolean isInErrorPath) { this.isInErrorPath = isInErrorPath; }$/;"	m	class:Vertex
+setInitInvoke	src/safetyChecker/Edge.java	/^	public void setInitInvoke(boolean initInvoke) { this.initInvoke = initInvoke; } $/;"	m	class:Edge
 setInvariant	src/safetyChecker/Vertex.java	/^	public void setInvariant(BoolExpr invariant) { this.invariant = invariant; }$/;"	m	class:Vertex
 setLocationNumber	src/safetyChecker/Vertex.java	/^	public void setLocationNumber(int locationNumber) { this.locationNumber = locationNumber; } 	$/;"	m	class:Vertex
 setNewEdge	src/safetyChecker/Edge.java	/^	public void setNewEdge(boolean newEdge) { this.newEdge = newEdge; }$/;"	m	class:Edge
@@ -814,11 +827,9 @@ test	src/safetyTestCode/object/Test1.java	/^	public void test() {$/;"	m	class:Te
 test	src/safetyTestCode/whiletest/Test1.java	/^	public void test() {$/;"	m	class:Test1
 test	src/safetyTestCode/whiletest/Test2.java	/^	public void test(int n) {$/;"	m	class:Test2
 test1	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void test1(int i) {$/;"	m	class:ErrorFunction
-test1	src/safetyTestCode/arraytest/Test1.java	/^	public void test1() {$/;"	m	class:Test1
-test2	src/safetyTestCode/arraytest/Test1.java	/^	public int test2(int x, int y) {$/;"	m	class:Test1
 test2	src/safetyTestCode/whiletest/Test2.java	/^	public void test2() {$/;"	m	class:Test2
+test3	src/safetyTestCode/arraytest/Test1.java	/^	public void test3(int n) {$/;"	m	class:Test1
 test4	src/safetyTestCode/arraytest/Test1.java	/^	public void test4(int n) {$/;"	m	class:Test1
-test5	src/safetyTestCode/arraytest/Test1.java	/^	public void test5(int n) {$/;"	m	class:Test1
 testDriver	src/RecordPeekMemoryAndTime/testDriver.java	/^public class testDriver {$/;"	c
 to	src/safetyChecker/InterpolationHandler.java	/^	Expr[] to = null;$/;"	f	class:InterpolationHandler
 toString	src/safetyChecker/Edge.java	/^	public String toString() { return unit.toString(); }$/;"	m	class:Edge
@@ -854,3 +865,4 @@ z3Expr	src/safetyChecker/Edge.java	/^	private BoolExpr z3Expr;$/;"	f	class:Edge	
 z3Handler	src/safetyChecker/InterpolationHandler.java	/^	private Z3ScriptHandler z3Handler;$/;"	f	class:InterpolationHandler	file:
 z3Handler	src/safetyChecker/ProgramTree.java	/^	private Z3ScriptHandler z3Handler; $/;"	f	class:ProgramTree	file:
 z3Local	src/safetyChecker/Z3ArrayHandler.java	/^	public Expr z3Local(Local local, boolean assignLeft, int nodeIndex, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
+z3ObjectField	src/safetyChecker/Z3ScriptHandler.java	/^	public Expr z3ObjectField(InstanceFieldRef ref, boolean assignLeft, Edge edge) {$/;"	m	class:Z3ScriptHandler
