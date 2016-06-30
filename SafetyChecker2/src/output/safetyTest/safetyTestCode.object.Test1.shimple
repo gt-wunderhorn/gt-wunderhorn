@@ -56,66 +56,144 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
     public static void main(java.lang.String[]) throws java.io.IOException
     {
-        java.lang.String[] r0;
-        java.io.BufferedReader r1, $r3;
-        java.io.PrintWriter r2, $r6;
-        java.io.InputStreamReader $r4;
-        java.io.InputStream $r5;
-        java.io.PrintStream $r7;
-        java.lang.String $r8, $r9;
-        int $i0, i1, i2, i2_1, i1_1, i1_2, i2_2;
+        java.lang.String[] r0, r3;
+        java.io.BufferedReader r1, $r5;
+        java.io.PrintWriter r2, $r8;
+        int i0, $i1, $i2, $i3, i4, i5, i6, i7, i8, i9, i4_1, i5_1, i4_2, i5_2, i6_1, i6_2, i6_3, i7_1, i8_1, i9_1, i9_2, i7_2, i8_2, i7_3, i8_3, i7_4, i8_4, i9_3;
+        int[] r4;
+        java.io.InputStreamReader $r6;
+        java.io.InputStream $r7;
+        java.io.PrintStream $r9;
+        java.lang.String $r10, $r11, $r12, $r13, $r14, $r15, $r16;
 
         r0 := @parameter0: java.lang.String[];
 
-        $r3 = new java.io.BufferedReader;
+        $r5 = new java.io.BufferedReader;
 
-        $r4 = new java.io.InputStreamReader;
+        $r6 = new java.io.InputStreamReader;
 
-        $r5 = <java.lang.System: java.io.InputStream in>;
+        $r7 = <java.lang.System: java.io.InputStream in>;
 
-        specialinvoke $r4.<java.io.InputStreamReader: void <init>(java.io.InputStream)>($r5);
+        specialinvoke $r6.<java.io.InputStreamReader: void <init>(java.io.InputStream)>($r7);
 
-        specialinvoke $r3.<java.io.BufferedReader: void <init>(java.io.Reader)>($r4);
+        specialinvoke $r5.<java.io.BufferedReader: void <init>(java.io.Reader)>($r6);
 
-        r1 = $r3;
+        r1 = $r5;
 
-        $r6 = new java.io.PrintWriter;
+        $r8 = new java.io.PrintWriter;
 
-        $r7 = <java.lang.System: java.io.PrintStream out>;
+        $r9 = <java.lang.System: java.io.PrintStream out>;
 
-        specialinvoke $r6.<java.io.PrintWriter: void <init>(java.io.OutputStream)>($r7);
+        specialinvoke $r8.<java.io.PrintWriter: void <init>(java.io.OutputStream)>($r9);
 
-        r2 = $r6;
+        r2 = $r8;
 
-        $r8 = virtualinvoke r1.<java.io.BufferedReader: java.lang.String readLine()>();
+        $r10 = virtualinvoke r1.<java.io.BufferedReader: java.lang.String readLine()>();
 
-        $r9 = virtualinvoke $r8.<java.lang.String: java.lang.String trim()>();
+        $r11 = virtualinvoke $r10.<java.lang.String: java.lang.String trim()>();
 
-        i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r9);
+        i4 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r11);
 
-        i2 = 2;
+        i5 = 2;
 
-(0)     goto label2;
+(0)     goto label7;
 
      label1:
-(1)     i2_2 = i2_1 + i1_2;
+        i5_2 = i5_1 + i4_2;
+
+        $r12 = virtualinvoke r1.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.String: java.lang.String trim()>();
+
+        i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r13);
+
+        $r14 = virtualinvoke r1.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        $r15 = virtualinvoke $r14.<java.lang.String: java.lang.String trim()>();
+
+        r3 = virtualinvoke $r15.<java.lang.String: java.lang.String[] split(java.lang.String)>("\\s+");
+
+        r4 = newarray (int)[i0];
+
+        i6_1 = 0;
+
+(1)     goto label3;
 
      label2:
-        i2_1 = Phi(i2 #0, i2_2 #1);
+        $r16 = r3[i6_2];
 
-        i1_1 = Phi(i1 #0, i1_2 #1);
+        $i2 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r16);
 
-        $i0 = i1_1;
+        r4[i6_2] = $i2;
 
-        i1_2 = i1_1 + -1;
+(2)     i6_3 = i6_2 + 1;
 
-        if $i0 > 0 goto label1;
+     label3:
+        i6_2 = Phi(i6_1 #1, i6_3 #2);
 
-        if i2_1 != 13 goto label3;
+        if i6_2 < i0 goto label2;
+
+        i7_1 = r4[0];
+
+        i8_1 = 1;
+
+        i9_1 = 1;
+
+(3)     goto label6;
+
+     label4:
+        $i3 = r4[i9_2];
+
+(4)     if i7_2 < $i3 goto label5;
+
+        i7_3 = r4[i9_2];
+
+(5)     i8_3 = i8_2 + 1;
+
+     label5:
+        i7_4 = Phi(i7_2 #4, i7_3 #5);
+
+        i8_4 = Phi(i8_2 #4, i8_3 #5);
+
+(6)     i9_3 = i9_2 + 1;
+
+     label6:
+        i9_2 = Phi(i9_1 #3, i9_3 #6);
+
+        i7_2 = Phi(i7_1 #3, i7_4 #6);
+
+        i8_2 = Phi(i8_1 #3, i8_4 #6);
+
+        if i9_2 < i0 goto label4;
+
+(7)     virtualinvoke r2.<java.io.PrintWriter: void println(int)>(i8_2);
+
+     label7:
+        i4_1 = Phi(i4 #0, i4_2 #7);
+
+        i9 = Phi(i9 #0, i9_2 #7);
+
+        i5_1 = Phi(i5 #0, i5_2 #7);
+
+        i7 = Phi(i7 #0, i7_2 #7);
+
+        i6 = Phi(i6 #0, i6_2 #7);
+
+        i8 = Phi(i8 #0, i8_2 #7);
+
+        $i1 = i4_1;
+
+        i4_2 = i4_1 + -1;
+
+        if $i1 > 0 goto label1;
+
+        virtualinvoke r2.<java.io.PrintWriter: void close()>();
+
+        if i5_1 != 3 goto label8;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
-     label3:
+     label8:
         return;
     }
 }

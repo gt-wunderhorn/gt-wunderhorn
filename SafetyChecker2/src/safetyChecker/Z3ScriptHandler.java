@@ -58,6 +58,7 @@ import soot.jimple.StaticFieldRef;
 import soot.jimple.StringConstant;
 import soot.jimple.SubExpr;
 import soot.jimple.VirtualInvokeExpr;
+import soot.jimple.internal.JNewArrayExpr;
 import soot.jimple.internal.JNewExpr;
 import soot.jimple.internal.JimpleLocal;
 import soot.shimple.PhiExpr;
@@ -103,8 +104,8 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
-		LogUtils.warning(">>>>>>");
-		LogUtils.infoln(e.getSource() + "***" + e);
+		LogUtils.debug(">>>>>>");
+		LogUtils.debugln(e.getSource() + "***" + e);
 		boolean converted = false;
 		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
@@ -117,9 +118,9 @@ public class Z3ScriptHandler {
 		if(stmt instanceof IdentityStmt) converted = this.convertIdentityStmt(e);
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
-		if(e.isInitInvoke()) converted = convertInitInvoke(e);
+		if(stmt instanceof InvokeStmt && !e.isSubFunction()) converted = convertNotSubFuntionInvoke(e);
 	
-		LogUtils.infoln("z3Expr=" + e.getZ3Expr());
+		LogUtils.debugln("z3Expr=" + e.getZ3Expr());
 		if(!converted) {
 			LogUtils.warningln("---------------");	
 			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
@@ -131,7 +132,7 @@ public class Z3ScriptHandler {
 		return converted;
 	}
 
-	private boolean convertInitInvoke(Edge edge){
+	private boolean convertNotSubFuntionInvoke(Edge edge){
 		edge.setZ3Expr(this.ictx.mkTrue());
 		return true;
 	}
@@ -210,20 +211,21 @@ public class Z3ScriptHandler {
 		
 		if(left.getType() instanceof RefType && right instanceof VirtualInvokeExpr) {
 			right = new JNewExpr((RefType) left.getType()); 
+		} else if (right.toString().contains("java.lang.String[] split(java.lang.String)")) {
+			right = new JNewArrayExpr(RefType.v("java.lang.String"), IntConstant.v(0)); 
 		}
-
+		
 		Type leftType = left.getType();
 		Expr rightZ3 = null;
 
 		// rigth invoke expression needs to be added
-		LogUtils.warningln("right=" + right);
 		if(edge.isSubFunction() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
 			rightZ3 = this.ictx.mkIntConst("return_" + this.getRealArraySize("return_"));
 		} else if(right instanceof InvokeExpr && !edge.isSubFunction()) { 
 			rightZ3 = this.ictx.mkIntConst("nonSubFunction_" +this.getRealArraySize("nonSubFunction_"));
-		} else
+		} else {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
-		
+		}
 		LogUtils.debugln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
 		LogUtils.debugln("leftZ3=" + leftZ3);
@@ -335,12 +337,10 @@ public class Z3ScriptHandler {
 				String newName = oldName + getNameSuffix(edge);
 				Expr leftExpr = null;
 				if(type instanceof IntegerType) {
-					LogUtils.warningln("IntegerType");
 					leftExpr = ictx.mkIntConst(newName);
 					this.substitute.put(newName, oldName); // + "_" + edge.getProgramTree().getProgramDefinition());
 					this.substituteSort.put(newName, ictx.mkIntSort());
 				} if (type instanceof LongType) {
-					LogUtils.warningln("LongType");
 					leftExpr = this.ictx.mkIntConst(newName);
 					this.substitute.put(newName, oldName);
 					this.substituteSort.put(newName, this.ictx.mkIntSort());
@@ -362,7 +362,6 @@ public class Z3ScriptHandler {
 				return exprValue;
 			}
 			if(constant instanceof LongConstant) {
-				LogUtils.infoln("LongConstant");
 				LongConstant LongConstant = (LongConstant) constant;
 				long longValue = LongConstant.value;
 				Expr exprValue = ictx.mkInt(longValue);
@@ -474,8 +473,8 @@ public class Z3ScriptHandler {
 			System.exit(0);
 		}
 		if(value instanceof ArrayRef) {
-			LogUtils.fatalln("FATAL: ArrayRef is not supported yet!");
-			System.exit(0);
+			ArrayRef arrayRef = (ArrayRef) value;
+			return arrayHandler.z3ArrayRef(arrayRef, this, edge);
 		}
 		if(value instanceof InstanceFieldRef) {
 			LogUtils.fatalln("FATAL: InstanceFieldRef is not supported yet!");

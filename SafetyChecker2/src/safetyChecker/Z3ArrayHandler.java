@@ -81,7 +81,7 @@ public class Z3ArrayHandler {
 
 			String globalName = z3Handler.getGlobalName(oldName);  
 			Expr arrayCellConst = ictx.mkConst(globalName, arrayCell);
-			LogUtils.warningln("arrayCellConst=" + arrayCellConst);
+			LogUtils.debugln("arrayCellConst=" + arrayCellConst);
 
 			z3Handler.getSubstitute().put(globalName, oldName);
 			z3Handler.getGlobal().put(oldName, arrayCellConst);

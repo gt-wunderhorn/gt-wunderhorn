@@ -79,7 +79,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test1 extends java.lang.Obje
 
         if i4_1 <= i0 goto label3;
 
-        if i3_1 != 4 goto label5;
+        if i3_1 != 8 goto label5;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 

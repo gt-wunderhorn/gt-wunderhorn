@@ -33,23 +33,23 @@ public class Test1 {
 
                 while (t-- > 0) {
 			a += t;
- //                       int n = Integer.parseInt(br.readLine().trim());
- //                       String[] ss = br.readLine().trim().split("\\s+");
- //                       int[] aa = new int[n];
- //                       for (int i = 0; i < n; i++)
- //                               aa[i] = Integer.parseInt(ss[i]);
- //                       int speed = aa[0];
- //                       int cnt = 1;
- //                       for (int i = 1; i < n; i++)
- //                               if (speed >= aa[i]) {
- //                                       speed = aa[i];
- //                                       cnt++;
- //                               }
- //                       pw.println(cnt);
+                        int n = Integer.parseInt(br.readLine().trim());
+                        String[] ss = br.readLine().trim().split("\\s+");
+                        int[] aa = new int[n];
+                        for (int i = 0; i < n; i++)
+                                aa[i] = Integer.parseInt(ss[i]);
+                       int speed = aa[0];
+                        int cnt = 1;
+                        for (int i = 1; i < n; i++)
+                                if (speed >= aa[i]) {
+                                        speed = aa[i];
+                                        cnt++;
+                                }
+                       pw.println(cnt);
                 }
- //               pw.close();
+                pw.close();
  
-		if(a == 13)
+		if(a == 3)
 		ErrorLable.Error();
         }
 }

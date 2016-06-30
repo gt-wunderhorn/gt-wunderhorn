@@ -89,7 +89,7 @@ public class UnitController {
 	}
 
 	private boolean isSubFunctionUnit(Unit u, Map<String, Body> stores, Edge e) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		if(isInvoke(u)) {
+		if(this.isInvoke(u)) {
 			String sign = getMethodSignature(u);
 			if(!sign.contains(ERRORLABEL) && stores.containsKey(sign)) {
 				LogUtils.warningln("SubFunction found : " + sign);

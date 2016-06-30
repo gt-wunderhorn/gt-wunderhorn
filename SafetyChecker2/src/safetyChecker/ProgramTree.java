@@ -229,8 +229,6 @@ public class ProgramTree {
 
 	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.debugln("----->expand : " + w + "--" + w.getOutgoingEdge() + "--" + coverRelation.isCovered(w) + "**" + w.getOutgoingEdge().isInErrorPath());
-		for(Edge ee : w.getIncomingEdges())
-			LogUtils.warningln(ee);
 
 		boolean result = false;
 		if (!coverRelation.isCovered(w)) {
