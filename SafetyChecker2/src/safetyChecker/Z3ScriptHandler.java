@@ -79,6 +79,7 @@ public class Z3ScriptHandler {
 	private Stack<Expr> parameters = new Stack<Expr>();
 	private Z3ArrayHandler arrayHandler = new Z3ArrayHandler();
 	private Z3ObjectFieldHandler objFieldHandler = new Z3ObjectFieldHandler();
+	private Z3JavaMathHandler z3MathHandler = new Z3JavaMathHandler();
 	private Vertex errorPathRoot;
 	private Edge currentEdge;
 
@@ -222,13 +223,16 @@ public class Z3ScriptHandler {
 		if(edge.isSubFunction() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
 			rightZ3 = this.ictx.mkIntConst("return_" + this.getRealArraySize("return_"));
 		} else if(right instanceof InvokeExpr && !edge.isSubFunction()) { 
-			rightZ3 = this.ictx.mkIntConst("nonSubFunction_" +this.getRealArraySize("nonSubFunction_"));
+			if(this.z3MathHandler.isJavaMathLibrary(right))
+				rightZ3 = this.z3MathHandler.createMathEquality(right, this, edge);
+			else
+				rightZ3 = this.ictx.mkIntConst("nonSubFunction_" +this.getRealArraySize("nonSubFunction_"));
 		} else {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		}
-		LogUtils.debugln("rightZ3=" + rightZ3);
+		LogUtils.infoln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
-		LogUtils.debugln("leftZ3=" + leftZ3);
+		LogUtils.infoln("leftZ3=" + leftZ3);
 
 		BoolExpr eq = null; 
 //		if(UnitController.isArraysEqualsInvoke(right)) {
@@ -288,7 +292,7 @@ public class Z3ScriptHandler {
 			System.exit(0);
 		} else {
 			edge.setZ3Expr(eq);
-			LogUtils.debugln("eq2=" + eq);
+			LogUtils.warningln("eq2=" + eq);
 		}
 		if(eq == null)
 			return false;

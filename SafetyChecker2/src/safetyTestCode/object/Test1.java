@@ -9,6 +9,15 @@ import safetyChecker.ErrorLable;
 
 public class Test1 {
 
+	public static void main(String[] args) throws IOException {
+		
+		int a = 3;
+		int b = 5;
+		int i = Math.max(a,b);
+		if(i == b-a)
+			ErrorLable.Error();
+	}	
+
 	public void test() {
 		Obj o = new Obj();
 		byte b = 3;
@@ -24,8 +33,8 @@ public class Test1 {
 		if(l == l1-20)
 			ErrorLable.Error();
 	}
-	
-        public static void main(String[] args) throws IOException {
+
+        public static void main2(String[] args) throws IOException {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 PrintWriter pw = new PrintWriter(System.out);
                 int t = Integer.parseInt(br.readLine().trim());
@@ -40,16 +49,16 @@ public class Test1 {
                                 aa[i] = Integer.parseInt(ss[i]);
                        int speed = aa[0];
                         int cnt = 1;
-                        for (int i = 1; i < n; i++)
-                                if (speed >= aa[i]) {
-                                        speed = aa[i];
-                                        cnt++;
-                                }
+//                        for (int i = 1; i < n; i++)
+//                                if (speed >= aa[i]) {
+//                                        speed = aa[i];
+//                                        cnt++;
+//                                }
                        pw.println(cnt);
                 }
                 pw.close();
  
-		if(a == 3)
+		if(a == 11)
 		ErrorLable.Error();
         }
 }
