@@ -39,7 +39,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test1 extends java.lang.Obje
     public int climbStairs(int)
     {
         safetyTestCode.leetCode.climbingStairs.Test1 r0;
-        int i0, i1, i2, i3, i4, i4_1, i2_1, i3_1, i3_2, i2_2, i4_2;
+        int i0, i1, i2, i3, i4, i4_1, i3_1, i2_1, i3_2, i2_2, i4_2;
 
         r0 := @this: safetyTestCode.leetCode.climbingStairs.Test1;
 
@@ -73,9 +73,9 @@ public class safetyTestCode.leetCode.climbingStairs.Test1 extends java.lang.Obje
      label4:
         i4_1 = Phi(i4 #0, i4_2 #1);
 
-        i2_1 = Phi(i2 #0, i2_2 #1);
-
         i3_1 = Phi(i3 #0, i3_2 #1);
+
+        i2_1 = Phi(i2 #0, i2_2 #1);
 
         if i4_1 <= i0 goto label3;
 

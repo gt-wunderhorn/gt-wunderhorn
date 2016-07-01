@@ -11,13 +11,13 @@ import safetyChecker.ErrorLable;
 public class Test1 {
 
 	public static void main(String[] args) {
-		int[] intArray = new int[2];
-		intArray[0] = 3;
-		int[][] intArray3 = new int[2][4];
-		intArray3[1][3] = 3;
-		int a = intArray3[0][2];
+//		int[] intArray = new int[2];
+//		intArray[0] = 3;
 
-		if(intArray3[1][3] == 3)
+		int n=1;
+		int[][] intArray3 = new int[3][2];
+		intArray3[n][2] = 3;
+		if(intArray3[0][1] != 3)
 			ErrorLable.Error();
 
 

@@ -15,31 +15,26 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
     public static void main(java.lang.String[])
     {
         java.lang.String[] r0;
-        int[] r1, $r3, $r4, $r5;
-        int[][] r2;
-        int i0, $i1;
+        byte b0;
+        int[][] r1;
+        int[] $r2, $r3;
+        int $i1;
 
         r0 := @parameter0: java.lang.String[];
 
-        r1 = newarray (int)[2];
+        b0 = 1;
 
-        r1[0] = 3;
+        r1 = newmultiarray (int)[3][2];
 
-        r2 = newmultiarray (int)[2][4];
+        $r2 = r1[b0];
 
-        $r3 = r2[1];
+        $r2[2] = 3;
 
-        $r3[3] = 3;
+        $r3 = r1[0];
 
-        $r4 = r2[0];
+        $i1 = $r3[1];
 
-        i0 = $r4[2];
-
-        $r5 = r2[1];
-
-        $i1 = $r5[3];
-
-        if $i1 != 3 goto label1;
+        if $i1 == 3 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
@@ -170,7 +165,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         java.lang.String[] r0, r3;
         java.io.BufferedReader r1, $r5;
         java.io.PrintWriter r2, $r8;
-        int i0, $i2, $i3, i4, i5, i6, i7, i5_1, i4_1, i4_2, i5_2, i6_1, i6_2, i6_3;
+        int i0, $i2, $i3, i4, i5, i6, i7, i4_1, i5_1, i4_2, i5_2, i6_1, i6_2, i6_3;
         int[] r4;
         byte b1;
         java.io.InputStreamReader $r6;
@@ -252,11 +247,11 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (3)     virtualinvoke r2.<java.io.PrintWriter: void println(int)>(b1);
 
      label4:
-        i5_1 = Phi(i5 #0, i5_2 #3);
+        i6 = Phi(i6 #0, i6_2 #3);
 
         i4_1 = Phi(i4 #0, i4_2 #3);
 
-        i6 = Phi(i6 #0, i6_2 #3);
+        i5_1 = Phi(i5 #0, i5_2 #3);
 
         $i2 = i4_1;
 

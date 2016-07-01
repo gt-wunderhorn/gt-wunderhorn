@@ -211,9 +211,9 @@ public class safetyChecker.Z3ScriptHandler extends java.lang.Object
 (2)     z2_2 = 1;
 
      label3:
-        r24_1 = Phi(r24 #0, r24_2 #1, r24_2 #2);
-
         z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
+
+        r24_1 = Phi(r24 #0, r24_2 #1, r24_2 #2);
 
         if r24_1 != null goto label1;
 
@@ -1772,9 +1772,9 @@ public class safetyChecker.Z3ScriptHandler extends java.lang.Object
      label14:
         r99_2 = Phi(r99_1 #5, r99_6 #11);
 
-        r98_2 = Phi(r98_1 #5, r98_6 #11);
-
         r101_2 = Phi(r101_1 #5, r101_3 #11);
+
+        r98_2 = Phi(r98_1 #5, r98_6 #11);
 
         $r33 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
@@ -1783,9 +1783,9 @@ public class safetyChecker.Z3ScriptHandler extends java.lang.Object
      label15:
         r99_1 = Phi(r99 #4, r99_2 #12);
 
-        r98_1 = Phi(r98 #4, r98_2 #12);
-
         r101 = Phi(r101 #4, r101_2 #12);
+
+        r98_1 = Phi(r98 #4, r98_2 #12);
 
         $z12 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
