@@ -12,29 +12,114 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         return;
     }
 
-    public static void main(java.lang.String[]) throws java.io.IOException
+    public static void main(java.lang.String[])
     {
         java.lang.String[] r0;
-        byte b0, b1;
-        int i2, i3, i4;
+        int[] r1, $r3, $r4, $r5;
+        int[][] r2;
+        int i0, $i1;
 
         r0 := @parameter0: java.lang.String[];
 
-        b0 = 3;
+        r1 = newarray (int)[2];
 
-        b1 = 5;
+        r1[0] = 3;
 
-        i2 = staticinvoke <java.lang.Math: int max(int,int)>(29, b1);
+        r2 = newmultiarray (int)[2][4];
 
-        i3 = staticinvoke <java.lang.Math: int max(int,int)>(b1, b0);
+        $r3 = r2[1];
 
-        i4 = i2 % i3;
+        $r3[3] = 3;
 
-        if i4 == 4 goto label1;
+        $r4 = r2[0];
+
+        i0 = $r4[2];
+
+        $r5 = r2[1];
+
+        $i1 = $r5[3];
+
+        if $i1 != 3 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label1:
+        return;
+    }
+
+    public static void main4(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        java.util.Scanner r1, $r3;
+        java.lang.String r2;
+        java.io.InputStream $r4;
+        int $i0, $i1, $i3, $i4, $i5, i7, i7_1, i7_2;
+        char $c2, $c6;
+        java.io.PrintStream $r5;
+        boolean z0, z0_1, z0_2;
+
+        r0 := @parameter0: java.lang.String[];
+
+        $r3 = new java.util.Scanner;
+
+        $r4 = <java.lang.System: java.io.InputStream in>;
+
+        specialinvoke $r3.<java.util.Scanner: void <init>(java.io.InputStream)>($r4);
+
+        r1 = $r3;
+
+        r2 = virtualinvoke r1.<java.util.Scanner: java.lang.String next()>();
+
+        z0 = 1;
+
+        i7 = 0;
+
+(0)     goto label4;
+
+     label1:
+        $c2 = virtualinvoke r2.<java.lang.String: char charAt(int)>(i7_1);
+
+        $i3 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        $i4 = $i3 - i7_1;
+
+        $i5 = $i4 - 1;
+
+        $c6 = virtualinvoke r2.<java.lang.String: char charAt(int)>($i5);
+
+        if $c2 != $c6 goto label2;
+
+        goto label3;
+
+     label2:
+        $r5 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r5.<java.io.PrintStream: void println(java.lang.String)>("No");
+
+        z0_1 = 0;
+
+(1)     goto label5;
+
+     label3:
+(2)     i7_2 = i7_1 + 1;
+
+     label4:
+        i7_1 = Phi(i7 #0, i7_2 #2);
+
+        $i0 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        $i1 = $i0 / 2;
+
+(3)     if i7_1 < $i1 goto label1;
+
+     label5:
+        z0_2 = Phi(z0_1 #1, z0 #3);
+
+        if z0_2 != 0 goto label6;
+
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+
+     label6:
         return;
     }
 
@@ -186,6 +271,32 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
      label5:
+        return;
+    }
+
+    public static void main3(java.lang.String[]) throws java.io.IOException
+    {
+        java.lang.String[] r0;
+        byte b0, b1;
+        int i2, i3, i4;
+
+        r0 := @parameter0: java.lang.String[];
+
+        b0 = 3;
+
+        b1 = 5;
+
+        i2 = staticinvoke <java.lang.Math: int max(int,int)>(29, b1);
+
+        i3 = staticinvoke <java.lang.Math: int max(int,int)>(b1, b0);
+
+        i4 = i2 % i3;
+
+        if i4 == 4 goto label1;
+
+        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+
+     label1:
         return;
     }
 }

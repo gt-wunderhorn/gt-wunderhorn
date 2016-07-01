@@ -134,9 +134,6 @@ public class safetyChecker.Z3JavaMathHandler extends java.lang.Object
         com.microsoft.z3.ArithExpr[] $r18, $r20;
         com.microsoft.z3.ArithExpr $r19, $r21, $r22, $r23, $r24, $r25, $r26;
         com.microsoft.z3.BoolExpr[] $r27;
-        java.lang.Object[] $r28;
-        java.lang.StringBuilder $r29, $r30;
-        java.lang.String $r31;
 
         r0 := @this: safetyChecker.Z3JavaMathHandler;
 
@@ -210,21 +207,7 @@ public class safetyChecker.Z3JavaMathHandler extends java.lang.Object
 
         r15 = virtualinvoke r5.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r27);
 
-        $r28 = newarray (java.lang.Object)[1];
-
-        $r29 = new java.lang.StringBuilder;
-
-        specialinvoke $r29.<java.lang.StringBuilder: void <init>(java.lang.String)>("firstHalf=");
-
-        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r15);
-
-        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r28[0] = $r31;
-
-        staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r28);
-
-        return r14;
+        return r15;
     }
 
     protected com.microsoft.z3.Expr createMathEquality(soot.Value, safetyChecker.Z3ScriptHandler, safetyChecker.Edge)

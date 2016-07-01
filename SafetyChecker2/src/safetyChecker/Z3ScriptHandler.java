@@ -60,7 +60,6 @@ import soot.jimple.SubExpr;
 import soot.jimple.VirtualInvokeExpr;
 import soot.jimple.internal.JNewArrayExpr;
 import soot.jimple.internal.JNewExpr;
-import soot.jimple.internal.JRemExpr;
 import soot.jimple.internal.JimpleLocal;
 import soot.shimple.PhiExpr;
 import soot.toolkits.scalar.ValueUnitPair;
@@ -106,8 +105,8 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
-		LogUtils.debug(">>>>>>");
-		LogUtils.debugln(e.getSource() + "***" + e);
+		LogUtils.warning(">>>>>>");
+		LogUtils.infoln(e.getSource() + "***" + e);
 		boolean converted = false;
 		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
@@ -122,7 +121,7 @@ public class Z3ScriptHandler {
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 		if(stmt instanceof InvokeStmt && !e.isSubFunction()) converted = convertNotSubFuntionInvoke(e);
 	
-		LogUtils.debugln("z3Expr=" + e.getZ3Expr());
+		LogUtils.infoln("z3Expr=" + e.getZ3Expr());
 		if(!converted) {
 			LogUtils.warningln("---------------");	
 			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
@@ -231,9 +230,9 @@ public class Z3ScriptHandler {
 		} else {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		}
-		LogUtils.infoln("rightZ3=" + rightZ3);
+		LogUtils.debugln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
-		LogUtils.infoln("leftZ3=" + leftZ3);
+		LogUtils.debugln("leftZ3=" + leftZ3);
 
 		BoolExpr eq = null; 
 //		if(UnitController.isArraysEqualsInvoke(right)) {
@@ -250,26 +249,25 @@ public class Z3ScriptHandler {
 		if(right instanceof AnyNewExpr) {
 			if(right instanceof NewArrayExpr) { 
 				BoolExpr realArray = arrayHandler.newArrayExpr(rightZ3, right.getType(), this);
-				LogUtils.debugln("realArray=" + realArray);
-				LogUtils.debugln("eq=" + eq);
 			        BoolExpr arrayExpr = this.ictx.mkAnd(eq, realArray);
 				// rest is to use for checking array equality.
 				// if size value is not integer this for now.
-				Value sizeValue = ((NewArrayExpr) right).getSize();
-				int maxSize = 0;
-				if(sizeValue instanceof Local) {
-					// handle for non integer values
-					maxSize = 10;//Integer.MAX_VALUE;
-				} else if(sizeValue instanceof IntConstant) {
-					IntConstant sizeIC = (IntConstant) sizeValue;
-					maxSize = sizeIC.value;
-					this.maxArraySize.put(left.toString(), maxSize);
-				}
-				// assign 0 as default value.
-//				BoolExpr defaultValues = arrayHandler.updateDefaultValue(left, maxSize, this, edge);
-//				arrayExpr = this.ictx.mkAnd(arrayExpr, defaultValues);
+//				Value sizeValue = ((NewArrayExpr) right).getSize();
+//				int maxSize = 0;
+//				// max size is useless now need to handle after 2d arrays
+//				if(sizeValue instanceof Local) {
+//					// handle for non integer values
+//					maxSize = 10;//Integer.MAX_VALUE;
+//				} else if(sizeValue instanceof IntConstant) {
+//					IntConstant sizeIC = (IntConstant) sizeValue;
+//					maxSize = sizeIC.value;
+//					this.maxArraySize.put(left.toString(), maxSize);
+//				}
 				edge.setZ3Expr(arrayExpr);		
-				//LogUtils.debugln("eq=" + arrayExpr);
+			} else if(right instanceof NewMultiArrayExpr) {
+				BoolExpr realMulArray = arrayHandler.newMultiArrayExpr((NewMultiArrayExpr)right, right.getType(), this, rightZ3);
+				BoolExpr arrayExpr = this.ictx.mkAnd(eq, realMulArray);
+				edge.setZ3Expr(arrayExpr);
 			} else if (right instanceof NewExpr) {
 				edge.setZ3Expr(eq);	
 			}
@@ -294,7 +292,7 @@ public class Z3ScriptHandler {
 				LogUtils.warningln(ee.getKey() + "--" + ee.getValue());
 		} else {
 			edge.setZ3Expr(eq);
-			LogUtils.warningln("eq2=" + eq);
+			LogUtils.debugln("eq2=" + eq);
 		}
 		if(eq == null)
 			return false;
@@ -618,8 +616,8 @@ public class Z3ScriptHandler {
 	private Expr convertAnyNewExpr(AnyNewExpr ane, Edge e) {
 		LogUtils.debugln("Z3ScriptHandler.convertAnyNewExpr");
 		if(ane instanceof NewExpr) return convertNewExpr((NewExpr)ane, e);
-		if(ane instanceof NewArrayExpr) return convertNewArrayExpr((NewArrayExpr)ane, e);
-		if(ane instanceof NewMultiArrayExpr) return convertNewMultiArrayExpr((NewMultiArrayExpr)ane, e);
+		if(ane instanceof NewArrayExpr) return arrayHandler.convertNewArrayExpr((NewArrayExpr)ane, e, this);
+		if(ane instanceof NewMultiArrayExpr) return arrayHandler.convertNewMultiArrayExpr((NewMultiArrayExpr)ane, e, this);
 		return null;
 	}
 	
@@ -641,31 +639,6 @@ public class Z3ScriptHandler {
 			sortId.put(typeName, ns);
 			return ns.getNewObject();
 		}	
-	}
-
-	private Expr convertNewArrayExpr(NewArrayExpr ne, Edge e) {
-		Type type = ne.getType();
-		String virtualName = type.toString();
-		
-		if(sortId.containsKey(virtualName)) {
-			NewSort ns = sortId.get(virtualName);
-			return ns.getNewObject();
-		} else {
-			Sort newSort = null;
-			if(newSortMap.containsKey(virtualName)) {
-				newSort = newSortMap.get(virtualName);
-			} else {
-				newSort = this.ictx.mkUninterpretedSort(virtualName);
-				newSortMap.put(virtualName, newSort);
-			}
-			NewSort ns = new NewSort(newSort, this.ictx);
-			sortId.put(virtualName, ns);
-			return ns.getNewObject();
-		}
-	}
-	
-	private Expr convertNewMultiArrayExpr(NewMultiArrayExpr ne, Edge e) {
-		throw new RuntimeException();
 	}
 
 	private String getArrayName(Value leftOp) {

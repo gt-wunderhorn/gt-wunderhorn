@@ -38,8 +38,7 @@ public class Z3JavaMathHandler {
 		return ((InvokeExpr)value).getMethod();
 	}
 
-	protected boolean isModulusInstruction(Value value)
-	{
+	protected boolean isModulusInstruction(Value value) {
 		if(value instanceof BinopExpr) {
 			BinopExpr expr = (BinopExpr) value;
 			if(expr instanceof JRemExpr) 
@@ -64,9 +63,7 @@ public class Z3JavaMathHandler {
 		BoolExpr secondHalf = ictx.mkLt((ArithExpr)leftZ3, (ArithExpr)op2Expr);
 		BoolExpr wholeExpr = ictx.mkAnd(firstHalf, secondHalf);
       
-		LogUtils.warningln("firstHalf=" + wholeExpr);
-		return secondHalf;
-	
+		return wholeExpr;
 	}
 
 	protected Expr createMathEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {
