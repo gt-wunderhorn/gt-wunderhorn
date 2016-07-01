@@ -16,7 +16,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
     {
         java.lang.String[] r0;
         byte b0, b1;
-        int i2, $i3;
+        int i2, i3, i4;
 
         r0 := @parameter0: java.lang.String[];
 
@@ -24,11 +24,13 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         b1 = 5;
 
-        i2 = staticinvoke <java.lang.Math: int max(int,int)>(b0, b1);
+        i2 = staticinvoke <java.lang.Math: int max(int,int)>(29, b1);
 
-        $i3 = b1 - b0;
+        i3 = staticinvoke <java.lang.Math: int max(int,int)>(b1, b0);
 
-        if i2 != $i3 goto label1;
+        i4 = i2 % i3;
+
+        if i4 == 4 goto label1;
 
         staticinvoke <safetyChecker.ErrorLable: void Error()>();
 
@@ -83,7 +85,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         java.lang.String[] r0, r3;
         java.io.BufferedReader r1, $r5;
         java.io.PrintWriter r2, $r8;
-        int i0, $i2, $i3, i4, i5, i6, i7, i4_1, i5_1, i4_2, i5_2, i6_1, i6_2, i6_3;
+        int i0, $i2, $i3, i4, i5, i6, i7, i5_1, i4_1, i4_2, i5_2, i6_1, i6_2, i6_3;
         int[] r4;
         byte b1;
         java.io.InputStreamReader $r6;
@@ -165,11 +167,11 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (3)     virtualinvoke r2.<java.io.PrintWriter: void println(int)>(b1);
 
      label4:
-        i6 = Phi(i6 #0, i6_2 #3);
+        i5_1 = Phi(i5 #0, i5_2 #3);
 
         i4_1 = Phi(i4 #0, i4_2 #3);
 
-        i5_1 = Phi(i5 #0, i5_2 #3);
+        i6 = Phi(i6 #0, i6_2 #3);
 
         $i2 = i4_1;
 

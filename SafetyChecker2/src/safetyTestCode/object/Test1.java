@@ -13,8 +13,10 @@ public class Test1 {
 		
 		int a = 3;
 		int b = 5;
-		int i = Math.max(a,b);
-		if(i == b-a)
+		int i = Math.max(29,b);
+		int j = Math.max(b,a);
+		int c = i % j;
+		if(c != 4)
 			ErrorLable.Error();
 	}	
 

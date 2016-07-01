@@ -60,6 +60,7 @@ import soot.jimple.SubExpr;
 import soot.jimple.VirtualInvokeExpr;
 import soot.jimple.internal.JNewArrayExpr;
 import soot.jimple.internal.JNewExpr;
+import soot.jimple.internal.JRemExpr;
 import soot.jimple.internal.JimpleLocal;
 import soot.shimple.PhiExpr;
 import soot.toolkits.scalar.ValueUnitPair;
@@ -240,7 +241,11 @@ public class Z3ScriptHandler {
 //			BoolExpr eq2 = this.ictx.mkIff(this.ictx.mkNot((BoolExpr)rightZ3), this.ictx.mkEq(leftZ3, this.ictx.mkInt(0)));
 //			eq = this.ictx.mkAnd(eq1, eq2);
 //		} else 
-		eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, edge.getSource().getDistance());
+
+		if(z3MathHandler.isModulusInstruction(right))
+			eq = z3MathHandler.createModuleExpr(leftZ3, right, this, edge);
+		else
+			eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, edge.getSource().getDistance());
 
 		if(right instanceof AnyNewExpr) {
 			if(right instanceof NewArrayExpr) { 
@@ -287,9 +292,6 @@ public class Z3ScriptHandler {
 
 			for(Entry<String, Expr> ee : localMap.entrySet())
 				LogUtils.warningln(ee.getKey() + "--" + ee.getValue());
-
-
-			System.exit(0);
 		} else {
 			edge.setZ3Expr(eq);
 			LogUtils.warningln("eq2=" + eq);
@@ -824,8 +826,10 @@ public class Z3ScriptHandler {
 
 			return this.ictx.mkSub((ArithExpr) op1Expr, (ArithExpr) op2Expr);
 		}
+		
+		
 
-
+		LogUtils.fatalln("type  fo the " + expr + " is " + expr.getClass().getName());
 		LogUtils.fatalln("Z3ScriptHandler.convertBoolExpr returns null for " + expr);
 		return null;
 	}

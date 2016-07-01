@@ -3,12 +3,15 @@ package safetyChecker;
 import java.util.HashSet;
 
 import com.microsoft.z3.ArithExpr;
+import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.InterpolationContext;
 
 import soot.SootMethod;
 import soot.Value;
+import soot.jimple.BinopExpr;
 import soot.jimple.InvokeExpr;
+import soot.jimple.internal.JRemExpr;
 
 public class Z3JavaMathHandler {
 
@@ -33,6 +36,37 @@ public class Z3JavaMathHandler {
 	
 	private SootMethod getSootMethod(Value value) {
 		return ((InvokeExpr)value).getMethod();
+	}
+
+	protected boolean isModulusInstruction(Value value)
+	{
+		if(value instanceof BinopExpr) {
+			BinopExpr expr = (BinopExpr) value;
+			if(expr instanceof JRemExpr) 
+				return true;
+		}
+		return false;
+	}
+
+	protected BoolExpr createModuleExpr(Expr leftZ3, Value right, Z3ScriptHandler z3Handler, Edge edge) {
+		InterpolationContext ictx = z3Handler.getIctx();
+
+		BinopExpr expr = (BinopExpr) right;
+		JRemExpr remExpr = (JRemExpr) expr;
+		Value op1Value = remExpr.getOp1();
+		Value op2Value = remExpr.getOp2();
+      
+		Expr fresh = ictx.mkIntConst("fresh");
+		Expr op1Expr = z3Handler.convertValue(op1Value, false, edge, edge.getSource().getDistance());
+		Expr op2Expr = z3Handler.convertValue(op2Value, false, edge, edge.getSource().getDistance());
+      
+		BoolExpr firstHalf = ictx.mkEq(op1Expr, ictx.mkAdd((ArithExpr)leftZ3, (ArithExpr)ictx.mkMul((ArithExpr)fresh, (ArithExpr)op2Expr)));
+		BoolExpr secondHalf = ictx.mkLt((ArithExpr)leftZ3, (ArithExpr)op2Expr);
+		BoolExpr wholeExpr = ictx.mkAnd(firstHalf, secondHalf);
+      
+		LogUtils.warningln("firstHalf=" + wholeExpr);
+		return secondHalf;
+	
 	}
 
 	protected Expr createMathEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {
@@ -68,4 +102,6 @@ public class Z3JavaMathHandler {
 
 		return ictx.mkITE(ictx.mkLe((ArithExpr)arg0Expr, (ArithExpr)arg1Expr), arg0Expr, arg1Expr);
 	}
+
+	
 }
