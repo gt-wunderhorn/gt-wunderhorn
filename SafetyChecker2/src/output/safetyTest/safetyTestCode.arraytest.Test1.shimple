@@ -34,7 +34,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         if $i1 != 0 goto label1;
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label1:
         return;
@@ -96,7 +96,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         if $z0 == 0 goto label1;
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label1:
         return;
@@ -143,7 +143,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         if $z0 == 0 goto label3;
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label3:
         return;

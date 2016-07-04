@@ -1,4 +1,4 @@
-package safetyChecker;
+package safetyChecker.z3ScriptManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +12,12 @@ import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.InterpolationContext;
 import com.microsoft.z3.Sort;
+
+import safetyChecker.Edge;
+import safetyChecker.NewSort;
+import safetyChecker.UnitController;
+import safetyChecker.Vertex;
+import safetyChecker.utilities.LogUtils;
 
 import soot.ArrayType;
 import soot.IntegerType;
@@ -79,7 +85,8 @@ public class Z3ScriptHandler {
 	private Stack<Expr> parameters = new Stack<Expr>();
 	private Z3ArrayHandler arrayHandler = new Z3ArrayHandler();
 	private Z3ObjectFieldHandler objFieldHandler = new Z3ObjectFieldHandler();
-	private Z3JavaMathHandler z3MathHandler = new Z3JavaMathHandler();
+	private Z3JavaMathLibrary z3MathLibrary = new Z3JavaMathLibrary();
+	private Z3JavaStringLibrary z3StringLibrary = new Z3JavaStringLibrary();
 	private Vertex errorPathRoot;
 	private Edge currentEdge;
 
@@ -210,12 +217,14 @@ public class Z3ScriptHandler {
 		Value right = aStmt.getRightOp();
 		//nonsense and dummy parts needs to be added
 		
+		LogUtils.warningln("right1=" + right);
 		if(left.getType() instanceof RefType && right instanceof VirtualInvokeExpr) {
 			right = new JNewExpr((RefType) left.getType()); 
 		} else if (right.toString().contains("java.lang.String[] split(java.lang.String)")) {
 			right = new JNewArrayExpr(RefType.v("java.lang.String"), IntConstant.v(0)); 
 		}
 		
+		LogUtils.warningln("right1=" + right);
 		Type leftType = left.getType();
 		Expr rightZ3 = null;
 
@@ -223,14 +232,16 @@ public class Z3ScriptHandler {
 		if(edge.isSubFunction() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
 			rightZ3 = this.ictx.mkIntConst("return_" + this.getRealArraySize("return_"));
 		} else if(right instanceof InvokeExpr && !edge.isSubFunction()) { 
-			if(this.z3MathHandler.isJavaMathLibrary(right))
-				rightZ3 = this.z3MathHandler.createMathEquality(right, this, edge);
+			if(this.z3MathLibrary.isJavaMathLibrary(right))
+				rightZ3 = this.z3MathLibrary.createMathEquality(right, this, edge);
+			else if(this.z3StringLibrary.isJavaStringLibrary(right))
+				rightZ3 = this.z3StringLibrary.createStringEquality(right, this, edge);
 			else
 				rightZ3 = this.ictx.mkIntConst("nonSubFunction_" +this.getRealArraySize("nonSubFunction_"));
 		} else {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		}
-		LogUtils.debugln("rightZ3=" + rightZ3);
+		LogUtils.warningln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
 		LogUtils.debugln("leftZ3=" + leftZ3);
 
@@ -241,8 +252,8 @@ public class Z3ScriptHandler {
 //			eq = this.ictx.mkAnd(eq1, eq2);
 //		} else 
 
-		if(z3MathHandler.isModulusInstruction(right))
-			eq = z3MathHandler.createModuleExpr(leftZ3, right, this, edge);
+		if(z3MathLibrary.isModulusInstruction(right))
+			eq = z3MathLibrary.createModuleExpr(leftZ3, right, this, edge);
 		else
 			eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, edge.getSource().getDistance());
 
@@ -290,6 +301,13 @@ public class Z3ScriptHandler {
 
 			for(Entry<String, Expr> ee : localMap.entrySet())
 				LogUtils.warningln(ee.getKey() + "--" + ee.getValue());
+		} else if(right instanceof StringConstant) { 
+			StringConstant sc = (StringConstant) right;
+			LogUtils.fatalln("right=" + right);
+			BoolExpr f1 = Z3StringHandler.covertString(sc, this, rightZ3);
+			BoolExpr wholeFormula = this.ictx.mkAnd(eq, f1);
+			edge.setZ3Expr(wholeFormula);
+		
 		} else {
 			edge.setZ3Expr(eq);
 			LogUtils.debugln("eq2=" + eq);
@@ -451,32 +469,78 @@ public class Z3ScriptHandler {
 	}
 
 	private Expr convertRefLikeValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
-		LogUtils.debugln("Z3ScriptHandler.convertRefLikeValue=" + edge);
+		LogUtils.warningln("Z3ScriptHandler.convertRefLikeValue=" + edge);
 		LogUtils.detailln("type  fo the value is " + value.getClass().getName());
+ 
 		if(value instanceof PhiExpr) {
-			LogUtils.fatalln("FATAL: PhiExpr is not supported yet!");
-			System.exit(0);
+			PhiExpr phiExpr = (PhiExpr) value;
+			List<ValueUnitPair> pairList = phiExpr.getArgs();
+			
+			Vertex vertex = edge.getSource();
+			Edge resultEdge = null;
+			Value resultValue = null;
+			boolean shortestResultFound = false;
+
+			for(ValueUnitPair pair : pairList) {
+//				if(resultEdge!=null && resultEdge.getTarget().getDistance()-vertex.getDistance()==0)
+//					break;
+			
+				Value valuePair = pair.getValue();
+				LogUtils.debugln("valuePair=" + valuePair);
+				Unit unitPair = pair.getUnit();
+				LogUtils.debugln("unitPair=" + unitPair);
+				
+				Vertex phiEqualityVertex = errorPathRoot;
+				while(phiEqualityVertex != edge.getSource()) {
+					Unit phiEqualityUnit = phiEqualityVertex.getOutgoingEdge().getUnit();	
+					if(phiEqualityUnit.equals(unitPair)) {
+						if(resultEdge == null) {
+							resultEdge = phiEqualityVertex.getOutgoingEdge();
+							resultValue = valuePair;
+						} else if(phiEqualityVertex.getDistance() < resultEdge.getSource().getDistance()) {
+							resultEdge = phiEqualityVertex.getOutgoingEdge();
+							resultValue = valuePair;
+						}
+						LogUtils.detailln("phiEqualityUnit=" + phiEqualityUnit + "-- Dist-" + phiEqualityVertex.getDistance());
+						LogUtils.detailln("resultunit=" + resultEdge + " -- Dis=" + resultEdge.getSource().getDistance());
+					}
+					phiEqualityVertex = phiEqualityVertex.getNextVertex();
+				}
+					
+			}
+			
+			Expr resultExpr = convertValue(resultValue, false, edge, edge.getSource().getDistance());
+			if(resultExpr == null)
+				resultExpr = this.ictx.mkInt(0);
+			LogUtils.debugln("resultExpr=" + resultExpr);
+			return resultExpr;
 		}
 		if(value instanceof Local) {
+			LogUtils.fatalln("1");
 			Type type = value.getType();		
 			Local local = (Local) value;
 			if(type instanceof RefType) {
+				LogUtils.fatalln("11");
 				return createZ3Object(local, assignLeft,  edge);	
 			}
 			if(type instanceof ArrayType) {
+				LogUtils.fatalln("22");
 				Expr result = this.arrayHandler.z3Local(local, assignLeft, nodeIndex, this); 
 				return result;
 			}
 		}
 		if(value instanceof AnyNewExpr) {
+			LogUtils.fatal("2");
 			Expr result = convertAnyNewExpr((AnyNewExpr) value, edge);	
 			return result;
 		}
 		if(value instanceof StringConstant) {
-			LogUtils.fatalln("FATAL: StringConstant. is not supported yet!");
-			System.exit(0);
+			LogUtils.fatal("3");
+			Expr result = Z3StringHandler.z3NewString(this);
+			return result;
 		}
 		if(value instanceof ArrayRef) {
+			LogUtils.fatal("4");
 			ArrayRef arrayRef = (ArrayRef) value;
 			return arrayHandler.z3ArrayRef(arrayRef, this, edge);
 		}
@@ -485,10 +549,13 @@ public class Z3ScriptHandler {
 			System.exit(0);
 		}
 		if(value instanceof CastExpr) {
-			LogUtils.fatalln("FATAL: CastExpr is not supported yet!");
-			System.exit(0);
-		}
+			LogUtils.fatal("6");
+			CastExpr castExpr = (CastExpr) value;
+			Value uncasted = castExpr.getOp();
+			return this.convertValue(uncasted, assignLeft, edge, nodeIndex);  
+		}	       
 		if(value instanceof StaticFieldRef) {
+			LogUtils.fatal("5");
 			StaticFieldRef sfRef = (StaticFieldRef) value;
 			SootField field = sfRef.getField();
 			String name = field.getName();
@@ -496,8 +563,7 @@ public class Z3ScriptHandler {
 			return objFieldHandler.handleStaticFieldRef(newLocal, assignLeft, this);			
 		}
 		if(value instanceof NullConstant) {
-			LogUtils.fatalln("FATAL: NullConstant is not supported yet!");
-			System.exit(0);
+			return this.ictx.mkInt(0);
 		}
 			
 		LogUtils.fatalln("FATAL: Conversion cannot be done");

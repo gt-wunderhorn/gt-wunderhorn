@@ -12,31 +12,448 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         return;
     }
 
-    public static void main(java.lang.String[])
+    public static void main(java.lang.String[]) throws java.io.IOException
     {
         java.lang.String[] r0;
         byte b0;
-        int[][] r1;
-        int[] $r2, $r3;
-        int $i1;
+        java.lang.String r1, r2;
+        char $c1;
 
         r0 := @parameter0: java.lang.String[];
 
-        b0 = 1;
+        b0 = 98;
 
-        r1 = newmultiarray (int)[3][2];
+        r1 = "sta";
 
-        $r2 = r1[b0];
+        r2 = "sym";
 
-        $r2[2] = 3;
+        $c1 = virtualinvoke r1.<java.lang.String: char charAt(int)>(2);
 
-        $r3 = r1[0];
+        if b0 == $c1 goto label1;
 
-        $i1 = $r3[1];
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
-        if $i1 == 3 goto label1;
+     label1:
+        return;
+    }
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+    public static void main7(java.lang.String[]) throws java.io.IOException
+    {
+        java.lang.String[] r0;
+        java.io.InputStreamReader r1, $r4;
+        java.io.BufferedReader r2, $r6;
+        int i0, i1, i2, $i4, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, i41, i42, i43, i44, i45, i46, i47, i48, i49, i41_1, i42_1, i46_1, i42_2, i44_1, i43_1, i43_2, i44_2, i44_3, i43_3, i43_4, i43_5, i44_4, i44_5, i43_6, i46_2, i46_3, i46_4, i42_3, i47_1, i48_1, i48_2, i47_2, i47_3, i47_4, i48_3, i41_2, i49_1, i49_2;
+        int[][] r3;
+        java.io.InputStream $r5;
+        java.lang.String $r7, $r8, $r10, $r13, $r37, r42, r43, r44, r45, r46, r42_1, r45_1, r45_2, r45_3, r45_4, r45_5, r42_2;
+        java.lang.StringBuilder $r9, $r11, $r12, $r14, $r36, $r38, $r39;
+        char $c3, $c5, $c39, $c40;
+        int[] $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r23, $r24, $r25, $r26, $r27, $r28, $r29, $r30, $r31, $r32, $r33, $r34, $r35;
+        java.io.PrintStream $r40, $r41;
+        boolean z0, z1, z2, z3;
+
+        r0 := @parameter0: java.lang.String[];
+
+        $r4 = new java.io.InputStreamReader;
+
+        $r5 = <java.lang.System: java.io.InputStream in>;
+
+        specialinvoke $r4.<java.io.InputStreamReader: void <init>(java.io.InputStream)>($r5);
+
+        r1 = $r4;
+
+        $r6 = new java.io.BufferedReader;
+
+        specialinvoke $r6.<java.io.BufferedReader: void <init>(java.io.Reader)>(r1);
+
+        r2 = $r6;
+
+        z0 = 0;
+
+        z1 = 0;
+
+        z2 = 0;
+
+        $r7 = virtualinvoke r2.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r7);
+
+        r42 = "";
+
+        i41 = 0;
+
+(0)     goto label19;
+
+     label01:
+        $r8 = virtualinvoke r2.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r8);
+
+        r3 = newmultiarray (int)[i1][i1];
+
+        i42_1 = 0;
+
+(1)     goto label15;
+
+     label02:
+        r43 = virtualinvoke r2.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        $r9 = new java.lang.StringBuilder;
+
+        $r10 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r43);
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>($r10);
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        r44 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        z3 = 0;
+
+        i2 = virtualinvoke r44.<java.lang.String: int length()>();
+
+        i43_2 = 0;
+
+        i44_2 = 0;
+
+(2)     goto label07;
+
+     label03:
+        r45_3 = "";
+
+(3)     goto label05;
+
+     label04:
+        $r12 = new java.lang.StringBuilder;
+
+        $r13 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r45_4);
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>(java.lang.String)>($r13);
+
+        $i4 = i43_4;
+
+        i43_5 = i43_4 + 1;
+
+        $c5 = virtualinvoke r44.<java.lang.String: char charAt(int)>($i4);
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c5);
+
+(4)     r45_5 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label05:
+        r45_4 = Phi(r45_3 #3, r45_5 #4);
+
+        i43_4 = Phi(i43_3 #3, i43_5 #4);
+
+        $c3 = virtualinvoke r44.<java.lang.String: char charAt(int)>(i43_4);
+
+        if $c3 != 32 goto label04;
+
+(5)     if r45_4 == "" goto label06;
+
+        i45 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>(r45_4);
+
+        $r15 = r3[i42_2];
+
+        $i6 = i44_3;
+
+        i44_4 = i44_3 + 1;
+
+(6)     $r15[$i6] = i45;
+
+     label06:
+        i44_5 = Phi(i44_3 #5, i44_4 #6);
+
+(7)     i43_6 = i43_4 + 1;
+
+     label07:
+        r45_2 = Phi(r45_1 #2, r45_4 #7);
+
+        i44_3 = Phi(i44_2 #2, i44_5 #7);
+
+        i43_3 = Phi(i43_2 #2, i43_6 #7);
+
+        if i43_3 < i2 goto label03;
+
+        i46_2 = 0;
+
+(8)     goto label14;
+
+     label08:
+        if i42_2 != 0 goto label09;
+
+        $r33 = r3[i42_2];
+
+        $r32 = r3[i42_2];
+
+        $i34 = $r32[i46_3];
+
+        $r33[i46_3] = $i34;
+
+        goto label13;
+
+     label09:
+        if i46_3 != 0 goto label10;
+
+        $r31 = r3[i42_2];
+
+        $r29 = r3[i42_2];
+
+        $i32 = $r29[i46_3];
+
+        $i30 = i42_2 - 1;
+
+        $r30 = r3[$i30];
+
+        $i31 = $r30[i46_3];
+
+        $i33 = $i32 + $i31;
+
+        $r31[i46_3] = $i33;
+
+        goto label13;
+
+     label10:
+        if i42_2 != i46_3 goto label11;
+
+        $r28 = r3[i42_2];
+
+        $r26 = r3[i42_2];
+
+        $i28 = $r26[i46_3];
+
+        $i25 = i42_2 - 1;
+
+        $r27 = r3[$i25];
+
+        $i26 = i46_3 - 1;
+
+        $i27 = $r27[$i26];
+
+        $i29 = $i28 + $i27;
+
+        $r28[i46_3] = $i29;
+
+        goto label13;
+
+     label11:
+        $r16 = r3[i42_2];
+
+        $i10 = $r16[i46_3];
+
+        $i7 = i42_2 - 1;
+
+        $r17 = r3[$i7];
+
+        $i8 = i46_3 - 1;
+
+        $i9 = $r17[$i8];
+
+        $i15 = $i10 + $i9;
+
+        $r18 = r3[i42_2];
+
+        $i13 = $r18[i46_3];
+
+        $i11 = i42_2 - 1;
+
+        $r19 = r3[$i11];
+
+        $i12 = $r19[i46_3];
+
+        $i14 = $i13 + $i12;
+
+        if $i15 <= $i14 goto label12;
+
+        $r25 = r3[i42_2];
+
+        $r23 = r3[i42_2];
+
+        $i23 = $r23[i46_3];
+
+        $i20 = i42_2 - 1;
+
+        $r24 = r3[$i20];
+
+        $i21 = i46_3 - 1;
+
+        $i22 = $r24[$i21];
+
+        $i24 = $i23 + $i22;
+
+        $r25[i46_3] = $i24;
+
+        goto label13;
+
+     label12:
+        $r22 = r3[i42_2];
+
+        $r20 = r3[i42_2];
+
+        $i18 = $r20[i46_3];
+
+        $i16 = i42_2 - 1;
+
+        $r21 = r3[$i16];
+
+        $i17 = $r21[i46_3];
+
+        $i19 = $i18 + $i17;
+
+        $r22[i46_3] = $i19;
+
+     label13:
+(9)     i46_4 = i46_3 + 1;
+
+     label14:
+        i46_3 = Phi(i46_2 #8, i46_4 #9);
+
+        if i46_3 <= i42_2 goto label08;
+
+(10)    i42_3 = i42_2 + 1;
+
+     label15:
+        r45_1 = Phi(r45 #1, r45_2 #10);
+
+        i46_1 = Phi(i46 #1, i46_3 #10);
+
+        i42_2 = Phi(i42_1 #1, i42_3 #10);
+
+        i44_1 = Phi(i44 #1, i44_3 #10);
+
+        i43_1 = Phi(i43 #1, i43_3 #10);
+
+        if i42_2 < i1 goto label02;
+
+        i47_1 = 0;
+
+        i48_1 = 0;
+
+(11)    goto label18;
+
+     label16:
+        $i35 = i1 - 1;
+
+        $r34 = r3[$i35];
+
+        $i36 = $r34[i48_2];
+
+(12)    if i47_2 >= $i36 goto label17;
+
+        $i37 = i1 - 1;
+
+        $r35 = r3[$i37];
+
+(13)    i47_3 = $r35[i48_2];
+
+     label17:
+        i47_4 = Phi(i47_2 #12, i47_3 #13);
+
+(14)    i48_3 = i48_2 + 1;
+
+     label18:
+        i48_2 = Phi(i48_1 #11, i48_3 #14);
+
+        i47_2 = Phi(i47_1 #11, i47_4 #14);
+
+        if i48_2 < i1 goto label16;
+
+        $r36 = new java.lang.StringBuilder;
+
+        $r37 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r42_1);
+
+        specialinvoke $r36.<java.lang.StringBuilder: void <init>(java.lang.String)>($r37);
+
+        $r38 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i47_2);
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        r42_2 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.String toString()>();
+
+(15)    i41_2 = i41_1 + 1;
+
+     label19:
+        r45 = Phi(r45 #0, r45_1 #15);
+
+        i41_1 = Phi(i41 #0, i41_2 #15);
+
+        i46 = Phi(i46 #0, i46_1 #15);
+
+        r42_1 = Phi(r42 #0, r42_2 #15);
+
+        i48 = Phi(i48 #0, i48_2 #15);
+
+        i42 = Phi(i42 #0, i42_2 #15);
+
+        i47 = Phi(i47 #0, i47_2 #15);
+
+        i44 = Phi(i44 #0, i44_1 #15);
+
+        i43 = Phi(i43 #0, i43_1 #15);
+
+        if i41_1 < i0 goto label01;
+
+        r46 = virtualinvoke r42_1.<java.lang.String: java.lang.String trim()>();
+
+        i49 = 0;
+
+(16)    goto label23;
+
+     label20:
+        $c39 = virtualinvoke r46.<java.lang.String: char charAt(int)>(i49_1);
+
+        if $c39 == 32 goto label21;
+
+        $r41 = <java.lang.System: java.io.PrintStream out>;
+
+        $c40 = virtualinvoke r46.<java.lang.String: char charAt(int)>(i49_1);
+
+        virtualinvoke $r41.<java.io.PrintStream: void print(char)>($c40);
+
+        goto label22;
+
+     label21:
+        $r40 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r40.<java.io.PrintStream: void println()>();
+
+     label22:
+(17)    i49_2 = i49_1 + 1;
+
+     label23:
+        i49_1 = Phi(i49 #16, i49_2 #17);
+
+        $i38 = virtualinvoke r46.<java.lang.String: int length()>();
+
+        if i49_1 < $i38 goto label20;
+
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
+
+        return;
+    }
+
+    public static void main6(java.lang.String[]) throws java.lang.Exception
+    {
+        java.lang.String[] r0;
+        int[][] r1;
+        int[] $r2, $r3;
+        int $i0;
+
+        r0 := @parameter0: java.lang.String[];
+
+        r1 = newmultiarray (int)[1][2];
+
+        $r2 = r1[0];
+
+        $r2[1] = 3;
+
+        $r3 = r1[2];
+
+        $i0 = $r3[1];
+
+        if $i0 != 3 goto label1;
+
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label1:
         return;
@@ -112,7 +529,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         if z0_2 != 0 goto label6;
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label6:
         return;
@@ -154,7 +571,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         if $b6 != 0 goto label1;
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label1:
         return;
@@ -247,9 +664,9 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (3)     virtualinvoke r2.<java.io.PrintWriter: void println(int)>(b1);
 
      label4:
-        i6 = Phi(i6 #0, i6_2 #3);
-
         i4_1 = Phi(i4 #0, i4_2 #3);
+
+        i6 = Phi(i6 #0, i6_2 #3);
 
         i5_1 = Phi(i5 #0, i5_2 #3);
 
@@ -263,7 +680,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         if i5_1 != 11 goto label5;
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label5:
         return;
@@ -289,7 +706,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         if i4 == 4 goto label1;
 
-        staticinvoke <safetyChecker.ErrorLable: void Error()>();
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label1:
         return;

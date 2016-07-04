@@ -5,17 +5,17 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
 import com.microsoft.z3.InterpolationContext;
 
-import dotty.CfgConverter;
-
 import safetyChecker.exception.ErrorLocationNotFoundException;
 import safetyChecker.exception.MainFunctionNotFoundException;
+import safetyChecker.utilities.DottyConverter;
+import safetyChecker.utilities.LogUtils;
+import safetyChecker.z3ScriptManager.Z3ScriptHandler;
 
 import soot.Body;
 import soot.Unit;
@@ -221,9 +221,9 @@ public class ProgramTree {
 		Queue<Vertex> q = new LinkedList<Vertex>();
 		q.add(root);		
 
-		CfgConverter.printAllPaths(q, "_all.dot");
+		DottyConverter.printAllPaths(q, "_all.dot");
 		LogUtils.warningln("errorSet size = " + errorSet.size());
-		CfgConverter.printErrorPaths(errorSet, "_errors.dot", coverRelation);
+		DottyConverter.printErrorPaths(errorSet, "_errors.dot", coverRelation);
 		LogUtils.infoln("<------unwind");
 	}
 

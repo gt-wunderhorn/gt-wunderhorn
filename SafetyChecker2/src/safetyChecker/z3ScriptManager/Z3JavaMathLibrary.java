@@ -1,4 +1,4 @@
-package safetyChecker;
+package safetyChecker.z3ScriptManager;
 
 import java.util.HashSet;
 
@@ -7,13 +7,15 @@ import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.InterpolationContext;
 
+import safetyChecker.Edge;
+
 import soot.SootMethod;
 import soot.Value;
 import soot.jimple.BinopExpr;
 import soot.jimple.InvokeExpr;
 import soot.jimple.internal.JRemExpr;
 
-public class Z3JavaMathHandler {
+public class Z3JavaMathLibrary {
 
 	private int arg0Index = 0;
 	private int arg1Index = 1;
@@ -23,12 +25,12 @@ public class Z3JavaMathHandler {
 	
 	private static final HashSet<String> MATH_LIBRARY_DB = new HashSet<String>();// = {MATH_MAX_METHOD, MATH_MIN_METHOD}; 
 
-	public Z3JavaMathHandler() {
+	public Z3JavaMathLibrary() {
 		MATH_LIBRARY_DB.add(MATH_MAX_METHOD);
 		MATH_LIBRARY_DB.add(MATH_MIN_METHOD);	
 	}
 
-	protected boolean isJavaMathLibrary(Value value) {
+	public boolean isJavaMathLibrary(Value value) {
 		if(MATH_LIBRARY_DB.contains(this.getSootMethod(value).toString()))
 			return true;
 		return false;	
@@ -38,7 +40,7 @@ public class Z3JavaMathHandler {
 		return ((InvokeExpr)value).getMethod();
 	}
 
-	protected boolean isModulusInstruction(Value value) {
+	public boolean isModulusInstruction(Value value) {
 		if(value instanceof BinopExpr) {
 			BinopExpr expr = (BinopExpr) value;
 			if(expr instanceof JRemExpr) 
@@ -47,7 +49,7 @@ public class Z3JavaMathHandler {
 		return false;
 	}
 
-	protected BoolExpr createModuleExpr(Expr leftZ3, Value right, Z3ScriptHandler z3Handler, Edge edge) {
+	public BoolExpr createModuleExpr(Expr leftZ3, Value right, Z3ScriptHandler z3Handler, Edge edge) {
 		InterpolationContext ictx = z3Handler.getIctx();
 
 		BinopExpr expr = (BinopExpr) right;
@@ -66,10 +68,10 @@ public class Z3JavaMathHandler {
 		return wholeExpr;
 	}
 
-	protected Expr createMathEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {
-		if(this.getSootMethod(value).toString().equals(Z3JavaMathHandler.MATH_MAX_METHOD))
+	public Expr createMathEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {
+		if(this.getSootMethod(value).toString().equals(Z3JavaMathLibrary.MATH_MAX_METHOD))
 			return maxEquality(value, z3Handler, edge);	
-		if(this.getSootMethod(value).toString().equals(Z3JavaMathHandler.MATH_MIN_METHOD))
+		if(this.getSootMethod(value).toString().equals(Z3JavaMathLibrary.MATH_MIN_METHOD))
 			return minEquality(value, z3Handler, edge);
 		return null;
 	}	

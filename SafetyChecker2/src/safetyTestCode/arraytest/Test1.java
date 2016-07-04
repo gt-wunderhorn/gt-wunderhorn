@@ -2,7 +2,7 @@ package safetyTestCode.arraytest;
 
 import java.util.Arrays;
 
-import safetyChecker.ErrorLable;
+import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 

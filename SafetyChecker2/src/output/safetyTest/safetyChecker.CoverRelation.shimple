@@ -95,7 +95,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r4[0] = $r9;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r4);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         $r10 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
 
@@ -173,7 +173,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r6[0] = ">>>>>>>>>CoverRelation.cover";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r6);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r6);
 
         $r7 = r0.<safetyChecker.CoverRelation: java.util.Map unitVertexMap>;
 
@@ -223,7 +223,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r11[0] = $r20;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r11);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r11);
 
         $r21 = newarray (java.lang.Object)[1];
 
@@ -243,7 +243,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r21[0] = $r27;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r21);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r21);
 
         $r28 = virtualinvoke r3.<java.util.LinkedList: java.lang.Object get(int)>(i1_2);
 
@@ -309,7 +309,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r32[0] = $r35;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r32);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r32);
 
         if z0 == 0 goto label09;
 
@@ -317,7 +317,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r36[0] = "----------";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r36);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r36);
 
         $r37 = newarray (java.lang.Object)[1];
 
@@ -337,7 +337,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r37[0] = $r43;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r37);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r37);
 
         $r44 = newarray (java.lang.Object)[1];
 
@@ -357,7 +357,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r44[0] = $r50;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r44);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r44);
 
         z1 = virtualinvoke r0.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r5);
 
@@ -377,7 +377,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r51[0] = $r56;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r51);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r51);
 
         if z1 != 0 goto label09;
 
@@ -518,7 +518,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r7[0] = "--->coverRelation.isStrongerThan";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r7);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r7);
 
         $r8 = newarray (java.lang.Object)[1];
 
@@ -532,7 +532,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r8[0] = $r11;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r8);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r8);
 
         $r12 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
@@ -550,7 +550,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r13[0] = $r16;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r13);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r13);
 
         $r18 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
@@ -574,7 +574,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r19[0] = $r22;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r19);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r19);
 
         $r23 = r0.<safetyChecker.CoverRelation: com.microsoft.z3.InterpolationContext ictx>;
 
@@ -618,7 +618,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r26[0] = $r29;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r26);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r26);
 
         virtualinvoke r5.<com.microsoft.z3.Solver: void dispose()>();
 
@@ -626,7 +626,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r30[0] = "<---coverRelation.isStrongerThan";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r30);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r30);
 
         return z1_2;
     }
@@ -720,7 +720,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r4[0] = ">>>>>CoverRelation.addCoverRelation";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r4);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         $r5 = newarray (java.lang.Object)[1];
 
@@ -738,7 +738,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r5[0] = $r10;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r5);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r5);
 
         $r11 = r0.<safetyChecker.CoverRelation: java.util.Map coveredByMap>;
 
@@ -764,7 +764,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r23[0] = $r26;
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r23);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r23);
 
         staticinvoke <java.lang.System: void exit(int)>(0);
 
@@ -775,7 +775,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r12[0] = "else coveredByMap. not contains";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r12);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r12);
 
         $r13 = r0.<safetyChecker.CoverRelation: java.util.Map coveredByMap>;
 
@@ -824,7 +824,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r19[0] = "<<<<<CoverRelation.addCoverRelation";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r19);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r19);
 
         return;
     }
@@ -899,7 +899,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r13[0] = $r18;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r13);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r13);
 
         specialinvoke r0.<safetyChecker.CoverRelation: void add2UncoveredMap(safetyChecker.Vertex)>(r4);
 
@@ -953,7 +953,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r5[0] = $r8;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r5);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r5);
 
         $r9 = r0.<safetyChecker.CoverRelation: java.util.Map coveringMap>;
 
@@ -1027,7 +1027,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r4[0] = $r7;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r4);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         $r8 = virtualinvoke r1.<safetyChecker.Vertex: java.util.Set getPreviousVertexSet()>();
 
@@ -1129,7 +1129,7 @@ public class safetyChecker.CoverRelation extends java.lang.Object
 
         $r4[0] = $r7;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r4);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         $r8 = virtualinvoke r1.<safetyChecker.Vertex: java.util.Set getPreviousVertexSet()>();
 

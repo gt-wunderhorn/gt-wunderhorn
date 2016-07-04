@@ -1,4 +1,4 @@
-package dotty;
+package safetyChecker.utilities;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,13 +13,12 @@ import java.util.Set;
 
 import safetyChecker.CoverRelation;
 import safetyChecker.Edge;
-import safetyChecker.LogUtils;
 import safetyChecker.Vertex;
 
 import soot.Unit;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 
-public class CfgConverter {
+public class DottyConverter {
 
 	private static BufferedWriter getBufferedWriter(String fileName) throws IOException {
 			File file = new File(fileName);

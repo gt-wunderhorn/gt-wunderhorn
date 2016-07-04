@@ -1,4 +1,4 @@
-package safetyChecker;
+package safetyChecker.utilities;
 
 public class ErrorLable {
 

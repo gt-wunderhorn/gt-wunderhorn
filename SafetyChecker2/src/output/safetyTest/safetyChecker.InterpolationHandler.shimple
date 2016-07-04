@@ -1,23 +1,23 @@
 public class safetyChecker.InterpolationHandler extends java.lang.Object
 {
     private com.microsoft.z3.InterpolationContext ictx;
-    private safetyChecker.Z3ScriptHandler z3Handler;
+    private safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler;
     private safetyChecker.CoverRelation coverRelation;
     com.microsoft.z3.Expr[] 'from';
     com.microsoft.z3.Expr[] 'to';
 
-    public void <init>(com.microsoft.z3.InterpolationContext, safetyChecker.Z3ScriptHandler, safetyChecker.CoverRelation)
+    public void <init>(com.microsoft.z3.InterpolationContext, safetyChecker.z3ScriptManager.Z3ScriptHandler, safetyChecker.CoverRelation)
     {
         safetyChecker.InterpolationHandler r0;
         com.microsoft.z3.InterpolationContext r1;
-        safetyChecker.Z3ScriptHandler r2;
+        safetyChecker.z3ScriptManager.Z3ScriptHandler r2;
         safetyChecker.CoverRelation r3;
 
         r0 := @this: safetyChecker.InterpolationHandler;
 
         r1 := @parameter0: com.microsoft.z3.InterpolationContext;
 
-        r2 := @parameter1: safetyChecker.Z3ScriptHandler;
+        r2 := @parameter1: safetyChecker.z3ScriptManager.Z3ScriptHandler;
 
         r3 := @parameter2: safetyChecker.CoverRelation;
 
@@ -29,7 +29,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx> = r1;
 
-        r0.<safetyChecker.InterpolationHandler: safetyChecker.Z3ScriptHandler z3Handler> = r2;
+        r0.<safetyChecker.InterpolationHandler: safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler> = r2;
 
         r0.<safetyChecker.InterpolationHandler: safetyChecker.CoverRelation coverRelation> = r3;
 
@@ -61,7 +61,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r4[0] = ">>>>>> InterpolationHandler.createInterpolant";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r4);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r4);
 
         $r5 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
@@ -81,7 +81,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r6[0] = $r10;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r6);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r6);
 
         r41 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
@@ -123,7 +123,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r12[0] = $r15;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r12);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r12);
 
         $r16 = newarray (java.lang.Object)[1];
 
@@ -137,7 +137,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r16[0] = $r19;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r16);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r16);
 
         $r21 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
@@ -192,29 +192,29 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 (6)     r40_3 = r45;
 
      label05:
-        i2_3 = Phi(i2_1 #2, i2_2 #3, i2_1 #4, i2_1 #6);
-
         r40_4 = Phi(r40_2 #2, r40_2 #3, r40_2 #4, r40_3 #6);
+
+        i2_3 = Phi(i2_1 #2, i2_2 #3, i2_1 #4, i2_1 #6);
 
         r42_3 = Phi(r42_1 #2, r42_2 #3, r42_2 #4, r42_1 #6);
 
 (7)     r41_2 = virtualinvoke r41_1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
      label06:
-        i2_1 = Phi(i2 #0, i2_3 #7);
-
         r40_1 = Phi(r40 #0, r40_4 #7);
 
         r41_1 = Phi(r41 #0, r41_2 #7);
+
+        i2_1 = Phi(i2 #0, i2_3 #7);
 
         r42_1 = Phi(r42 #0, r42_3 #7);
 
 (8)     if r41_1 != null goto label01;
 
      label07:
-        z2_2 = Phi(z2 #1, z2_1 #5, z2 #8);
-
         r40_5 = Phi(r40_1 #1, r40_2 #5, r40_1 #8);
+
+        z2_2 = Phi(z2 #1, z2_1 #5, z2 #8);
 
         r42_4 = Phi(r42_1 #1, r42_2 #5, r42_1 #8);
 
@@ -222,19 +222,19 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r28[0] = "------------------pathformula----------------";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r28);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r28);
 
         $r29 = newarray (java.lang.Object)[1];
 
         $r29[0] = r40_5;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r29);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r29);
 
         $r30 = newarray (java.lang.Object)[1];
 
         $r30[0] = "------------------pathformula----------------";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r30);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r30);
 
 (9)     if z2_2 == 0 goto label08;
 
@@ -289,13 +289,13 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r34[0] = $r37;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r34);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r34);
 
         $r38 = newarray (java.lang.Object)[1];
 
         $r38[0] = "<<<<<< InterpolationHandler.createInterpolant";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r38);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r38);
 
         return z3_3;
     }
@@ -341,7 +341,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r11[0] = $r14;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r11);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r11);
 
         $r15 = newarray (java.lang.Object)[1];
 
@@ -355,7 +355,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r15[0] = $r18;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r15);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r15);
 
         r36 = r1;
 
@@ -388,7 +388,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r22[0] = $r26;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r22);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r22);
 
         r38 = virtualinvoke r36_1.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
@@ -415,7 +415,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r35[0] = "Check the invariant list";
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r35);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r35);
 
 (3)     goto label04;
 
@@ -466,18 +466,18 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 (5)     i3_2 = i3_1 + 1;
 
      label07:
-        i3_3 = Phi(i3_1 #1, i3_2 #5);
-
         r39_5 = Phi(r39 #1, r39_4 #5);
+
+        i3_3 = Phi(i3_1 #1, i3_2 #5);
 
 (6)     r36_2 = virtualinvoke r36_1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
      label08:
         r36_1 = Phi(r36 #0, r36_2 #6);
 
-        i3_1 = Phi(i3 #0, i3_3 #6);
-
         r39 = Phi(r39 #0, r39_5 #6);
+
+        i3_1 = Phi(i3 #0, i3_3 #6);
 
 (7)     if r36_1 == null goto label15;
 
@@ -492,7 +492,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r6[0] = "invariantList is null";
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r6);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r6);
 
         r40 = r1;
 
@@ -548,11 +548,11 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
      label15:
         r36_3 = Phi(r36_1 #7, r36_1 #8, r36 #10, r36 #12);
 
+        r39_6 = Phi(r39 #7, r39 #8, r39 #10, r39 #12);
+
         r40_3 = Phi(r40 #7, r40 #8, r40_1 #10, r40_1 #12);
 
         i3_4 = Phi(i3_1 #7, i3_1 #8, i3 #10, i3 #12);
-
-        r39_6 = Phi(r39 #7, r39 #8, r39 #10, r39 #12);
 
         return;
     }
@@ -564,7 +564,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
         java.util.Map$Entry r3;
         java.util.Iterator r4;
         java.lang.String r5, r6, $r25;
-        safetyChecker.Z3ScriptHandler $r7, $r8;
+        safetyChecker.z3ScriptManager.Z3ScriptHandler $r7, $r8;
         int $i0, $i1, i2, i2_1, i2_2;
         com.microsoft.z3.Expr[] $r9, $r10, $r17, $r20;
         java.util.Set $r11;
@@ -578,13 +578,13 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         r0 := @this: safetyChecker.InterpolationHandler;
 
-        $r7 = r0.<safetyChecker.InterpolationHandler: safetyChecker.Z3ScriptHandler z3Handler>;
+        $r7 = r0.<safetyChecker.InterpolationHandler: safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler>;
 
-        r1 = virtualinvoke $r7.<safetyChecker.Z3ScriptHandler: java.util.Map getSubstitute()>();
+        r1 = virtualinvoke $r7.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map getSubstitute()>();
 
-        $r8 = r0.<safetyChecker.InterpolationHandler: safetyChecker.Z3ScriptHandler z3Handler>;
+        $r8 = r0.<safetyChecker.InterpolationHandler: safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler>;
 
-        r2 = virtualinvoke $r8.<safetyChecker.Z3ScriptHandler: java.util.Map getSubstituteSort()>();
+        r2 = virtualinvoke $r8.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map getSubstituteSort()>();
 
         $i0 = interfaceinvoke r1.<java.util.Map: int size()>();
 
@@ -637,7 +637,7 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 
         $r22[0] = $r25;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r22);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r22);
 
         $r26 = r0.<safetyChecker.InterpolationHandler: com.microsoft.z3.InterpolationContext ictx>;
 
@@ -669,9 +669,9 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 (3)     i2_2 = i2_1 + 1;
 
      label3:
-        i2_1 = Phi(i2 #0, i2_2 #3);
-
         r27 = Phi(r27 #0, r27_3 #3);
+
+        i2_1 = Phi(i2 #0, i2_2 #3);
 
         $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
 

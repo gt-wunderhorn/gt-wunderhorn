@@ -1,6 +1,6 @@
 package safetyTestCode.whiletest;
 
-import safetyChecker.ErrorLable;
+import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 

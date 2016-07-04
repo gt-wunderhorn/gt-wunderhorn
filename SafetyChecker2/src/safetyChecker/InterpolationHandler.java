@@ -11,6 +11,9 @@ import com.microsoft.z3.Params;
 import com.microsoft.z3.Sort;
 import com.microsoft.z3.enumerations.Z3_lbool;
 
+import safetyChecker.utilities.LogUtils;
+import safetyChecker.z3ScriptManager.Z3ScriptHandler;
+
 public class InterpolationHandler {
 
 	private InterpolationContext ictx;

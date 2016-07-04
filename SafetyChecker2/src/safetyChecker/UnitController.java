@@ -5,6 +5,7 @@ import java.util.Map;
 
 import safetyChecker.exception.ErrorLocationNotFoundException;
 import safetyChecker.exception.MainFunctionNotFoundException;
+import safetyChecker.utilities.LogUtils;
 
 import soot.Body;
 import soot.Unit;
@@ -14,7 +15,6 @@ import soot.jimple.IfStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.NewExpr;
-import soot.jimple.ReturnStmt;
 import soot.jimple.internal.JAssignStmt;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 

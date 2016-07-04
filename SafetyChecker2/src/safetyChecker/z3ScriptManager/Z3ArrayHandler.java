@@ -1,4 +1,4 @@
-package safetyChecker;
+package safetyChecker.z3ScriptManager;
 
 import java.util.Map;
 
@@ -8,7 +8,10 @@ import com.microsoft.z3.Expr;
 import com.microsoft.z3.IntExpr;
 import com.microsoft.z3.InterpolationContext;
 import com.microsoft.z3.Sort;
-import com.microsoft.z3.Symbol;
+
+import safetyChecker.Edge;
+import safetyChecker.NewSort;
+import safetyChecker.utilities.LogUtils;
 
 import soot.Local;
 import soot.Type;
@@ -129,10 +132,11 @@ public class Z3ArrayHandler {
 
 		if(!z3Handler.getGlobal().containsKey(oldName)) {
 			Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
-			Sort arrayCell = ictx.mkArraySort(ictx.getIntSort(), arraySort);
+			Sort arrayCell = ictx.getIntSort();
+			Sort arrayMem = ictx.mkArraySort(arrayCell, arraySort);
 
 			String globalName = z3Handler.getGlobalName(oldName);  
-			Expr arrayCellConst = ictx.mkConst(globalName, arrayCell);
+			Expr arrayCellConst = ictx.mkConst(globalName, arrayMem);
 			LogUtils.debugln("arrayCellConst=" + arrayCellConst);
 
 			z3Handler.getSubstitute().put(globalName, oldName);
@@ -156,22 +160,85 @@ public class Z3ArrayHandler {
 		return newArrayEq;
 	}
 
-	public BoolExpr newMultiArrayExpr(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {
+
+	public BoolExpr newMultiArrayExpr2(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {
 		InterpolationContext ictx = z3Handler.getIctx();
-		int dimensionNumber = nmae.getSizeCount();
-		IntConstant sizeI = (IntConstant) nmae.getSize(0); 	
-		int size = sizeI.value;
-		LogUtils.fatalln(type.getClass());
-		LogUtils.fatalln("size of first dim=" + size);
+		IntConstant sizeI=(IntConstant) nmae.getSize(0);
+		int size=sizeI.value;
 		size++;
+		Type t=nmae.getBaseType().getElementType();
+		Map<String, NewSort> sortId = z3Handler.getSortId();
+		Map<String, Sort> newSortMap = z3Handler.getNewSortMap();
+		Expr[] LowrightZ3=new Expr[size];
+		BoolExpr[] constrains=new BoolExpr[size];
+		String virtualName =t.toString();
+		NewSort s=null;
+		if (sortId.containsKey(virtualName)) {
+			s = sortId.get(virtualName);
+		} else {
+			Sort newSort = null;
+			if (newSortMap.containsKey(virtualName)) {
+				newSort = newSortMap.get(virtualName);
+			} else {
+				newSort = ictx.mkUninterpretedSort(virtualName);
+				newSortMap.put(virtualName, newSort);
+			}
+			s = new NewSort(newSort, ictx);
+			sortId.put(virtualName, s);
+		}
+		for(int i=0;i<size;i++){
+			LowrightZ3[i]=s.getNewObject();
+			constrains[i]=this.newArrayExpr(LowrightZ3[i],t, z3Handler);
+		}
+		Type t1=nmae.getType();
+		String typeName=t1.toString();
+		String oldname = this.getArrayPrefix()+typeName;
+		if (!z3Handler.getGlobal().containsKey(oldname)) {
+			Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
+			Sort StringArraySort = ictx.mkArraySort(ictx.getIntSort(), arraySort);
+			String globalName = z3Handler.getGlobalName(oldname);
+			Expr realStringArray = ictx.mkConst(globalName, StringArraySort);
+			z3Handler.getSubstitute().put(globalName, oldname);
+			z3Handler.getGlobal().put(oldname, realStringArray);
+		}
+		Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
+		int ArraySize = z3Handler.getRealArraySize(oldname);
+		ArrayExpr theArray = ictx.mkArrayConst("array_" + ArraySize,ictx.getIntSort(), ictx.getIntSort());
+		BoolExpr[] theArrayConstrains=new BoolExpr[size];
+		for(int i=0;i<size;i++){
+			Expr select=ictx.mkSelect(theArray, ictx.mkInt(i));
+			theArrayConstrains[i]=ictx.mkEq(select,LowrightZ3[i]);
+		}
+		ArrayExpr oldRealArray = (ArrayExpr) z3Handler.getGlobal().get(oldname);
+		String newName = z3Handler.getGlobalName(oldname);
+		ArrayExpr newRealArray = (ArrayExpr) ictx.mkConst(newName,oldRealArray.getSort());
+		Expr afterStore = ictx.mkStore(oldRealArray, rightZ3, theArray);
+		BoolExpr newRealArrayEq = ictx.mkEq(newRealArray, afterStore);
+		z3Handler.getGlobal().put(oldname, newRealArray);
+		z3Handler.getSubstitute().put(newName, oldname);
+		BoolExpr allLowConstrains=ictx.mkAnd(constrains);
+		BoolExpr thisArrayConstrains=ictx.mkAnd(theArrayConstrains);
+		BoolExpr all=ictx.mkAnd(allLowConstrains,thisArrayConstrains,newRealArrayEq);
+		return all;
+	}
+
+	public BoolExpr newMultiArrayExpr(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {
+		BoolExpr aa = this.newMultiArrayExpr2(nmae, type, z3Handler, rightZ3);
+		if(aa!=null) return aa;
+		InterpolationContext ictx = z3Handler.getIctx();
+//		int dimensionNumber = nmae.getSizeCount();
+//		IntConstant sizeI = (IntConstant) nmae.getSize(0); 	
+//		int size = 0;//sizeI.value;
+//		size++;
 
 		Type t=nmae.getType();
 		Map<String, NewSort> sortId = z3Handler.getSortId();
 		Map<String, Sort> newSortMap = z3Handler.getNewSortMap();
 
-		Expr[] LowrightZ3 = new Expr[size];
-		BoolExpr[] constraints = new BoolExpr[size];
+//		Expr[] LowrightZ3 = new Expr[size];
+//		BoolExpr[] constraints = new BoolExpr[size];
 		String virtualName = t.toString();
+		virtualName = type.toString().substring(0, type.toString().indexOf("]")+1);//"int[]";//type.toString();
 
 		NewSort s = null;
 		if(sortId.containsKey(virtualName)) {
@@ -188,10 +255,12 @@ public class Z3ArrayHandler {
 			sortId.put(virtualName, s);
 		}
 
-		for(int i = 0; i < size; i++) {
-			LowrightZ3[i] = s.getNewObject();;
-			constraints[i] = newArrayExpr(LowrightZ3[i], t, z3Handler); 
-		}
+//		for(int i = 0; i < size; i++) {
+//			LowrightZ3[i] = s.getNewObject();;
+//			constraints[i] = newArrayExpr(LowrightZ3[i], t, z3Handler); 
+//		}
+		Expr firstDimObj = s.getNewObject();
+		BoolExpr firtDimArray = this.newArrayExpr(firstDimObj, t, z3Handler);
 
 		Type t1 = nmae.getType();
 		String typeName = t1.toString();
@@ -205,15 +274,19 @@ public class Z3ArrayHandler {
 			z3Handler.getGlobal().put(oldName, realStringArray);
 		}
 
-//		Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
+//*		Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
 		int ArraySize = z3Handler.getRealArraySize(oldName);
 		ArrayExpr theArray = ictx.mkArrayConst("array_" + ArraySize, ictx.getIntSort(), ictx.getIntSort());
-//		ArrayExpr arrayConst = ictx.mkConstArray(ictx.getIntSort(), ictx.mkInt(0));
-		BoolExpr[] theArrayConstrains=new BoolExpr[size];
-		for(int i=0;i<size;i++){
-			Expr select=ictx.mkSelect(theArray, ictx.mkInt(i));
-			theArrayConstrains[i]=ictx.mkEq(select,LowrightZ3[i]);
-		}
+//***		ArrayExpr arrayConst = ictx.mkConstArray(ictx.getIntSort(), ictx.mkInt(0));
+
+		BoolExpr theArrayConstrains = null;
+			Expr select=ictx.mkSelect(theArray, ictx.mkInt(0));
+			theArrayConstrains=ictx.mkEq(select,firstDimObj);
+
+			Expr secondDimObj = s.getNewObject();
+			Expr select2 = ictx.mkSelect(theArray, ictx.mkInt(1));
+			BoolExpr curCellConstraint = ictx.mkEq(select2, secondDimObj);
+
 		ArrayExpr oldRealArray = (ArrayExpr) z3Handler.getGlobal().get(oldName);
 		String newName = z3Handler.getGlobalName(oldName);
 		ArrayExpr newRealArray = (ArrayExpr) ictx.mkConst(newName, oldRealArray.getSort());
@@ -221,9 +294,14 @@ public class Z3ArrayHandler {
 		BoolExpr newRealArrayEq = ictx.mkEq(newRealArray, afterStore);
 		z3Handler.getGlobal().put(oldName, newRealArray);
 		z3Handler.getSubstitute().put(newName, oldName);
-		BoolExpr allLowConstrains=ictx.mkAnd(constraints);
+		BoolExpr allLowConstrains=ictx.mkAnd(firtDimArray);
 		BoolExpr thisArrayConstrains=ictx.mkAnd(theArrayConstrains);
-		BoolExpr all=ictx.mkAnd(allLowConstrains,thisArrayConstrains,newRealArrayEq);
+		BoolExpr thisArrayConstrains2 = ictx.mkAnd(curCellConstraint);
+
+		 
+
+		BoolExpr all=ictx.mkAnd(allLowConstrains,thisArrayConstrains,newRealArrayEq, thisArrayConstrains2);
+		LogUtils.fatalln(all);
 		return all;
 	}
 
@@ -445,6 +523,6 @@ public class Z3ArrayHandler {
 	}
 
 	private String getArrayPrefix() {
-		return "realArray_";
+		return "ArrayMem_";
 	}
 }

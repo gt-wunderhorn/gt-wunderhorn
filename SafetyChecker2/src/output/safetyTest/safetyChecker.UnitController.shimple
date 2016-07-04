@@ -266,7 +266,7 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         $r5[0] = $r8;
 
-        staticinvoke <safetyChecker.LogUtils: void debugln(java.lang.Object[])>($r5);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r5);
 
         r2 = staticinvoke <safetyChecker.UnitController: java.lang.String getMethodSignature(soot.Unit)>(r1);
 
@@ -346,7 +346,7 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         $r5[0] = $r8;
 
-        staticinvoke <safetyChecker.LogUtils: void warningln(java.lang.Object[])>($r5);
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r5);
 
         $r9 = new safetyChecker.ProgramTree;
 

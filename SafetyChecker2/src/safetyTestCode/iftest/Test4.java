@@ -1,6 +1,6 @@
 package safetyTestCode.iftest;
 
-import safetyChecker.ErrorLable;
+import safetyChecker.utilities.ErrorLable;
 
 public class Test4 {
 

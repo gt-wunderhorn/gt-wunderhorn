@@ -10,6 +10,8 @@ import com.microsoft.z3.IntExpr;
 import com.microsoft.z3.InterpolationContext;
 import com.microsoft.z3.Sort;
 
+import safetyChecker.utilities.LogUtils;
+
 public class NewSort {
 	private Sort Type;
 	private int currentId;

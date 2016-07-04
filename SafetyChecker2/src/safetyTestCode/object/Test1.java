@@ -6,20 +6,101 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import safetyChecker.ErrorLable;
+import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 
-	public static void main(String[] args) {
-//		int[] intArray = new int[2];
-//		intArray[0] = 3;
+	public static void main(String args[]) throws java.io.IOException {
+		char a = 'b';
+		String s1 = "sta";
+		String s2 = "sym";
 
-		int n=1;
-		int[][] intArray3 = new int[3][2];
-		intArray3[n][2] = 3;
-		if(intArray3[0][1] != 3)
+		if(a != s1.charAt(2))
 			ErrorLable.Error();
+	}
 
+	public static void main7(String args[]) throws java.io.IOException {
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		int j = 0, k = 0, i = 0, ch = Integer.parseInt(br.readLine());
+		String s = "";
+		for (i = 0; i < ch; i++) {
+			int r = Integer.parseInt(br.readLine());
+			int ar[][] = new int[r][r];
+			for (j = 0; j < r; j++) {
+				String str = br.readLine();
+				str = str + " ";
+				int n = 0, len = str.length(), l = 0;
+				k = 0;
+				while (l < len) {
+					String str1 = "";
+					while (str.charAt(l) != ' ')
+						str1 = str1 + str.charAt(l++);
+					if (str1 != "") {
+						n = Integer.parseInt(str1);
+
+						ar[j][k++] = n;
+					}
+					l++;
+				}
+
+				for (k = 0; k <= j; k++) {
+					if (j == 0) {
+						ar[j][k] = ar[j][k];
+					} else if (k == 0) {
+						ar[j][k] = ar[j][k] + ar[j - 1][k];
+					} else if (j == k) {
+						ar[j][k] = ar[j][k] + ar[j - 1][k - 1];
+					} else {
+						if ((ar[j][k] + ar[j - 1][k - 1]) > (ar[j][k] + ar[j - 1][k])) {
+							ar[j][k] = ar[j][k] + ar[j - 1][k - 1];
+						} else {
+							ar[j][k] = ar[j][k] + ar[j - 1][k];
+						}
+					}
+
+				}
+
+			}
+
+			int max = 0;
+			for (j = 0; j < r; j++) {
+				if (max < ar[r - 1][j]) {
+					max = ar[r - 1][j];
+				}
+			}
+			s = s + max + " ";
+
+		}
+		s = s.trim();
+		for (i = 0; i < s.length(); i++) {
+			if (s.charAt(i) != ' ')
+				System.out.print(s.charAt(i));
+			else
+				System.out.println();
+		}
+		ErrorLable.Error();
+
+	}
+
+	public static void main6(String[] args) throws Exception {
+		// int[] intArray = new int[2];
+		// intArray[0] = 3;
+
+//		InputStreamReader isr = new InputStreamReader(System.in);
+//		BufferedReader br = new BufferedReader(isr);
+//		int i = Integer.parseInt(br.readLine());
+//		int j = Integer.parseInt(br.readLine());
+		int[][] intArray3 = new int[1][2];
+
+//		for(int i2 = 0; i2 < j; i2++)
+//			for(int j2 = 0; j2 < j; j2++)
+//				intArray3[i2][j2] = i2+j2;
+
+		intArray3[0][1] = 3;
+//		intArray3[1][2] = 7;
+		if (intArray3[2][1] == 3)
+			ErrorLable.Error();
 
 	}
 
@@ -37,7 +118,7 @@ public class Test1 {
 			}
 		}
 		if (!flag)
-			ErrorLable.Error();	
+			ErrorLable.Error();
 	}
 
 	public void test() {

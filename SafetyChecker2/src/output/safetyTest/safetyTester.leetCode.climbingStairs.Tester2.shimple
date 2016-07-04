@@ -91,7 +91,7 @@ public class safetyTester.leetCode.climbingStairs.Tester2 extends java.lang.Obje
 
         $r11[0] = "safetyTester.leetCode.climbingStairs.Tester2... Test started...";
 
-        staticinvoke <safetyChecker.LogUtils: void infoln(java.lang.Object[])>($r11);
+        staticinvoke <safetyChecker.utilities.LogUtils: void infoln(java.lang.Object[])>($r11);
 
      label1:
         r26 = new safetyChecker.ProgramTree;
@@ -116,37 +116,37 @@ public class safetyTester.leetCode.climbingStairs.Tester2 extends java.lang.Obje
 
         $r16[0] = "*******************************************";
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r16);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r16);
 
         $r17 = newarray (java.lang.Object)[1];
 
         $r17[0] = "*********** EXCEPTION OCCURRED ************";
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r17);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r17);
 
         $r18 = newarray (java.lang.Object)[1];
 
         $r18[0] = "*******************************************";
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r18);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r18);
 
         $r19 = newarray (java.lang.Object)[1];
 
         $r19[0] = r23;
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r19);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r19);
 
         $r20 = newarray (java.lang.Object)[1];
 
         $r20[0] = "******************";
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r20);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r20);
 
         $r21 = newarray (java.lang.Object)[1];
 
         $r21[0] = "******************";
 
-        staticinvoke <safetyChecker.LogUtils: void fatalln(java.lang.Object[])>($r21);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r21);
 
         virtualinvoke r23.<java.lang.Exception: void printStackTrace()>();
 
@@ -155,7 +155,7 @@ public class safetyTester.leetCode.climbingStairs.Tester2 extends java.lang.Obje
 
         $r14[0] = "safetyTester.leetCode.climbingStairs.Tester2... Test finished...";
 
-        staticinvoke <safetyChecker.LogUtils: void infoln(java.lang.Object[])>($r14);
+        staticinvoke <safetyChecker.utilities.LogUtils: void infoln(java.lang.Object[])>($r14);
 
         return;
 

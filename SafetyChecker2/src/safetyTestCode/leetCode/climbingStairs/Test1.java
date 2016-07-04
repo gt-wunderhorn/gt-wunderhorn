@@ -1,6 +1,6 @@
 package safetyTestCode.leetCode.climbingStairs;
 
-import safetyChecker.ErrorLable;
+import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 

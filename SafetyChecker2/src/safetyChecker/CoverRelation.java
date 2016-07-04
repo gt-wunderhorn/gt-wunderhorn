@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.microsoft.z3.ArithExpr;
 import com.microsoft.z3.BoolExpr;
-import com.microsoft.z3.IntExpr;
 import com.microsoft.z3.InterpolationContext;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Status;
+
+import safetyChecker.utilities.LogUtils;
 
 import soot.Unit;
 

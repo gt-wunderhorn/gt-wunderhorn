@@ -1,4 +1,4 @@
-package safetyChecker;
+package safetyChecker.z3ScriptManager;
 
 import java.util.Map;
 
@@ -6,6 +6,8 @@ import com.microsoft.z3.ArrayExpr;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.InterpolationContext;
 import com.microsoft.z3.Sort;
+
+import safetyChecker.NewSort;
 
 import soot.Local;
 import soot.Type;
