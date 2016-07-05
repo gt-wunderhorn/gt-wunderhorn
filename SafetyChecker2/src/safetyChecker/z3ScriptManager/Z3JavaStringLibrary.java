@@ -33,7 +33,6 @@ public class Z3JavaStringLibrary {
 	}
 
 	public boolean isJavaStringLibrary(Value value) {
-		LogUtils.fatalln(this.getSootMethod(value).toString());
 		if(STRING_LIBRARY_DB.contains(this.getSootMethod(value).toString()))
 			return true;
 		return false;
@@ -67,18 +66,12 @@ public class Z3JavaStringLibrary {
 		Sort newSort = newSortMap.get(typeName);
 
 		ArrayExpr oldArray = (ArrayExpr) z3Handler.getGlobal().get(oldname);
-		LogUtils.fatalln("newSort=" + newSort);
-		LogUtils.fatalln("oldArray=" + oldArray);
 		NewSort s2 = z3Handler.getSortId().get(typeName);
-		LogUtils.fatalln("s2" + s2);
 		Local local = (Local) callerObject ;
 		String valueName = local.getName() + edge.getProgramTree().getProgramDefinition(); 
-		LogUtils.fatalln("valueName=" + valueName);
 		Expr a = ictx.mkConst(valueName, newSort);// newSortMap.get(TypeName));
 		Expr result = z3Handler.getIctx().mkSelect(oldArray, s2.getId(a));
-		LogUtils.fatalln("result"+result);
 		Expr result2 = z3Handler.getIctx().mkSelect((ArrayExpr)result, arg0Exr);
-		LogUtils.fatalln("result2"+result2);
 
 //		String oldname = "realString";
 //		ArrayExpr arrayExpr = (ArrayExpr) z3Handler.getGlobal().get(oldname);

@@ -12,10 +12,12 @@ public class Test1 {
 
 	public static void main(String args[]) throws java.io.IOException {
 		char a = 'b';
-		String s1 = "sta";
-		String s2 = "sym";
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		String str = br.readLine();
+//		String s1 = "sta";
 
-		if(a != s1.charAt(2))
+		if(a != str.charAt(2))
 			ErrorLable.Error();
 	}
 

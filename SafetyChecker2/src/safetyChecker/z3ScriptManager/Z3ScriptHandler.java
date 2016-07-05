@@ -112,8 +112,8 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
-		LogUtils.warning(">>>>>>");
-		LogUtils.infoln(e.getSource() + "***" + e);
+		LogUtils.debug(">>>>>>");
+		LogUtils.debugln(e.getSource() + "***" + e);
 		boolean converted = false;
 		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
@@ -128,7 +128,7 @@ public class Z3ScriptHandler {
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 		if(stmt instanceof InvokeStmt && !e.isSubFunction()) converted = convertNotSubFuntionInvoke(e);
 	
-		LogUtils.infoln("z3Expr=" + e.getZ3Expr());
+		LogUtils.debugln("z3Expr=" + e.getZ3Expr());
 		if(!converted) {
 			LogUtils.warningln("---------------");	
 			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
@@ -217,14 +217,12 @@ public class Z3ScriptHandler {
 		Value right = aStmt.getRightOp();
 		//nonsense and dummy parts needs to be added
 		
-		LogUtils.warningln("right1=" + right);
 		if(left.getType() instanceof RefType && right instanceof VirtualInvokeExpr) {
 			right = new JNewExpr((RefType) left.getType()); 
 		} else if (right.toString().contains("java.lang.String[] split(java.lang.String)")) {
 			right = new JNewArrayExpr(RefType.v("java.lang.String"), IntConstant.v(0)); 
 		}
 		
-		LogUtils.warningln("right1=" + right);
 		Type leftType = left.getType();
 		Expr rightZ3 = null;
 
@@ -241,7 +239,7 @@ public class Z3ScriptHandler {
 		} else {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		}
-		LogUtils.warningln("rightZ3=" + rightZ3);
+		LogUtils.debugln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
 		LogUtils.debugln("leftZ3=" + leftZ3);
 
@@ -258,7 +256,11 @@ public class Z3ScriptHandler {
 			eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, edge.getSource().getDistance());
 
 		if(right instanceof AnyNewExpr) {
-			if(right instanceof NewArrayExpr) { 
+			if(right.getType().toString().equals("java.lang.String")) {
+				BoolExpr f1 = Z3StringHandler.covertString(null, this, rightZ3);
+				BoolExpr wholeFormula = this.ictx.mkAnd(eq, f1);
+				edge.setZ3Expr(wholeFormula);
+			} if(right instanceof NewArrayExpr) { 
 				BoolExpr realArray = arrayHandler.newArrayExpr(rightZ3, right.getType(), this);
 			        BoolExpr arrayExpr = this.ictx.mkAnd(eq, realArray);
 				// rest is to use for checking array equality.
@@ -283,7 +285,6 @@ public class Z3ScriptHandler {
 				edge.setZ3Expr(eq);	
 			}
 		} else if(edge.isSubFunction()) {
-			LogUtils.warningln("subfunction is nt complete yet");
 			for(Value parameterValue : ((InvokeExpr) right).getArgs()) {	
 				Expr parameterExpr = this.localMap.get(parameterValue.toString());
 				if(parameterExpr == null) {
@@ -301,16 +302,14 @@ public class Z3ScriptHandler {
 
 			for(Entry<String, Expr> ee : localMap.entrySet())
 				LogUtils.warningln(ee.getKey() + "--" + ee.getValue());
-		} else if(right instanceof StringConstant) { 
+		} else if(right instanceof StringConstant || (left.getType().equals("java.lang.String") && right.toString().contains("readLine"))) { 
 			StringConstant sc = (StringConstant) right;
-			LogUtils.fatalln("right=" + right);
 			BoolExpr f1 = Z3StringHandler.covertString(sc, this, rightZ3);
 			BoolExpr wholeFormula = this.ictx.mkAnd(eq, f1);
 			edge.setZ3Expr(wholeFormula);
 		
 		} else {
 			edge.setZ3Expr(eq);
-			LogUtils.debugln("eq2=" + eq);
 		}
 		if(eq == null)
 			return false;
@@ -469,7 +468,7 @@ public class Z3ScriptHandler {
 	}
 
 	private Expr convertRefLikeValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {
-		LogUtils.warningln("Z3ScriptHandler.convertRefLikeValue=" + edge);
+		LogUtils.debugln("Z3ScriptHandler.convertRefLikeValue=" + edge);
 		LogUtils.detailln("type  fo the value is " + value.getClass().getName());
  
 		if(value instanceof PhiExpr) {
@@ -516,31 +515,25 @@ public class Z3ScriptHandler {
 			return resultExpr;
 		}
 		if(value instanceof Local) {
-			LogUtils.fatalln("1");
 			Type type = value.getType();		
 			Local local = (Local) value;
 			if(type instanceof RefType) {
-				LogUtils.fatalln("11");
 				return createZ3Object(local, assignLeft,  edge);	
 			}
 			if(type instanceof ArrayType) {
-				LogUtils.fatalln("22");
 				Expr result = this.arrayHandler.z3Local(local, assignLeft, nodeIndex, this); 
 				return result;
 			}
 		}
 		if(value instanceof AnyNewExpr) {
-			LogUtils.fatal("2");
 			Expr result = convertAnyNewExpr((AnyNewExpr) value, edge);	
 			return result;
 		}
 		if(value instanceof StringConstant) {
-			LogUtils.fatal("3");
 			Expr result = Z3StringHandler.z3NewString(this);
 			return result;
 		}
 		if(value instanceof ArrayRef) {
-			LogUtils.fatal("4");
 			ArrayRef arrayRef = (ArrayRef) value;
 			return arrayHandler.z3ArrayRef(arrayRef, this, edge);
 		}
@@ -549,13 +542,11 @@ public class Z3ScriptHandler {
 			System.exit(0);
 		}
 		if(value instanceof CastExpr) {
-			LogUtils.fatal("6");
 			CastExpr castExpr = (CastExpr) value;
 			Value uncasted = castExpr.getOp();
 			return this.convertValue(uncasted, assignLeft, edge, nodeIndex);  
 		}	       
 		if(value instanceof StaticFieldRef) {
-			LogUtils.fatal("5");
 			StaticFieldRef sfRef = (StaticFieldRef) value;
 			SootField field = sfRef.getField();
 			String name = field.getName();

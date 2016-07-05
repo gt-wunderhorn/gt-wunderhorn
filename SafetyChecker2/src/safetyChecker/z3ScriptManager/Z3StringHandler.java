@@ -18,7 +18,7 @@ import soot.jimple.StringConstant;
 
 public class Z3StringHandler {
 	static BoolExpr covertString(StringConstant s, Z3ScriptHandler z3Handler, Expr rightz3) {
-		String a = s.value;
+		String a = (s != null) ? s.value : "";
 		InterpolationContext ictx = z3Handler.getIctx();
 		BoolExpr[] result = new BoolExpr[a.length()];
 		String oldname = "realString";
