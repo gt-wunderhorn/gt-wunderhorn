@@ -113,8 +113,8 @@ public class Z3ScriptHandler {
 	}
 
 	public boolean createZ3Script(Edge e) {
-		LogUtils.debug(">>>>>>");
-		LogUtils.debugln(e.getSource() + "***" + e);
+		LogUtils.warning(">>>>>>");
+		LogUtils.infoln(e.getSource() + "***" + e);
 		boolean converted = false;
 		currentEdge = e;
 		if(e.isErrorEdge()) converted = convertErrorEdge(e); 
@@ -122,15 +122,14 @@ public class Z3ScriptHandler {
 		if(stmt instanceof IfStmt) converted = this.convertIfStmt(e);
 		if(stmt instanceof GotoStmt) converted = this.convertGotoStmt(e); 
 		if(stmt instanceof AssignStmt) converted = this.convertAssignStmtEdge(e);
-//		if(e.isReturnEdge()) converted = convertReturnStmt(e);
 		// add invoke
 		if(stmt instanceof IdentityStmt) converted = this.convertIdentityStmt(e);
+		if(stmt instanceof InvokeStmt && !e.isSubFunction()) converted = convertNotSubFuntionInvoke(e);
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
-		if(stmt instanceof InvokeStmt && !e.isSubFunction()) converted = convertNotSubFuntionInvoke(e);
 		if(e.isNewString()) converted = convertNewStringExpr(e);
 	
-		LogUtils.debugln("z3Expr=" + e.getZ3Expr());
+		LogUtils.infoln("z3Expr=" + e.getZ3Expr());
 		if(!converted) {
 			LogUtils.warningln("---------------");	
 			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
@@ -251,6 +250,8 @@ public class Z3ScriptHandler {
 				rightZ3 = this.z3MathLibrary.createMathEquality(right, this, edge);
 			else if(this.z3StringLibrary.isJavaStringLibrary(right))
 				rightZ3 = this.z3StringLibrary.createStringEquality(right, this, edge);
+			else if(edge.isArrayCopyEdge() || UnitController.isArraysEqualsInvoke(right))
+				rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 			else
 				rightZ3 = this.ictx.mkIntConst("nonSubFunction_" +this.getRealArraySize("nonSubFunction_"));
 		} else {
@@ -261,11 +262,6 @@ public class Z3ScriptHandler {
 		LogUtils.debugln("leftZ3=" + leftZ3);
 
 		BoolExpr eq = null; 
-//		if(UnitController.isArraysEqualsInvoke(right)) {
-//			BoolExpr eq1 = this.ictx.mkIff((BoolExpr)rightZ3, this.ictx.mkEq(leftZ3, this.ictx.mkInt(1)));
-//			BoolExpr eq2 = this.ictx.mkIff(this.ictx.mkNot((BoolExpr)rightZ3), this.ictx.mkEq(leftZ3, this.ictx.mkInt(0)));
-//			eq = this.ictx.mkAnd(eq1, eq2);
-//		} else 
 
 		if(z3MathLibrary.isModulusInstruction(right))
 			eq = z3MathLibrary.createModuleExpr(leftZ3, right, this, edge);
@@ -280,19 +276,6 @@ public class Z3ScriptHandler {
 			} if(right instanceof NewArrayExpr) { 
 				BoolExpr realArray = arrayHandler.newArrayExpr(rightZ3, right.getType(), this);
 			        BoolExpr arrayExpr = this.ictx.mkAnd(eq, realArray);
-				// rest is to use for checking array equality.
-				// if size value is not integer this for now.
-//				Value sizeValue = ((NewArrayExpr) right).getSize();
-//				int maxSize = 0;
-//				// max size is useless now need to handle after 2d arrays
-//				if(sizeValue instanceof Local) {
-//					// handle for non integer values
-//					maxSize = 10;//Integer.MAX_VALUE;
-//				} else if(sizeValue instanceof IntConstant) {
-//					IntConstant sizeIC = (IntConstant) sizeValue;
-//					maxSize = sizeIC.value;
-//					this.maxArraySize.put(left.toString(), maxSize);
-//				}
 				edge.setZ3Expr(arrayExpr);		
 			} else if(right instanceof NewMultiArrayExpr) {
 				BoolExpr realMulArray = arrayHandler.newMultiArrayExpr((NewMultiArrayExpr)right, right.getType(), this, rightZ3);
@@ -347,7 +330,6 @@ public class Z3ScriptHandler {
 
 		LogUtils.infoln("Unit : " + e.getUnit());
 		LogUtils.infoln("leakCandidate : " + leakCandidate);
-//		Expr leakCandidateZ3 = convertValue(leakCandidate, e);	
 		return false;
 	}
 
@@ -375,7 +357,7 @@ public class Z3ScriptHandler {
 				Expr leftExpr = null;
 				if(type instanceof IntegerType) {
 					leftExpr = ictx.mkIntConst(newName);
-					this.substitute.put(newName, oldName); // + "_" + edge.getProgramTree().getProgramDefinition());
+					this.substitute.put(newName, oldName); 
 					this.substituteSort.put(newName, ictx.mkIntSort());
 				} if (type instanceof LongType) {
 					leftExpr = this.ictx.mkIntConst(newName);

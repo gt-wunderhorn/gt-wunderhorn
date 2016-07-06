@@ -8,7 +8,7 @@ public class Test4 {
 		int x = 5;
 		int y = 0;
 		int z = 3; 
-		if (y == 0)
+		if (y != 0)
 			z = x;
 		else 
 			z = 1;

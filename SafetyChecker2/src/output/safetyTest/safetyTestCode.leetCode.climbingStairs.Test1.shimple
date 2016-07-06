@@ -27,7 +27,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test1 extends java.lang.Obje
 
         r1 = $r2;
 
-        i0 = virtualinvoke r1.<safetyTestCode.leetCode.climbingStairs.Test1: int climbStairs(int)>(4);
+        i0 = virtualinvoke r1.<safetyTestCode.leetCode.climbingStairs.Test1: int climbStairs(int)>(5);
 
         $r3 = <java.lang.System: java.io.PrintStream out>;
 
@@ -79,7 +79,7 @@ public class safetyTestCode.leetCode.climbingStairs.Test1 extends java.lang.Obje
 
         if i4_1 <= i0 goto label3;
 
-        if i3_1 != 8 goto label5;
+        if i3_1 != 9 goto label5;
 
         staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 

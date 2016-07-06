@@ -1,2 +1,0 @@
-source String[] <= TelephonyManager.getDeviceId
-sink   SmsManager.sendTextMessage <= String[]

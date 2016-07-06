@@ -71,9 +71,6 @@ public class DottyConverter {
 						}
 
 						writer.write("\t\"" + source + "\" -> \"" + target + "\"[" + color + "label=\"" + e + "--" /*+ e.getZ3Expr()*/ + inv4Edge  + "\"];\n");
-
-//						writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[" + color + "label=\"" + e + "--" + e.getZ3Expr() + "\n**" + w.getInvariant() + "\"];\n");
-						
 					}
 				for(Vertex v2 : vSet) { 
 					queue.add(v2);
@@ -121,7 +118,6 @@ public class DottyConverter {
 
 			while(!queue.isEmpty()) {
 				Vertex w = queue.remove();
-//				System.out.println(current);
 				Set<Vertex> vSet = w.getPreviousVertexSet();
 				if(w.getDistance()!=0)
 					writer.write("\t\"" + w.getNextVertex() + "\" -> \"" + w + "\"[label=\"" + w.getOutgoingEdge() + "\"];\n");
@@ -157,8 +153,6 @@ public class DottyConverter {
 			
 			while(!queue.isEmpty()) {
 				Vertex w = queue.remove();
-//				System.out.println(current);
-			
 				for(Edge incoming : w.getIncomingEdges()) {
 					if(cfg.getUnexceptionalPredsOf(incoming.getUnit()).size() == 0) {
 				
@@ -211,7 +205,6 @@ public class DottyConverter {
 		if(v.getNextVertex() == null) return;
 
 		writer.write("\t\""+v.toString()+ "\" -> \"" + v.getNextVertex().toString() + "\"[label=\"" + v.getOutgoingEdge().toString() + "\"];\n");
-//		writer.write("\t\""+v.toString()+ "\" -> \"" + v.getNextVertex().toString() + "\";\n");
 	
 		if(v.getNextVertex() != null) printSinglePath(v.getNextVertex(), writer);
 	}
@@ -231,7 +224,6 @@ public class DottyConverter {
 	
 			while(!queue.isEmpty()) {
 				Unit current = queue.remove();
-//				System.out.println(current);
 				List<Unit> predecessors = cfg.getUnexceptionalPredsOf(current);
 				for(Unit predecessor : predecessors) { 
 					writer.write("\t\"" + current + "\" -> \"" + predecessor + "\";\n");

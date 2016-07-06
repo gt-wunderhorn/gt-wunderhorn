@@ -4,7 +4,7 @@ import safetyChecker.utilities.ErrorLable;
 
 public class Test2 {
 
-	public void test2() {
+	public void test(int n) {
 		int x = 5;
 		int y = 1;
 
@@ -30,9 +30,9 @@ public class Test2 {
 			ErrorLable.Error();
 	}
 
-	public void test(int n) {
-		for(int i = 0; i < 5; i++) {
-			for(int j = 0; j < 5; j++) {}
+	public void test2(int n) {
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {}
 		}
 		// 2-2 error root #   28, L747-D37 -- benefit 1 root 20 vertexes 
 		// 3-3 error root #  564, L15790-D60 -- 15 roots

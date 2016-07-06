@@ -122,7 +122,7 @@ public class ProgramTree {
 
 	private boolean findMainFunction() {
 		if(stores.containsKey(functionSignature)) {
-			this.cfg = new ExceptionalUnitGraph(stores.get(functionSignature));//entry.getValue()
+			this.cfg = new ExceptionalUnitGraph(stores.get(functionSignature));
 			
 			Body body = stores.get(functionSignature);
 		 	this.functionName = body.getMethod().getName();
@@ -141,7 +141,6 @@ public class ProgramTree {
 				boolean unDoneFlag = (cfg.getUnexceptionalPredsOf(returnEdge.getUnit()).size() > 1) ? true : false; 
 				Vertex returnVertex = this.addVertex(root, returnEdge, unDoneFlag);
 				returnVertex.setReturnLocation(true);
-//				this.unDoneLeaves.add(returnVertex);
 			}
 			return true;
 		}
@@ -168,7 +167,6 @@ public class ProgramTree {
 		if(!returnRootQueue.isEmpty()) {
 			Vertex returnRoot = returnRootQueue.remove();
 			LogUtils.warningln("returnRoot=" + returnRoot);
-		//	z3Handler.convertPathtoZ3Script(returnRoot);
 			return returnRoot;
 		}
 		return null;
@@ -184,7 +182,6 @@ public class ProgramTree {
 
 	private HashMap<Vertex, Vertex> candidate2BeInPath = new HashMap<Vertex, Vertex>();
 	private HashMap<Vertex, Vertex> treeConnection = new HashMap<Vertex, Vertex>();
-//	private Queue<Vertex> unDoneLeaves = new LinkedList<Vertex>();
 
 	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		LogUtils.debugln("----->Unwind");
@@ -265,7 +262,6 @@ public class ProgramTree {
 				}
 				
 				if(v.getOutgoingEdge().isErrorEdge()) {
-//					this.unDoneLeaves.clear();
 					this.treeConnection.clear();
 					this.candidate2BeInPath.clear();
 					this.uncovered.clear();
@@ -309,14 +305,6 @@ public class ProgramTree {
 			undoneLeaf.addIncomingEdge(connection.getOutgoingEdge());
 			undoneLeaf.addPreviousVertex(connection);
 	
-//			int noOfCurrentPreds = undoneLeaf.getPreviousVertexSet().size();
-//			int noOfMaxPreds = this.cfg.getUnexceptionalPredsOf(undoneLeaf.getOutgoingEdge().getUnit()).size();
-
-//			if(noOfCurrentPreds == noOfMaxPreds)
-//				this.unDoneLeaves.remove(undoneLeaf);
-//			if(noOfCurrentPreds < noOfMaxPreds)
-//				this.uncovered.add(undoneLeaf);
-			
 			entryVertex = undoneLeaf;
 		}
 	}	
@@ -339,7 +327,6 @@ public class ProgramTree {
 				this.candidate2BeInPath.remove(nextVertex);
 			}
 		} else { 
-//			this.unDoneLeaves.add(nextVertex);
 			this.treeConnection.put(prevVertex, nextVertex);
 			this.candidate2BeInPath.put(prevVertex, prevVertex);
 		}

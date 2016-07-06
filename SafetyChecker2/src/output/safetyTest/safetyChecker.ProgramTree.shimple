@@ -933,15 +933,15 @@ public class safetyChecker.ProgramTree extends java.lang.Object
         goto label10;
 
      label09:
-        $r47 := @caughtexception;
+        $r49 := @caughtexception;
 
-        r52 = $r47;
+        r52 = $r49;
 
-        $r48 = newarray (java.lang.Object)[1];
+        $r50 = newarray (java.lang.Object)[1];
 
-        $r48[0] = "Exception occured during unwind";
+        $r50[0] = "Exception occured during unwind";
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r48);
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r50);
 
      label10:
         $r3 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
@@ -997,15 +997,15 @@ public class safetyChecker.ProgramTree extends java.lang.Object
         goto label14;
 
      label13:
-        $r49 := @caughtexception;
+        $r47 := @caughtexception;
 
-        r54 = $r49;
+        r54 = $r47;
 
-        $r50 = newarray (java.lang.Object)[1];
+        $r48 = newarray (java.lang.Object)[1];
 
-        $r50[0] = "Error in printig tree";
+        $r48[0] = "Error in printig tree";
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r50);
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r48);
 
      label14:
         return;

@@ -6,7 +6,7 @@ public class Test1 {
 
 	public static void main(String[] args) {
 		Test1 t1 = new Test1();
-		int result = t1.climbStairs(4);
+		int result = t1.climbStairs(5);
 		System.out.println(result);
 	}
 
@@ -24,7 +24,7 @@ public class Test1 {
 			count1 = temp;
 		}
 		
-		if(count2 == 8)
+		if(count2 == 9)
 			ErrorLable.Error();
 
 		return count2;

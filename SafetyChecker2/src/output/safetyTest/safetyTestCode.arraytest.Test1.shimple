@@ -12,7 +12,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
         return;
     }
 
-    public void test4(int)
+    public void test(int)
     {
         safetyTestCode.arraytest.Test1 r0;
         int i0, $i1, i2, i3;
@@ -32,7 +32,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         $i1 = r1[0];
 
-        if $i1 != 0 goto label1;
+        if $i1 != 2 goto label1;
 
         staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
@@ -40,7 +40,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
         return;
     }
 
-    public void test(int)
+    public void test3(int)
     {
         safetyTestCode.arraytest.Test1 r0;
         int i0, $i2, $i3, $i4, $i5, $i6, $i7;
@@ -92,7 +92,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r1, 0, r2, 0, 3);
 
-        $z0 = staticinvoke <java.util.Arrays: boolean equals(int[],int[])>(r1, r2);
+        $z0 = staticinvoke <java.util.Arrays: boolean equals(int[],int[])>(r1, r3);
 
         if $z0 == 0 goto label1;
 
@@ -102,10 +102,10 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
         return;
     }
 
-    public void test3(int)
+    public void test4(int)
     {
         safetyTestCode.arraytest.Test1 r0;
-        int i0, $i1, $i2, i3, i3_1, i3_2;
+        int i0, i1, i1_1, i1_2;
         int[] r1, r2;
         boolean $z0;
 
@@ -117,27 +117,21 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         r2 = newarray (int)[i0];
 
-        i3 = 0;
+        i1 = 0;
 
 (0)     goto label2;
 
      label1:
-        r1[i3_1] = i3_1;
+        r1[i1_1] = i1_1;
 
-        r2[i3_1] = i3_1;
+        r2[i1_1] = i1_1;
 
-(1)     i3_2 = i3_1 + 1;
+(1)     i1_2 = i1_1 + 1;
 
      label2:
-        i3_1 = Phi(i3 #0, i3_2 #1);
+        i1_1 = Phi(i1 #0, i1_2 #1);
 
-        if i3_1 < i0 goto label1;
-
-        $i2 = i0 - 1;
-
-        $i1 = i0 + 12;
-
-        r2[$i2] = $i1;
+        if i1_1 < i0 goto label1;
 
         $z0 = staticinvoke <java.util.Arrays: boolean equals(int[],int[])>(r1, r2);
 

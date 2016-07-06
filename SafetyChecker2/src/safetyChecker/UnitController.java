@@ -24,7 +24,7 @@ public class UnitController {
 	public static final String ERRORLABEL = "ErrorLable";
 	public static final String OBJECTINVOKE = "<java.lang.Object: void <init>";
 	public static final String NONSENSCOMPARE = "java.lang.String: boolean equals";
-	public static final String NOTINVOKESIGNATURE = "void <init>"; //java.lang.Object: void <init>()>";
+	public static final String NOTINVOKESIGNATURE = "void <init>"; 
 	public static final String NEWSTRINGINVOKE = "<java.lang.String: void <init>(java.lang.String)>";
 
 	private static final String SEND_TEXT_MESSAGE_SIGNATURE = "sendTextMessage";
@@ -62,7 +62,8 @@ public class UnitController {
 		e.getSource().setEntryLocation(e.isEntryLocation());
 		e.getSource().setInErrorPath(e.isInErrorPath());
 
-		if(e.isErrorEdge()){ // || (e.getTarget().getOutgoingEdge() != null && e.getTarget().getOutgoingEdge().isInErrorPath())){
+
+		if(e.isErrorEdge()){ 
 			e.setInErrorPath(true);
 		}
 	}
@@ -190,7 +191,7 @@ public class UnitController {
 		}
 		return sign;
 	}
-
+	
 	public static boolean isArraysEqualsInvoke(Value right) {
 		if(right instanceof InvokeExpr) {
 			String sign = ((InvokeExpr) right).getMethod().getSignature();
@@ -198,7 +199,7 @@ public class UnitController {
 				return true;
 		}	
 		return false;
-	}	
+	}
 
 	public boolean isControlLocation(Unit unit) {
 		if(unit instanceof IfStmt)

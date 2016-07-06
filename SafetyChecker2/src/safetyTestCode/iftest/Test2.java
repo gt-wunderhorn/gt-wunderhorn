@@ -14,7 +14,7 @@ public class Test2 {
 			z = 3;
 		}
 
-		if(x != z)
+		if(x == z)
 			ErrorLable.Error();
 	}
 

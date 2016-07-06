@@ -15,7 +15,7 @@ public class LogUtils {
 
 	// flag for the printing level
 	// lowever levels are not printing
-	private static int currentLevel = FATAL; 
+	private static int currentLevel = INFO; 
 
 	// for reset
 	public static final String ANSI_RESET = "\u001B[0m";

@@ -23,7 +23,7 @@ public class Z3JavaMathLibrary {
 	private static final String MATH_MAX_METHOD = "<java.lang.Math: int max(int,int)>";
 	private static final String MATH_MIN_METHOD = "<java.lang.Math: int min(int,int)>";
 	
-	private static final HashSet<String> MATH_LIBRARY_DB = new HashSet<String>();// = {MATH_MAX_METHOD, MATH_MIN_METHOD}; 
+	private static final HashSet<String> MATH_LIBRARY_DB = new HashSet<String>();
 
 	public Z3JavaMathLibrary() {
 		MATH_LIBRARY_DB.add(MATH_MAX_METHOD);

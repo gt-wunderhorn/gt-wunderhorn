@@ -6,9 +6,9 @@ public class Test1 {
 
 	public void test() {
 		int x = 3; //callee();
-		if(x != 3)
-			x = 4;
 		if(x == 3)
+			x = 4;
+		if(x != 3)
 			ErrorLable.Error();
 	}
 

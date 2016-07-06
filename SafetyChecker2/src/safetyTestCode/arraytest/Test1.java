@@ -6,7 +6,7 @@ import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 
-	public void test4(int n) {
+	public void test(int n) {
 		int[] intArray = new int[2];
 		int[] intArray2 = new int[2];
 
@@ -15,7 +15,7 @@ public class Test1 {
 //		for(int i = 0; i < n; i++)
 //			intArray[i] = 3;
 				
-		if((intArray[0] == 0))  
+		if((intArray[0] == 2))  
 			ErrorLable.Error();
 	}
 
@@ -45,7 +45,7 @@ public class Test1 {
 //
 //	}
 	
-	public void test(int n) {
+	public void test3(int n) {
 
 		int x = 3;
 		int[] intArray = new int[3];
@@ -78,11 +78,11 @@ public class Test1 {
 
 //		if(Arrays.equals(intArray, intArray2))
 		
-		if(Arrays.equals(intArray, intArray2))
+		if(Arrays.equals(intArray, intArray3))
 			ErrorLable.Error();
 	}
 
-	public void test3(int n) {
+	public void test4(int n) {
 		int[] a1 = new int[n];
 		int[] a2 = new int[n];
 
@@ -90,8 +90,6 @@ public class Test1 {
 			a1[i] = i;
 			a2[i] = i;
 		}	
-		a2[n-1] = n+12;
-		 
 		
 
 		if(Arrays.equals(a1,a2))

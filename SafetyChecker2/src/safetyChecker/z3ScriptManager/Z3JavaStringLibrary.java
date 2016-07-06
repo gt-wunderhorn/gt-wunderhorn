@@ -69,22 +69,9 @@ public class Z3JavaStringLibrary {
 		NewSort s2 = z3Handler.getSortId().get(typeName);
 		Local local = (Local) callerObject ;
 		String valueName = local.getName() + edge.getProgramTree().getProgramDefinition(); 
-		Expr a = ictx.mkConst(valueName, newSort);// newSortMap.get(TypeName));
+		Expr a = ictx.mkConst(valueName, newSort);
 		Expr result = z3Handler.getIctx().mkSelect(oldArray, s2.getId(a));
 		Expr result2 = z3Handler.getIctx().mkSelect((ArrayExpr)result, arg0Exr);
-
-//		String oldname = "realString";
-//		ArrayExpr arrayExpr = (ArrayExpr) z3Handler.getGlobal().get(oldname);
-//		LogUtils.fatalln("arrayExpr=" + arrayExpr);
-//		ArrayExpr selectExpr = (ArrayExpr) z3Handler.getIctx().mkSelect(arrayExpr, callerExpr);
-//		Expr result = z3Handler.getIctx().mkSelect(selectExpr, z3Index);	
-
-
-
-//		Expr selectIndex = z3Handler.convertValue(arg0, false, edge, edge.getSource().getDistance());
-//		Expr selectExpr = ictx.mkSelect((ArrayExpr) callerExpr, selectIndex);
-		
-//		LogUtils.warningln("selectExpr=" + selectExpr);
 
 		return result2; 
 	}

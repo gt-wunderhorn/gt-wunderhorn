@@ -10,15 +10,15 @@ import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 
-	public static void main(String args[]) throws java.io.IOException {
-		char a = 'a';
+	public static void main6(String args[]) throws java.io.IOException {
+		char a = 'b';
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		String str = br.readLine();
 		String ss = new String("aa");
 
 
-		if(a == ss.charAt(2))
+		if(a == ss.charAt(1))
 			ErrorLable.Error();
 	}
 
@@ -86,23 +86,21 @@ public class Test1 {
 
 	}
 
-	public static void main6(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		// int[] intArray = new int[2];
 		// intArray[0] = 3;
 
-//		InputStreamReader isr = new InputStreamReader(System.in);
-//		BufferedReader br = new BufferedReader(isr);
-//		int i = Integer.parseInt(br.readLine());
-//		int j = Integer.parseInt(br.readLine());
-		int[][] intArray3 = new int[1][2];
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		int i = Integer.parseInt(br.readLine());
+		int j = Integer.parseInt(br.readLine());
+		int[][] intArray3 = new int[i][j];
 
-//		for(int i2 = 0; i2 < j; i2++)
-//			for(int j2 = 0; j2 < j; j2++)
-//				intArray3[i2][j2] = i2+j2;
+		for(int i2 = 0; i2 < j; i2++)
+			for(int j2 = 0; j2 < j; j2++)
+				intArray3[i2][j2] = i2+j2;
 
-		intArray3[0][1] = 3;
-//		intArray3[1][2] = 7;
-		if (intArray3[2][1] == 3)
+		if (intArray3[0][1] == 3)
 			ErrorLable.Error();
 
 	}
