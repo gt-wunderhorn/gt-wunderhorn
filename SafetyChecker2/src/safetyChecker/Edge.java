@@ -28,6 +28,7 @@ public class Edge {
 	private boolean controlLocation = false;
 	private boolean entryLocation = false;
 	private boolean initInvoke = false;
+	private boolean newString = false;
 	
 	private List<Expr> parameterList = new LinkedList<Expr>();
 
@@ -80,6 +81,9 @@ public class Edge {
 
 	public boolean  isInitInvoke() { return this.initInvoke; }
 	public void setInitInvoke(boolean initInvoke) { this.initInvoke = initInvoke; } 
+
+	public boolean isNewString() { return this.newString; }
+	public void setNewString(boolean newString) { this.newString = newString; }
 
 	public BoolExpr getZ3Expr() { return this.z3Expr; }
 	public void setZ3Expr(BoolExpr z3Expr) { this.z3Expr = z3Expr; } 

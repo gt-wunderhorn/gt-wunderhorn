@@ -701,14 +701,13 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         safetyChecker.CoverRelation r0;
         safetyChecker.Vertex r1, r2;
         java.util.HashSet r3, $r16;
-        java.lang.Object[] $r4, $r5, $r12, $r19, $r23;
-        java.lang.StringBuilder $r6, $r7, $r8, $r9, $r24, $r25;
-        java.lang.String $r10, $r26;
+        java.lang.Object[] $r4, $r5, $r12, $r19;
+        java.lang.StringBuilder $r6, $r7, $r8, $r9;
+        java.lang.String $r10;
         java.util.Map $r11, $r13, $r15, $r17, $r20;
         boolean $z0, $z1, $z2;
         java.lang.Object $r21;
         java.util.Set $r22;
-        int $i0, $i1;
 
         r0 := @this: safetyChecker.CoverRelation;
 
@@ -745,28 +744,6 @@ public class safetyChecker.CoverRelation extends java.lang.Object
         $z0 = interfaceinvoke $r11.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
 
         if $z0 == 0 goto label1;
-
-        $r23 = newarray (java.lang.Object)[1];
-
-        $r24 = new java.lang.StringBuilder;
-
-        specialinvoke $r24.<java.lang.StringBuilder: void <init>(java.lang.String)>("hooopaaa");
-
-        $i0 = r0.<safetyChecker.CoverRelation: int counter>;
-
-        $i1 = $i0 + 1;
-
-        r0.<safetyChecker.CoverRelation: int counter> = $i1;
-
-        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
-
-        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r23[0] = $r26;
-
-        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r23);
-
-        staticinvoke <java.lang.System: void exit(int)>(0);
 
         return;
 

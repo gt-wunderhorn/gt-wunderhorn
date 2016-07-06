@@ -11,13 +11,14 @@ import safetyChecker.utilities.ErrorLable;
 public class Test1 {
 
 	public static void main(String args[]) throws java.io.IOException {
-		char a = 'b';
+		char a = 'a';
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		String str = br.readLine();
-//		String s1 = "sta";
+		String ss = new String("aa");
 
-		if(a != str.charAt(2))
+
+		if(a == ss.charAt(2))
 			ErrorLable.Error();
 	}
 

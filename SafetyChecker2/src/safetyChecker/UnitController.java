@@ -25,6 +25,7 @@ public class UnitController {
 	public static final String OBJECTINVOKE = "<java.lang.Object: void <init>";
 	public static final String NONSENSCOMPARE = "java.lang.String: boolean equals";
 	public static final String NOTINVOKESIGNATURE = "void <init>"; //java.lang.Object: void <init>()>";
+	public static final String NEWSTRINGINVOKE = "<java.lang.String: void <init>(java.lang.String)>";
 
 	private static final String SEND_TEXT_MESSAGE_SIGNATURE = "sendTextMessage";
        	private static final Integer SEND_TEXT_MESSAGE_PARAM_NO = 2;
@@ -56,6 +57,7 @@ public class UnitController {
 		e.setControlLocation(this.isControlLocation(u));
 		e.setEntryLocation(this.isEntryLocation(u, cfg));
 		e.setInitInvoke(this.isInitInvoke(u));
+		e.setNewString(this.isNewString(u));
 
 		e.getSource().setEntryLocation(e.isEntryLocation());
 		e.getSource().setInErrorPath(e.isInErrorPath());
@@ -63,6 +65,13 @@ public class UnitController {
 		if(e.isErrorEdge()){ // || (e.getTarget().getOutgoingEdge() != null && e.getTarget().getOutgoingEdge().isInErrorPath())){
 			e.setInErrorPath(true);
 		}
+	}
+
+	private boolean isNewString(Unit u) {
+		String methodSignature = this.getMethodSignature(u);
+		if(methodSignature.equals(NEWSTRINGINVOKE))
+			return true;
+		return false;
 	}
 
 	private boolean isArrayCopyInvoke(Unit u) {

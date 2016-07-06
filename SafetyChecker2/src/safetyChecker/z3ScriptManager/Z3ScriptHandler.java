@@ -30,6 +30,7 @@ import soot.SootField;
 import soot.Type;
 import soot.Unit;
 import soot.Value;
+import soot.ValueBox;
 import soot.VoidType;
 import soot.jimple.AddExpr;
 import soot.jimple.AnyNewExpr;
@@ -127,6 +128,7 @@ public class Z3ScriptHandler {
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 		if(stmt instanceof InvokeStmt && !e.isSubFunction()) converted = convertNotSubFuntionInvoke(e);
+		if(e.isNewString()) converted = convertNewStringExpr(e);
 	
 		LogUtils.debugln("z3Expr=" + e.getZ3Expr());
 		if(!converted) {
@@ -135,9 +137,23 @@ public class Z3ScriptHandler {
 			LogUtils.warningln("Expr=" + e.getZ3Expr());
 			LogUtils.fatalln("Converstion failed");
 			LogUtils.fatalln("Z3ScriptHandler.createZ3Script");
-			System.exit(0);
 		}
 		return converted;
+	}
+	
+	private boolean convertNewStringExpr(Edge edge) {
+		InvokeStmt iStmt = (InvokeStmt) edge.getUnit();
+		InvokeExpr iExpr = iStmt.getInvokeExpr();
+		StringConstant sc = (StringConstant) iExpr.getArg(0);
+		ValueBox valueBox = iExpr.getUseBoxes().get(1);
+		Value callerObject = valueBox.getValue();
+		Expr rightZ3 = convertValue(callerObject, true, edge, 0);
+		BoolExpr f1 = Z3StringHandler.covertString(sc, this, rightZ3);
+		LogUtils.fatalln(rightZ3);
+		LogUtils.fatalln(f1);
+		BoolExpr eq = this.ictx.mkEq(rightZ3, f1); 
+		edge.setZ3Expr(eq);
+		return true;
 	}
 
 	private boolean convertNotSubFuntionInvoke(Edge edge){
@@ -222,6 +238,7 @@ public class Z3ScriptHandler {
 		} else if (right.toString().contains("java.lang.String[] split(java.lang.String)")) {
 			right = new JNewArrayExpr(RefType.v("java.lang.String"), IntConstant.v(0)); 
 		}
+		LogUtils.debugln("right=" + right);
 		
 		Type leftType = left.getType();
 		Expr rightZ3 = null;
@@ -289,7 +306,6 @@ public class Z3ScriptHandler {
 				Expr parameterExpr = this.localMap.get(parameterValue.toString());
 				if(parameterExpr == null) {
 					LogUtils.fatalln(("paremeter is null, cannot find the Z3 value"));
-					System.exit(0);
 				}
 				edge.addParameter(parameterExpr);
 				try {
@@ -308,7 +324,7 @@ public class Z3ScriptHandler {
 			BoolExpr wholeFormula = this.ictx.mkAnd(eq, f1);
 			edge.setZ3Expr(wholeFormula);
 		
-		} else {
+		}  else {
 			edge.setZ3Expr(eq);
 		}
 		if(eq == null)
@@ -538,8 +554,8 @@ public class Z3ScriptHandler {
 			return arrayHandler.z3ArrayRef(arrayRef, this, edge);
 		}
 		if(value instanceof InstanceFieldRef) {
-			LogUtils.fatalln("FATAL: InstanceFieldRef is not supported yet!");
-			System.exit(0);
+			InstanceFieldRef localStmt = (InstanceFieldRef) value;
+			return this.z3InstanceFieldRef(localStmt, assignLeft, edge);
 		}
 		if(value instanceof CastExpr) {
 			CastExpr castExpr = (CastExpr) value;
@@ -561,6 +577,26 @@ public class Z3ScriptHandler {
 		LogUtils.fatalln("FATAL: Unit : " + edge.getUnit() + " - Value : " + value);
 		LogUtils.fatalln("Z3ScriptHandler.convertRefLikeValue");
 		return null;
+	}
+
+	private Expr z3InstanceFieldRef(InstanceFieldRef v, boolean IfAssignLeft, Edge edge) {
+		Value base = v.getBase();
+		SootField Field = v.getField();
+		Expr baseZ3 = this.convertValue(base, false, edge, 0);
+		String FieldName = Field.toString();
+		if (!this.global.containsKey(FieldName)) {
+			Sort newArraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
+			String arrayName = this.getGlobalName(FieldName);
+			Expr newArray = ictx.mkConst(arrayName,newArraySort);
+			this.global.put(FieldName, newArray);
+		}
+		if (IfAssignLeft) {
+			return baseZ3;
+		} else {
+			ArrayExpr oldArray = (ArrayExpr) this.global.get(FieldName);
+			Expr result = ictx.mkSelect(oldArray, baseZ3);
+			return result;
+		}
 	}
 
 	private Expr createZ3Object(Local v,  boolean IfAssignLeft, Edge e) {

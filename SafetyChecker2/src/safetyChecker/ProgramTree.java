@@ -157,8 +157,6 @@ public class ProgramTree {
 			if(returnRootQueue.size() > 0) {
 				Vertex returnRoot = returnRootQueue.peek();
 				z3Handler.convertPathtoZ3Script(returnRoot);
-				LogUtils.infoln("inside if");
-				System.exit(0);
 				return true;
 			}
 		}
@@ -189,42 +187,49 @@ public class ProgramTree {
 //	private Queue<Vertex> unDoneLeaves = new LinkedList<Vertex>();
 
 	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.infoln("----->Unwind");
+		LogUtils.debugln("----->Unwind");
 
 		boolean windingDone = false;
 
 		while(!this.uncovered.isEmpty()) {
-			Vertex v = uncovered.remove();
-			if(this.isConnectionCovered(v))
-				continue;
-
-			LogUtils.debugln(v.getOutgoingEdge() + "---" + v + "--" + coverRelation.isCovered(v));
-			if(coverRelation.isCovered(v)) continue;
-
-			boolean errorPathFound = expandBFS(v);
-			
-			if(!errorRootQueue.isEmpty()) {
-				LogUtils.debugln("errorRootQueue = " + errorRootQueue);
-				Vertex errorRoot = errorRootQueue.remove(); 
-				
-				LogUtils.infoln("error root #" + errorRootSet.size() + "=" + errorRoot);
-				z3Handler.convertPathtoZ3Script(errorRoot); 
-				errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
-				LogUtils.debugln("printing result path");
-				this.printResult(errorRoot.toString());
-
-				if(errorLocationFeasible) break;
-				coverRelation.updateCover();
+			try {
+				Vertex v = uncovered.remove();
+				if(this.isConnectionCovered(v))
+					continue;
+	
+				LogUtils.debugln(v.getOutgoingEdge() + "---" + v + "--" + coverRelation.isCovered(v));
+				if(coverRelation.isCovered(v)) continue;
+	
+				boolean errorPathFound = expandBFS(v);
+				if(!errorRootQueue.isEmpty()) {
+					LogUtils.debugln("errorRootQueue = " + errorRootQueue);
+					Vertex errorRoot = errorRootQueue.remove(); 
+					
+					LogUtils.infoln("error root #" + errorRootSet.size() + "=" + errorRoot);
+					z3Handler.convertPathtoZ3Script(errorRoot); 
+					errorLocationFeasible = itpHandler.createInterpolant(errorRoot);
+					LogUtils.debugln("printing result path");
+					this.printResult(errorRoot.toString());
+	
+					if(errorLocationFeasible) break;
+					coverRelation.updateCover();
+				}
+			} catch (Exception ex) {
+				LogUtils.warningln("Exception occured during unwind");
 			}
 		}	
 
-		Queue<Vertex> q = new LinkedList<Vertex>();
-		q.add(root);		
-
-		DottyConverter.printAllPaths(q, "_all.dot");
-		LogUtils.warningln("errorSet size = " + errorSet.size());
-		DottyConverter.printErrorPaths(errorSet, "_errors.dot", coverRelation);
-		LogUtils.infoln("<------unwind");
+		try {
+			Queue<Vertex> q = new LinkedList<Vertex>();
+			q.add(root);		
+	
+			DottyConverter.printAllPaths(q, "_all.dot");
+			LogUtils.warningln("errorSet size = " + errorSet.size());
+			DottyConverter.printErrorPaths(errorSet, "_errors.dot", coverRelation);
+			LogUtils.debugln("<------unwind");
+		} catch (Exception ex) {
+			LogUtils.warningln("Error in printig tree");
+		}
 	}
 
 	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {

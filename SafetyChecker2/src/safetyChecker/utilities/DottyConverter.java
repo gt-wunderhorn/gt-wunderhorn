@@ -110,7 +110,6 @@ public class DottyConverter {
 			writer.close();
 		} catch (Exception exp) {
 			exp.printStackTrace();
-			System.exit(0);
 		}
 	}
 
@@ -135,7 +134,6 @@ public class DottyConverter {
 			writer.close();
 		} catch (Exception exp) {
 			exp.printStackTrace();
-			System.exit(0);
 		}
 
 	}
@@ -206,7 +204,6 @@ public class DottyConverter {
 	
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
 	}
 	
@@ -247,7 +244,6 @@ public class DottyConverter {
 			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		}
 	}

@@ -162,8 +162,6 @@ public class CoverRelation {
 
 		if(this.coveredByMap.containsKey(weakerVertex)) {
 			// since it is covered once no need to add another cover
-			LogUtils.fatalln("hooopaaa" + counter++);
-			System.exit(0);
 			return;
 		} else {
 			LogUtils.debugln("else coveredByMap. not contains");

@@ -4,6 +4,7 @@ public class safetyChecker.UnitController extends java.lang.Object
     public static final java.lang.String OBJECTINVOKE;
     public static final java.lang.String NONSENSCOMPARE;
     public static final java.lang.String NOTINVOKESIGNATURE;
+    public static final java.lang.String NEWSTRINGINVOKE;
     private static final java.lang.String SEND_TEXT_MESSAGE_SIGNATURE;
     private static final java.lang.Integer SEND_TEXT_MESSAGE_PARAM_NO;
     private static final java.lang.String AND_UTIL_LOG_SIGNATURE;
@@ -85,7 +86,7 @@ public class safetyChecker.UnitController extends java.lang.Object
         java.util.Map r2;
         soot.toolkits.graph.ExceptionalUnitGraph r3;
         soot.Unit r4;
-        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13;
         safetyChecker.Vertex $r5, $r6;
 
         r0 := @this: safetyChecker.UnitController;
@@ -138,26 +139,53 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         virtualinvoke r1.<safetyChecker.Edge: void setInitInvoke(boolean)>($z9);
 
+        $z10 = specialinvoke r0.<safetyChecker.UnitController: boolean isNewString(soot.Unit)>(r4);
+
+        virtualinvoke r1.<safetyChecker.Edge: void setNewString(boolean)>($z10);
+
         $r5 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $z10 = virtualinvoke r1.<safetyChecker.Edge: boolean isEntryLocation()>();
+        $z11 = virtualinvoke r1.<safetyChecker.Edge: boolean isEntryLocation()>();
 
-        virtualinvoke $r5.<safetyChecker.Vertex: void setEntryLocation(boolean)>($z10);
+        virtualinvoke $r5.<safetyChecker.Vertex: void setEntryLocation(boolean)>($z11);
 
         $r6 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $z11 = virtualinvoke r1.<safetyChecker.Edge: boolean isInErrorPath()>();
+        $z12 = virtualinvoke r1.<safetyChecker.Edge: boolean isInErrorPath()>();
 
-        virtualinvoke $r6.<safetyChecker.Vertex: void setInErrorPath(boolean)>($z11);
+        virtualinvoke $r6.<safetyChecker.Vertex: void setInErrorPath(boolean)>($z12);
 
-        $z12 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
+        $z13 = virtualinvoke r1.<safetyChecker.Edge: boolean isErrorEdge()>();
 
-        if $z12 == 0 goto label1;
+        if $z13 == 0 goto label1;
 
         virtualinvoke r1.<safetyChecker.Edge: void setInErrorPath(boolean)>(1);
 
      label1:
         return;
+    }
+
+    private boolean isNewString(soot.Unit)
+    {
+        safetyChecker.UnitController r0;
+        soot.Unit r1;
+        java.lang.String r2;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.UnitController;
+
+        r1 := @parameter0: soot.Unit;
+
+        r2 = staticinvoke <safetyChecker.UnitController: java.lang.String getMethodSignature(soot.Unit)>(r1);
+
+        $z0 = virtualinvoke r2.<java.lang.String: boolean equals(java.lang.Object)>("<java.lang.String: void <init>(java.lang.String)>");
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
     }
 
     private boolean isArrayCopyInvoke(soot.Unit)
