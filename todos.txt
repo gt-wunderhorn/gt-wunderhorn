@@ -1,6 +1,8 @@
 This file contains a list of open issues for the safety checker. Each
 item is tagged with the developer who's actively working on it.
 
+--------------------------------------------------------------------------------
+
 Unsupported language features:
 
 -Programs containing multiple, user-defined methods (Burak)
@@ -9,8 +11,33 @@ Unsupported language features:
 
 -Overflow and underflow
 
-Optimizations:
+--------------------------------------------------------------------------------
 
--Path refinement
+Usability features:
 
-  +Constraint minimization
+-Frontend that allows users to specify searching for classes of
+ runtime exceptions. In particular:
+
+  +ArrayOutOfBoundsException
+
+  +ClassCastException
+
+  +NullPointerException
+
+--------------------------------------------------------------------------------
+
+Convergence optimizations: optimizations that could help the checker
+find inductive invariants
+
+-path refinement
+
+  +interpolate over an unsatisfiable core of the path formula
+
+--------------------------------------------------------------------------------
+
+Performance optimizations: optimizations that could improve
+performance without affecting intermediate results computed
+
+-Path refinement:
+
+  +use Z3 backtracking across multiple queries
