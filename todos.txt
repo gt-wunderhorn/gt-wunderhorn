@@ -1,0 +1,16 @@
+This file contains a list of open issues for the safety checker. Each
+item is tagged with the developer who's actively working on it.
+
+Unsupported language features:
+
+-Programs containing multiple, user-defined methods (Burak)
+
+-Multi-dimensional arrays (Burak)
+
+-Overflow and underflow
+
+Optimizations:
+
+-Path refinement
+
+  +Constraint minimization
