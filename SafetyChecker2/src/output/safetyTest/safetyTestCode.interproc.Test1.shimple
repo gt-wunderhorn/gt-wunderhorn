@@ -15,22 +15,20 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
     public void test(int)
     {
         safetyTestCode.interproc.Test1 r0;
-        int i0, i4;
-        byte b1, b2, b3;
+        int i0, i3;
+        byte b1, b2;
 
         r0 := @this: safetyTestCode.interproc.Test1;
 
         i0 := @parameter0: int;
 
-        b1 = 2;
+        b1 = 1;
 
-        b2 = 3;
+        b2 = 5;
 
-        b3 = 3;
+        i3 = virtualinvoke r0.<safetyTestCode.interproc.Test1: int getNumber(int,int)>(b1, b2);
 
-        i4 = virtualinvoke r0.<safetyTestCode.interproc.Test1: int getNumber(int,int)>(b1, b2);
-
-        if i4 != 5 goto label1;
+        if i3 != 15 goto label1;
 
         staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
@@ -41,7 +39,7 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
     public int getNumber(int, int)
     {
         safetyTestCode.interproc.Test1 r0;
-        int i0, i1, i2;
+        int i0, i1, i2, $i3;
 
         r0 := @this: safetyTestCode.interproc.Test1;
 
@@ -49,8 +47,24 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
 
         i1 := @parameter1: int;
 
-        i2 = i0 + i1;
+        $i3 = virtualinvoke r0.<safetyTestCode.interproc.Test1: int getDouble(int)>(i1);
+
+        i2 = i0 + $i3;
 
         return i2;
+    }
+
+    int getDouble(int)
+    {
+        safetyTestCode.interproc.Test1 r0;
+        int i0, $i1;
+
+        r0 := @this: safetyTestCode.interproc.Test1;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 * 2;
+
+        return $i1;
     }
 }

@@ -225,9 +225,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 (2)     z2_2 = 1;
 
      label3:
-        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
-
         r24_1 = Phi(r24 #0, r24_2 #1, r24_2 #2);
+
+        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
 
         if r24_1 != null goto label1;
 
@@ -2007,9 +2007,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 (11)    r104_3 = virtualinvoke r104_2.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
      label14:
-        r104_2 = Phi(r104_1 #5, r104_3 #11);
-
         r102_2 = Phi(r102_1 #5, r102_6 #11);
+
+        r104_2 = Phi(r104_1 #5, r104_3 #11);
 
         r101_2 = Phi(r101_1 #5, r101_6 #11);
 
@@ -2018,9 +2018,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 (12)    if r104_2 != $r36 goto label10;
 
      label15:
-        r104 = Phi(r104 #4, r104_2 #12);
-
         r102_1 = Phi(r102 #4, r102_2 #12);
+
+        r104 = Phi(r104 #4, r104_2 #12);
 
         r101_1 = Phi(r101 #4, r101_2 #12);
 
@@ -2322,9 +2322,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 (5)     r74_4 = r4;
 
      label04:
-        r73_5 = Phi(r73_3 #3, r73_2 #4, r73_4 #5);
-
         r74_5 = Phi(r74_3 #3, r74_2 #4, r74_4 #5);
+
+        r73_5 = Phi(r73_3 #3, r73_2 #4, r73_4 #5);
 
         $r51 = newarray (java.lang.Object)[1];
 
@@ -2369,29 +2369,29 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 (6)     staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r57);
 
      label05:
-        r73_6 = Phi(r73_2 #2, r73_5 #6);
-
         r74_6 = Phi(r74_2 #2, r74_5 #6);
+
+        r73_6 = Phi(r73_2 #2, r73_5 #6);
 
 (7)     r76_3 = virtualinvoke r76_2.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
      label06:
-        r73_2 = Phi(r73_1 #1, r73_6 #7);
+        r74_2 = Phi(r74_1 #1, r74_6 #7);
 
         r76_2 = Phi(r76_1 #1, r76_3 #7);
 
-        r74_2 = Phi(r74_1 #1, r74_6 #7);
+        r73_2 = Phi(r73_1 #1, r73_6 #7);
 
         $r48 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
 (8)     if r76_2 != $r48 goto label02;
 
      label07:
-        r73_1 = Phi(r73 #0, r73_2 #8);
+        r74_1 = Phi(r74 #0, r74_2 #8);
 
         r76 = Phi(r76 #0, r76_2 #8);
 
-        r74_1 = Phi(r74 #0, r74_2 #8);
+        r73_1 = Phi(r73 #0, r73_2 #8);
 
         $z13 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
