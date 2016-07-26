@@ -3,7 +3,6 @@ package safetyChecker.z3ScriptManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Stack;
 
 import com.microsoft.z3.ArithExpr;
@@ -20,6 +19,7 @@ import safetyChecker.Vertex;
 import safetyChecker.utilities.LogUtils;
 
 import soot.ArrayType;
+import soot.Body;
 import soot.IntegerType;
 import soot.Local;
 import soot.LongType;
@@ -61,6 +61,8 @@ import soot.jimple.NewArrayExpr;
 import soot.jimple.NewExpr;
 import soot.jimple.NewMultiArrayExpr;
 import soot.jimple.NullConstant;
+import soot.jimple.ParameterRef;
+import soot.jimple.ReturnStmt;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.StringConstant;
 import soot.jimple.SubExpr;
@@ -74,6 +76,7 @@ import soot.toolkits.scalar.ValueUnitPair;
 public class Z3ScriptHandler {
 	
 	private InterpolationContext ictx;
+	private Map<String, Body> stores;
 	private Map<String, Sort> newSortMap = new HashMap<String, Sort>();
 	private Map<String, NewSort> sortId = new HashMap<String, NewSort>();
 	private Map<String, Expr> global = new HashMap<String, Expr>();
@@ -91,8 +94,9 @@ public class Z3ScriptHandler {
 	private Vertex errorPathRoot;
 	private Edge currentEdge;
 
-	public Z3ScriptHandler(InterpolationContext ictx) {
+	public Z3ScriptHandler(InterpolationContext ictx, Map<String, Body> stores) {
 		this.ictx = ictx;
+		this.stores = stores;
 	}
 	
 	public void convertPathtoZ3Script(Vertex v) {
@@ -124,10 +128,12 @@ public class Z3ScriptHandler {
 		if(stmt instanceof AssignStmt) converted = this.convertAssignStmtEdge(e);
 		// add invoke
 		if(stmt instanceof IdentityStmt) converted = this.convertIdentityStmt(e);
-		if(stmt instanceof InvokeStmt && !e.isSubFunction()) converted = convertNotSubFuntionInvoke(e);
+		if(stmt instanceof InvokeStmt && !e.isFunctionCall()) converted = convertNotSubFuntionInvoke(e);
 		if(e.isSinkEdge()) converted = convertSinkInvoke2Z3(e);
 		if(e.isArrayCopyEdge()) converted = convertArrayCopy(e);
 		if(e.isNewString()) converted = convertNewStringExpr(e);
+		if(stmt instanceof ReturnStmt) converted = convertReturnStmt(e);
+		if(e.isFunctionCall() && !(stmt instanceof AssignStmt)) converted = this.convertFunctionCallOnly(e);
 	
 		LogUtils.infoln("z3Expr=" + e.getZ3Expr());
 		if(!converted) {
@@ -135,9 +141,21 @@ public class Z3ScriptHandler {
 			LogUtils.warningln("Vertex=" + e.getSource() + "---- Unit=" + e);
 			LogUtils.warningln("Expr=" + e.getZ3Expr());
 			LogUtils.fatalln("Converstion failed");
+			LogUtils.warningln("type  fo the " + e.getZ3Expr() + " is " + e.getUnit().getClass().getName());
 			LogUtils.fatalln("Z3ScriptHandler.createZ3Script");
 		}
 		return converted;
+	}
+
+	private boolean convertFunctionCallOnly(Edge edge) {
+		edge.setZ3Expr(this.ictx.mkTrue());
+		return true;
+	}
+
+	private boolean convertReturnStmt(Edge edge) {
+		edge.getProgramTree().getCallerVertex().getOutgoingEdge().setReturnUnit(edge.getUnit());
+		edge.setZ3Expr(this.ictx.mkTrue());
+		return true;
 	}
 	
 	private boolean convertNewStringExpr(Edge edge) {
@@ -202,6 +220,7 @@ public class Z3ScriptHandler {
 		LogUtils.debugln("Z3ScriptHandler.convertIdentityStmt=" + edge);
 		IdentityStmt iStmt = (IdentityStmt) edge.getUnit();
 		Value left = iStmt.getLeftOp();
+		Type leftType = left.getType();
 		Expr leftZ3 = convertValue(left, true, edge, edge.getSource().getDistance());
 		if(parameters.isEmpty()) {
 			Type t = left.getType();
@@ -209,14 +228,43 @@ public class Z3ScriptHandler {
 				RefType rType = (RefType) t;
 				NewExpr right = new JNewExpr(rType);
 				Expr rightZ3 = convertValue(right, false, edge, 0);
-				Type leftType = left.getType();
 				BoolExpr expr = convertAssignStmt(rightZ3, leftZ3, leftType, left, edge.getSource().getDistance());
 				edge.setZ3Expr(expr);
 				if(expr == null) 
 					return false;
 				return true;	
 			} else { 
-				edge.setZ3Expr(this.ictx.mkTrue());
+				if(edge.getProgramTree().isMainFunction()) {
+					edge.setZ3Expr(this.ictx.mkTrue());
+					return true;
+				}
+
+				Value right = iStmt.getRightOp();
+				if(right instanceof ParameterRef) {
+					ParameterRef par = (ParameterRef) right;
+					int parameterIndex = par.getIndex();
+
+					Edge callerEdge = edge.getProgramTree().getCallerVertex().getOutgoingEdge();
+					Unit callerUnit = callerEdge.getUnit();
+					Expr rightZ3 = null;
+					if(callerUnit instanceof AssignStmt) {
+						AssignStmt aStmt = (AssignStmt) callerUnit;
+						InvokeExpr iExpr = (InvokeExpr) aStmt.getRightOp();
+						Value arg = iExpr.getArg(parameterIndex);
+						rightZ3 = this.convertValue(arg, false, callerEdge, callerEdge.getSource().getDistance());  
+						
+					} else {
+						InvokeStmt iStmt2 = (InvokeStmt) callerUnit; 
+						Value arg = iStmt2.getInvokeExpr().getArg(parameterIndex);
+						rightZ3 = this.convertValue(arg, false, callerEdge, callerEdge.getSource().getDistance());
+					}	
+					
+					BoolExpr expr = this.convertAssignStmt(rightZ3, leftZ3, leftType, left, edge.getSource().getDistance());
+					edge.setZ3Expr(expr);
+
+				}
+
+	//			edge.setZ3Expr(this.ictx.mkTrue());
 				return true;
 			}
 		} else {
@@ -243,9 +291,28 @@ public class Z3ScriptHandler {
 		Expr rightZ3 = null;
 
 		// rigth invoke expression needs to be added
-		if(edge.isSubFunction() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
-			rightZ3 = this.ictx.mkIntConst("return_" + this.getRealArraySize("return_"));
-		} else if(right instanceof InvokeExpr && !edge.isSubFunction()) { 
+		if(edge.isFunctionCall() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
+			Unit stmt = edge.getReturnUnit();
+			Value returnValue = stmt.getUseBoxes().get(0).getValue();
+			rightZ3 = this.convertValue(returnValue, false, edge, edge.getSource().getDistance());
+//			LogUtils.fatalln(right);
+//			LogUtils.fatalln(((InvokeExpr)right).getMethod());
+//			String subFuncSig = ((InvokeExpr)right).getMethod().toString();
+//			try{
+//				LogUtils.warningln("calls programtree");
+//				Vertex returnRoot = null;
+//				ProgramTree subPT = new ProgramTree(stores, subFuncSig, false);
+//				if(subPT.getNewReturnPath())
+//					returnRoot = subPT.getNewReturnRoot();
+//				while(returnRoot != null)
+//					LogUtils.warningln(returnRoot);
+//
+//			} catch (Exception e) {
+//				LogUtils.warningln("ahahahahahahah");
+//				LogUtils.fatalln(e.getMessage());
+//				rightZ3 = this.ictx.mkIntConst("return_" + this.getRealArraySize("return_"));
+//			}
+		} else if(right instanceof InvokeExpr && !edge.isFunctionCall()) { 
 			if(this.z3MathLibrary.isJavaMathLibrary(right))
 				rightZ3 = this.z3MathLibrary.createMathEquality(right, this, edge);
 			else if(this.z3StringLibrary.isJavaStringLibrary(right))
@@ -284,24 +351,7 @@ public class Z3ScriptHandler {
 			} else if (right instanceof NewExpr) {
 				edge.setZ3Expr(eq);	
 			}
-		} else if(edge.isSubFunction()) {
-			for(Value parameterValue : ((InvokeExpr) right).getArgs()) {	
-				Expr parameterExpr = this.localMap.get(parameterValue.toString());
-				if(parameterExpr == null) {
-					LogUtils.fatalln(("paremeter is null, cannot find the Z3 value"));
-				}
-				edge.addParameter(parameterExpr);
-				try {
-					if(!edge.getProgramTree().getNewReturnPath())
-						LogUtils.warningln("New return path cannot be found : " + edge);
-				} catch (Exception exp) {
-					throw new RuntimeException(exp);
-				}
-			}
-
-			for(Entry<String, Expr> ee : localMap.entrySet())
-				LogUtils.warningln(ee.getKey() + "--" + ee.getValue());
-		} else if(right instanceof StringConstant || (left.getType().equals("java.lang.String") && right.toString().contains("readLine"))) { 
+		}  else if(right instanceof StringConstant || (left.getType().equals("java.lang.String") && right.toString().contains("readLine"))) { 
 			StringConstant sc = (StringConstant) right;
 			BoolExpr f1 = Z3StringHandler.covertString(sc, this, rightZ3);
 			BoolExpr wholeFormula = this.ictx.mkAnd(eq, f1);
@@ -438,8 +488,8 @@ public class Z3ScriptHandler {
 			return resultExpr;
 		}
 		if(value instanceof InvokeExpr) {
-			if(edge.isSubFunction()) {
-				LogUtils.warningln(value);
+			if(edge.isFunctionCall()) {
+				LogUtils.warningln("****" + value);
 				
 			}
 		}

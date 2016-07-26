@@ -63,7 +63,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         java.lang.String[] r0;
         java.io.InputStreamReader r1, $r4;
         java.io.BufferedReader r2, $r6;
-        int i0, i1, i2, $i4, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, i41, i42, i43, i44, i45, i46, i47, i48, i49, i41_1, i42_1, i44_1, i46_1, i43_1, i42_2, i43_2, i44_2, i44_3, i43_3, i43_4, i43_5, i44_4, i44_5, i43_6, i46_2, i46_3, i46_4, i42_3, i47_1, i48_1, i48_2, i47_2, i47_3, i47_4, i48_3, i41_2, i49_1, i49_2;
+        int i0, i1, i2, $i4, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, i41, i42, i43, i44, i45, i46, i47, i48, i49, i41_1, i42_1, i42_2, i46_1, i43_1, i44_1, i43_2, i44_2, i43_3, i44_3, i43_4, i43_5, i44_4, i44_5, i43_6, i46_2, i46_3, i46_4, i42_3, i47_1, i48_1, i47_2, i48_2, i47_3, i47_4, i48_3, i41_2, i49_1, i49_2;
         int[][] r3;
         java.io.InputStream $r5;
         java.lang.String $r7, $r8, $r10, $r13, $r37, r42, r43, r44, r45, r46, r42_1, r45_1, r45_2, r45_3, r45_4, r45_5, r42_2;
@@ -162,9 +162,9 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (4)     r45_5 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
 
      label05:
-        i43_4 = Phi(i43_3 #3, i43_5 #4);
-
         r45_4 = Phi(r45_3 #3, r45_5 #4);
+
+        i43_4 = Phi(i43_3 #3, i43_5 #4);
 
         $c3 = virtualinvoke r44.<java.lang.String: char charAt(int)>(i43_4);
 
@@ -188,11 +188,11 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (7)     i43_6 = i43_4 + 1;
 
      label07:
-        i44_3 = Phi(i44_2 #2, i44_5 #7);
+        r45_2 = Phi(r45_1 #2, r45_4 #7);
 
         i43_3 = Phi(i43_2 #2, i43_6 #7);
 
-        r45_2 = Phi(r45_1 #2, r45_4 #7);
+        i44_3 = Phi(i44_2 #2, i44_5 #7);
 
         if i43_3 < i2 goto label03;
 
@@ -334,15 +334,15 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (10)    i42_3 = i42_2 + 1;
 
      label15:
-        i44_1 = Phi(i44 #1, i44_3 #10);
+        i42_2 = Phi(i42_1 #1, i42_3 #10);
+
+        r45_1 = Phi(r45 #1, r45_2 #10);
 
         i46_1 = Phi(i46 #1, i46_3 #10);
 
         i43_1 = Phi(i43 #1, i43_3 #10);
 
-        i42_2 = Phi(i42_1 #1, i42_3 #10);
-
-        r45_1 = Phi(r45 #1, r45_2 #10);
+        i44_1 = Phi(i44 #1, i44_3 #10);
 
         if i42_2 < i1 goto label02;
 
@@ -373,9 +373,9 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (14)    i48_3 = i48_2 + 1;
 
      label18:
-        i48_2 = Phi(i48_1 #11, i48_3 #14);
-
         i47_2 = Phi(i47_1 #11, i47_4 #14);
+
+        i48_2 = Phi(i48_1 #11, i48_3 #14);
 
         if i48_2 < i1 goto label16;
 
@@ -394,11 +394,9 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (15)    i41_2 = i41_1 + 1;
 
      label19:
-        i41_1 = Phi(i41 #0, i41_2 #15);
+        i42 = Phi(i42 #0, i42_2 #15);
 
-        i44 = Phi(i44 #0, i44_1 #15);
-
-        i48 = Phi(i48 #0, i48_2 #15);
+        r45 = Phi(r45 #0, r45_1 #15);
 
         i47 = Phi(i47 #0, i47_2 #15);
 
@@ -406,11 +404,13 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         i43 = Phi(i43 #0, i43_1 #15);
 
-        i42 = Phi(i42 #0, i42_2 #15);
+        i44 = Phi(i44 #0, i44_1 #15);
+
+        i41_1 = Phi(i41 #0, i41_2 #15);
 
         r42_1 = Phi(r42 #0, r42_2 #15);
 
-        r45 = Phi(r45 #0, r45_1 #15);
+        i48 = Phi(i48 #0, i48_2 #15);
 
         if i41_1 < i0 goto label01;
 
@@ -453,12 +453,12 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         return;
     }
 
-    public static void main(java.lang.String[]) throws java.lang.Exception
+    public static void main4(java.lang.String[]) throws java.lang.Exception
     {
         java.lang.String[] r0;
         java.io.InputStreamReader r1, $r4;
         java.io.BufferedReader r2, $r6;
-        int i0, i1, $i2, $i3, i4, i5, i4_1, i5_1, i5_2, i5_3, i4_2;
+        int i0, i1, $i3, $i4, i5, i6, i5_1, i6_1, i6_2, i6_3, i5_2;
         int[][] r3;
         java.io.InputStream $r5;
         java.lang.String $r7, $r8;
@@ -490,43 +490,45 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 
         r3 = newmultiarray (int)[i0][i1];
 
-        i4 = 0;
+        staticinvoke <safetyTestCode.object.Test1: int test()>();
+
+        i5 = 0;
 
 (0)     goto label4;
 
      label1:
-        i5_1 = 0;
+        i6_1 = 0;
 
 (1)     goto label3;
 
      label2:
-        $r9 = r3[i4_1];
+        $r9 = r3[i5_1];
 
-        $i2 = i4_1 + i5_2;
+        $i3 = i5_1 + i6_2;
 
-        $r9[i5_2] = $i2;
+        $r9[i6_2] = $i3;
 
-(2)     i5_3 = i5_2 + 1;
+(2)     i6_3 = i6_2 + 1;
 
      label3:
-        i5_2 = Phi(i5_1 #1, i5_3 #2);
+        i6_2 = Phi(i6_1 #1, i6_3 #2);
 
-        if i5_2 < i1 goto label2;
+        if i6_2 < i1 goto label2;
 
-(3)     i4_2 = i4_1 + 1;
+(3)     i5_2 = i5_1 + 1;
 
      label4:
-        i4_1 = Phi(i4 #0, i4_2 #3);
+        i6 = Phi(i6 #0, i6_2 #3);
 
-        i5 = Phi(i5 #0, i5_2 #3);
+        i5_1 = Phi(i5 #0, i5_2 #3);
 
-        if i4_1 < i1 goto label1;
+        if i5_1 < i1 goto label1;
 
         $r10 = r3[0];
 
-        $i3 = $r10[1];
+        $i4 = $r10[1];
 
-        if $i3 != 3 goto label5;
+        if $i4 != 3 goto label5;
 
         staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
@@ -534,7 +536,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         return;
     }
 
-    public static void main4(java.lang.String[])
+    public static void main(java.lang.String[])
     {
         java.lang.String[] r0;
         java.util.Scanner r1, $r3;
@@ -602,6 +604,8 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
      label5:
         z0_2 = Phi(z0_1 #1, z0 #3);
 
+        staticinvoke <safetyTestCode.object.Test1: int test()>();
+
         if z0_2 != 0 goto label6;
 
         staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
@@ -610,21 +614,18 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         return;
     }
 
-    public void test()
+    public static int test()
     {
-        safetyTestCode.object.Test1 r0;
-        safetyTestCode.object.Obj r1, $r2;
+        safetyTestCode.object.Obj r0, $r1;
         byte b0, b1, $b6, b7, b8;
         long l2, l3, $l5;
         int $i4;
 
-        r0 := @this: safetyTestCode.object.Test1;
+        $r1 = new safetyTestCode.object.Obj;
 
-        $r2 = new safetyTestCode.object.Obj;
+        specialinvoke $r1.<safetyTestCode.object.Obj: void <init>()>();
 
-        specialinvoke $r2.<safetyTestCode.object.Obj: void <init>()>();
-
-        r1 = $r2;
+        r0 = $r1;
 
         b7 = 3;
 
@@ -649,7 +650,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
 
      label1:
-        return;
+        return 0;
     }
 
     public static void main2(java.lang.String[]) throws java.io.IOException
@@ -657,7 +658,7 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
         java.lang.String[] r0, r3;
         java.io.BufferedReader r1, $r5;
         java.io.PrintWriter r2, $r8;
-        int i0, $i2, $i3, i4, i5, i6, i7, i5_1, i4_1, i4_2, i5_2, i6_1, i6_2, i6_3;
+        int i0, $i2, $i3, i4, i5, i6, i7, i4_1, i5_1, i4_2, i5_2, i6_1, i6_2, i6_3;
         int[] r4;
         byte b1;
         java.io.InputStreamReader $r6;
@@ -739,9 +740,9 @@ public class safetyTestCode.object.Test1 extends java.lang.Object
 (3)     virtualinvoke r2.<java.io.PrintWriter: void println(int)>(b1);
 
      label4:
-        i5_1 = Phi(i5 #0, i5_2 #3);
-
         i4_1 = Phi(i4 #0, i4_2 #3);
+
+        i5_1 = Phi(i5 #0, i5_2 #3);
 
         i6 = Phi(i6 #0, i6_2 #3);
 

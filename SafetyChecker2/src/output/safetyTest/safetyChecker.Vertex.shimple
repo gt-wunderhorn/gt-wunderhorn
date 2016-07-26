@@ -3,7 +3,7 @@ public class safetyChecker.Vertex extends java.lang.Object
     private boolean returnLocation;
     private boolean entryLocation;
     private boolean errorLocation;
-    private boolean subFunction;
+    private boolean functionCall;
     private boolean sinkLocation;
     private boolean sourceLocation;
     private boolean isInErrorPath;
@@ -12,10 +12,11 @@ public class safetyChecker.Vertex extends java.lang.Object
     private java.util.Set incomingEdges;
     private safetyChecker.Vertex nextVertex;
     private java.util.Set previousVertexSet;
+    private safetyChecker.ProgramTree subTree;
+    private safetyChecker.Vertex callerVertex;
     private boolean psi;
     private int distance;
     private int locationNumber;
-    private int rootNumber;
     private com.microsoft.z3.BoolExpr invariant;
 
     public void <init>()
@@ -33,7 +34,7 @@ public class safetyChecker.Vertex extends java.lang.Object
 
         r0.<safetyChecker.Vertex: boolean errorLocation> = 0;
 
-        r0.<safetyChecker.Vertex: boolean subFunction> = 0;
+        r0.<safetyChecker.Vertex: boolean functionCall> = 0;
 
         r0.<safetyChecker.Vertex: boolean sinkLocation> = 0;
 
@@ -60,8 +61,6 @@ public class safetyChecker.Vertex extends java.lang.Object
         r0.<safetyChecker.Vertex: int distance> = 0;
 
         r0.<safetyChecker.Vertex: int locationNumber> = 0;
-
-        r0.<safetyChecker.Vertex: int rootNumber> = 0;
 
         return;
     }
@@ -144,19 +143,19 @@ public class safetyChecker.Vertex extends java.lang.Object
         return;
     }
 
-    public boolean isSubFunction()
+    public boolean isFunctionCall()
     {
         safetyChecker.Vertex r0;
         boolean $z0;
 
         r0 := @this: safetyChecker.Vertex;
 
-        $z0 = r0.<safetyChecker.Vertex: boolean subFunction>;
+        $z0 = r0.<safetyChecker.Vertex: boolean functionCall>;
 
         return $z0;
     }
 
-    public void setSubFunction(boolean)
+    public void setFunctionCall(boolean)
     {
         safetyChecker.Vertex r0;
         boolean z0;
@@ -165,7 +164,7 @@ public class safetyChecker.Vertex extends java.lang.Object
 
         z0 := @parameter0: boolean;
 
-        r0.<safetyChecker.Vertex: boolean subFunction> = z0;
+        r0.<safetyChecker.Vertex: boolean functionCall> = z0;
 
         return;
     }
@@ -377,6 +376,56 @@ public class safetyChecker.Vertex extends java.lang.Object
         $r2 = r0.<safetyChecker.Vertex: java.util.Set previousVertexSet>;
 
         interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public safetyChecker.ProgramTree getSubTree()
+    {
+        safetyChecker.Vertex r0;
+        safetyChecker.ProgramTree $r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = r0.<safetyChecker.Vertex: safetyChecker.ProgramTree subTree>;
+
+        return $r1;
+    }
+
+    public void setSubTree(safetyChecker.ProgramTree)
+    {
+        safetyChecker.Vertex r0;
+        safetyChecker.ProgramTree r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        r1 := @parameter0: safetyChecker.ProgramTree;
+
+        r0.<safetyChecker.Vertex: safetyChecker.ProgramTree subTree> = r1;
+
+        return;
+    }
+
+    public safetyChecker.Vertex getCallerVertex()
+    {
+        safetyChecker.Vertex r0, $r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        $r1 = r0.<safetyChecker.Vertex: safetyChecker.Vertex callerVertex>;
+
+        return $r1;
+    }
+
+    public void setCallerVertex(safetyChecker.Vertex)
+    {
+        safetyChecker.Vertex r0, r1;
+
+        r0 := @this: safetyChecker.Vertex;
+
+        r1 := @parameter0: safetyChecker.Vertex;
+
+        r0.<safetyChecker.Vertex: safetyChecker.Vertex callerVertex> = r1;
 
         return;
     }

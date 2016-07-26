@@ -15,10 +15,11 @@ public class Edge {
 	private Vertex target;
 	private ProgramTree programTree;
 	private BoolExpr z3Expr;
+	private Unit returnUnit;
 
 	private boolean returnEdge = false;
 	private boolean errorEdge = false;
-	private boolean subFunction = false;
+	private boolean functionCall = false;
 	private boolean sinkEdge = false;
 	private boolean sourceEdge = false;
 	private boolean objectEdge = false;
@@ -49,8 +50,8 @@ public class Edge {
 	public boolean isErrorEdge() { return this.errorEdge; }
 	public void setErrorEdge(boolean errorEdge) { this.errorEdge = errorEdge; }
 	
-	public boolean isSubFunction() { return this.subFunction; }
-	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }	
+	public boolean isFunctionCall() { return this.functionCall; }
+	public void setFunctionCall(boolean functionCall) { this.functionCall = functionCall; }	
 	
 	public boolean isSinkEdge() { return this.sinkEdge; }
 	public void setSinkEdge(boolean sinkEdge) { this.sinkEdge = sinkEdge; }
@@ -87,6 +88,9 @@ public class Edge {
 
 	public BoolExpr getZ3Expr() { return this.z3Expr; }
 	public void setZ3Expr(BoolExpr z3Expr) { this.z3Expr = z3Expr; } 
+
+	public Unit getReturnUnit() { return this.returnUnit; }
+	public void setReturnUnit(Unit returnUnit) { this.returnUnit = returnUnit; }
 
 	public List<Expr> getParameterList() { return this.parameterList; }
 	public void addParameter(Expr parameter) { this.parameterList.add(parameter); }

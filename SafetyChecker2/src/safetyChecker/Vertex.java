@@ -10,7 +10,7 @@ public class Vertex {
 	private boolean returnLocation = false;
 	private boolean entryLocation = false;
 	private boolean errorLocation = false;
-	private boolean subFunction = false;
+	private boolean functionCall = false;
 	private boolean sinkLocation = false;
 	private boolean sourceLocation = false;
 	private boolean isInErrorPath = false; 
@@ -20,11 +20,12 @@ public class Vertex {
 	private Set<Edge> incomingEdges = new HashSet<Edge>();
 	private Vertex nextVertex;
 	private Set<Vertex> previousVertexSet = new HashSet<Vertex>();
+	private ProgramTree subTree;
+	private Vertex callerVertex;
 
 	private boolean psi = false;
 	private int distance = 0;
 	private int locationNumber = 0;
-	private int rootNumber = 0;
 	private BoolExpr invariant;
 
 	public boolean isReturnLocation() { return this.returnLocation; }
@@ -36,8 +37,8 @@ public class Vertex {
 	public boolean isErrorLocation() { return this.errorLocation; }
 	public void setErrorLocation(boolean errorLocation) { this.errorLocation = errorLocation; }
 	
-	public boolean isSubFunction() { return this.subFunction; }
-	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }
+	public boolean isFunctionCall() { return this.functionCall; }
+	public void setFunctionCall(boolean functionCall) { this.functionCall = functionCall; }
 	
 	public boolean isSinkLocation() { return this.sinkLocation; }
 	public void setSinkLocation(boolean sinkLocation) { this.sinkLocation = sinkLocation; }
@@ -63,6 +64,12 @@ public class Vertex {
 	public Set<Vertex> getPreviousVertexSet() { return this.previousVertexSet; }
 	public void addPreviousVertex(Vertex v) { this.previousVertexSet.add(v); }
 	
+	public ProgramTree getSubTree() { return this.subTree; }
+	public void setSubTree(ProgramTree subTree) { this.subTree = subTree; }
+
+	public Vertex getCallerVertex() { return this.callerVertex; }
+	public void setCallerVertex(Vertex callerVertex) { this.callerVertex = callerVertex; }
+
 	public boolean isSigh() { return this.psi; }
 	public void setSight(boolean psi) { this.psi = psi; }
 

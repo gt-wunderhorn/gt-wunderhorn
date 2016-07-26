@@ -48,7 +48,7 @@ public class UnitController {
 	public void analyzeEdge(Edge e, Map<String, Body> stores, ExceptionalUnitGraph cfg) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		Unit u = e.getUnit();
 		e.setErrorEdge(this.isErrorUnit(u));
-		e.setSubFunction(this.isSubFunctionUnit(u, stores, e));
+		e.setFunctionCall(this.isSubFunctionUnit(u, stores, e));
 		e.setSinkEdge(this.isSinkInvoke(u));
 		e.setSourceEdge(this.isSourceInvoke(u));
 		e.setObjectEdge(this.isObjectInvoke(u));
@@ -102,8 +102,20 @@ public class UnitController {
 		if(this.isInvoke(u)) {
 			String sign = getMethodSignature(u);
 			if(!sign.contains(ERRORLABEL) && stores.containsKey(sign)) {
-				LogUtils.warningln("SubFunction found : " + sign);
-				e.setProgramTree(new ProgramTree(stores, sign, false));
+				LogUtils.detailln("SubFunction found : " + sign);
+				//e.setProgramTree(new ProgramTree(stores, sign, false));
+				
+//				if(u instanceof AssignStmt) {
+//					AssignStmt aStmt = (AssignStmt) u;
+//					Value left = aStmt.getLeftOp();
+//					InvokeExpr right = (InvokeExpr) aStmt.getRightOp();
+//					right.getArgBox(
+//					
+//				} else {
+//					LogUtils.fatalln("isSubFunctionUnit else");
+//					InvokeStmt invoke = (InvokeStmt) u;
+//					System.exit(0);
+//				}	
 				return true;							
 			}					
 		}	

@@ -105,7 +105,7 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         $z1 = specialinvoke r0.<safetyChecker.UnitController: boolean isSubFunctionUnit(soot.Unit,java.util.Map,safetyChecker.Edge)>(r4, r2, r1);
 
-        virtualinvoke r1.<safetyChecker.Edge: void setSubFunction(boolean)>($z1);
+        virtualinvoke r1.<safetyChecker.Edge: void setFunctionCall(boolean)>($z1);
 
         $z2 = specialinvoke r0.<safetyChecker.UnitController: boolean isSinkInvoke(soot.Unit)>(r4);
 
@@ -338,7 +338,6 @@ public class safetyChecker.UnitController extends java.lang.Object
         boolean $z0, $z1, $z2;
         java.lang.Object[] $r5;
         java.lang.StringBuilder $r6, $r7;
-        safetyChecker.ProgramTree $r9;
 
         r0 := @this: safetyChecker.UnitController;
 
@@ -374,13 +373,7 @@ public class safetyChecker.UnitController extends java.lang.Object
 
         $r5[0] = $r8;
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r5);
-
-        $r9 = new safetyChecker.ProgramTree;
-
-        specialinvoke $r9.<safetyChecker.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean)>(r2, r4, 0);
-
-        virtualinvoke r3.<safetyChecker.Edge: void setProgramTree(safetyChecker.ProgramTree)>($r9);
+        staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r5);
 
         return 1;
 

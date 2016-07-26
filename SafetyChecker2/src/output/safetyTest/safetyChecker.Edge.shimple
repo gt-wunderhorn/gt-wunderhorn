@@ -5,9 +5,10 @@ public class safetyChecker.Edge extends java.lang.Object
     private safetyChecker.Vertex target;
     private safetyChecker.ProgramTree programTree;
     private com.microsoft.z3.BoolExpr z3Expr;
+    private soot.Unit returnUnit;
     private boolean returnEdge;
     private boolean errorEdge;
-    private boolean subFunction;
+    private boolean functionCall;
     private boolean sinkEdge;
     private boolean sourceEdge;
     private boolean objectEdge;
@@ -36,7 +37,7 @@ public class safetyChecker.Edge extends java.lang.Object
 
         r0.<safetyChecker.Edge: boolean errorEdge> = 0;
 
-        r0.<safetyChecker.Edge: boolean subFunction> = 0;
+        r0.<safetyChecker.Edge: boolean functionCall> = 0;
 
         r0.<safetyChecker.Edge: boolean sinkEdge> = 0;
 
@@ -199,19 +200,19 @@ public class safetyChecker.Edge extends java.lang.Object
         return;
     }
 
-    public boolean isSubFunction()
+    public boolean isFunctionCall()
     {
         safetyChecker.Edge r0;
         boolean $z0;
 
         r0 := @this: safetyChecker.Edge;
 
-        $z0 = r0.<safetyChecker.Edge: boolean subFunction>;
+        $z0 = r0.<safetyChecker.Edge: boolean functionCall>;
 
         return $z0;
     }
 
-    public void setSubFunction(boolean)
+    public void setFunctionCall(boolean)
     {
         safetyChecker.Edge r0;
         boolean z0;
@@ -220,7 +221,7 @@ public class safetyChecker.Edge extends java.lang.Object
 
         z0 := @parameter0: boolean;
 
-        r0.<safetyChecker.Edge: boolean subFunction> = z0;
+        r0.<safetyChecker.Edge: boolean functionCall> = z0;
 
         return;
     }
@@ -533,6 +534,32 @@ public class safetyChecker.Edge extends java.lang.Object
         r1 := @parameter0: com.microsoft.z3.BoolExpr;
 
         r0.<safetyChecker.Edge: com.microsoft.z3.BoolExpr z3Expr> = r1;
+
+        return;
+    }
+
+    public soot.Unit getReturnUnit()
+    {
+        safetyChecker.Edge r0;
+        soot.Unit $r1;
+
+        r0 := @this: safetyChecker.Edge;
+
+        $r1 = r0.<safetyChecker.Edge: soot.Unit returnUnit>;
+
+        return $r1;
+    }
+
+    public void setReturnUnit(soot.Unit)
+    {
+        safetyChecker.Edge r0;
+        soot.Unit r1;
+
+        r0 := @this: safetyChecker.Edge;
+
+        r1 := @parameter0: soot.Unit;
+
+        r0.<safetyChecker.Edge: soot.Unit returnUnit> = r1;
 
         return;
     }

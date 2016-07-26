@@ -13,168 +13,57 @@ ANSI_PURPLE	src/safetyChecker/utilities/LogUtils.java	/^	public static final Str
 ANSI_RED	src/safetyChecker/utilities/LogUtils.java	/^	public static final String ANSI_RED = "\\u001B[31m";$/;"	f	class:LogUtils
 ANSI_RESET	src/safetyChecker/utilities/LogUtils.java	/^	public static final String ANSI_RESET = "\\u001B[0m";$/;"	f	class:LogUtils
 ANSI_YELLOW	src/safetyChecker/utilities/LogUtils.java	/^	public static final String ANSI_YELLOW = "\\u001B[33m";$/;"	f	class:LogUtils
-APK	BechMark/DroidBench/ArrayAccess1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidBench/ArrayAccess2/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidBench/ArrayCopy1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidBench/ImplicitFlow3/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidBench/MultidimensionalArray1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
-APK	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/Makefile	/^APK  := bin\/$(NAME)-debug.apk$/;"	m
 ARRAYS_EQUALS_SIGNATURE	src/safetyChecker/UnitController.java	/^	private static final String ARRAYS_EQUALS_SIGNATURE = "<java.util.Arrays: boolean equals(int[],int[])>";$/;"	f	class:UnitController	file:
-AppBaseTheme	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppBaseTheme	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppBaseTheme	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppBaseTheme	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppBaseTheme	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppBaseTheme	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppBaseTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppBaseTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int AppBaseTheme=0x7f050000;$/;"	f	class:R.style
-AppTheme	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-AppTheme	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-AppTheme	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-AppTheme	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-AppTheme	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-AppTheme	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-AppTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-AppTheme	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int AppTheme=0x7f050001;$/;"	f	class:R.style
-ArrayAccess1	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^public class ArrayAccess1 extends Activity {$/;"	c
-ArrayAccess2	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^public class ArrayAccess2 extends Activity {$/;"	c
-ArrayCopy1	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^public class ArrayCopy1 extends Activity {$/;"	c
-ArrayCopy2	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^public class ArrayCopy2 extends Activity {$/;"	c
-ArrayCopy3	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^public class ArrayCopy3 extends Activity {$/;"	c
-ArrayCopy4	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^public class ArrayCopy4 extends Activity {$/;"	c
-BuildConfig	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-BuildConfig	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-BuildConfig	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-BuildConfig	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-BuildConfig	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-BuildConfig	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-BuildConfig	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-BuildConfig	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/BuildConfig.java	/^public final class BuildConfig {$/;"	c
-Callbacks_LocationLeak1_DroidSafeFailed	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^public class Callbacks_LocationLeak1_DroidSafeFailed extends Activity {$/;"	c
-Callbacks_LocationLeak1_Original	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^public class Callbacks_LocationLeak1_Original extends Activity {$/;"	c
-ClassA	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public class ClassA implements Interface{$/;"	c	class:FlowTestDroidSafeFailed
-ClassA	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	public class ClassA implements Interface{$/;"	c	class:ImplicitFlow3
-ClassB	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public class ClassB implements Interface{$/;"	c	class:FlowTestDroidSafeFailed
-ClassB	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	public class ClassB implements Interface{$/;"	c	class:ImplicitFlow3
 CoverRelation	src/safetyChecker/CoverRelation.java	/^	public CoverRelation(InterpolationContext ictx, ProgramTree programTree) {$/;"	m	class:CoverRelation
 CoverRelation	src/safetyChecker/CoverRelation.java	/^public class CoverRelation {$/;"	c
 CreateZ3ScriptFailedException	src/safetyChecker/exception/CreateZ3ScriptFailedException.java	/^	public CreateZ3ScriptFailedException(String message) {$/;"	m	class:CreateZ3ScriptFailedException
 CreateZ3ScriptFailedException	src/safetyChecker/exception/CreateZ3ScriptFailedException.java	/^public class CreateZ3ScriptFailedException extends Exception {$/;"	c
-DEBUG	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
-DEBUG	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
-DEBUG	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
-DEBUG	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
-DEBUG	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
-DEBUG	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
-DEBUG	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
-DEBUG	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/BuildConfig.java	/^    public final static boolean DEBUG = true;$/;"	f	class:BuildConfig
 DEBUG	src/safetyChecker/utilities/LogUtils.java	/^	private static final int DEBUG = 1;$/;"	f	class:LogUtils	file:
 DETAIL	src/safetyChecker/utilities/LogUtils.java	/^	private static final int DETAIL = 0; $/;"	f	class:LogUtils	file:
-DataStore	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/DataStore.java	/^public class DataStore {$/;"	c
-Datacontainer	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
-Datacontainer	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
-Datacontainer	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^public class Datacontainer {$/;"	c
-Datacontainer	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^    class Datacontainer{$/;"	c	class:FieldSensitivity4
 DottyConverter	src/safetyChecker/utilities/DottyConverter.java	/^public class DottyConverter {$/;"	c
 ERRORLABEL	src/safetyChecker/UnitController.java	/^	public static final String ERRORLABEL = "ErrorLable";$/;"	f	class:UnitController
 Edge	src/safetyChecker/Edge.java	/^	public Edge(Unit unit) { this.unit = unit; }$/;"	m	class:Edge
 Edge	src/safetyChecker/Edge.java	/^public class Edge {$/;"	c
-Error	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void Error() {$/;"	m	class:ErrorFunction
 Error	src/safetyChecker/utilities/ErrorLable.java	/^	public static void Error(){};$/;"	m	class:ErrorLable
-Error1	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void Error1(int a){$/;"	m	class:ErrorFunction
-Error2	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void Error2(String a){$/;"	m	class:ErrorFunction
-Error3	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^     public static void Error3(boolean a){$/;"	m	class:ErrorFunction
-ErrorFunction	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^public class ErrorFunction {$/;"	c
 ErrorLable	src/safetyChecker/utilities/ErrorLable.java	/^public class ErrorLable {$/;"	c
 ErrorLocationNotFoundException	src/safetyChecker/exception/ErrorLocationNotFoundException.java	/^	public ErrorLocationNotFoundException(String message) {$/;"	m	class:ErrorLocationNotFoundException
 ErrorLocationNotFoundException	src/safetyChecker/exception/ErrorLocationNotFoundException.java	/^public class ErrorLocationNotFoundException extends Exception {$/;"	c
 FATAL	src/safetyChecker/utilities/LogUtils.java	/^	private static final int FATAL = 4;$/;"	f	class:LogUtils	file:
 FEASIBLE	src/safetyChecker/utilities/LogUtils.java	/^	private static final int FEASIBLE = 102;$/;"	f	class:LogUtils	file:
-FieldSensitivity1	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^public class FieldSensitivity1 extends Activity {$/;"	c
-FieldSensitivity2	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/FieldSensitivity2.java	/^public class FieldSensitivity2 extends Activity {$/;"	c
-FieldSensitivity3	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/FieldSensitivity3.java	/^public class FieldSensitivity3 extends Activity {$/;"	c
-FieldSensitivity4	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^public class FieldSensitivity4 extends Activity {$/;"	c
-FlowTest	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/FlowTest.java	/^public class FlowTest {$/;"	c
-FlowTest	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/FlowTest.java	/^public class FlowTest {$/;"	c
-FlowTestDroidSafeFailed	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^public class FlowTestDroidSafeFailed extends Activity {$/;"	c
 INFEASIBLE	src/safetyChecker/utilities/LogUtils.java	/^	private static final int INFEASIBLE = 101;$/;"	f	class:LogUtils	file:
 INFO	src/safetyChecker/utilities/LogUtils.java	/^	private static final int INFO = 2;$/;"	f	class:LogUtils	file:
-ImplicitFlow1	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^public class ImplicitFlow1 extends Activity {$/;"	c
-ImplicitFlow2	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^public class ImplicitFlow2 extends Activity {$/;"	c
-ImplicitFlow3	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^public class ImplicitFlow3 extends Activity {$/;"	c
-ImplicitFlow4	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^public class ImplicitFlow4 extends Activity {$/;"	c
-Interface	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	interface Interface{$/;"	i	class:FlowTestDroidSafeFailed
-Interface	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	interface Interface{$/;"	i	class:ImplicitFlow3
 InterpolationHandler	src/safetyChecker/InterpolationHandler.java	/^	public InterpolationHandler(InterpolationContext ictx, Z3ScriptHandler z3Handler, CoverRelation coverRelation) { $/;"	m	class:InterpolationHandler
 InterpolationHandler	src/safetyChecker/InterpolationHandler.java	/^public class InterpolationHandler {$/;"	c
-LinkedList	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public LinkedList() {$/;"	m	class:LinkedList
-LinkedList	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^public class LinkedList {$/;"	c
-LinkedList1	BechMark/WeFail/FailLinkedList/src/LinkedList1.java	/^public class LinkedList1 {$/;"	c
 LogUtils	src/safetyChecker/utilities/LogUtils.java	/^public class LogUtils {$/;"	c
-MATH_LIBRARY_DB	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private static final HashSet<String> MATH_LIBRARY_DB = new HashSet<String>();\/\/ = {MATH_MAX_METHOD, MATH_MIN_METHOD}; $/;"	f	class:Z3JavaMathHandler	file:
-MATH_MAX_METHOD	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private static final String MATH_MAX_METHOD = "<java.lang.Math: int max(int,int)>";$/;"	f	class:Z3JavaMathHandler	file:
-MATH_MIN_METHOD	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private static final String MATH_MIN_METHOD = "<java.lang.Math: int min(int,int)>";$/;"	f	class:Z3JavaMathHandler	file:
-MainActivity	BechMark/DroidBench/ArrayCopy1/src/edu/mit/array_copy/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
-MainActivity	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
-MainActivity	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
-MainActivity	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^public class MainActivity extends Activity {$/;"	c
+MATH_LIBRARY_DB	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private static final HashSet<String> MATH_LIBRARY_DB = new HashSet<String>();$/;"	f	class:Z3JavaMathLibrary	file:
+MATH_MAX_METHOD	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private static final String MATH_MAX_METHOD = "<java.lang.Math: int max(int,int)>";$/;"	f	class:Z3JavaMathLibrary	file:
+MATH_MIN_METHOD	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private static final String MATH_MIN_METHOD = "<java.lang.Math: int min(int,int)>";$/;"	f	class:Z3JavaMathLibrary	file:
 MainFunctionNotFoundException	src/safetyChecker/exception/MainFunctionNotFoundException.java	/^	public MainFunctionNotFoundException(String message) {$/;"	m	class:MainFunctionNotFoundException
 MainFunctionNotFoundException	src/safetyChecker/exception/MainFunctionNotFoundException.java	/^public class MainFunctionNotFoundException extends Exception {$/;"	c
-MultiDimensionalArray1_DroidSafeFailed1	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed1.java	/^public class MultiDimensionalArray1_DroidSafeFailed1 extends Activity {$/;"	c
-MultiDimensionalArray1_DroidSafeFailed2	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed2.java	/^public class MultiDimensionalArray1_DroidSafeFailed2 extends Activity {$/;"	c
-MultiDimensionalArray1_Original	BechMark/DroidBench/MultidimensionalArray1/src/edu/mit/array_slice/MultiDimensionalArray1_Original.java	/^public class MultiDimensionalArray1_Original extends Activity {$/;"	c
-MyLocationListener	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^    private class MyLocationListener implements LocationListener {  $/;"	c	class:Callbacks_LocationLeak1_DroidSafeFailed
-MyLocationListener	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^    private class MyLocationListener implements LocationListener {  $/;"	c	class:Callbacks_LocationLeak1_Original
-NAME	BechMark/DroidBench/ArrayAccess1/Makefile	/^NAME := ArrayAccess1$/;"	m
-NAME	BechMark/DroidBench/ArrayAccess2/Makefile	/^NAME := Arraycces2$/;"	m
-NAME	BechMark/DroidBench/ArrayCopy1/Makefile	/^NAME := ArrayCopy1$/;"	m
-NAME	BechMark/DroidBench/ImplicitFlow3/Makefile	/^NAME := ImplicitFlow3$/;"	m
-NAME	BechMark/DroidBench/MultidimensionalArray1/Makefile	/^NAME := MultidimensionalArray1$/;"	m
-NAME	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/Makefile	/^NAME := GTFlowTest$/;"	m
-NAME	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/Makefile	/^NAME := MultidimensionalArray1$/;"	m
-NAME	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/Makefile	/^NAME := MultidimensionalArray1$/;"	m
-NAME	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/Makefile	/^NAME := LocationLeak1$/;"	m
-NAME	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/Makefile	/^NAME := LocationLeak1$/;"	m
-NAME	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/Makefile	/^NAME := GTFlowTest$/;"	m
+NEWSTRINGINVOKE	src/safetyChecker/UnitController.java	/^	public static final String NEWSTRINGINVOKE = "<java.lang.String: void <init>(java.lang.String)>";$/;"	f	class:UnitController
 NONSENSCOMPARE	src/safetyChecker/UnitController.java	/^	public static final String NONSENSCOMPARE = "java.lang.String: boolean equals";$/;"	f	class:UnitController
-NOTINVOKESIGNATURE	src/safetyChecker/UnitController.java	/^	public static final String NOTINVOKESIGNATURE = "void <init>"; \/\/java.lang.Object: void <init>()>";$/;"	f	class:UnitController
+NOTINVOKESIGNATURE	src/safetyChecker/UnitController.java	/^	public static final String NOTINVOKESIGNATURE = "void <init>"; $/;"	f	class:UnitController
 NewSort	src/safetyChecker/NewSort.java	/^	public NewSort(Sort Type, InterpolationContext ictx) {$/;"	m	class:NewSort
 NewSort	src/safetyChecker/NewSort.java	/^public class NewSort {$/;"	c
-Node	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		public Node(int a) {$/;"	m	class:LinkedList.Node
-Node	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	class Node {$/;"	c	class:LinkedList
 OBJECTINVOKE	src/safetyChecker/UnitController.java	/^	public static final String OBJECTINVOKE = "<java.lang.Object: void <init>";$/;"	f	class:UnitController
 ObejctId	src/safetyChecker/NewSort.java	/^	private int ObejctId;$/;"	f	class:NewSort	file:
 Obj	src/safetyTestCode/object/Obj.java	/^public class Obj {$/;"	c
-OverwiteValue	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/OverwiteValue.java	/^public class OverwiteValue extends Activity {$/;"	c
 Path	src/safetyChecker/NewSort.java	/^	private int Path;$/;"	f	class:NewSort	file:
-ProgramTree	src/safetyChecker/ProgramTree.java	/^	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:ProgramTree
+ProgramTree	src/safetyChecker/ProgramTree.java	/^	public ProgramTree(Map<String, Body> stores, String functionSignature)$/;"	m	class:ProgramTree
+ProgramTree	src/safetyChecker/ProgramTree.java	/^	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction)$/;"	m	class:ProgramTree
+ProgramTree	src/safetyChecker/ProgramTree.java	/^	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction, Vertex callerVertex)$/;"	m	class:ProgramTree
 ProgramTree	src/safetyChecker/ProgramTree.java	/^public class ProgramTree {$/;"	c
-R	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^public final class R {$/;"	c
-R	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^public final class R {$/;"	c
-R	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^public final class R {$/;"	c
-R	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^public final class R {$/;"	c
-R	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^public final class R {$/;"	c
-R	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^public final class R {$/;"	c
-R	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^public final class R {$/;"	c
-R	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^public final class R {$/;"	c
 RESET	src/safetyChecker/utilities/LogUtils.java	/^	private static final int RESET = 100;$/;"	f	class:LogUtils	file:
 RecordPeekMemoryAndTime	src/RecordPeekMemoryAndTime/testDriver.java	/^package RecordPeekMemoryAndTime;$/;"	p
 SEND_TEXT_MESSAGE_PARAM_NO	src/safetyChecker/UnitController.java	/^       	private static final Integer SEND_TEXT_MESSAGE_PARAM_NO = 2;$/;"	f	class:UnitController	file:
 SEND_TEXT_MESSAGE_SIGNATURE	src/safetyChecker/UnitController.java	/^	private static final String SEND_TEXT_MESSAGE_SIGNATURE = "sendTextMessage";$/;"	f	class:UnitController	file:
+STRING_CHARAT	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	private static final String STRING_CHARAT = "<java.lang.String: char charAt(int)>";$/;"	f	class:Z3JavaStringLibrary	file:
+STRING_LIBRARY_DB	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	private static final HashSet<String> STRING_LIBRARY_DB = new HashSet<String>();$/;"	f	class:Z3JavaStringLibrary	file:
 SYSTEM_ARRAYCOPY_SIGNATURE	src/safetyChecker/UnitController.java	/^	private static final String SYSTEM_ARRAYCOPY_SIGNATURE = "<java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>";$/;"	f	class:UnitController	file:
-SafetyInitializerW	src/safetyChecker/SafetyInitializerW.java	/^public class SafetyInitializerW {$/;"	c
 Source	PngCreator.py	/^from graphviz import Source $/;"	i
-StaticInitClass1	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^	public static class StaticInitClass1{$/;"	c	class:MainActivity
-StaticInitClass1	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^	public static class StaticInitClass1{$/;"	c	class:MainActivity
-StringHelper	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^public class StringHelper {$/;"	c
-Test	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^class Test {$/;"	c
 Test1	src/safetyTestCode/arraytest/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/safetyTestCode/iftest/Test1.java	/^public class Test1 {$/;"	c
+Test1	src/safetyTestCode/interproc/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/safetyTestCode/leetCode/climbingStairs/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/safetyTestCode/object/Test1.java	/^public class Test1 {$/;"	c
 Test1	src/safetyTestCode/whiletest/Test1.java	/^public class Test1 {$/;"	c
@@ -185,6 +74,7 @@ Test3	src/safetyTestCode/iftest/Test3.java	/^public class Test3 {$/;"	c
 Test4	src/safetyTestCode/iftest/Test4.java	/^public class Test4 {$/;"	c
 Tester1	src/safetyTester/arraytest/Tester1.java	/^public class Tester1 {$/;"	c
 Tester1	src/safetyTester/iftest/Tester1.java	/^public class Tester1 {$/;"	c
+Tester1	src/safetyTester/interproc/Tester1.java	/^public class Tester1 {$/;"	c
 Tester1	src/safetyTester/leetCode/climbingStairs/Tester1.java	/^public class Tester1 {$/;"	c
 Tester1	src/safetyTester/object/Tester1.java	/^public class Tester1 {$/;"	c
 Tester1	src/safetyTester/whiletest/Tester1.java	/^public class Tester1 {$/;"	c
@@ -196,37 +86,19 @@ Tester4	src/safetyTester/iftest/Tester4.java	/^public class Tester4 {$/;"	c
 Type	src/safetyChecker/NewSort.java	/^	private Sort Type;$/;"	f	class:NewSort	file:
 UnitController	src/safetyChecker/UnitController.java	/^	public UnitController () {$/;"	m	class:UnitController
 UnitController	src/safetyChecker/UnitController.java	/^public class UnitController {$/;"	c
-UnreachableCode	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^public class UnreachableCode extends Activity {$/;"	c
 Vertex	src/safetyChecker/Vertex.java	/^public class Vertex {$/;"	c
 WARNING	src/safetyChecker/utilities/LogUtils.java	/^	private static final int WARNING = 3;$/;"	f	class:LogUtils	file:
-Z3ArrayHandler	src/safetyChecker/Z3ArrayHandler.java	/^public class Z3ArrayHandler {$/;"	c
 Z3ArrayHandler	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^public class Z3ArrayHandler {$/;"	c
-Z3JavaMathHandler	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	public Z3JavaMathHandler() {$/;"	m	class:Z3JavaMathHandler
-Z3JavaMathHandler	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^public class Z3JavaMathHandler {$/;"	c
+Z3JavaMathLibrary	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	public Z3JavaMathLibrary() {$/;"	m	class:Z3JavaMathLibrary
+Z3JavaMathLibrary	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^public class Z3JavaMathLibrary {$/;"	c
+Z3JavaStringLibrary	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	public Z3JavaStringLibrary() {$/;"	m	class:Z3JavaStringLibrary
+Z3JavaStringLibrary	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^public class Z3JavaStringLibrary {$/;"	c
 Z3ObjectFieldHandler	src/safetyChecker/z3ScriptManager/Z3ObjectFieldHandler.java	/^public class Z3ObjectFieldHandler {$/;"	c
-Z3ScriptHandler	src/safetyChecker/Z3ScriptHandler.java	/^	public Z3ScriptHandler(InterpolationContext ictx) {$/;"	m	class:Z3ScriptHandler
-Z3ScriptHandler	src/safetyChecker/Z3ScriptHandler.java	/^public class Z3ScriptHandler {$/;"	c
-Z3ScriptHandler	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Z3ScriptHandler(InterpolationContext ictx) {$/;"	m	class:Z3ScriptHandler
+Z3ScriptHandler	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Z3ScriptHandler(InterpolationContext ictx, Map<String, Body> stores) {$/;"	m	class:Z3ScriptHandler
 Z3ScriptHandler	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^public class Z3ScriptHandler {$/;"	c
+Z3StringHandler	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^public class Z3StringHandler {$/;"	c
 access1	src/safetyTestCode/object/Obj.java	/^	int access1;$/;"	f	class:Obj
 access2	src/safetyTestCode/object/Obj.java	/^	int access2;$/;"	f	class:Obj
-activity_field_sensitivity2	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity2=0x7f030000;$/;"	f	class:R.layout
-activity_field_sensitivity2	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity2=0x7f060000;$/;"	f	class:R.menu
-activity_field_sensitivity4	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity4=0x7f030000;$/;"	f	class:R.layout
-activity_field_sensitivity4	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int activity_field_sensitivity4=0x7f060000;$/;"	f	class:R.menu
-activity_implicit_flow2	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow2=0x7f030000;$/;"	f	class:R.layout
-activity_implicit_flow2	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow2=0x7f060000;$/;"	f	class:R.menu
-activity_implicit_flow4	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow4=0x7f030000;$/;"	f	class:R.layout
-activity_implicit_flow4	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int activity_implicit_flow4=0x7f060000;$/;"	f	class:R.menu
-activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f030000;$/;"	f	class:R.layout
-activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f060000;$/;"	f	class:R.menu
-activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f030000;$/;"	f	class:R.layout
-activity_location_leak1	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int activity_location_leak1=0x7f060000;$/;"	f	class:R.menu
-activity_overwite_value	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_overwite_value=0x7f030000;$/;"	f	class:R.layout
-activity_overwite_value	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int activity_overwite_value=0x7f060000;$/;"	f	class:R.menu
-activity_unreachable_code	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int activity_unreachable_code=0x7f030000;$/;"	f	class:R.layout
-activity_unreachable_code	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int activity_unreachable_code=0x7f060000;$/;"	f	class:R.menu
-add	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public void add(int n) {$/;"	m	class:LinkedList
 add2UncoveredMap	src/safetyChecker/CoverRelation.java	/^	private void add2UncoveredMap(Vertex vertex) {$/;"	m	class:CoverRelation	file:
 addCoverRelation	src/safetyChecker/CoverRelation.java	/^	private void addCoverRelation(Vertex weakerVertex, Vertex strongerVertex) {$/;"	m	class:CoverRelation	file:
 addErrorEntryLocation	src/safetyChecker/ProgramTree.java	/^	private void addErrorEntryLocation(Vertex entryVertex) {$/;"	m	class:ProgramTree	file:
@@ -236,110 +108,52 @@ addPreviousVertex	src/safetyChecker/Vertex.java	/^	public void addPreviousVertex
 addVertex	src/safetyChecker/ProgramTree.java	/^	private Vertex addVertex(Vertex nextVertex, Edge edge, boolean unDoneFlag) {$/;"	m	class:ProgramTree	file:
 analyzeEdge	src/safetyChecker/UnitController.java	/^	public void analyzeEdge(Edge e, Map<String, Body> stores, ExceptionalUnitGraph cfg) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:UnitController
 ancestorCoveredSet	src/safetyChecker/CoverRelation.java	/^	private Set<Vertex> ancestorCoveredSet;$/;"	f	class:CoverRelation	file:
-app_name	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-app_name	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-app_name	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-app_name	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-app_name	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-app_name	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-app_name	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-app_name	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int app_name=0x7f040000;$/;"	f	class:R.string
-arg0Index	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private int arg0Index = 0;$/;"	f	class:Z3JavaMathHandler	file:
-arg1Index	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private int arg1Index = 1;$/;"	f	class:Z3JavaMathHandler	file:
-argArray1	src/safetyChecker/Z3ArrayHandler.java	/^	private int argArray1 = 0;$/;"	f	class:Z3ArrayHandler	file:
+arg0Index	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private int arg0Index = 0;$/;"	f	class:Z3JavaMathLibrary	file:
+arg0Index	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	private int arg0Index = 0;$/;"	f	class:Z3JavaStringLibrary	file:
+arg1Index	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private int arg1Index = 1;$/;"	f	class:Z3JavaMathLibrary	file:
 argArray1	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private int argArray1 = 0;$/;"	f	class:Z3ArrayHandler	file:
-argArray2	src/safetyChecker/Z3ArrayHandler.java	/^	private int argArray2 = 1;$/;"	f	class:Z3ArrayHandler	file:
 argArray2	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private int argArray2 = 1;$/;"	f	class:Z3ArrayHandler	file:
-argDtcIndex	src/safetyChecker/Z3ArrayHandler.java	/^	private int argDtcIndex = 2;$/;"	f	class:Z3ArrayHandler	file:
 argDtcIndex	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private int argDtcIndex = 2;$/;"	f	class:Z3ArrayHandler	file:
-argDtcStartIndex	src/safetyChecker/Z3ArrayHandler.java	/^	private int argDtcStartIndex = 3;$/;"	f	class:Z3ArrayHandler	file:
 argDtcStartIndex	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private int argDtcStartIndex = 3;$/;"	f	class:Z3ArrayHandler	file:
-argLengthIndex	src/safetyChecker/Z3ArrayHandler.java	/^	private int argLengthIndex = 4;$/;"	f	class:Z3ArrayHandler	file:
 argLengthIndex	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private int argLengthIndex = 4;$/;"	f	class:Z3ArrayHandler	file:
-argSrcIndex	src/safetyChecker/Z3ArrayHandler.java	/^	private int argSrcIndex = 0;$/;"	f	class:Z3ArrayHandler	file:
 argSrcIndex	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private int argSrcIndex = 0;$/;"	f	class:Z3ArrayHandler	file:
-argSrcStartIndex	src/safetyChecker/Z3ArrayHandler.java	/^	private int argSrcStartIndex = 1;$/;"	f	class:Z3ArrayHandler	file:
 argSrcStartIndex	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private int argSrcStartIndex = 1;$/;"	f	class:Z3ArrayHandler	file:
 arrayCopy	src/safetyChecker/Edge.java	/^	private boolean arrayCopy = false;$/;"	f	class:Edge	file:
-arrayData	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^	public static String[] arrayData;$/;"	f	class:ArrayAccess1
-arrayHandler	src/safetyChecker/Z3ScriptHandler.java	/^	private Z3ArrayHandler arrayHandler = new Z3ArrayHandler();$/;"	f	class:Z3ScriptHandler	file:
 arrayHandler	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Z3ArrayHandler arrayHandler = new Z3ArrayHandler();$/;"	f	class:Z3ScriptHandler	file:
-arrayNameMap	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Integer> arrayNameMap = new HashMap<String, Integer>();$/;"	f	class:Z3ScriptHandler	file:
 arrayNameMap	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Integer> arrayNameMap = new HashMap<String, Integer>();$/;"	f	class:Z3ScriptHandler	file:
-arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy1	file:
-arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy2	file:
-arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy3	file:
-arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^    private void arraycopy(String[] src, int srcPos, String[] dst, int dstPos, int length) {$/;"	m	class:ArrayCopy4	file:
-attr	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-attr	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-attr	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-attr	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-attr	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-attr	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-attr	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-attr	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class attr {$/;"	c	class:R
-button1	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int button1=0x7f070001;$/;"	f	class:R.id
-button1	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int button1=0x7f070002;$/;"	f	class:R.id
-c	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^	public static Context c;$/;"	f	class:MainActivity
-calculateIndex	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^	private int calculateIndex(){$/;"	m	class:ArrayAccess2	file:
 callee	src/safetyTestCode/iftest/Test1.java	/^	public int callee() {$/;"	m	class:Test1
-caller	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/FlowTest.java	/^	public void caller()$/;"	m	class:FlowTest
-caller	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/FlowTest.java	/^	public void caller()$/;"	m	class:FlowTest
+callerVertex	src/safetyChecker/Vertex.java	/^	private Vertex callerVertex;$/;"	f	class:Vertex	file:
+calllerVertex	src/safetyChecker/ProgramTree.java	/^	private Vertex calllerVertex;$/;"	f	class:ProgramTree	file:
 candidate2BeInPath	src/safetyChecker/ProgramTree.java	/^	private HashMap<Vertex, Vertex> candidate2BeInPath = new HashMap<Vertex, Vertex>();$/;"	f	class:ProgramTree	file:
 cfg	src/safetyChecker/ProgramTree.java	/^	private ExceptionalUnitGraph cfg;$/;"	f	class:ProgramTree	file:
-check	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int check=0x7f040002;$/;"	f	class:R.string
-check	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int check=0x7f040002;$/;"	f	class:R.string
+charAtEquality	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	private Expr charAtEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaStringLibrary	file:
 checkCoveredBy	src/safetyChecker/CoverRelation.java	/^	private boolean checkCoveredBy(Vertex weakerVertex, Vertex strongerVertex) {$/;"	m	class:CoverRelation	file:
 checkHoldsAndClearCoverRelation	src/safetyChecker/CoverRelation.java	/^	protected void checkHoldsAndClearCoverRelation(Vertex vertex) {$/;"	m	class:CoverRelation
-checkPassword	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^    public void checkPassword(View view){$/;"	m	class:ImplicitFlow2
-checkUsernamePassword	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^    public void checkUsernamePassword(View view){$/;"	m	class:ImplicitFlow4
-checkXvalue	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    private void checkXvalue(int x)	{$/;"	m	class:ImplicitFlow1	file:
 check_call	PngCreator.py	/^from subprocess import check_call$/;"	i
 cleanParameterList	src/safetyChecker/Edge.java	/^	public void cleanParameterList() { this.parameterList = new LinkedList<Expr>(); }$/;"	m	class:Edge
 clearCoverRelation	src/safetyChecker/CoverRelation.java	/^	private void clearCoverRelation(Vertex vertex) {$/;"	m	class:CoverRelation	file:
 climbStairs	src/safetyTestCode/leetCode/climbingStairs/Test1.java	/^	public int climbStairs(int n) {$/;"	m	class:Test1
 climbStairs	src/safetyTestCode/leetCode/climbingStairs/Test2.java	/^	public int climbStairs(int n) {$/;"	m	class:Test2
-com.flow	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^package com.flow;$/;"	p
-com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^package com.flow.arraycopy;$/;"	p
-com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^package com.flow.arraycopy;$/;"	p
-com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^package com.flow.arraycopy;$/;"	p
-com.flow.arraycopy	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^package com.flow.arraycopy;$/;"	p
 controlLocation	src/safetyChecker/Edge.java	/^	private boolean controlLocation = false;$/;"	f	class:Edge	file:
-convertAnyNewExpr	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertAnyNewExpr(AnyNewExpr ane, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 convertAnyNewExpr	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Expr convertAnyNewExpr(AnyNewExpr ane, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
-convertArrayCopy	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertArrayCopy(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
 convertArrayCopy	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertArrayCopy(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
-convertAssignStmt	src/safetyChecker/Z3ScriptHandler.java	/^	private BoolExpr convertAssignStmt(Expr rightZ3, Expr leftZ3, Type leftType, Value left, int distance) {$/;"	m	class:Z3ScriptHandler	file:
 convertAssignStmt	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private BoolExpr convertAssignStmt(Expr rightZ3, Expr leftZ3, Type leftType, Value left, int distance) {$/;"	m	class:Z3ScriptHandler	file:
-convertAssignStmtEdge	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertAssignStmtEdge(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
 convertAssignStmtEdge	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertAssignStmtEdge(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
-convertBoolExpr	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertBoolExpr(BinopExpr expr, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler	file:
 convertBoolExpr	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Expr convertBoolExpr(BinopExpr expr, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler	file:
-convertErrorEdge	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertErrorEdge(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
 convertErrorEdge	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertErrorEdge(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
-convertGotoStmt	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertGotoStmt(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 convertGotoStmt	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertGotoStmt(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
-convertIdentityStmt	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertIdentityStmt(Edge edge) { $/;"	m	class:Z3ScriptHandler	file:
 convertIdentityStmt	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertIdentityStmt(Edge edge) { $/;"	m	class:Z3ScriptHandler	file:
-convertIfStmt	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertIfStmt(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
 convertIfStmt	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertIfStmt(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
-convertNewArrayExpr	src/safetyChecker/Z3ArrayHandler.java	/^	protected Expr convertNewArrayExpr(NewArrayExpr ne, Edge e, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
 convertNewArrayExpr	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	protected Expr convertNewArrayExpr(NewArrayExpr ne, Edge e, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
-convertNewExpr	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertNewExpr(NewExpr ne, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 convertNewExpr	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Expr convertNewExpr(NewExpr ne, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
-convertNewMultiArrayExpr	src/safetyChecker/Z3ArrayHandler.java	/^	protected Expr convertNewMultiArrayExpr(NewMultiArrayExpr ne, Edge e, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
 convertNewMultiArrayExpr	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	protected Expr convertNewMultiArrayExpr(NewMultiArrayExpr ne, Edge e, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
-convertNotSubFuntionInvoke	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertNotSubFuntionInvoke(Edge edge){$/;"	m	class:Z3ScriptHandler	file:
+convertNewStringExpr	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertNewStringExpr(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
 convertNotSubFuntionInvoke	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertNotSubFuntionInvoke(Edge edge){$/;"	m	class:Z3ScriptHandler	file:
-convertPathtoZ3Script	src/safetyChecker/Z3ScriptHandler.java	/^	public void convertPathtoZ3Script(Vertex v) {$/;"	m	class:Z3ScriptHandler
 convertPathtoZ3Script	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public void convertPathtoZ3Script(Vertex v) {$/;"	m	class:Z3ScriptHandler
-convertPrimitiveValue	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertPrimitiveValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler	file:
 convertPrimitiveValue	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Expr convertPrimitiveValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler	file:
-convertRefLikeValue	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr convertRefLikeValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler	file:
 convertRefLikeValue	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Expr convertRefLikeValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler	file:
-convertSinkInvoke2Z3	src/safetyChecker/Z3ScriptHandler.java	/^	private boolean convertSinkInvoke2Z3(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
+convertReturnStmt	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertReturnStmt(Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
 convertSinkInvoke2Z3	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private boolean convertSinkInvoke2Z3(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
-convertValue	src/safetyChecker/Z3ScriptHandler.java	/^	protected Expr convertValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler
 convertValue	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	protected Expr convertValue(Value value, boolean assignLeft, Edge edge, int nodeIndex) {$/;"	m	class:Z3ScriptHandler
 counter	src/safetyChecker/CoverRelation.java	/^	int counter =0;$/;"	f	class:CoverRelation
 cover	src/safetyChecker/CoverRelation.java	/^	private void cover() {$/;"	m	class:CoverRelation	file:
@@ -348,87 +162,28 @@ coverRelation	src/safetyChecker/InterpolationHandler.java	/^	private CoverRelati
 coverRelation	src/safetyChecker/ProgramTree.java	/^	private CoverRelation coverRelation;$/;"	f	class:ProgramTree	file:
 coveredByMap	src/safetyChecker/CoverRelation.java	/^	private Map<Vertex, Vertex> coveredByMap;$/;"	f	class:CoverRelation	file:
 coveringMap	src/safetyChecker/CoverRelation.java	/^	private Map<Vertex, Set<Vertex>> coveringMap;$/;"	f	class:CoverRelation	file:
-covertLocal	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^	static Expr covertLocal(Local v, boolean IfAssignLeft,$/;"	m	class:StringHelper
-covertString	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^	static BoolExpr covertString(StringConstant s, PathCoverter theCoverter,$/;"	m	class:StringHelper
+covertString	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^	static BoolExpr covertString(StringConstant s, Z3ScriptHandler z3Handler, Expr rightz3) {$/;"	m	class:Z3StringHandler
 creatNewOject	src/safetyChecker/NewSort.java	/^	public void creatNewOject(Expr name) {$/;"	m	class:NewSort
 createInterpolant	src/safetyChecker/InterpolationHandler.java	/^	public boolean createInterpolant(Vertex errorRoot) { $/;"	m	class:InterpolationHandler
-createMathEquality	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	public Expr createMathEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathHandler
-createModuleExpr	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	public BoolExpr createModuleExpr(Expr leftZ3, Value right, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathHandler
-createZ3Object	src/safetyChecker/Z3ScriptHandler.java	/^	private Expr createZ3Object(Local v,  boolean IfAssignLeft, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
+createMathEquality	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	public Expr createMathEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathLibrary
+createModuleExpr	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	public BoolExpr createModuleExpr(Expr leftZ3, Value right, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathLibrary
+createStringEquality	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	public Expr createStringEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaStringLibrary
 createZ3Object	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Expr createZ3Object(Local v,  boolean IfAssignLeft, Edge e) {$/;"	m	class:Z3ScriptHandler	file:
-createZ3Script	src/safetyChecker/Z3ScriptHandler.java	/^	public boolean createZ3Script(Edge e) {$/;"	m	class:Z3ScriptHandler
 createZ3Script	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public boolean createZ3Script(Edge e) {$/;"	m	class:Z3ScriptHandler
-currentEdge	src/safetyChecker/Z3ScriptHandler.java	/^	private Edge currentEdge;$/;"	f	class:Z3ScriptHandler	file:
 currentEdge	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Edge currentEdge;$/;"	f	class:Z3ScriptHandler	file:
 currentId	src/safetyChecker/NewSort.java	/^	private int currentId;$/;"	f	class:NewSort	file:
 currentLevel	src/safetyChecker/utilities/LogUtils.java	/^	private static int currentLevel = INFO; $/;"	f	class:LogUtils	file:
-d1	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private Datacontainer d1;$/;"	f	class:FieldSensitivity1	file:
-de.ecspride	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/FieldSensitivity2.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/FieldSensitivity3.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/FlowTest.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/FlowTest.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/DataStore.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/OverwiteValue.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/BuildConfig.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^package de.ecspride;$/;"	p
-de.ecspride	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^package de.ecspride;$/;"	p
 debug	src/safetyChecker/utilities/LogUtils.java	/^	public static void debug(Object... objects) {$/;"	m	class:LogUtils
 debugln	src/safetyChecker/utilities/LogUtils.java	/^	public static void debugln(Object... objects) {$/;"	m	class:LogUtils
-description	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	private String description;$/;"	f	class:Datacontainer	file:
-description	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	private String description;$/;"	f	class:Datacontainer	file:
-description	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	private String description;$/;"	f	class:Datacontainer	file:
 detail	src/safetyChecker/utilities/LogUtils.java	/^	public static void detail(Object... objects) {$/;"	m	class:LogUtils
 detailln	src/safetyChecker/utilities/LogUtils.java	/^	public static void detailln(Object... objects) {$/;"	m	class:LogUtils
 distance	src/safetyChecker/Vertex.java	/^	private int distance = 0;$/;"	f	class:Vertex	file:
-drawable	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
-drawable	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
-drawable	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
-drawable	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
-drawable	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
-drawable	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
-drawable	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
-drawable	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class drawable {$/;"	c	class:R
 edgeSet	src/safetyChecker/ProgramTree.java	/^	private Set<Edge> edgeSet = new HashSet<Edge>();$/;"	f	class:ProgramTree	file:
-edu.mit.array_copy	BechMark/DroidBench/ArrayCopy1/src/edu/mit/array_copy/MainActivity.java	/^package edu.mit.array_copy;$/;"	p
-edu.mit.array_slice	BechMark/DroidBench/MultidimensionalArray1/src/edu/mit/array_slice/MultiDimensionalArray1_Original.java	/^package edu.mit.array_slice;$/;"	p
-edu.mit.array_slice	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed1.java	/^package edu.mit.array_slice;$/;"	p
-edu.mit.array_slice	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed2.java	/^package edu.mit.array_slice;$/;"	p
-edu.mit.clinit	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^package edu.mit.clinit;$/;"	p
 entryLocation	src/safetyChecker/Edge.java	/^	private boolean entryLocation = false;$/;"	f	class:Edge	file:
 entryLocation	src/safetyChecker/Vertex.java	/^	private boolean entryLocation = false;$/;"	f	class:Vertex	file:
 errorEdge	src/safetyChecker/Edge.java	/^	private boolean errorEdge = false;$/;"	f	class:Edge	file:
 errorLocation	src/safetyChecker/Vertex.java	/^	private boolean errorLocation = false;$/;"	f	class:Vertex	file:
 errorLocationFeasible	src/safetyChecker/ProgramTree.java	/^	private boolean errorLocationFeasible = false;$/;"	f	class:ProgramTree	file:
-errorPathRoot	src/safetyChecker/Z3ScriptHandler.java	/^	private Vertex errorPathRoot;$/;"	f	class:Z3ScriptHandler	file:
 errorPathRoot	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Vertex errorPathRoot;$/;"	f	class:Z3ScriptHandler	file:
 errorPaths	src/safetyChecker/ProgramTree.java	/^	private LinkedList<LinkedList<Vertex>> errorPaths;$/;"	f	class:ProgramTree	file:
 errorRootQueue	src/safetyChecker/ProgramTree.java	/^	private Queue<Vertex> errorRootQueue;$/;"	f	class:ProgramTree	file:
@@ -437,128 +192,80 @@ errorSet	src/safetyChecker/ProgramTree.java	/^	private Queue<Vertex> errorSet = 
 expandBFS	src/safetyChecker/ProgramTree.java	/^	private boolean expandBFS(Vertex w) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:ProgramTree	file:
 fatal	src/safetyChecker/utilities/LogUtils.java	/^	public static void fatal(Object... objects) {$/;"	m	class:LogUtils
 fatalln	src/safetyChecker/utilities/LogUtils.java	/^	public static void fatalln(Object... objects) {$/;"	m	class:LogUtils
-field	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/DataStore.java	/^	public String field;$/;"	f	class:DataStore
-findErrorLocation	src/safetyChecker/ProgramTree.java	/^	private boolean findErrorLocation(Vertex w) {$/;"	m	class:ProgramTree	file:
 findMainFunction	src/safetyChecker/ProgramTree.java	/^	private boolean findMainFunction() {$/;"	m	class:ProgramTree	file:
 findPrevControlLocation	src/safetyChecker/CoverRelation.java	/^	private Vertex findPrevControlLocation(Vertex vertex) {$/;"	m	class:CoverRelation	file:
+findSubFunction	src/safetyChecker/ProgramTree.java	/^	private boolean findSubFunction() {$/;"	m	class:ProgramTree	file:
 from	src/safetyChecker/InterpolationHandler.java	/^	Expr[] from = null;$/;"	f	class:InterpolationHandler
+functionCall	src/safetyChecker/Edge.java	/^	private boolean functionCall = false;$/;"	f	class:Edge	file:
 functionName	src/safetyChecker/ProgramTree.java	/^	private String functionName;$/;"	f	class:ProgramTree	file:
 functionNameInvokeCount	src/safetyChecker/ProgramTree.java	/^	private static Map<String, Integer> functionNameInvokeCount = new HashMap<String, Integer>();$/;"	f	class:ProgramTree	file:
 functionSignature	src/safetyChecker/ProgramTree.java	/^	private String functionSignature;$/;"	f	class:ProgramTree	file:
 generateNameMapping	src/safetyChecker/InterpolationHandler.java	/^	private void generateNameMapping() {$/;"	m	class:InterpolationHandler	file:
-get	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	public int get(int size) {$/;"	m	class:LinkedList
-getArrayName	src/safetyChecker/Z3ScriptHandler.java	/^	private String getArrayName(Value leftOp) {$/;"	m	class:Z3ScriptHandler	file:
 getArrayName	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private String getArrayName(Value leftOp) {$/;"	m	class:Z3ScriptHandler	file:
-getArrayNameMap	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Integer> getArrayNameMap() { return this.arrayNameMap; }$/;"	m	class:Z3ScriptHandler
 getArrayNameMap	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, Integer> getArrayNameMap() { return this.arrayNameMap; }$/;"	m	class:Z3ScriptHandler
-getArrayNameSuffix	src/safetyChecker/Z3ScriptHandler.java	/^	protected String getArrayNameSuffix() {$/;"	m	class:Z3ScriptHandler
 getArrayNameSuffix	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	protected String getArrayNameSuffix() {$/;"	m	class:Z3ScriptHandler
-getArrayPrefix	src/safetyChecker/Z3ArrayHandler.java	/^	private String getArrayPrefix() {$/;"	m	class:Z3ArrayHandler	file:
 getArrayPrefix	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private String getArrayPrefix() {$/;"	m	class:Z3ArrayHandler	file:
-getArraySortSuffix	src/safetyChecker/Z3ScriptHandler.java	/^	protected String getArraySortSuffix() {$/;"	m	class:Z3ScriptHandler
 getArraySortSuffix	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	protected String getArraySortSuffix() {$/;"	m	class:Z3ScriptHandler
 getBufferedWriter	src/safetyChecker/utilities/DottyConverter.java	/^	private static BufferedWriter getBufferedWriter(String fileName) throws IOException {$/;"	m	class:DottyConverter	file:
-getCfg	src/safetyChecker/ProgramTree.java	/^	protected ExceptionalUnitGraph getCfg() { return this.cfg; }$/;"	m	class:ProgramTree
+getCallerVertex	src/safetyChecker/Vertex.java	/^	public Vertex getCallerVertex() { return this.callerVertex; }$/;"	m	class:Vertex
+getCfg	src/safetyChecker/ProgramTree.java	/^	protected ExceptionalUnitGraph getCfg() {$/;"	m	class:ProgramTree
 getCoveredByMap	src/safetyChecker/CoverRelation.java	/^	public Map<Vertex, Vertex> getCoveredByMap() { return this.coveredByMap; }$/;"	m	class:CoverRelation
 getCoveringMap	src/safetyChecker/CoverRelation.java	/^	public Map<Vertex, Set<Vertex>> getCoveringMap() { return this.coveringMap; }$/;"	m	class:CoverRelation
-getDescription	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public String getDescription() {$/;"	m	class:Datacontainer
-getDescription	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public String getDescription() {$/;"	m	class:Datacontainer
-getDescription	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public String getDescription() {$/;"	m	class:Datacontainer
 getDistance	src/safetyChecker/Vertex.java	/^	public int getDistance() { return this.distance; }$/;"	m	class:Vertex
 getFalseInvariant	src/safetyChecker/InterpolationHandler.java	/^	public BoolExpr getFalseInvariant() { return this.ictx.mkFalse(); }$/;"	m	class:InterpolationHandler
 getFunctionName	src/safetyChecker/ProgramTree.java	/^	public String getFunctionName() {$/;"	m	class:ProgramTree
-getGlobal	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Expr> getGlobal() { return this.global; }$/;"	m	class:Z3ScriptHandler
 getGlobal	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, Expr> getGlobal() { return this.global; }$/;"	m	class:Z3ScriptHandler
-getGlobalName	src/safetyChecker/Z3ScriptHandler.java	/^	public String getGlobalName(String name) {$/;"	m	class:Z3ScriptHandler
 getGlobalName	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public String getGlobalName(String name) {$/;"	m	class:Z3ScriptHandler
-getIctx	src/safetyChecker/Z3ScriptHandler.java	/^	public InterpolationContext getIctx() { return this.ictx; }$/;"	m	class:Z3ScriptHandler
 getIctx	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public InterpolationContext getIctx() { return this.ictx; }$/;"	m	class:Z3ScriptHandler
 getId	src/safetyChecker/NewSort.java	/^	public IntExpr getId(Expr name) {$/;"	m	class:NewSort
 getIncomingEdges	src/safetyChecker/Vertex.java	/^	public Set<Edge> getIncomingEdges() { return this.incomingEdges; }$/;"	m	class:Vertex
 getInvariant	src/safetyChecker/Vertex.java	/^	public BoolExpr getInvariant() { return this.invariant; }$/;"	m	class:Vertex
-getLocalMap	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Expr> getLocalMap() { return this.localMap; }$/;"	m	class:Z3ScriptHandler
 getLocalMap	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, Expr> getLocalMap() { return this.localMap; }$/;"	m	class:Z3ScriptHandler
 getLocationNumber	src/safetyChecker/Vertex.java	/^	public int getLocationNumber() { return this.locationNumber; }$/;"	m	class:Vertex
-getMaxArraySize	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Integer> getMaxArraySize() { return this.maxArraySize; }$/;"	m	class:Z3ScriptHandler
 getMaxArraySize	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, Integer> getMaxArraySize() { return this.maxArraySize; }$/;"	m	class:Z3ScriptHandler
 getMessage	src/safetyChecker/exception/CreateZ3ScriptFailedException.java	/^	public String getMessage() {$/;"	m	class:CreateZ3ScriptFailedException
 getMessage	src/safetyChecker/exception/ErrorLocationNotFoundException.java	/^	public String getMessage() {$/;"	m	class:ErrorLocationNotFoundException
 getMessage	src/safetyChecker/exception/MainFunctionNotFoundException.java	/^	public String getMessage() {$/;"	m	class:MainFunctionNotFoundException
 getMethodSignature	src/safetyChecker/UnitController.java	/^	public static String getMethodSignature(Unit u) {$/;"	m	class:UnitController
-getNameSuffix	src/safetyChecker/Z3ScriptHandler.java	/^	private String getNameSuffix(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
-getNameSuffix	src/safetyChecker/Z3ScriptHandler.java	/^	protected String getNameSuffix() {$/;"	m	class:Z3ScriptHandler
 getNameSuffix	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private String getNameSuffix(Edge e) {$/;"	m	class:Z3ScriptHandler	file:
 getNameSuffix	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	protected String getNameSuffix() {$/;"	m	class:Z3ScriptHandler
 getNewObject	src/safetyChecker/NewSort.java	/^	public Expr getNewObject() {$/;"	m	class:NewSort
 getNewReturnPath	src/safetyChecker/ProgramTree.java	/^	public boolean getNewReturnPath() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:ProgramTree
 getNewReturnRoot	src/safetyChecker/ProgramTree.java	/^	public Vertex getNewReturnRoot() {$/;"	m	class:ProgramTree
-getNewSortMap	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Sort> getNewSortMap() { return this.newSortMap; }$/;"	m	class:Z3ScriptHandler
 getNewSortMap	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, Sort> getNewSortMap() { return this.newSortMap; }$/;"	m	class:Z3ScriptHandler
 getNextVertex	src/safetyChecker/Vertex.java	/^	public Vertex getNextVertex() { return this.nextVertex; }$/;"	m	class:Vertex
+getNumber	src/safetyTestCode/arraytest/Test1.java	/^	public int getNumber(){$/;"	m	class:Test1
+getNumber	src/safetyTestCode/interproc/Test1.java	/^	public int getNumber(){$/;"	m	class:Test1
 getOutgoingEdge	src/safetyChecker/Vertex.java	/^	public Edge getOutgoingEdge() { return this.outgoingEdge; }$/;"	m	class:Vertex
 getOutputColor	src/safetyChecker/utilities/LogUtils.java	/^	public static String getOutputColor(int printLevel) {$/;"	m	class:LogUtils
 getParameterList	src/safetyChecker/Edge.java	/^	public List<Expr> getParameterList() { return this.parameterList; }$/;"	m	class:Edge
 getPreviousVertexSet	src/safetyChecker/Vertex.java	/^	public Set<Vertex> getPreviousVertexSet() { return this.previousVertexSet; }$/;"	m	class:Vertex
 getProgramDefinition	src/safetyChecker/ProgramTree.java	/^	public String getProgramDefinition() {$/;"	m	class:ProgramTree
 getProgramTree	src/safetyChecker/Edge.java	/^	public ProgramTree getProgramTree() { return this.programTree; }$/;"	m	class:Edge
-getRealArray	src/safetyChecker/Z3ArrayHandler.java	/^	private ArrayExpr getRealArray(Local local, Edge edge, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler	file:
 getRealArray	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private ArrayExpr getRealArray(Local local, Edge edge, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler	file:
-getRealArraySize	src/safetyChecker/Z3ScriptHandler.java	/^	protected int getRealArraySize(String name) {$/;"	m	class:Z3ScriptHandler
 getRealArraySize	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	protected int getRealArraySize(String name) {$/;"	m	class:Z3ScriptHandler
-getSecret	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public String getSecret() {$/;"	m	class:Datacontainer
-getSecret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public String getSecret() {$/;"	m	class:Datacontainer
-getSecret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public String getSecret() {$/;"	m	class:Datacontainer
-getSootMethod	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private SootMethod getSootMethod(Value value) {$/;"	m	class:Z3JavaMathHandler	file:
-getSortId	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, NewSort> getSortId() { return this.sortId; }$/;"	m	class:Z3ScriptHandler
+getSootMethod	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private SootMethod getSootMethod(Value value) {$/;"	m	class:Z3JavaMathLibrary	file:
+getSootMethod	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	private SootMethod getSootMethod(Value value) {$/;"	m	class:Z3JavaStringLibrary	file:
 getSortId	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, NewSort> getSortId() { return this.sortId; }$/;"	m	class:Z3ScriptHandler
 getSource	src/safetyChecker/Edge.java	/^	public Vertex getSource() { return this.source; } $/;"	m	class:Edge
-getSubstitute	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, String> getSubstitute() { return this.substitute; }$/;"	m	class:Z3ScriptHandler
+getSubTree	src/safetyChecker/Vertex.java	/^	public ProgramTree getSubTree() { return this.subTree; }$/;"	m	class:Vertex
 getSubstitute	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, String> getSubstitute() { return this.substitute; }$/;"	m	class:Z3ScriptHandler
-getSubstituteSort	src/safetyChecker/Z3ScriptHandler.java	/^	public Map<String, Sort> getSubstituteSort() { return this.substituteSort; }$/;"	m	class:Z3ScriptHandler
 getSubstituteSort	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Map<String, Sort> getSubstituteSort() { return this.substituteSort; }$/;"	m	class:Z3ScriptHandler
 getTarget	src/safetyChecker/Edge.java	/^	public Vertex getTarget() { return this.target; }$/;"	m	class:Edge
 getTrueInvariant	src/safetyChecker/InterpolationHandler.java	/^	public BoolExpr getTrueInvariant() { return this.ictx.mkTrue(); }$/;"	m	class:InterpolationHandler
-getUncovered	src/safetyChecker/ProgramTree.java	/^	protected Queue<Vertex> getUncovered() { return this.uncovered; }$/;"	m	class:ProgramTree
+getUncovered	src/safetyChecker/ProgramTree.java	/^	protected Queue<Vertex> getUncovered() {$/;"	m	class:ProgramTree
 getUnit	src/safetyChecker/Edge.java	/^	public Unit getUnit() { return this.unit; }$/;"	m	class:Edge
 getUnitVertexMap	src/safetyChecker/CoverRelation.java	/^	public Map<Unit, LinkedList<Vertex>> getUnitVertexMap() { return this.unitVertexMap; } $/;"	m	class:CoverRelation
 getZ3Expr	src/safetyChecker/Edge.java	/^	public BoolExpr getZ3Expr() { return this.z3Expr; }$/;"	m	class:Edge
-global	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Expr> global = new HashMap<String, Expr>();$/;"	f	class:Z3ScriptHandler	file:
 global	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Expr> global = new HashMap<String, Expr>();$/;"	f	class:Z3ScriptHandler	file:
 handleStaticFieldRef	src/safetyChecker/z3ScriptManager/Z3ObjectFieldHandler.java	/^	protected Expr handleStaticFieldRef(Local local, boolean assignLeft, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ObjectFieldHandler
-head	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	private Node head;$/;"	f	class:LinkedList	file:
-hello_world	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
-hello_world	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
-hello_world	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
-hello_world	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
-hello_world	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
-hello_world	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int hello_world=0x7f040002;$/;"	f	class:R.string
 iCtx	src/safetyChecker/NewSort.java	/^	private InterpolationContext iCtx;$/;"	f	class:NewSort	file:
-ic_launcher	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
-ic_launcher	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
-ic_launcher	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
-ic_launcher	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
-ic_launcher	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
-ic_launcher	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
-ic_launcher	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
-ic_launcher	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int ic_launcher=0x7f020000;$/;"	f	class:R.drawable
 ictx	src/safetyChecker/CoverRelation.java	/^	private InterpolationContext ictx;$/;"	f	class:CoverRelation	file:
 ictx	src/safetyChecker/InterpolationHandler.java	/^	private InterpolationContext ictx;$/;"	f	class:InterpolationHandler	file:
 ictx	src/safetyChecker/ProgramTree.java	/^	private InterpolationContext ictx;$/;"	f	class:ProgramTree	file:
-ictx	src/safetyChecker/Z3ScriptHandler.java	/^	private InterpolationContext ictx;$/;"	f	class:Z3ScriptHandler	file:
 ictx	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private InterpolationContext ictx;$/;"	f	class:Z3ScriptHandler	file:
-id	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
-id	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
-id	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
-id	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
-id	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
-id	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
-id	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
-id	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class id {$/;"	c	class:R
 ifHasExpr	src/safetyChecker/NewSort.java	/^	public boolean ifHasExpr(Expr name) {$/;"	m	class:NewSort
-ifStringType	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^	static boolean ifStringType(Type t) {$/;"	m	class:StringHelper
-im	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^	public static String im;$/;"	f	class:MainActivity
-im	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^	public static String im;$/;"	f	class:MainActivity
-imei	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^	String imei;$/;"	f	class:ImplicitFlow1
+ifStringType	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^	static boolean ifStringType(Type t) {$/;"	m	class:Z3StringHandler
 inErrorPath	src/safetyChecker/Edge.java	/^	private boolean inErrorPath = false;$/;"	f	class:Edge	file:
 incomingEdges	src/safetyChecker/Vertex.java	/^	private Set<Edge> incomingEdges = new HashSet<Edge>();$/;"	f	class:Vertex	file:
 index	src/safetyChecker/NewSort.java	/^	private Map<Expr, IntExpr> index;$/;"	f	class:NewSort	file:
@@ -582,16 +289,21 @@ isEntryLocation	src/safetyChecker/Vertex.java	/^	public boolean isEntryLocation(
 isErrorEdge	src/safetyChecker/Edge.java	/^	public boolean isErrorEdge() { return this.errorEdge; }$/;"	m	class:Edge
 isErrorLocation	src/safetyChecker/Vertex.java	/^	public boolean isErrorLocation() { return this.errorLocation; }$/;"	m	class:Vertex
 isErrorUnit	src/safetyChecker/UnitController.java	/^	public boolean isErrorUnit(Unit u) {$/;"	m	class:UnitController
+isFunctionCall	src/safetyChecker/Edge.java	/^	public boolean isFunctionCall() { return this.functionCall; }$/;"	m	class:Edge
 isInErrorPath	src/safetyChecker/Edge.java	/^	public boolean isInErrorPath() { return this.inErrorPath; }$/;"	m	class:Edge
 isInErrorPath	src/safetyChecker/Vertex.java	/^	private boolean isInErrorPath = false; $/;"	f	class:Vertex	file:
 isInErrorPath	src/safetyChecker/Vertex.java	/^	public boolean isInErrorPath() { return this.isInErrorPath; }$/;"	m	class:Vertex
 isInitInvoke	src/safetyChecker/Edge.java	/^	public boolean  isInitInvoke() { return this.initInvoke; }$/;"	m	class:Edge
 isInitInvoke	src/safetyChecker/UnitController.java	/^	public boolean isInitInvoke(Unit u) {$/;"	m	class:UnitController
 isInvoke	src/safetyChecker/UnitController.java	/^	public boolean isInvoke(Unit u) {$/;"	m	class:UnitController
-isJavaMathLibrary	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	public boolean isJavaMathLibrary(Value value) {$/;"	m	class:Z3JavaMathHandler
-isModulusInstruction	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	public boolean isModulusInstruction(Value value) {$/;"	m	class:Z3JavaMathHandler
+isJavaMathLibrary	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	public boolean isJavaMathLibrary(Value value) {$/;"	m	class:Z3JavaMathLibrary
+isJavaStringLibrary	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	public boolean isJavaStringLibrary(Value value) {$/;"	m	class:Z3JavaStringLibrary
+isMainFunction	src/safetyChecker/ProgramTree.java	/^	private boolean isMainFunction() {$/;"	m	class:ProgramTree	file:
+isModulusInstruction	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	public boolean isModulusInstruction(Value value) {$/;"	m	class:Z3JavaMathLibrary
 isNewEdge	src/safetyChecker/Edge.java	/^	public boolean isNewEdge() { return this.newEdge; }$/;"	m	class:Edge
 isNewInvoke	src/safetyChecker/UnitController.java	/^	public boolean isNewInvoke(Unit u) {$/;"	m	class:UnitController
+isNewString	src/safetyChecker/Edge.java	/^	public boolean isNewString() { return this.newString; }$/;"	m	class:Edge
+isNewString	src/safetyChecker/UnitController.java	/^	private boolean isNewString(Unit u) {$/;"	m	class:UnitController	file:
 isNonSenseCompare	src/safetyChecker/UnitController.java	/^	public boolean isNonSenseCompare(Unit u) {$/;"	m	class:UnitController
 isObjectEdge	src/safetyChecker/Edge.java	/^	public boolean isObjectEdge() { return this.objectEdge; }$/;"	m	class:Edge
 isObjectInvoke	src/safetyChecker/UnitController.java	/^	public boolean isObjectInvoke(Unit u) {$/;"	m	class:UnitController
@@ -605,53 +317,30 @@ isSourceEdge	src/safetyChecker/Edge.java	/^	public boolean isSourceEdge() { retu
 isSourceInvoke	src/safetyChecker/UnitController.java	/^	private boolean isSourceInvoke(Unit u) {$/;"	m	class:UnitController	file:
 isSourceLocation	src/safetyChecker/Vertex.java	/^	public boolean isSourceLocation() { return this.sourceLocation; }$/;"	m	class:Vertex
 isStrongerThan	src/safetyChecker/CoverRelation.java	/^	private boolean isStrongerThan(BoolExpr strongerInvariant, BoolExpr weakerInvariant) {$/;"	m	class:CoverRelation	file:
-isSubFunction	src/safetyChecker/Edge.java	/^	public boolean isSubFunction() { return this.subFunction; }$/;"	m	class:Edge
 isSubFunction	src/safetyChecker/Vertex.java	/^	public boolean isSubFunction() { return this.subFunction; }$/;"	m	class:Vertex
 isSubFunctionUnit	src/safetyChecker/UnitController.java	/^	private boolean isSubFunctionUnit(Unit u, Map<String, Body> stores, Edge e) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:UnitController	file:
-isTreeDone	src/safetyChecker/ProgramTree.java	/^	public boolean isTreeDone() { $/;"	m	class:ProgramTree
+isSubTree	src/safetyChecker/ProgramTree.java	/^	private boolean isSubTree() {$/;"	m	class:ProgramTree	file:
+isTreeDone	src/safetyChecker/ProgramTree.java	/^	public boolean isTreeDone() {$/;"	m	class:ProgramTree
 isVertexDone	src/safetyChecker/Vertex.java	/^	public boolean isVertexDone() { return this.vertexDone; }$/;"	m	class:Vertex
 isWeakerThan	src/safetyChecker/CoverRelation.java	/^	private boolean isWeakerThan(BoolExpr weakerInvariant, BoolExpr strongerInvariant) {$/;"	m	class:CoverRelation	file:
 itpHandler	src/safetyChecker/ProgramTree.java	/^	private InterpolationHandler itpHandler;$/;"	f	class:ProgramTree	file:
-latitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^	private String latitude = "";$/;"	f	class:Callbacks_LocationLeak1_DroidSafeFailed	file:
-latitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^	private String latitude = "";$/;"	f	class:Callbacks_LocationLeak1_Original	file:
-layout	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-layout	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-layout	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-layout	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-layout	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-layout	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-layout	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-layout	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class layout {$/;"	c	class:R
-leakData	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	public void leakData(View view){$/;"	m	class:FlowTestDroidSafeFailed
-leakData	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	public void leakData(View view){$/;"	m	class:ImplicitFlow3
-leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  		public void leakInfo();$/;"	m	interface:FlowTestDroidSafeFailed.Interface
-leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  		public void leakInfo(){$/;"	m	class:FlowTestDroidSafeFailed.ClassA
-leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  		public void leakInfo(){$/;"	m	class:FlowTestDroidSafeFailed.ClassB
-leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  		public void leakInfo();$/;"	m	interface:ImplicitFlow3.Interface
-leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  		public void leakInfo(){$/;"	m	class:ImplicitFlow3.ClassA
-leakInfo	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  		public void leakInfo(){$/;"	m	class:ImplicitFlow3.ClassB
-leakInformationBit	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^  	private void leakInformationBit(List list){	$/;"	m	class:FlowTestDroidSafeFailed	file:
-leakInformationBit	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^  	private void leakInformationBit(List list){	$/;"	m	class:ImplicitFlow3	file:
+jimpleLocalBoxIndex	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^	private int jimpleLocalBoxIndex = 1;$/;"	f	class:Z3JavaStringLibrary	file:
 lf	src/safetyChecker/ProgramTree.java	/^	private Vertex lf;$/;"	f	class:ProgramTree	file:
 liSet	src/safetyChecker/ProgramTree.java	/^	private Set<Vertex> liSet;$/;"	f	class:ProgramTree	file:
-localMap	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Expr> localMap = new HashMap<String, Expr>();$/;"	f	class:Z3ScriptHandler	file:
 localMap	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Expr> localMap = new HashMap<String, Expr>();$/;"	f	class:Z3ScriptHandler	file:
 locationCounter	src/safetyChecker/ProgramTree.java	/^	private int locationCounter = 0;$/;"	f	class:ProgramTree	file:
 locationNumber	src/safetyChecker/Vertex.java	/^	private int locationNumber = 0;$/;"	f	class:Vertex	file:
-longtitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^	private String longtitude = "";$/;"	f	class:Callbacks_LocationLeak1_DroidSafeFailed	file:
-longtitude	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^	private String longtitude = "";$/;"	f	class:Callbacks_LocationLeak1_Original	file:
-lookup	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^	private boolean lookup(String username, String password) throws Exception{$/;"	m	class:ImplicitFlow4	file:
 main	PngCreator.py	/^def main():$/;"	f
 main	src/RecordPeekMemoryAndTime/testDriver.java	/^	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {$/;"	m	class:testDriver
-main	src/safetyChecker/SafetyInitializerW.java	/^	public static void main(String args[]) {$/;"	m	class:SafetyInitializerW
 main	src/safetyTestCode/leetCode/climbingStairs/Test1.java	/^	public static void main(String[] args) {$/;"	m	class:Test1
 main	src/safetyTestCode/leetCode/climbingStairs/Test2.java	/^	public static void main(String[] args) {$/;"	m	class:Test2
-main	src/safetyTestCode/object/Test1.java	/^	public static void main(String args[]) throws java.io.IOException {$/;"	m	class:Test1
+main	src/safetyTestCode/object/Test1.java	/^	public static void main(String[] args) {$/;"	m	class:Test1
 main	src/safetyTester/arraytest/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
 main	src/safetyTester/iftest/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
 main	src/safetyTester/iftest/Tester2.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester2
 main	src/safetyTester/iftest/Tester3.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester3
 main	src/safetyTester/iftest/Tester4.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester4
+main	src/safetyTester/interproc/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
 main	src/safetyTester/leetCode/climbingStairs/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
 main	src/safetyTester/leetCode/climbingStairs/Tester2.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester2
 main	src/safetyTester/object/Tester1.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester1
@@ -659,96 +348,27 @@ main	src/safetyTester/whiletest/Tester1.java	/^	public static void main(String[]
 main	src/safetyTester/whiletest/Tester2.java	/^	public static void main(String[] args) throws FileNotFoundException,$/;"	m	class:Tester2
 main2	src/safetyTestCode/object/Test1.java	/^	public static void main2(String[] args) throws IOException {$/;"	m	class:Test1
 main3	src/safetyTestCode/object/Test1.java	/^	public static void main3(String[] args) throws IOException {$/;"	m	class:Test1
-main4	src/safetyTestCode/object/Test1.java	/^	public static void main4(String[] args) {$/;"	m	class:Test1
-main6	src/safetyTestCode/object/Test1.java	/^	public static void main6(String[] args) throws Exception {$/;"	m	class:Test1
+main4	src/safetyTestCode/object/Test1.java	/^	public static void main4(String[] args) throws Exception {$/;"	m	class:Test1
+main6	src/safetyTestCode/object/Test1.java	/^	public static void main6(String args[]) throws java.io.IOException {$/;"	m	class:Test1
+main7	src/safetyTestCode/object/Test1.java	/^	public static void main7(String args[]) throws java.io.IOException {$/;"	m	class:Test1
 mainFunction	src/safetyChecker/ProgramTree.java	/^	private boolean mainFunction;$/;"	f	class:ProgramTree	file:
-maxArraySize	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Integer> maxArraySize = new HashMap<String, Integer>();$/;"	f	class:Z3ScriptHandler	file:
 maxArraySize	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Integer> maxArraySize = new HashMap<String, Integer>();$/;"	f	class:Z3ScriptHandler	file:
-maxEquality	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private Expr maxEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathHandler	file:
-menu	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class menu {$/;"	c	class:R
-menu_settings	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
-menu_settings	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
-menu_settings	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070002;$/;"	f	class:R.id
-menu_settings	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070003;$/;"	f	class:R.id
-menu_settings	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
-menu_settings	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
-menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
-menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f040001;$/;"	f	class:R.string
-menu_settings	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^        public static final int menu_settings=0x7f070000;$/;"	f	class:R.id
-minEquality	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^	private Expr minEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathHandler	file:
-newArrayExpr	src/safetyChecker/Z3ArrayHandler.java	/^	public BoolExpr newArrayExpr(Expr rightZ3, Type type, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
+maxEquality	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private Expr maxEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathLibrary	file:
+minEquality	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^	private Expr minEquality(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3JavaMathLibrary	file:
 newArrayExpr	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public BoolExpr newArrayExpr(Expr rightZ3, Type type, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
 newEdge	src/safetyChecker/Edge.java	/^	private boolean newEdge = false;$/;"	f	class:Edge	file:
-newMultiArrayExpr	src/safetyChecker/Z3ArrayHandler.java	/^	public BoolExpr newMultiArrayExpr(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {$/;"	m	class:Z3ArrayHandler
 newMultiArrayExpr	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public BoolExpr newMultiArrayExpr(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {$/;"	m	class:Z3ArrayHandler
-newMultiArrayExpr2	src/safetyChecker/Z3ArrayHandler.java	/^	public BoolExpr newMultiArrayExpr2(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {$/;"	m	class:Z3ArrayHandler
 newMultiArrayExpr2	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public BoolExpr newMultiArrayExpr2(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {$/;"	m	class:Z3ArrayHandler
-newSortMap	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Sort> newSortMap = new HashMap<String, Sort>();$/;"	f	class:Z3ScriptHandler	file:
 newSortMap	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Sort> newSortMap = new HashMap<String, Sort>();$/;"	f	class:Z3ScriptHandler	file:
-next	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		Node next;$/;"	f	class:LinkedList.Node
+newString	src/safetyChecker/Edge.java	/^	private boolean newString = false;$/;"	f	class:Edge	file:
 nextLine	src/safetyChecker/utilities/LogUtils.java	/^	public static void nextLine(int printLevel) {$/;"	m	class:LogUtils
 nextVertex	src/safetyChecker/Vertex.java	/^	private Vertex nextVertex;$/;"	f	class:Vertex	file:
-objFieldHandler	src/safetyChecker/Z3ScriptHandler.java	/^	private Z3ObjectFieldHandler objFieldHandler = new Z3ObjectFieldHandler();$/;"	f	class:Z3ScriptHandler	file:
 objFieldHandler	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Z3ObjectFieldHandler objFieldHandler = new Z3ObjectFieldHandler();$/;"	f	class:Z3ScriptHandler	file:
 objectEdge	src/safetyChecker/Edge.java	/^	private boolean objectEdge = false;$/;"	f	class:Edge	file:
-onCreate	BechMark/DroidBench/ArrayAccess1/src/de/ecspride/ArrayAccess1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayAccess1
-onCreate	BechMark/DroidBench/ArrayAccess2/src/de/ecspride/ArrayAccess2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayAccess2
-onCreate	BechMark/DroidBench/ArrayCopy1/src/edu/mit/array_copy/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
-onCreate	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity1
-onCreate	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/FieldSensitivity2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity2
-onCreate	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/FieldSensitivity3.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity3
-onCreate	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FieldSensitivity4
-onCreate	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow2
-onCreate	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/FlowTestDroidSafeFailed.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:FlowTestDroidSafeFailed
-onCreate	BechMark/DroidBench/ImplicitFlow3/src/de/ecspride/ImplicitFlow3.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow3
-onCreate	BechMark/DroidBench/ImplicitFlow4/src/de/ecspride/ImplicitFlow4.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow4
-onCreate	BechMark/DroidBench/MultidimensionalArray1/src/edu/mit/array_slice/MultiDimensionalArray1_Original.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MultiDimensionalArray1_Original
-onCreate	BechMark/DroidBench/ObjectSensitivity2/src/de/ecspride/OverwiteValue.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:OverwiteValue
-onCreate	BechMark/DroidBench/StaticInitialization1/src/de/ecspride/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
-onCreate	BechMark/DroidBench/StaticInitialization2/src/de/ecspride/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
-onCreate	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MainActivity
-onCreate	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:UnreachableCode
-onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy1
-onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy2
-onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy3.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy3
-onCreate	BechMark/DroidSafeFail/ArrayCopyDroidSafeFaile1/src/com/flow/arraycopy/ArrayCopy4.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ArrayCopy4
-onCreate	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFail1/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MultiDimensionalArray1_DroidSafeFailed1
-onCreate	BechMark/DroidSafeFail/ArraysAndLists_MultidimensionalArrayDroidSafeFailed2/src/edu/mit/array_slice/MultiDimensionalArray1_DroidSafeFailed2.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:MultiDimensionalArray1_DroidSafeFailed2
-onCreate	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed
-onCreate	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:Callbacks_LocationLeak1_Original
-onCreate	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    protected void onCreate(Bundle savedInstanceState) {$/;"	m	class:ImplicitFlow1
-onLocationChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onLocationChanged(Location loc) {  \/\/source$/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
-onLocationChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onLocationChanged(Location loc) {  \/\/source$/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
-onProviderDisabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onProviderDisabled(String provider) {}  $/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
-onProviderDisabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onProviderDisabled(String provider) {}  $/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
-onProviderEnabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onProviderEnabled(String provider) { }  $/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
-onProviderEnabled	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onProviderEnabled(String provider) { }  $/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
-onResume	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^    protected void onResume (){$/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed
-onResume	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^    protected void onResume (){$/;"	m	class:Callbacks_LocationLeak1_Original
-onStatusChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/src/de/ecspride/Callbacks_LocationLeak1_DroidSafeFailed.java	/^		  public void onStatusChanged(String provider, int status, Bundle extras) {}  $/;"	m	class:Callbacks_LocationLeak1_DroidSafeFailed.MyLocationListener
-onStatusChanged	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/src/de/ecspride/Callbacks_LocationLeak1_Original.java	/^		  public void onStatusChanged(String provider, int status, Bundle extras) {}  $/;"	m	class:Callbacks_LocationLeak1_Original.MyLocationListener
 os	PngCreator.py	/^import os$/;"	i
 outgoingEdge	src/safetyChecker/Vertex.java	/^	private Edge outgoingEdge;$/;"	f	class:Vertex	file:
 parameterList	src/safetyChecker/Edge.java	/^	private List<Expr> parameterList = new LinkedList<Expr>();$/;"	f	class:Edge	file:
-parameters	src/safetyChecker/Z3ScriptHandler.java	/^	private Stack<Expr> parameters = new Stack<Expr>();$/;"	f	class:Z3ScriptHandler	file:
 parameters	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Stack<Expr> parameters = new Stack<Expr>();$/;"	f	class:Z3ScriptHandler	file:
-password	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^        public static final int password=0x7f070000;$/;"	f	class:R.id
-password	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int password=0x7f070001;$/;"	f	class:R.id
-passwordCorrect	BechMark/DroidBench/ImplicitFlow2/src/de/ecspride/ImplicitFlow2.java	/^	private boolean passwordCorrect = false;$/;"	f	class:ImplicitFlow2	file:
 path	src/safetyChecker/ProgramTree.java	/^	private Stack<Edge> path = new Stack<Edge>();$/;"	f	class:ProgramTree	file:
 previousVertexSet	src/safetyChecker/Vertex.java	/^	private Set<Vertex> previousVertexSet = new HashSet<Vertex>();$/;"	f	class:Vertex	file:
 print	src/safetyChecker/utilities/LogUtils.java	/^	private static void print(int printLevel, Object... objects) {$/;"	m	class:LogUtils	file:
@@ -763,7 +383,6 @@ println	src/safetyChecker/utilities/LogUtils.java	/^	private static void println
 programTree	src/safetyChecker/CoverRelation.java	/^	private ProgramTree programTree;$/;"	f	class:CoverRelation	file:
 programTree	src/safetyChecker/Edge.java	/^	private ProgramTree programTree;$/;"	f	class:Edge	file:
 psi	src/safetyChecker/Vertex.java	/^	private boolean psi = false;$/;"	f	class:Vertex	file:
-realArraySize	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Integer> realArraySize = new HashMap<String, Integer>();$/;"	f	class:Z3ScriptHandler	file:
 realArraySize	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Integer> realArraySize = new HashMap<String, Integer>();$/;"	f	class:Z3ScriptHandler	file:
 realObject	src/safetyChecker/NewSort.java	/^	private Set<IntExpr> realObject;$/;"	f	class:NewSort	file:
 refine	src/safetyChecker/ProgramTree.java	/^	private void refine(Vertex v) {$/;"	m	class:ProgramTree	file:
@@ -773,32 +392,31 @@ returnPaths	src/safetyChecker/ProgramTree.java	/^	private LinkedList<LinkedList<
 returnRootQueue	src/safetyChecker/ProgramTree.java	/^	private Queue<Vertex> returnRootQueue;$/;"	f	class:ProgramTree	file:
 root	src/safetyChecker/ProgramTree.java	/^	private Vertex root;$/;"	f	class:ProgramTree	file:
 rootNumber	src/safetyChecker/Vertex.java	/^	private int rootNumber = 0;$/;"	f	class:Vertex	file:
-s	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^    public String s;$/;"	f	class:MainActivity
 safetyChecker	src/safetyChecker/CoverRelation.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/Edge.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/InterpolationHandler.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/NewSort.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/ProgramTree.java	/^package safetyChecker;$/;"	p
-safetyChecker	src/safetyChecker/SafetyInitializerW.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/UnitController.java	/^package safetyChecker;$/;"	p
 safetyChecker	src/safetyChecker/Vertex.java	/^package safetyChecker;$/;"	p
-safetyChecker	src/safetyChecker/Z3ArrayHandler.java	/^package safetyChecker;$/;"	p
-safetyChecker	src/safetyChecker/Z3ScriptHandler.java	/^package safetyChecker;$/;"	p
-safetyChecker	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^package safetyChecker;$/;"	p
-safetyChecker	src/safetyChecker/z3ScriptManager/Z3ObjectFieldHandler.java	/^package safetyChecker;$/;"	p
-safetyChecker	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^package safetyChecker;$/;"	p
 safetyChecker.exception	src/safetyChecker/exception/CreateZ3ScriptFailedException.java	/^package safetyChecker.exception;$/;"	p
 safetyChecker.exception	src/safetyChecker/exception/ErrorLocationNotFoundException.java	/^package safetyChecker.exception;$/;"	p
 safetyChecker.exception	src/safetyChecker/exception/MainFunctionNotFoundException.java	/^package safetyChecker.exception;$/;"	p
 safetyChecker.utilities	src/safetyChecker/utilities/DottyConverter.java	/^package safetyChecker.utilities;$/;"	p
 safetyChecker.utilities	src/safetyChecker/utilities/ErrorLable.java	/^package safetyChecker.utilities;$/;"	p
 safetyChecker.utilities	src/safetyChecker/utilities/LogUtils.java	/^package safetyChecker.utilities;$/;"	p
-safetyChecker.z3ScriptManager	src/safetyChecker/z3ScriptManager/Z3JavaMathHandler.java	/^package safetyChecker.z3ScriptManager;$/;"	p
+safetyChecker.z3ScriptManager	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^package safetyChecker.z3ScriptManager;$/;"	p
+safetyChecker.z3ScriptManager	src/safetyChecker/z3ScriptManager/Z3JavaMathLibrary.java	/^package safetyChecker.z3ScriptManager;$/;"	p
+safetyChecker.z3ScriptManager	src/safetyChecker/z3ScriptManager/Z3JavaStringLibrary.java	/^package safetyChecker.z3ScriptManager;$/;"	p
+safetyChecker.z3ScriptManager	src/safetyChecker/z3ScriptManager/Z3ObjectFieldHandler.java	/^package safetyChecker.z3ScriptManager;$/;"	p
+safetyChecker.z3ScriptManager	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^package safetyChecker.z3ScriptManager;$/;"	p
+safetyChecker.z3ScriptManager	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^package safetyChecker.z3ScriptManager;$/;"	p
 safetyTestCode.arraytest	src/safetyTestCode/arraytest/Test1.java	/^package safetyTestCode.arraytest;$/;"	p
 safetyTestCode.iftest	src/safetyTestCode/iftest/Test1.java	/^package safetyTestCode.iftest;$/;"	p
 safetyTestCode.iftest	src/safetyTestCode/iftest/Test2.java	/^package safetyTestCode.iftest;$/;"	p
 safetyTestCode.iftest	src/safetyTestCode/iftest/Test3.java	/^package safetyTestCode.iftest;$/;"	p
 safetyTestCode.iftest	src/safetyTestCode/iftest/Test4.java	/^package safetyTestCode.iftest;$/;"	p
+safetyTestCode.interproc	src/safetyTestCode/interproc/Test1.java	/^package safetyTestCode.interproc;$/;"	p
 safetyTestCode.leetCode.climbingStairs	src/safetyTestCode/leetCode/climbingStairs/Test1.java	/^package safetyTestCode.leetCode.climbingStairs;$/;"	p
 safetyTestCode.leetCode.climbingStairs	src/safetyTestCode/leetCode/climbingStairs/Test2.java	/^package safetyTestCode.leetCode.climbingStairs;$/;"	p
 safetyTestCode.object	src/safetyTestCode/object/Obj.java	/^package safetyTestCode.object;$/;"	p
@@ -810,54 +428,46 @@ safetyTester.iftest	src/safetyTester/iftest/Tester1.java	/^package safetyTester.
 safetyTester.iftest	src/safetyTester/iftest/Tester2.java	/^package safetyTester.iftest;$/;"	p
 safetyTester.iftest	src/safetyTester/iftest/Tester3.java	/^package safetyTester.iftest;$/;"	p
 safetyTester.iftest	src/safetyTester/iftest/Tester4.java	/^package safetyTester.iftest;$/;"	p
+safetyTester.interproc	src/safetyTester/interproc/Tester1.java	/^package safetyTester.interproc;$/;"	p
 safetyTester.leetCode.climbingStairs	src/safetyTester/leetCode/climbingStairs/Tester1.java	/^package safetyTester.leetCode.climbingStairs;$/;"	p
 safetyTester.leetCode.climbingStairs	src/safetyTester/leetCode/climbingStairs/Tester2.java	/^package safetyTester.leetCode.climbingStairs;$/;"	p
 safetyTester.object	src/safetyTester/object/Tester1.java	/^package safetyTester.object;$/;"	p
 safetyTester.whiletest	src/safetyTester/whiletest/Tester1.java	/^package safetyTester.whiletest;$/;"	p
 safetyTester.whiletest	src/safetyTester/whiletest/Tester2.java	/^package safetyTester.whiletest;$/;"	p
-secret	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
-secret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
-secret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	private String secret;$/;"	f	class:Datacontainer	file:
-sendTaint	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private void sendTaint(){$/;"	m	class:FieldSensitivity1	file:
-sendText	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^    private void sendText() {$/;"	m	class:ImplicitFlow1	file:
 sensitiveParameterMap	src/safetyChecker/UnitController.java	/^	public static final Map<String, Integer> sensitiveParameterMap = new HashMap<String, Integer>();$/;"	f	class:UnitController
 serialVersionUID	src/safetyChecker/exception/CreateZ3ScriptFailedException.java	/^	public static final long serialVersionUID = 1L;$/;"	f	class:CreateZ3ScriptFailedException
 serialVersionUID	src/safetyChecker/exception/ErrorLocationNotFoundException.java	/^	public static final long serialVersionUID = 1L;$/;"	f	class:ErrorLocationNotFoundException
 serialVersionUID	src/safetyChecker/exception/MainFunctionNotFoundException.java	/^	public static final long serialVersionUID = 1L;$/;"	f	class:MainFunctionNotFoundException
 setArrayCopyEdge	src/safetyChecker/Edge.java	/^	public void setArrayCopyEdge(boolean arrayCopy) { this.arrayCopy = arrayCopy; }$/;"	m	class:Edge
+setCallerVertex	src/safetyChecker/Vertex.java	/^	public void setCallerVertex(Vertex callerVertex) { this.callerVertex = callerVertex; }$/;"	m	class:Vertex
 setControlLocation	src/safetyChecker/Edge.java	/^	public void setControlLocation(boolean controlLocation) { this.controlLocation = controlLocation; }$/;"	m	class:Edge
-setDescription	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public void setDescription(String description) {$/;"	m	class:Datacontainer
-setDescription	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public void setDescription(String description) {$/;"	m	class:Datacontainer
-setDescription	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public void setDescription(String description) {$/;"	m	class:Datacontainer
 setDistance	src/safetyChecker/Vertex.java	/^	public void setDistance(int distance) { this.distance = distance; } 	$/;"	m	class:Vertex
 setEntryLocation	src/safetyChecker/Edge.java	/^	public void setEntryLocation(boolean entryLocation) { this.entryLocation = entryLocation; }$/;"	m	class:Edge
 setEntryLocation	src/safetyChecker/Vertex.java	/^	public void setEntryLocation(boolean entryLocation) { this.entryLocation = entryLocation; }$/;"	m	class:Vertex
 setErrorEdge	src/safetyChecker/Edge.java	/^	public void setErrorEdge(boolean errorEdge) { this.errorEdge = errorEdge; }$/;"	m	class:Edge
 setErrorLocation	src/safetyChecker/Vertex.java	/^	public void setErrorLocation(boolean errorLocation) { this.errorLocation = errorLocation; }$/;"	m	class:Vertex
+setFunctionCall	src/safetyChecker/Edge.java	/^	public void setFunctionCall(boolean functionCall) { this.functionCall = functionCall; }	$/;"	m	class:Edge
 setInErrorPath	src/safetyChecker/Edge.java	/^	public void setInErrorPath(boolean inErrorPath) { this.inErrorPath = inErrorPath; }$/;"	m	class:Edge
 setInErrorPath	src/safetyChecker/Vertex.java	/^	public void setInErrorPath(boolean isInErrorPath) { this.isInErrorPath = isInErrorPath; }$/;"	m	class:Vertex
 setInitInvoke	src/safetyChecker/Edge.java	/^	public void setInitInvoke(boolean initInvoke) { this.initInvoke = initInvoke; } $/;"	m	class:Edge
 setInvariant	src/safetyChecker/Vertex.java	/^	public void setInvariant(BoolExpr invariant) { this.invariant = invariant; }$/;"	m	class:Vertex
 setLocationNumber	src/safetyChecker/Vertex.java	/^	public void setLocationNumber(int locationNumber) { this.locationNumber = locationNumber; } 	$/;"	m	class:Vertex
 setNewEdge	src/safetyChecker/Edge.java	/^	public void setNewEdge(boolean newEdge) { this.newEdge = newEdge; }$/;"	m	class:Edge
+setNewString	src/safetyChecker/Edge.java	/^	public void setNewString(boolean newString) { this.newString = newString; }$/;"	m	class:Edge
 setNextVertex	src/safetyChecker/Vertex.java	/^	public void setNextVertex(Vertex nextVertex) { this.nextVertex = nextVertex; } $/;"	m	class:Vertex
 setObjectEdge	src/safetyChecker/Edge.java	/^	public void setObjectEdge(boolean objectEdge) { this.objectEdge = objectEdge; }$/;"	m	class:Edge
 setOutgoingEdge	src/safetyChecker/Vertex.java	/^	public void setOutgoingEdge(Edge outgoingEdge) { this.outgoingEdge = outgoingEdge;}$/;"	m	class:Vertex
 setProgramTree	src/safetyChecker/Edge.java	/^	public void setProgramTree(ProgramTree programTree) { this.programTree = programTree; }$/;"	m	class:Edge
 setReturnEdge	src/safetyChecker/Edge.java	/^	public void setReturnEdge(boolean returnEdge) { this.returnEdge = returnEdge; }$/;"	m	class:Edge
 setReturnLocation	src/safetyChecker/Vertex.java	/^	public void setReturnLocation(boolean returnLocation) { this.returnLocation = returnLocation; }$/;"	m	class:Vertex
-setSecret	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/Datacontainer.java	/^	public void setSecret(String secret) {$/;"	m	class:Datacontainer
-setSecret	BechMark/DroidBench/FieldSensitivity2/src/de/ecspride/Datacontainer.java	/^	public void setSecret(String secret) {$/;"	m	class:Datacontainer
-setSecret	BechMark/DroidBench/FieldSensitivity3/src/de/ecspride/Datacontainer.java	/^	public void setSecret(String secret) {$/;"	m	class:Datacontainer
 setSight	src/safetyChecker/Vertex.java	/^	public void setSight(boolean psi) { this.psi = psi; }$/;"	m	class:Vertex
 setSinkEdge	src/safetyChecker/Edge.java	/^	public void setSinkEdge(boolean sinkEdge) { this.sinkEdge = sinkEdge; }$/;"	m	class:Edge
 setSinkLocation	src/safetyChecker/Vertex.java	/^	public void setSinkLocation(boolean sinkLocation) { this.sinkLocation = sinkLocation; }$/;"	m	class:Vertex
 setSource	src/safetyChecker/Edge.java	/^	public void setSource(Vertex source) { this.source = source; }$/;"	m	class:Edge
 setSourceEdge	src/safetyChecker/Edge.java	/^	public void setSourceEdge(boolean sourceEdge) { this.sourceEdge = sourceEdge; }$/;"	m	class:Edge
 setSourceLocation	src/safetyChecker/Vertex.java	/^	public void setSourceLocation(boolean sourceLocation) { this.sourceLocation = sourceLocation; }$/;"	m	class:Vertex
-setSubFunction	src/safetyChecker/Edge.java	/^	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }	$/;"	m	class:Edge
 setSubFunction	src/safetyChecker/Vertex.java	/^	public void setSubFunction(boolean subFunction) { this.subFunction = subFunction; }$/;"	m	class:Vertex
-setTaint	BechMark/DroidBench/FieldSensitivity1/src/de/ecspride/FieldSensitivity1.java	/^	private Datacontainer setTaint(Datacontainer data){$/;"	m	class:FieldSensitivity1	file:
+setSubTree	src/safetyChecker/Vertex.java	/^	public void setSubTree(ProgramTree subTree) { this.subTree = subTree; }$/;"	m	class:Vertex
 setTarget	src/safetyChecker/Edge.java	/^	public void setTarget(Vertex target) { this.target = target; }$/;"	m	class:Edge
 setUnit	src/safetyChecker/Edge.java	/^	public void setUnit(Unit unit) { this.unit = unit; }$/;"	m	class:Edge
 setVertexDone	src/safetyChecker/Vertex.java	/^	public void setVertexDone(boolean vertexDone) { this.vertexDone = vertexDone; }	$/;"	m	class:Vertex
@@ -866,7 +476,6 @@ signature	src/safetyChecker/ProgramTree.java	/^	private String signature;$/;"	f	
 sinkEdge	src/safetyChecker/Edge.java	/^	private boolean sinkEdge = false;$/;"	f	class:Edge	file:
 sinkLocation	src/safetyChecker/Vertex.java	/^	private boolean sinkLocation = false;$/;"	f	class:Vertex	file:
 sinkSignatureDB	src/safetyChecker/UnitController.java	/^	public static final String[] sinkSignatureDB = { SEND_TEXT_MESSAGE_SIGNATURE, AND_UTIL_LOG_SIGNATURE };$/;"	f	class:UnitController
-sortId	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, NewSort> sortId = new HashMap<String, NewSort>();$/;"	f	class:Z3ScriptHandler	file:
 sortId	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, NewSort> sortId = new HashMap<String, NewSort>();$/;"	f	class:Z3ScriptHandler	file:
 source	src/safetyChecker/Edge.java	/^	private Vertex source; $/;"	f	class:Edge	file:
 sourceEdge	src/safetyChecker/Edge.java	/^	private boolean sourceEdge = false;$/;"	f	class:Edge	file:
@@ -874,54 +483,39 @@ sourceLocation	src/safetyChecker/Vertex.java	/^	private boolean sourceLocation =
 sourceSignatureDB	src/safetyChecker/UnitController.java	/^	public static final String[] sourceSignatureDB = {"getSimSerialNumber", "getDeviceId" }; $/;"	f	class:UnitController
 startTest	src/safetyChecker/ProgramTree.java	/^	private void startTest() throws ErrorLocationNotFoundException, MainFunctionNotFoundException {$/;"	m	class:ProgramTree	file:
 stores	src/safetyChecker/ProgramTree.java	/^	private Map<String, Body> stores;$/;"	f	class:ProgramTree	file:
+stores	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Body> stores;$/;"	f	class:Z3ScriptHandler	file:
 stores	src/safetyTester/arraytest/Tester1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester1
 stores	src/safetyTester/iftest/Tester1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester1
 stores	src/safetyTester/iftest/Tester2.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester2
 stores	src/safetyTester/iftest/Tester3.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester3
 stores	src/safetyTester/iftest/Tester4.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester4
+stores	src/safetyTester/interproc/Tester1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester1
 stores	src/safetyTester/leetCode/climbingStairs/Tester1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester1
 stores	src/safetyTester/leetCode/climbingStairs/Tester2.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester2
 stores	src/safetyTester/object/Tester1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester1
 stores	src/safetyTester/whiletest/Tester1.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester1
 stores	src/safetyTester/whiletest/Tester2.java	/^	static Map<String, Body> stores = new HashMap<String, Body>();$/;"	f	class:Tester2
-string	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-string	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-string	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-string	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-string	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-string	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-string	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-string	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class string {$/;"	c	class:R
-style	BechMark/DroidBench/FieldSensitivity2/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-style	BechMark/DroidBench/FieldSensitivity4/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-style	BechMark/DroidBench/ImplicitFlow2/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-style	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-style	BechMark/DroidBench/ObjectSensitivity2/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-style	BechMark/DroidBench/UnreachableCode/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-style	BechMark/DroidSafeFail/Callbacks_LocationLeak1_DroidSafeFailed/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-style	BechMark/DroidSafeFail/Callbacks_LocationLeak1_Original/gen/de/ecspride/R.java	/^    public static final class style {$/;"	c	class:R
-subFunction	src/safetyChecker/Edge.java	/^	private boolean subFunction = false;$/;"	f	class:Edge	file:
 subFunction	src/safetyChecker/Vertex.java	/^	private boolean subFunction = false;$/;"	f	class:Vertex	file:
 subFunctionList	src/safetyChecker/ProgramTree.java	/^	private LinkedList<Edge> subFunctionList;$/;"	f	class:ProgramTree	file:
-substitute	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, String> substitute = new HashMap<String, String>();$/;"	f	class:Z3ScriptHandler	file:
+subTree	src/safetyChecker/ProgramTree.java	/^	private boolean subTree = false;$/;"	f	class:ProgramTree	file:
+subTree	src/safetyChecker/Vertex.java	/^	private ProgramTree subTree;$/;"	f	class:Vertex	file:
 substitute	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, String> substitute = new HashMap<String, String>();$/;"	f	class:Z3ScriptHandler	file:
-substituteSort	src/safetyChecker/Z3ScriptHandler.java	/^	private Map<String, Sort> substituteSort = new HashMap<String, Sort>();$/;"	f	class:Z3ScriptHandler	file:
 substituteSort	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Map<String, Sort> substituteSort = new HashMap<String, Sort>();$/;"	f	class:Z3ScriptHandler	file:
-tail	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^	private Node tail;$/;"	f	class:LinkedList	file:
 target	src/safetyChecker/Edge.java	/^	private Vertex target;$/;"	f	class:Edge	file:
-test	BechMark/WeFail/FailLinkedList/src/LinkedList1.java	/^	static public void test(int length){$/;"	m	class:LinkedList1
 test	src/safetyTestCode/arraytest/Test1.java	/^	public void test(int n) {$/;"	m	class:Test1
 test	src/safetyTestCode/iftest/Test1.java	/^	public void test() {$/;"	m	class:Test1
 test	src/safetyTestCode/iftest/Test2.java	/^	public void test() {$/;"	m	class:Test2
 test	src/safetyTestCode/iftest/Test3.java	/^	public void test() {$/;"	m	class:Test3
 test	src/safetyTestCode/iftest/Test4.java	/^	public void test() {$/;"	m	class:Test4
-test	src/safetyTestCode/object/Test1.java	/^	public void test() {$/;"	m	class:Test1
+test	src/safetyTestCode/interproc/Test1.java	/^	public void test(int n) {$/;"	m	class:Test1
+test	src/safetyTestCode/object/Test1.java	/^	public static int test() {$/;"	m	class:Test1
 test	src/safetyTestCode/whiletest/Test1.java	/^	public void test() {$/;"	m	class:Test1
 test	src/safetyTestCode/whiletest/Test2.java	/^	public void test(int n) {$/;"	m	class:Test2
-test1	BechMark/WeFail/FailLinkedList/src/ErrorFunction.java	/^	public static void test1(int i) {$/;"	m	class:ErrorFunction
-test2	src/safetyTestCode/whiletest/Test2.java	/^	public void test2() {$/;"	m	class:Test2
+test2	src/safetyTestCode/whiletest/Test2.java	/^	public void test2(int n) {$/;"	m	class:Test2
 test3	src/safetyTestCode/arraytest/Test1.java	/^	public void test3(int n) {$/;"	m	class:Test1
 test4	src/safetyTestCode/arraytest/Test1.java	/^	public void test4(int n) {$/;"	m	class:Test1
+test6	src/safetyTestCode/arraytest/Test1.java	/^	public void test6(int n) {$/;"	m	class:Test1
+test7	src/safetyTestCode/arraytest/Test1.java	/^	public void test7(int n){$/;"	m	class:Test1
 testDriver	src/RecordPeekMemoryAndTime/testDriver.java	/^public class testDriver {$/;"	c
 to	src/safetyChecker/InterpolationHandler.java	/^	Expr[] to = null;$/;"	f	class:InterpolationHandler
 toString	src/safetyChecker/Edge.java	/^	public String toString() { return unit.toString(); }$/;"	m	class:Edge
@@ -933,39 +527,25 @@ uncovered	src/safetyChecker/ProgramTree.java	/^	private Queue<Vertex> uncovered 
 unit	src/safetyChecker/Edge.java	/^	private Unit unit;$/;"	f	class:Edge	file:
 unitController	src/safetyChecker/ProgramTree.java	/^	private UnitController unitController;$/;"	f	class:ProgramTree	file:
 unitVertexMap	src/safetyChecker/CoverRelation.java	/^	private Map<Unit, LinkedList<Vertex>> unitVertexMap;$/;"	f	class:CoverRelation	file:
-unreachable	BechMark/DroidBench/UnreachableCode/src/de/ecspride/UnreachableCode.java	/^  	private void unreachable(){$/;"	m	class:UnreachableCode	file:
 unwind	src/safetyChecker/ProgramTree.java	/^	private void unwind() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {$/;"	m	class:ProgramTree	file:
-updateArrayRef	src/safetyChecker/Z3ArrayHandler.java	/^	private BoolExpr updateArrayRef(Value arrayBase, Z3ScriptHandler z3Handler, Expr rightZ3, Edge edge, int index) {$/;"	m	class:Z3ArrayHandler	file:
-updateArrayRef	src/safetyChecker/Z3ArrayHandler.java	/^	public BoolExpr updateArrayRef(ArrayRef arrayRef, Z3ScriptHandler z3Handler, Expr rightZ3, Edge edge) {$/;"	m	class:Z3ArrayHandler
 updateArrayRef	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private BoolExpr updateArrayRef(Value arrayBase, Z3ScriptHandler z3Handler, Expr rightZ3, Edge edge, int index) {$/;"	m	class:Z3ArrayHandler	file:
 updateArrayRef	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public BoolExpr updateArrayRef(ArrayRef arrayRef, Z3ScriptHandler z3Handler, Expr rightZ3, Edge edge) {$/;"	m	class:Z3ArrayHandler
 updateCover	src/safetyChecker/CoverRelation.java	/^	public void updateCover() {$/;"	m	class:CoverRelation
 updateInvariant	src/safetyChecker/InterpolationHandler.java	/^	private void updateInvariant(Vertex errorRootVertex, BoolExpr[] invariantList, boolean isFeasible) {$/;"	m	class:InterpolationHandler	file:
 updateUnitVertexMap	src/safetyChecker/CoverRelation.java	/^	public void updateUnitVertexMap(Vertex vertex) {$/;"	m	class:CoverRelation
-username	BechMark/DroidBench/ImplicitFlow4/gen/de/ecspride/R.java	/^        public static final int username=0x7f070000;$/;"	f	class:R.id
-v	BechMark/DroidBench/StaticInitialization3/src/edu/mit/clinit/MainActivity.java	/^    public static MainActivity v;$/;"	f	class:MainActivity
-value	BechMark/DroidBench/FieldSensitivity4/src/de/ecspride/FieldSensitivity4.java	/^		String value = "android";	$/;"	f	class:FieldSensitivity4.Datacontainer
-value	BechMark/WeFail/FailLinkedList/src/LinkedList.java	/^		int value;$/;"	f	class:LinkedList.Node
 vertexDone	src/safetyChecker/Vertex.java	/^	private boolean vertexDone = false;$/;"	f	class:Vertex	file:
 warning	src/safetyChecker/utilities/LogUtils.java	/^	public static void warning(Object... objects) {$/;"	m	class:LogUtils
 warningln	src/safetyChecker/utilities/LogUtils.java	/^	public static void warningln(Object... objects) {$/;"	m	class:LogUtils
-writeToLog	BechMark/DroidSafeFail/ImplictFlowDroidSafeFail1/src/com/flow/ImplicitFlow1.java	/^	private void writeToLog(String message){$/;"	m	class:ImplicitFlow1	file:
-z3ArrayCopy	src/safetyChecker/Z3ArrayHandler.java	/^	public BoolExpr z3ArrayCopy(Edge edge, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
 z3ArrayCopy	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public BoolExpr z3ArrayCopy(Edge edge, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
-z3ArrayRef	src/safetyChecker/Z3ArrayHandler.java	/^	private Expr z3ArrayRef(Value array, Z3ScriptHandler z3Handler, Edge edge, int index) {$/;"	m	class:Z3ArrayHandler	file:
-z3ArrayRef	src/safetyChecker/Z3ArrayHandler.java	/^	public Expr z3ArrayRef(ArrayRef value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3ArrayHandler
 z3ArrayRef	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	private Expr z3ArrayRef(Value array, Z3ScriptHandler z3Handler, Edge edge, int index) {$/;"	m	class:Z3ArrayHandler	file:
 z3ArrayRef	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public Expr z3ArrayRef(ArrayRef value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3ArrayHandler
-z3ArraysEqual	src/safetyChecker/Z3ArrayHandler.java	/^	public Expr z3ArraysEqual(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3ArrayHandler
 z3ArraysEqual	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public Expr z3ArraysEqual(Value value, Z3ScriptHandler z3Handler, Edge edge) {$/;"	m	class:Z3ArrayHandler
 z3Expr	src/safetyChecker/Edge.java	/^	private BoolExpr z3Expr;$/;"	f	class:Edge	file:
 z3Handler	src/safetyChecker/InterpolationHandler.java	/^	private Z3ScriptHandler z3Handler;$/;"	f	class:InterpolationHandler	file:
-z3Handler	src/safetyChecker/ProgramTree.java	/^	private Z3ScriptHandler z3Handler; $/;"	f	class:ProgramTree	file:
-z3Local	src/safetyChecker/Z3ArrayHandler.java	/^	public Expr z3Local(Local local, boolean assignLeft, int nodeIndex, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
+z3Handler	src/safetyChecker/ProgramTree.java	/^	private Z3ScriptHandler z3Handler;$/;"	f	class:ProgramTree	file:
+z3InstanceFieldRef	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Expr z3InstanceFieldRef(InstanceFieldRef v, boolean IfAssignLeft, Edge edge) {$/;"	m	class:Z3ScriptHandler	file:
 z3Local	src/safetyChecker/z3ScriptManager/Z3ArrayHandler.java	/^	public Expr z3Local(Local local, boolean assignLeft, int nodeIndex, Z3ScriptHandler z3Handler) {$/;"	m	class:Z3ArrayHandler
-z3MathHandler	src/safetyChecker/Z3ScriptHandler.java	/^	private Z3JavaMathHandler z3MathHandler = new Z3JavaMathHandler();$/;"	f	class:Z3ScriptHandler	file:
-z3MathHandler	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Z3JavaMathHandler z3MathHandler = new Z3JavaMathHandler();$/;"	f	class:Z3ScriptHandler	file:
-z3NewString	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^	public static Expr z3NewString(PathCoverter theCoverter, PathHelper PathHelper)$/;"	m	class:StringHelper
-z3ObjectField	src/safetyChecker/Z3ScriptHandler.java	/^	public Expr z3ObjectField(InstanceFieldRef ref, boolean assignLeft, Edge edge) {$/;"	m	class:Z3ScriptHandler
+z3MathLibrary	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Z3JavaMathLibrary z3MathLibrary = new Z3JavaMathLibrary();$/;"	f	class:Z3ScriptHandler	file:
+z3NewString	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^	public static Expr z3NewString(Z3ScriptHandler z3Handler) {$/;"	m	class:Z3StringHandler
 z3ObjectField	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	public Expr z3ObjectField(InstanceFieldRef ref, boolean assignLeft, Edge edge) {$/;"	m	class:Z3ScriptHandler
-z3_helper	src/safetyChecker/z3ScriptManager/Z3StringHandler.java	/^package z3_helper;$/;"	p
+z3StringLibrary	src/safetyChecker/z3ScriptManager/Z3ScriptHandler.java	/^	private Z3JavaStringLibrary z3StringLibrary = new Z3JavaStringLibrary();$/;"	f	class:Z3ScriptHandler	file:

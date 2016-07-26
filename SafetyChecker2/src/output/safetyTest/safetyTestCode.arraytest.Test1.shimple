@@ -15,6 +15,78 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
     public void test(int)
     {
         safetyTestCode.arraytest.Test1 r0;
+        int i0, i1;
+
+        r0 := @this: safetyTestCode.arraytest.Test1;
+
+        i0 := @parameter0: int;
+
+        i1 = virtualinvoke r0.<safetyTestCode.arraytest.Test1: int getNumber()>();
+
+        if i1 != 5 goto label1;
+
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
+
+     label1:
+        return;
+    }
+
+    public int getNumber()
+    {
+        safetyTestCode.arraytest.Test1 r0;
+        byte b0;
+        int i1;
+
+        r0 := @this: safetyTestCode.arraytest.Test1;
+
+        b0 = 5;
+
+        i1 = b0 + 1;
+
+        return i1;
+    }
+
+    public void test7(int)
+    {
+        safetyTestCode.arraytest.Test1 r0;
+        int i0, i3, i4;
+        byte b1, b2;
+        int[][] r1;
+        int[] $r2, $r3, $r4;
+
+        r0 := @this: safetyTestCode.arraytest.Test1;
+
+        i0 := @parameter0: int;
+
+        b1 = 3;
+
+        b2 = 5;
+
+        r1 = newmultiarray (int)[3][5];
+
+        $r2 = r1[1];
+
+        $r2[3] = 3;
+
+        $r3 = r1[0];
+
+        i3 = $r3[2];
+
+        $r4 = r1[1];
+
+        i4 = $r4[3];
+
+        if i4 != 0 goto label1;
+
+        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
+
+     label1:
+        return;
+    }
+
+    public void test6(int)
+    {
+        safetyTestCode.arraytest.Test1 r0;
         int i0, $i1, i2, i3;
         int[] r1, r2;
 

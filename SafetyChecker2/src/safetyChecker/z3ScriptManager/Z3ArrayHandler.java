@@ -160,10 +160,29 @@ public class Z3ArrayHandler {
 
 
 	public BoolExpr newMultiArrayExpr(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {
+		LogUtils.fatalln("1111");
+		int size = 0;
 		InterpolationContext ictx = z3Handler.getIctx();
-		IntConstant sizeI=(IntConstant) nmae.getSize(0);
-		int size=sizeI.value;
-		size++;
+		
+		if(nmae.getSize(0) instanceof IntConstant) {
+			LogUtils.warningln("IntConstant");
+			
+			IntConstant sizeI=(IntConstant) nmae.getSize(0);
+			IntConstant sizeI2=(IntConstant) nmae.getSize(1);
+
+
+			size = sizeI.value;
+			int size2=sizeI2.value;
+			size++;
+		} else if(nmae.getSize(0) instanceof Local) {
+			LogUtils.warningln("local mis");
+			Local sizeL = (Local) nmae.getSize(0);
+			Local sizeL2 = (Local) nmae.getSize(1);
+			LogUtils.fatalln(sizeL + "--" + sizeL2);
+			System.exit(0);
+		}
+		LogUtils.fatalln("1111");
+
 		Type t=nmae.getBaseType().getElementType();
 		Map<String, NewSort> sortId = z3Handler.getSortId();
 		Map<String, Sort> newSortMap = z3Handler.getNewSortMap();
@@ -201,12 +220,15 @@ public class Z3ArrayHandler {
 		}
 		Sort arraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
 		int ArraySize = z3Handler.getRealArraySize(oldname);
-		ArrayExpr theArray = ictx.mkArrayConst("array_" + ArraySize,ictx.getIntSort(), ictx.getIntSort());
+		ArrayExpr theArray = ictx.mkConstArray(ictx.getIntSort(), ictx.mkInt(0));
+
 		BoolExpr[] theArrayConstrains=new BoolExpr[size];
 		for(int i=0;i<size;i++){
 			Expr select=ictx.mkSelect(theArray, ictx.mkInt(i));
 			theArrayConstrains[i]=ictx.mkEq(select,LowrightZ3[i]);
+			LogUtils.warningln(theArrayConstrains[i] +"\n-----------------");
 		}
+		System.exit(0);
 		ArrayExpr oldRealArray = (ArrayExpr) z3Handler.getGlobal().get(oldname);
 		String newName = z3Handler.getGlobalName(oldname);
 		ArrayExpr newRealArray = (ArrayExpr) ictx.mkConst(newName,oldRealArray.getSort());
@@ -221,6 +243,7 @@ public class Z3ArrayHandler {
 	}
 
 	public BoolExpr newMultiArrayExpr2(NewMultiArrayExpr nmae, Type type, Z3ScriptHandler z3Handler, Expr rightZ3) {
+		LogUtils.fatalln("22222");
 //		BoolExpr aa = this.newMultiArrayExpr2(nmae, type, z3Handler, rightZ3);
 //		if(aa!=null) return aa;
 		InterpolationContext ictx = z3Handler.getIctx();

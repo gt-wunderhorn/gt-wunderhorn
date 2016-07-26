@@ -86,7 +86,7 @@ public class Test1 {
 
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main4(String[] args) throws Exception {
 		// int[] intArray = new int[2];
 		// intArray[0] = 3;
 
@@ -96,6 +96,7 @@ public class Test1 {
 		int j = Integer.parseInt(br.readLine());
 		int[][] intArray3 = new int[i][j];
 
+		int a = test();
 		for(int i2 = 0; i2 < j; i2++)
 			for(int j2 = 0; j2 < j; j2++)
 				intArray3[i2][j2] = i2+j2;
@@ -105,7 +106,7 @@ public class Test1 {
 
 	}
 
-	public static void main4(String[] args) {
+	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String A = sc.next();
 		boolean flag = true;
@@ -118,11 +119,12 @@ public class Test1 {
 				break;
 			}
 		}
+		int a = test();
 		if (!flag)
 			ErrorLable.Error();
 	}
 
-	public void test() {
+	public static int test() {
 		Obj o = new Obj();
 		byte b = 3;
 		short s = 2;
@@ -136,6 +138,7 @@ public class Test1 {
 
 		if (l == l1 - 20)
 			ErrorLable.Error();
+		return 0;
 	}
 
 	public static void main2(String[] args) throws IOException {

@@ -6,7 +6,36 @@ import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 
+
 	public void test(int n) {
+		int i = getNumber();
+		if(i == 5)
+			ErrorLable.Error();
+
+	}
+
+
+	public int getNumber(){
+		int i = 5;
+		int j = i + 1;
+		return j;
+	}
+
+
+	public void test7(int n){
+		int i = 3;
+		int j = 5;
+		int[][] intArray3 = new int[3][5];
+		intArray3[1][3] = 3;
+		int a = intArray3[0][2];
+		int b = intArray3[1][3];
+
+		if(b == 0)
+			ErrorLable.Error();
+
+	}
+
+	public void test6(int n) {
 		int[] intArray = new int[2];
 		int[] intArray2 = new int[2];
 
@@ -36,14 +65,6 @@ public class Test1 {
 //			ErrorLable.Error();
 //	}
 //
-//	public void test6(int n){
-//		int[][] intArray3 = new int[2][4];
-//		intArray3[1][3] = 3;
-//		int a = intArray3[0][2];
-//
-//		ErrorLable.Error();
-//
-//	}
 	
 	public void test3(int n) {
 

@@ -1,4 +1,4 @@
-package safetyTester.arraytest;
+package safetyTester.interproc;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -45,8 +45,8 @@ public class Tester1 {
 		soot.Main.main(sootArgs);
 		//System.out.println(stores.size());
 
-		String mainFunction ="<safetyTestCode.arraytest.Test1: void test(int)>";
-		LogUtils.infoln("safetyTester.arraytest.Tester1... Test started...");
+		String mainFunction ="<safetyTestCode.interproc.Test1: void test(int)>";
+		LogUtils.infoln("safetyTester.interproc.Tester1... Test started...");
 	
 		try {	
 			ProgramTree pTree = new ProgramTree(stores, mainFunction, true);
