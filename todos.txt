@@ -6,7 +6,20 @@ item is tagged with the developer who's actively working on it.
 Unsupported language features:
 
 -Programs containing multiple, user-defined methods (Burak)
+******
+when the program calls a method that could be overwritten by a subclass
 
+[9:29]  
+so `class A { int f() { … } } class B extends A { int f () { … } }`
+
+[9:29]  
+then in the code, `A x = …; x.f()`
+
+[9:30]  
+the analysis has to model the fact that `x` could have dynamic class `A` or `B`
+
+
+******
 -Multi-dimensional arrays (Burak)
 
 -Overflow and underflow
