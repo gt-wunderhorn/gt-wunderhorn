@@ -8,7 +8,7 @@ public class Test1 {
 		int j = 1;
 		int k = 5;
 		int i = getNumber(j, k);
-		if(i == 15) 
+		if(i == 11) 
 			ErrorLable.Error();
 
 	}

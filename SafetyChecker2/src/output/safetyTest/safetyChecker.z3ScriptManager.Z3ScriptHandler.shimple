@@ -525,9 +525,8 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
         safetyChecker.Edge r1, $r4;
         safetyChecker.ProgramTree $r2;
         safetyChecker.Vertex $r3;
-        soot.Unit $r5;
-        com.microsoft.z3.InterpolationContext $r6;
-        com.microsoft.z3.BoolExpr $r7;
+        com.microsoft.z3.InterpolationContext $r5;
+        com.microsoft.z3.BoolExpr $r6;
 
         r0 := @this: safetyChecker.z3ScriptManager.Z3ScriptHandler;
 
@@ -539,15 +538,13 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r4 = virtualinvoke $r3.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $r5 = virtualinvoke r1.<safetyChecker.Edge: soot.Unit getUnit()>();
+        virtualinvoke $r4.<safetyChecker.Edge: void setFunctionReturn(safetyChecker.Edge)>(r1);
 
-        virtualinvoke $r4.<safetyChecker.Edge: void setReturnUnit(soot.Unit)>($r5);
+        $r5 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r6 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r6 = virtualinvoke $r5.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkTrue()>();
 
-        $r7 = virtualinvoke $r6.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkTrue()>();
-
-        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>($r7);
+        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>($r6);
 
         return 1;
     }
@@ -1022,16 +1019,16 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
     private boolean convertAssignStmtEdge(safetyChecker.Edge)
     {
         safetyChecker.z3ScriptManager.Z3ScriptHandler r0;
-        safetyChecker.Edge r1;
+        safetyChecker.Edge r1, $r64, $r70, $r71;
         soot.jimple.AssignStmt r2;
-        soot.Value r3, r74, r93, r94, r95, r96, r97, r98, r99, r100, r101, r103, r105, r107;
-        soot.Type r4, $r14, $r34, $r36, $r40, $r44, $r61, $r70;
-        com.microsoft.z3.BoolExpr r5, r77, r78, r79, r80, r81, r82, r83, r85, r77_1, r77_2;
-        java.lang.Object[] $r6, $r16, $r21, $r26;
-        safetyChecker.Vertex $r8, $r20, $r25, $r31, $r52, $r65;
-        java.lang.StringBuilder $r9, $r10, $r11, $r18, $r23, $r28, $r55, r86, r89, r90, r91, r92;
+        soot.Value r3, r81, r100, r101, r102, r103, r104, r105, r106, r107, r108, r110, r112, r114;
+        soot.Type r4, $r14, $r34, $r36, $r40, $r44, $r61, $r77;
+        com.microsoft.z3.BoolExpr r5, r84, r85, r86, r87, r88, r89, r90, r92, r84_1, r84_2;
+        java.lang.Object[] $r6, $r16, $r21, $r26, $r62, $r63, $r65, $r66;
+        safetyChecker.Vertex $r8, $r20, $r25, $r31, $r52, $r72;
+        java.lang.StringBuilder $r9, $r10, $r11, $r18, $r23, $r28, $r55, r93, r96, r97, r98, r99;
         java.lang.String $r12, $r15, $r19, $r24, $r29, $r35, $r37, $r56;
-        soot.Unit $r13, r73;
+        soot.Unit $r13, r80;
         boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15, $z16, $z17, $z18, $z19;
         int $i0, $i1, $i2, $i3, $i4, $i5;
         safetyChecker.z3ScriptManager.Z3JavaMathLibrary $r30, $r49, $r50, $r58;
@@ -1042,15 +1039,15 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
         safetyChecker.z3ScriptManager.Z3JavaStringLibrary $r51, $r57;
         soot.jimple.InvokeExpr $r59;
         soot.SootMethod $r60;
-        java.util.List $r62;
-        java.lang.Object $r63, r72, r75, r72_1, r72_2, r72_3, r75_1, r75_2, r75_3, r75_4, r75_5, r75_6;
-        soot.ValueBox $r64;
-        soot.RefType $r67, $r71;
-        soot.jimple.IntConstant $r68;
-        com.microsoft.z3.Expr r76, r102, r104, r106, r108, r109;
-        soot.jimple.StringConstant r84;
-        soot.jimple.internal.JNewExpr r87;
-        soot.jimple.internal.JNewArrayExpr r88;
+        java.util.List $r67;
+        java.lang.Object $r68, r79, r82, r79_1, r79_2, r79_3, r82_1, r82_2, r82_3, r82_4, r82_5, r82_6;
+        soot.ValueBox $r69;
+        soot.RefType $r74, $r78;
+        soot.jimple.IntConstant $r75;
+        com.microsoft.z3.Expr r83, r109, r111, r113, r115, r116;
+        soot.jimple.StringConstant r91;
+        soot.jimple.internal.JNewExpr r94;
+        soot.jimple.internal.JNewArrayExpr r95;
 
         r0 := @this: safetyChecker.z3ScriptManager.Z3ScriptHandler;
 
@@ -1058,13 +1055,13 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r6 = newarray (java.lang.Object)[1];
 
-        r86 = new java.lang.StringBuilder;
+        r93 = new java.lang.StringBuilder;
 
-        specialinvoke r86.<java.lang.StringBuilder: void <init>(java.lang.String)>("Z3ScriptHandler.convertAssignStmtEdge=");
+        specialinvoke r93.<java.lang.StringBuilder: void <init>(java.lang.String)>("Z3ScriptHandler.convertAssignStmtEdge=");
 
         $r8 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $r9 = virtualinvoke r86.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
+        $r9 = virtualinvoke r93.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
 
         $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("***");
 
@@ -1082,7 +1079,7 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         r3 = interfaceinvoke r2.<soot.jimple.AssignStmt: soot.Value getLeftOp()>();
 
-        r72 = interfaceinvoke r2.<soot.jimple.AssignStmt: soot.Value getRightOp()>();
+        r79 = interfaceinvoke r2.<soot.jimple.AssignStmt: soot.Value getRightOp()>();
 
         $r14 = interfaceinvoke r3.<soot.Value: soot.Type getType()>();
 
@@ -1090,49 +1087,49 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z0 == 0 goto label01;
 
-        $z19 = r72 instanceof soot.jimple.VirtualInvokeExpr;
+        $z19 = r79 instanceof soot.jimple.VirtualInvokeExpr;
 
         if $z19 == 0 goto label01;
 
-        r87 = new soot.jimple.internal.JNewExpr;
+        r94 = new soot.jimple.internal.JNewExpr;
 
-        $r70 = interfaceinvoke r3.<soot.Value: soot.Type getType()>();
+        $r77 = interfaceinvoke r3.<soot.Value: soot.Type getType()>();
 
-        $r71 = (soot.RefType) $r70;
+        $r78 = (soot.RefType) $r77;
 
-        specialinvoke r87.<soot.jimple.internal.JNewExpr: void <init>(soot.RefType)>($r71);
+        specialinvoke r94.<soot.jimple.internal.JNewExpr: void <init>(soot.RefType)>($r78);
 
-        r72_1 = r87;
+        r79_1 = r94;
 
 (0)     goto label02;
 
      label01:
-        $r15 = virtualinvoke r72.<java.lang.Object: java.lang.String toString()>();
+        $r15 = virtualinvoke r79.<java.lang.Object: java.lang.String toString()>();
 
         $z1 = virtualinvoke $r15.<java.lang.String: boolean contains(java.lang.CharSequence)>("java.lang.String[] split(java.lang.String)");
 
 (1)     if $z1 == 0 goto label02;
 
-        r88 = new soot.jimple.internal.JNewArrayExpr;
+        r95 = new soot.jimple.internal.JNewArrayExpr;
 
-        $r67 = staticinvoke <soot.RefType: soot.RefType v(java.lang.String)>("java.lang.String");
+        $r74 = staticinvoke <soot.RefType: soot.RefType v(java.lang.String)>("java.lang.String");
 
-        $r68 = staticinvoke <soot.jimple.IntConstant: soot.jimple.IntConstant v(int)>(0);
+        $r75 = staticinvoke <soot.jimple.IntConstant: soot.jimple.IntConstant v(int)>(0);
 
-        specialinvoke r88.<soot.jimple.internal.JNewArrayExpr: void <init>(soot.Type,soot.Value)>($r67, $r68);
+        specialinvoke r95.<soot.jimple.internal.JNewArrayExpr: void <init>(soot.Type,soot.Value)>($r74, $r75);
 
-(2)     r72_2 = r88;
+(2)     r79_2 = r95;
 
      label02:
-        r72_3 = Phi(r72_1 #0, r72 #1, r72_2 #2);
+        r79_3 = Phi(r79_1 #0, r79 #1, r79_2 #2);
 
         $r16 = newarray (java.lang.Object)[1];
 
-        r89 = new java.lang.StringBuilder;
+        r96 = new java.lang.StringBuilder;
 
-        specialinvoke r89.<java.lang.StringBuilder: void <init>(java.lang.String)>("right=");
+        specialinvoke r96.<java.lang.StringBuilder: void <init>(java.lang.String)>("right=");
 
-        $r18 = virtualinvoke r89.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r72_3);
+        $r18 = virtualinvoke r96.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r79_3);
 
         $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -1146,7 +1143,7 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z2 == 0 goto label03;
 
-        $r59 = (soot.jimple.InvokeExpr) r72_3;
+        $r59 = (soot.jimple.InvokeExpr) r79_3;
 
         $r60 = interfaceinvoke $r59.<soot.jimple.InvokeExpr: soot.SootMethod getMethod()>();
 
@@ -1156,26 +1153,56 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z18 != 0 goto label03;
 
-        r73 = virtualinvoke r1.<safetyChecker.Edge: soot.Unit getReturnUnit()>();
+        $r62 = newarray (java.lang.Object)[1];
 
-        $r62 = interfaceinvoke r73.<soot.Unit: java.util.List getUseBoxes()>();
+        $r62[0] = "******";
 
-        $r63 = interfaceinvoke $r62.<java.util.List: java.lang.Object get(int)>(0);
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatal(java.lang.Object[])>($r62);
 
-        $r64 = (soot.ValueBox) $r63;
+        $r63 = newarray (java.lang.Object)[1];
 
-        r74 = interfaceinvoke $r64.<soot.ValueBox: soot.Value getValue()>();
+        $r63[0] = "here we go";
 
-        $r65 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
+        staticinvoke <safetyChecker.utilities.LogUtils: void infoln(java.lang.Object[])>($r63);
 
-        $i5 = virtualinvoke $r65.<safetyChecker.Vertex: int getDistance()>();
+        $r64 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Edge getFunctionReturn()>();
 
-        r75 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r74, 0, r1, $i5);
+        r80 = virtualinvoke $r64.<safetyChecker.Edge: soot.Unit getUnit()>();
+
+        $r65 = newarray (java.lang.Object)[1];
+
+        $r65[0] = "******";
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatal(java.lang.Object[])>($r65);
+
+        $r66 = newarray (java.lang.Object)[1];
+
+        $r66[0] = r80;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r66);
+
+        $r67 = interfaceinvoke r80.<soot.Unit: java.util.List getUseBoxes()>();
+
+        $r68 = interfaceinvoke $r67.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r69 = (soot.ValueBox) $r68;
+
+        r81 = interfaceinvoke $r69.<soot.ValueBox: soot.Value getValue()>();
+
+        $r70 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Edge getFunctionReturn()>();
+
+        $r71 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Edge getFunctionReturn()>();
+
+        $r72 = virtualinvoke $r71.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
+
+        $i5 = virtualinvoke $r72.<safetyChecker.Vertex: int getDistance()>();
+
+        r82 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r81, 0, $r70, $i5);
 
 (3)     goto label09;
 
      label03:
-        $z3 = r72_3 instanceof soot.jimple.InvokeExpr;
+        $z3 = r79_3 instanceof soot.jimple.InvokeExpr;
 
         if $z3 == 0 goto label08;
 
@@ -1185,34 +1212,34 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r50 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3JavaMathLibrary z3MathLibrary>;
 
-        r93 = (soot.Value) r72_3;
+        r100 = (soot.Value) r79_3;
 
-        $z14 = virtualinvoke $r50.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: boolean isJavaMathLibrary(soot.Value)>(r93);
+        $z14 = virtualinvoke $r50.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: boolean isJavaMathLibrary(soot.Value)>(r100);
 
         if $z14 == 0 goto label04;
 
         $r58 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3JavaMathLibrary z3MathLibrary>;
 
-        r94 = (soot.Value) r72_3;
+        r101 = (soot.Value) r79_3;
 
-        r75_1 = virtualinvoke $r58.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: com.microsoft.z3.Expr createMathEquality(soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r94, r0, r1);
+        r82_1 = virtualinvoke $r58.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: com.microsoft.z3.Expr createMathEquality(soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r101, r0, r1);
 
 (4)     goto label09;
 
      label04:
         $r51 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3JavaStringLibrary z3StringLibrary>;
 
-        r95 = (soot.Value) r72_3;
+        r102 = (soot.Value) r79_3;
 
-        $z15 = virtualinvoke $r51.<safetyChecker.z3ScriptManager.Z3JavaStringLibrary: boolean isJavaStringLibrary(soot.Value)>(r95);
+        $z15 = virtualinvoke $r51.<safetyChecker.z3ScriptManager.Z3JavaStringLibrary: boolean isJavaStringLibrary(soot.Value)>(r102);
 
         if $z15 == 0 goto label05;
 
         $r57 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3JavaStringLibrary z3StringLibrary>;
 
-        r96 = (soot.Value) r72_3;
+        r103 = (soot.Value) r79_3;
 
-        r75_2 = virtualinvoke $r57.<safetyChecker.z3ScriptManager.Z3JavaStringLibrary: com.microsoft.z3.Expr createStringEquality(soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r96, r0, r1);
+        r82_2 = virtualinvoke $r57.<safetyChecker.z3ScriptManager.Z3JavaStringLibrary: com.microsoft.z3.Expr createStringEquality(soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r103, r0, r1);
 
 (5)     goto label09;
 
@@ -1221,9 +1248,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z16 != 0 goto label06;
 
-        r97 = (soot.Value) r72_3;
+        r104 = (soot.Value) r79_3;
 
-        $z17 = staticinvoke <safetyChecker.UnitController: boolean isArraysEqualsInvoke(soot.Value)>(r97);
+        $z17 = staticinvoke <safetyChecker.UnitController: boolean isArraysEqualsInvoke(soot.Value)>(r104);
 
         if $z17 == 0 goto label07;
 
@@ -1232,26 +1259,26 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $i3 = virtualinvoke $r52.<safetyChecker.Vertex: int getDistance()>();
 
-        r98 = (soot.Value) r72_3;
+        r105 = (soot.Value) r79_3;
 
-        r75_4 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r98, 0, r1, $i3);
+        r82_4 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r105, 0, r1, $i3);
 
 (6)     goto label09;
 
      label07:
         $r54 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r90 = new java.lang.StringBuilder;
+        r97 = new java.lang.StringBuilder;
 
-        specialinvoke r90.<java.lang.StringBuilder: void <init>(java.lang.String)>("nonSubFunction_");
+        specialinvoke r97.<java.lang.StringBuilder: void <init>(java.lang.String)>("nonSubFunction_");
 
         $i4 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: int getRealArraySize(java.lang.String)>("nonSubFunction_");
 
-        $r55 = virtualinvoke r90.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i4);
+        $r55 = virtualinvoke r97.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i4);
 
         $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        r75_3 = virtualinvoke $r54.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>($r56);
+        r82_3 = virtualinvoke $r54.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>($r56);
 
 (7)     goto label09;
 
@@ -1260,40 +1287,40 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $i0 = virtualinvoke $r20.<safetyChecker.Vertex: int getDistance()>();
 
-        r99 = (soot.Value) r72_3;
+        r106 = (soot.Value) r79_3;
 
-(8)     r75_5 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r99, 0, r1, $i0);
+(8)     r82_5 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r106, 0, r1, $i0);
 
      label09:
-        r75_6 = Phi(r75 #3, r75_1 #4, r75_2 #5, r75_4 #6, r75_3 #7, r75_5 #8);
+        r82_6 = Phi(r82 #3, r82_1 #4, r82_2 #5, r82_4 #6, r82_3 #7, r82_5 #8);
 
         $r21 = newarray (java.lang.Object)[1];
 
-        r91 = new java.lang.StringBuilder;
+        r98 = new java.lang.StringBuilder;
 
-        specialinvoke r91.<java.lang.StringBuilder: void <init>(java.lang.String)>("rightZ3=");
+        specialinvoke r98.<java.lang.StringBuilder: void <init>(java.lang.String)>("rightZ3=");
 
-        $r23 = virtualinvoke r91.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r75_6);
+        $r23 = virtualinvoke r98.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r82_6);
 
         $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.String toString()>();
 
         $r21[0] = $r24;
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r21);
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r21);
 
         $r25 = virtualinvoke r1.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
         $i1 = virtualinvoke $r25.<safetyChecker.Vertex: int getDistance()>();
 
-        r76 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r3, 1, r1, $i1);
+        r83 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r3, 1, r1, $i1);
 
         $r26 = newarray (java.lang.Object)[1];
 
-        r92 = new java.lang.StringBuilder;
+        r99 = new java.lang.StringBuilder;
 
-        specialinvoke r92.<java.lang.StringBuilder: void <init>(java.lang.String)>("leftZ3=");
+        specialinvoke r99.<java.lang.StringBuilder: void <init>(java.lang.String)>("leftZ3=");
 
-        $r28 = virtualinvoke r92.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r76);
+        $r28 = virtualinvoke r99.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r83);
 
         $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -1303,17 +1330,17 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r30 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3JavaMathLibrary z3MathLibrary>;
 
-        r100 = (soot.Value) r72_3;
+        r107 = (soot.Value) r79_3;
 
-        $z4 = virtualinvoke $r30.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: boolean isModulusInstruction(soot.Value)>(r100);
+        $z4 = virtualinvoke $r30.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: boolean isModulusInstruction(soot.Value)>(r107);
 
         if $z4 == 0 goto label10;
 
         $r49 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3JavaMathLibrary z3MathLibrary>;
 
-        r101 = (soot.Value) r72_3;
+        r108 = (soot.Value) r79_3;
 
-        r77 = virtualinvoke $r49.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: com.microsoft.z3.BoolExpr createModuleExpr(com.microsoft.z3.Expr,soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r76, r101, r0, r1);
+        r84 = virtualinvoke $r49.<safetyChecker.z3ScriptManager.Z3JavaMathLibrary: com.microsoft.z3.BoolExpr createModuleExpr(com.microsoft.z3.Expr,soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r83, r108, r0, r1);
 
 (9)     goto label11;
 
@@ -1322,20 +1349,20 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $i2 = virtualinvoke $r31.<safetyChecker.Vertex: int getDistance()>();
 
-        r102 = (com.microsoft.z3.Expr) r75_6;
+        r109 = (com.microsoft.z3.Expr) r82_6;
 
-(10)    r77_1 = specialinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.BoolExpr convertAssignStmt(com.microsoft.z3.Expr,com.microsoft.z3.Expr,soot.Type,soot.Value,int)>(r102, r76, r4, r3, $i2);
+(10)    r84_1 = specialinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.BoolExpr convertAssignStmt(com.microsoft.z3.Expr,com.microsoft.z3.Expr,soot.Type,soot.Value,int)>(r109, r83, r4, r3, $i2);
 
      label11:
-        r77_2 = Phi(r77 #9, r77_1 #10);
+        r84_2 = Phi(r84 #9, r84_1 #10);
 
-        $z5 = r72_3 instanceof soot.jimple.AnyNewExpr;
+        $z5 = r79_3 instanceof soot.jimple.AnyNewExpr;
 
         if $z5 == 0 goto label15;
 
-        r103 = (soot.Value) r72_3;
+        r110 = (soot.Value) r79_3;
 
-        $r36 = interfaceinvoke r103.<soot.Value: soot.Type getType()>();
+        $r36 = interfaceinvoke r110.<soot.Value: soot.Type getType()>();
 
         $r37 = virtualinvoke $r36.<soot.Type: java.lang.String toString()>();
 
@@ -1343,93 +1370,93 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z9 == 0 goto label12;
 
-        r104 = (com.microsoft.z3.Expr) r75_6;
+        r111 = (com.microsoft.z3.Expr) r82_6;
 
-        r78 = staticinvoke <safetyChecker.z3ScriptManager.Z3StringHandler: com.microsoft.z3.BoolExpr covertString(soot.jimple.StringConstant,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr)>(null, r0, r104);
+        r85 = staticinvoke <safetyChecker.z3ScriptManager.Z3StringHandler: com.microsoft.z3.BoolExpr covertString(soot.jimple.StringConstant,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr)>(null, r0, r111);
 
         $r48 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
         $r47 = newarray (com.microsoft.z3.BoolExpr)[2];
 
-        $r47[0] = r77_2;
+        $r47[0] = r84_2;
 
-        $r47[1] = r78;
+        $r47[1] = r85;
 
-        r79 = virtualinvoke $r48.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r47);
+        r86 = virtualinvoke $r48.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r47);
 
-        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r79);
+        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r86);
 
      label12:
-        $z10 = r72_3 instanceof soot.jimple.NewArrayExpr;
+        $z10 = r79_3 instanceof soot.jimple.NewArrayExpr;
 
         if $z10 == 0 goto label13;
 
         $r43 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3ArrayHandler arrayHandler>;
 
-        r105 = (soot.Value) r72_3;
+        r112 = (soot.Value) r79_3;
 
-        $r44 = interfaceinvoke r105.<soot.Value: soot.Type getType()>();
+        $r44 = interfaceinvoke r112.<soot.Value: soot.Type getType()>();
 
-        r106 = (com.microsoft.z3.Expr) r75_6;
+        r113 = (com.microsoft.z3.Expr) r82_6;
 
-        r80 = virtualinvoke $r43.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.BoolExpr newArrayExpr(com.microsoft.z3.Expr,soot.Type,safetyChecker.z3ScriptManager.Z3ScriptHandler)>(r106, $r44, r0);
+        r87 = virtualinvoke $r43.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.BoolExpr newArrayExpr(com.microsoft.z3.Expr,soot.Type,safetyChecker.z3ScriptManager.Z3ScriptHandler)>(r113, $r44, r0);
 
         $r46 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
         $r45 = newarray (com.microsoft.z3.BoolExpr)[2];
 
-        $r45[0] = r77_2;
+        $r45[0] = r84_2;
 
-        $r45[1] = r80;
+        $r45[1] = r87;
 
-        r81 = virtualinvoke $r46.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r45);
+        r88 = virtualinvoke $r46.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r45);
 
-        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r81);
+        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r88);
 
         goto label18;
 
      label13:
-        $z11 = r72_3 instanceof soot.jimple.NewMultiArrayExpr;
+        $z11 = r79_3 instanceof soot.jimple.NewMultiArrayExpr;
 
         if $z11 == 0 goto label14;
 
         $r38 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3ArrayHandler arrayHandler>;
 
-        $r39 = (soot.jimple.NewMultiArrayExpr) r72_3;
+        $r39 = (soot.jimple.NewMultiArrayExpr) r79_3;
 
-        r107 = (soot.Value) r72_3;
+        r114 = (soot.Value) r79_3;
 
-        $r40 = interfaceinvoke r107.<soot.Value: soot.Type getType()>();
+        $r40 = interfaceinvoke r114.<soot.Value: soot.Type getType()>();
 
-        r108 = (com.microsoft.z3.Expr) r75_6;
+        r115 = (com.microsoft.z3.Expr) r82_6;
 
-        r82 = virtualinvoke $r38.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.BoolExpr newMultiArrayExpr(soot.jimple.NewMultiArrayExpr,soot.Type,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr)>($r39, $r40, r0, r108);
+        r89 = virtualinvoke $r38.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.BoolExpr newMultiArrayExpr(soot.jimple.NewMultiArrayExpr,soot.Type,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr)>($r39, $r40, r0, r115);
 
         $r42 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
         $r41 = newarray (com.microsoft.z3.BoolExpr)[2];
 
-        $r41[0] = r77_2;
+        $r41[0] = r84_2;
 
-        $r41[1] = r82;
+        $r41[1] = r89;
 
-        r83 = virtualinvoke $r42.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r41);
+        r90 = virtualinvoke $r42.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r41);
 
-        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r83);
+        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r90);
 
         goto label18;
 
      label14:
-        $z12 = r72_3 instanceof soot.jimple.NewExpr;
+        $z12 = r79_3 instanceof soot.jimple.NewExpr;
 
         if $z12 == 0 goto label18;
 
-        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r77_2);
+        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r84_2);
 
         goto label18;
 
      label15:
-        $z6 = r72_3 instanceof soot.jimple.StringConstant;
+        $z6 = r79_3 instanceof soot.jimple.StringConstant;
 
         if $z6 != 0 goto label16;
 
@@ -1439,26 +1466,26 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z7 == 0 goto label17;
 
-        $r35 = virtualinvoke r72_3.<java.lang.Object: java.lang.String toString()>();
+        $r35 = virtualinvoke r79_3.<java.lang.Object: java.lang.String toString()>();
 
         $z8 = virtualinvoke $r35.<java.lang.String: boolean contains(java.lang.CharSequence)>("readLine");
 
         if $z8 == 0 goto label17;
 
      label16:
-        r84 = (soot.jimple.StringConstant) r72_3;
+        r91 = (soot.jimple.StringConstant) r79_3;
 
-        r109 = (com.microsoft.z3.Expr) r75_6;
+        r116 = (com.microsoft.z3.Expr) r82_6;
 
-        r85 = staticinvoke <safetyChecker.z3ScriptManager.Z3StringHandler: com.microsoft.z3.BoolExpr covertString(soot.jimple.StringConstant,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr)>(r84, r0, r109);
+        r92 = staticinvoke <safetyChecker.z3ScriptManager.Z3StringHandler: com.microsoft.z3.BoolExpr covertString(soot.jimple.StringConstant,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr)>(r91, r0, r116);
 
         $r33 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
         $r32 = newarray (com.microsoft.z3.BoolExpr)[2];
 
-        $r32[0] = r77_2;
+        $r32[0] = r84_2;
 
-        $r32[1] = r85;
+        $r32[1] = r92;
 
         r5 = virtualinvoke $r33.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkAnd(com.microsoft.z3.BoolExpr[])>($r32);
 
@@ -1467,10 +1494,10 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
         goto label18;
 
      label17:
-        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r77_2);
+        virtualinvoke r1.<safetyChecker.Edge: void setZ3Expr(com.microsoft.z3.BoolExpr)>(r84_2);
 
      label18:
-        if r77_2 != null goto label19;
+        if r84_2 != null goto label19;
 
         return 0;
 
@@ -1657,37 +1684,39 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
     private com.microsoft.z3.Expr convertPrimitiveValue(soot.Value, boolean, safetyChecker.Edge, int)
     {
         safetyChecker.z3ScriptManager.Z3ScriptHandler r0;
-        soot.Value r1, r4, r97, r102, r102_1, r102_2, r102_3, r102_4, r102_5, r102_6;
-        boolean z0, z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15, $z16, $z17;
-        safetyChecker.Edge r2, $r37, r101, r101_1, r101_2, r101_3, r101_4, r101_5, r101_6;
+        soot.Value r1, r4, r113, r118, r118_1, r118_2, r118_3, r118_4, r118_5, r118_6;
+        boolean z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15, $z16, $z17, z18;
+        safetyChecker.Edge r2, $r37, r117, r117_1, r117_2, r117_3, r117_4, r117_5, r117_6;
         int i0, $i1, $i2, $i3, $i4, $i5, i6;
         java.util.Iterator r3;
         soot.Unit r5, r6;
-        java.lang.Object[] $r7, $r11, $r12, $r19, $r23, $r28, $r32, $r39, $r45, $r53;
-        java.lang.StringBuilder $r9, $r15, $r16, $r17, $r25, $r30, $r34, $r41, $r42, $r43, $r47, $r48, $r50, $r55, $r69, r110, r111, r112, r113, r114, r115, r116, r117, r118;
-        java.lang.String $r10, $r18, $r26, $r31, $r35, $r44, $r51, $r56, $r67, $r68, r87, r89;
-        safetyChecker.Vertex $r14, $r36, $r38, $r49, $r52, r104, r104_1, r104_2, r104_3;
+        java.lang.Object[] $r7, $r11, $r12, $r19, $r23, $r28, $r32, $r39, $r45, $r53, $r92;
+        java.lang.StringBuilder $r9, $r15, $r16, $r17, $r25, $r30, $r34, $r41, $r42, $r43, $r47, $r48, $r50, $r55, $r72, $r95, r126, r127, r128, r130, r131, r132, r133, r134, r135, r136;
+        java.lang.String $r10, $r18, $r26, $r31, $r35, $r44, $r51, $r56, $r70, $r71, $r94, $r96, r101, r102, r104;
+        safetyChecker.Vertex $r14, $r36, $r38, $r49, $r52, r120, r120_1, r120_2, r120_3;
         safetyChecker.z3ScriptManager.Z3ArrayHandler $r20, $r21;
-        com.microsoft.z3.Expr $r22, $r58, $r62, $r65, r107, r109, r119;
-        java.lang.Object $r27, $r64, r105, r105_1, r105_2;
-        com.microsoft.z3.InterpolationContext $r57, $r59, $r60, $r72, $r75, $r79, $r82;
+        com.microsoft.z3.Expr $r22, $r58, $r62, $r68, r123, r125, r137;
+        java.lang.Object $r27, $r65, $r67, $r75, r121, r121_1, r121_2;
+        com.microsoft.z3.InterpolationContext $r57, $r59, $r60, $r78, $r81, $r85, $r88;
         soot.jimple.BinopExpr $r61;
-        java.util.Map $r63, $r70, $r73, $r76, $r80, $r83;
-        com.microsoft.z3.IntSort $r77, $r84;
-        soot.Local r86;
-        soot.Type r88;
-        com.microsoft.z3.IntExpr r90, r90_1, r90_2, r90_3, r90_4;
-        soot.jimple.Constant r91;
-        soot.jimple.IntConstant r92;
-        com.microsoft.z3.IntNum r93, r95;
-        soot.jimple.LongConstant r94;
+        safetyChecker.ProgramTree $r63;
+        java.util.Map $r64, $r66, $r73, $r74, $r76, $r79, $r82, $r86, $r89, $r98;
+        com.microsoft.z3.IntSort $r83, $r90;
+        soot.Local r100;
+        soot.Type r103;
+        com.microsoft.z3.IntExpr r105, r105_1, r105_2, r105_3, r105_4;
+        java.util.HashMap r106, r129;
+        soot.jimple.Constant r107;
+        soot.jimple.IntConstant r108;
+        com.microsoft.z3.IntNum r109, r111;
+        soot.jimple.LongConstant r110;
         long l7;
-        soot.jimple.CastExpr r96;
-        soot.shimple.PhiExpr r98;
-        java.util.List r99;
-        soot.toolkits.scalar.ValueUnitPair r103;
-        soot.jimple.ArrayRef r106;
-        soot.jimple.InstanceFieldRef r108;
+        soot.jimple.CastExpr r112;
+        soot.shimple.PhiExpr r114;
+        java.util.List r115;
+        soot.toolkits.scalar.ValueUnitPair r119;
+        soot.jimple.ArrayRef r122;
+        soot.jimple.InstanceFieldRef r124;
 
         r0 := @this: safetyChecker.z3ScriptManager.Z3ScriptHandler;
 
@@ -1701,11 +1730,11 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r7 = newarray (java.lang.Object)[1];
 
-        r110 = new java.lang.StringBuilder;
+        r126 = new java.lang.StringBuilder;
 
-        specialinvoke r110.<java.lang.StringBuilder: void <init>(java.lang.String)>("Z3ScriptHandler.convertPrimitiveValue=");
+        specialinvoke r126.<java.lang.StringBuilder: void <init>(java.lang.String)>("Z3ScriptHandler.convertPrimitiveValue=");
 
-        $r9 = virtualinvoke r110.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+        $r9 = virtualinvoke r126.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
 
         $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -1713,97 +1742,142 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r7);
 
-        $z2 = r1 instanceof soot.Local;
+        $z1 = r1 instanceof soot.Local;
 
-        if $z2 == 0 goto label04;
+        if $z1 == 0 goto label05;
 
-        r86 = (soot.Local) r1;
+        r100 = (soot.Local) r1;
 
-        r87 = interfaceinvoke r86.<soot.Local: java.lang.String getName()>();
+        r101 = interfaceinvoke r100.<soot.Local: java.lang.String getName()>();
 
-        if z0 == 0 goto label03;
+        $r63 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        r88 = interfaceinvoke r1.<soot.Value: soot.Type getType()>();
+        r102 = virtualinvoke $r63.<safetyChecker.ProgramTree: java.lang.String getProgramDefinition()>();
 
-        r111 = new java.lang.StringBuilder;
+        if z0 == 0 goto label04;
 
-        $r67 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r87);
+        r103 = interfaceinvoke r1.<soot.Value: soot.Type getType()>();
 
-        specialinvoke r111.<java.lang.StringBuilder: void <init>(java.lang.String)>($r67);
+        r127 = new java.lang.StringBuilder;
 
-        $r68 = specialinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getNameSuffix(safetyChecker.Edge)>(r2);
+        $r70 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r101);
 
-        $r69 = virtualinvoke r111.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r68);
+        specialinvoke r127.<java.lang.StringBuilder: void <init>(java.lang.String)>($r70);
 
-        r89 = virtualinvoke $r69.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r71 = specialinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getNameSuffix(safetyChecker.Edge)>(r2);
 
-        r90 = null;
+        $r72 = virtualinvoke r127.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r71);
 
-        $z16 = r88 instanceof soot.IntegerType;
+        r104 = virtualinvoke $r72.<java.lang.StringBuilder: java.lang.String toString()>();
 
-(0)     if $z16 == 0 goto label01;
+        r105 = null;
 
-        $r79 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r73 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
 
-        r90_1 = virtualinvoke $r79.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>(r89);
+        $z15 = interfaceinvoke $r73.<java.util.Map: boolean containsKey(java.lang.Object)>(r102);
 
-        $r80 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
+        if $z15 != 0 goto label01;
 
-        interfaceinvoke $r80.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r89, r87);
+        $r92 = newarray (java.lang.Object)[1];
 
-        $r83 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substituteSort>;
+        r128 = new java.lang.StringBuilder;
 
-        $r82 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r94 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r102);
 
-        $r84 = virtualinvoke $r82.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort mkIntSort()>();
+        specialinvoke r128.<java.lang.StringBuilder: void <init>(java.lang.String)>($r94);
 
-(1)     interfaceinvoke $r83.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r89, $r84);
+        $r95 = virtualinvoke r128.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" does not exist");
+
+        $r96 = virtualinvoke $r95.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r92[0] = $r96;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r92);
+
+        r129 = new java.util.HashMap;
+
+        specialinvoke r129.<java.util.HashMap: void <init>()>();
+
+        r106 = r129;
+
+        $r98 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
+
+        interfaceinvoke $r98.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r102, r106);
 
      label01:
-        r90_2 = Phi(r90 #0, r90_1 #1);
+        $z16 = r103 instanceof soot.IntegerType;
 
-        $z17 = r88 instanceof soot.LongType;
+(0)     if $z16 == 0 goto label02;
 
-(2)     if $z17 == 0 goto label02;
+        $r85 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r72 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        r105_1 = virtualinvoke $r85.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>(r104);
 
-        r90_3 = virtualinvoke $r72.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>(r89);
+        $r86 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
 
-        $r73 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
+        interfaceinvoke $r86.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r104, r101);
 
-        interfaceinvoke $r73.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r89, r87);
+        $r89 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substituteSort>;
 
-        $r76 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substituteSort>;
+        $r88 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r75 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r90 = virtualinvoke $r88.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort mkIntSort()>();
 
-        $r77 = virtualinvoke $r75.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort mkIntSort()>();
-
-(3)     interfaceinvoke $r76.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r89, $r77);
+(1)     interfaceinvoke $r89.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r104, $r90);
 
      label02:
-        r90_4 = Phi(r90_2 #2, r90_3 #3);
+        r105_2 = Phi(r105 #0, r105_1 #1);
 
-        $r70 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
+        $z17 = r103 instanceof soot.LongType;
 
-        interfaceinvoke $r70.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r87, r90_4);
+(2)     if $z17 == 0 goto label03;
 
-        return r90_4;
+        $r78 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        r105_3 = virtualinvoke $r78.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntExpr mkIntConst(java.lang.String)>(r104);
+
+        $r79 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
+
+        interfaceinvoke $r79.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r104, r101);
+
+        $r82 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substituteSort>;
+
+        $r81 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        $r83 = virtualinvoke $r81.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntSort mkIntSort()>();
+
+(3)     interfaceinvoke $r82.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r104, $r83);
 
      label03:
-        $r63 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
+        r105_4 = Phi(r105_2 #2, r105_3 #3);
 
-        $r64 = interfaceinvoke $r63.<java.util.Map: java.lang.Object get(java.lang.Object)>(r87);
+        $r74 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
 
-        $r65 = (com.microsoft.z3.Expr) $r64;
+        $r75 = interfaceinvoke $r74.<java.util.Map: java.lang.Object get(java.lang.Object)>(r102);
 
-        return $r65;
+        $r76 = (java.util.Map) $r75;
+
+        interfaceinvoke $r76.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r101, r105_4);
+
+        return r105_4;
 
      label04:
-        $z3 = r1 instanceof soot.jimple.BinopExpr;
+        $r64 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
 
-        if $z3 == 0 goto label05;
+        $r65 = interfaceinvoke $r64.<java.util.Map: java.lang.Object get(java.lang.Object)>(r102);
+
+        $r66 = (java.util.Map) $r65;
+
+        $r67 = interfaceinvoke $r66.<java.util.Map: java.lang.Object get(java.lang.Object)>(r101);
+
+        $r68 = (com.microsoft.z3.Expr) $r67;
+
+        return $r68;
+
+     label05:
+        $z2 = r1 instanceof soot.jimple.BinopExpr;
+
+        if $z2 == 0 goto label06;
 
         $r61 = (soot.jimple.BinopExpr) r1;
 
@@ -1811,90 +1885,90 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         return $r62;
 
-     label05:
-        $z4 = r1 instanceof soot.jimple.Constant;
+     label06:
+        $z3 = r1 instanceof soot.jimple.Constant;
 
-        if $z4 == 0 goto label07;
+        if $z3 == 0 goto label08;
 
-        r91 = (soot.jimple.Constant) r1;
+        r107 = (soot.jimple.Constant) r1;
 
-        $z14 = r91 instanceof soot.jimple.IntConstant;
+        $z13 = r107 instanceof soot.jimple.IntConstant;
 
-        if $z14 == 0 goto label06;
+        if $z13 == 0 goto label07;
 
-        r92 = (soot.jimple.IntConstant) r91;
+        r108 = (soot.jimple.IntConstant) r107;
 
-        i6 = r92.<soot.jimple.IntConstant: int value>;
+        i6 = r108.<soot.jimple.IntConstant: int value>;
 
         $r60 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r93 = virtualinvoke $r60.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(i6);
+        r109 = virtualinvoke $r60.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(i6);
 
-        return r93;
+        return r109;
 
-     label06:
-        $z15 = r91 instanceof soot.jimple.LongConstant;
+     label07:
+        $z14 = r107 instanceof soot.jimple.LongConstant;
 
-        if $z15 == 0 goto label07;
+        if $z14 == 0 goto label08;
 
-        r94 = (soot.jimple.LongConstant) r91;
+        r110 = (soot.jimple.LongConstant) r107;
 
-        l7 = r94.<soot.jimple.LongConstant: long value>;
+        l7 = r110.<soot.jimple.LongConstant: long value>;
 
         $r59 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r95 = virtualinvoke $r59.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(long)>(l7);
+        r111 = virtualinvoke $r59.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(long)>(l7);
 
-        return r95;
+        return r111;
 
-     label07:
-        $z5 = r1 instanceof soot.jimple.CastExpr;
+     label08:
+        $z4 = r1 instanceof soot.jimple.CastExpr;
 
-        if $z5 == 0 goto label08;
+        if $z4 == 0 goto label09;
 
-        r96 = (soot.jimple.CastExpr) r1;
+        r112 = (soot.jimple.CastExpr) r1;
 
-        r97 = interfaceinvoke r96.<soot.jimple.CastExpr: soot.Value getOp()>();
+        r113 = interfaceinvoke r112.<soot.jimple.CastExpr: soot.Value getOp()>();
 
-        $r58 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r97, z0, r2, i0);
+        $r58 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r113, z0, r2, i0);
 
         return $r58;
 
-     label08:
-        $z6 = r1 instanceof soot.shimple.PhiExpr;
+     label09:
+        $z5 = r1 instanceof soot.shimple.PhiExpr;
 
-        if $z6 == 0 goto label17;
+        if $z5 == 0 goto label18;
 
-        r98 = (soot.shimple.PhiExpr) r1;
+        r114 = (soot.shimple.PhiExpr) r1;
 
-        r99 = interfaceinvoke r98.<soot.shimple.PhiExpr: java.util.List getArgs()>();
+        r115 = interfaceinvoke r114.<soot.shimple.PhiExpr: java.util.List getArgs()>();
 
         virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        r101 = null;
+        r117 = null;
 
-        r102 = null;
+        r118 = null;
 
-        z1 = 0;
+        z18 = 0;
 
-        r3 = interfaceinvoke r99.<java.util.List: java.util.Iterator iterator()>();
+        r3 = interfaceinvoke r115.<java.util.List: java.util.Iterator iterator()>();
 
-(4)     goto label15;
+(4)     goto label16;
 
-     label09:
+     label10:
         $r27 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
 
-        r103 = (soot.toolkits.scalar.ValueUnitPair) $r27;
+        r119 = (soot.toolkits.scalar.ValueUnitPair) $r27;
 
-        r4 = virtualinvoke r103.<soot.toolkits.scalar.ValueUnitPair: soot.Value getValue()>();
+        r4 = virtualinvoke r119.<soot.toolkits.scalar.ValueUnitPair: soot.Value getValue()>();
 
         $r28 = newarray (java.lang.Object)[1];
 
-        r112 = new java.lang.StringBuilder;
+        r130 = new java.lang.StringBuilder;
 
-        specialinvoke r112.<java.lang.StringBuilder: void <init>(java.lang.String)>("valuePair=");
+        specialinvoke r130.<java.lang.StringBuilder: void <init>(java.lang.String)>("valuePair=");
 
-        $r30 = virtualinvoke r112.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r4);
+        $r30 = virtualinvoke r130.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r4);
 
         $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -1902,15 +1976,15 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r28);
 
-        r5 = virtualinvoke r103.<soot.toolkits.scalar.ValueUnitPair: soot.Unit getUnit()>();
+        r5 = virtualinvoke r119.<soot.toolkits.scalar.ValueUnitPair: soot.Unit getUnit()>();
 
         $r32 = newarray (java.lang.Object)[1];
 
-        r113 = new java.lang.StringBuilder;
+        r131 = new java.lang.StringBuilder;
 
-        specialinvoke r113.<java.lang.StringBuilder: void <init>(java.lang.String)>("unitPair=");
+        specialinvoke r131.<java.lang.StringBuilder: void <init>(java.lang.String)>("unitPair=");
 
-        $r34 = virtualinvoke r113.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r5);
+        $r34 = virtualinvoke r131.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r5);
 
         $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -1918,56 +1992,56 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r32);
 
-        r104_1 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.Vertex errorPathRoot>;
+        r120_1 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.Vertex errorPathRoot>;
 
-(5)     goto label14;
+(5)     goto label15;
 
-     label10:
-        $r37 = virtualinvoke r104_2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+     label11:
+        $r37 = virtualinvoke r120_2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
         r6 = virtualinvoke $r37.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-        $z13 = virtualinvoke r6.<java.lang.Object: boolean equals(java.lang.Object)>(r5);
+        $z12 = virtualinvoke r6.<java.lang.Object: boolean equals(java.lang.Object)>(r5);
 
-(6)     if $z13 == 0 goto label13;
+(6)     if $z12 == 0 goto label14;
 
-        if r101_2 != null goto label11;
+        if r117_2 != null goto label12;
 
-        r101_3 = virtualinvoke r104_2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        r117_3 = virtualinvoke r120_2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        r102_3 = r4;
+        r118_3 = r4;
 
-(7)     goto label12;
+(7)     goto label13;
 
-     label11:
-        $i1 = virtualinvoke r104_2.<safetyChecker.Vertex: int getDistance()>();
+     label12:
+        $i1 = virtualinvoke r120_2.<safetyChecker.Vertex: int getDistance()>();
 
-        $r38 = virtualinvoke r101_2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
+        $r38 = virtualinvoke r117_2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
         $i2 = virtualinvoke $r38.<safetyChecker.Vertex: int getDistance()>();
 
-(8)     if $i1 >= $i2 goto label12;
+(8)     if $i1 >= $i2 goto label13;
 
-        r101_4 = virtualinvoke r104_2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        r117_4 = virtualinvoke r120_2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-(9)     r102_4 = r4;
+(9)     r118_4 = r4;
 
-     label12:
-        r102_5 = Phi(r102_3 #7, r102_2 #8, r102_4 #9);
+     label13:
+        r118_5 = Phi(r118_3 #7, r118_2 #8, r118_4 #9);
 
-        r101_5 = Phi(r101_3 #7, r101_2 #8, r101_4 #9);
+        r117_5 = Phi(r117_3 #7, r117_2 #8, r117_4 #9);
 
         $r39 = newarray (java.lang.Object)[1];
 
-        r114 = new java.lang.StringBuilder;
+        r132 = new java.lang.StringBuilder;
 
-        specialinvoke r114.<java.lang.StringBuilder: void <init>(java.lang.String)>("phiEqualityUnit=");
+        specialinvoke r132.<java.lang.StringBuilder: void <init>(java.lang.String)>("phiEqualityUnit=");
 
-        $r41 = virtualinvoke r114.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r6);
+        $r41 = virtualinvoke r132.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r6);
 
         $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-- Dist-");
 
-        $i3 = virtualinvoke r104_2.<safetyChecker.Vertex: int getDistance()>();
+        $i3 = virtualinvoke r120_2.<safetyChecker.Vertex: int getDistance()>();
 
         $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
 
@@ -1979,15 +2053,15 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r45 = newarray (java.lang.Object)[1];
 
-        r115 = new java.lang.StringBuilder;
+        r133 = new java.lang.StringBuilder;
 
-        specialinvoke r115.<java.lang.StringBuilder: void <init>(java.lang.String)>("resultunit=");
+        specialinvoke r133.<java.lang.StringBuilder: void <init>(java.lang.String)>("resultunit=");
 
-        $r47 = virtualinvoke r115.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r101_5);
+        $r47 = virtualinvoke r133.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r117_5);
 
         $r48 = virtualinvoke $r47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" -- Dis=");
 
-        $r49 = virtualinvoke r101_5.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
+        $r49 = virtualinvoke r117_5.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
         $i4 = virtualinvoke $r49.<safetyChecker.Vertex: int getDistance()>();
 
@@ -1999,57 +2073,57 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
 (10)    staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r45);
 
-     label13:
-        r102_6 = Phi(r102_2 #6, r102_5 #10);
-
-        r101_6 = Phi(r101_2 #6, r101_5 #10);
-
-(11)    r104_3 = virtualinvoke r104_2.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
-
      label14:
-        r102_2 = Phi(r102_1 #5, r102_6 #11);
+        r118_6 = Phi(r118_2 #6, r118_5 #10);
 
-        r104_2 = Phi(r104_1 #5, r104_3 #11);
+        r117_6 = Phi(r117_2 #6, r117_5 #10);
 
-        r101_2 = Phi(r101_1 #5, r101_6 #11);
+(11)    r120_3 = virtualinvoke r120_2.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
+
+     label15:
+        r118_2 = Phi(r118_1 #5, r118_6 #11);
+
+        r120_2 = Phi(r120_1 #5, r120_3 #11);
+
+        r117_2 = Phi(r117_1 #5, r117_6 #11);
 
         $r36 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-(12)    if r104_2 != $r36 goto label10;
+(12)    if r120_2 != $r36 goto label11;
 
-     label15:
-        r102_1 = Phi(r102 #4, r102_2 #12);
+     label16:
+        r118_1 = Phi(r118 #4, r118_2 #12);
 
-        r104 = Phi(r104 #4, r104_2 #12);
+        r120 = Phi(r120 #4, r120_2 #12);
 
-        r101_1 = Phi(r101 #4, r101_2 #12);
+        r117_1 = Phi(r117 #4, r117_2 #12);
 
-        $z12 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+        $z11 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
-        if $z12 != 0 goto label09;
+        if $z11 != 0 goto label10;
 
         $r52 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
         $i5 = virtualinvoke $r52.<safetyChecker.Vertex: int getDistance()>();
 
-        r105 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r102_1, 0, r2, $i5);
+        r121 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr convertValue(soot.Value,boolean,safetyChecker.Edge,int)>(r118_1, 0, r2, $i5);
 
-(13)    if r105 != null goto label16;
+(13)    if r121 != null goto label17;
 
         $r57 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-(14)    r105_1 = virtualinvoke $r57.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(0);
+(14)    r121_1 = virtualinvoke $r57.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.IntNum mkInt(int)>(0);
 
-     label16:
-        r105_2 = Phi(r105 #13, r105_1 #14);
+     label17:
+        r121_2 = Phi(r121 #13, r121_1 #14);
 
         $r53 = newarray (java.lang.Object)[1];
 
-        r116 = new java.lang.StringBuilder;
+        r134 = new java.lang.StringBuilder;
 
-        specialinvoke r116.<java.lang.StringBuilder: void <init>(java.lang.String)>("resultExpr=");
+        specialinvoke r134.<java.lang.StringBuilder: void <init>(java.lang.String)>("resultExpr=");
 
-        $r55 = virtualinvoke r116.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r105_2);
+        $r55 = virtualinvoke r134.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r121_2);
 
         $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -2057,26 +2131,26 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r53);
 
-        r119 = (com.microsoft.z3.Expr) r105_2;
+        r137 = (com.microsoft.z3.Expr) r121_2;
 
-        return r119;
+        return r137;
 
-     label17:
-        $z7 = r1 instanceof soot.jimple.InvokeExpr;
+     label18:
+        $z6 = r1 instanceof soot.jimple.InvokeExpr;
 
-        if $z7 == 0 goto label18;
+        if $z6 == 0 goto label19;
 
-        $z11 = virtualinvoke r2.<safetyChecker.Edge: boolean isFunctionCall()>();
+        $z10 = virtualinvoke r2.<safetyChecker.Edge: boolean isFunctionCall()>();
 
-        if $z11 == 0 goto label18;
+        if $z10 == 0 goto label19;
 
         $r23 = newarray (java.lang.Object)[1];
 
-        r117 = new java.lang.StringBuilder;
+        r135 = new java.lang.StringBuilder;
 
-        specialinvoke r117.<java.lang.StringBuilder: void <init>(java.lang.String)>("****");
+        specialinvoke r135.<java.lang.StringBuilder: void <init>(java.lang.String)>("****");
 
-        $r25 = virtualinvoke r117.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+        $r25 = virtualinvoke r135.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
 
         $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
 
@@ -2084,42 +2158,42 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r23);
 
-     label18:
-        $z8 = r1 instanceof soot.jimple.ArrayRef;
+     label19:
+        $z7 = r1 instanceof soot.jimple.ArrayRef;
 
-        if $z8 == 0 goto label19;
+        if $z7 == 0 goto label20;
 
-        r106 = (soot.jimple.ArrayRef) r1;
+        r122 = (soot.jimple.ArrayRef) r1;
 
         $r21 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3ArrayHandler arrayHandler>;
 
-        $r22 = virtualinvoke $r21.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.Expr z3ArrayRef(soot.jimple.ArrayRef,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r106, r0, r2);
+        $r22 = virtualinvoke $r21.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.Expr z3ArrayRef(soot.jimple.ArrayRef,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r122, r0, r2);
 
         return $r22;
 
-     label19:
-        $z9 = staticinvoke <safetyChecker.UnitController: boolean isArraysEqualsInvoke(soot.Value)>(r1);
+     label20:
+        $z8 = staticinvoke <safetyChecker.UnitController: boolean isArraysEqualsInvoke(soot.Value)>(r1);
 
-        if $z9 == 0 goto label20;
+        if $z8 == 0 goto label21;
 
         $r20 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3ArrayHandler arrayHandler>;
 
-        r107 = virtualinvoke $r20.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.Expr z3ArraysEqual(soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r1, r0, r2);
+        r123 = virtualinvoke $r20.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.Expr z3ArraysEqual(soot.Value,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r1, r0, r2);
 
-        return r107;
-
-     label20:
-        $z10 = r1 instanceof soot.jimple.InstanceFieldRef;
-
-        if $z10 == 0 goto label21;
-
-        r108 = (soot.jimple.InstanceFieldRef) r1;
-
-        r109 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr z3ObjectField(soot.jimple.InstanceFieldRef,boolean,safetyChecker.Edge)>(r108, z0, r2);
-
-        return r109;
+        return r123;
 
      label21:
+        $z9 = r1 instanceof soot.jimple.InstanceFieldRef;
+
+        if $z9 == 0 goto label22;
+
+        r124 = (soot.jimple.InstanceFieldRef) r1;
+
+        r125 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.Expr z3ObjectField(soot.jimple.InstanceFieldRef,boolean,safetyChecker.Edge)>(r124, z0, r2);
+
+        return r125;
+
+     label22:
         $r11 = newarray (java.lang.Object)[1];
 
         $r11[0] = "returning null";
@@ -2128,13 +2202,13 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r12 = newarray (java.lang.Object)[1];
 
-        r118 = new java.lang.StringBuilder;
+        r136 = new java.lang.StringBuilder;
 
-        specialinvoke r118.<java.lang.StringBuilder: void <init>(java.lang.String)>("Vertex=");
+        specialinvoke r136.<java.lang.StringBuilder: void <init>(java.lang.String)>("Vertex=");
 
         $r14 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
-        $r15 = virtualinvoke r118.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r14);
+        $r15 = virtualinvoke r136.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r14);
 
         $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("---Edge=");
 
@@ -2378,9 +2452,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
      label06:
         r74_2 = Phi(r74_1 #1, r74_6 #7);
 
-        r76_2 = Phi(r76_1 #1, r76_3 #7);
-
         r73_2 = Phi(r73_1 #1, r73_6 #7);
+
+        r76_2 = Phi(r76_1 #1, r76_3 #7);
 
         $r48 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
@@ -2389,9 +2463,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
      label07:
         r74_1 = Phi(r74 #0, r74_2 #8);
 
-        r76 = Phi(r76 #0, r76_2 #8);
-
         r73_1 = Phi(r73 #0, r73_2 #8);
+
+        r76 = Phi(r76 #0, r76_2 #8);
 
         $z13 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
@@ -2454,7 +2528,7 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         $r37 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3ArrayHandler arrayHandler>;
 
-        r80 = virtualinvoke $r37.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.Expr z3Local(soot.Local,boolean,int,safetyChecker.z3ScriptManager.Z3ScriptHandler)>(r79, z0, i0, r0);
+        r80 = virtualinvoke $r37.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.Expr z3Local(soot.Local,boolean,int,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.Edge)>(r79, z0, i0, r0, r2);
 
         return r80;
 
@@ -2934,25 +3008,26 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
     private com.microsoft.z3.BoolExpr convertAssignStmt(com.microsoft.z3.Expr, com.microsoft.z3.Expr, soot.Type, soot.Value, int)
     {
         safetyChecker.z3ScriptManager.Z3ScriptHandler r0;
-        com.microsoft.z3.Expr r1, r2, $r39, r74, r75;
+        com.microsoft.z3.Expr r1, r2, $r45, r85, r86;
         soot.Type r3;
         soot.Value r4;
         int i0;
-        com.microsoft.z3.ArrayExpr r5, $r16, $r23, r66, r67, r77, r77_1, r77_2;
-        com.microsoft.z3.BoolExpr r6, r62, r71, r78;
+        com.microsoft.z3.ArrayExpr r5, $r22, $r29, r77, r78, r88, r88_1, r88_2;
+        com.microsoft.z3.BoolExpr r6, r73, r82, r89;
+        java.lang.Object[] $r7, $r24, $r39, $r46, $r67;
+        java.lang.StringBuilder $r8, $r9, $r10, $r11, $r25, $r26, $r33, $r36, $r40, $r41, $r47, $r48, $r59, $r62, $r68, $r69;
+        java.lang.String $r12, $r27, $r34, $r35, $r42, $r49, $r56, $r60, $r61, $r70, r74, r75, r76, r79, r83, r84;
         boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
-        java.util.Map $r7, $r11, $r12, $r13, $r31, $r44, $r45, $r47, $r52;
-        java.lang.Object $r8, $r14, $r32, $r53;
-        com.microsoft.z3.InterpolationContext $r9, $r15, $r22, $r24, $r37, $r54, $r60, $r61;
-        com.microsoft.z3.Sort $r10, $r38, $r46;
-        com.microsoft.z3.IntExpr $r17, $r55;
-        java.lang.Object[] $r18, $r33, $r40, $r56;
-        java.lang.StringBuilder $r19, $r20, $r27, $r30, $r34, $r35, $r41, $r42, $r48, $r51, $r57, $r58;
-        java.lang.String $r21, $r28, $r29, $r36, $r43, $r49, $r50, $r59, r63, r64, r65, r68, r72, r73;
-        safetyChecker.Edge $r25;
-        safetyChecker.z3ScriptManager.Z3ArrayHandler $r26;
-        safetyChecker.NewSort r69, r76;
-        soot.jimple.ArrayRef r70;
+        java.util.Map $r13, $r17, $r18, $r19, $r37, $r50, $r51, $r54, $r58, $r63;
+        java.lang.Object $r14, $r20, $r38, $r57, $r64;
+        com.microsoft.z3.InterpolationContext $r15, $r21, $r28, $r30, $r43, $r65, $r71, $r72;
+        com.microsoft.z3.Sort $r16, $r44, $r52;
+        com.microsoft.z3.IntExpr $r23, $r66;
+        safetyChecker.Edge $r31, $r53;
+        safetyChecker.z3ScriptManager.Z3ArrayHandler $r32;
+        safetyChecker.ProgramTree $r55;
+        safetyChecker.NewSort r80, r87;
+        soot.jimple.ArrayRef r81;
 
         r0 := @this: safetyChecker.z3ScriptManager.Z3ScriptHandler;
 
@@ -2966,6 +3041,24 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         i0 := @parameter4: int;
 
+        $r7 = newarray (java.lang.Object)[1];
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("=");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r7[0] = $r12;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r7);
+
         $z0 = r3 instanceof soot.PrimType;
 
         if $z0 == 0 goto label1;
@@ -2974,11 +3067,11 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z6 == 0 goto label1;
 
-        $r61 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r72 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r62 = virtualinvoke $r61.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r2, r1);
+        r73 = virtualinvoke $r72.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r2, r1);
 
-        return r62;
+        return r73;
 
      label1:
         $z1 = r3 instanceof soot.ArrayType;
@@ -2989,119 +3082,129 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z5 == 0 goto label2;
 
-        r63 = virtualinvoke r3.<soot.Type: java.lang.String toString()>();
+        r74 = virtualinvoke r3.<soot.Type: java.lang.String toString()>();
 
-        r64 = r63;
+        r75 = r74;
 
-        $r27 = new java.lang.StringBuilder;
+        $r33 = new java.lang.StringBuilder;
 
-        $r28 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r64);
+        $r34 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r75);
 
-        specialinvoke $r27.<java.lang.StringBuilder: void <init>(java.lang.String)>($r28);
+        specialinvoke $r33.<java.lang.StringBuilder: void <init>(java.lang.String)>($r34);
 
-        $r29 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getNameSuffix()>();
+        $r35 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getNameSuffix()>();
 
-        $r30 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r29);
+        $r36 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r35);
 
-        r65 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
+        r76 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r31 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
+        $r37 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
 
-        $r32 = interfaceinvoke $r31.<java.util.Map: java.lang.Object get(java.lang.Object)>(r64);
+        $r38 = interfaceinvoke $r37.<java.util.Map: java.lang.Object get(java.lang.Object)>(r75);
 
-        r66 = (com.microsoft.z3.ArrayExpr) $r32;
+        r77 = (com.microsoft.z3.ArrayExpr) $r38;
 
-        $r33 = newarray (java.lang.Object)[1];
+        $r39 = newarray (java.lang.Object)[1];
 
-        $r34 = new java.lang.StringBuilder;
+        $r40 = new java.lang.StringBuilder;
 
-        specialinvoke $r34.<java.lang.StringBuilder: void <init>(java.lang.String)>("latestArray=");
+        specialinvoke $r40.<java.lang.StringBuilder: void <init>(java.lang.String)>("latestArray=");
 
-        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r66);
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r77);
 
-        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r33[0] = $r36;
+        $r39[0] = $r42;
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r33);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r39);
 
-        $r37 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r43 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r38 = virtualinvoke r66.<com.microsoft.z3.ArrayExpr: com.microsoft.z3.Sort getSort()>();
+        $r44 = virtualinvoke r77.<com.microsoft.z3.ArrayExpr: com.microsoft.z3.Sort getSort()>();
 
-        $r39 = virtualinvoke $r37.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r65, $r38);
+        $r45 = virtualinvoke $r43.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r76, $r44);
 
-        r67 = (com.microsoft.z3.ArrayExpr) $r39;
+        r78 = (com.microsoft.z3.ArrayExpr) $r45;
 
-        $r40 = newarray (java.lang.Object)[1];
+        $r46 = newarray (java.lang.Object)[1];
 
-        $r41 = new java.lang.StringBuilder;
+        $r47 = new java.lang.StringBuilder;
 
-        specialinvoke $r41.<java.lang.StringBuilder: void <init>(java.lang.String)>("newArray=");
+        specialinvoke $r47.<java.lang.StringBuilder: void <init>(java.lang.String)>("newArray=");
 
-        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r67);
+        $r48 = virtualinvoke $r47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r78);
 
-        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r49 = virtualinvoke $r48.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r40[0] = $r43;
+        $r46[0] = $r49;
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r40);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r46);
 
-        $r44 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
+        $r50 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
 
-        interfaceinvoke $r44.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r65, r64);
+        interfaceinvoke $r50.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r76, r75);
 
-        $r45 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substituteSort>;
+        $r51 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substituteSort>;
 
-        $r46 = virtualinvoke r67.<com.microsoft.z3.ArrayExpr: com.microsoft.z3.Sort getSort()>();
+        $r52 = virtualinvoke r78.<com.microsoft.z3.ArrayExpr: com.microsoft.z3.Sort getSort()>();
 
-        interfaceinvoke $r45.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r65, $r46);
+        interfaceinvoke $r51.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r76, $r52);
 
-        $r47 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
+        $r54 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map localMap>;
 
-        interfaceinvoke $r47.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r64, r67);
+        $r53 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.Edge currentEdge>;
 
-        $r48 = new java.lang.StringBuilder;
+        $r55 = virtualinvoke $r53.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        $r49 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r63);
+        $r56 = virtualinvoke $r55.<safetyChecker.ProgramTree: java.lang.String getProgramDefinition()>();
 
-        specialinvoke $r48.<java.lang.StringBuilder: void <init>(java.lang.String)>($r49);
+        $r57 = interfaceinvoke $r54.<java.util.Map: java.lang.Object get(java.lang.Object)>($r56);
 
-        $r50 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getArraySortSuffix()>();
+        $r58 = (java.util.Map) $r57;
 
-        $r51 = virtualinvoke $r48.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r50);
+        interfaceinvoke $r58.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r75, r78);
 
-        r68 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r59 = new java.lang.StringBuilder;
 
-        $r52 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map sortId>;
+        $r60 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r74);
 
-        $r53 = interfaceinvoke $r52.<java.util.Map: java.lang.Object get(java.lang.Object)>(r68);
+        specialinvoke $r59.<java.lang.StringBuilder: void <init>(java.lang.String)>($r60);
 
-        r69 = (safetyChecker.NewSort) $r53;
+        $r61 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getArraySortSuffix()>();
 
-        $r54 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r62 = virtualinvoke $r59.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r61);
 
-        $r55 = virtualinvoke r69.<safetyChecker.NewSort: com.microsoft.z3.IntExpr getId(com.microsoft.z3.Expr)>(r2);
+        r79 = virtualinvoke $r62.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        r5 = virtualinvoke $r54.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r66, $r55, r1);
+        $r63 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map sortId>;
 
-        $r56 = newarray (java.lang.Object)[1];
+        $r64 = interfaceinvoke $r63.<java.util.Map: java.lang.Object get(java.lang.Object)>(r79);
 
-        $r57 = new java.lang.StringBuilder;
+        r80 = (safetyChecker.NewSort) $r64;
 
-        specialinvoke $r57.<java.lang.StringBuilder: void <init>(java.lang.String)>("afterStore=");
+        $r65 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r58 = virtualinvoke $r57.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r5);
+        $r66 = virtualinvoke r80.<safetyChecker.NewSort: com.microsoft.z3.IntExpr getId(com.microsoft.z3.Expr)>(r2);
 
-        $r59 = virtualinvoke $r58.<java.lang.StringBuilder: java.lang.String toString()>();
+        r5 = virtualinvoke $r65.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r77, $r66, r1);
 
-        $r56[0] = $r59;
+        $r67 = newarray (java.lang.Object)[1];
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r56);
+        $r68 = new java.lang.StringBuilder;
 
-        $r60 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        specialinvoke $r68.<java.lang.StringBuilder: void <init>(java.lang.String)>("afterStore=");
 
-        r6 = virtualinvoke $r60.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r67, r5);
+        $r69 = virtualinvoke $r68.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r5);
+
+        $r70 = virtualinvoke $r69.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r67[0] = $r70;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r67);
+
+        $r71 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+
+        r6 = virtualinvoke $r71.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r78, r5);
 
         return r6;
 
@@ -3110,46 +3213,46 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z2 == 0 goto label3;
 
-        r70 = (soot.jimple.ArrayRef) r4;
+        r81 = (soot.jimple.ArrayRef) r4;
 
-        $r26 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3ArrayHandler arrayHandler>;
+        $r32 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.z3ScriptManager.Z3ArrayHandler arrayHandler>;
 
-        $r25 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.Edge currentEdge>;
+        $r31 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: safetyChecker.Edge currentEdge>;
 
-        r71 = virtualinvoke $r26.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.BoolExpr updateArrayRef(soot.jimple.ArrayRef,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr,safetyChecker.Edge)>(r70, r0, r1, $r25);
+        r82 = virtualinvoke $r32.<safetyChecker.z3ScriptManager.Z3ArrayHandler: com.microsoft.z3.BoolExpr updateArrayRef(soot.jimple.ArrayRef,safetyChecker.z3ScriptManager.Z3ScriptHandler,com.microsoft.z3.Expr,safetyChecker.Edge)>(r81, r0, r1, $r31);
 
-        return r71;
+        return r82;
 
      label3:
-        r72 = specialinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getArrayName(soot.Value)>(r4);
+        r83 = specialinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getArrayName(soot.Value)>(r4);
 
-        r73 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getGlobalName(java.lang.String)>(r72);
+        r84 = virtualinvoke r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.lang.String getGlobalName(java.lang.String)>(r83);
 
-        $r7 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map global>;
+        $r13 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map global>;
 
-        $r8 = interfaceinvoke $r7.<java.util.Map: java.lang.Object get(java.lang.Object)>(r72);
+        $r14 = interfaceinvoke $r13.<java.util.Map: java.lang.Object get(java.lang.Object)>(r83);
 
-        r74 = (com.microsoft.z3.Expr) $r8;
+        r85 = (com.microsoft.z3.Expr) $r14;
 
-        $r9 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r15 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r10 = virtualinvoke r74.<com.microsoft.z3.Expr: com.microsoft.z3.Sort getSort()>();
+        $r16 = virtualinvoke r85.<com.microsoft.z3.Expr: com.microsoft.z3.Sort getSort()>();
 
-        r75 = virtualinvoke $r9.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r73, $r10);
+        r86 = virtualinvoke $r15.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.Expr mkConst(java.lang.String,com.microsoft.z3.Sort)>(r84, $r16);
 
-        $r11 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
+        $r17 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map substitute>;
 
-        interfaceinvoke $r11.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r73, r72);
+        interfaceinvoke $r17.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r84, r83);
 
-        $r12 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map global>;
+        $r18 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map global>;
 
-        interfaceinvoke $r12.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r72, r75);
+        interfaceinvoke $r18.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r83, r86);
 
-        $r13 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map sortId>;
+        $r19 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: java.util.Map sortId>;
 
-        $r14 = interfaceinvoke $r13.<java.util.Map: java.lang.Object get(java.lang.Object)>(r72);
+        $r20 = interfaceinvoke $r19.<java.util.Map: java.lang.Object get(java.lang.Object)>(r83);
 
-        r76 = (safetyChecker.NewSort) $r14;
+        r87 = (safetyChecker.NewSort) $r20;
 
         $z3 = r4 instanceof soot.jimple.FieldRef;
 
@@ -3159,45 +3262,45 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 
         if $z4 != 0 goto label4;
 
-        $r24 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r30 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r23 = (com.microsoft.z3.ArrayExpr) r74;
+        $r29 = (com.microsoft.z3.ArrayExpr) r85;
 
-        r77 = virtualinvoke $r24.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>($r23, r2, r1);
+        r88 = virtualinvoke $r30.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>($r29, r2, r1);
 
 (0)     goto label5;
 
      label4:
-        $r15 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r21 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r16 = (com.microsoft.z3.ArrayExpr) r74;
+        $r22 = (com.microsoft.z3.ArrayExpr) r85;
 
-        $r17 = virtualinvoke r76.<safetyChecker.NewSort: com.microsoft.z3.IntExpr getId(com.microsoft.z3.Expr)>(r2);
+        $r23 = virtualinvoke r87.<safetyChecker.NewSort: com.microsoft.z3.IntExpr getId(com.microsoft.z3.Expr)>(r2);
 
-(1)     r77_1 = virtualinvoke $r15.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>($r16, $r17, r1);
+(1)     r88_1 = virtualinvoke $r21.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.ArrayExpr mkStore(com.microsoft.z3.ArrayExpr,com.microsoft.z3.Expr,com.microsoft.z3.Expr)>($r22, $r23, r1);
 
      label5:
-        r77_2 = Phi(r77 #0, r77_1 #1);
+        r88_2 = Phi(r88 #0, r88_1 #1);
 
-        $r18 = newarray (java.lang.Object)[1];
+        $r24 = newarray (java.lang.Object)[1];
 
-        $r19 = new java.lang.StringBuilder;
+        $r25 = new java.lang.StringBuilder;
 
-        specialinvoke $r19.<java.lang.StringBuilder: void <init>(java.lang.String)>("afterStore=");
+        specialinvoke $r25.<java.lang.StringBuilder: void <init>(java.lang.String)>("afterStore=");
 
-        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r77_2);
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r88_2);
 
-        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r18[0] = $r21;
+        $r24[0] = $r27;
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r18);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r24);
 
-        $r22 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
+        $r28 = r0.<safetyChecker.z3ScriptManager.Z3ScriptHandler: com.microsoft.z3.InterpolationContext ictx>;
 
-        r78 = virtualinvoke $r22.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r75, r77_2);
+        r89 = virtualinvoke $r28.<com.microsoft.z3.InterpolationContext: com.microsoft.z3.BoolExpr mkEq(com.microsoft.z3.Expr,com.microsoft.z3.Expr)>(r86, r88_2);
 
-        return r78;
+        return r89;
     }
 
     private com.microsoft.z3.Expr convertAnyNewExpr(soot.jimple.AnyNewExpr, safetyChecker.Edge)

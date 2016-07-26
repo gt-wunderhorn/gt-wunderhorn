@@ -34,7 +34,7 @@ public class Z3ArrayHandler {
 	private int argArray1 = 0;
 	private int argArray2 = 1;
 
-	public Expr z3Local(Local local, boolean assignLeft, int nodeIndex, Z3ScriptHandler z3Handler) {
+	public Expr z3Local(Local local, boolean assignLeft, int nodeIndex, Z3ScriptHandler z3Handler, Edge edge) {
 		InterpolationContext ictx = z3Handler.getIctx();
 		Type type = local.getType();
 		String typeString = type.toString();
@@ -52,7 +52,7 @@ public class Z3ArrayHandler {
 		if(!z3Handler.getLocalMap().containsKey(arrayName)) {
 			Sort newArraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
 			Expr newArray = ictx.mkConst(arrayName, newArraySort);
-			z3Handler.getLocalMap().put(arrayName, newArray);
+			z3Handler.getLocalMap().get(edge.getProgramTree().getProgramDefinition()).put(arrayName, newArray);
 			NewSort ns = new NewSort(newSort, ictx);
 			z3Handler.getSortId().put(sortName, ns);	
 		}

@@ -5,7 +5,7 @@ public class safetyChecker.Edge extends java.lang.Object
     private safetyChecker.Vertex target;
     private safetyChecker.ProgramTree programTree;
     private com.microsoft.z3.BoolExpr z3Expr;
-    private soot.Unit returnUnit;
+    private safetyChecker.Edge functionReturn;
     private boolean returnEdge;
     private boolean errorEdge;
     private boolean functionCall;
@@ -538,28 +538,26 @@ public class safetyChecker.Edge extends java.lang.Object
         return;
     }
 
-    public soot.Unit getReturnUnit()
+    public safetyChecker.Edge getFunctionReturn()
     {
-        safetyChecker.Edge r0;
-        soot.Unit $r1;
+        safetyChecker.Edge r0, $r1;
 
         r0 := @this: safetyChecker.Edge;
 
-        $r1 = r0.<safetyChecker.Edge: soot.Unit returnUnit>;
+        $r1 = r0.<safetyChecker.Edge: safetyChecker.Edge functionReturn>;
 
         return $r1;
     }
 
-    public void setReturnUnit(soot.Unit)
+    public void setFunctionReturn(safetyChecker.Edge)
     {
-        safetyChecker.Edge r0;
-        soot.Unit r1;
+        safetyChecker.Edge r0, r1;
 
         r0 := @this: safetyChecker.Edge;
 
-        r1 := @parameter0: soot.Unit;
+        r1 := @parameter0: safetyChecker.Edge;
 
-        r0.<safetyChecker.Edge: soot.Unit returnUnit> = r1;
+        r0.<safetyChecker.Edge: safetyChecker.Edge functionReturn> = r1;
 
         return;
     }

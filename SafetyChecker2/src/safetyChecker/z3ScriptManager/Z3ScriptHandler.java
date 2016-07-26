@@ -80,7 +80,8 @@ public class Z3ScriptHandler {
 	private Map<String, Sort> newSortMap = new HashMap<String, Sort>();
 	private Map<String, NewSort> sortId = new HashMap<String, NewSort>();
 	private Map<String, Expr> global = new HashMap<String, Expr>();
-	private Map<String, Expr> localMap = new HashMap<String, Expr>();
+//	private Map<String, Expr> localMap = new HashMap<String, Expr>();
+	private Map<String, Map<String, Expr>> localMap = new HashMap<String, Map<String, Expr>>();
 	private Map<String, Integer> arrayNameMap = new HashMap<String, Integer>();
 	private Map<String, Integer> realArraySize = new HashMap<String, Integer>();
 	private Map<String, Integer> maxArraySize = new HashMap<String, Integer>();
@@ -153,7 +154,7 @@ public class Z3ScriptHandler {
 	}
 
 	private boolean convertReturnStmt(Edge edge) {
-		edge.getProgramTree().getCallerVertex().getOutgoingEdge().setReturnUnit(edge.getUnit());
+		edge.getProgramTree().getCallerVertex().getOutgoingEdge().setFunctionReturn(edge);
 		edge.setZ3Expr(this.ictx.mkTrue());
 		return true;
 	}
@@ -292,9 +293,13 @@ public class Z3ScriptHandler {
 
 		// rigth invoke expression needs to be added
 		if(edge.isFunctionCall() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
-			Unit stmt = edge.getReturnUnit();
+			LogUtils.fatal("******");
+			LogUtils.infoln("here we go");
+			Unit stmt = edge.getFunctionReturn().getUnit();
+			LogUtils.fatal("******");
+			LogUtils.warningln(stmt);
 			Value returnValue = stmt.getUseBoxes().get(0).getValue();
-			rightZ3 = this.convertValue(returnValue, false, edge, edge.getSource().getDistance());
+			rightZ3 = this.convertValue(returnValue, false, edge.getFunctionReturn(), edge.getFunctionReturn().getSource().getDistance());
 //			LogUtils.fatalln(right);
 //			LogUtils.fatalln(((InvokeExpr)right).getMethod());
 //			String subFuncSig = ((InvokeExpr)right).getMethod().toString();
@@ -324,7 +329,7 @@ public class Z3ScriptHandler {
 		} else {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		}
-		LogUtils.debugln("rightZ3=" + rightZ3);
+		LogUtils.warningln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
 		LogUtils.debugln("leftZ3=" + leftZ3);
 
@@ -401,10 +406,19 @@ public class Z3ScriptHandler {
 		if(value instanceof Local) { 
 			Local local = (Local) value;
 			String oldName = local.getName();
+			String functionDefinition = edge.getProgramTree().getProgramDefinition();
 			if(assignLeft) {
 				Type type = value.getType();
 				String newName = oldName + getNameSuffix(edge);
 				Expr leftExpr = null;
+				///
+				if(!localMap.containsKey(functionDefinition)) {
+					LogUtils.warningln(functionDefinition + " does not exist");
+					Map<String, Expr> insideLocalMap = new HashMap<String, Expr>();
+					localMap.put(functionDefinition, insideLocalMap);
+
+				}
+				//
 				if(type instanceof IntegerType) {
 					leftExpr = ictx.mkIntConst(newName);
 					this.substitute.put(newName, oldName); 
@@ -414,10 +428,14 @@ public class Z3ScriptHandler {
 					this.substitute.put(newName, oldName);
 					this.substituteSort.put(newName, this.ictx.mkIntSort());
 				}
-				localMap.put(oldName, leftExpr);
+				// fix here
+//				localMap.put(oldName, leftExpr);
+				localMap.get(functionDefinition).put(oldName, leftExpr);
 				return leftExpr;
 			} else 
-				return localMap.get(oldName);
+				// fix here
+				//return localMap.get(oldName);
+				return localMap.get(functionDefinition).get(oldName);
 		}
 		if(value instanceof BinopExpr) {
 			return this.convertBoolExpr((BinopExpr) value, edge, nodeIndex);
@@ -569,7 +587,7 @@ public class Z3ScriptHandler {
 				return createZ3Object(local, assignLeft,  edge);	
 			}
 			if(type instanceof ArrayType) {
-				Expr result = this.arrayHandler.z3Local(local, assignLeft, nodeIndex, this); 
+				Expr result = this.arrayHandler.z3Local(local, assignLeft, nodeIndex, this, edge); 
 				return result;
 			}
 		}
@@ -688,6 +706,7 @@ public class Z3ScriptHandler {
 	}	
 
 	private BoolExpr convertAssignStmt(Expr rightZ3, Expr leftZ3, Type leftType, Value left, int distance) {
+		LogUtils.warningln(leftZ3 + "=" + rightZ3);
 		if ((leftType instanceof PrimType) && (left instanceof Local)) {
 			BoolExpr leftEqRight = ictx.mkEq(leftZ3, rightZ3);
 			return leftEqRight;
@@ -703,7 +722,9 @@ public class Z3ScriptHandler {
 			LogUtils.debugln("newArray=" + newArray);
 			this.substitute.put(newName, virtualName);
 			this.substituteSort.put(newName, newArray.getSort());
-			this.localMap.put(virtualName, newArray);
+			// fix here
+//			this.localMap.put(virtualName, newArray);
+			this.localMap.get(currentEdge.getProgramTree().getProgramDefinition()).put(virtualName, newArray);
 
 			String sortName = typeName + this.getArraySortSuffix();
 			NewSort s = sortId.get(sortName);
@@ -958,7 +979,11 @@ public class Z3ScriptHandler {
 	public Map<String, String> getSubstitute() { return this.substitute; }
 	public Map<String, Sort> getSubstituteSort() { return this.substituteSort; }
 	public Map<String, Integer> getArrayNameMap() { return this.arrayNameMap; }
-	public Map<String, Expr> getLocalMap() { return this.localMap; }
+	// fix here
+	public Map<String, Map<String, Expr>> getLocalMap() { 
+		//return this.localMap; 
+		return this.localMap;	
+	}
 	public Map<String, NewSort> getSortId() { return this.sortId; }
 	public Map<String, Sort> getNewSortMap() { return this.newSortMap; }
 	public Map<String, Integer> getMaxArraySize() { return this.maxArraySize; }
