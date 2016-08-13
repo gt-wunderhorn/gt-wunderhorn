@@ -228,7 +228,7 @@ public class CoverRelation {
 	}
 
 	private void add2UncoveredMap(Vertex vertex) {
-		if(vertex.getPreviousVertexSet().size() < this.programTree.getCfg().getUnexceptionalPredsOf(vertex.getOutgoingEdge().getUnit()).size())
+		if(vertex.getPreviousVertexSet().size() < vertex.getOutgoingEdge().getProgramTree().getCfg().getUnexceptionalPredsOf(vertex.getOutgoingEdge().getUnit()).size())
 			this.programTree.getUncovered().add(vertex);
 
 	}

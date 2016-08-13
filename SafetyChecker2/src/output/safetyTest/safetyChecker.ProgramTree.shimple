@@ -21,6 +21,7 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     private java.lang.String functionSignature;
     private java.lang.String functionName;
     private static java.util.Map functionNameInvokeCount;
+    private int functionStackVersion;
     private soot.toolkits.graph.ExceptionalUnitGraph cfg;
     private java.lang.String signature;
     private safetyChecker.UnitController unitController;
@@ -108,20 +109,20 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     {
         safetyChecker.ProgramTree r0;
         java.util.Map r1;
-        java.lang.String r2, $r29, $r32, $r33, $r35, $r39;
+        java.lang.String r2, $r28, $r31, $r32, $r34, $r38;
         boolean z0, $z1, $z2, $z3, z4, z4_1, z4_2;
-        java.util.HashSet $r3, $r11;
+        java.util.HashSet $r3, $r10;
         java.util.Stack $r4;
-        java.util.LinkedList $r5, $r6, $r10, $r12, $r13, $r14, $r15;
+        java.util.LinkedList $r5, $r6, $r9, $r11, $r12, $r13, $r14;
         java.util.HashMap $r7, $r8;
-        java.lang.Object[] $r9, $r26, $r36;
-        safetyChecker.UnitController $r16;
-        com.microsoft.z3.InterpolationContext $r17, $r19, $r21, $r25;
-        safetyChecker.z3ScriptManager.Z3ScriptHandler $r18, $r24;
-        safetyChecker.CoverRelation $r20, $r23;
-        safetyChecker.InterpolationHandler $r22;
-        java.lang.StringBuilder $r27, $r28, $r31, $r34, $r37, $r38;
-        safetyChecker.exception.MainFunctionNotFoundException $r30;
+        safetyChecker.UnitController $r15;
+        com.microsoft.z3.InterpolationContext $r16, $r18, $r20, $r24;
+        safetyChecker.z3ScriptManager.Z3ScriptHandler $r17, $r23;
+        safetyChecker.CoverRelation $r19, $r22;
+        safetyChecker.InterpolationHandler $r21;
+        java.lang.Object[] $r25, $r35;
+        java.lang.StringBuilder $r26, $r27, $r30, $r33, $r36, $r37;
+        safetyChecker.exception.MainFunctionNotFoundException $r29;
 
         r0 := @this: safetyChecker.ProgramTree;
 
@@ -175,130 +176,124 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         r0.<safetyChecker.ProgramTree: java.util.HashMap treeConnection> = $r8;
 
-        $r9 = newarray (java.lang.Object)[1];
-
-        $r9[0] = "------->ProgramTree";
-
-        staticinvoke <safetyChecker.utilities.LogUtils: void infoln(java.lang.Object[])>($r9);
-
         r0.<safetyChecker.ProgramTree: boolean errorLocationFeasible> = 0;
 
-        $r10 = new java.util.LinkedList;
+        $r9 = new java.util.LinkedList;
 
-        specialinvoke $r10.<java.util.LinkedList: void <init>()>();
+        specialinvoke $r9.<java.util.LinkedList: void <init>()>();
 
-        r0.<safetyChecker.ProgramTree: java.util.LinkedList subFunctionList> = $r10;
+        r0.<safetyChecker.ProgramTree: java.util.LinkedList subFunctionList> = $r9;
 
-        $r11 = new java.util.HashSet;
+        $r10 = new java.util.HashSet;
 
-        specialinvoke $r11.<java.util.HashSet: void <init>()>();
+        specialinvoke $r10.<java.util.HashSet: void <init>()>();
 
-        r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet> = $r11;
+        r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet> = $r10;
+
+        $r11 = new java.util.LinkedList;
+
+        specialinvoke $r11.<java.util.LinkedList: void <init>()>();
+
+        r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue> = $r11;
 
         $r12 = new java.util.LinkedList;
 
         specialinvoke $r12.<java.util.LinkedList: void <init>()>();
 
-        r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue> = $r12;
+        r0.<safetyChecker.ProgramTree: java.util.Queue returnRootQueue> = $r12;
 
         $r13 = new java.util.LinkedList;
 
         specialinvoke $r13.<java.util.LinkedList: void <init>()>();
 
-        r0.<safetyChecker.ProgramTree: java.util.Queue returnRootQueue> = $r13;
+        r0.<safetyChecker.ProgramTree: java.util.LinkedList returnPaths> = $r13;
 
         $r14 = new java.util.LinkedList;
 
         specialinvoke $r14.<java.util.LinkedList: void <init>()>();
 
-        r0.<safetyChecker.ProgramTree: java.util.LinkedList returnPaths> = $r14;
-
-        $r15 = new java.util.LinkedList;
-
-        specialinvoke $r15.<java.util.LinkedList: void <init>()>();
-
-        r0.<safetyChecker.ProgramTree: java.util.LinkedList errorPaths> = $r15;
+        r0.<safetyChecker.ProgramTree: java.util.LinkedList errorPaths> = $r14;
 
         r0.<safetyChecker.ProgramTree: java.lang.String functionSignature> = r2;
 
         r0.<safetyChecker.ProgramTree: java.util.Map stores> = r1;
 
-        $r16 = new safetyChecker.UnitController;
+        $r15 = new safetyChecker.UnitController;
 
-        specialinvoke $r16.<safetyChecker.UnitController: void <init>()>();
+        specialinvoke $r15.<safetyChecker.UnitController: void <init>()>();
 
-        r0.<safetyChecker.ProgramTree: safetyChecker.UnitController unitController> = $r16;
+        r0.<safetyChecker.ProgramTree: safetyChecker.UnitController unitController> = $r15;
 
         r0.<safetyChecker.ProgramTree: boolean mainFunction> = z0;
 
-        $r17 = new com.microsoft.z3.InterpolationContext;
+        $r16 = new com.microsoft.z3.InterpolationContext;
 
-        specialinvoke $r17.<com.microsoft.z3.InterpolationContext: void <init>()>();
+        specialinvoke $r16.<com.microsoft.z3.InterpolationContext: void <init>()>();
 
-        r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx> = $r17;
+        r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx> = $r16;
 
-        $r18 = new safetyChecker.z3ScriptManager.Z3ScriptHandler;
+        $r17 = new safetyChecker.z3ScriptManager.Z3ScriptHandler;
 
-        $r19 = r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx>;
+        $r18 = r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx>;
 
-        specialinvoke $r18.<safetyChecker.z3ScriptManager.Z3ScriptHandler: void <init>(com.microsoft.z3.InterpolationContext,java.util.Map)>($r19, r1);
+        specialinvoke $r17.<safetyChecker.z3ScriptManager.Z3ScriptHandler: void <init>(com.microsoft.z3.InterpolationContext,java.util.Map)>($r18, r1);
 
-        r0.<safetyChecker.ProgramTree: safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler> = $r18;
+        r0.<safetyChecker.ProgramTree: safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler> = $r17;
 
-        $r20 = new safetyChecker.CoverRelation;
+        $r19 = new safetyChecker.CoverRelation;
 
-        $r21 = r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx>;
+        $r20 = r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx>;
 
-        specialinvoke $r20.<safetyChecker.CoverRelation: void <init>(com.microsoft.z3.InterpolationContext,safetyChecker.ProgramTree)>($r21, r0);
+        specialinvoke $r19.<safetyChecker.CoverRelation: void <init>(com.microsoft.z3.InterpolationContext,safetyChecker.ProgramTree)>($r20, r0);
 
-        r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation> = $r20;
+        r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation> = $r19;
 
-        $r22 = new safetyChecker.InterpolationHandler;
+        $r21 = new safetyChecker.InterpolationHandler;
 
-        $r25 = r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx>;
+        $r24 = r0.<safetyChecker.ProgramTree: com.microsoft.z3.InterpolationContext ictx>;
 
-        $r24 = r0.<safetyChecker.ProgramTree: safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler>;
+        $r23 = r0.<safetyChecker.ProgramTree: safetyChecker.z3ScriptManager.Z3ScriptHandler z3Handler>;
 
-        $r23 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+        $r22 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
-        specialinvoke $r22.<safetyChecker.InterpolationHandler: void <init>(com.microsoft.z3.InterpolationContext,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.CoverRelation)>($r25, $r24, $r23);
+        specialinvoke $r21.<safetyChecker.InterpolationHandler: void <init>(com.microsoft.z3.InterpolationContext,safetyChecker.z3ScriptManager.Z3ScriptHandler,safetyChecker.CoverRelation)>($r24, $r23, $r22);
 
-        r0.<safetyChecker.ProgramTree: safetyChecker.InterpolationHandler itpHandler> = $r22;
+        r0.<safetyChecker.ProgramTree: safetyChecker.InterpolationHandler itpHandler> = $r21;
 
         $z1 = r0.<safetyChecker.ProgramTree: boolean mainFunction>;
 
         if $z1 == 0 goto label1;
 
-        $r36 = newarray (java.lang.Object)[1];
+        $r35 = newarray (java.lang.Object)[1];
 
-        $r37 = new java.lang.StringBuilder;
+        $r36 = new java.lang.StringBuilder;
 
-        specialinvoke $r37.<java.lang.StringBuilder: void <init>(java.lang.String)>("mainFunction = ");
+        specialinvoke $r36.<java.lang.StringBuilder: void <init>(java.lang.String)>("mainFunction = ");
 
-        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
 
-        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r36[0] = $r39;
+        $r35[0] = $r38;
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r36);
+        staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r35);
 
         goto label2;
 
      label1:
-        $r26 = newarray (java.lang.Object)[1];
+        $r25 = newarray (java.lang.Object)[1];
 
-        $r27 = new java.lang.StringBuilder;
+        $r26 = new java.lang.StringBuilder;
 
-        specialinvoke $r27.<java.lang.StringBuilder: void <init>(java.lang.String)>("subFunction = ");
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>(java.lang.String)>("subFunction = ");
 
-        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
 
-        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r26[0] = $r29;
+        $r25[0] = $r28;
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r26);
+        staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r25);
 
      label2:
         z4 = 0;
@@ -325,23 +320,23 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $z2 == 0 goto label5;
 
-        $r30 = new safetyChecker.exception.MainFunctionNotFoundException;
+        $r29 = new safetyChecker.exception.MainFunctionNotFoundException;
 
-        $r31 = new java.lang.StringBuilder;
+        $r30 = new java.lang.StringBuilder;
 
-        $r32 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
+        $r31 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
 
-        $r33 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r32);
+        $r32 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r31);
 
-        specialinvoke $r31.<java.lang.StringBuilder: void <init>(java.lang.String)>($r33);
+        specialinvoke $r30.<java.lang.StringBuilder: void <init>(java.lang.String)>($r32);
 
-        $r34 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" does not exist in the current program");
+        $r33 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" does not exist in the current program");
 
-        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        specialinvoke $r30.<safetyChecker.exception.MainFunctionNotFoundException: void <init>(java.lang.String)>($r35);
+        specialinvoke $r29.<safetyChecker.exception.MainFunctionNotFoundException: void <init>(java.lang.String)>($r34);
 
-        throw $r30;
+        throw $r29;
 
      label5:
         return;
@@ -375,195 +370,18 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     {
         safetyChecker.ProgramTree r0;
         soot.Body r1, $r10;
-        safetyChecker.Edge r2, $r26;
+        safetyChecker.Edge r2, $r30;
         boolean z0, $z1, $z2, $z3, $z3_1, $z3_2, $z3_3;
-        safetyChecker.Vertex r3, $r23, $r34;
-        java.lang.String $r4, $r7, $r11, $r15, $r16, $r19, $r22, $r35, $r38;
-        java.util.Map $r5, $r8, $r12, $r17, $r18, $r36, $r37;
-        soot.toolkits.graph.ExceptionalUnitGraph $r6, $r24, $r27, $r31;
-        java.lang.Object $r9, $r13, $r29, $r39;
+        safetyChecker.Vertex r3, $r27, $r38;
+        java.lang.String $r4, $r7, $r11, $r15, $r16, $r19, $r22, $r26, $r39, $r42;
+        java.util.Map $r5, $r8, $r12, $r17, $r18, $r23, $r40, $r41;
+        soot.toolkits.graph.ExceptionalUnitGraph $r6, $r28, $r31, $r35;
+        java.lang.Object $r9, $r13, $r24, $r33, $r43;
         soot.SootMethod $r14;
-        java.lang.Integer $r20, $r40, $r41;
-        java.util.List $r25, $r28, $r33;
-        int $i0, $i1, $i2, $i3, i4, i4_1, i4_2;
-        soot.Unit $r30, $r32;
-
-        r0 := @this: safetyChecker.ProgramTree;
-
-        $r5 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
-
-        $r4 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
-
-        $z1 = interfaceinvoke $r5.<java.util.Map: boolean containsKey(java.lang.Object)>($r4);
-
-        if $z1 == 0 goto label7;
-
-        $r6 = new soot.toolkits.graph.ExceptionalUnitGraph;
-
-        $r8 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
-
-        $r7 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
-
-        $r9 = interfaceinvoke $r8.<java.util.Map: java.lang.Object get(java.lang.Object)>($r7);
-
-        $r10 = (soot.Body) $r9;
-
-        specialinvoke $r6.<soot.toolkits.graph.ExceptionalUnitGraph: void <init>(soot.Body)>($r10);
-
-        r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg> = $r6;
-
-        $r12 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
-
-        $r11 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
-
-        $r13 = interfaceinvoke $r12.<java.util.Map: java.lang.Object get(java.lang.Object)>($r11);
-
-        r1 = (soot.Body) $r13;
-
-        $r14 = virtualinvoke r1.<soot.Body: soot.SootMethod getMethod()>();
-
-        $r15 = virtualinvoke $r14.<soot.SootMethod: java.lang.String getName()>();
-
-        r0.<safetyChecker.ProgramTree: java.lang.String functionName> = $r15;
-
-        $r17 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
-
-        $r16 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
-
-        $z2 = interfaceinvoke $r17.<java.util.Map: boolean containsKey(java.lang.Object)>($r16);
-
-        if $z2 == 0 goto label1;
-
-        $r37 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
-
-        $r38 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
-
-        $r36 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
-
-        $r35 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
-
-        $r39 = interfaceinvoke $r36.<java.util.Map: java.lang.Object get(java.lang.Object)>($r35);
-
-        $r40 = (java.lang.Integer) $r39;
-
-        $i2 = virtualinvoke $r40.<java.lang.Integer: int intValue()>();
-
-        $i3 = $i2 + 1;
-
-        $r41 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i3);
-
-        interfaceinvoke $r37.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r38, $r41);
-
-        goto label2;
-
-     label1:
-        $r18 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
-
-        $r19 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
-
-        $r20 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(0);
-
-        interfaceinvoke $r18.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r19, $r20);
-
-     label2:
-        $r22 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
-
-        r0.<safetyChecker.ProgramTree: java.lang.String signature> = $r22;
-
-        $r23 = new safetyChecker.Vertex;
-
-        specialinvoke $r23.<safetyChecker.Vertex: void <init>()>();
-
-        r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root> = $r23;
-
-        i4 = 0;
-
-(0)     goto label6;
-
-     label3:
-        $r26 = new safetyChecker.Edge;
-
-        $r27 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
-
-        $r28 = virtualinvoke $r27.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
-
-        $r29 = interfaceinvoke $r28.<java.util.List: java.lang.Object get(int)>(i4_1);
-
-        $r30 = (soot.Unit) $r29;
-
-        specialinvoke $r26.<safetyChecker.Edge: void <init>(soot.Unit)>($r30);
-
-        r2 = $r26;
-
-        virtualinvoke r2.<safetyChecker.Edge: void setReturnEdge(boolean)>(1);
-
-        virtualinvoke r2.<safetyChecker.Edge: void setProgramTree(safetyChecker.ProgramTree)>(r0);
-
-        $r31 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
-
-        $r32 = virtualinvoke r2.<safetyChecker.Edge: soot.Unit getUnit()>();
-
-        $r33 = virtualinvoke $r31.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r32);
-
-        $i1 = interfaceinvoke $r33.<java.util.List: int size()>();
-
-        if $i1 <= 1 goto label4;
-
-        $z3_1 = 1;
-
-(1)     goto label5;
-
-     label4:
-(2)     $z3_2 = 0;
-
-     label5:
-        $z3_3 = Phi($z3_1 #1, $z3_2 #2);
-
-        z0 = $z3_3;
-
-        $r34 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
-
-        r3 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>($r34, r2, z0);
-
-        virtualinvoke r3.<safetyChecker.Vertex: void setReturnLocation(boolean)>(1);
-
-(3)     i4_2 = i4_1 + 1;
-
-     label6:
-        i4_1 = Phi(i4 #0, i4_2 #3);
-
-        $z3 = Phi($z3 #0, $z3_3 #3);
-
-        $r24 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
-
-        $r25 = virtualinvoke $r24.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
-
-        $i0 = interfaceinvoke $r25.<java.util.List: int size()>();
-
-        if i4_1 < $i0 goto label3;
-
-        return 1;
-
-     label7:
-        return 0;
-    }
-
-    private boolean findSubFunction()
-    {
-        safetyChecker.ProgramTree r0;
-        soot.Body r1, $r10;
-        safetyChecker.Edge r2, $r28;
-        boolean z0, $z1, $z2, $z3, $z3_1, $z3_2, $z3_3;
-        safetyChecker.Vertex r3, $r23, $r24, $r25, $r36;
-        java.lang.String $r4, $r7, $r11, $r15, $r16, $r19, $r22, $r37, $r40;
-        java.util.Map $r5, $r8, $r12, $r17, $r18, $r38, $r39;
-        soot.toolkits.graph.ExceptionalUnitGraph $r6, $r26, $r29, $r33;
-        java.lang.Object $r9, $r13, $r31, $r41;
-        soot.SootMethod $r14;
-        java.lang.Integer $r20, $r42, $r43;
+        java.lang.Integer $r20, $r25, $r44, $r45;
         int $i0, $i1, $i2, $i3, $i4, i5, i5_1, i5_2;
-        java.util.List $r27, $r30, $r35;
-        soot.Unit $r32, $r34;
+        java.util.List $r29, $r32, $r37;
+        soot.Unit $r34, $r36;
 
         r0 := @this: safetyChecker.ProgramTree;
 
@@ -611,25 +429,25 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $z2 == 0 goto label1;
 
-        $r39 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+        $r41 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
 
-        $r40 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+        $r42 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
 
-        $r38 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+        $r40 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
 
-        $r37 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+        $r39 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
 
-        $r41 = interfaceinvoke $r38.<java.util.Map: java.lang.Object get(java.lang.Object)>($r37);
+        $r43 = interfaceinvoke $r40.<java.util.Map: java.lang.Object get(java.lang.Object)>($r39);
 
-        $r42 = (java.lang.Integer) $r41;
+        $r44 = (java.lang.Integer) $r43;
 
-        $i3 = virtualinvoke $r42.<java.lang.Integer: int intValue()>();
+        $i3 = virtualinvoke $r44.<java.lang.Integer: int intValue()>();
 
         $i4 = $i3 + 1;
 
-        $r43 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i4);
+        $r45 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i4);
 
-        interfaceinvoke $r39.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r40, $r43);
+        interfaceinvoke $r41.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r42, $r45);
 
         goto label2;
 
@@ -643,52 +461,58 @@ public class safetyChecker.ProgramTree extends java.lang.Object
         interfaceinvoke $r18.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r19, $r20);
 
      label2:
-        $r22 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
+        $r23 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
 
-        r0.<safetyChecker.ProgramTree: java.lang.String signature> = $r22;
+        $r22 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
 
-        $r23 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex calllerVertex>;
+        $r24 = interfaceinvoke $r23.<java.util.Map: java.lang.Object get(java.lang.Object)>($r22);
 
-        r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root> = $r23;
+        $r25 = (java.lang.Integer) $r24;
 
-        $r25 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
+        $i0 = virtualinvoke $r25.<java.lang.Integer: int intValue()>();
 
-        $r24 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex calllerVertex>;
+        r0.<safetyChecker.ProgramTree: int functionStackVersion> = $i0;
 
-        $i0 = virtualinvoke $r24.<safetyChecker.Vertex: int getDistance()>();
+        $r26 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
 
-        virtualinvoke $r25.<safetyChecker.Vertex: void setDistance(int)>($i0);
+        r0.<safetyChecker.ProgramTree: java.lang.String signature> = $r26;
+
+        $r27 = new safetyChecker.Vertex;
+
+        specialinvoke $r27.<safetyChecker.Vertex: void <init>()>();
+
+        r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root> = $r27;
 
         i5 = 0;
 
 (0)     goto label6;
 
      label3:
-        $r28 = new safetyChecker.Edge;
+        $r30 = new safetyChecker.Edge;
 
-        $r29 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+        $r31 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
 
-        $r30 = virtualinvoke $r29.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
+        $r32 = virtualinvoke $r31.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
 
-        $r31 = interfaceinvoke $r30.<java.util.List: java.lang.Object get(int)>(i5_1);
+        $r33 = interfaceinvoke $r32.<java.util.List: java.lang.Object get(int)>(i5_1);
 
-        $r32 = (soot.Unit) $r31;
+        $r34 = (soot.Unit) $r33;
 
-        specialinvoke $r28.<safetyChecker.Edge: void <init>(soot.Unit)>($r32);
+        specialinvoke $r30.<safetyChecker.Edge: void <init>(soot.Unit)>($r34);
 
-        r2 = $r28;
+        r2 = $r30;
 
         virtualinvoke r2.<safetyChecker.Edge: void setReturnEdge(boolean)>(1);
 
         virtualinvoke r2.<safetyChecker.Edge: void setProgramTree(safetyChecker.ProgramTree)>(r0);
 
-        $r33 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+        $r35 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
 
-        $r34 = virtualinvoke r2.<safetyChecker.Edge: soot.Unit getUnit()>();
+        $r36 = virtualinvoke r2.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-        $r35 = virtualinvoke $r33.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r34);
+        $r37 = virtualinvoke $r35.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r36);
 
-        $i2 = interfaceinvoke $r35.<java.util.List: int size()>();
+        $i2 = interfaceinvoke $r37.<java.util.List: int size()>();
 
         if $i2 <= 1 goto label4;
 
@@ -704,9 +528,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         z0 = $z3_3;
 
-        $r36 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
+        $r38 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
 
-        r3 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>($r36, r2, z0);
+        r3 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>($r38, r2, z0);
 
         virtualinvoke r3.<safetyChecker.Vertex: void setReturnLocation(boolean)>(1);
 
@@ -717,13 +541,216 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $z3 = Phi($z3 #0, $z3_3 #3);
 
-        $r26 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+        $r28 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
 
-        $r27 = virtualinvoke $r26.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
+        $r29 = virtualinvoke $r28.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
 
-        $i1 = interfaceinvoke $r27.<java.util.List: int size()>();
+        $i1 = interfaceinvoke $r29.<java.util.List: int size()>();
 
         if i5_1 < $i1 goto label3;
+
+        return 1;
+
+     label7:
+        return 0;
+    }
+
+    private boolean findSubFunction()
+    {
+        safetyChecker.ProgramTree r0;
+        soot.Body r1, $r10;
+        safetyChecker.Edge r2, $r32, $r42;
+        boolean z0, $z1, $z2, $z3, $z4, $z4_1, $z4_2, $z4_3;
+        safetyChecker.Vertex r3, $r27, $r28, $r29, $r40, $r41;
+        java.lang.String $r4, $r7, $r11, $r15, $r16, $r19, $r22, $r26, $r43, $r46;
+        java.util.Map $r5, $r8, $r12, $r17, $r18, $r23, $r44, $r45;
+        soot.toolkits.graph.ExceptionalUnitGraph $r6, $r30, $r33, $r37;
+        java.lang.Object $r9, $r13, $r24, $r35, $r47;
+        soot.SootMethod $r14;
+        java.lang.Integer $r20, $r25, $r48, $r49;
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6, i6_1, i6_2;
+        java.util.List $r31, $r34, $r39;
+        soot.Unit $r36, $r38;
+
+        r0 := @this: safetyChecker.ProgramTree;
+
+        $r5 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
+
+        $r4 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
+
+        $z1 = interfaceinvoke $r5.<java.util.Map: boolean containsKey(java.lang.Object)>($r4);
+
+        if $z1 == 0 goto label7;
+
+        $r6 = new soot.toolkits.graph.ExceptionalUnitGraph;
+
+        $r8 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
+
+        $r7 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
+
+        $r9 = interfaceinvoke $r8.<java.util.Map: java.lang.Object get(java.lang.Object)>($r7);
+
+        $r10 = (soot.Body) $r9;
+
+        specialinvoke $r6.<soot.toolkits.graph.ExceptionalUnitGraph: void <init>(soot.Body)>($r10);
+
+        r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg> = $r6;
+
+        $r12 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
+
+        $r11 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
+
+        $r13 = interfaceinvoke $r12.<java.util.Map: java.lang.Object get(java.lang.Object)>($r11);
+
+        r1 = (soot.Body) $r13;
+
+        $r14 = virtualinvoke r1.<soot.Body: soot.SootMethod getMethod()>();
+
+        $r15 = virtualinvoke $r14.<soot.SootMethod: java.lang.String getName()>();
+
+        r0.<safetyChecker.ProgramTree: java.lang.String functionName> = $r15;
+
+        $r17 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r16 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+
+        $z2 = interfaceinvoke $r17.<java.util.Map: boolean containsKey(java.lang.Object)>($r16);
+
+        if $z2 == 0 goto label1;
+
+        $r45 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r46 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+
+        $r44 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r43 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+
+        $r47 = interfaceinvoke $r44.<java.util.Map: java.lang.Object get(java.lang.Object)>($r43);
+
+        $r48 = (java.lang.Integer) $r47;
+
+        $i4 = virtualinvoke $r48.<java.lang.Integer: int intValue()>();
+
+        $i5 = $i4 + 1;
+
+        $r49 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i5);
+
+        interfaceinvoke $r45.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r46, $r49);
+
+        goto label2;
+
+     label1:
+        $r18 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r19 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+
+        $r20 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(0);
+
+        interfaceinvoke $r18.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r19, $r20);
+
+     label2:
+        $r23 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+
+        $r22 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+
+        $r24 = interfaceinvoke $r23.<java.util.Map: java.lang.Object get(java.lang.Object)>($r22);
+
+        $r25 = (java.lang.Integer) $r24;
+
+        $i0 = virtualinvoke $r25.<java.lang.Integer: int intValue()>();
+
+        r0.<safetyChecker.ProgramTree: int functionStackVersion> = $i0;
+
+        $r26 = r0.<safetyChecker.ProgramTree: java.lang.String functionSignature>;
+
+        r0.<safetyChecker.ProgramTree: java.lang.String signature> = $r26;
+
+        $r27 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex calllerVertex>;
+
+        r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root> = $r27;
+
+        $r29 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
+
+        $r28 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex calllerVertex>;
+
+        $i1 = virtualinvoke $r28.<safetyChecker.Vertex: int getDistance()>();
+
+        virtualinvoke $r29.<safetyChecker.Vertex: void setDistance(int)>($i1);
+
+        i6 = 0;
+
+(0)     goto label6;
+
+     label3:
+        $r32 = new safetyChecker.Edge;
+
+        $r33 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r34 = virtualinvoke $r33.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
+
+        $r35 = interfaceinvoke $r34.<java.util.List: java.lang.Object get(int)>(i6_1);
+
+        $r36 = (soot.Unit) $r35;
+
+        specialinvoke $r32.<safetyChecker.Edge: void <init>(soot.Unit)>($r36);
+
+        r2 = $r32;
+
+        virtualinvoke r2.<safetyChecker.Edge: void setReturnEdge(boolean)>(1);
+
+        virtualinvoke r2.<safetyChecker.Edge: void setProgramTree(safetyChecker.ProgramTree)>(r0);
+
+        $r37 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r38 = virtualinvoke r2.<safetyChecker.Edge: soot.Unit getUnit()>();
+
+        $r39 = virtualinvoke $r37.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r38);
+
+        $i3 = interfaceinvoke $r39.<java.util.List: int size()>();
+
+        if $i3 <= 1 goto label4;
+
+        $z4_1 = 1;
+
+(1)     goto label5;
+
+     label4:
+(2)     $z4_2 = 0;
+
+     label5:
+        $z4_3 = Phi($z4_1 #1, $z4_2 #2);
+
+        z0 = $z4_3;
+
+        $r40 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
+
+        r3 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>($r40, r2, z0);
+
+        virtualinvoke r3.<safetyChecker.Vertex: void setReturnLocation(boolean)>(1);
+
+        $r41 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
+
+        $r42 = virtualinvoke $r41.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+
+        $z3 = virtualinvoke $r42.<safetyChecker.Edge: boolean isInErrorPath()>();
+
+        virtualinvoke r2.<safetyChecker.Edge: void setInErrorPath(boolean)>($z3);
+
+(3)     i6_2 = i6_1 + 1;
+
+     label6:
+        i6_1 = Phi(i6 #0, i6_2 #3);
+
+        $z4 = Phi($z4 #0, $z4_3 #3);
+
+        $r30 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
+
+        $r31 = virtualinvoke $r30.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getTails()>();
+
+        $i2 = interfaceinvoke $r31.<java.util.List: int size()>();
+
+        if i6_1 < $i2 goto label3;
 
         return 1;
 
@@ -749,7 +776,7 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $r3[0] = ">>>>>>>> ProgramTree.getNewReturnPath";
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r3);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r3);
 
         goto label2;
 
@@ -799,7 +826,7 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $r13[0] = "<<<<<<<<< ProgramTree.getNewReturnPath";
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r13);
+        staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r13);
 
         return 0;
     }
@@ -914,21 +941,20 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     {
         safetyChecker.ProgramTree r0;
         boolean z0, $z2, $z3, $z4, $z5, $z6, $z7, $z8;
-        safetyChecker.Vertex r1, $r38, r54;
-        java.lang.Object[] $r2, $r6, $r18, $r25, $r34, $r39, $r46, $r48, $r49, $r53;
+        safetyChecker.Vertex r1, $r38, r49;
+        java.lang.Object[] $r2, $r6, $r18, $r25, $r34, $r39, $r46, $r48;
         java.util.Queue $r3, $r4, $r17, $r20, $r23, $r41, $r45;
         java.lang.Object $r5, $r24;
         java.lang.StringBuilder $r7, $r9, $r10, $r11, $r12, $r14, $r19, $r21, $r26, $r28, $r29, $r30, $r40, $r42;
         safetyChecker.Edge $r8;
         safetyChecker.CoverRelation $r13, $r16, $r36, $r44;
-        java.lang.String $r15, $r22, $r31, $r35, $r43, $r50;
+        java.lang.String $r15, $r22, $r31, $r35, $r43;
         java.util.HashSet $r27;
         int $i0, $i1;
         safetyChecker.z3ScriptManager.Z3ScriptHandler $r32;
         safetyChecker.InterpolationHandler $r33;
-        java.util.LinkedList $r37, r56;
-        java.lang.Exception $r47, $r52, r55, r57;
-        java.lang.StackTraceElement[] $r51;
+        java.util.LinkedList $r37, r50;
+        java.lang.Exception $r47, r51;
 
         r0 := @this: safetyChecker.ProgramTree;
 
@@ -940,42 +966,41 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         z0 = 0;
 
-        goto label10;
+        goto label5;
 
-     label01:
+     label1:
         $r4 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
         $r5 = interfaceinvoke $r4.<java.util.Queue: java.lang.Object remove()>();
 
-        r54 = (safetyChecker.Vertex) $r5;
+        r49 = (safetyChecker.Vertex) $r5;
 
-        $z3 = specialinvoke r0.<safetyChecker.ProgramTree: boolean isConnectionCovered(safetyChecker.Vertex)>(r54);
+        $z3 = specialinvoke r0.<safetyChecker.ProgramTree: boolean isConnectionCovered(safetyChecker.Vertex)>(r49);
 
-        if $z3 == 0 goto label03;
+        if $z3 == 0 goto label2;
 
-     label02:
-        goto label10;
+        goto label5;
 
-     label03:
+     label2:
         $r6 = newarray (java.lang.Object)[1];
 
         $r7 = new java.lang.StringBuilder;
 
         specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
 
-        $r8 = virtualinvoke r54.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r8 = virtualinvoke r49.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
         $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
 
         $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("---");
 
-        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r54);
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r49);
 
         $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("--");
 
         $r13 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
-        $z4 = virtualinvoke $r13.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r54);
+        $z4 = virtualinvoke $r13.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r49);
 
         $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(boolean)>($z4);
 
@@ -987,21 +1012,20 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $r16 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
-        $z5 = virtualinvoke $r16.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r54);
+        $z5 = virtualinvoke $r16.<safetyChecker.CoverRelation: boolean isCovered(safetyChecker.Vertex)>(r49);
 
-        if $z5 == 0 goto label05;
+        if $z5 == 0 goto label3;
 
-     label04:
-        goto label10;
+        goto label5;
 
-     label05:
-        specialinvoke r0.<safetyChecker.ProgramTree: boolean expandBFS(safetyChecker.Vertex)>(r54);
+     label3:
+        specialinvoke r0.<safetyChecker.ProgramTree: boolean expandBFS(safetyChecker.Vertex)>(r49);
 
         $r17 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
 
         $z6 = interfaceinvoke $r17.<java.util.Queue: boolean isEmpty()>();
 
-        if $z6 != 0 goto label10;
+        if $z6 != 0 goto label5;
 
         $r18 = newarray (java.lang.Object)[1];
 
@@ -1069,61 +1093,34 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $z8 = r0.<safetyChecker.ProgramTree: boolean errorLocationFeasible>;
 
-        if $z8 == 0 goto label07;
+        if $z8 == 0 goto label4;
 
-     label06:
-        goto label11;
+        goto label6;
 
-     label07:
+     label4:
         $r36 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
         virtualinvoke $r36.<safetyChecker.CoverRelation: void updateCover()>();
 
-     label08:
-        goto label10;
-
-     label09:
-        $r47 := @caughtexception;
-
-        r55 = $r47;
-
-        $r48 = newarray (java.lang.Object)[1];
-
-        $r48[0] = "Exception occured during unwind";
-
-        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r48);
-
-        $r49 = newarray (java.lang.Object)[1];
-
-        $r50 = virtualinvoke r55.<java.lang.Exception: java.lang.String getMessage()>();
-
-        $r49[0] = $r50;
-
-        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r49);
-
-        $r51 = virtualinvoke r55.<java.lang.Exception: java.lang.StackTraceElement[] getStackTrace()>();
-
-        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r51);
-
-     label10:
+     label5:
         $r3 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
         $z2 = interfaceinvoke $r3.<java.util.Queue: boolean isEmpty()>();
 
-        if $z2 == 0 goto label01;
+        if $z2 == 0 goto label1;
 
-     label11:
+     label6:
         $r37 = new java.util.LinkedList;
 
         specialinvoke $r37.<java.util.LinkedList: void <init>()>();
 
-        r56 = $r37;
+        r50 = $r37;
 
         $r38 = r0.<safetyChecker.ProgramTree: safetyChecker.Vertex root>;
 
-        interfaceinvoke r56.<java.util.Queue: boolean add(java.lang.Object)>($r38);
+        interfaceinvoke r50.<java.util.Queue: boolean add(java.lang.Object)>($r38);
 
-        staticinvoke <safetyChecker.utilities.DottyConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r56, "_all.dot");
+        staticinvoke <safetyChecker.utilities.DottyConverter: void printAllPaths(java.util.Queue,java.lang.String)>(r50, "_all.dot");
 
         $r39 = newarray (java.lang.Object)[1];
 
@@ -1155,52 +1152,48 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         staticinvoke <safetyChecker.utilities.LogUtils: void debugln(java.lang.Object[])>($r46);
 
-     label12:
-        goto label14;
+     label7:
+        goto label9;
 
-     label13:
-        $r52 := @caughtexception;
+     label8:
+        $r47 := @caughtexception;
 
-        r57 = $r52;
+        r51 = $r47;
 
-        $r53 = newarray (java.lang.Object)[1];
+        $r48 = newarray (java.lang.Object)[1];
 
-        $r53[0] = "Error in printig tree";
+        $r48[0] = "Error in printig tree";
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r53);
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r48);
 
-     label14:
+     label9:
         return;
 
-        catch java.lang.Exception from label01 to label02 with label09;
-        catch java.lang.Exception from label03 to label04 with label09;
-        catch java.lang.Exception from label05 to label06 with label09;
-        catch java.lang.Exception from label07 to label08 with label09;
-        catch java.lang.Exception from label11 to label12 with label13;
+        catch java.lang.Exception from label6 to label7 with label8;
     }
 
     private boolean expandBFS(safetyChecker.Vertex) throws safetyChecker.exception.MainFunctionNotFoundException, safetyChecker.exception.ErrorLocationNotFoundException
     {
-        safetyChecker.ProgramTree r0, r6, $r36, $r42, $r46, $r53, $r54, $r56, $r58, $r62, $r73, $r74, $r77, $r79, $r83;
-        safetyChecker.Vertex r1, $r57, $r68, $r75, r85, r85_1, r85_2, r85_3, r85_4;
-        soot.Unit r2, $r39, $r61, $r82;
+        safetyChecker.ProgramTree r0, r6, $r36, $r42, $r47, $r54, $r55, $r57, $r59, $r63, $r74, $r75, $r78, $r80, $r84;
+        safetyChecker.Vertex r1, $r58, $r69, $r76, r86, r86_1, r86_2, r86_3, r86_4;
+        soot.Unit r2, $r39, $r62, $r83;
         java.util.Iterator r3;
-        safetyChecker.Edge r4, $r11, $r17, $r31, $r34, $r35, $r38, $r41, $r43, $r48, $r76, $r78, $r81;
+        safetyChecker.Edge r4, $r11, $r17, $r31, $r34, $r35, $r38, $r41, $r43, $r44, $r49, $r77, $r79, $r82;
         java.lang.String r5, $r19, $r28, $r33;
-        java.lang.Object[] $r7, $r21, $r29, $r60;
+        java.lang.Object[] $r7, $r21, $r29, $r61;
         java.lang.StringBuilder $r8, $r9, $r10, $r12, $r13, $r15, $r16, $r18, $r22, $r24, $r25, $r27, $r30, $r32;
-        safetyChecker.CoverRelation $r14, $r20, $r71;
-        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15, $z16, $z17, $z18, $z19, $z20, $z21, $z22, $z23, z24, z25, z25_1, z25_2, z24_1, z24_2, z24_3, z24_4, z25_3, z24_5;
+        safetyChecker.CoverRelation $r14, $r20, $r72;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15, $z16, $z17, $z18, $z19, $z20, $z21, $z22, $z23, z24, z25, z25_1, z25_2, z24_1, z24_2, z24_3, z24_4, z24_5, z25_3;
         java.util.Set $r23, $r26;
         int $i0, $i1, $i2;
-        soot.toolkits.graph.ExceptionalUnitGraph $r37, $r47, $r80;
-        java.lang.Object $r40, $r67;
-        safetyChecker.UnitController $r44;
-        java.util.Map $r45, $r63;
-        java.util.HashMap $r49, $r50;
-        java.util.Queue $r51, $r52, $r55, $r59, $r64, $r65, $r66, $r70, $r72;
-        java.util.LinkedList $r69;
-        java.util.List r84, r84_1, r84_2, r84_3;
+        soot.toolkits.graph.ExceptionalUnitGraph $r37, $r48, $r81;
+        java.lang.Object $r40, $r68;
+        safetyChecker.UnitController $r45;
+        java.util.Map $r46, $r64;
+        java.util.HashMap $r50, $r51;
+        java.util.Queue $r52, $r53, $r56, $r60, $r65, $r66, $r67, $r71, $r73;
+        java.util.LinkedList $r70;
+        java.util.List r85, r85_1, r85_2, r85_3;
 
         r0 := @this: safetyChecker.ProgramTree;
 
@@ -1272,9 +1265,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $z3 == 0 goto label01;
 
-        $r83 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.ProgramTree getSubTree()>();
+        $r84 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.ProgramTree getSubTree()>();
 
-        $z23 = virtualinvoke $r83.<safetyChecker.ProgramTree: boolean hasNewReturnRoot()>();
+        $z23 = virtualinvoke $r84.<safetyChecker.ProgramTree: boolean hasNewReturnRoot()>();
 
         if $z23 != 0 goto label01;
 
@@ -1289,17 +1282,17 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $z4 == 0 goto label02;
 
-        $r78 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r79 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $r79 = virtualinvoke $r78.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r80 = virtualinvoke $r79.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        $r80 = virtualinvoke $r79.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph getCfg()>();
+        $r81 = virtualinvoke $r80.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph getCfg()>();
 
-        $r81 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r82 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $r82 = virtualinvoke $r81.<safetyChecker.Edge: soot.Unit getUnit()>();
+        $r83 = virtualinvoke $r82.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-        r84 = virtualinvoke $r80.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r82);
+        r85 = virtualinvoke $r81.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r83);
 
 (1)     goto label03;
 
@@ -1310,14 +1303,14 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $r39 = virtualinvoke $r38.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-(2)     r84_1 = virtualinvoke $r37.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r39);
+(2)     r85_1 = virtualinvoke $r37.<soot.toolkits.graph.ExceptionalUnitGraph: java.util.List getUnexceptionalPredsOf(soot.Unit)>($r39);
 
      label03:
-        r84_2 = Phi(r84 #1, r84_1 #2);
+        r85_2 = Phi(r85 #1, r85_1 #2);
 
         z25 = 0;
 
-        $i2 = interfaceinvoke r84_2.<java.util.List: int size()>();
+        $i2 = interfaceinvoke r85_2.<java.util.List: int size()>();
 
 (3)     if $i2 <= 1 goto label04;
 
@@ -1326,7 +1319,7 @@ public class safetyChecker.ProgramTree extends java.lang.Object
      label04:
         z25_2 = Phi(z25 #3, z25_1 #4);
 
-        r3 = interfaceinvoke r84_2.<java.util.List: java.util.Iterator iterator()>();
+        r3 = interfaceinvoke r85_2.<java.util.List: java.util.Iterator iterator()>();
 
 (5)     goto label19;
 
@@ -1345,11 +1338,11 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $r42 != null goto label06;
 
-        $r76 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r77 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $r77 = virtualinvoke $r76.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r78 = virtualinvoke $r77.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        virtualinvoke r4.<safetyChecker.Edge: void setProgramTree(safetyChecker.ProgramTree)>($r77);
+        virtualinvoke r4.<safetyChecker.Edge: void setProgramTree(safetyChecker.ProgramTree)>($r78);
 
      label06:
         $r43 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
@@ -1358,47 +1351,49 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         virtualinvoke r4.<safetyChecker.Edge: void setInErrorPath(boolean)>($z6);
 
-        $z7 = virtualinvoke r1.<safetyChecker.Vertex: boolean isFunctionCall()>();
+        $r44 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+
+        $z7 = virtualinvoke $r44.<safetyChecker.Edge: boolean isFunctionCall()>();
 
         if $z7 == 0 goto label07;
 
-        $r74 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.ProgramTree getSubTree()>();
+        $r75 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.ProgramTree getSubTree()>();
 
-        $r75 = virtualinvoke $r74.<safetyChecker.ProgramTree: safetyChecker.Vertex getNewReturnRoot()>();
+        $r76 = virtualinvoke $r75.<safetyChecker.ProgramTree: safetyChecker.Vertex getNewReturnRoot()>();
 
-        r85_1 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>($r75, r4, z25_2);
+        r86_1 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>($r76, r4, z25_2);
 
 (6)     goto label08;
 
      label07:
-(7)     r85_2 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>(r1, r4, z25_2);
+(7)     r86_2 = specialinvoke r0.<safetyChecker.ProgramTree: safetyChecker.Vertex addVertex(safetyChecker.Vertex,safetyChecker.Edge,boolean)>(r1, r4, z25_2);
 
      label08:
-        r85_3 = Phi(r85_1 #6, r85_2 #7);
+        r86_3 = Phi(r86_1 #6, r86_2 #7);
 
-        $r44 = r0.<safetyChecker.ProgramTree: safetyChecker.UnitController unitController>;
+        $r45 = r0.<safetyChecker.ProgramTree: safetyChecker.UnitController unitController>;
 
-        $r45 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
+        $r46 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
 
-        $r46 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r47 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        $r47 = virtualinvoke $r46.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph getCfg()>();
+        $r48 = virtualinvoke $r47.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph getCfg()>();
 
-        virtualinvoke $r44.<safetyChecker.UnitController: void analyzeEdge(safetyChecker.Edge,java.util.Map,soot.toolkits.graph.ExceptionalUnitGraph)>(r4, $r45, $r47);
+        virtualinvoke $r45.<safetyChecker.UnitController: void analyzeEdge(safetyChecker.Edge,java.util.Map,soot.toolkits.graph.ExceptionalUnitGraph)>(r4, $r46, $r48);
 
         $z8 = virtualinvoke r4.<safetyChecker.Edge: boolean isInErrorPath()>();
 
         if $z8 != 0 goto label09;
 
-        $r72 = r0.<safetyChecker.ProgramTree: java.util.Queue errorSet>;
+        $r73 = r0.<safetyChecker.ProgramTree: java.util.Queue errorSet>;
 
-        $z21 = interfaceinvoke $r72.<java.util.Queue: boolean isEmpty()>();
+        $z21 = interfaceinvoke $r73.<java.util.Queue: boolean isEmpty()>();
 
         if $z21 != 0 goto label09;
 
-        $r73 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r74 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        $z22 = virtualinvoke $r73.<safetyChecker.ProgramTree: boolean isMainFunction()>();
+        $z22 = virtualinvoke $r74.<safetyChecker.ProgramTree: boolean isMainFunction()>();
 
         if $z22 == 0 goto label09;
 
@@ -1409,74 +1404,74 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $z9 == 0 goto label10;
 
-        $r71 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
+        $r72 = r0.<safetyChecker.ProgramTree: safetyChecker.CoverRelation coverRelation>;
 
-        virtualinvoke $r71.<safetyChecker.CoverRelation: void updateUnitVertexMap(safetyChecker.Vertex)>(r85_3);
+        virtualinvoke $r72.<safetyChecker.CoverRelation: void updateUnitVertexMap(safetyChecker.Vertex)>(r86_3);
 
      label10:
         $z10 = virtualinvoke r4.<safetyChecker.Edge: boolean isErrorEdge()>();
 
         if $z10 == 0 goto label11;
 
-        $r70 = r0.<safetyChecker.ProgramTree: java.util.Queue errorSet>;
+        $r71 = r0.<safetyChecker.ProgramTree: java.util.Queue errorSet>;
 
-        interfaceinvoke $r70.<java.util.Queue: boolean add(java.lang.Object)>(r1);
+        interfaceinvoke $r71.<java.util.Queue: boolean add(java.lang.Object)>(r1);
 
      label11:
         $z11 = virtualinvoke r4.<safetyChecker.Edge: boolean isFunctionCall()>();
 
         if $z11 == 0 goto label12;
 
-        $r69 = r0.<safetyChecker.ProgramTree: java.util.LinkedList subFunctionList>;
+        $r70 = r0.<safetyChecker.ProgramTree: java.util.LinkedList subFunctionList>;
 
-        virtualinvoke $r69.<java.util.LinkedList: boolean add(java.lang.Object)>(r4);
+        virtualinvoke $r70.<java.util.LinkedList: boolean add(java.lang.Object)>(r4);
 
      label12:
         $z12 = virtualinvoke r4.<safetyChecker.Edge: boolean isFunctionCall()>();
 
         if $z12 == 0 goto label15;
 
-        $r60 = newarray (java.lang.Object)[1];
+        $r61 = newarray (java.lang.Object)[1];
 
-        $r60[0] = "here we go";
+        $r61[0] = "here we go";
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r60);
+        staticinvoke <safetyChecker.utilities.LogUtils: void detailln(java.lang.Object[])>($r61);
 
-        $r61 = virtualinvoke r4.<safetyChecker.Edge: soot.Unit getUnit()>();
+        $r62 = virtualinvoke r4.<safetyChecker.Edge: soot.Unit getUnit()>();
 
-        r5 = staticinvoke <safetyChecker.UnitController: java.lang.String getMethodSignature(soot.Unit)>($r61);
+        r5 = staticinvoke <safetyChecker.UnitController: java.lang.String getMethodSignature(soot.Unit)>($r62);
 
-        $r62 = new safetyChecker.ProgramTree;
+        $r63 = new safetyChecker.ProgramTree;
 
-        $r63 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
+        $r64 = r0.<safetyChecker.ProgramTree: java.util.Map stores>;
 
-        specialinvoke $r62.<safetyChecker.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean,safetyChecker.Vertex)>($r63, r5, 0, r85_3);
+        specialinvoke $r63.<safetyChecker.ProgramTree: void <init>(java.util.Map,java.lang.String,boolean,safetyChecker.Vertex)>($r64, r5, 0, r86_3);
 
-        r6 = $r62;
+        r6 = $r63;
 
         $z19 = virtualinvoke r4.<safetyChecker.Edge: boolean isFunctionCall()>();
 
-        virtualinvoke r85_3.<safetyChecker.Vertex: void setFunctionCall(boolean)>($z19);
+        virtualinvoke r86_3.<safetyChecker.Vertex: void setFunctionCall(boolean)>($z19);
 
-        virtualinvoke r85_3.<safetyChecker.Vertex: void setSubTree(safetyChecker.ProgramTree)>(r6);
+        virtualinvoke r86_3.<safetyChecker.Vertex: void setSubTree(safetyChecker.ProgramTree)>(r6);
 
         goto label14;
 
      label13:
-        $r65 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
+        $r66 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
-        $r66 = virtualinvoke r6.<safetyChecker.ProgramTree: java.util.Queue getUncovered()>();
+        $r67 = virtualinvoke r6.<safetyChecker.ProgramTree: java.util.Queue getUncovered()>();
 
-        $r67 = interfaceinvoke $r66.<java.util.Queue: java.lang.Object poll()>();
+        $r68 = interfaceinvoke $r67.<java.util.Queue: java.lang.Object poll()>();
 
-        $r68 = (safetyChecker.Vertex) $r67;
+        $r69 = (safetyChecker.Vertex) $r68;
 
-        interfaceinvoke $r65.<java.util.Queue: boolean add(java.lang.Object)>($r68);
+        interfaceinvoke $r66.<java.util.Queue: boolean add(java.lang.Object)>($r69);
 
      label14:
-        $r64 = virtualinvoke r6.<safetyChecker.ProgramTree: java.util.Queue getUncovered()>();
+        $r65 = virtualinvoke r6.<safetyChecker.ProgramTree: java.util.Queue getUncovered()>();
 
-        $z20 = interfaceinvoke $r64.<java.util.Queue: boolean isEmpty()>();
+        $z20 = interfaceinvoke $r65.<java.util.Queue: boolean isEmpty()>();
 
         if $z20 == 0 goto label13;
 
@@ -1485,9 +1480,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
 (9)     if $z13 == 0 goto label17;
 
-        $r58 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r59 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        $z17 = virtualinvoke $r58.<safetyChecker.ProgramTree: boolean isMainFunction()>();
+        $z17 = virtualinvoke $r59.<safetyChecker.ProgramTree: boolean isMainFunction()>();
 
 (10)    if $z17 == 0 goto label17;
 
@@ -1495,16 +1490,16 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $z18 == 0 goto label16;
 
-        specialinvoke r0.<safetyChecker.ProgramTree: void addErrorEntryLocation(safetyChecker.Vertex)>(r85_3);
+        specialinvoke r0.<safetyChecker.ProgramTree: void addErrorEntryLocation(safetyChecker.Vertex)>(r86_3);
 
         z24_2 = 1;
 
 (11)    goto label17;
 
      label16:
-        $r59 = r0.<safetyChecker.ProgramTree: java.util.Queue returnRootQueue>;
+        $r60 = r0.<safetyChecker.ProgramTree: java.util.Queue returnRootQueue>;
 
-        interfaceinvoke $r59.<java.util.Queue: boolean add(java.lang.Object)>(r85_3);
+        interfaceinvoke $r60.<java.util.Queue: boolean add(java.lang.Object)>(r86_3);
 
 (12)    z24_3 = 0;
 
@@ -1515,72 +1510,72 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         if $z14 == 0 goto label18;
 
-        $r53 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r54 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        $z16 = virtualinvoke $r53.<safetyChecker.ProgramTree: boolean isSubTree()>();
+        $z16 = virtualinvoke $r54.<safetyChecker.ProgramTree: boolean isSubTree()>();
 
         if $z16 == 0 goto label18;
 
-        $r54 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r55 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        virtualinvoke $r54.<safetyChecker.ProgramTree: void addNewReturnRoot(safetyChecker.Vertex)>(r85_3);
+        virtualinvoke $r55.<safetyChecker.ProgramTree: void addNewReturnRoot(safetyChecker.Vertex)>(r86_3);
 
-        $r55 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
+        $r56 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
-        $r56 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
+        $r57 = virtualinvoke r4.<safetyChecker.Edge: safetyChecker.ProgramTree getProgramTree()>();
 
-        $r57 = virtualinvoke $r56.<safetyChecker.ProgramTree: safetyChecker.Vertex getCallerVertex()>();
+        $r58 = virtualinvoke $r57.<safetyChecker.ProgramTree: safetyChecker.Vertex getCallerVertex()>();
 
-        interfaceinvoke $r55.<java.util.Queue: boolean add(java.lang.Object)>($r57);
+        interfaceinvoke $r56.<java.util.Queue: boolean add(java.lang.Object)>($r58);
 
      label18:
-        $r48 = virtualinvoke r85_3.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r49 = virtualinvoke r86_3.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        $z15 = virtualinvoke $r48.<safetyChecker.Edge: boolean isErrorEdge()>();
+        $z15 = virtualinvoke $r49.<safetyChecker.Edge: boolean isErrorEdge()>();
 
 (13)    if $z15 == 0 goto label19;
 
-        $r49 = r0.<safetyChecker.ProgramTree: java.util.HashMap treeConnection>;
-
-        virtualinvoke $r49.<java.util.HashMap: void clear()>();
-
-        $r50 = r0.<safetyChecker.ProgramTree: java.util.HashMap candidate2BeInPath>;
+        $r50 = r0.<safetyChecker.ProgramTree: java.util.HashMap treeConnection>;
 
         virtualinvoke $r50.<java.util.HashMap: void clear()>();
 
-        $r51 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
+        $r51 = r0.<safetyChecker.ProgramTree: java.util.HashMap candidate2BeInPath>;
 
-        interfaceinvoke $r51.<java.util.Queue: void clear()>();
+        virtualinvoke $r51.<java.util.HashMap: void clear()>();
 
         $r52 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
-        interfaceinvoke $r52.<java.util.Queue: boolean add(java.lang.Object)>(r85_3);
+        interfaceinvoke $r52.<java.util.Queue: void clear()>();
 
-        virtualinvoke r85_3.<safetyChecker.Vertex: void setNextVertex(safetyChecker.Vertex)>(r1);
+        $r53 = r0.<safetyChecker.ProgramTree: java.util.Queue uncovered>;
 
-        virtualinvoke r1.<safetyChecker.Vertex: void addPreviousVertex(safetyChecker.Vertex)>(r85_3);
+        interfaceinvoke $r53.<java.util.Queue: boolean add(java.lang.Object)>(r86_3);
+
+        virtualinvoke r86_3.<safetyChecker.Vertex: void setNextVertex(safetyChecker.Vertex)>(r1);
+
+        virtualinvoke r1.<safetyChecker.Vertex: void addPreviousVertex(safetyChecker.Vertex)>(r86_3);
 
         virtualinvoke r4.<safetyChecker.Edge: void setTarget(safetyChecker.Vertex)>(r1);
 
 (14)    virtualinvoke r1.<safetyChecker.Vertex: void addIncomingEdge(safetyChecker.Edge)>(r4);
 
      label19:
-        r85 = Phi(r85 #5, r85_3 #8, r85_3 #13, r85_3 #14);
-
         z24_1 = Phi(z24 #5, z24_1 #8, z24_4 #13, z24_4 #14);
+
+        r86 = Phi(r86 #5, r86_3 #8, r86_3 #13, r86_3 #14);
 
         $z5 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
 (15)    if $z5 != 0 goto label05;
 
      label20:
+        z24_5 = Phi(z24 #0, z24_1 #15);
+
+        r85_3 = Phi(r85 #0, r85_2 #15);
+
         z25_3 = Phi(z25 #0, z25_2 #15);
 
-        r85_4 = Phi(r85 #0, r85 #15);
-
-        r84_3 = Phi(r84 #0, r84_2 #15);
-
-        z24_5 = Phi(z24 #0, z24_1 #15);
+        r86_4 = Phi(r86 #0, r86 #15);
 
         $r21 = newarray (java.lang.Object)[1];
 
@@ -1665,63 +1660,76 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     private void addErrorEntryLocation(safetyChecker.Vertex)
     {
         safetyChecker.ProgramTree r0;
-        safetyChecker.Vertex r1, r2, r12, r12_1, r12_2;
-        java.util.HashSet $r3;
-        java.util.Queue $r4;
-        java.util.HashMap $r5, $r6, $r8;
-        boolean $z2;
-        java.lang.Object $r7, $r9;
-        safetyChecker.Edge $r10, $r11;
+        safetyChecker.Vertex r1, r2, r3, r14, r14_1, r14_2, r14_3, r14_4;
+        java.util.HashSet $r4;
+        java.util.Queue $r5;
+        safetyChecker.Edge $r6, $r12, $r13;
+        boolean $z2, $z3;
+        java.util.HashMap $r7, $r8, $r10;
+        java.lang.Object $r9, $r11;
 
         r0 := @this: safetyChecker.ProgramTree;
 
-        r12 := @parameter0: safetyChecker.Vertex;
+        r1 := @parameter0: safetyChecker.Vertex;
 
-        $r3 = r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet>;
+        $r4 = r0.<safetyChecker.ProgramTree: java.util.HashSet errorRootSet>;
 
-        virtualinvoke $r3.<java.util.HashSet: boolean add(java.lang.Object)>(r12);
+        virtualinvoke $r4.<java.util.HashSet: boolean add(java.lang.Object)>(r1);
 
-        $r4 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
+        $r5 = r0.<safetyChecker.ProgramTree: java.util.Queue errorRootQueue>;
 
-        interfaceinvoke $r4.<java.util.Queue: boolean add(java.lang.Object)>(r12);
+        interfaceinvoke $r5.<java.util.Queue: boolean add(java.lang.Object)>(r1);
 
-(0)     goto label2;
+        r14 = r1;
+
+(0)     goto label3;
 
      label1:
-        $r6 = r0.<safetyChecker.ProgramTree: java.util.HashMap candidate2BeInPath>;
+        $r8 = r0.<safetyChecker.ProgramTree: java.util.HashMap candidate2BeInPath>;
 
-        $r7 = virtualinvoke $r6.<java.util.HashMap: java.lang.Object get(java.lang.Object)>(r12_1);
-
-        r1 = (safetyChecker.Vertex) $r7;
-
-        $r8 = r0.<safetyChecker.ProgramTree: java.util.HashMap treeConnection>;
-
-        $r9 = virtualinvoke $r8.<java.util.HashMap: java.lang.Object get(java.lang.Object)>(r1);
+        $r9 = virtualinvoke $r8.<java.util.HashMap: java.lang.Object get(java.lang.Object)>(r14_2);
 
         r2 = (safetyChecker.Vertex) $r9;
 
-        virtualinvoke r1.<safetyChecker.Vertex: void setNextVertex(safetyChecker.Vertex)>(r2);
+        $r10 = r0.<safetyChecker.ProgramTree: java.util.HashMap treeConnection>;
 
-        $r10 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        $r11 = virtualinvoke $r10.<java.util.HashMap: java.lang.Object get(java.lang.Object)>(r2);
 
-        virtualinvoke $r10.<safetyChecker.Edge: void setTarget(safetyChecker.Vertex)>(r2);
+        r3 = (safetyChecker.Vertex) $r11;
 
-        $r11 = virtualinvoke r1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+        virtualinvoke r2.<safetyChecker.Vertex: void setNextVertex(safetyChecker.Vertex)>(r3);
 
-        virtualinvoke r2.<safetyChecker.Vertex: void addIncomingEdge(safetyChecker.Edge)>($r11);
+        $r12 = virtualinvoke r2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 
-        virtualinvoke r2.<safetyChecker.Vertex: void addPreviousVertex(safetyChecker.Vertex)>(r1);
+        virtualinvoke $r12.<safetyChecker.Edge: void setTarget(safetyChecker.Vertex)>(r3);
 
-(1)     r12_2 = r2;
+        $r13 = virtualinvoke r2.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+
+        virtualinvoke r3.<safetyChecker.Vertex: void addIncomingEdge(safetyChecker.Edge)>($r13);
+
+        virtualinvoke r3.<safetyChecker.Vertex: void addPreviousVertex(safetyChecker.Vertex)>(r2);
+
+(1)     r14_3 = r3;
 
      label2:
-        r12_1 = Phi(r12 #0, r12_2 #1);
+        r14_2 = Phi(r14_3 #1, r14_1 #3);
 
-        $r5 = r0.<safetyChecker.ProgramTree: java.util.HashMap candidate2BeInPath>;
+        $r7 = r0.<safetyChecker.ProgramTree: java.util.HashMap candidate2BeInPath>;
 
-        $z2 = virtualinvoke $r5.<java.util.HashMap: boolean containsKey(java.lang.Object)>(r12_1);
+        $z3 = virtualinvoke $r7.<java.util.HashMap: boolean containsKey(java.lang.Object)>(r14_2);
 
-        if $z2 != 0 goto label1;
+        if $z3 != 0 goto label1;
+
+(2)     r14_4 = virtualinvoke r14_2.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
+
+     label3:
+        r14_1 = Phi(r14 #0, r14_4 #2);
+
+        $r6 = virtualinvoke r14_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
+
+        $z2 = virtualinvoke $r6.<safetyChecker.Edge: boolean isErrorEdge()>();
+
+(3)     if $z2 == 0 goto label2;
 
         return;
     }
@@ -1833,10 +1841,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
     public java.lang.String getProgramDefinition()
     {
         safetyChecker.ProgramTree r0;
-        java.lang.StringBuilder $r1, $r3, $r4, $r8;
-        java.lang.String $r2, $r5, $r9;
-        java.util.Map $r6;
-        java.lang.Object $r7;
+        java.lang.StringBuilder $r1, $r3, $r4, $r5;
+        java.lang.String $r2, $r6;
+        int $i0;
 
         r0 := @this: safetyChecker.ProgramTree;
 
@@ -1850,17 +1857,25 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 
         $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
 
-        $r6 = <safetyChecker.ProgramTree: java.util.Map functionNameInvokeCount>;
+        $i0 = virtualinvoke r0.<safetyChecker.ProgramTree: int getFunctionStackVersion()>();
 
-        $r5 = r0.<safetyChecker.ProgramTree: java.lang.String functionName>;
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
 
-        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>($r5);
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r8 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r7);
+        return $r6;
+    }
 
-        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+    public int getFunctionStackVersion()
+    {
+        safetyChecker.ProgramTree r0;
+        int $i0;
 
-        return $r9;
+        r0 := @this: safetyChecker.ProgramTree;
+
+        $i0 = r0.<safetyChecker.ProgramTree: int functionStackVersion>;
+
+        return $i0;
     }
 
     public java.lang.String getFunctionName()

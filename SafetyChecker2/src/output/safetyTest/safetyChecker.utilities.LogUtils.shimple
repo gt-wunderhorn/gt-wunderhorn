@@ -17,6 +17,13 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
     public static final java.lang.String ANSI_PURPLE;
     public static final java.lang.String ANSI_CYAN;
 
+    static void <clinit>()
+    {
+        <safetyChecker.utilities.LogUtils: int currentLevel> = 2;
+
+        return;
+    }
+
     public void <init>()
     {
         safetyChecker.utilities.LogUtils r0;
@@ -91,11 +98,11 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
     private static transient void print(int, java.lang.Object[])
     {
         int i0, i1, $i2, i3, i3_1, i3_2, i3_3;
-        java.lang.Object[] r0, r1;
-        java.lang.Object r2;
-        java.lang.StringBuilder $r3, $r6, $r7, $r9;
+        java.lang.Object[] r0, r2;
+        java.lang.Object r1;
+        java.lang.StringBuilder $r3, $r7, $r9;
         java.io.PrintStream $r4;
-        java.lang.String $r5, $r8, $r10;
+        java.lang.String $r5, $r6, $r8, $r10;
 
         i0 := @parameter0: int;
 
@@ -103,32 +110,30 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
 
         $i2 = <safetyChecker.utilities.LogUtils: int currentLevel>;
 
-(0)     if $i2 > i0 goto label2;
+(0)     if $i2 > i0 goto label3;
 
-        r1 = r0;
+        r2 = r0;
 
-        i1 = lengthof r1;
+        i1 = lengthof r0;
 
-(1)     i3 = 0;
+        i3 = 0;
+
+(1)     goto label2;
 
      label1:
-        i3_1 = Phi(i3 #1, i3_2 #3);
-
-(2)     if i3_1 >= i1 goto label2;
-
-        r2 = r1[i3_1];
+        r1 = r2[i3_1];
 
         $r4 = <java.lang.System: java.io.PrintStream out>;
 
         $r3 = new java.lang.StringBuilder;
 
-        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
-
         $r5 = staticinvoke <safetyChecker.utilities.LogUtils: java.lang.String getOutputColor(int)>(i0);
 
-        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+        $r6 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r5);
 
-        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>($r6);
+
+        $r7 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
 
         $r8 = staticinvoke <safetyChecker.utilities.LogUtils: java.lang.String getOutputColor(int)>(100);
 
@@ -138,12 +143,15 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
 
         virtualinvoke $r4.<java.io.PrintStream: void print(java.lang.String)>($r10);
 
-        i3_2 = i3_1 + 1;
-
-(3)     goto label1;
+(2)     i3_2 = i3_1 + 1;
 
      label2:
-        i3_3 = Phi(i3 #0, i3_1 #2);
+        i3_1 = Phi(i3 #1, i3_2 #2);
+
+(3)     if i3_1 < i1 goto label1;
+
+     label3:
+        i3_3 = Phi(i3 #0, i3_1 #3);
 
         return;
     }
@@ -151,11 +159,11 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
     private static transient void println(int, java.lang.Object[])
     {
         int i0, i1, $i2, i3, i3_1, i3_2, i3_3;
-        java.lang.Object[] r0, r1;
-        java.lang.Object r2;
-        java.lang.StringBuilder $r3, $r6, $r7, $r9;
+        java.lang.Object[] r0, r2;
+        java.lang.Object r1;
+        java.lang.StringBuilder $r3, $r7, $r9;
         java.io.PrintStream $r4;
-        java.lang.String $r5, $r8, $r10;
+        java.lang.String $r5, $r6, $r8, $r10;
 
         i0 := @parameter0: int;
 
@@ -163,32 +171,30 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
 
         $i2 = <safetyChecker.utilities.LogUtils: int currentLevel>;
 
-(0)     if $i2 > i0 goto label2;
+(0)     if $i2 > i0 goto label3;
 
-        r1 = r0;
+        r2 = r0;
 
-        i1 = lengthof r1;
+        i1 = lengthof r0;
 
-(1)     i3 = 0;
+        i3 = 0;
+
+(1)     goto label2;
 
      label1:
-        i3_1 = Phi(i3 #1, i3_2 #3);
-
-(2)     if i3_1 >= i1 goto label2;
-
-        r2 = r1[i3_1];
+        r1 = r2[i3_1];
 
         $r4 = <java.lang.System: java.io.PrintStream out>;
 
         $r3 = new java.lang.StringBuilder;
 
-        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
-
         $r5 = staticinvoke <safetyChecker.utilities.LogUtils: java.lang.String getOutputColor(int)>(i0);
 
-        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+        $r6 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r5);
 
-        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>($r6);
+
+        $r7 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
 
         $r8 = staticinvoke <safetyChecker.utilities.LogUtils: java.lang.String getOutputColor(int)>(100);
 
@@ -198,12 +204,15 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
 
         virtualinvoke $r4.<java.io.PrintStream: void println(java.lang.String)>($r10);
 
-        i3_2 = i3_1 + 1;
-
-(3)     goto label1;
+(2)     i3_2 = i3_1 + 1;
 
      label2:
-        i3_3 = Phi(i3 #0, i3_1 #2);
+        i3_1 = Phi(i3 #1, i3_2 #2);
+
+(3)     if i3_1 < i1 goto label1;
+
+     label3:
+        i3_3 = Phi(i3 #0, i3_1 #3);
 
         return;
     }
@@ -339,10 +348,10 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
 
     public static void printResult(java.lang.String, boolean)
     {
-        java.lang.String r0, $r5, $r12;
+        java.lang.String r0, $r4, $r10;
         boolean z0;
-        java.lang.Object[] $r1, $r6, $r7, $r8, $r13, $r14;
-        java.lang.StringBuilder $r2, $r3, $r4, $r9, $r10, $r11;
+        java.lang.Object[] $r1, $r5, $r6, $r7, $r11, $r12;
+        java.lang.StringBuilder $r2, $r3, $r8, $r9;
 
         r0 := @parameter0: java.lang.String;
 
@@ -350,33 +359,31 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
 
         if z0 == 0 goto label1;
 
-        $r8 = newarray (java.lang.Object)[1];
+        $r7 = newarray (java.lang.Object)[1];
 
-        $r9 = new java.lang.StringBuilder;
+        $r8 = new java.lang.StringBuilder;
 
-        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>(java.lang.String)>("********************\n ");
 
-        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("********************\n ");
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r0);
 
-        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r0);
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+        $r7[0] = $r10;
 
-        $r8[0] = $r12;
+        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(102, $r7);
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(102, $r8);
+        $r11 = newarray (java.lang.Object)[1];
 
-        $r13 = newarray (java.lang.Object)[1];
+        $r11[0] = "Error path is feasible.";
 
-        $r13[0] = "Error path is feasible.";
+        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(102, $r11);
 
-        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(102, $r13);
+        $r12 = newarray (java.lang.Object)[1];
 
-        $r14 = newarray (java.lang.Object)[1];
+        $r12[0] = "********************";
 
-        $r14[0] = "********************";
-
-        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(102, $r14);
+        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(102, $r12);
 
         goto label2;
 
@@ -385,38 +392,29 @@ public class safetyChecker.utilities.LogUtils extends java.lang.Object
 
         $r2 = new java.lang.StringBuilder;
 
-        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>(java.lang.String)>("********************\n ");
 
-        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("********************\n ");
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r0);
 
-        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r0);
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
-
-        $r1[0] = $r5;
+        $r1[0] = $r4;
 
         staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(101, $r1);
 
+        $r5 = newarray (java.lang.Object)[1];
+
+        $r5[0] = "Error path is not feasible.";
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(101, $r5);
+
         $r6 = newarray (java.lang.Object)[1];
 
-        $r6[0] = "Error path is not feasible.";
+        $r6[0] = "********************";
 
         staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(101, $r6);
 
-        $r7 = newarray (java.lang.Object)[1];
-
-        $r7[0] = "********************";
-
-        staticinvoke <safetyChecker.utilities.LogUtils: void println(int,java.lang.Object[])>(101, $r7);
-
      label2:
-        return;
-    }
-
-    static void <clinit>()
-    {
-        <safetyChecker.utilities.LogUtils: int currentLevel> = 2;
-
         return;
     }
 }

@@ -1,0 +1,42 @@
+public class safetyTestCode.interproc.Obj extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        safetyTestCode.interproc.Obj r0;
+
+        r0 := @this: safetyTestCode.interproc.Obj;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public int getSix()
+    {
+        safetyTestCode.interproc.Obj r0;
+
+        r0 := @this: safetyTestCode.interproc.Obj;
+
+        return 6;
+    }
+
+    public static int getFive()
+    {
+        return 5;
+    }
+
+    public int getDouble(int)
+    {
+        safetyTestCode.interproc.Obj r0;
+        int i0, $i1;
+
+        r0 := @this: safetyTestCode.interproc.Obj;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 * 3;
+
+        return $i1;
+    }
+}

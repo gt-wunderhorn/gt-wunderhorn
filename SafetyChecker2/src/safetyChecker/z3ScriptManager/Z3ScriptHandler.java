@@ -111,6 +111,7 @@ public class Z3ScriptHandler {
 			createZ3Script(v.getOutgoingEdge());
 	
 			v = v.getNextVertex();
+			if(v == null) LogUtils.warningln("NUUUUUULLLLLLL");
 			if(v.getOutgoingEdge().isErrorEdge())
 				isError = true;
 		}
@@ -294,10 +295,10 @@ public class Z3ScriptHandler {
 		// rigth invoke expression needs to be added
 		if(edge.isFunctionCall() && !(((InvokeExpr)right).getMethod().getReturnType() instanceof VoidType)) {
 			LogUtils.fatal("******");
-			LogUtils.infoln("here we go");
+			LogUtils.infoln("subfunction call");
 			Unit stmt = edge.getFunctionReturn().getUnit();
 			LogUtils.fatal("******");
-			LogUtils.warningln(stmt);
+			LogUtils.debugln(stmt);
 			Value returnValue = stmt.getUseBoxes().get(0).getValue();
 			rightZ3 = this.convertValue(returnValue, false, edge.getFunctionReturn(), edge.getFunctionReturn().getSource().getDistance());
 //			LogUtils.fatalln(right);
@@ -329,7 +330,7 @@ public class Z3ScriptHandler {
 		} else {
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		}
-		LogUtils.warningln("rightZ3=" + rightZ3);
+		LogUtils.debugln("rightZ3=" + rightZ3);
 		Expr leftZ3 = this.convertValue(left, true, edge, edge.getSource().getDistance());
 		LogUtils.debugln("leftZ3=" + leftZ3);
 
@@ -413,7 +414,7 @@ public class Z3ScriptHandler {
 				Expr leftExpr = null;
 				///
 				if(!localMap.containsKey(functionDefinition)) {
-					LogUtils.warningln(functionDefinition + " does not exist");
+					LogUtils.debugln(functionDefinition + " does not exist");
 					Map<String, Expr> insideLocalMap = new HashMap<String, Expr>();
 					localMap.put(functionDefinition, insideLocalMap);
 
@@ -706,7 +707,7 @@ public class Z3ScriptHandler {
 	}	
 
 	private BoolExpr convertAssignStmt(Expr rightZ3, Expr leftZ3, Type leftType, Value left, int distance) {
-		LogUtils.warningln(leftZ3 + "=" + rightZ3);
+		LogUtils.debugln(leftZ3 + "=" + rightZ3);
 		if ((leftType instanceof PrimType) && (left instanceof Local)) {
 			BoolExpr leftEqRight = ictx.mkEq(leftZ3, rightZ3);
 			return leftEqRight;

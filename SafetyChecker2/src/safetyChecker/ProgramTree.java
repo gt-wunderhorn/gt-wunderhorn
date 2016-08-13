@@ -48,6 +48,7 @@ public class ProgramTree {
 	private String functionSignature;
 	private String functionName;
 	private static Map<String, Integer> functionNameInvokeCount = new HashMap<String, Integer>();
+	private int functionStackVersion;
 	private ExceptionalUnitGraph cfg;
 	// private HelpTree helpTree;
 	private String signature;
@@ -75,7 +76,6 @@ public class ProgramTree {
 
 	public ProgramTree(Map<String, Body> stores, String functionSignature, boolean mainFunction)
 			throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.infoln("------->ProgramTree");
 		this.errorLocationFeasible = false;
 		this.subFunctionList = new LinkedList<Edge>();
 		this.errorRootSet = new HashSet<Vertex>();
@@ -149,6 +149,8 @@ public class ProgramTree {
 				functionNameInvokeCount.put(functionName, functionNameInvokeCount.get(functionName) + 1);
 			else
 				functionNameInvokeCount.put(functionName, 0);
+			this.functionStackVersion = functionNameInvokeCount.get(functionName); 
+				
 			this.signature = functionSignature;
 
 			// Assumption is that we have only one ErrorLocation and return
@@ -179,6 +181,7 @@ public class ProgramTree {
 				functionNameInvokeCount.put(functionName, functionNameInvokeCount.get(functionName) + 1);
 			else
 				functionNameInvokeCount.put(functionName, 0);
+			this.functionStackVersion = functionNameInvokeCount.get(functionName); 
 			this.signature = functionSignature;
 
 			// Assumption is that we have only one ErrorLocation and return
@@ -194,6 +197,7 @@ public class ProgramTree {
 				boolean unDoneFlag = (cfg.getUnexceptionalPredsOf(returnEdge.getUnit()).size() > 1) ? true : false;
 				Vertex returnVertex = this.addVertex(root, returnEdge, unDoneFlag);
 				returnVertex.setReturnLocation(true);
+				returnEdge.setInErrorPath(this.root.getOutgoingEdge().isInErrorPath());
 			}
 			return true;
 		}
@@ -201,7 +205,7 @@ public class ProgramTree {
 	}
 
 	public boolean getNewReturnPath() throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
-		LogUtils.warningln(">>>>>>>> ProgramTree.getNewReturnPath");
+		LogUtils.debugln(">>>>>>>> ProgramTree.getNewReturnPath");
 		while (!this.uncovered.isEmpty()) {
 			Vertex v = uncovered.remove();
 			LogUtils.detailln(v.getIncomingEdges());
@@ -212,7 +216,7 @@ public class ProgramTree {
 				return true;
 			}
 		}
-		LogUtils.warningln("<<<<<<<<< ProgramTree.getNewReturnPath");
+		LogUtils.debugln("<<<<<<<<< ProgramTree.getNewReturnPath");
 		return false;
 	}
 
@@ -250,7 +254,7 @@ public class ProgramTree {
 		boolean windingDone = false;
 
 		while (!this.uncovered.isEmpty()) {
-			try {
+//			try {
 				Vertex v = uncovered.remove();
 				if (this.isConnectionCovered(v))
 					continue;
@@ -272,13 +276,14 @@ public class ProgramTree {
 
 					if (errorLocationFeasible)
 						break;
+
 					coverRelation.updateCover();
 				}
-			} catch (Exception ex) {
-				LogUtils.fatalln("Exception occured during unwind");
-				LogUtils.warningln(ex.getMessage());
-				LogUtils.fatalln(ex.getStackTrace());
-			}
+//			} catch (Exception ex) {
+//				LogUtils.fatalln("Exception occured during unwind");
+//				LogUtils.warningln(ex.getMessage());
+//				LogUtils.fatalln(ex.getStackTrace());
+//			}
 		}
 
 		try {
@@ -308,17 +313,18 @@ public class ProgramTree {
 //			LogUtils.fatal("--");
 //			LogUtils.info(w.getOutgoingEdge());
 //			LogUtils.fatal("--");
-//			LogUtils.infoln(w.getOutgoingEdge().getProgramTree());
-//			if(w.getOutgoingEdge().getProgramTree().isSubTree())
-//				LogUtils.warningln(w.getNextVertex().getOutgoingEdge());
-			if(w.getOutgoingEdge().getProgramTree().isSubTree())
+//			LogUtils.infoln(w.getOutgoingEdge().getProgramTree().getProgramDefinition());
+
+			if(w.getOutgoingEdge().getProgramTree().isSubTree()) {
 				unitList = w.getOutgoingEdge().getProgramTree().getCfg().getUnexceptionalPredsOf(w.getOutgoingEdge().getUnit()); 
-			else
+			} else {
 				unitList = cfg.getUnexceptionalPredsOf(w.getOutgoingEdge().getUnit());
+			}
 
 			boolean unDoneFlag = false;
-			if (unitList.size() > 1)
+			if (unitList.size() > 1) { 
 				unDoneFlag = true;
+			} 
 			
 			for (Unit unit : unitList) {
 
@@ -328,13 +334,13 @@ public class ProgramTree {
 				edge.setInErrorPath(w.getOutgoingEdge().isInErrorPath());
 				
 				Vertex v = null;
-				if(w.isFunctionCall())
+				if(w.getOutgoingEdge().isFunctionCall()) {
 					v = this.addVertex(w.getSubTree().getNewReturnRoot(), edge, unDoneFlag);
-				else
+				} else {
 					v = this.addVertex(w, edge, unDoneFlag);
+					
+				}
 
-//				if(edge.getProgramTree().getCfg() == null)
-//					LogUtils.fatalln("*&*&*&*&*&" + edge + "--" + edge.getProgramTree());
 				unitController.analyzeEdge(edge, stores, edge.getProgramTree().getCfg());
 				if (!edge.isInErrorPath() && !errorSet.isEmpty() && edge.getProgramTree().isMainFunction())
 					continue;
@@ -404,18 +410,25 @@ public class ProgramTree {
 		this.errorRootSet.add(entryVertex);
 		this.errorRootQueue.add(entryVertex);
 
-		while (this.candidate2BeInPath.containsKey(entryVertex)) {
-			Vertex connection = this.candidate2BeInPath.get(entryVertex);
-			Vertex undoneLeaf = this.treeConnection.get(connection);
+		Vertex checkVertex = entryVertex;
 
-			connection.setNextVertex(undoneLeaf);
-			connection.getOutgoingEdge().setTarget(undoneLeaf);
+		 while (!checkVertex.getOutgoingEdge().isErrorEdge()) {
+			while (this.candidate2BeInPath.containsKey(checkVertex)) {
+				Vertex connection = this.candidate2BeInPath.get(checkVertex);
+				Vertex undoneLeaf = this.treeConnection.get(connection);
+	
+				connection.setNextVertex(undoneLeaf);
+				connection.getOutgoingEdge().setTarget(undoneLeaf);
+	
+				undoneLeaf.addIncomingEdge(connection.getOutgoingEdge());
+				undoneLeaf.addPreviousVertex(connection);
+	
+				checkVertex = undoneLeaf;
+			}
 
-			undoneLeaf.addIncomingEdge(connection.getOutgoingEdge());
-			undoneLeaf.addPreviousVertex(connection);
+			checkVertex = checkVertex.getNextVertex();
+		} 
 
-			entryVertex = undoneLeaf;
-		}
 	}
 
 	private Vertex addVertex(Vertex nextVertex, Edge edge, boolean unDoneFlag) {
@@ -452,8 +465,10 @@ public class ProgramTree {
 	}
 
 	public String getProgramDefinition() {
-		return "_" + this.functionName + "_" + ProgramTree.functionNameInvokeCount.get(this.functionName);
+		return "_" + this.functionName + "_" + this.getFunctionStackVersion();
 	}
+
+	public int getFunctionStackVersion() { return this.functionStackVersion; }
 
 	public String getFunctionName() {
 		return this.functionName;
