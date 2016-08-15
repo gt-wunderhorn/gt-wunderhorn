@@ -1,22 +1,26 @@
 package safetyTestCode.interproc;
 
+import safetyChecker.utilities.ConsraintAnnotation;
 import safetyChecker.utilities.ErrorLable;
 
 public class Test1 {
 
+	int j;
+	@ConsraintAnnotation(constraint=true)
 	public void test(int i) {
-		int j = recursive(2);
+		int j = recursive(3);
 	//	int j = getHalf(10);
 	//	int j = fun1(1);
-		if(j == 3) 
+		if(j == 2) 
 			ErrorLable.Error();	
 	}
 
 	public int recursive(int i) {
-		if(i == 1)
+		if(i == 1 || i == 2)
 			return 1;
 		else
-			return recursive(i-1) + i;
+			return recursive(i-1) 
+				+ recursive(i-2);
 	}
 	
 	public int recursive2(int i) {

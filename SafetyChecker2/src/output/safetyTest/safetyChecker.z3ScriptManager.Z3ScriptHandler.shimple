@@ -2092,9 +2092,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
      label15:
         r118_2 = Phi(r118_1 #5, r118_6 #11);
 
-        r120_2 = Phi(r120_1 #5, r120_3 #11);
-
         r117_2 = Phi(r117_1 #5, r117_6 #11);
+
+        r120_2 = Phi(r120_1 #5, r120_3 #11);
 
         $r36 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
@@ -2103,9 +2103,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
      label16:
         r118_1 = Phi(r118 #4, r118_2 #12);
 
-        r120 = Phi(r120 #4, r120_2 #12);
-
         r117_1 = Phi(r117 #4, r117_2 #12);
+
+        r120 = Phi(r120 #4, r120_2 #12);
 
         $z11 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
@@ -2461,9 +2461,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
      label06:
         r73_2 = Phi(r73_1 #1, r73_6 #7);
 
-        r76_2 = Phi(r76_1 #1, r76_3 #7);
-
         r74_2 = Phi(r74_1 #1, r74_6 #7);
+
+        r76_2 = Phi(r76_1 #1, r76_3 #7);
 
         $r48 = virtualinvoke r2.<safetyChecker.Edge: safetyChecker.Vertex getSource()>();
 
@@ -2472,9 +2472,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
      label07:
         r73_1 = Phi(r73 #0, r73_2 #8);
 
-        r76 = Phi(r76 #0, r76_2 #8);
-
         r74_1 = Phi(r74 #0, r74_2 #8);
+
+        r76 = Phi(r76 #0, r76_2 #8);
 
         $z13 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 

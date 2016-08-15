@@ -194,7 +194,8 @@ public class ProgramTree {
 				Edge returnEdge = new Edge(cfg.getTails().get(i));
 				returnEdge.setReturnEdge(true);
 				returnEdge.setProgramTree(this);
-				boolean unDoneFlag = (cfg.getUnexceptionalPredsOf(returnEdge.getUnit()).size() > 1) ? true : false;
+			//	boolean unDoneFlag = (cfg.getUnexceptionalPredsOf(returnEdge.getUnit()).size() > 1) ? true : false;
+			        boolean unDoneFlag = (cfg.getTails().size() > 1) ? true : false; 
 				Vertex returnVertex = this.addVertex(root, returnEdge, unDoneFlag);
 				returnVertex.setReturnLocation(true);
 				returnEdge.setInErrorPath(this.root.getOutgoingEdge().isInErrorPath());
@@ -410,10 +411,18 @@ public class ProgramTree {
 		this.errorRootSet.add(entryVertex);
 		this.errorRootQueue.add(entryVertex);
 
-		Vertex checkVertex = entryVertex;
 
-		 while (!checkVertex.getOutgoingEdge().isErrorEdge()) {
+		Vertex checkVertex = entryVertex;
+		LogUtils.warning(checkVertex.getOutgoingEdge());
+		LogUtils.infoln(checkVertex.getOutgoingEdge().getProgramTree().getProgramDefinition());
+
+		while (!checkVertex.getOutgoingEdge().isErrorEdge()) {
+			LogUtils.fatalln("***");
+			LogUtils.warningln(checkVertex.getOutgoingEdge());
+			boolean checkFlag = false;
 			while (this.candidate2BeInPath.containsKey(checkVertex)) {
+				LogUtils.infoln("inside");
+				LogUtils.warningln(checkVertex.getOutgoingEdge());
 				Vertex connection = this.candidate2BeInPath.get(checkVertex);
 				Vertex undoneLeaf = this.treeConnection.get(connection);
 	
@@ -424,9 +433,14 @@ public class ProgramTree {
 				undoneLeaf.addPreviousVertex(connection);
 	
 				checkVertex = undoneLeaf;
+				checkFlag = true;
 			}
 
-			checkVertex = checkVertex.getNextVertex();
+			LogUtils.infoln(checkVertex + "--" + checkVertex.getOutgoingEdge());
+			LogUtils.warning(checkVertex.getNextVertex());
+			LogUtils.warningln("--" + checkVertex.getNextVertex().getOutgoingEdge());
+			if(!checkFlag)
+				checkVertex = checkVertex.getNextVertex();
 		} 
 
 	}
@@ -449,8 +463,17 @@ public class ProgramTree {
 				this.candidate2BeInPath.remove(nextVertex);
 			}
 		} else {
-			this.treeConnection.put(prevVertex, nextVertex);
-			this.candidate2BeInPath.put(prevVertex, prevVertex);
+			if(edge.isReturnEdge() && edge.getProgramTree().isSubTree()) {
+				Edge mainCaller = this.calllerVertex.getOutgoingEdge();
+				while(!mainCaller.getProgramTree().isMainFunction()) {
+					mainCaller = mainCaller.getProgramTree().getCallerVertex().getOutgoingEdge();
+				}
+				mainCaller.getProgramTree().getTreeConnection().put(prevVertex, nextVertex);
+				mainCaller.getProgramTree().getCandidate2BeInPath().put(prevVertex, prevVertex);
+			} else {
+				this.treeConnection.put(prevVertex, nextVertex);
+				this.candidate2BeInPath.put(prevVertex, prevVertex);
+			}
 		}
 
 		edge.setSource(prevVertex);
@@ -495,5 +518,7 @@ public class ProgramTree {
 	}
 
 	public Vertex getCallerVertex() { return this.calllerVertex; }
+	public HashMap<Vertex, Vertex> getCandidate2BeInPath() { return this.candidate2BeInPath; }
+	public HashMap<Vertex, Vertex> getTreeConnection() { return this.treeConnection; }	
 
 }
