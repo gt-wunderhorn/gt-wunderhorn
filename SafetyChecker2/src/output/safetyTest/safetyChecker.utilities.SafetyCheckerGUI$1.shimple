@@ -1,0 +1,170 @@
+class safetyChecker.utilities.SafetyCheckerGUI$1 extends java.lang.Object implements java.awt.event.ActionListener
+{
+    final safetyChecker.utilities.SafetyCheckerGUI this$0;
+
+    void <init>(safetyChecker.utilities.SafetyCheckerGUI)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI$1 r0;
+        safetyChecker.utilities.SafetyCheckerGUI r1;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI$1;
+
+        r1 := @parameter0: safetyChecker.utilities.SafetyCheckerGUI;
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI$1: safetyChecker.utilities.SafetyCheckerGUI this$0> = r1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI$1 r0;
+        java.awt.event.ActionEvent r1;
+        javax.swing.JFileChooser r2, $r4;
+        int i0, $i1, $i2, $i3, i4, i4_1, i4_2, i4_3;
+        java.io.File[] r3;
+        java.io.File $r5, $r12, $r15, $r21, $r23, $r26;
+        javax.swing.JFrame $r6;
+        safetyChecker.utilities.SafetyCheckerGUI $r7, $r16, $r24, $r25;
+        javax.swing.JLabel $r8;
+        java.lang.StringBuilder $r9, $r11, $r14;
+        java.lang.String $r10, $r13, $r22, r27, r27_1, r27_2, r27_3, r27_4, r27_5;
+        java.lang.Object[] $r17, $r18, $r20;
+        java.lang.Integer $r19;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI$1;
+
+        r1 := @parameter0: java.awt.event.ActionEvent;
+
+        $r4 = new javax.swing.JFileChooser;
+
+        specialinvoke $r4.<javax.swing.JFileChooser: void <init>()>();
+
+        r2 = $r4;
+
+        virtualinvoke r2.<javax.swing.JFileChooser: void setMultiSelectionEnabled(boolean)>(1);
+
+        virtualinvoke r2.<javax.swing.JFileChooser: void setFileSelectionMode(int)>(2);
+
+        $r5 = new java.io.File;
+
+        specialinvoke $r5.<java.io.File: void <init>(java.lang.String)>("/Users/burak/Documents/WHarris/safety-itps/SafetyChecker2");
+
+        virtualinvoke r2.<javax.swing.JFileChooser: void setCurrentDirectory(java.io.File)>($r5);
+
+        $r6 = new javax.swing.JFrame;
+
+        specialinvoke $r6.<javax.swing.JFrame: void <init>()>();
+
+        i0 = virtualinvoke r2.<javax.swing.JFileChooser: int showOpenDialog(java.awt.Component)>($r6);
+
+        if i0 != 0 goto label4;
+
+        r3 = virtualinvoke r2.<javax.swing.JFileChooser: java.io.File[] getSelectedFiles()>();
+
+        r27 = "nothing";
+
+        $i1 = lengthof r3;
+
+(0)     if $i1 <= 0 goto label1;
+
+        $r26 = r3[0];
+
+(1)     r27_1 = virtualinvoke $r26.<java.io.File: java.lang.String getName()>();
+
+     label1:
+        r27_2 = Phi(r27 #0, r27_1 #1);
+
+        i4 = 1;
+
+(2)     goto label3;
+
+     label2:
+        $r9 = new java.lang.StringBuilder;
+
+        $r10 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r27_3);
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>(java.lang.String)>($r10);
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", ");
+
+        $r12 = r3[i4_1];
+
+        $r13 = virtualinvoke $r12.<java.io.File: java.lang.String getName()>();
+
+        $r14 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r13);
+
+        r27_4 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r16 = r0.<safetyChecker.utilities.SafetyCheckerGUI$1: safetyChecker.utilities.SafetyCheckerGUI this$0>;
+
+        $r15 = r3[0];
+
+        $r16.<safetyChecker.utilities.SafetyCheckerGUI: java.io.File selectedfile> = $r15;
+
+(3)     i4_2 = i4_1 + 1;
+
+     label3:
+        i4_1 = Phi(i4 #2, i4_2 #3);
+
+        r27_3 = Phi(r27_2 #2, r27_4 #3);
+
+        $i2 = lengthof r3;
+
+        if i4_1 < $i2 goto label2;
+
+        $r17 = newarray (java.lang.Object)[1];
+
+        $r17[0] = "******";
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r17);
+
+        $r18 = newarray (java.lang.Object)[1];
+
+        $i3 = lengthof r3;
+
+        $r19 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i3);
+
+        $r18[0] = $r19;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r18);
+
+        $r20 = newarray (java.lang.Object)[1];
+
+        $r21 = r3[0];
+
+        $r22 = virtualinvoke $r21.<java.io.File: java.lang.String toString()>();
+
+        $r20[0] = $r22;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void infoln(java.lang.Object[])>($r20);
+
+        $r24 = r0.<safetyChecker.utilities.SafetyCheckerGUI$1: safetyChecker.utilities.SafetyCheckerGUI this$0>;
+
+        $r23 = r3[0];
+
+        $r24.<safetyChecker.utilities.SafetyCheckerGUI: java.io.File selectedfile> = $r23;
+
+        $r25 = r0.<safetyChecker.utilities.SafetyCheckerGUI$1: safetyChecker.utilities.SafetyCheckerGUI this$0>;
+
+        staticinvoke <safetyChecker.utilities.SafetyCheckerGUI: void access$0(safetyChecker.utilities.SafetyCheckerGUI)>($r25);
+
+(4)     goto label5;
+
+     label4:
+        $r7 = r0.<safetyChecker.utilities.SafetyCheckerGUI$1: safetyChecker.utilities.SafetyCheckerGUI this$0>;
+
+        $r8 = $r7.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JLabel apiListLabel>;
+
+(5)     virtualinvoke $r8.<javax.swing.JLabel: void setText(java.lang.String)>("You canceled.");
+
+     label5:
+        i4_3 = Phi(i4_1 #4, i4 #5);
+
+        r27_5 = Phi(r27_3 #4, r27 #5);
+
+        return;
+    }
+}

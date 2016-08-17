@@ -1,0 +1,56 @@
+class safetyChecker.utilities.SafetyCheckerGUI$4 extends soot.BodyTransformer
+{
+    final safetyChecker.utilities.SafetyCheckerGUI this$0;
+
+    void <init>(safetyChecker.utilities.SafetyCheckerGUI)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI$4 r0;
+        safetyChecker.utilities.SafetyCheckerGUI r1;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI$4;
+
+        r1 := @parameter0: safetyChecker.utilities.SafetyCheckerGUI;
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI$4: safetyChecker.utilities.SafetyCheckerGUI this$0> = r1;
+
+        specialinvoke r0.<soot.BodyTransformer: void <init>()>();
+
+        return;
+    }
+
+    protected void internalTransform(soot.Body, java.lang.String, java.util.Map)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI$4 r0;
+        soot.Body r1;
+        java.lang.String r2;
+        java.util.Map r3;
+        soot.SootMethod r4;
+        safetyChecker.utilities.LeafNode r5, $r6;
+        safetyChecker.utilities.SafetyCheckerGUI $r7;
+        java.util.LinkedList $r8;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI$4;
+
+        r1 := @parameter0: soot.Body;
+
+        r2 := @parameter1: java.lang.String;
+
+        r3 := @parameter2: java.util.Map;
+
+        r4 = virtualinvoke r1.<soot.Body: soot.SootMethod getMethod()>();
+
+        $r6 = new safetyChecker.utilities.LeafNode;
+
+        specialinvoke $r6.<safetyChecker.utilities.LeafNode: void <init>(soot.SootMethod)>(r4);
+
+        r5 = $r6;
+
+        $r7 = r0.<safetyChecker.utilities.SafetyCheckerGUI$4: safetyChecker.utilities.SafetyCheckerGUI this$0>;
+
+        $r8 = $r7.<safetyChecker.utilities.SafetyCheckerGUI: java.util.LinkedList api>;
+
+        virtualinvoke $r8.<java.util.LinkedList: boolean add(java.lang.Object)>(r5);
+
+        return;
+    }
+}

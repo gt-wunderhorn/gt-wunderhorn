@@ -4,3 +4,4 @@ testOnly bin/safetyTester.iftest.Tester1
 cd bin
 ls
 test-only safetyTester.iftest.Tester1
+exit

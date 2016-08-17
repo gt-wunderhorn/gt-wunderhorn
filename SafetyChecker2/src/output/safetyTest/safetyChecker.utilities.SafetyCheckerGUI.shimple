@@ -1,0 +1,713 @@
+public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel implements javax.swing.event.TreeSelectionListener
+{
+    javax.swing.JPanel mainPanel;
+    javax.swing.JPanel selectPanel;
+    javax.swing.JPanel constraintPanel;
+    javax.swing.JPanel resultPanel;
+    javax.swing.JPanel apiPanel;
+    javax.swing.JComboBox parameterTypeBox;
+    javax.swing.JLabel apiListLabel;
+    javax.swing.JScrollPane treeView;
+    java.io.File selectedfile;
+    javax.swing.JTree tree;
+    private java.util.HashMap classNodeMap;
+    static javax.swing.JFrame frame;
+    java.util.LinkedList api;
+
+    static void <clinit>()
+    {
+        javax.swing.JFrame $r0;
+
+        $r0 = new javax.swing.JFrame;
+
+        specialinvoke $r0.<javax.swing.JFrame: void <init>(java.lang.String)>("SafetyChecker for Android Apps");
+
+        <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame> = $r0;
+
+        return;
+    }
+
+    public void <init>(java.awt.Container)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        java.awt.Container r1;
+        javax.swing.JScrollPane $r2;
+        java.util.LinkedList $r3;
+        javax.swing.JPanel $r4, $r5, $r7, $r8, $r9, $r10;
+        javax.swing.border.Border $r6;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        r1 := @parameter0: java.awt.Container;
+
+        specialinvoke r0.<javax.swing.JPanel: void <init>()>();
+
+        $r2 = new javax.swing.JScrollPane;
+
+        specialinvoke $r2.<javax.swing.JScrollPane: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JScrollPane treeView> = $r2;
+
+        $r3 = new java.util.LinkedList;
+
+        specialinvoke $r3.<java.util.LinkedList: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.LinkedList api> = $r3;
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addWidgets()>();
+
+        $r4 = new javax.swing.JPanel;
+
+        specialinvoke $r4.<javax.swing.JPanel: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel mainPanel> = $r4;
+
+        $r5 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel mainPanel>;
+
+        $r6 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEmptyBorder(int,int,int,int)>(5, 5, 5, 5);
+
+        virtualinvoke $r5.<javax.swing.JPanel: void setBorder(javax.swing.border.Border)>($r6);
+
+        $r7 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel selectPanel>;
+
+        virtualinvoke r1.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r7, "First");
+
+        $r8 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel apiPanel>;
+
+        virtualinvoke r1.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r8, "Before");
+
+        $r9 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+
+        virtualinvoke r1.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r9, "Center");
+
+        $r10 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel resultPanel>;
+
+        virtualinvoke r1.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r10, "After");
+
+        return;
+    }
+
+    private void addWidgets()
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        javax.swing.JPanel $r1, $r2, $r3, $r4, $r6;
+        javax.swing.JLabel $r5;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        $r1 = new javax.swing.JPanel;
+
+        specialinvoke $r1.<javax.swing.JPanel: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel selectPanel> = $r1;
+
+        $r2 = new javax.swing.JPanel;
+
+        specialinvoke $r2.<javax.swing.JPanel: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel resultPanel> = $r2;
+
+        $r3 = new javax.swing.JPanel;
+
+        specialinvoke $r3.<javax.swing.JPanel: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel apiPanel> = $r3;
+
+        $r4 = new javax.swing.JPanel;
+
+        specialinvoke $r4.<javax.swing.JPanel: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel> = $r4;
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addWidgets2SelectPanel()>();
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addWidgets2APIPanel()>();
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addWidgets2ConstraintPanel()>();
+
+        $r6 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel resultPanel>;
+
+        $r5 = new javax.swing.JLabel;
+
+        specialinvoke $r5.<javax.swing.JLabel: void <init>(java.lang.String)>("resultPanel");
+
+        virtualinvoke $r6.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r5);
+
+        return;
+    }
+
+    private void addWidgets2SelectPanel()
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        javax.swing.JButton r1, $r3;
+        java.lang.String[] r2, $r6;
+        javax.swing.JLabel $r4;
+        safetyChecker.utilities.SafetyCheckerGUI$1 $r5;
+        javax.swing.JComboBox $r7, $r8, $r15;
+        javax.swing.JPanel $r9, $r13, $r16;
+        javax.swing.border.TitledBorder $r10;
+        javax.swing.border.Border $r11;
+        javax.swing.border.CompoundBorder $r12;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        $r3 = new javax.swing.JButton;
+
+        specialinvoke $r3.<javax.swing.JButton: void <init>(java.lang.String)>("Picker");
+
+        r1 = $r3;
+
+        $r4 = new javax.swing.JLabel;
+
+        specialinvoke $r4.<javax.swing.JLabel: void <init>(java.lang.String)>("API for Library");
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JLabel apiListLabel> = $r4;
+
+        $r5 = new safetyChecker.utilities.SafetyCheckerGUI$1;
+
+        specialinvoke $r5.<safetyChecker.utilities.SafetyCheckerGUI$1: void <init>(safetyChecker.utilities.SafetyCheckerGUI)>(r0);
+
+        virtualinvoke r1.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r5);
+
+        $r6 = newarray (java.lang.String)[2];
+
+        $r6[0] = "Bounded Parameters";
+
+        $r6[1] = "UnBounded Parameters";
+
+        r2 = $r6;
+
+        $r7 = new javax.swing.JComboBox;
+
+        specialinvoke $r7.<javax.swing.JComboBox: void <init>(java.lang.Object[])>(r2);
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JComboBox parameterTypeBox> = $r7;
+
+        $r8 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JComboBox parameterTypeBox>;
+
+        virtualinvoke $r8.<javax.swing.JComboBox: void setSelectedIndex(int)>(1);
+
+        $r9 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel selectPanel>;
+
+        $r10 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.TitledBorder createTitledBorder(java.lang.String)>("Select and Configure");
+
+        $r11 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEmptyBorder(int,int,int,int)>(5, 5, 5, 5);
+
+        $r12 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.CompoundBorder createCompoundBorder(javax.swing.border.Border,javax.swing.border.Border)>($r10, $r11);
+
+        virtualinvoke $r9.<javax.swing.JPanel: void setBorder(javax.swing.border.Border)>($r12);
+
+        $r13 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel selectPanel>;
+
+        virtualinvoke $r13.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>(r1);
+
+        $r16 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel selectPanel>;
+
+        $r15 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JComboBox parameterTypeBox>;
+
+        virtualinvoke $r16.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r15);
+
+        return;
+    }
+
+    private void addWidgets2APIPanel()
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        javax.swing.tree.DefaultMutableTreeNode r1, $r3;
+        javax.swing.JButton r2, $r6;
+        javax.swing.JTree $r4, $r5, $r9;
+        safetyChecker.utilities.SafetyCheckerGUI$2 $r7;
+        javax.swing.JScrollPane $r8, $r16;
+        javax.swing.JPanel $r10, $r12, $r13, $r14, $r17;
+        javax.swing.BoxLayout $r11;
+        javax.swing.JFrame $r19;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        $r3 = new javax.swing.tree.DefaultMutableTreeNode;
+
+        specialinvoke $r3.<javax.swing.tree.DefaultMutableTreeNode: void <init>(java.lang.Object)>("API");
+
+        r1 = $r3;
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void createNodes(javax.swing.tree.DefaultMutableTreeNode)>(r1);
+
+        $r4 = new javax.swing.JTree;
+
+        specialinvoke $r4.<javax.swing.JTree: void <init>(javax.swing.tree.TreeNode)>(r1);
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JTree tree> = $r4;
+
+        $r5 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JTree tree>;
+
+        virtualinvoke $r5.<javax.swing.JTree: void addTreeSelectionListener(javax.swing.event.TreeSelectionListener)>(r0);
+
+        $r6 = new javax.swing.JButton;
+
+        specialinvoke $r6.<javax.swing.JButton: void <init>(java.lang.String)>("Add to constraint");
+
+        r2 = $r6;
+
+        $r7 = new safetyChecker.utilities.SafetyCheckerGUI$2;
+
+        specialinvoke $r7.<safetyChecker.utilities.SafetyCheckerGUI$2: void <init>(safetyChecker.utilities.SafetyCheckerGUI)>(r0);
+
+        virtualinvoke r2.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r7);
+
+        $r8 = new javax.swing.JScrollPane;
+
+        $r9 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JTree tree>;
+
+        specialinvoke $r8.<javax.swing.JScrollPane: void <init>(java.awt.Component)>($r9);
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JScrollPane treeView> = $r8;
+
+        $r10 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel apiPanel>;
+
+        virtualinvoke $r10.<javax.swing.JPanel: void removeAll()>();
+
+        $r13 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel apiPanel>;
+
+        $r11 = new javax.swing.BoxLayout;
+
+        $r12 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel apiPanel>;
+
+        specialinvoke $r11.<javax.swing.BoxLayout: void <init>(java.awt.Container,int)>($r12, 1);
+
+        virtualinvoke $r13.<javax.swing.JPanel: void setLayout(java.awt.LayoutManager)>($r11);
+
+        $r14 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel apiPanel>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>(r2);
+
+        $r17 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel apiPanel>;
+
+        $r16 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JScrollPane treeView>;
+
+        virtualinvoke $r17.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r16);
+
+        $r19 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        virtualinvoke $r19.<javax.swing.JFrame: void pack()>();
+
+        return;
+    }
+
+    private void addWidgets2ConstraintPanel()
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        javax.swing.JPanel $r1, $r6, $r7;
+        javax.swing.border.TitledBorder $r2;
+        javax.swing.border.Border $r3;
+        javax.swing.border.CompoundBorder $r4;
+        javax.swing.BoxLayout $r5;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        $r1 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+
+        $r2 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.TitledBorder createTitledBorder(java.lang.String)>("Build Constraint");
+
+        $r3 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEmptyBorder(int,int,int,int)>(5, 5, 5, 5);
+
+        $r4 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.CompoundBorder createCompoundBorder(javax.swing.border.Border,javax.swing.border.Border)>($r2, $r3);
+
+        virtualinvoke $r1.<javax.swing.JPanel: void setBorder(javax.swing.border.Border)>($r4);
+
+        $r7 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+
+        $r5 = new javax.swing.BoxLayout;
+
+        $r6 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+
+        specialinvoke $r5.<javax.swing.BoxLayout: void <init>(java.awt.Container,int)>($r6, 1);
+
+        virtualinvoke $r7.<javax.swing.JPanel: void setLayout(java.awt.LayoutManager)>($r5);
+
+        return;
+    }
+
+    private void addConstraint(java.lang.String, java.lang.String)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        java.lang.String r1, r2, r3, $r6;
+        javax.swing.JLabel r4, $r10;
+        java.lang.StringBuilder $r5, $r7, $r8, $r9;
+        javax.swing.JPanel $r11;
+        javax.swing.JFrame $r13;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        $r5 = new java.lang.StringBuilder;
+
+        $r6 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r1);
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>(java.lang.String)>($r6);
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" obj = new ");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        r3 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r10 = new javax.swing.JLabel;
+
+        specialinvoke $r10.<javax.swing.JLabel: void <init>(java.lang.String)>(r3);
+
+        r4 = $r10;
+
+        $r11 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+
+        virtualinvoke $r11.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>(r4);
+
+        $r13 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        virtualinvoke $r13.<javax.swing.JFrame: void pack()>();
+
+        return;
+    }
+
+    private void createNodes(javax.swing.tree.DefaultMutableTreeNode)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        javax.swing.tree.DefaultMutableTreeNode r1, r6, $r14, $r15, r18, r18_1, r18_2, r18_3;
+        safetyChecker.utilities.LeafNode r2;
+        java.util.Iterator r3;
+        java.lang.String r4, r5, $r10;
+        java.util.HashMap $r7, $r11, $r12, $r16;
+        java.util.LinkedList $r8;
+        boolean $z0, $z1, $z2;
+        java.lang.Object $r9, $r13;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        r1 := @parameter0: javax.swing.tree.DefaultMutableTreeNode;
+
+        $r7 = new java.util.HashMap;
+
+        specialinvoke $r7.<java.util.HashMap: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap> = $r7;
+
+        $r8 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.LinkedList api>;
+
+        r3 = virtualinvoke $r8.<java.util.LinkedList: java.util.Iterator iterator()>();
+
+(0)     goto label5;
+
+     label1:
+        $r9 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r2 = (safetyChecker.utilities.LeafNode) $r9;
+
+        $r10 = virtualinvoke r2.<safetyChecker.utilities.LeafNode: java.lang.String getClassInfo()>();
+
+        $z1 = virtualinvoke $r10.<java.lang.String: boolean contains(java.lang.CharSequence)>("$");
+
+        if $z1 == 0 goto label2;
+
+(1)     goto label5;
+
+     label2:
+        r4 = virtualinvoke r2.<safetyChecker.utilities.LeafNode: java.lang.String getClassInfo()>();
+
+        r5 = virtualinvoke r2.<safetyChecker.utilities.LeafNode: java.lang.String toString()>();
+
+        $r11 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
+
+        $z2 = virtualinvoke $r11.<java.util.HashMap: boolean containsKey(java.lang.Object)>(r4);
+
+        if $z2 != 0 goto label3;
+
+        $r15 = new javax.swing.tree.DefaultMutableTreeNode;
+
+        specialinvoke $r15.<javax.swing.tree.DefaultMutableTreeNode: void <init>(java.lang.Object)>(r4);
+
+        r18_1 = $r15;
+
+        $r16 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
+
+        virtualinvoke $r16.<java.util.HashMap: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r18_1);
+
+        virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: void add(javax.swing.tree.MutableTreeNode)>(r18_1);
+
+(2)     goto label4;
+
+     label3:
+        $r12 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
+
+        $r13 = virtualinvoke $r12.<java.util.HashMap: java.lang.Object get(java.lang.Object)>(r4);
+
+(3)     r18_2 = (javax.swing.tree.DefaultMutableTreeNode) $r13;
+
+     label4:
+        r18_3 = Phi(r18_1 #2, r18_2 #3);
+
+        $r14 = new javax.swing.tree.DefaultMutableTreeNode;
+
+        specialinvoke $r14.<javax.swing.tree.DefaultMutableTreeNode: void <init>(java.lang.Object)>(r5);
+
+        r6 = $r14;
+
+(4)     virtualinvoke r18_3.<javax.swing.tree.DefaultMutableTreeNode: void add(javax.swing.tree.MutableTreeNode)>(r6);
+
+     label5:
+        r18 = Phi(r18 #0, r18 #1, r18_3 #4);
+
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 != 0 goto label1;
+
+        return;
+    }
+
+    private static void createAndShowGUI()
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0, $r5;
+        javax.swing.JPanel r1, $r8;
+        javax.swing.JFrame $r2, $r4, $r6, $r10, $r11;
+        java.awt.Dimension $r3;
+        java.awt.Container $r7;
+        java.awt.GridLayout $r9;
+
+        $r2 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        virtualinvoke $r2.<javax.swing.JFrame: void setDefaultCloseOperation(int)>(3);
+
+        $r4 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        $r3 = new java.awt.Dimension;
+
+        specialinvoke $r3.<java.awt.Dimension: void <init>(int,int)>(120, 40);
+
+        virtualinvoke $r4.<javax.swing.JFrame: void setSize(java.awt.Dimension)>($r3);
+
+        $r5 = new safetyChecker.utilities.SafetyCheckerGUI;
+
+        $r6 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        $r7 = virtualinvoke $r6.<javax.swing.JFrame: java.awt.Container getContentPane()>();
+
+        specialinvoke $r5.<safetyChecker.utilities.SafetyCheckerGUI: void <init>(java.awt.Container)>($r7);
+
+        r0 = $r5;
+
+        $r8 = new javax.swing.JPanel;
+
+        $r9 = new java.awt.GridLayout;
+
+        specialinvoke $r9.<java.awt.GridLayout: void <init>(int,int)>(2, 2);
+
+        specialinvoke $r8.<javax.swing.JPanel: void <init>(java.awt.LayoutManager)>($r9);
+
+        r1 = $r8;
+
+        $r10 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        virtualinvoke $r10.<javax.swing.JFrame: void pack()>();
+
+        $r11 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        virtualinvoke $r11.<javax.swing.JFrame: void setVisible(boolean)>(1);
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        safetyChecker.utilities.SafetyCheckerGUI$3 $r1;
+
+        r0 := @parameter0: java.lang.String[];
+
+        $r1 = new safetyChecker.utilities.SafetyCheckerGUI$3;
+
+        specialinvoke $r1.<safetyChecker.utilities.SafetyCheckerGUI$3: void <init>()>();
+
+        staticinvoke <javax.swing.SwingUtilities: void invokeLater(java.lang.Runnable)>($r1);
+
+        return;
+    }
+
+    private void getAPI()
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        java.lang.String[] r1, $r6;
+        soot.options.Options $r3, $r4, $r5;
+        java.io.File $r7;
+        java.lang.String $r8, $r17;
+        soot.PackManager $r9;
+        soot.Pack $r10;
+        java.lang.Object[] $r13;
+        java.util.LinkedList $r15, r18;
+        int $i0;
+        java.lang.StringBuilder $r16, r21;
+        safetyChecker.utilities.SafetyCheckerGUI$4 r19;
+        soot.Transform r20;
+        soot.Transformer r22;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        r18 = new java.util.LinkedList;
+
+        specialinvoke r18.<java.util.LinkedList: void <init>()>();
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.LinkedList api> = r18;
+
+        $r3 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $r3.<soot.options.Options: void set_src_prec(int)>(1);
+
+        $r4 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $r4.<soot.options.Options: void set_output_format(int)>(3);
+
+        $r5 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $r5.<soot.options.Options: void set_allow_phantom_refs(boolean)>(1);
+
+        $r6 = newarray (java.lang.String)[4];
+
+        $r6[0] = "-process-dir";
+
+        $r7 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.io.File selectedfile>;
+
+        $r8 = virtualinvoke $r7.<java.io.File: java.lang.String toString()>();
+
+        $r6[1] = $r8;
+
+        $r6[2] = "-output-dir";
+
+        $r6[3] = "src/output/safetyTest";
+
+        r1 = $r6;
+
+        $r9 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        $r10 = virtualinvoke $r9.<soot.PackManager: soot.Pack getPack(java.lang.String)>("stp");
+
+        r20 = new soot.Transform;
+
+        r19 = new safetyChecker.utilities.SafetyCheckerGUI$4;
+
+        specialinvoke r19.<safetyChecker.utilities.SafetyCheckerGUI$4: void <init>(safetyChecker.utilities.SafetyCheckerGUI)>(r0);
+
+        r22 = (soot.Transformer) r19;
+
+        specialinvoke r20.<soot.Transform: void <init>(java.lang.String,soot.Transformer)>("stp.test", r22);
+
+        virtualinvoke $r10.<soot.Pack: void add(soot.Transform)>(r20);
+
+        staticinvoke <soot.Main: void main(java.lang.String[])>(r1);
+
+        $r13 = newarray (java.lang.Object)[1];
+
+        r21 = new java.lang.StringBuilder;
+
+        specialinvoke r21.<java.lang.StringBuilder: void <init>(java.lang.String)>("Size of the api=");
+
+        $r15 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.LinkedList api>;
+
+        $i0 = virtualinvoke $r15.<java.util.LinkedList: int size()>();
+
+        $r16 = virtualinvoke r21.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r13[0] = $r17;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void fatalln(java.lang.Object[])>($r13);
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addWidgets2APIPanel()>();
+
+        return;
+    }
+
+    public void valueChanged(javax.swing.event.TreeSelectionEvent)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        javax.swing.event.TreeSelectionEvent r1;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        r1 := @parameter0: javax.swing.event.TreeSelectionEvent;
+
+        return;
+    }
+
+    private void add2ConstraintPressed()
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+        javax.swing.tree.DefaultMutableTreeNode r1;
+        java.lang.Object r2, $r6;
+        java.lang.String r3, r4;
+        javax.swing.JTree $r5;
+        boolean $z0;
+        javax.swing.tree.TreeNode $r7;
+
+        r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
+
+        $r5 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JTree tree>;
+
+        $r6 = virtualinvoke $r5.<javax.swing.JTree: java.lang.Object getLastSelectedPathComponent()>();
+
+        r1 = (javax.swing.tree.DefaultMutableTreeNode) $r6;
+
+        if r1 != null goto label1;
+
+        return;
+
+     label1:
+        r2 = virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: java.lang.Object getUserObject()>();
+
+        $z0 = virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: boolean isLeaf()>();
+
+        if $z0 == 0 goto label2;
+
+        r3 = virtualinvoke r2.<java.lang.Object: java.lang.String toString()>();
+
+        $r7 = virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: javax.swing.tree.TreeNode getParent()>();
+
+        r4 = virtualinvoke $r7.<java.lang.Object: java.lang.String toString()>();
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addConstraint(java.lang.String,java.lang.String)>(r4, r3);
+
+     label2:
+        return;
+    }
+
+    static void access$0(safetyChecker.utilities.SafetyCheckerGUI)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+
+        r0 := @parameter0: safetyChecker.utilities.SafetyCheckerGUI;
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void getAPI()>();
+
+        return;
+    }
+
+    static void access$1(safetyChecker.utilities.SafetyCheckerGUI)
+    {
+        safetyChecker.utilities.SafetyCheckerGUI r0;
+
+        r0 := @parameter0: safetyChecker.utilities.SafetyCheckerGUI;
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void add2ConstraintPressed()>();
+
+        return;
+    }
+
+    static void access$2()
+    {
+        staticinvoke <safetyChecker.utilities.SafetyCheckerGUI: void createAndShowGUI()>();
+
+        return;
+    }
+}

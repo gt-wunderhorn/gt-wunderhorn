@@ -234,9 +234,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 (2)     z2_2 = 1;
 
      label4:
-        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
-
         r25_1 = Phi(r25 #0, r25_2 #1, r25_2 #2);
+
+        z2_1 = Phi(z2 #0, z2_1 #1, z2_2 #2);
 
         if r25_1 != null goto label1;
 
@@ -1601,9 +1601,9 @@ public class safetyChecker.z3ScriptManager.Z3ScriptHandler extends java.lang.Obj
 (3)     i2_2 = i2_1 + 1;
 
      label3:
-        i2_1 = Phi(i2 #0, i2_2 #3);
-
         r22_1 = Phi(r22 #0, r22_3 #3);
+
+        i2_1 = Phi(i2 #0, i2_2 #3);
 
         if i2_1 < i0 goto label1;
 
