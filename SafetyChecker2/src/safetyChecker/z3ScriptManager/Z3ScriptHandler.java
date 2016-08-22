@@ -527,7 +527,23 @@ public class Z3ScriptHandler {
 			return result;
 		}
 
+		if(value instanceof StaticFieldRef) {
+			StaticFieldRef sfRef = (StaticFieldRef) value;
+			SootField field = sfRef.getField();
+			String name = field.getName();
+			Local newLocal = new JimpleLocal(name, field.getType());
+			Expr result = objFieldHandler.handleStaticFieldRef(newLocal, assignLeft, this);			
+			// this is only for assertion 
+			// even though it is not disabled
+			// this 0 makes it enabled.
+			// returning only the result also works....
+			return ictx.mkInt(0); 
+//			return result;
+		}
 
+		LogUtils.warning("type  fo the ");
+		LogUtils.fatal(value); 
+		LogUtils.warningln(" is  " + value.getClass().getName());
 		LogUtils.fatalln("returning null");
 		LogUtils.fatalln("Vertex=" + edge.getSource() + "---Edge=" + edge);
 		LogUtils.fatalln("Z3ScriptHandler.convertPrimitiveValue");

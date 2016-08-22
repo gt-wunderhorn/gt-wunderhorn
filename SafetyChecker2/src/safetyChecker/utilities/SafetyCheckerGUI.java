@@ -158,11 +158,16 @@ public class SafetyCheckerGUI extends JPanel implements TreeSelectionListener {
 		constraintPanel.setLayout(new BoxLayout(constraintPanel, BoxLayout.Y_AXIS));
 	}
 	
-	private void addConstraint(String classInfo, String methodSig) {
-		String constractorCall = classInfo + " obj = new " + classInfo + ";";
+	int constraintCount = 0;
+	private void addConstraint(LeafNode lf) {
+		String constractorCall = lf.getClassInfo() + " obj" + ++constraintCount + " = new " + lf.getClassInfo() + ";";
+	       	String assignStmt = lf.getMethod().getReturnType() + " result" + constraintCount + " = obj." + constraintCount + lf.getMethod().getSubSignature().split(" ")[1];
+	
 //		String invoke = methodSig.get
 		JLabel label = new JLabel(constractorCall);
+		JLabel label2 = new JLabel(assignStmt);
 		constraintPanel.add(label);
+		constraintPanel.add(label2);
 		SafetyCheckerGUI.frame.pack();
 	}
 
@@ -179,7 +184,6 @@ public class SafetyCheckerGUI extends JPanel implements TreeSelectionListener {
 //			String methodInfo = classAndMethod[1];
 
 			String classInfo = lf.getClassInfo();
-			String methodInfo = lf.toString();
 
 			DefaultMutableTreeNode classNode;
 			if(!classNodeMap.containsKey(classInfo)) {
@@ -190,7 +194,7 @@ public class SafetyCheckerGUI extends JPanel implements TreeSelectionListener {
 				classNode = classNodeMap.get(classInfo);
 			}
 			
-			DefaultMutableTreeNode methodNode = new DefaultMutableTreeNode(methodInfo);
+			DefaultMutableTreeNode methodNode = new DefaultMutableTreeNode(lf);
 			classNode.add(methodNode);	
 		}
 	}
@@ -273,10 +277,12 @@ public class SafetyCheckerGUI extends JPanel implements TreeSelectionListener {
 		if(node == null) return;
 
 		Object nodeInfo = node.getUserObject();
+		LogUtils.warningln(nodeInfo);
+		LogUtils.warningln(nodeInfo.getClass());
 		if(node.isLeaf()) {
 			String methodSig = nodeInfo.toString();
 			String classInfo = node.getParent().toString();
-			addConstraint(classInfo, methodSig);
+			addConstraint((LeafNode) nodeInfo);
 		}
 
 	}

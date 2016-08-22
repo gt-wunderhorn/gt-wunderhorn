@@ -107,9 +107,9 @@ class safetyChecker.utilities.SafetyCheckerGUI$1 extends java.lang.Object implem
 (3)     i4_2 = i4_1 + 1;
 
      label3:
-        i4_1 = Phi(i4 #2, i4_2 #3);
-
         r27_3 = Phi(r27_2 #2, r27_4 #3);
+
+        i4_1 = Phi(i4 #2, i4_2 #3);
 
         $i2 = lengthof r3;
 
@@ -161,9 +161,9 @@ class safetyChecker.utilities.SafetyCheckerGUI$1 extends java.lang.Object implem
 (5)     virtualinvoke $r8.<javax.swing.JLabel: void setText(java.lang.String)>("You canceled.");
 
      label5:
-        i4_3 = Phi(i4_1 #4, i4 #5);
-
         r27_5 = Phi(r27_3 #4, r27 #5);
+
+        i4_3 = Phi(i4_1 #4, i4 #5);
 
         return;
     }

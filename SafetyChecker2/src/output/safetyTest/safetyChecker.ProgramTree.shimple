@@ -537,9 +537,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 (3)     i5_2 = i5_1 + 1;
 
      label6:
-        $z3 = Phi($z3 #0, $z3_3 #3);
-
         i5_1 = Phi(i5 #0, i5_2 #3);
+
+        $z3 = Phi($z3 #0, $z3_3 #3);
 
         $r28 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
 
@@ -738,9 +738,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 (3)     i6_2 = i6_1 + 1;
 
      label6:
-        i6_1 = Phi(i6 #0, i6_2 #3);
-
         $z4 = Phi($z4 #0, $z4_3 #3);
+
+        i6_1 = Phi(i6 #0, i6_2 #3);
 
         $r30 = r0.<safetyChecker.ProgramTree: soot.toolkits.graph.ExceptionalUnitGraph cfg>;
 
@@ -1181,7 +1181,7 @@ public class safetyChecker.ProgramTree extends java.lang.Object
         java.lang.Object[] $r7, $r21, $r29, $r61;
         java.lang.StringBuilder $r8, $r9, $r10, $r12, $r13, $r15, $r16, $r18, $r22, $r24, $r25, $r27, $r30, $r32;
         safetyChecker.CoverRelation $r14, $r20, $r72;
-        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15, $z16, $z17, $z18, $z19, $z20, $z21, $z22, $z23, z24, z25, z25_1, z25_2, z24_1, z24_2, z24_3, z24_4, z25_3, z24_5;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15, $z16, $z17, $z18, $z19, $z20, $z21, $z22, $z23, z24, z25, z25_1, z25_2, z24_1, z24_2, z24_3, z24_4, z24_5, z25_3;
         java.util.Set $r23, $r26;
         int $i0, $i1, $i2;
         soot.toolkits.graph.ExceptionalUnitGraph $r37, $r48, $r81;
@@ -1558,20 +1558,20 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 (14)    virtualinvoke r1.<safetyChecker.Vertex: void addIncomingEdge(safetyChecker.Edge)>(r4);
 
      label19:
-        r86 = Phi(r86 #5, r86_3 #8, r86_3 #13, r86_3 #14);
-
         z24_1 = Phi(z24 #5, z24_1 #8, z24_4 #13, z24_4 #14);
+
+        r86 = Phi(r86 #5, r86_3 #8, r86_3 #13, r86_3 #14);
 
         $z5 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
 (15)    if $z5 != 0 goto label05;
 
      label20:
-        r86_4 = Phi(r86 #0, r86 #15);
+        z24_5 = Phi(z24 #0, z24_1 #15);
 
         z25_3 = Phi(z25 #0, z25_2 #15);
 
-        z24_5 = Phi(z24 #0, z24_1 #15);
+        r86_4 = Phi(r86 #0, r86 #15);
 
         r85_3 = Phi(r85 #0, r85_2 #15);
 
@@ -1768,9 +1768,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 (2)     z4_3 = 1;
 
      label3:
-        z4_2 = Phi(z4_1 #1, z4_3 #2);
-
         r41_2 = Phi(r41_1 #1, r41_3 #2);
+
+        z4_2 = Phi(z4_1 #1, z4_3 #2);
 
         $r16 = r0.<safetyChecker.ProgramTree: java.util.HashMap candidate2BeInPath>;
 
@@ -1829,9 +1829,9 @@ public class safetyChecker.ProgramTree extends java.lang.Object
 (4)     r41_4 = virtualinvoke r41_2.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
      label4:
-        z4 = Phi(z4 #0, z4_2 #3, z4_2 #4);
-
         r41_1 = Phi(r41 #0, r41_2 #3, r41_4 #4);
+
+        z4 = Phi(z4 #0, z4_2 #3, z4_2 #4);
 
         $r12 = virtualinvoke r41_1.<safetyChecker.Vertex: safetyChecker.Edge getOutgoingEdge()>();
 

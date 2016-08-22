@@ -6,13 +6,15 @@ import safetyChecker.utilities.ErrorLable;
 public class Test1 {
 
 	int j;
-	@ConsraintAnnotation(constraint=true)
 	public void test(int i) {
 		int j = recursive(3);
+//		i = recursive(2);
 	//	int j = getHalf(10);
 	//	int j = fun1(1);
-		if(j == 2) 
-			ErrorLable.Error();	
+		
+		assert j > 2; // && i == 3;
+//		if(j == 2) 
+//			ErrorLable.Error();	
 	}
 
 	public int recursive(int i) {
@@ -72,7 +74,9 @@ public class Test1 {
 	public static void main(String[] args) {
 	
 		Test1 test1 = new Test1();
-		int j = test1.recursive(3);
+		int j = test1.recursive(5);
+		System.out.println(j);
+		assert j == 4;
 		System.out.println(j);
 
 	}

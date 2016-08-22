@@ -1,6 +1,33 @@
 public class safetyTestCode.interproc.Test1 extends java.lang.Object
 {
     int j;
+    static final boolean $assertionsDisabled;
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1, $z1_1, $z1_2;
+
+        $r0 = class "safetyTestCode/interproc/Test1";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+(0)     goto label2;
+
+     label1:
+(1)     $z1_1 = 0;
+
+     label2:
+        $z1_2 = Phi($z1 #0, $z1_1 #1);
+
+        <safetyTestCode.interproc.Test1: boolean $assertionsDisabled> = $z1_2;
+
+        return;
+    }
 
     public void <init>()
     {
@@ -17,6 +44,8 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
     {
         safetyTestCode.interproc.Test1 r0;
         int i0, i1;
+        boolean $z0;
+        java.lang.AssertionError $r1;
 
         r0 := @this: safetyTestCode.interproc.Test1;
 
@@ -24,9 +53,17 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
 
         i1 = virtualinvoke r0.<safetyTestCode.interproc.Test1: int recursive(int)>(3);
 
-        if i1 != 2 goto label1;
+        $z0 = <safetyTestCode.interproc.Test1: boolean $assertionsDisabled>;
 
-        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
+        if $z0 != 0 goto label1;
+
+        if i1 > 2 goto label1;
+
+        $r1 = new java.lang.AssertionError;
+
+        specialinvoke $r1.<java.lang.AssertionError: void <init>()>();
+
+        throw $r1;
 
      label1:
         return;
@@ -199,7 +236,9 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
         java.lang.String[] r0;
         safetyTestCode.interproc.Test1 r1, $r2;
         int i0;
-        java.io.PrintStream $r3;
+        java.io.PrintStream $r3, $r4;
+        boolean $z0;
+        java.lang.AssertionError $r5;
 
         r0 := @parameter0: java.lang.String[];
 
@@ -209,11 +248,28 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
 
         r1 = $r2;
 
-        i0 = virtualinvoke r1.<safetyTestCode.interproc.Test1: int recursive(int)>(3);
+        i0 = virtualinvoke r1.<safetyTestCode.interproc.Test1: int recursive(int)>(5);
 
         $r3 = <java.lang.System: java.io.PrintStream out>;
 
         virtualinvoke $r3.<java.io.PrintStream: void println(int)>(i0);
+
+        $z0 = <safetyTestCode.interproc.Test1: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        if i0 == 4 goto label1;
+
+        $r5 = new java.lang.AssertionError;
+
+        specialinvoke $r5.<java.lang.AssertionError: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        $r4 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r4.<java.io.PrintStream: void println(int)>(i0);
 
         return;
     }

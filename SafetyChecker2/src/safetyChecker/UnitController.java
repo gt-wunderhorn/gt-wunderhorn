@@ -21,7 +21,7 @@ import soot.toolkits.graph.ExceptionalUnitGraph;
 public class UnitController {
 
 
-	public static final String ERRORLABEL = "ErrorLable";
+	public static final String ERRORLABEL = "new java.lang.AssertionError";
 	public static final String OBJECTINVOKE = "<java.lang.Object: void <init>";
 	public static final String NONSENSCOMPARE = "java.lang.String: boolean equals";
 	public static final String NOTINVOKESIGNATURE = "void <init>"; 
@@ -45,8 +45,14 @@ public class UnitController {
 		sensitiveParameterMap.put(AND_UTIL_LOG_SIGNATURE, AND_UTIL_LOG_PARAM_NO);
 	}
 	
+	static int iii = 0;
 	public void analyzeEdge(Edge e, Map<String, Body> stores, ExceptionalUnitGraph cfg) throws MainFunctionNotFoundException, ErrorLocationNotFoundException {
 		Unit u = e.getUnit();
+//		LogUtils.warning(u + "--"); 
+//		LogUtils.fatalln(this.isErrorUnit(u));
+//		iii++;
+//		if(iii == 5)
+//			System.exit(0);
 		e.setErrorEdge(this.isErrorUnit(u));
 		e.setFunctionCall(this.isSubFunctionUnit(u, stores, e));
 		e.setSinkEdge(this.isSinkInvoke(u));
@@ -123,11 +129,11 @@ public class UnitController {
 	}
 
 	public boolean isErrorUnit(Unit u) {
-		if(isInvoke(u)) {
-			String sign = getMethodSignature(u); 
-			if(sign.contains(ERRORLABEL))
+//		if(isInvoke(u)) {
+//			String sign = getMethodSignature(u); 
+			if(u.toString().contains(ERRORLABEL))
 				return true;	
-		}
+//		}
 		return false;	
 	}
 	

@@ -10,6 +10,7 @@ public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel
     javax.swing.JScrollPane treeView;
     java.io.File selectedfile;
     javax.swing.JTree tree;
+    int constraintCount;
     private java.util.HashMap classNodeMap;
     static javax.swing.JFrame frame;
     java.util.LinkedList api;
@@ -47,6 +48,8 @@ public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel
         specialinvoke $r2.<javax.swing.JScrollPane: void <init>()>();
 
         r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JScrollPane treeView> = $r2;
+
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: int constraintCount> = 0;
 
         $r3 = new java.util.LinkedList;
 
@@ -327,48 +330,109 @@ public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel
         return;
     }
 
-    private void addConstraint(java.lang.String, java.lang.String)
+    private void addConstraint(safetyChecker.utilities.LeafNode)
     {
         safetyChecker.utilities.SafetyCheckerGUI r0;
-        java.lang.String r1, r2, r3, $r6;
-        javax.swing.JLabel r4, $r10;
-        java.lang.StringBuilder $r5, $r7, $r8, $r9;
-        javax.swing.JPanel $r11;
-        javax.swing.JFrame $r13;
+        safetyChecker.utilities.LeafNode r1;
+        java.lang.String r2, r3, $r7, $r8, $r12, $r24, $r26;
+        javax.swing.JLabel r4, r5, $r28, $r29;
+        java.lang.StringBuilder $r6, $r9, $r10, $r11, $r13, $r14, $r15, $r18, $r19, $r20, $r21, $r22, $r27;
+        int $i0, $i1, $i2, $i3;
+        soot.SootMethod $r16, $r23;
+        soot.Type $r17;
+        java.lang.String[] $r25;
+        javax.swing.JPanel $r30, $r32;
+        javax.swing.JFrame $r34;
 
         r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
 
-        r1 := @parameter0: java.lang.String;
+        r1 := @parameter0: safetyChecker.utilities.LeafNode;
 
-        r2 := @parameter1: java.lang.String;
+        $r6 = new java.lang.StringBuilder;
 
-        $r5 = new java.lang.StringBuilder;
+        $r7 = virtualinvoke r1.<safetyChecker.utilities.LeafNode: java.lang.String getClassInfo()>();
 
-        $r6 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r1);
+        $r8 = staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>($r7);
 
-        specialinvoke $r5.<java.lang.StringBuilder: void <init>(java.lang.String)>($r6);
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>(java.lang.String)>($r8);
 
-        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" obj = new ");
+        $r9 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" obj");
 
-        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+        $i0 = r0.<safetyChecker.utilities.SafetyCheckerGUI: int constraintCount>;
 
-        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+        $i1 = $i0 + 1;
 
-        r3 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: int constraintCount> = $i1;
 
-        $r10 = new javax.swing.JLabel;
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
 
-        specialinvoke $r10.<javax.swing.JLabel: void <init>(java.lang.String)>(r3);
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" = new ");
 
-        r4 = $r10;
+        $r12 = virtualinvoke r1.<safetyChecker.utilities.LeafNode: java.lang.String getClassInfo()>();
 
-        $r11 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
 
-        virtualinvoke $r11.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>(r4);
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
 
-        $r13 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+        r2 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
 
-        virtualinvoke $r13.<javax.swing.JFrame: void pack()>();
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke r1.<safetyChecker.utilities.LeafNode: soot.SootMethod getMethod()>();
+
+        $r17 = virtualinvoke $r16.<soot.SootMethod: soot.Type getReturnType()>();
+
+        $r18 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r17);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" result");
+
+        $i2 = r0.<safetyChecker.utilities.SafetyCheckerGUI: int constraintCount>;
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i2);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" = obj.");
+
+        $i3 = r0.<safetyChecker.utilities.SafetyCheckerGUI: int constraintCount>;
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
+
+        $r23 = virtualinvoke r1.<safetyChecker.utilities.LeafNode: soot.SootMethod getMethod()>();
+
+        $r24 = virtualinvoke $r23.<soot.SootMethod: java.lang.String getSubSignature()>();
+
+        $r25 = virtualinvoke $r24.<java.lang.String: java.lang.String[] split(java.lang.String)>(" ");
+
+        $r26 = $r25[1];
+
+        $r27 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r26);
+
+        r3 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r28 = new javax.swing.JLabel;
+
+        specialinvoke $r28.<javax.swing.JLabel: void <init>(java.lang.String)>(r2);
+
+        r4 = $r28;
+
+        $r29 = new javax.swing.JLabel;
+
+        specialinvoke $r29.<javax.swing.JLabel: void <init>(java.lang.String)>(r3);
+
+        r5 = $r29;
+
+        $r30 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+
+        virtualinvoke $r30.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>(r4);
+
+        $r32 = r0.<safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JPanel constraintPanel>;
+
+        virtualinvoke $r32.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>(r5);
+
+        $r34 = <safetyChecker.utilities.SafetyCheckerGUI: javax.swing.JFrame frame>;
+
+        virtualinvoke $r34.<javax.swing.JFrame: void pack()>();
 
         return;
     }
@@ -376,39 +440,39 @@ public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel
     private void createNodes(javax.swing.tree.DefaultMutableTreeNode)
     {
         safetyChecker.utilities.SafetyCheckerGUI r0;
-        javax.swing.tree.DefaultMutableTreeNode r1, r6, $r14, $r15, r18, r18_1, r18_2, r18_3;
+        javax.swing.tree.DefaultMutableTreeNode r1, r5, $r13, $r14, r17, r17_1, r17_2, r17_3;
         safetyChecker.utilities.LeafNode r2;
         java.util.Iterator r3;
-        java.lang.String r4, r5, $r10;
-        java.util.HashMap $r7, $r11, $r12, $r16;
-        java.util.LinkedList $r8;
+        java.lang.String r4, $r9;
+        java.util.HashMap $r6, $r10, $r11, $r15;
+        java.util.LinkedList $r7;
         boolean $z0, $z1, $z2;
-        java.lang.Object $r9, $r13;
+        java.lang.Object $r8, $r12;
 
         r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
 
         r1 := @parameter0: javax.swing.tree.DefaultMutableTreeNode;
 
-        $r7 = new java.util.HashMap;
+        $r6 = new java.util.HashMap;
 
-        specialinvoke $r7.<java.util.HashMap: void <init>()>();
+        specialinvoke $r6.<java.util.HashMap: void <init>()>();
 
-        r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap> = $r7;
+        r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap> = $r6;
 
-        $r8 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.LinkedList api>;
+        $r7 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.LinkedList api>;
 
-        r3 = virtualinvoke $r8.<java.util.LinkedList: java.util.Iterator iterator()>();
+        r3 = virtualinvoke $r7.<java.util.LinkedList: java.util.Iterator iterator()>();
 
 (0)     goto label5;
 
      label1:
-        $r9 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+        $r8 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
 
-        r2 = (safetyChecker.utilities.LeafNode) $r9;
+        r2 = (safetyChecker.utilities.LeafNode) $r8;
 
-        $r10 = virtualinvoke r2.<safetyChecker.utilities.LeafNode: java.lang.String getClassInfo()>();
+        $r9 = virtualinvoke r2.<safetyChecker.utilities.LeafNode: java.lang.String getClassInfo()>();
 
-        $z1 = virtualinvoke $r10.<java.lang.String: boolean contains(java.lang.CharSequence)>("$");
+        $z1 = virtualinvoke $r9.<java.lang.String: boolean contains(java.lang.CharSequence)>("$");
 
         if $z1 == 0 goto label2;
 
@@ -417,48 +481,46 @@ public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel
      label2:
         r4 = virtualinvoke r2.<safetyChecker.utilities.LeafNode: java.lang.String getClassInfo()>();
 
-        r5 = virtualinvoke r2.<safetyChecker.utilities.LeafNode: java.lang.String toString()>();
+        $r10 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
 
-        $r11 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
-
-        $z2 = virtualinvoke $r11.<java.util.HashMap: boolean containsKey(java.lang.Object)>(r4);
+        $z2 = virtualinvoke $r10.<java.util.HashMap: boolean containsKey(java.lang.Object)>(r4);
 
         if $z2 != 0 goto label3;
 
-        $r15 = new javax.swing.tree.DefaultMutableTreeNode;
+        $r14 = new javax.swing.tree.DefaultMutableTreeNode;
 
-        specialinvoke $r15.<javax.swing.tree.DefaultMutableTreeNode: void <init>(java.lang.Object)>(r4);
+        specialinvoke $r14.<javax.swing.tree.DefaultMutableTreeNode: void <init>(java.lang.Object)>(r4);
 
-        r18_1 = $r15;
+        r17_1 = $r14;
 
-        $r16 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
+        $r15 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
 
-        virtualinvoke $r16.<java.util.HashMap: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r18_1);
+        virtualinvoke $r15.<java.util.HashMap: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r17_1);
 
-        virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: void add(javax.swing.tree.MutableTreeNode)>(r18_1);
+        virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: void add(javax.swing.tree.MutableTreeNode)>(r17_1);
 
 (2)     goto label4;
 
      label3:
-        $r12 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
+        $r11 = r0.<safetyChecker.utilities.SafetyCheckerGUI: java.util.HashMap classNodeMap>;
 
-        $r13 = virtualinvoke $r12.<java.util.HashMap: java.lang.Object get(java.lang.Object)>(r4);
+        $r12 = virtualinvoke $r11.<java.util.HashMap: java.lang.Object get(java.lang.Object)>(r4);
 
-(3)     r18_2 = (javax.swing.tree.DefaultMutableTreeNode) $r13;
+(3)     r17_2 = (javax.swing.tree.DefaultMutableTreeNode) $r12;
 
      label4:
-        r18_3 = Phi(r18_1 #2, r18_2 #3);
+        r17_3 = Phi(r17_1 #2, r17_2 #3);
 
-        $r14 = new javax.swing.tree.DefaultMutableTreeNode;
+        $r13 = new javax.swing.tree.DefaultMutableTreeNode;
 
-        specialinvoke $r14.<javax.swing.tree.DefaultMutableTreeNode: void <init>(java.lang.Object)>(r5);
+        specialinvoke $r13.<javax.swing.tree.DefaultMutableTreeNode: void <init>(java.lang.Object)>(r2);
 
-        r6 = $r14;
+        r5 = $r13;
 
-(4)     virtualinvoke r18_3.<javax.swing.tree.DefaultMutableTreeNode: void add(javax.swing.tree.MutableTreeNode)>(r6);
+(4)     virtualinvoke r17_3.<javax.swing.tree.DefaultMutableTreeNode: void add(javax.swing.tree.MutableTreeNode)>(r5);
 
      label5:
-        r18 = Phi(r18 #0, r18 #1, r18_3 #4);
+        r17 = Phi(r17 #0, r17 #1, r17_3 #4);
 
         $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
 
@@ -646,10 +708,12 @@ public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel
         safetyChecker.utilities.SafetyCheckerGUI r0;
         javax.swing.tree.DefaultMutableTreeNode r1;
         java.lang.Object r2, $r6;
-        java.lang.String r3, r4;
         javax.swing.JTree $r5;
+        java.lang.Object[] $r7, $r8;
+        java.lang.Class $r9;
         boolean $z0;
-        javax.swing.tree.TreeNode $r7;
+        javax.swing.tree.TreeNode $r10;
+        safetyChecker.utilities.LeafNode $r11;
 
         r0 := @this: safetyChecker.utilities.SafetyCheckerGUI;
 
@@ -666,17 +730,33 @@ public class safetyChecker.utilities.SafetyCheckerGUI extends javax.swing.JPanel
      label1:
         r2 = virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: java.lang.Object getUserObject()>();
 
+        $r7 = newarray (java.lang.Object)[1];
+
+        $r7[0] = r2;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r7);
+
+        $r8 = newarray (java.lang.Object)[1];
+
+        $r9 = virtualinvoke r2.<java.lang.Object: java.lang.Class getClass()>();
+
+        $r8[0] = $r9;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r8);
+
         $z0 = virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: boolean isLeaf()>();
 
         if $z0 == 0 goto label2;
 
-        r3 = virtualinvoke r2.<java.lang.Object: java.lang.String toString()>();
+        virtualinvoke r2.<java.lang.Object: java.lang.String toString()>();
 
-        $r7 = virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: javax.swing.tree.TreeNode getParent()>();
+        $r10 = virtualinvoke r1.<javax.swing.tree.DefaultMutableTreeNode: javax.swing.tree.TreeNode getParent()>();
 
-        r4 = virtualinvoke $r7.<java.lang.Object: java.lang.String toString()>();
+        virtualinvoke $r10.<java.lang.Object: java.lang.String toString()>();
 
-        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addConstraint(java.lang.String,java.lang.String)>(r4, r3);
+        $r11 = (safetyChecker.utilities.LeafNode) r2;
+
+        specialinvoke r0.<safetyChecker.utilities.SafetyCheckerGUI: void addConstraint(safetyChecker.utilities.LeafNode)>($r11);
 
      label2:
         return;
