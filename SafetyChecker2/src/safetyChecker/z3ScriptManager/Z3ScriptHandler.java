@@ -338,8 +338,11 @@ public class Z3ScriptHandler {
 
 		if(z3MathLibrary.isModulusInstruction(right))
 			eq = z3MathLibrary.createModuleExpr(leftZ3, right, this, edge);
-		else
+		else {
 			eq = convertAssignStmt(rightZ3, leftZ3, leftType, left, edge.getSource().getDistance());
+			if(edge.isCheck4Flow()) 
+				eq = this.ictx.mkAnd(eq, this.setFlowConstraint(edge, (ArithExpr) leftZ3));
+		}
 
 		if(right instanceof AnyNewExpr) {
 			if(right.getType().toString().equals("java.lang.String")) {
@@ -846,6 +849,13 @@ public class Z3ScriptHandler {
 
 	}
 
+	private BoolExpr setFlowConstraint(Edge edge, ArithExpr expr) {
+		BoolExpr leExpr = this.ictx.mkLe(expr, this.ictx.mkInt(Integer.MAX_VALUE));
+		BoolExpr geExpr = this.ictx.mkGe(expr, this.ictx.mkInt(Integer.MIN_VALUE));
+		BoolExpr rangeExpr = this.ictx.mkAnd(geExpr, leExpr);
+		return rangeExpr;
+	}
+
 	private Expr convertBoolExpr(BinopExpr expr, Edge edge, int nodeIndex) {
 		
 		if(expr instanceof AddExpr) {
@@ -855,6 +865,7 @@ public class Z3ScriptHandler {
 
 			Expr op1Expr = convertValue(op1Value, false, edge, edge.getSource().getDistance());
 			Expr op2Expr = convertValue(op2Value, false, edge, edge.getSource().getDistance());
+			edge.setCheck4Flow(true);
 
 			return ictx.mkAdd((ArithExpr)op1Expr, (ArithExpr)op2Expr);
 		}
@@ -865,6 +876,7 @@ public class Z3ScriptHandler {
 
 			Expr op1Expr = convertValue(op1Value, false, edge, nodeIndex);
 			Expr op2Expr = convertValue(op2Value, false, edge, nodeIndex);
+			edge.setCheck4Flow(true);
 			
 			return this.ictx.mkSub((ArithExpr) op1Expr, (ArithExpr) op2Expr);	
 		}
@@ -875,6 +887,7 @@ public class Z3ScriptHandler {
 
 			Expr op1Expr = convertValue(op1Value, false, edge, nodeIndex);
 			Expr op2Expr = convertValue(op2Value, false, edge, nodeIndex);
+			edge.setCheck4Flow(true);
 
 			return this.ictx.mkMul((ArithExpr) op1Expr, (ArithExpr) op2Expr);	
 
@@ -886,6 +899,7 @@ public class Z3ScriptHandler {
 
 			Expr op1Expr = convertValue(op1Value, false, edge, nodeIndex);
 			Expr op2Expr = convertValue(op2Value, false, edge, nodeIndex);
+			edge.setCheck4Flow(true);
 
 			return this.ictx.mkDiv((ArithExpr) op1Expr, (ArithExpr) op2Expr);	
 

@@ -68,7 +68,6 @@ public class UnitController {
 		e.getSource().setEntryLocation(e.isEntryLocation());
 		e.getSource().setInErrorPath(e.isInErrorPath());
 
-
 		if(e.isErrorEdge()){ 
 			e.setInErrorPath(true);
 		}

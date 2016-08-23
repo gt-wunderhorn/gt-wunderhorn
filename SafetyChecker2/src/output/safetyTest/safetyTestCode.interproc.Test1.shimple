@@ -43,7 +43,7 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
     public void test(int)
     {
         safetyTestCode.interproc.Test1 r0;
-        int i0, i1;
+        int i0, i1, i2;
         boolean $z0;
         java.lang.AssertionError $r1;
 
@@ -53,11 +53,13 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
 
         i1 = virtualinvoke r0.<safetyTestCode.interproc.Test1: int recursive(int)>(3);
 
+        i2 = i1 + 2147483647;
+
         $z0 = <safetyTestCode.interproc.Test1: boolean $assertionsDisabled>;
 
         if $z0 != 0 goto label1;
 
-        if i1 > 2 goto label1;
+        if i1 == 3 goto label1;
 
         $r1 = new java.lang.AssertionError;
 
@@ -235,10 +237,12 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
     {
         java.lang.String[] r0;
         safetyTestCode.interproc.Test1 r1, $r2;
-        int i0;
+        int i0, i1, i2;
         java.io.PrintStream $r3, $r4;
         boolean $z0;
-        java.lang.AssertionError $r5;
+        java.lang.Object[] $r5, $r6, $r8, $r10, $r12;
+        java.lang.Integer $r7, $r9, $r11;
+        java.lang.AssertionError $r13;
 
         r0 := @parameter0: java.lang.String[];
 
@@ -260,16 +264,59 @@ public class safetyTestCode.interproc.Test1 extends java.lang.Object
 
         if i0 == 4 goto label1;
 
-        $r5 = new java.lang.AssertionError;
+        $r13 = new java.lang.AssertionError;
 
-        specialinvoke $r5.<java.lang.AssertionError: void <init>()>();
+        specialinvoke $r13.<java.lang.AssertionError: void <init>()>();
 
-        throw $r5;
+        throw $r13;
 
      label1:
         $r4 = <java.lang.System: java.io.PrintStream out>;
 
         virtualinvoke $r4.<java.io.PrintStream: void println(int)>(i0);
+
+        i1 = 2147483647;
+
+        i2 = i1 + 10;
+
+        if i2 >= -2147483599 goto label2;
+
+        $r12 = newarray (java.lang.Object)[1];
+
+        $r12[0] = "Haha";
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r12);
+
+     label2:
+        $r5 = newarray (java.lang.Object)[1];
+
+        $r5[0] = "test";
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r5);
+
+        $r6 = newarray (java.lang.Object)[1];
+
+        $r7 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(2147483647);
+
+        $r6[0] = $r7;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r6);
+
+        $r8 = newarray (java.lang.Object)[1];
+
+        $r9 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(-2147483648);
+
+        $r8[0] = $r9;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r8);
+
+        $r10 = newarray (java.lang.Object)[1];
+
+        $r11 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i2);
+
+        $r10[0] = $r11;
+
+        staticinvoke <safetyChecker.utilities.LogUtils: void warningln(java.lang.Object[])>($r10);
 
         return;
     }

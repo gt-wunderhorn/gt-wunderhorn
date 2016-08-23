@@ -19,6 +19,7 @@ public class safetyChecker.Edge extends java.lang.Object
     private boolean entryLocation;
     private boolean initInvoke;
     private boolean newString;
+    private boolean check4Flow;
     private java.util.List parameterList;
 
     public void <init>(soot.Unit)
@@ -58,6 +59,8 @@ public class safetyChecker.Edge extends java.lang.Object
         r0.<safetyChecker.Edge: boolean initInvoke> = 0;
 
         r0.<safetyChecker.Edge: boolean newString> = 0;
+
+        r0.<safetyChecker.Edge: boolean check4Flow> = 0;
 
         $r2 = new java.util.LinkedList;
 
@@ -508,6 +511,32 @@ public class safetyChecker.Edge extends java.lang.Object
         z0 := @parameter0: boolean;
 
         r0.<safetyChecker.Edge: boolean newString> = z0;
+
+        return;
+    }
+
+    public boolean isCheck4Flow()
+    {
+        safetyChecker.Edge r0;
+        boolean $z0;
+
+        r0 := @this: safetyChecker.Edge;
+
+        $z0 = r0.<safetyChecker.Edge: boolean check4Flow>;
+
+        return $z0;
+    }
+
+    public void setCheck4Flow(boolean)
+    {
+        safetyChecker.Edge r0;
+        boolean z0;
+
+        r0 := @this: safetyChecker.Edge;
+
+        z0 := @parameter0: boolean;
+
+        r0.<safetyChecker.Edge: boolean check4Flow> = z0;
 
         return;
     }

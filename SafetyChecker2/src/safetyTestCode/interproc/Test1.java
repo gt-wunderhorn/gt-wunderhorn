@@ -2,6 +2,7 @@ package safetyTestCode.interproc;
 
 import safetyChecker.utilities.ConsraintAnnotation;
 import safetyChecker.utilities.ErrorLable;
+import safetyChecker.utilities.LogUtils;
 
 public class Test1 {
 
@@ -12,7 +13,8 @@ public class Test1 {
 	//	int j = getHalf(10);
 	//	int j = fun1(1);
 		
-		assert j > 2; // && i == 3;
+		int k = j + Integer.MAX_VALUE;
+		assert j == 3; // && i == 3;
 //		if(j == 2) 
 //			ErrorLable.Error();	
 	}
@@ -78,6 +80,15 @@ public class Test1 {
 		System.out.println(j);
 		assert j == 4;
 		System.out.println(j);
+
+		int i = Integer.MAX_VALUE;
+		i = i+10;
+		if(i < Integer.MAX_VALUE + 50)
+			LogUtils.warningln("Haha");
+		LogUtils.warningln("test");
+		LogUtils.warningln(Integer.MAX_VALUE);
+		LogUtils.warningln(Integer.MIN_VALUE);
+		LogUtils.warningln(i);
 
 	}
 

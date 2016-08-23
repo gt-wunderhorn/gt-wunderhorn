@@ -30,6 +30,7 @@ public class Edge {
 	private boolean entryLocation = false;
 	private boolean initInvoke = false;
 	private boolean newString = false;
+	private boolean check4Flow = false;
 	
 	private List<Expr> parameterList = new LinkedList<Expr>();
 
@@ -85,6 +86,9 @@ public class Edge {
 
 	public boolean isNewString() { return this.newString; }
 	public void setNewString(boolean newString) { this.newString = newString; }
+
+	public boolean isCheck4Flow() { return this.check4Flow; }
+	public void setCheck4Flow(boolean check4Flow) { this.check4Flow = check4Flow; } 
 
 	public BoolExpr getZ3Expr() { return this.z3Expr; }
 	public void setZ3Expr(BoolExpr z3Expr) { this.z3Expr = z3Expr; } 
