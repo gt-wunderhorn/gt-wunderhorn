@@ -66,7 +66,7 @@ public class Z3ArrayHandler {
 				ns.creatNewOject(expr);
 			return expr;
 		} else {
-			ArrayExpr arrayExpr = (ArrayExpr) z3Handler.getLocalMap().get(arrayName);
+			ArrayExpr arrayExpr = (ArrayExpr) z3Handler.getLocalMap().get(edge.getProgramTree().getProgramDefinition()).get(arrayName);
 			NewSort ns = z3Handler.getSortId().get(sortName);
 			String valueName = local.getName() + z3Handler.getArrayNameSuffix(); 
 			Expr expr = ictx.mkConst(valueName, z3Handler.getNewSortMap().get(typeString));

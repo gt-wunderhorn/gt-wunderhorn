@@ -736,7 +736,7 @@ public class Z3ScriptHandler {
 			String virtualName = typeName;
 			String newName = virtualName + this.getNameSuffix();
 
-			ArrayExpr latestArray = (ArrayExpr) this.localMap.get(virtualName);
+			ArrayExpr latestArray = (ArrayExpr) this.localMap.get(currentEdge.getProgramTree().getProgramDefinition()).get(virtualName);
 			LogUtils.debugln("latestArray="+latestArray);
 			ArrayExpr newArray = (ArrayExpr) this.ictx.mkConst(newName, latestArray.getSort());
 			LogUtils.debugln("newArray=" + newArray);

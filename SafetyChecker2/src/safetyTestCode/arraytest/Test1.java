@@ -7,7 +7,7 @@ import safetyChecker.utilities.ErrorLable;
 public class Test1 {
 
 
-	public void test(int n) {
+	public void test6(int n) {
 		int i = getNumber();
 		if(i == 5)
 			ErrorLable.Error();
@@ -35,17 +35,19 @@ public class Test1 {
 
 	}
 
-	public void test6(int n) {
+	public void test(int n) {
 		int[] intArray = new int[2];
-		int[] intArray2 = new int[2];
+//		int[] intArray2 = new int[2];
 
-		int i = intArray[0];
-		i = intArray2[0];
+//		int i = intArray[0];
+//		i = intArray2[0];
 //		for(int i = 0; i < n; i++)
 //			intArray[i] = 3;
 				
-		if((intArray[0] == 2))  
-			ErrorLable.Error();
+		int b = intArray[0];
+		assert b == 0;
+//		if((intArray[0] == 2))  
+//			ErrorLable.Error();
 	}
 
 //	public int test2(int x, int y) {
