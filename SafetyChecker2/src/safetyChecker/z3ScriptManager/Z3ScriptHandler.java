@@ -608,6 +608,8 @@ public class Z3ScriptHandler {
 			}
 			if(type instanceof ArrayType) {
 				Expr result = this.arrayHandler.z3Local(local, assignLeft, nodeIndex, this, edge); 
+
+			LogUtils.fatalln(result);
 				return result;
 			}
 		}
@@ -737,20 +739,30 @@ public class Z3ScriptHandler {
 			String newName = virtualName + this.getNameSuffix();
 
 			ArrayExpr latestArray = (ArrayExpr) this.localMap.get(currentEdge.getProgramTree().getProgramDefinition()).get(virtualName);
-			LogUtils.debugln("latestArray="+latestArray);
+			LogUtils.fatalln("latestArray="+latestArray);
 			ArrayExpr newArray = (ArrayExpr) this.ictx.mkConst(newName, latestArray.getSort());
 			LogUtils.debugln("newArray=" + newArray);
 			this.substitute.put(newName, virtualName);
 			this.substituteSort.put(newName, newArray.getSort());
 			// fix here
 //			this.localMap.put(virtualName, newArray);
+			String functionDefition= currentEdge.getProgramTree().getProgramDefinition();
+			LogUtils.warningln("functionDefition=" + functionDefition);
+			LogUtils.warningln("virtualName=" +virtualName);
+			LogUtils.fatalln("newArray=" + newArray);
+			LogUtils.infoln("before=" + this.localMap.get(functionDefition).get(virtualName));
 			this.localMap.get(currentEdge.getProgramTree().getProgramDefinition()).put(virtualName, newArray);
+			LogUtils.infoln("after=" + this.localMap.get(functionDefition).get(virtualName));
 
+			LogUtils.warningln("typeName=" + typeName);
 			String sortName = typeName + this.getArraySortSuffix();
+			LogUtils.warningln("sortName=" + sortName);
 			NewSort s = sortId.get(sortName);
+			LogUtils.warningln("leftZ3=" + leftZ3);
+			LogUtils.warningln("sortId.get(SortName).get(leftZ3)=" + s.getId(leftZ3));
 
 			Expr afterStore = ictx.mkStore((ArrayExpr) latestArray, s.getId(leftZ3), rightZ3);
-			LogUtils.debugln("afterStore="+afterStore);
+			LogUtils.warningln("afterStore="+afterStore);
 			BoolExpr newArrayEqOldArray = ictx.mkEq(newArray, afterStore);
 			return newArrayEqOldArray;
 		}
@@ -780,7 +792,6 @@ public class Z3ScriptHandler {
 	}
 
 	private Expr convertAnyNewExpr(AnyNewExpr ane, Edge e) {
-		LogUtils.debugln("Z3ScriptHandler.convertAnyNewExpr");
 		if(ane instanceof NewExpr) return convertNewExpr((NewExpr)ane, e);
 		if(ane instanceof NewArrayExpr) return arrayHandler.convertNewArrayExpr((NewArrayExpr)ane, e, this);
 		if(ane instanceof NewMultiArrayExpr) return arrayHandler.convertNewMultiArrayExpr((NewMultiArrayExpr)ane, e, this);

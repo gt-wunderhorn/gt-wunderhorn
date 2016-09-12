@@ -49,7 +49,8 @@ public class Z3ArrayHandler {
 		String sortName = typeString + z3Handler.getArraySortSuffix();
 		String arrayName = typeString;
 
-		if(!z3Handler.getLocalMap().containsKey(arrayName)) {
+		if(!z3Handler.getLocalMap().get(edge.getProgramTree().getProgramDefinition()).containsKey(arrayName)) {
+			LogUtils.fatalln("*******\n********");
 			Sort newArraySort = ictx.mkArraySort(ictx.getIntSort(), ictx.getIntSort());
 			Expr newArray = ictx.mkConst(arrayName, newArraySort);
 			z3Handler.getLocalMap().get(edge.getProgramTree().getProgramDefinition()).put(arrayName, newArray);
@@ -79,14 +80,17 @@ public class Z3ArrayHandler {
 	protected Expr convertNewArrayExpr(NewArrayExpr ne, Edge e, Z3ScriptHandler z3Handler) {
 		Type type = ne.getType();
 		String virtualName = type.toString();
+		LogUtils.fatalln("virtualName="+ virtualName);
 		Map<String, NewSort> sortId = z3Handler.getSortId();	
 		Map<String, Sort> newSortMap =  z3Handler.getNewSortMap();
 		InterpolationContext ictx = z3Handler.getIctx();
 
 		if(sortId.containsKey(virtualName)) {
+			LogUtils.fatalln("does");
 			NewSort ns = sortId.get(virtualName);
 			return ns.getNewObject();
-		} else {
+		} else {	
+			LogUtils.fatalln("not");
 			Sort newSort = null;
 			if(newSortMap.containsKey(virtualName)) {
 				newSort = newSortMap.get(virtualName);

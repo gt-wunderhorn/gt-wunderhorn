@@ -1,5 +1,32 @@
 public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 {
+    static final boolean $assertionsDisabled;
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1, $z1_1, $z1_2;
+
+        $r0 = class "safetyTestCode/arraytest/Test1";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+(0)     goto label2;
+
+     label1:
+(1)     $z1_1 = 0;
+
+     label2:
+        $z1_2 = Phi($z1 #0, $z1_1 #1);
+
+        <safetyTestCode.arraytest.Test1: boolean $assertionsDisabled> = $z1_2;
+
+        return;
+    }
 
     public void <init>()
     {
@@ -12,7 +39,7 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
         return;
     }
 
-    public void test(int)
+    public void test6(int)
     {
         safetyTestCode.arraytest.Test1 r0;
         int i0, i1;
@@ -84,11 +111,13 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
         return;
     }
 
-    public void test6(int)
+    public void test(int)
     {
         safetyTestCode.arraytest.Test1 r0;
-        int i0, $i1, i2, i3;
+        int i0, $i1;
         int[] r1, r2;
+        boolean $z0;
+        java.lang.AssertionError $r3;
 
         r0 := @this: safetyTestCode.arraytest.Test1;
 
@@ -98,15 +127,23 @@ public class safetyTestCode.arraytest.Test1 extends java.lang.Object
 
         r2 = newarray (int)[2];
 
-        i2 = r1[0];
+        r2[1] = 1;
 
-        i3 = r2[0];
+        r1[1] = 2;
 
-        $i1 = r1[0];
+        $z0 = <safetyTestCode.arraytest.Test1: boolean $assertionsDisabled>;
 
-        if $i1 != 2 goto label1;
+        if $z0 != 0 goto label1;
 
-        staticinvoke <safetyChecker.utilities.ErrorLable: void Error()>();
+        $i1 = r2[2];
+
+        if $i1 == 0 goto label1;
+
+        $r3 = new java.lang.AssertionError;
+
+        specialinvoke $r3.<java.lang.AssertionError: void <init>()>();
+
+        throw $r3;
 
      label1:
         return;

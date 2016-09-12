@@ -37,15 +37,16 @@ public class Test1 {
 
 	public void test(int n) {
 		int[] intArray = new int[2];
-//		int[] intArray2 = new int[2];
+		int[] intArray2 = new int[2];
 
+		intArray2[1] = 1;
+		intArray[1] = 2;
 //		int i = intArray[0];
 //		i = intArray2[0];
 //		for(int i = 0; i < n; i++)
 //			intArray[i] = 3;
 				
-		int b = intArray[0];
-		assert b == 0;
+		assert 0 == intArray2[2];
 //		if((intArray[0] == 2))  
 //			ErrorLable.Error();
 	}

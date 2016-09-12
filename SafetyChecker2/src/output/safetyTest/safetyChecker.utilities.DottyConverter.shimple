@@ -43,7 +43,7 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
     public static void printErrorPaths(java.util.Queue, java.lang.String, safetyChecker.CoverRelation)
     {
         java.util.Queue r0;
-        java.lang.String r1, $r21, $r25, $r27, $r29, $r34, $r37, $r40, $r46, $r59, $r61, $r63, $r68, $r70, r79, r81, r82, r83, r84, r85, r92, r93, r94, r95, r79_1, r79_2, r79_3, r81_1, r82_1, r83_1, r84_1, r84_2, r83_2, r83_3, r84_3, r81_2, r81_3, r83_4, r84_4, r85_1, r85_2, r85_3, r82_2, r85_4, r82_3, r81_4, r85_5, r83_5, r82_4, r84_5, r92_1, r93_1, r94_1, r94_2, r94_3, r92_2, r94_4, r92_3, r95_1, r95_2, r95_3, r93_2, r93_3, r95_4, r81_5, r85_6, r83_6, r93_4, r95_5, r82_5, r79_4, r94_5, r84_6, r92_4, r81_6, r85_7, r83_7, r93_5, r95_6, r82_6, r79_5, r94_6, r84_7, r92_5;
+        java.lang.String r1, $r21, $r25, $r27, $r29, $r34, $r37, $r40, $r46, $r59, $r61, $r63, $r68, $r70, r79, r81, r82, r83, r84, r85, r92, r93, r94, r95, r79_1, r79_2, r79_3, r81_1, r82_1, r83_1, r84_1, r84_2, r83_2, r83_3, r84_3, r81_2, r83_4, r81_3, r84_4, r85_1, r85_2, r85_3, r82_2, r82_3, r85_4, r83_5, r82_4, r81_4, r84_5, r85_5, r92_1, r93_1, r94_1, r94_2, r94_3, r92_2, r92_3, r94_4, r95_1, r95_2, r95_3, r93_2, r93_3, r95_4, r93_4, r92_4, r95_5, r83_6, r82_5, r81_5, r84_6, r79_4, r94_5, r85_6, r93_5, r92_5, r95_6, r83_7, r82_6, r81_6, r84_7, r79_5, r94_6, r85_7;
         safetyChecker.CoverRelation r2;
         java.io.BufferedWriter r3;
         boolean $z0, $z1, $z2, $z4, $z5, $z6, $z7, $z8, $z9;
@@ -177,9 +177,9 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
 (18)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r46);
 
      label06:
-        r81_3 = Phi(r81_1 #11, r81_2 #18);
-
         r83_4 = Phi(r83_1 #11, r83_3 #18);
+
+        r81_3 = Phi(r81_1 #11, r81_2 #18);
 
         r84_4 = Phi(r84 #11, r84_3 #18);
 
@@ -217,9 +217,9 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
 (25)    r82_2 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.String toString()>();
 
      label08:
-        r85_4 = Phi(r85 #20, r85_3 #25);
-
         r82_3 = Phi(r82_1 #20, r82_2 #25);
+
+        r85_4 = Phi(r85 #20, r85_3 #25);
 
 (26)    $r9 = virtualinvoke r76.<safetyChecker.Vertex: java.util.Set getPreviousVertexSet()>();
 
@@ -269,15 +269,15 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
 (27)    virtualinvoke r3.<java.io.BufferedWriter: void write(java.lang.String)>($r21);
 
      label10:
-        r81_4 = Phi(r81 #6, r81 #7, r81_3 #27);
-
-        r85_5 = Phi(r85 #6, r85 #7, r85_4 #27);
-
         r83_5 = Phi(r83 #6, r83 #7, r83_4 #27);
 
         r82_4 = Phi(r82 #6, r82 #7, r82_3 #27);
 
+        r81_4 = Phi(r81 #6, r81 #7, r81_3 #27);
+
         r84_5 = Phi(r84 #6, r84 #7, r84_4 #27);
+
+        r85_5 = Phi(r85 #6, r85 #7, r85_4 #27);
 
 (28)    r86 = interfaceinvoke r77.<java.util.Set: java.util.Iterator iterator()>();
 
@@ -296,17 +296,17 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
 (29)    if $z2 != 0 goto label11;
 
      label13:
-        r81 = Phi(r81 #1, r81_4 #29);
-
-        r85 = Phi(r85 #1, r85_5 #29);
-
         r83 = Phi(r83 #1, r83_5 #29);
 
         r82 = Phi(r82 #1, r82_4 #29);
 
-        r79 = Phi(r79 #1, r79_3 #29);
+        r81 = Phi(r81 #1, r81_4 #29);
 
         r84 = Phi(r84 #1, r84_5 #29);
+
+        r79 = Phi(r79 #1, r79_3 #29);
+
+        r85 = Phi(r85 #1, r85_5 #29);
 
         $z0 = interfaceinvoke r0.<java.util.Queue: boolean isEmpty()>();
 
@@ -369,9 +369,9 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
 (38)    r92_2 = virtualinvoke $r72.<java.lang.StringBuilder: java.lang.String toString()>();
 
      label16:
-        r94_4 = Phi(r94 #33, r94_3 #38);
-
         r92_3 = Phi(r92_1 #33, r92_2 #38);
+
+        r94_4 = Phi(r94 #33, r94_3 #38);
 
 (39)    $r53 = virtualinvoke r91.<safetyChecker.Vertex: com.microsoft.z3.BoolExpr getInvariant()>();
 
@@ -430,11 +430,11 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
      label19:
         r93 = Phi(r93 #30, r93_3 #47);
 
+        r92 = Phi(r92 #30, r92_3 #47);
+
         r95 = Phi(r95 #30, r95_4 #47);
 
         r94 = Phi(r94 #30, r94_4 #47);
-
-        r92 = Phi(r92 #30, r92_3 #47);
 
         $z7 = interfaceinvoke r88.<java.util.Iterator: boolean hasNext()>();
 
@@ -452,50 +452,50 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
      label21:
         $r74 := @caughtexception;
 
-        r81_5 = Phi(r81 #0, r81_1 #8, r81_2 #17, r81_3 #19, r81_4 #28);
-
-        r85_6 = Phi(r85 #0, r85_1 #21, r85_2 #23, r85_3 #24, r85_4 #26, r85_5 #28);
-
-        r83_6 = Phi(r83 #0, r83_1 #10, r83_2 #15, r83_3 #16, r83_4 #19, r83_5 #28);
-
         r93_4 = Phi(r93 #0, r93_1 #32, r93_2 #45, r93_3 #46);
+
+        r92_4 = Phi(r92 #0, r92_1 #31, r92_2 #38, r92_3 #39);
 
         r95_5 = Phi(r95 #0, r95_1 #41, r95_2 #43, r95_3 #44, r95_4 #46);
 
+        r83_6 = Phi(r83 #0, r83_1 #10, r83_2 #15, r83_3 #16, r83_4 #19, r83_5 #28);
+
         r82_5 = Phi(r82 #0, r82_1 #9, r82_2 #25, r82_3 #26, r82_4 #28);
+
+        r81_5 = Phi(r81 #0, r81_1 #8, r81_2 #17, r81_3 #19, r81_4 #28);
+
+        r84_6 = Phi(r84 #0, r84_1 #12, r84_2 #13, r84_3 #16, r84_4 #19, r84_5 #28);
 
         r79_4 = Phi(r79 #0, r79_1 #2, r79_2 #4, r79_3 #5);
 
         r94_5 = Phi(r94 #0, r94_1 #34, r94_2 #36, r94_3 #37, r94_4 #39);
 
-        r84_6 = Phi(r84 #0, r84_1 #12, r84_2 #13, r84_3 #16, r84_4 #19, r84_5 #28);
-
-        r92_4 = Phi(r92 #0, r92_1 #31, r92_2 #38, r92_3 #39);
+        r85_6 = Phi(r85 #0, r85_1 #21, r85_2 #23, r85_3 #24, r85_4 #26, r85_5 #28);
 
         r96 = $r74;
 
 (49)    virtualinvoke r96.<java.lang.Exception: void printStackTrace()>();
 
      label22:
-        r81_6 = Phi(r81 #48, r81_5 #49);
-
-        r85_7 = Phi(r85 #48, r85_6 #49);
-
-        r83_7 = Phi(r83 #48, r83_6 #49);
-
         r93_5 = Phi(r93 #48, r93_4 #49);
+
+        r92_5 = Phi(r92 #48, r92_4 #49);
 
         r95_6 = Phi(r95 #48, r95_5 #49);
 
+        r83_7 = Phi(r83 #48, r83_6 #49);
+
         r82_6 = Phi(r82 #48, r82_5 #49);
+
+        r81_6 = Phi(r81 #48, r81_5 #49);
+
+        r84_7 = Phi(r84 #48, r84_6 #49);
 
         r79_5 = Phi(r79 #48, r79_4 #49);
 
         r94_6 = Phi(r94 #48, r94_5 #49);
 
-        r84_7 = Phi(r84 #48, r84_6 #49);
-
-        r92_5 = Phi(r92 #48, r92_4 #49);
+        r85_7 = Phi(r85 #48, r85_6 #49);
 
         return;
 
@@ -619,7 +619,7 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
         safetyChecker.Edge r6, $r12, $r22, r34, r37;
         boolean $z0, $z3, $z4, $z5, $z8;
         java.lang.Object $r10, $r13, $r15, $r20, $r28;
-        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i8_1, i8_2, i8_3, i8_4, i8_5, i8_6, i8_7, i8_8, i9_1, i9_2, i8_9, i9_3, i8_10, i9_4;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i8_1, i8_2, i8_3, i8_4, i8_5, i8_6, i8_7, i8_8, i9_1, i9_2, i9_3, i8_9, i9_4, i8_10;
         java.util.Set $r14;
         soot.Unit $r16, $r18, r32, r39;
         java.lang.StringBuilder $r24, $r25, $r26;
@@ -867,18 +867,18 @@ public class safetyChecker.utilities.DottyConverter extends java.lang.Object
      label14:
         $r29 := @caughtexception;
 
-        i8_9 = Phi(i8 #0, i8_2 #2, i8_1 #4, i8_5 #8, i8_6 #10, i8_8 #12, i8_7 #14, i8_4 #16, i8_3 #18);
-
         i9_3 = Phi(i9 #0, i9_2 #20, i9_1 #22);
+
+        i8_9 = Phi(i8 #0, i8_2 #2, i8_1 #4, i8_5 #8, i8_6 #10, i8_8 #12, i8_7 #14, i8_4 #16, i8_3 #18);
 
         r42 = $r29;
 
 (24)    virtualinvoke r42.<java.lang.Exception: void printStackTrace()>();
 
      label15:
-        i8_10 = Phi(i8_3 #23, i8_9 #24);
-
         i9_4 = Phi(i9_1 #23, i9_3 #24);
+
+        i8_10 = Phi(i8_3 #23, i8_9 #24);
 
         return;
 
