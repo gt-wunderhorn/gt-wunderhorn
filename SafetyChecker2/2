@@ -327,6 +327,7 @@ public class Z3ScriptHandler {
 			else
 				rightZ3 = this.ictx.mkIntConst("nonSubFunction_" +this.getRealArraySize("nonSubFunction_"));
 		} else {
+			LogUtils.fatalln("right is called here" + right);
 			rightZ3 = convertValue(right, false, edge, edge.getSource().getDistance());
 		}
 		LogUtils.debugln("rightZ3=" + rightZ3);

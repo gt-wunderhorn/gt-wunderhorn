@@ -473,9 +473,9 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 (6)     r37_2 = virtualinvoke r37_1.<safetyChecker.Vertex: safetyChecker.Vertex getNextVertex()>();
 
      label08:
-        r37_1 = Phi(r37 #0, r37_2 #6);
-
         r40 = Phi(r40 #0, r40_5 #6);
+
+        r37_1 = Phi(r37 #0, r37_2 #6);
 
         i3_1 = Phi(i3 #0, i3_3 #6);
 
@@ -550,13 +550,13 @@ public class safetyChecker.InterpolationHandler extends java.lang.Object
 (12)    if r41_1 != null goto label10;
 
      label15:
-        r37_3 = Phi(r37_1 #7, r37_1 #8, r37 #10, r37 #12);
-
         r40_6 = Phi(r40 #7, r40 #8, r40 #10, r40 #12);
 
-        i3_4 = Phi(i3_1 #7, i3_1 #8, i3 #10, i3 #12);
+        r37_3 = Phi(r37_1 #7, r37_1 #8, r37 #10, r37 #12);
 
         r41_3 = Phi(r41 #7, r41 #8, r41_1 #10, r41_1 #12);
+
+        i3_4 = Phi(i3_1 #7, i3_1 #8, i3 #10, i3 #12);
 
         return;
     }

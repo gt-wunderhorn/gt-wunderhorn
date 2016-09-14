@@ -58,7 +58,7 @@ public class safetyTestCode.interproc.Rob extends java.lang.Object
     {
         safetyTestCode.interproc.Rob r0;
         int[] r1;
-        int i0, i1, i2, $i3, $i4, i5, i6, i7, i5_1, i7_1, i6_1, i5_2, i6_2, i7_2;
+        int i0, i1, i2, $i3, $i4, i5, i6, i7, i6_1, i5_1, i7_1, i5_2, i6_2, i7_2;
 
         r0 := @this: safetyTestCode.interproc.Rob;
 
@@ -90,11 +90,11 @@ public class safetyTestCode.interproc.Rob extends java.lang.Object
 (1)     i7_2 = i7_1 + 1;
 
      label2:
+        i6_1 = Phi(i6 #0, i6_2 #1);
+
         i5_1 = Phi(i5 #0, i5_2 #1);
 
         i7_1 = Phi(i7 #0, i7_2 #1);
-
-        i6_1 = Phi(i6 #0, i6_2 #1);
 
         if i7_1 <= i1 goto label1;
 
