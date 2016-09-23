@@ -1,0 +1,21 @@
+## REDUCING NUMBER OF RELATIONS
+If more than one line indicates a particular line then that line is a join point.
+In general, only:
+  Entries
+  Joins
+  Exits
+
+require relations.
+
+## REDUCING NUMBER OF VARIABLES
+If
+a program variable is changed on the left hand side of a relation
+AND
+that same program variable is referenced later in the program.
+THEN
+The relation must be bound over that variable. Otherwise, it need not be.
+
+Abstract instructions merely contain the ability to make assignments and perform
+branches.
+
+Horn clauses add to that the ability to inspect relations.
