@@ -83,3 +83,13 @@ let mk_not = function
 let mk_and = function
   | [e] -> e
   | es  -> And es
+
+let rec num_queries es =
+  let rec count = function
+    | Query _          -> 1
+    | Eq (e1, e2)      -> count e1 + count e2
+    | Implies (e1, e2) -> count e1 + count e2
+    | And es           -> num_queries es
+    | Not e            -> count e
+    | _                -> 0 in
+  List.map count es |> List.fold_left (+) 0
