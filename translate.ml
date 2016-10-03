@@ -48,9 +48,9 @@ let translate_path trace path =
   let precondition = mk_condition table (T.initial_label path) initial_vars in
 
   match path with
-  | Assertion (_, v) ->
+  | T.Assertion (_, v) ->
     Implies (Not (Implies (precondition, (Eq (substitute table (Var v), Int_lit 1)))), substitute table (Query v))
-  | Path (_, _, instrs) ->
+  | T.Path (_, _, instrs) ->
     let (expressions, table) = List.fold_left loop ([], table) instrs in
 
     let lhs =
