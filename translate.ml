@@ -9,7 +9,7 @@ module Alias_table = Count_table.Make(
 
 let mk_alias table var =
   let Variable prefix = var in
-  Variable (prefix ^ (string_of_int (Alias_table.get table var)))
+  Variable (prefix ^ "_" ^ (string_of_int (Alias_table.get table var)))
 
 let rec substitute table = function
   | Relation (lbl, vs) -> Relation (lbl, List.map (mk_alias table) vs)
