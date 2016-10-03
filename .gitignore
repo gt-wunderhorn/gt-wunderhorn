@@ -1,3 +1,6 @@
 _build/
 *.swp
 *.class
+*.byte
+*.native
+parsed/

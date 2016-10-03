@@ -8,6 +8,9 @@ NAME = example
 
 all: byte
 
+use:
+	$(OCB) use.byte
+
 clean:
 	$(OCB) -clean
 

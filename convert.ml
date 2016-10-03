@@ -32,29 +32,30 @@ let rec compare cond x y = match cond with
   | `Lt -> assert false (* TODO *)
   | `Ne -> P.Not (compare `Eq x y)
 
-let instr = function
-  | A3.Nop                   -> []
-  | A3.AffectVar (v, e)      -> [P.Linear (P.Assign (var v, expr e))]
-  | A3.AffectArray _         -> assert false (* TODO *)
-  | A3.AffectField _         -> assert false (* TODO *)
-  | A3.AffectStaticField _   -> assert false (* TODO *)
-  | A3.Goto l                -> [P.Non_linear (P.Goto l)]
-  | A3.Ifd ((cond, x, y), l) -> [P.Non_linear (P.If (compare cond x y, l))]
-  | A3.Throw _               -> assert false (* TODO *)
-  | A3.Return _              -> [P.Linear (P.Return (P.Int_lit 0))] (* TODO *)
-  | A3.New _                 -> assert false (* TODO *)
-  | A3.NewArray _            -> assert false (* TODO *)
-  | A3.InvokeStatic (_, _, ms, vs) ->
-    if (JB.ms_name ms) = "ensure"
-    then [P.Linear (P.Assert (tvar (List.hd vs)))]
-    else assert false (* TODO *)
-  | A3.InvokeVirtual _       -> assert false (* TODO *)
-  | A3.InvokeNonVirtual _    -> assert false (* TODO *)
-  | A3.MonitorEnter _        -> assert false (* TODO *)
-  | A3.MonitorExit _         -> assert false (* TODO *)
-  | A3.MayInit _             -> [] (* TODO *)
-  | A3.Check _               -> assert false (* TODO *)
-  | A3.Formula _             -> assert false (* TODO *)
-
 let convert is =
+  let offset = ref 0 in
+  let instr = function
+    | A3.Nop                   -> offset := !offset + 1; []
+    | A3.AffectVar (v, e)      -> [P.Linear (P.Assign (var v, expr e))]
+    | A3.AffectArray _         -> assert false (* TODO *)
+    | A3.AffectField _         -> assert false (* TODO *)
+    | A3.AffectStaticField _   -> assert false (* TODO *)
+    | A3.Goto l                -> [P.Non_linear (P.Goto (l - !offset))]
+    | A3.Ifd ((cond, x, y), l) -> [P.Non_linear (P.If (compare cond x y, l - !offset))]
+    | A3.Throw _               -> assert false (* TODO *)
+    | A3.Return _              -> [P.Linear (P.Return (P.Int_lit 0))] (* TODO *)
+    | A3.New _                 -> assert false (* TODO *)
+    | A3.NewArray _            -> assert false (* TODO *)
+    | A3.InvokeStatic (_, _, ms, vs) ->
+      if (JB.ms_name ms) = "ensure"
+      then [P.Linear (P.Assert (tvar (List.hd vs)))]
+      else assert false (* TODO *)
+    | A3.InvokeVirtual _       -> assert false (* TODO *)
+    | A3.InvokeNonVirtual _    -> assert false (* TODO *)
+    | A3.MonitorEnter _        -> assert false (* TODO *)
+    | A3.MonitorExit _         -> assert false (* TODO *)
+    | A3.MayInit _             -> offset := !offset + 1; []
+    | A3.Check _               -> assert false (* TODO *)
+    | A3.Formula _             -> assert false (* TODO *)
+  in
   List.map instr is |> List.concat

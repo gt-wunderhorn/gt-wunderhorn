@@ -35,9 +35,9 @@ let reduce_instr table = function
 let mk_condition table label vars =
   Relation (label, List.map (mk_alias table) (Var_set.elements vars))
 
-let translate_path trace path =
-  let initial_vars  = T.critical_variables trace (T.initial_label path) in
-  let terminal_vars = T.critical_variables trace (T.terminal_label path) in
+let translate_path trace (init, term, path) =
+  let initial_vars  = T.critical_variables trace init in
+  let terminal_vars = T.critical_variables trace term in
   let all_vars = Var_set.unions [initial_vars; terminal_vars; T.path_variables path] in
   let table = Alias_table.mk (Var_set.elements all_vars) in
 
@@ -45,12 +45,12 @@ let translate_path trace path =
     let (expr, table') = reduce_instr table instr in
     (acc @ [expr], table') in
 
-  let precondition = mk_condition table (T.initial_label path) initial_vars in
+  let precondition = mk_condition table init initial_vars in
 
   match path with
-  | T.Assertion (_, v) ->
+  | T.Assertion v ->
     Implies (Not (Implies (precondition, (Eq (substitute table (Var v), Int_lit 1)))), substitute table (Query v))
-  | T.Path (_, _, instrs) ->
+  | T.Path instrs ->
     let (expressions, table) = List.fold_left loop ([], table) instrs in
 
     let lhs =
@@ -58,7 +58,8 @@ let translate_path trace path =
       then mk_and expressions
       else mk_and (precondition :: expressions) in
 
-    let postcondition = mk_condition table (T.terminal_label path) terminal_vars in
+    let postcondition = mk_condition table term terminal_vars in
     Implies (lhs, postcondition)
 
-let translate trace = List.map (translate_path trace) trace
+let translate trace =
+  List.map (translate_path trace) (T.P_graph.connected_edges trace)

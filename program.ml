@@ -61,15 +61,20 @@ let rec expr_rels = function
   | Not e            -> expr_rels e
   | Invoke (es, _)   -> Rel_set.unions_map expr_rels es
 
-let instruction_variables = function
-  | Assign (v, e) -> Var_set.add v (expr_vars e)
+(** Which variables are used by a given instruction? *)
+let instruction_useds = function
+  | Assign (v, e) -> expr_vars e
   | Call e        -> expr_vars e
   | Return e      -> expr_vars e
   | Assert v      -> Var_set.singleton v
 
+(** Which variables are mutated by a given instruction? *)
 let instruction_mutables = function
   | Assign (v, _) -> Var_set.singleton v
   | _             -> Var_set.empty
+
+let instruction_variables i =
+  Var_set.union (instruction_useds i) (instruction_mutables i)
 
 let mk_not = function
   | Not e -> e

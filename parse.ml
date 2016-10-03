@@ -28,11 +28,3 @@ let parse classpath cl =
   match (snd meth).cm_implementation with
     | Native -> assert false
     | Java x -> Array.to_list (A3Bir.code (Lazy.force x))
-
-
-(*   fun cms -> *)
-(*     let meth = snd (ClassMethodMap.find cms methods) in *)
-
-(*     match meth.cm_implementation with *)
-(*       | Native -> assert false *)
-(*       | Java x -> (Lazy.force x) *)
