@@ -10,9 +10,11 @@ all: byte
 
 use:
 	$(OCB) use.byte
+	mkdir parsed
 
 clean:
 	$(OCB) -clean
+	rm -rf parsed
 
 byte:
 	$(OCB) $(NAME).byte
