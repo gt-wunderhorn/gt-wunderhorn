@@ -12,13 +12,13 @@ let header =
 
 let show_var (Variable v) = v
 
-let interpret_var v =
+let print_var v =
   parens ["declare-var"; show_var v ; "Int"]
 
-let interpret_rel (lbl, vs) =
+let print_rel (lbl, vs) =
   parens ["declare-rel"; lbl; parens (List.map (fun _ -> "Int") vs)]
 
-let interpret_expr query_count expr =
+let print_expr query_count expr =
   let rec ex = function
     | Relation (lbl, vs) -> parens (lbl :: List.map show_var vs)
     | Query v            ->
@@ -45,7 +45,7 @@ let rec range start stop =
 let declare_query n = parens ["declare-rel"; "q" ^ string_of_int n; parens ["Int"]]
 let query n = parens ["query"; "q" ^ string_of_int n]
 
-let interpret exprs =
+let print exprs =
 
   let vars = Var_set.unions_map expr_vars exprs in
   let rels = Rel_set.unions_map expr_rels exprs in
@@ -54,9 +54,9 @@ let interpret exprs =
 
   line_sep
     [ header
-    ; line_sep (List.map interpret_var (Var_set.elements vars))
-    ; line_sep (List.map interpret_rel (Rel_set.elements rels))
+    ; line_sep (List.map print_var (Var_set.elements vars))
+    ; line_sep (List.map print_rel (Rel_set.elements rels))
     ; line_sep (List.map declare_query (range 0 (num_queries exprs)))
-    ; line_sep (List.map (interpret_expr query_count) exprs)
+    ; line_sep (List.map (print_expr query_count) exprs)
     ; line_sep (List.map query (range 0 (num_queries exprs)))
     ]

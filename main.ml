@@ -17,8 +17,8 @@ let inspect =
 
   converter cms
   |> Trace.trace converter
-  |> Translate.translate
-  |> Interpret.interpret
+  |> Graph_to_clauses.translate
+  |> Print_clauses.print
 
 let _ =
   Printf.printf "%s\n" inspect
