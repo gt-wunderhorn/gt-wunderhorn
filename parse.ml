@@ -29,6 +29,6 @@ let parse id classpath cn =
     | Native -> assert false
     | Java x ->
       { id      = "p" ^ string_of_int !id
-      ; params  = List.map (fun v -> Program.Variable (A3Bir.var_name (snd v))) (A3Bir.params (Lazy.force x))
+      ; params  = List.map (fun v -> Ir.Variable (A3Bir.var_name (snd v))) (A3Bir.params (Lazy.force x))
       ; content = Array.to_list (A3Bir.code (Lazy.force x))
       }

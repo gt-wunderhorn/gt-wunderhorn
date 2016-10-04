@@ -1,5 +1,4 @@
-open Program
-module P = Program
+open Ir
 module Pr = Procedure
 
 type path =
@@ -98,7 +97,7 @@ let rec trace converter prog =
         ; complete (
             Pr.exit_label proc,
             line+1,
-            [Assign (v, P.Var (Pr.ret_var proc))]) ]
+            [Assign (v, Ir.Var (Pr.ret_var proc))]) ]
     | _ -> P_graph.empty
   in
 

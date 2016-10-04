@@ -5,7 +5,7 @@ module P = Procedure
 let classpath =
   "/home/david/Workspace/retry:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar"
 
-let inspect program =
+let inspect =
   let cn  = JB.make_cn "Test" in
   let cms = JB.make_cms cn JP.main_signature in
 
@@ -13,9 +13,12 @@ let inspect program =
 
   let converter cms =
     Parse.parse proc_id classpath cn cms
-    |> P.map Convert.convert in
+    |> P.map A3_to_ir.convert in
 
   converter cms
   |> Trace.trace converter
   |> Translate.translate
   |> Interpret.interpret
+
+let _ =
+  Printf.printf "%s\n" inspect

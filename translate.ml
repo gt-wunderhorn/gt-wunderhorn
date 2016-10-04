@@ -1,4 +1,4 @@
-open Program
+open Ir
 module T = Trace
 
 module Alias_table = Count_table.Make(

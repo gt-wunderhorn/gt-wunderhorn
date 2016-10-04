@@ -2,9 +2,9 @@ OCB_FLAGS = -tag thread -use-ocamlfind -pkgs $(LIBS) -Is $(DIRS)
 OCB = ocamlbuild $(OCB_FLAGS)
 DIRS = utility
 
-LIBS = batteries,sawja
+LIBS = sawja
 
-NAME = example
+NAME = main
 
 all: byte
 
@@ -14,13 +14,10 @@ use:
 clean:
 	$(OCB) -clean
 
-native:
-	$(OCB) $(NAME).native
-
 byte:
 	$(OCB) $(NAME).byte
 
-test: native
-	./$(NAME).native "OCaml" "OCamlBuild" "users"
+test: all
+	./test.sh
 
 .PHONY: all clean byte native debug test

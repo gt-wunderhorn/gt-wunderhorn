@@ -1,4 +1,4 @@
-open Program
+open Ir
 
 let line_sep = String.concat "\n"
 let space_sep = String.concat " "

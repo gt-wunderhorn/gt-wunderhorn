@@ -4,3 +4,5 @@ _build/
 *.byte
 *.native
 parsed/
+Test.java
+test.z3
