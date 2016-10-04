@@ -1,4 +1,9 @@
-module Make (T : Graph_info.T) = struct
+module type Graph_info = sig
+  type node
+  type edge
+end
+
+module Make (T : Graph_info) = struct
   type connected_edge =
     { initial  : T.node
     ; terminal : T.node
@@ -11,16 +16,22 @@ module Make (T : Graph_info.T) = struct
   type t = CE_set.t
 
   let empty = CE_set.empty
-  let merge x y = CE_set.union x y
+  let merge = CE_set.union
+  let merges = CE_set.unions
 
   let add initial terminal content =
     CE_set.add ({ initial; terminal; content })
+
+  let filter p = CE_set.filter (fun e -> p (e.content))
 
   let from_list c_edges =
     c_edges
     |> List.map (fun (initial, terminal, content) ->
         { initial; terminal; content })
     |> CE_set.of_list
+
+  let singleton (initial, terminal, content) =
+    CE_set.singleton { initial; terminal; content }
 
   let c_edges = CE_set.elements
 
@@ -68,22 +79,3 @@ module Make (T : Graph_info.T) = struct
                     ; print_edge e.content ])
     |> String.concat "\n"
 end
-
-(* let my_edges = *)
-(*   [ (0, 1, 'a') *)
-(*   ; (1, 2, 'c') *)
-(*   ; (1, 3, 'b') *)
-(*   ; (2, 0, 'd') *)
-(*   ; (3, 4, 'e') *)
-(*   ; (3, 5, 'f') *)
-(*   ; (4, 6, 'g') *)
-(*   ; (5, 6, 'h') ] *)
-
-(* module CGraph = Make( *)
-(*   struct type node = int;; type edge = char end) *)
-
-(* let g = CGraph.from_list my_edges *)
-
-(* let print g = Printf.printf "%s\n" (CGraph.display string_of_int Char.escaped g) *)
-
-(* let _ = print g *)

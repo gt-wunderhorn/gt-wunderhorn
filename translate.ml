@@ -11,47 +11,51 @@ let mk_alias table var =
   let Variable prefix = var in
   Variable (prefix ^ "_" ^ (string_of_int (Alias_table.get table var)))
 
-let rec substitute table = function
-  | Relation (lbl, vs) -> Relation (lbl, List.map (mk_alias table) vs)
-  | Query v            -> Query (mk_alias table v)
-  | Int_lit i          -> Int_lit i
-  | Var v              -> Var (mk_alias table v)
-  | Eq (e1, e2)        -> Eq (substitute table e1, substitute table e2)
-  | Implies (e1, e2)   -> Implies (substitute table e1, substitute table e2)
-  | And es             -> And (List.map (substitute table) es)
-  | Not e              -> Not (substitute table e)
-  | Invoke _           -> assert false (** TODO *)
+let substitute table =
+  let rec subst = function
+    | Relation (lbl, vs) -> Relation (lbl, List.map (mk_alias table) vs)
+    | Query v            -> Query (mk_alias table v)
+    | Var v              -> Var (mk_alias table v)
+    | Add (e1, e2)       -> Add (subst e1, subst e2)
+    | Eq (e1, e2)        -> Eq (subst e1, subst e2)
+    | Ge (e1, e2)        -> Ge (subst e1, subst e2)
+    | Gt (e1, e2)        -> Gt (subst e1, subst e2)
+    | Le (e1, e2)        -> Le (subst e1, subst e2)
+    | Lt (e1, e2)        -> Lt (subst e1, subst e2)
+    | Implies (e1, e2)   -> Implies (subst e1, subst e2)
+    | And es             -> And (List.map (subst) es)
+    | Not e              -> Not (subst e)
+    | Int_lit i          -> Int_lit i
+    | True               -> True
+    | False              -> False in
+  subst
 
 let reduce_instr table = function
   | Assign (v, e) ->
-    let table = Alias_table.increment table v in
-    (substitute table (Eq (Var v, e)), table)
-  | Call e   -> (substitute table e, table)
-  | Return e -> (substitute table e, table) (** TODO *)
-  | Assert (Variable v) ->
-    Printf.printf "%s\n" v;
-    assert false
+    Alias_table.increment table v;
+    substitute table (Eq (Var v, e))
+  | Call e -> substitute table e
+  | Assert (Variable v) -> assert false
 
-let mk_condition table label vars =
-  Relation (label, List.map (mk_alias table) (Var_set.elements vars))
+let mk_condition st label vars =
+  if Var_set.is_empty vars
+  then True
+  else Relation (label, List.map (mk_alias st) (Var_set.elements vars))
 
 let translate_path trace (init, term, path) =
   let initial_vars  = T.critical_variables trace init in
   let terminal_vars = T.critical_variables trace term in
-  let all_vars = Var_set.unions [initial_vars; terminal_vars; T.path_variables path] in
-  let table = Alias_table.mk (Var_set.elements all_vars) in
-
-  let loop (acc, table) instr =
-    let (expr, table') = reduce_instr table instr in
-    (acc @ [expr], table') in
+  let table = Alias_table.empty () in
 
   let precondition = mk_condition table init initial_vars in
 
   match path with
   | T.Assertion v ->
-    Implies (Not (Implies (precondition, (Eq (substitute table (Var v), Int_lit 1)))), substitute table (Query v))
+    Implies (Not (Implies (precondition,
+                           (Eq (substitute table (Var v), Int_lit 1)))),
+             substitute table (Query v))
   | T.Path instrs ->
-    let (expressions, table) = List.fold_left loop ([], table) instrs in
+    let expressions = List.map (reduce_instr table) instrs in
 
     let lhs =
       if Var_set.is_empty initial_vars
@@ -62,4 +66,5 @@ let translate_path trace (init, term, path) =
     Implies (lhs, postcondition)
 
 let translate trace =
-  List.map (translate_path trace) (T.P_graph.connected_edges trace)
+  let edges = T.P_graph.connected_edges trace in
+  List.map (translate_path trace) edges

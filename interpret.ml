@@ -15,24 +15,28 @@ let show_var (Variable v) = v
 let interpret_var v =
   parens ["declare-var"; show_var v ; "Int"]
 
-let rel_name lbl = "Line" ^ string_of_int lbl
-
 let interpret_rel (lbl, vs) =
-  parens ["declare-rel"; rel_name lbl; parens (List.map (fun _ -> "Int") vs)]
+  parens ["declare-rel"; lbl; parens (List.map (fun _ -> "Int") vs)]
 
 let interpret_expr query_count expr =
   let rec ex = function
-    | Relation (lbl, vs) -> parens (rel_name lbl :: List.map show_var vs)
+    | Relation (lbl, vs) -> parens (lbl :: List.map show_var vs)
     | Query v            ->
       query_count := !query_count + 1;
       parens ["q" ^ string_of_int !query_count; show_var v]
-    | Int_lit i          -> string_of_int i
     | Var v              -> show_var v
-    | Eq (e1, e2)        -> parens ["="; ex e1; ex e2]
+    | Add (e1, e2)       -> parens ["+";  ex e1; ex e2]
+    | Eq (e1, e2)        -> parens ["=";  ex e1; ex e2]
+    | Ge (e1, e2)        -> parens [">="; ex e1; ex e2]
+    | Gt (e1, e2)        -> parens [">";  ex e1; ex e2]
+    | Le (e1, e2)        -> parens ["<="; ex e1; ex e2]
+    | Lt (e1, e2)        -> parens ["<";  ex e1; ex e2]
     | Implies (e1, e2)   -> parens ["=>"; ex e1; ex e2]
     | And es             -> parens ("and" :: List.map ex es)
     | Not e              -> parens ["not"; ex e]
-    | Invoke _           -> assert false (** TODO *) in
+    | Int_lit i          -> string_of_int i
+    | True               -> "true"
+    | False              -> "false" in
   parens ["rule"; ex expr]
 
 let rec range start stop =

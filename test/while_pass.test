@@ -1,0 +1,8 @@
+public static void main(String[] args) {
+  int x = 0;
+  int n = 50;
+  while (x < n) {
+    x += 2;
+  }
+  ensure(x != 41);
+}

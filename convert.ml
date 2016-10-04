@@ -16,20 +16,41 @@ let const = function
   | `Long i   -> assert false (* TODO *)
   | `String s -> assert false (* TODO *)
 
+let binop op x y = match op with
+  | A3.ArrayLoad _ -> assert false (* TODO *)
+  | A3.Add _       -> P.Add (x, y)
+  | A3.Sub _       -> assert false (* TODO *)
+  | A3.Mult _      -> assert false (* TODO *)
+  | A3.Div _       -> assert false (* TODO *)
+  | A3.Rem _       -> assert false (* TODO *)
+  | A3.IShl        -> assert false (* TODO *)
+  | A3.IShr        -> assert false (* TODO *)
+  | A3.IAnd        -> assert false (* TODO *)
+  | A3.IOr         -> assert false (* TODO *)
+  | A3.IXor        -> assert false (* TODO *)
+  | A3.IUshr       -> assert false (* TODO *)
+  | A3.LShl        -> assert false (* TODO *)
+  | A3.LShr        -> assert false (* TODO *)
+  | A3.LAnd        -> assert false (* TODO *)
+  | A3.LOr         -> assert false (* TODO *)
+  | A3.LXor        -> assert false (* TODO *)
+  | A3.LUshr       -> assert false (* TODO *)
+  | A3.CMP _       -> assert false (* TODO *)
+
 let expr = function
-  | A3.Const c       -> const c
-  | A3.Var v         -> assert false (* TODO *)
-  | A3.Unop _        -> assert false (* TODO *)
-  | A3.Binop _       -> assert false (* TODO *)
-  | A3.Field _       -> assert false (* TODO *)
-  | A3.StaticField _ -> assert false (* TODO *)
+  | A3.Const c          -> const c
+  | A3.Var v            -> tvar_e v
+  | A3.Binop (op, x, y) -> binop op (tvar_e x) (tvar_e y)
+  | A3.Unop _           -> assert false (* TODO *)
+  | A3.Field _          -> assert false (* TODO *)
+  | A3.StaticField _    -> assert false (* TODO *)
 
 let rec compare cond x y = match cond with
   | `Eq -> P.Eq (tvar_e x, tvar_e y)
-  | `Ge -> assert false (* TODO *)
-  | `Gt -> assert false (* TODO *)
-  | `Le -> assert false (* TODO *)
-  | `Lt -> assert false (* TODO *)
+  | `Ge -> P.Ge (tvar_e x, tvar_e y)
+  | `Gt -> P.Gt (tvar_e x, tvar_e y)
+  | `Le -> P.Le (tvar_e x, tvar_e y)
+  | `Lt -> P.Lt (tvar_e x, tvar_e y)
   | `Ne -> P.Not (compare `Eq x y)
 
 let convert is =
@@ -43,13 +64,20 @@ let convert is =
     | A3.Goto l                -> [P.Non_linear (P.Goto (l - !offset))]
     | A3.Ifd ((cond, x, y), l) -> [P.Non_linear (P.If (compare cond x y, l - !offset))]
     | A3.Throw _               -> assert false (* TODO *)
-    | A3.Return _              -> [P.Linear (P.Return (P.Int_lit 0))] (* TODO *)
+    | A3.Return v              ->
+      let v = match v with
+        | None   -> P.Var (P.Variable "DUMMY")
+        | Some v -> tvar_e v in
+      [P.Non_linear (P.Return v)]
     | A3.New _                 -> assert false (* TODO *)
     | A3.NewArray _            -> assert false (* TODO *)
-    | A3.InvokeStatic (_, _, ms, vs) ->
+    | A3.InvokeStatic (v, cn, ms, vs) ->
       if (JB.ms_name ms) = "ensure"
       then [P.Linear (P.Assert (tvar (List.hd vs)))]
-      else assert false (* TODO *)
+      else let v = match v with
+          | None   -> P.Variable "DUMMY"
+          | Some v -> var v in
+        [P.Non_linear (P.Invoke (v, JB.make_cms cn ms, List.map tvar_e vs))]
     | A3.InvokeVirtual _       -> assert false (* TODO *)
     | A3.InvokeNonVirtual _    -> assert false (* TODO *)
     | A3.MonitorEnter _        -> assert false (* TODO *)

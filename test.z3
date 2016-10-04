@@ -1,30 +1,24 @@
 (set-option :fixedpoint.engine "duality")
-
-; 0 x := 3
-; 1 if (x:I != 3) goto 3
-; 2 x := 4
-; 3 if (x:I == 4) goto 6
-; 4 y := 1
-; 5 goto 7
-; 6 y := 0
-; 7 mayinit Assert
-; 8 Assert.ensure (y:I)
-; 9 return
-
-(declare-rel Line3 (Int))
-(declare-rel Line7 (Int))
-(declare-rel Goal (Int))
-
-(declare-var x Int)
-(declare-var x2 Int)
-(declare-var y Int)
-
-(rule (=> (and (= x 3) (not (= x 3))) (Line3 x)))
-(rule (=> (and (= x 3) (= x 3) (= x2 3)) (Line3 x2)))
-(rule (=> (and (Line3 x) (= x 4) (= y 0)) (Line7 y)))
-(rule (=> (and (Line3 x) (not (= x 4)) (= y 1)) (Line7 y)))
-(rule (=>
-       (not (=> (Line7 y) (= y 1)))
-       (Goal y)))
-
-(query Goal)
+(declare-rel __THE_QUERY__ (Int))
+(declare-var $T0_27_0 Int)
+(declare-var $T0_27_1 Int)
+(declare-var $bcvar1_0 Int)
+(declare-var $bcvar1_1 Int)
+(declare-var $bcvar2_0 Int)
+(declare-var $bcvar2_1 Int)
+(declare-var $irvar0_0 Int)
+(declare-var $irvar0_1 Int)
+(declare-var DUMMY_0 Int)
+(declare-var p0_ret_1 Int)
+(declare-rel p0_11 (Int))
+(declare-rel p0_2 (Int Int Int))
+(declare-rel p0_7 (Int Int))
+(declare-rel q0 (Int))
+(rule (=> (and (= $bcvar1_1 0) (= $bcvar2_1 40)) (p0_2 $bcvar1_1 $bcvar2_1 $irvar0_0)))
+(rule (=> (not (=> (p0_11 $T0_27_0) (= $T0_27_0 1))) (q0 $T0_27_0)))
+(rule (=> (and (p0_11 $T0_27_0) (= p0_ret_1 DUMMY_0)) true))
+(rule (=> (and (p0_2 $bcvar1_0 $bcvar2_0 $irvar0_0) (not (>= $bcvar1_0 $bcvar2_0)) (= $irvar0_1 2) (= $bcvar1_1 (+ $bcvar1_1 $irvar0_1))) (p0_2 $bcvar1_1 $bcvar2_0 $irvar0_1)))
+(rule (=> (and (p0_2 $bcvar1_0 $bcvar2_0 $irvar0_0) (>= $bcvar1_0 $bcvar2_0) (= $irvar0_1 38)) (p0_7 $bcvar1_0 $irvar0_1)))
+(rule (=> (and (p0_7 $bcvar1_0 $irvar0_0) (= $bcvar1_0 $irvar0_0) (= $T0_27_1 0)) (p0_11 $T0_27_1)))
+(rule (=> (and (p0_7 $bcvar1_0 $irvar0_0) (not (= $bcvar1_0 $irvar0_0)) (= $T0_27_1 1)) (p0_11 $T0_27_1)))
+(query q0)

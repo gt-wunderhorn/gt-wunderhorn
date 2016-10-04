@@ -6,15 +6,16 @@
 module Make (C : Comparable.T) = struct
   module Underlying = Map.Make(C)
 
-  type t = C.t Underlying.t
+  type t = (int Underlying.t) ref
 
-  let mk indices =
-    let add_entry table index = Underlying.add index 0 table in
-    List.fold_left add_entry Underlying.empty indices
+  let empty () : t = ref Underlying.empty
 
   let get table index =
-    Underlying.find index table
+    if Underlying.mem index !table
+    then ()
+    else table := Underlying.add index 0 !table;
+    Underlying.find index !table
 
   let increment table index =
-    Underlying.add index ((get table index)+1) table
+    table := Underlying.add index ((get table index)+1) !table
 end

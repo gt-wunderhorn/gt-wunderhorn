@@ -1,5 +1,6 @@
 open Program
 module P = Program
+module Pr = Procedure
 
 type path =
   | Path of linear_instruction list
@@ -13,7 +14,7 @@ let path_variables p =
   Var_set.unions (List.map instruction_variables (instructions p))
 
 module P_graph = Graph.Make(
-  struct type node = label;; type edge = path;; end)
+  struct type node = string;; type edge = path;; end)
 
 type t = P_graph.t
 
@@ -40,9 +41,10 @@ let join_points instrs =
     after checking some condition. *)
 let split_points instrs =
   let record_line_if_split line = function
-    | Non_linear (If _) -> Label_set.singleton line
-    | Linear (Assert _) -> Label_set.singleton line
-    | _                 -> Label_set.empty in
+    | Non_linear (If _)     -> Label_set.singleton line
+    | Non_linear (Invoke _) -> Label_set.singleton line
+    | Linear (Assert _)     -> Label_set.singleton line
+    | _                     -> Label_set.empty in
 
   instrs
   |> List.mapi record_line_if_split
@@ -52,35 +54,58 @@ let split_points instrs =
     We initialize partial paths at those locations. Then, we follow each of
     those paths until its end (indicated by another critical point, or the
     program end) is reached. Any degenerate paths are removed. *)
-let trace instrs =
+let rec trace converter prog =
+  let instrs = prog.Pr.content in
   let labels = Label_set.union (join_points instrs) (split_points instrs) in
 
-  let rec start_paths line = match List.nth instrs line with
-    | Non_linear (If (e, dest)) -> [(line, dest, Path [Call e]); (line, line+1, Path [Call (mk_not e)])]
-    | Non_linear (Goto dest)    -> [(line, dest, Path [])]
-    | Linear (Assert v)         -> [(line, line+1, Path []); (line, -1, Assertion v)]
-    | Linear i                  -> [(line, line+1, Path [i])] in
+  let mk_label num = prog.Pr.id ^ "_" ^ string_of_int num in
 
   (** A path is complete once it encounters a split, join, or the end of the
       program. It next linear instruction to a partial path until that condition
       is reached. *)
-  let rec complete_path path =
-    let (first, next, Path is) = path in
+  let rec complete path =
+    let (first, next, is) = path in
     if Label_set.mem next labels || next >= List.length instrs
-    then path
+    then P_graph.singleton (first, mk_label next, Path is)
     else match List.nth instrs next with
-      | Non_linear (Goto line) -> complete_path (first, line, Path is)
+      | Non_linear (Goto line) -> complete (first, line, is)
+      | Non_linear (Return v)  ->
+        P_graph.singleton (first, Pr.exit_label prog, Path (is @ [Assign (Pr.ret_var prog, v)]))
       | Non_linear _           -> assert false (* splits already checked *)
-      | Linear i               -> complete_path (first, next+1, Path (is @ [i])) in
+      | Linear i               -> complete (first, next+1, (is @ [i])) in
+
+  let subgraph_from line = match List.nth instrs line with
+    | Non_linear (If (e, dest)) ->
+      P_graph.merge
+        (complete (mk_label line, dest, [Call e]))
+        (complete (mk_label line, line+1, [Call (mk_not e)]))
+    | Non_linear (Goto dest) ->
+      complete (mk_label line, dest, [])
+    | Linear (Assert v) ->
+      P_graph.merge
+        (complete (mk_label line, line+1, []))
+        (P_graph.singleton (mk_label line, mk_label (-1), Assertion v))
+    | Linear i ->
+      complete (mk_label line, line+1, [i])
+    | Non_linear (Invoke (v, id, args)) ->
+      let proc = converter id in
+      P_graph.merges
+        [ trace converter proc
+        ; P_graph.singleton (
+            mk_label line,
+            Pr.entry_label proc,
+            Path (List.map2 (fun param arg -> Assign (param, arg)) proc.Pr.params args))
+        ; complete (
+            Pr.exit_label proc,
+            line+1,
+            [Assign (v, P.Var (Pr.ret_var proc))]) ]
+    | _ -> P_graph.empty
+  in
 
   Label_set.elements labels
-  |> List.map start_paths
-  |> List.concat
-  |> List.map (fun p -> match p with
-      | (f, n, Path is) -> complete_path (f, n, Path is)
-      | p -> p)
-  |> List.filter (fun (_, _, p) -> instructions p <> [])
-  |> P_graph.from_list
+  |> List.map subgraph_from
+  |> P_graph.merges
+  |> P_graph.filter (fun p -> instructions p <> [])
 
 let mutated_before graph label =
   graph

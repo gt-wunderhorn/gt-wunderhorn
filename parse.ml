@@ -3,14 +3,13 @@ open Javalib
 open JBasics
 open Sawja_pack
 open JProgram
+open Procedure
 
 type method_map =
   Javalib_pack.JBasics.class_method_signature ->
   Sawja_pack.A3Bir.t
 
-let parse classpath cl =
-  let cn = make_cn cl in
-
+let parse id classpath cn =
   let (prta,instantiated_classes) =
     JRTA.parse_program classpath
       (JBasics.make_cms cn JProgram.main_signature) in
@@ -20,11 +19,16 @@ let parse classpath cl =
       (Some (fun code pp -> (A3Bir.pc_ir2bc code).(pp)))
       prta in
 
-  let cms = make_cms cn JProgram.main_signature in
-
   let methods = pbir.parsed_methods in
 
-  let meth = ClassMethodMap.find cms methods in
-  match (snd meth).cm_implementation with
+  fun cms ->
+    id := !id + 1;
+    let meth = ClassMethodMap.find cms methods in
+    let cm = snd meth in
+    match cm.cm_implementation with
     | Native -> assert false
-    | Java x -> Array.to_list (A3Bir.code (Lazy.force x))
+    | Java x ->
+      { id      = "p" ^ string_of_int !id
+      ; params  = List.map (fun v -> Program.Variable (A3Bir.var_name (snd v))) (A3Bir.params (Lazy.force x))
+      ; content = Array.to_list (A3Bir.code (Lazy.force x))
+      }
