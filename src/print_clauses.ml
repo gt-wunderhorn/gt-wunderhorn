@@ -6,9 +6,7 @@ let parens strs = "(" ^ space_sep strs ^ ")"
 
 let header =
   line_sep
-    [ "(set-option :fixedpoint.engine \"duality\")"
-    ; "(declare-rel __THE_QUERY__ (Int))"
-    ]
+    [ "(set-option :fixedpoint.engine \"duality\")" ]
 
 let show_var (Variable v) = v
 

@@ -1,6 +1,6 @@
 OCB_FLAGS = -tag thread -use-ocamlfind -pkgs $(LIBS) -Is $(DIRS)
 OCB = ocamlbuild $(OCB_FLAGS)
-DIRS = utility
+DIRS = scripts,src,src/utility
 
 LIBS = sawja
 
@@ -10,7 +10,7 @@ all: byte
 
 use:
 	$(OCB) use.byte
-	mkdir parsed
+	mv use.byte bin
 
 clean:
 	$(OCB) -clean

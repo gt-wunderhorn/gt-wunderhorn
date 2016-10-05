@@ -5,7 +5,7 @@ open Sawja_pack
 open JProgram
 
 let classpath =
-  "/home/david/Workspace/retry:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar"
+  "/home/david/Workspace/retry/bin:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar"
 
 let (prta,instantiated_classes) =
   JRTA.parse_program classpath
@@ -18,4 +18,4 @@ let pbir = JProgram.map_program2
     prta
 
 let () =
-  A3Bir.print_program pbir "./parsed";
+  A3Bir.print_program pbir "./out";
