@@ -16,6 +16,8 @@ function expect_pass {
   fi
 }
 
+expect_pass ../test/array_pass.test
+expect_fail ../test/array_fail.test
 expect_pass ../test/multi_pass.test
 expect_fail ../test/multi_fail.test
 expect_pass ../test/linear_pass.test

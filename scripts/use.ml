@@ -5,7 +5,7 @@ open Sawja_pack
 open JProgram
 
 let classpath =
-  "/home/david/Workspace/retry/bin:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar"
+  "/home/david/Workspace/path-interpolation/bin:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar"
 
 let (prta,instantiated_classes) =
   JRTA.parse_program classpath

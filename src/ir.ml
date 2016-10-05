@@ -1,23 +1,30 @@
 type label = int
 
-type variable = Variable of string
+type sort =
+  | Array of sort
+  | Int
+  | Bool
+
+type variable = Variable of string * sort
 
 type procedure_id = Javalib_pack.JBasics.class_method_signature
 
 type expression =
-  | Relation of string * variable list
-  | Query    of variable
-  | Var      of variable
-  | Add      of expression * expression
-  | Eq       of expression * expression
-  | Ge       of expression * expression
-  | Gt       of expression * expression
-  | Le       of expression * expression
-  | Lt       of expression * expression
-  | Implies  of expression * expression
-  | And      of expression list
-  | Not      of expression
-  | Int_lit  of int
+  | Relation  of string * variable list
+  | Query     of variable
+  | Var       of variable
+  | ArrStore  of variable * expression * expression
+  | ArrSelect of expression * expression
+  | Add       of expression * expression
+  | Eq        of expression * expression
+  | Ge        of expression * expression
+  | Gt        of expression * expression
+  | Le        of expression * expression
+  | Lt        of expression * expression
+  | Implies   of expression * expression
+  | And       of expression list
+  | Not       of expression
+  | Int_lit   of int
   | True
   | False
 
@@ -45,35 +52,64 @@ module Rel_set = Set_ext.Make(
     let compare (lbl1, _) (lbl2, _) = compare lbl1 lbl2
   end)
 
+let rec expr_sort = function
+  | ArrStore (Variable (_, s), _, _) -> s
+  | ArrSelect (arr, _) -> (match expr_sort arr with
+    | Array s -> s
+    | _       -> assert false (* array select from non-array *))
+  | Relation _            -> Bool
+  | Query _               -> Bool
+  | Var (Variable (_, s)) -> s
+  | Add _                 -> Int
+  | Eq _                  -> Bool
+  | Ge _                  -> Bool
+  | Gt _                  -> Bool
+  | Le _                  -> Bool
+  | Lt _                  -> Bool
+  | Implies _             -> Bool
+  | And _                 -> Bool
+  | Not _                 -> Bool
+  | Int_lit _             -> Int
+  | True                  -> Bool
+  | False                 -> Bool
+
 let rec expr_vars = function
-  | Relation (_, vs) -> Var_set.unions_map Var_set.singleton vs
-  | Query v          -> Var_set.singleton v
-  | Var v            -> Var_set.singleton v
-  | Add (e1, e2)     -> Var_set.union (expr_vars e1) (expr_vars e2)
-  | Eq (e1, e2)      -> Var_set.union (expr_vars e1) (expr_vars e2)
-  | Ge (e1, e2)      -> Var_set.union (expr_vars e1) (expr_vars e2)
-  | Gt (e1, e2)      -> Var_set.union (expr_vars e1) (expr_vars e2)
-  | Le (e1, e2)      -> Var_set.union (expr_vars e1) (expr_vars e2)
-  | Lt (e1, e2)      -> Var_set.union (expr_vars e1) (expr_vars e2)
-  | Implies (e1, e2) -> Var_set.union (expr_vars e1) (expr_vars e2)
-  | And es           -> Var_set.unions_map expr_vars es
-  | Not e            -> expr_vars e
-  | _                -> Var_set.empty
+  | Relation (_, vs)     -> Var_set.unions_map Var_set.singleton vs
+  | Query v              -> Var_set.singleton v
+  | Var v                -> Var_set.singleton v
+  | ArrStore (v, e1, e2) -> Var_set.unions [ Var_set.singleton v; expr_vars e1; expr_vars e2]
+  | ArrSelect (e1, e2)   -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | Add (e1, e2)         -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | Eq (e1, e2)          -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | Ge (e1, e2)          -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | Gt (e1, e2)          -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | Le (e1, e2)          -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | Lt (e1, e2)          -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | Implies (e1, e2)     -> Var_set.union (expr_vars e1) (expr_vars e2)
+  | And es               -> Var_set.unions_map expr_vars es
+  | Not e                -> expr_vars e
+  | Int_lit _            -> Var_set.empty
+  | True                 -> Var_set.empty
+  | False                -> Var_set.empty
 
 let rec expr_rels = function
-  | Relation (l, vs) -> Rel_set.singleton (l, vs)
-  | Query v          -> Rel_set.empty
-  | Var v            -> Rel_set.empty
-  | Add (e1, e2)     -> Rel_set.union (expr_rels e1) (expr_rels e2)
-  | Eq (e1, e2)      -> Rel_set.union (expr_rels e1) (expr_rels e2)
-  | Ge (e1, e2)      -> Rel_set.union (expr_rels e1) (expr_rels e2)
-  | Gt (e1, e2)      -> Rel_set.union (expr_rels e1) (expr_rels e2)
-  | Le (e1, e2)      -> Rel_set.union (expr_rels e1) (expr_rels e2)
-  | Lt (e1, e2)      -> Rel_set.union (expr_rels e1) (expr_rels e2)
-  | Implies (e1, e2) -> Rel_set.union (expr_rels e1) (expr_rels e2)
-  | And es           -> Rel_set.unions_map expr_rels es
-  | Not e            -> expr_rels e
-  |  _               -> Rel_set.empty
+  | Relation (l, vs)     -> Rel_set.singleton (l, vs)
+  | Query v              -> Rel_set.empty
+  | Var v                -> Rel_set.empty
+  | ArrStore (v, e1, e2) -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | ArrSelect (e1, e2)   -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | Add (e1, e2)         -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | Eq (e1, e2)          -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | Ge (e1, e2)          -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | Gt (e1, e2)          -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | Le (e1, e2)          -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | Lt (e1, e2)          -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | Implies (e1, e2)     -> Rel_set.union (expr_rels e1) (expr_rels e2)
+  | And es               -> Rel_set.unions_map expr_rels es
+  | Not e                -> expr_rels e
+  | Int_lit _            -> Rel_set.empty
+  | True                 -> Rel_set.empty
+  | False                -> Rel_set.empty
 
 (** Which variables are used by a given instruction? *)
 let instruction_useds = function

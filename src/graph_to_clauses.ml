@@ -8,11 +8,13 @@ module Alias_table = Count_table.Make(
   end)
 
 let mk_alias table var =
-  let Variable prefix = var in
-  Variable (prefix ^ "_" ^ (string_of_int (Alias_table.get table var)))
+  let Variable (prefix, s) = var in
+  Variable (prefix ^ "_" ^ (string_of_int (Alias_table.get table var)), s)
 
 let substitute table =
   let rec subst = function
+    | ArrStore (v, i, e) -> ArrStore (mk_alias table v, subst i, subst e)
+    | ArrSelect (e1, e2) -> ArrSelect (subst e1, subst e2)
     | Relation (lbl, vs) -> Relation (lbl, List.map (mk_alias table) vs)
     | Query v            -> Query (mk_alias table v)
     | Var v              -> Var (mk_alias table v)
@@ -37,7 +39,7 @@ let reduce_instr table = function
     let v = mk_alias table v in
     Eq (Var v, rhs)
   | Call e -> substitute table e
-  | Assert (Variable v) -> assert false
+  | Assert (Variable (_, _)) -> assert false
 
 let mk_condition st label vars =
   if Var_set.is_empty vars

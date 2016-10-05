@@ -8,13 +8,19 @@ let header =
   line_sep
     [ "(set-option :fixedpoint.engine \"duality\")" ]
 
-let show_var (Variable v) = v
+let rec show_sort = function
+  | Array s -> parens ["Array"; "Int"; show_sort s]
+  | Int     -> "Int"
+  | Bool    -> "Bool"
+
+let show_var (Variable (v, _)) = v
+let show_var_sort (Variable (_, s)) = show_sort s
 
 let print_var v =
-  parens ["declare-var"; show_var v ; "Int"]
+  parens ["declare-var"; show_var v ; show_var_sort v]
 
 let print_rel (lbl, vs) =
-  parens ["declare-rel"; lbl; parens (List.map (fun _ -> "Int") vs)]
+  parens ["declare-rel"; lbl; parens (List.map show_var_sort vs)]
 
 let print_expr query_count expr =
   let rec ex = function
@@ -22,6 +28,9 @@ let print_expr query_count expr =
     | Query v            ->
       query_count := !query_count + 1;
       parens ["q" ^ string_of_int !query_count; show_var v]
+    | ArrStore (arr, idx, e) ->
+      parens ["store"; show_var arr; ex idx; ex e]
+    | ArrSelect (e1, e2) -> parens ["select"; ex e1; ex e2]
     | Var v              -> show_var v
     | Add (e1, e2)       -> parens ["+";  ex e1; ex e2]
     | Eq (e1, e2)        -> parens ["=";  ex e1; ex e2]

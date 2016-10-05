@@ -28,7 +28,8 @@ let parse id classpath cn =
     match cm.cm_implementation with
     | Native -> assert false
     | Java x ->
-      { id      = "p" ^ string_of_int !id
-      ; params  = List.map (fun v -> Ir.Variable (A3Bir.var_name (snd v))) (A3Bir.params (Lazy.force x))
-      ; content = Array.to_list (A3Bir.code (Lazy.force x))
+      { id       = "p" ^ string_of_int !id
+      ; params   = List.map (A3_to_ir.tvar) (A3Bir.params (Lazy.force x))
+      ; ret_sort = Ir.Int (* TODO, where can I can get sort from? *)
+      ; content  = Array.to_list (A3Bir.code (Lazy.force x))
       }
