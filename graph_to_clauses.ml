@@ -32,8 +32,10 @@ let substitute table =
 
 let reduce_instr table = function
   | Assign (v, e) ->
+    let rhs = substitute table e in
     Alias_table.increment table v;
-    substitute table (Eq (Var v, e))
+    let v = mk_alias table v in
+    Eq (Var v, rhs)
   | Call e -> substitute table e
   | Assert (Variable v) -> assert false
 
