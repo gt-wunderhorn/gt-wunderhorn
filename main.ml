@@ -3,7 +3,7 @@ module JB = Javalib_pack.JBasics
 module P = Procedure
 
 let classpath =
-  "/home/david/Workspace/retry:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar"
+  "/home/david/Workspace/retry/bin:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar"
 
 let inspect =
   let cn  = JB.make_cn "Test" in

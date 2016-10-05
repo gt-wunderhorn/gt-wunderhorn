@@ -1,4 +1,5 @@
 _build/
+bin/
 *.swp
 *.class
 *.byte

@@ -18,8 +18,9 @@ clean:
 
 byte:
 	$(OCB) $(NAME).byte
+	mv $(NAME).byte bin
 
 test: all
-	./test.sh
+	scripts/test.sh
 
 .PHONY: all clean byte native debug test
