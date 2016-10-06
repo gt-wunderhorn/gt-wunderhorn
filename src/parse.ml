@@ -1,35 +1,59 @@
-open Javalib_pack
-open Javalib
-open JBasics
-open Sawja_pack
-open JProgram
-open Procedure
+module JL = Javalib_pack.Javalib
+module JP = Sawja_pack.JProgram
+module J = Sawja_pack.JBir
+module P = Procedure
+module JB = Javalib_pack.JBasics
+
+module JC = Sawja_pack.JControlFlow
+
+module Cmm = JB.ClassMethodMap
+module Mm = JB.MethodMap
 
 type method_map =
-  Javalib_pack.JBasics.class_method_signature ->
-  Sawja_pack.JBir.t
+  JB.class_method_signature ->
+  J.t
 
 let parse id classpath cn =
   let (prta,instantiated_classes) =
-    JRTA.parse_program classpath
-      (JBasics.make_cms cn JProgram.main_signature) in
+    Sawja_pack.JRTA.parse_program classpath
+      (JB.make_cms cn JP.main_signature) in
 
-  let pbir = JProgram.map_program2
-      (fun _ -> JBir.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[]) 
-      (Some (fun code pp -> (JBir.pc_ir2bc code).(pp)))
+  let program = JP.map_program2
+      (fun _ -> J.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[])
+      (Some (fun code pp -> (J.pc_ir2bc code).(pp)))
       prta in
 
-  let methods = pbir.parsed_methods in
+  let methods = program.JP.parsed_methods in
+
+  let parse_method cm =
+    id := !id + 1;
+    match cm.JL.cm_implementation with
+    | JL.Native -> assert false
+    | JL.Java x ->
+      { P.id       = "p" ^ string_of_int !id
+      ; params   = List.map (Jbir_to_ir.tvar) (J.params (Lazy.force x))
+      ; ret_sort = Ir.Int (* TODO, where can I can get sort from? *)
+      ; content  = Array.to_list (J.code (Lazy.force x))
+      } in
+
+
+  let virtual_lookup target ms =
+    let nodes = match target with
+    | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms
+    | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in
+
+    let node_impl = function
+      | JP.Interface _ -> [] (* We only need to consider concrete implementations *)
+      | JP.Class node  -> [Mm.find ms (node.JP.c_info.JL.c_methods)] in
+
+    let get_inner_method = function
+      | JL.AbstractMethod _ -> assert false (* TODO *)
+      | JL.ConcreteMethod m -> m in
+
+    nodes
+    |> List.map node_impl
+    |> List.concat
+    |> List.map (fun m -> parse_method (get_inner_method m)) in
 
   fun cms ->
-    id := !id + 1;
-    let meth = ClassMethodMap.find cms methods in
-    let cm = snd meth in
-    match cm.cm_implementation with
-    | Native -> assert false
-    | Java x ->
-      { id       = "p" ^ string_of_int !id
-      ; params   = List.map (Jbir_to_ir.tvar) (JBir.params (Lazy.force x))
-      ; ret_sort = Ir.Int (* TODO, where can I can get sort from? *)
-      ; content  = Array.to_list (JBir.code (Lazy.force x))
-      }
+    parse_method (snd (Cmm.find cms methods))
