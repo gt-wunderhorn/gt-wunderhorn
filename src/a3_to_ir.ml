@@ -9,17 +9,22 @@ let rec sort = function
       | `Double -> assert false (* TODO *)
       | `Float  -> assert false (* TODO *)
       | `Int    -> Ir.Int
-      | `Long   -> assert false (* TODO *)
-      | `Short  -> assert false (* TODO *))
+      | `Long   -> Ir.Int
+      | `Short  -> Ir.Int)
   | JB.TObject t -> (match t with
       | JB.TArray t  -> Ir.Array (sort t)
-      | JB.TClass cn -> (* TODO *)
-        Ir.Array Ir.Int)
+      | JB.TClass cn -> Ir.Int)
+        (* Printf.printf "%s\n" (JB.cn_name cn); *)
+        (* Ir.Array Ir.Int) (1* TODO *1) *)
 
 let var v s = Ir.Variable (A3.var_name v, s)
 
 let tvar (s, v) = var v (sort s)
 let tvar_e v = Ir.Var (tvar v)
+
+let var_sort (s, _) = sort s
+
+let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
 let const = function
   | `ANull    -> assert false (* TODO *)
@@ -52,12 +57,13 @@ let binop op x y = match op with
   | A3.CMP _       -> assert false (* TODO *)
 
 let expr = function
-  | A3.Const c          -> const c
-  | A3.Var v            -> tvar_e v
-  | A3.Binop (op, x, y) -> binop op (tvar_e x) (tvar_e y)
-  | A3.Unop _           -> assert false (* TODO *)
-  | A3.Field _          -> assert false (* TODO *)
-  | A3.StaticField _    -> assert false (* TODO *)
+  | A3.Const c           -> const c
+  | A3.Var v             -> tvar_e v
+  | A3.Binop (op, x, y)  -> binop op (tvar_e x) (tvar_e y)
+  | A3.Unop _            -> assert false (* TODO *)
+  | A3.Field (v, cn, fs) ->
+    Ir.ArrSelect (Ir.Var (Ir.Variable (field_array_name cn fs, Ir.Array Ir.Int)), tvar_e v)
+  | A3.StaticField _     -> assert false (* TODO *)
 
 let rec compare cond x y = match cond with
   | `Eq -> Ir.Eq (tvar_e x, tvar_e y)
@@ -69,27 +75,49 @@ let rec compare cond x y = match cond with
 
 let convert is =
   let offset = ref 0 in
+  let noop _ = offset := !offset+1; [] in
+
   let instr = function
-    | A3.Nop                   -> offset := !offset + 1; []
+    | A3.Nop -> noop ()
+
     | A3.AffectVar (v, e)      ->
       let e = expr e in
       [Ir.Linear (Ir.Assign (var v (Ir.expr_sort e), e))]
+
     | A3.AffectArray (arr, ind, exp) ->
       [Ir.Linear (Ir.Assign
                     ( tvar arr
                     , Ir.ArrStore (tvar arr, tvar_e ind, tvar_e exp)))]
-    | A3.AffectField _         -> assert false (* TODO *)
-    | A3.AffectStaticField _   -> assert false (* TODO *)
-    | A3.Goto l                -> [Ir.Non_linear (Ir.Goto (l - !offset))]
-    | A3.Ifd ((cond, x, y), l) -> [Ir.Non_linear (Ir.If (compare cond x y, l - !offset))]
-    | A3.Throw _               -> assert false (* TODO *)
+
+    | A3.AffectField (v, cn, fs, e) ->
+      let field_array =
+        Ir.Variable (field_array_name cn fs, Ir.Array (var_sort e)) in
+      [Ir.Linear (Ir.Assign (field_array
+                 , Ir.ArrStore (field_array, tvar_e v, tvar_e e)))]
+
+    | A3.AffectStaticField _ ->
+      assert false (* TODO *)
+    | A3.Goto l ->
+      [Ir.Non_linear (Ir.Goto (l - !offset))]
+
+    | A3.Ifd ((cond, x, y), l) ->
+      [Ir.Non_linear (Ir.If (compare cond x y, l - !offset))]
+
+    | A3.Throw _ ->
+      assert false (* TODO *)
+
     | A3.Return v              ->
       let v = match v with
         | None   -> Ir.Var (Ir.Variable ("DUMMY", Ir.Int))
         | Some v -> tvar_e v in
       [Ir.Non_linear (Ir.Return v)]
-    | A3.New _                 -> assert false (* TODO *)
-    | A3.NewArray _            -> offset := !offset + 1; [] (* TODO *)
+
+    | A3.New _ ->
+      noop () (* TODO, how do I get graph? *)
+
+    | A3.NewArray _ ->
+      noop () (* TODO *)
+
     | A3.InvokeStatic (v, cn, ms, vs) ->
       if (JB.ms_name ms) = "ensure"
       then [Ir.Linear (Ir.Assert (tvar (List.hd vs)))]
@@ -97,12 +125,13 @@ let convert is =
           | None   -> Ir.Variable ("DUMMY", Ir.Int)
           | Some v -> var v Ir.Int in (* TODO, sort is wrong *)
         [Ir.Non_linear (Ir.Invoke (v, JB.make_cms cn ms, List.map tvar_e vs))]
+
     | A3.InvokeVirtual _       -> assert false (* TODO *)
     | A3.InvokeNonVirtual _    -> assert false (* TODO *)
     | A3.MonitorEnter _        -> assert false (* TODO *)
     | A3.MonitorExit _         -> assert false (* TODO *)
-    | A3.MayInit _             -> offset := !offset + 1; []
-    | A3.Check _               -> offset := !offset + 1; []
+    | A3.MayInit _             -> noop ()
+    | A3.Check _               -> noop ()
     | A3.Formula _             -> assert false (* TODO *)
   in
   List.map instr is |> List.concat
