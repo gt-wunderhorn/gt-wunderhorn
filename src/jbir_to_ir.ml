@@ -23,7 +23,7 @@ let var_sort (s, _) = sort s
 let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
 let const = function
-  | `ANull    -> assert false (* TODO *)
+  | `ANull    -> Ir.Int_lit 0
   | `Class _  -> assert false (* TODO *)
   | `Double f -> assert false (* TODO *)
   | `Float f  -> assert false (* TODO *)
@@ -74,83 +74,83 @@ let rec compare cond x y = match cond with
 let convert is =
   let offset = ref 0 in
   let offsets = ref [] in
-  let noop _ = offset := !offset+1; [] in
 
   let build_identity v =
     let counter = Ir.Variable ("COUNT", Ir.Int) in
-    offset := !offset-1;
     [ Ir.Linear (Ir.Assign (counter, Ir.Add (Ir.Var counter, Ir.Int_lit 1)))
     ; Ir.Linear (Ir.Assign (var v Ir.Int, Ir.Var counter))
     ] in
 
   let instr i =
-    offsets := !offsets @ [!offset];
+    let res = match i with
+      | J.Nop -> []
 
-    match i with
-    | J.Nop -> noop ()
+      | J.AffectVar (v, e)      ->
+        let e = expr e in
+        [Ir.Linear (Ir.Assign (var v (Ir.expr_sort e), e))]
 
-    | J.AffectVar (v, e)      ->
-      let e = expr e in
-      [Ir.Linear (Ir.Assign (var v (Ir.expr_sort e), e))]
+      | J.AffectArray (arr, ind, e) ->
+        let array_array =
+          Ir.Variable ("ARRAY", Ir.Array (Ir.Array Ir.Int)) in (* TODO, array type *)
 
-    | J.AffectArray (arr, ind, e) ->
-      let array_array =
-        Ir.Variable ("ARRAY", Ir.Array (Ir.Array Ir.Int)) in (* TODO, array type *)
+        let sub_array =
+          Ir.ArrSelect (Ir.Var array_array, expr arr) in
 
-      let sub_array =
-        Ir.ArrSelect (Ir.Var array_array, expr arr) in
+        [Ir.Linear (Ir.Assign (array_array
+                              , Ir.ArrStore (
+                                  Ir.Var array_array,
+                                  expr arr,
+                                  Ir.ArrStore (sub_array, expr ind, expr e))))]
 
-      [Ir.Linear (Ir.Assign (array_array
-                            , Ir.ArrStore (
-                                Ir.Var array_array,
-                                expr arr,
-                                Ir.ArrStore (sub_array, expr ind, expr e))))]
+      | J.AffectField (v, cn, fs, e) ->
+        let field_array =
+          Ir.Variable (field_array_name cn fs, Ir.Array Ir.Int) in (* TODO, array type *)
+        [Ir.Linear (Ir.Assign (field_array
+                              , Ir.ArrStore (Ir.Var field_array, expr v, expr e)))]
 
-    | J.AffectField (v, cn, fs, e) ->
-      let field_array =
-        Ir.Variable (field_array_name cn fs, Ir.Array Ir.Int) in (* TODO, array type *)
-      [Ir.Linear (Ir.Assign (field_array
-                            , Ir.ArrStore (Ir.Var field_array, expr v, expr e)))]
+      | J.AffectStaticField _ ->
+        assert false (* TODO *)
+      | J.Goto l ->
+        [Ir.Non_linear (Ir.Goto l)]
 
-    | J.AffectStaticField _ ->
-      assert false (* TODO *)
-    | J.Goto l ->
-      [Ir.Non_linear (Ir.Goto l)]
+      | J.Ifd ((cond, x, y), l) ->
+        [Ir.Non_linear (Ir.If (compare cond x y, l))]
 
-    | J.Ifd ((cond, x, y), l) ->
-      [Ir.Non_linear (Ir.If (compare cond x y, l))]
+      | J.Throw _ ->
+        assert false (* TODO *)
 
-    | J.Throw _ ->
-      assert false (* TODO *)
+      | J.Return v              ->
+        let v = match v with
+          | None   -> Ir.Int_lit 0
+          | Some v -> expr v in
+        [Ir.Non_linear (Ir.Return v)]
 
-    | J.Return v              ->
-      let v = match v with
-        | None   -> Ir.Int_lit 0
-        | Some v -> expr v in
-      [Ir.Non_linear (Ir.Return v)]
-
-    | J.New (v, cn, t, es) ->
-      build_identity v
+      | J.New (v, cn, t, es) ->
+        build_identity v
       (* TODO, how do I get graph? *)
 
-    | J.NewArray (v, t, es) ->
-      build_identity v
+      | J.NewArray (v, t, es) ->
+        build_identity v
 
-    | J.InvokeStatic (v, cn, ms, vs) ->
-      if (JB.ms_name ms) = "ensure"
-      then [Ir.Linear (Ir.Assert (expr (List.hd vs)))]
-      else let v = match v with
-          | None   -> Ir.Variable ("DUMMY", Ir.Int)
-          | Some v -> var v Ir.Int in (* TODO, sort is wrong *)
-        [Ir.Non_linear (Ir.Invoke (v, JB.make_cms cn ms, List.map expr vs))]
+      | J.InvokeStatic (v, cn, ms, vs) ->
+        if (JB.ms_name ms) = "ensure"
+        then [Ir.Linear (Ir.Assert (expr (List.hd vs)))]
+        else let v = match v with
+            | None   -> Ir.Variable ("DUMMY", Ir.Int)
+            | Some v -> var v Ir.Int in (* TODO, sort is wrong *)
+          [Ir.Non_linear (Ir.Invoke (v, JB.make_cms cn ms, List.map expr vs))]
 
-    | J.InvokeVirtual _       -> assert false (* TODO *)
-    | J.InvokeNonVirtual _    -> assert false (* TODO *)
-    | J.MonitorEnter _        -> assert false (* TODO *)
-    | J.MonitorExit _         -> assert false (* TODO *)
-    | J.MayInit _             -> noop ()
-    | J.Check _               -> noop ()
-    | J.Formula _             -> assert false (* TODO *)
+      | J.InvokeVirtual _       -> assert false (* TODO *)
+      | J.InvokeNonVirtual _    -> assert false (* TODO *)
+      | J.MonitorEnter _        -> assert false (* TODO *)
+      | J.MonitorExit _         -> assert false (* TODO *)
+      | J.MayInit _             -> []
+      | J.Check _               -> []
+      | J.Formula _             -> assert false (* TODO *) in
+
+    offsets := !offsets @ [!offset];
+    offset := !offset + 1 - (List.length res);
+    res
   in
 
   let account_for_offsets = function
