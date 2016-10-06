@@ -52,7 +52,7 @@ let split_points instrs =
 (** To trace a program we first find all the critical (join and split) points.
     We initialize partial paths at those locations. Then, we follow each of
     those paths until its end (indicated by another critical point, or the
-    program end) is reached. Any degenerate paths are removed. *)
+    program end) is reached. Any degenerate paths (no instructions) are removed. *)
 let rec trace converter prog =
   let instrs = prog.Pr.content in
   let labels = Label_set.union (join_points instrs) (split_points instrs) in

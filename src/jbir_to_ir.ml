@@ -76,6 +76,13 @@ let convert is =
   let offsets = ref [] in
   let noop _ = offset := !offset+1; [] in
 
+  let build_identity v =
+    let counter = Ir.Variable ("COUNT", Ir.Int) in
+    offset := !offset-1;
+    [ Ir.Linear (Ir.Assign (counter, Ir.Add (Ir.Var counter, Ir.Int_lit 1)))
+    ; Ir.Linear (Ir.Assign (var v Ir.Int, Ir.Var counter))
+    ] in
+
   let instr i =
     offsets := !offsets @ [!offset];
 
@@ -123,10 +130,11 @@ let convert is =
       [Ir.Non_linear (Ir.Return v)]
 
     | J.New (v, cn, t, es) ->
-      [Ir.Linear (Ir.Assign (var v Ir.Int, Ir.Int_lit 1))] (* TODO, how do I get graph? *)
+      build_identity v
+      (* TODO, how do I get graph? *)
 
     | J.NewArray (v, t, es) ->
-      [Ir.Linear (Ir.Assign (var v Ir.Int, Ir.Int_lit 1))]
+      build_identity v
 
     | J.InvokeStatic (v, cn, ms, vs) ->
       if (JB.ms_name ms) = "ensure"
