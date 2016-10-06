@@ -3,7 +3,7 @@ module Pr = Procedure
 
 type path =
   | Path of linear_instruction list
-  | Assertion of variable
+  | Assertion of expression
 
 let instructions = function
   | Path is     -> is
@@ -64,8 +64,21 @@ let rec trace converter prog =
       is reached. *)
   let rec complete path =
     let (first, next, is) = path in
-    if Label_set.mem next labels || next >= List.length instrs
+
+    let rec complete_goto next =
+      if next >= List.length instrs
+      then P_graph.singleton (first, mk_label next, Path is)
+      else match List.nth instrs next with
+        | Non_linear (Goto line) -> complete_goto line
+        | _ -> P_graph.singleton (first, mk_label next, Path is)
+    in
+
+    if next >= List.length instrs
     then P_graph.singleton (first, mk_label next, Path is)
+    else if Label_set.mem next labels
+    then match List.nth instrs next with
+      | Non_linear (Goto line) -> complete_goto line
+      | _ -> P_graph.singleton (first, mk_label next, Path is)
     else match List.nth instrs next with
       | Non_linear (Goto line) -> complete (first, line, is)
       | Non_linear (Return v)  ->

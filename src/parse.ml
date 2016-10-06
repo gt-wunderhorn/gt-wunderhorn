@@ -7,7 +7,7 @@ open Procedure
 
 type method_map =
   Javalib_pack.JBasics.class_method_signature ->
-  Sawja_pack.A3Bir.t
+  Sawja_pack.JBir.t
 
 let parse id classpath cn =
   let (prta,instantiated_classes) =
@@ -15,8 +15,8 @@ let parse id classpath cn =
       (JBasics.make_cms cn JProgram.main_signature) in
 
   let pbir = JProgram.map_program2
-      (fun _ -> A3Bir.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[]) 
-      (Some (fun code pp -> (A3Bir.pc_ir2bc code).(pp)))
+      (fun _ -> JBir.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[]) 
+      (Some (fun code pp -> (JBir.pc_ir2bc code).(pp)))
       prta in
 
   let methods = pbir.parsed_methods in
@@ -29,7 +29,7 @@ let parse id classpath cn =
     | Native -> assert false
     | Java x ->
       { id       = "p" ^ string_of_int !id
-      ; params   = List.map (A3_to_ir.tvar) (A3Bir.params (Lazy.force x))
+      ; params   = List.map (Jbir_to_ir.tvar) (JBir.params (Lazy.force x))
       ; ret_sort = Ir.Int (* TODO, where can I can get sort from? *)
-      ; content  = Array.to_list (A3Bir.code (Lazy.force x))
+      ; content  = Array.to_list (JBir.code (Lazy.force x))
       }

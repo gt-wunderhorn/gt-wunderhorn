@@ -16,7 +16,7 @@ let substitute table =
     | ArrStore (v, i, e) -> ArrStore (subst v, subst i, subst e)
     | ArrSelect (e1, e2) -> ArrSelect (subst e1, subst e2)
     | Relation (lbl, vs) -> Relation (lbl, List.map (mk_alias table) vs)
-    | Query v            -> Query (mk_alias table v)
+    | Query e            -> Query (subst e)
     | Var v              -> Var (mk_alias table v)
     | Add (e1, e2)       -> Add (subst e1, subst e2)
     | Eq (e1, e2)        -> Eq (subst e1, subst e2)
@@ -39,7 +39,7 @@ let reduce_instr table = function
     let v = mk_alias table v in
     Eq (Var v, rhs)
   | Call e -> substitute table e
-  | Assert (Variable (_, _)) -> assert false
+  | Assert _ -> assert false
 
 let mk_condition st label vars =
   if Var_set.is_empty vars
@@ -56,7 +56,7 @@ let translate_path trace (init, term, path) =
   match path with
   | T.Assertion v ->
     Implies (Not (Implies (precondition,
-                           (Eq (substitute table (Var v), Int_lit 1)))),
+                           (Eq (substitute table v, Int_lit 1)))),
              substitute table (Query v))
   | T.Path instrs ->
     let expressions = List.map (reduce_instr table) instrs in

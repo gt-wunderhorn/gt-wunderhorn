@@ -13,7 +13,7 @@ let inspect =
 
   let converter cms =
     Parse.parse proc_id classpath cn cms
-    |> P.map A3_to_ir.convert in
+    |> P.map Jbir_to_ir.convert in
 
   converter cms
   |> Trace.trace converter

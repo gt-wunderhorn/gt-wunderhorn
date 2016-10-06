@@ -13,9 +13,9 @@ let (prta,instantiated_classes) =
        (JBasics.make_cn "Test") JProgram.main_signature)
 
 let pbir = JProgram.map_program2
-    (fun _ -> A3Bir.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[]) 
-    (Some (fun code pp -> (A3Bir.pc_ir2bc code).(pp)))
+    (fun _ -> JBir.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[]) 
+    (Some (fun code pp -> (JBir.pc_ir2bc code).(pp)))
     prta
 
 let () =
-  A3Bir.print_program pbir "./out";
+  JBir.print_program pbir "./out";

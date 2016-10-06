@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function expect_fail {
-  res=$(scripts/run_test.sh $1)
+  res=$(scripts/run_test.sh $1 | tail -1)
   if [ "$res" != "sat" ]; then
     echo "$1 failed: $res"
     exit 1
@@ -9,7 +9,7 @@ function expect_fail {
 }
 
 function expect_pass {
-  res=$(scripts/run_test.sh $1)
+  res=$(scripts/run_test.sh $1 | tail -1)
   if [ "$res" != "unsat" ]; then
     echo "$1 failed: $res"
     exit 1

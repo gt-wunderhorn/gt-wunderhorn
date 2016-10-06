@@ -25,9 +25,9 @@ let print_rel (lbl, vs) =
 let print_expr query_count expr =
   let rec ex = function
     | Relation (lbl, vs) -> parens (lbl :: List.map show_var vs)
-    | Query v            ->
+    | Query e ->
       query_count := !query_count + 1;
-      parens ["q" ^ string_of_int !query_count; show_var v]
+      parens ["q" ^ string_of_int !query_count; ex e]
     | ArrStore (arr, idx, e) ->
       parens ["store"; ex arr; ex idx; ex e]
     | ArrSelect (e1, e2) -> parens ["select"; ex e1; ex e2]
