@@ -29,7 +29,7 @@ let print_expr query_count expr =
       query_count := !query_count + 1;
       parens ["q" ^ string_of_int !query_count; show_var v]
     | ArrStore (arr, idx, e) ->
-      parens ["store"; show_var arr; ex idx; ex e]
+      parens ["store"; ex arr; ex idx; ex e]
     | ArrSelect (e1, e2) -> parens ["select"; ex e1; ex e2]
     | Var v              -> show_var v
     | Add (e1, e2)       -> parens ["+";  ex e1; ex e2]

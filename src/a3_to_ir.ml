@@ -11,11 +11,7 @@ let rec sort = function
       | `Int    -> Ir.Int
       | `Long   -> Ir.Int
       | `Short  -> Ir.Int)
-  | JB.TObject t -> (match t with
-      | JB.TArray t  -> Ir.Array (sort t)
-      | JB.TClass cn -> Ir.Int)
-        (* Printf.printf "%s\n" (JB.cn_name cn); *)
-        (* Ir.Array Ir.Int) (1* TODO *1) *)
+  | JB.TObject t -> Ir.Int
 
 let var v s = Ir.Variable (A3.var_name v, s)
 
@@ -36,7 +32,9 @@ let const = function
   | `String s -> assert false (* TODO *)
 
 let binop op x y = match op with
-  | A3.ArrayLoad _ -> Ir.ArrSelect (x, y)
+  | A3.ArrayLoad _ ->
+    let array_array = Ir.Variable ("ARRAY", Ir.Array (Ir.Array Ir.Int)) in
+    Ir.ArrSelect (Ir.ArrSelect (Ir.Var array_array, x), y)
   | A3.Add _       -> Ir.Add (x, y)
   | A3.Sub _       -> assert false (* TODO *)
   | A3.Mult _      -> assert false (* TODO *)
@@ -84,16 +82,24 @@ let convert is =
       let e = expr e in
       [Ir.Linear (Ir.Assign (var v (Ir.expr_sort e), e))]
 
-    | A3.AffectArray (arr, ind, exp) ->
-      [Ir.Linear (Ir.Assign
-                    ( tvar arr
-                    , Ir.ArrStore (tvar arr, tvar_e ind, tvar_e exp)))]
+    | A3.AffectArray (arr, ind, e) ->
+      let array_array =
+        Ir.Variable ("ARRAY", Ir.Array (Ir.Array (var_sort e))) in
+
+      let sub_array =
+        Ir.ArrSelect (Ir.Var array_array, tvar_e arr) in
+
+      [Ir.Linear (Ir.Assign (array_array
+                            , Ir.ArrStore (
+                                Ir.Var array_array,
+                                tvar_e arr,
+                                Ir.ArrStore (sub_array, tvar_e ind, tvar_e e))))]
 
     | A3.AffectField (v, cn, fs, e) ->
       let field_array =
         Ir.Variable (field_array_name cn fs, Ir.Array (var_sort e)) in
       [Ir.Linear (Ir.Assign (field_array
-                 , Ir.ArrStore (field_array, tvar_e v, tvar_e e)))]
+                 , Ir.ArrStore (Ir.Var field_array, tvar_e v, tvar_e e)))]
 
     | A3.AffectStaticField _ ->
       assert false (* TODO *)

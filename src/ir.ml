@@ -13,7 +13,7 @@ type expression =
   | Relation  of string * variable list
   | Query     of variable
   | Var       of variable
-  | ArrStore  of variable * expression * expression
+  | ArrStore  of expression * expression * expression
   | ArrSelect of expression * expression
   | Add       of expression * expression
   | Eq        of expression * expression
@@ -53,7 +53,7 @@ module Rel_set = Set_ext.Make(
   end)
 
 let rec expr_sort = function
-  | ArrStore (Variable (_, s), _, _) -> s
+  | ArrStore _ -> Int (* TODO *)
   | ArrSelect (arr, _) -> (match expr_sort arr with
     | Array s -> s
     | _       -> assert false (* array select from non-array *))
@@ -77,7 +77,7 @@ let rec expr_vars = function
   | Relation (_, vs)     -> Var_set.unions_map Var_set.singleton vs
   | Query v              -> Var_set.singleton v
   | Var v                -> Var_set.singleton v
-  | ArrStore (v, e1, e2) -> Var_set.unions [ Var_set.singleton v; expr_vars e1; expr_vars e2]
+  | ArrStore (e1, e2, e3) -> Var_set.unions [ expr_vars e1; expr_vars e2; expr_vars e3]
   | ArrSelect (e1, e2)   -> Var_set.union (expr_vars e1) (expr_vars e2)
   | Add (e1, e2)         -> Var_set.union (expr_vars e1) (expr_vars e2)
   | Eq (e1, e2)          -> Var_set.union (expr_vars e1) (expr_vars e2)

@@ -13,7 +13,7 @@ let mk_alias table var =
 
 let substitute table =
   let rec subst = function
-    | ArrStore (v, i, e) -> ArrStore (mk_alias table v, subst i, subst e)
+    | ArrStore (v, i, e) -> ArrStore (subst v, subst i, subst e)
     | ArrSelect (e1, e2) -> ArrSelect (subst e1, subst e2)
     | Relation (lbl, vs) -> Relation (lbl, List.map (mk_alias table) vs)
     | Query v            -> Query (mk_alias table v)
