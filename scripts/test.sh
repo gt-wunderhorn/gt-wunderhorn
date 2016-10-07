@@ -16,8 +16,8 @@ function expect_pass {
   fi
 }
 
+# expect_pass ../test/method.test
 expect_pass ../test/object_identity.test
-# expect_pass ../test/array_of_arrays.test
 
 expect_pass ../test/array_pass.test
 expect_fail ../test/array_fail.test

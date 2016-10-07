@@ -10,10 +10,10 @@ let inspect =
 
   let proc_id = ref (-1) in
 
-  let parse cms =
-    Parse.parse proc_id classpath cn cms in
+  let parse =
+    Parse.parse proc_id classpath cn in
 
-  parse cms
+  parse.Parse.cms_lookup cms
   |> Ir.map (Jbir_to_ir.convert parse)
   |> Trace.trace
   |> Graph_to_clauses.translate

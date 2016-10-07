@@ -1,21 +1,9 @@
 module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
 
-let rec sort = function
-  | JB.TBasic t -> (match t with
-      | `Bool   -> Ir.Bool
-      | `Byte   -> assert false (* TODO *)
-      | `Char   -> assert false (* TODO *)
-      | `Double -> assert false (* TODO *)
-      | `Float  -> assert false (* TODO *)
-      | `Int    -> Ir.Int
-      | `Long   -> Ir.Int
-      | `Short  -> Ir.Int)
-  | JB.TObject t -> Ir.Int
-
-let var v s = Ir.Variable (J.var_name v, s)
-
-let tvar (s, v) = var v (sort s)
+let sort = Var.sort
+let var = Var.var
+let tvar = Var.tvar
 let tvar_e v = Ir.Var (tvar v)
 
 let var_sort (s, _) = sort s
@@ -131,21 +119,27 @@ let rec convert parse is =
 
     | J.New (v, cn, t, es) ->
       build_identity v
-      (* TODO, how do I get graph? *)
+    (* TODO, how do I get graph? *)
 
     | J.NewArray (v, t, es) ->
       build_identity v
 
-    | J.InvokeStatic (v, cn, ms, vs) ->
+    | J.InvokeStatic (v, cn, ms, es) ->
       if (JB.ms_name ms) = "ensure"
-      then [Ir.Linear (Ir.Assert (expr (List.hd vs)))]
+      then [Ir.Linear (Ir.Assert (expr (List.hd es)))]
       else let v = match v with
           | None   -> Ir.Variable ("DUMMY", Ir.Int)
           | Some v -> var v Ir.Int in (* TODO, sort is wrong *)
-        let proc = Ir.map (convert parse) (parse (JB.make_cms cn ms)) in
-        [Ir.Non_linear (Ir.Invoke (v, proc, List.map expr vs))]
+        let proc = Ir.map (convert parse) (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
+        [Ir.Non_linear (Ir.Invoke (v, proc, List.map expr es))]
 
-    | J.InvokeVirtual _       -> assert false (* TODO *)
+    | J.InvokeVirtual (v, e, ck, ms, es) ->
+      let v = match v with
+        | None   -> Ir.Variable ("DUMMY", Ir.Int)
+        | Some v -> var v Ir.Int in (* TODO, sort is wrong *)
+      let proc = Ir.map (convert parse) (List.hd (parse.Parse.virtual_lookup ck ms)) in (* TODO don't use hd *)
+      [Ir.Non_linear (Ir.Invoke (v, proc, List.map expr (e :: es)))]
+
     | J.InvokeNonVirtual _    -> assert false (* TODO *)
     | J.MonitorEnter _        -> assert false (* TODO *)
     | J.MonitorExit _         -> assert false (* TODO *)

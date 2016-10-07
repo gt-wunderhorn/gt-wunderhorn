@@ -39,8 +39,8 @@ let parse id classpath cn =
     match cm.JL.cm_implementation with
     | JL.Native -> assert false
     | JL.Java x ->
-      { Ir.id     = "p" ^ string_of_int !id
-      ; params   = List.map (Jbir_to_ir.tvar) (J.params (Lazy.force x))
+      { Ir.id    = "p" ^ string_of_int !id
+      ; params   = List.map (Var.tvar) (J.params (Lazy.force x))
       ; ret_sort = Ir.Int (* TODO, where can I can get sort from? *)
       ; content  = Array.to_list (J.code (Lazy.force x))
       } in
