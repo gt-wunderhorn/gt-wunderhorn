@@ -1,13 +1,22 @@
 module JL = Javalib_pack.Javalib
 module JP = Sawja_pack.JProgram
 module J = Sawja_pack.JBir
-module P = Procedure
 module JB = Javalib_pack.JBasics
 
 module JC = Sawja_pack.JControlFlow
 
 module Cmm = JB.ClassMethodMap
 module Mm = JB.MethodMap
+
+type 'a parse = { cms_lookup :
+                    JB.class_method_signature ->
+                    'a Ir.procedure
+
+                ; virtual_lookup :
+                    J.virtual_call_kind ->
+                    JB.method_signature ->
+                    ('a Ir.procedure) list
+                }
 
 type method_map =
   JB.class_method_signature ->
@@ -30,7 +39,7 @@ let parse id classpath cn =
     match cm.JL.cm_implementation with
     | JL.Native -> assert false
     | JL.Java x ->
-      { P.id       = "p" ^ string_of_int !id
+      { Ir.id     = "p" ^ string_of_int !id
       ; params   = List.map (Jbir_to_ir.tvar) (J.params (Lazy.force x))
       ; ret_sort = Ir.Int (* TODO, where can I can get sort from? *)
       ; content  = Array.to_list (J.code (Lazy.force x))
@@ -39,8 +48,8 @@ let parse id classpath cn =
 
   let virtual_lookup target ms =
     let nodes = match target with
-    | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms
-    | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in
+      | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms
+      | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in
 
     let node_impl = function
       | JP.Interface _ -> [] (* We only need to consider concrete implementations *)
@@ -55,5 +64,9 @@ let parse id classpath cn =
     |> List.concat
     |> List.map (fun m -> parse_method (get_inner_method m)) in
 
-  fun cms ->
-    parse_method (snd (Cmm.find cms methods))
+  let cms_lookup cms=
+    parse_method (snd (Cmm.find cms methods)) in
+
+  { cms_lookup
+  ; virtual_lookup
+  }

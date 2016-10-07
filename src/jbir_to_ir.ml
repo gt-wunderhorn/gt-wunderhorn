@@ -71,7 +71,7 @@ let rec compare cond x y = match cond with
   | `Lt -> Ir.Lt (expr x, expr y)
   | `Ne -> Ir.Not (compare `Eq x y)
 
-let convert is =
+let rec convert parse is =
   let offset = ref 0 in
   let offsets = ref [] in
   let noop _ = offset := !offset+1; [] in
@@ -142,7 +142,8 @@ let convert is =
       else let v = match v with
           | None   -> Ir.Variable ("DUMMY", Ir.Int)
           | Some v -> var v Ir.Int in (* TODO, sort is wrong *)
-        [Ir.Non_linear (Ir.Invoke (v, JB.make_cms cn ms, List.map expr vs))]
+        let proc = Ir.map (convert parse) (parse (JB.make_cms cn ms)) in
+        [Ir.Non_linear (Ir.Invoke (v, proc, List.map expr vs))]
 
     | J.InvokeVirtual _       -> assert false (* TODO *)
     | J.InvokeNonVirtual _    -> assert false (* TODO *)

@@ -7,7 +7,23 @@ type sort =
 
 type variable = Variable of string * sort
 
-type procedure_id = Javalib_pack.JBasics.class_method_signature
+type 'a procedure =
+  { id       : string
+  ; params   : variable list
+  ; ret_sort : sort
+  ; content  : 'a
+  }
+
+let map (f : 'a -> 'b) proc =
+  { id       = proc.id
+  ; params   = proc.params
+  ; ret_sort = proc.ret_sort
+  ; content  = f (proc.content)
+  }
+
+let ret_var p = Variable (p.id ^ "_ret", p.ret_sort)
+let entry_label p = p.id ^ "_0"
+let exit_label  p = p.id ^ "_exit"
 
 type expression =
   | Relation  of string * variable list
@@ -36,10 +52,9 @@ type linear_instruction =
 type non_linear_instruction =
   | If      of expression * label
   | Goto    of label
-  | Invoke  of variable * procedure_id * expression list
+  | Invoke  of variable * ((instruction list) procedure) * expression list
   | Return  of expression
-
-type instruction =
+and instruction =
   | Linear     of linear_instruction
   | Non_linear of non_linear_instruction
 

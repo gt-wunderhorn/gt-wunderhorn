@@ -1,5 +1,4 @@
 open Ir
-module Pr = Procedure
 
 type path =
   | Path of linear_instruction list
@@ -53,11 +52,11 @@ let split_points instrs =
     We initialize partial paths at those locations. Then, we follow each of
     those paths until its end (indicated by another critical point, or the
     program end) is reached. Any degenerate paths (no instructions) are removed. *)
-let rec trace converter prog =
-  let instrs = prog.Pr.content in
+let rec trace prog =
+  let instrs = prog.Ir.content in
   let labels = Label_set.union (join_points instrs) (split_points instrs) in
 
-  let mk_label num = prog.Pr.id ^ "_" ^ string_of_int num in
+  let mk_label num = prog.Ir.id ^ "_" ^ string_of_int num in
 
   (** A path is complete once it encounters a split, join, or the end of the
       program. It next linear instruction to a partial path until that condition
@@ -82,7 +81,7 @@ let rec trace converter prog =
     else match List.nth instrs next with
       | Non_linear (Goto line) -> complete (first, line, is)
       | Non_linear (Return v)  ->
-        P_graph.singleton (first, Pr.exit_label prog, Path (is @ [Assign (Pr.ret_var prog, v)]))
+        P_graph.singleton (first, Ir.exit_label prog, Path (is @ [Assign (Ir.ret_var prog, v)]))
       | Non_linear _           -> assert false (* splits already checked *)
       | Linear i               -> complete (first, next+1, (is @ [i])) in
 
@@ -99,18 +98,17 @@ let rec trace converter prog =
         (P_graph.singleton (mk_label line, mk_label (-1), Assertion v))
     | Linear i ->
       complete (mk_label line, line+1, [i])
-    | Non_linear (Invoke (v, id, args)) ->
-      let proc = converter id in
+    | Non_linear (Invoke (v, proc, args)) ->
       P_graph.merges
-        [ trace converter proc
+        [ trace proc
         ; P_graph.singleton (
             mk_label line,
-            Pr.entry_label proc,
-            Path (List.map2 (fun param arg -> Assign (param, arg)) proc.Pr.params args))
+            Ir.entry_label proc,
+            Path (List.map2 (fun param arg -> Assign (param, arg)) proc.Ir.params args))
         ; complete (
-            Pr.exit_label proc,
+            Ir.exit_label proc,
             line+1,
-            [Assign (v, Ir.Var (Pr.ret_var proc))]) ]
+            [Assign (v, Ir.Var (Ir.ret_var proc))]) ]
     | _ -> P_graph.empty
   in
 
