@@ -77,7 +77,7 @@ let rec convert parse is =
     match i with
     | J.Nop -> noop ()
 
-    | J.AffectVar (v, e)      ->
+    | J.AffectVar (v, e) ->
       let e = expr e in
       [Ir.Linear (Ir.Assign (var v (Ir.expr_sort e), e))]
 
@@ -118,8 +118,7 @@ let rec convert parse is =
       [Ir.Non_linear (Ir.Return v)]
 
     | J.New (v, cn, t, es) ->
-      build_identity v
-    (* TODO, how do I get graph? *)
+      build_identity v (* TODO, how do I get graph? *)
 
     | J.NewArray (v, t, es) ->
       build_identity v

@@ -5,11 +5,11 @@ type sort =
   | Int
   | Bool
 
-type variable = Variable of string * sort
+type var = Variable of string * sort
 
 type 'a procedure =
   { id       : string
-  ; params   : variable list
+  ; params   : var list
   ; ret_sort : sort
   ; content  : 'a
   }
@@ -25,45 +25,45 @@ let ret_var p = Variable (p.id ^ "_ret", p.ret_sort)
 let entry_label p = p.id ^ "_0"
 let exit_label  p = p.id ^ "_exit"
 
-type expression =
-  | Relation  of string * variable list
-  | Query     of expression
-  | Var       of variable
-  | ArrStore  of expression * expression * expression
-  | ArrSelect of expression * expression
-  | Add       of expression * expression
-  | Eq        of expression * expression
-  | Ge        of expression * expression
-  | Gt        of expression * expression
-  | Le        of expression * expression
-  | Lt        of expression * expression
-  | Implies   of expression * expression
-  | And       of expression list
-  | Not       of expression
+type expr =
+  | Relation  of string * var list
+  | Query     of expr
+  | Var       of var
+  | ArrStore  of expr * expr * expr
+  | ArrSelect of expr * expr
+  | Add       of expr * expr
+  | Eq        of expr * expr
+  | Ge        of expr * expr
+  | Gt        of expr * expr
+  | Le        of expr * expr
+  | Lt        of expr * expr
+  | Implies   of expr * expr
+  | And       of expr list
+  | Not       of expr
   | Int_lit   of int
   | True
   | False
 
-type linear_instruction =
-  | Assign  of variable * expression
-  | Call    of expression
-  | Assert  of expression
+type linear_instr =
+  | Assign  of var * expr
+  | Call    of expr
+  | Assert  of expr
 
-type non_linear_instruction =
-  | If      of expression * label
+type non_linear_instr =
+  | If      of expr * label
   | Goto    of label
-  | Invoke  of variable * ((instruction list) procedure) * expression list
-  | Return  of expression
-and instruction =
-  | Linear     of linear_instruction
-  | Non_linear of non_linear_instruction
+  | Invoke  of var * ((instr list) procedure) * expr list
+  | Return  of expr
+and instr =
+  | Linear     of linear_instr
+  | Non_linear of non_linear_instr
 
 module Var_set = Set_ext.Make(
-  struct type t = variable;; let compare = compare;; end)
+  struct type t = var;; let compare = compare;; end)
 
 module Rel_set = Set_ext.Make(
   struct
-    type t = string * variable list
+    type t = string * var list
     let compare (lbl1, _) (lbl2, _) = compare lbl1 lbl2
   end)
 
@@ -130,19 +130,19 @@ let expr_rels =
     | False                -> Rel_set.empty
   in ex
 
-(** Which variables are used by a given instruction? *)
-let instruction_useds = function
+(** Which vars are used by a given instr? *)
+let instr_useds = function
   | Assign (v, e)     -> expr_vars e
   | Call e            -> expr_vars e
   | Assert e          -> expr_vars e
 
-(** Which variables are mutated by a given instruction? *)
-let instruction_mutables = function
+(** Which vars are mutated by a given instr? *)
+let instr_mutables = function
   | Assign (v, _)    -> Var_set.singleton v
   | _                -> Var_set.empty
 
-let instruction_variables i =
-  Var_set.union (instruction_useds i) (instruction_mutables i)
+let instr_vars i =
+  Var_set.union (instr_useds i) (instr_mutables i)
 
 let mk_not = function
   | Not e -> e

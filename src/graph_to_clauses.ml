@@ -3,7 +3,7 @@ module T = Trace
 
 module Alias_table = Count_table.Make(
   struct
-    type t = variable
+    type t = var
     let compare = compare
   end)
 
@@ -47,8 +47,8 @@ let mk_condition st label vars =
   else Relation (label, List.map (mk_alias st) (Var_set.elements vars))
 
 let translate_path trace (init, term, path) =
-  let initial_vars  = T.critical_variables trace init in
-  let terminal_vars = T.critical_variables trace term in
+  let initial_vars  = T.critical_vars trace init in
+  let terminal_vars = T.critical_vars trace term in
   let table = Alias_table.empty () in
 
   let precondition = mk_condition table init initial_vars in

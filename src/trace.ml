@@ -1,15 +1,15 @@
 open Ir
 
 type path =
-  | Path of linear_instruction list
-  | Assertion of expression
+  | Path of linear_instr list
+  | Assertion of expr
 
 let instructions = function
   | Path is     -> is
   | Assertion v -> [Assert v]
 
-let path_variables p =
-  Var_set.unions (List.map instruction_variables (instructions p))
+let path_vars p =
+  Var_set.unions (List.map instr_vars (instructions p))
 
 module P_graph = Graph.Make(
   struct type node = string;; type edge = path;; end)
@@ -123,7 +123,7 @@ let mutated_before graph label =
   |> P_graph.edges
   |> List.map instructions
   |> List.concat
-  |> List.map instruction_mutables
+  |> List.map instr_mutables
   |> Var_set.unions
 
 let used_after graph label =
@@ -132,8 +132,8 @@ let used_after graph label =
   |> P_graph.edges
   |> List.map instructions
   |> List.concat
-  |> List.map instruction_useds
+  |> List.map instr_useds
   |> Var_set.unions
 
-let critical_variables graph label =
+let critical_vars graph label =
   Var_set.inter (mutated_before graph label) (used_after graph label)
