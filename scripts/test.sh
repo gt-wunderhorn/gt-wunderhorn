@@ -20,10 +20,10 @@ function expect_pass {
 # expect_pass ../test/object_identity.test
 # expect_pass ../test/nested.test
 
-# expect_pass ../test/array_pass.test
-# expect_fail ../test/array_fail.test
 # expect_pass ../test/object_pass.test
 # expect_fail ../test/object_fail.test
+expect_pass ../test/array_pass.test
+expect_fail ../test/array_fail.test
 expect_pass ../test/multi_call_pass.test
 expect_pass ../test/call_pass.test
 expect_fail ../test/call_fail.test

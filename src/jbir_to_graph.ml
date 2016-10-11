@@ -12,8 +12,10 @@ let const = function
   | `String s -> assert false (* TODO *)
 
 let binop op x y = match op with
-  | J.ArrayLoad _ -> assert false (* TODO *)
-  | J.Add _       -> L.Bi_op (L.Add, x, y)
+  | J.ArrayLoad _ ->
+    let array_array = ("ARRAY", L.Array (L.Array L.Int)) in
+    L.ArrSelect (L.ArrSelect (L.Var array_array, x), y)
+  | J.Add _       -> L.mk_add x y
   | J.Sub _       -> assert false (* TODO *)
   | J.Mult _      -> assert false (* TODO *)
   | J.Div _       -> assert false (* TODO *)
@@ -63,11 +65,33 @@ let rec instr parse st line instr =
   let noop _ = L.PG.singleton (this, next, []) in
   let id = st.Proc.id in
 
+  let build_identity v =
+    let count = ("COUNT", L.Int) in
+    L.PG.singleton
+      (this, next,
+       [ L.Assign (count, L.mk_add (L.Var count) (L.Int_lit 1))
+       ; L.Assign (Proc.var st v, L.Var count)
+       ]) in
+
   match instr with
   | J.Nop -> noop ()
   | J.AffectVar (v, e) ->
     L.PG.singleton (this, next, [L.Assign (Proc.var st v, expr st e)])
-  | J.AffectArray (arr, ind, e) -> assert false
+  | J.AffectArray (arr, ind, e) ->
+    let array_array =
+      ("ARRAY", L.Array (L.Array L.Int)) in (* TODO, array type *)
+
+    let sub_array =
+      L.ArrSelect (L.Var array_array, expr st arr) in
+
+    L.PG.singleton
+      (this, next,
+       [L.Assign (array_array
+                 , L.ArrStore (
+                     L.Var array_array,
+                     expr st arr,
+                     L.ArrStore (sub_array, expr st ind, expr st e)))])
+
   | J.AffectField (v, cn, fs, e) -> assert false
   | J.AffectStaticField _ -> assert false
   | J.Goto l -> L.PG.singleton (this, mk_lbl l, [])
@@ -80,11 +104,13 @@ let rec instr parse st line instr =
   | J.Return e ->
     L.PG.singleton
       (let lbl = id ^ "RET" in
-        match e with
+       let retvar = (id ^ "RETVAR", L.Int) in
+       match e with
        | None   -> (this, lbl, [])
-       | Some e -> (this, lbl, [L.Assign (id ^ "RETVAR", expr st e)]))
+       | Some e -> (this, lbl, [L.Assign (retvar, expr st e)]))
   | J.New (v, cn, t, es) -> assert false
-  | J.NewArray (v, t, es) -> assert false
+  | J.NewArray (v, t, es) ->
+    build_identity v
   | J.InvokeStatic (v, cn, ms, args) ->
     if (JB.ms_name ms) = "ensure"
     then L.PG.of_list
@@ -92,7 +118,7 @@ let rec instr parse st line instr =
         ; (this, next, [])
         ]
     else let v = match v with
-        | None -> "DUMMY"
+        | None -> ("DUMMY", L.Int)
         | Some v -> Proc.var st v in
       let proc = (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
       let assignments = List.map2
@@ -100,7 +126,7 @@ let rec instr parse st line instr =
           (List.map (Proc.var proc) proc.Proc.params)
           args in
       let ret = proc.Proc.id ^ "RET" in
-      let retvar = proc.Proc.id ^ "RETVAR" in
+      let retvar = (proc.Proc.id ^ "RETVAR", L.Int) in
 
       let proc_graph = convert parse proc in
       L.PG.union

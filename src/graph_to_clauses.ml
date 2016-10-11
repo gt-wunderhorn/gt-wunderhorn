@@ -6,7 +6,8 @@ module Alias_table = Count_table.Make(
     let compare = compare
   end)
 
-let mk_alias table var = var ^ "_" ^ (string_of_int (Alias_table.get table var))
+let mk_alias table (name, sort) =
+  (name ^ "_" ^ (string_of_int (Alias_table.get table (name, sort))), sort)
 
 let substitute table =
   let rec su = function
@@ -16,6 +17,8 @@ let substitute table =
     | L.Many_op (o, es)    -> L.Many_op (o, List.map su es)
     | L.Query (loc, e)     -> L.Query (loc, su e)
     | L.Relation (lbl, vs) -> L.Relation (lbl, List.map (mk_alias table) vs)
+    | L.ArrSelect (a, i)   -> L.ArrSelect (su a, su i)
+    | L.ArrStore (a, i, e) -> L.ArrStore (su a, su i, su e)
     | e                    -> e
   in su
 

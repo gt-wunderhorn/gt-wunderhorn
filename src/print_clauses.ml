@@ -7,11 +7,16 @@ let parens strs = "(" ^ space_sep strs ^ ")"
 let header = line_sep
     [ "(set-option :fixedpoint.engine \"duality\")" ]
 
-let print_var v =
-  parens ["declare-var"; v ; "Int"]
+let rec sort = function
+  | L.Int -> "Int"
+  | L.Bool -> "Bool"
+  | L.Array s -> parens ["Array Int"; sort s]
+
+let print_var (v, s) =
+  parens ["declare-var"; v ; sort s]
 
 let print_rel (lbl, vs) =
-  parens ["declare-rel"; "r_" ^ lbl; parens (List.map (fun v -> "Int") vs)]
+  parens ["declare-rel"; "r_" ^ lbl; parens (List.map (fun (_, s) -> sort s) vs)]
 
 let show_un_op = function
   | L.Not -> "not"
@@ -30,15 +35,17 @@ let show_many_op = function
 
 let print_expr expr =
   let rec ex = function
-    | L.Query (lbl, e)     -> parens ["q_" ^ lbl; ex e]
-    | L.Relation (lbl, vs) -> parens (("r_" ^ lbl) :: vs)
-    | L.Var v              -> v
-    | L.Un_op (op, e)      -> parens [show_un_op op; ex e]
-    | L.Bi_op (op, e1, e2) -> parens [show_bi_op op; ex e1; ex e2]
-    | L.Many_op (op, es)   -> parens (show_many_op op :: List.map ex es)
-    | L.Int_lit i          -> string_of_int i
-    | L.True               -> "true"
-    | L.False              -> "false" in
+    | L.Query (lbl, e)         -> parens ["q_" ^ lbl; ex e]
+    | L.Relation (lbl, vs)     -> parens (("r_" ^ lbl) :: (List.map fst vs))
+    | L.Var v                  -> fst v
+    | L.Un_op (op, e)          -> parens [show_un_op op; ex e]
+    | L.Bi_op (op, e1, e2)     -> parens [show_bi_op op; ex e1; ex e2]
+    | L.Many_op (op, es)       -> parens (show_many_op op :: List.map ex es)
+    | L.ArrStore (arr, idx, e) -> parens ["store"; ex arr; ex idx; ex e]
+    | L.ArrSelect (e1, e2)     -> parens ["select"; ex e1; ex e2]
+    | L.Int_lit i              -> string_of_int i
+    | L.True                   -> "true"
+    | L.False                  -> "false" in
   parens ["rule"; ex expr]
 
 let declare_query (lbl, _) = parens ["declare-rel"; "q_" ^ lbl; parens ["Int"]]

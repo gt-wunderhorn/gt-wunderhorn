@@ -1,4 +1,9 @@
-type var = string
+type sort =
+  | Int
+  | Bool
+  | Array of sort
+
+type var = string * sort
 
 module V_set = Set_ext.Make(
   struct type t = var;; let compare = compare end)
@@ -18,6 +23,8 @@ type expr =
   | Un_op of un_op * expr
   | Bi_op of bi_op * expr * expr
   | Many_op of many_op * expr list
+  | ArrStore of expr * expr * expr
+  | ArrSelect of expr * expr
   | Int_lit of int
   | True
   | False
@@ -34,6 +41,7 @@ let mk_not = function
   | e -> Un_op (Not, e)
 let mk_impl e1 e2 = Bi_op (Impl, e1, e2)
 let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
+let mk_add e1 e2 = Bi_op (Add, e1, e2)
 let mk_and = function
   | [e] -> e
   | es -> Many_op (And, es)
@@ -58,6 +66,8 @@ let expr_vars e =
     | Un_op (_, e)      -> ex e
     | Bi_op (_, e1, e2) -> V_set.union (ex e1) (ex e2)
     | Many_op (_, es)   -> V_set.unions_map ex es
+    | ArrSelect (a, i)  -> V_set.union (ex a) (ex i)
+    | ArrStore (a, i, e)-> V_set.unions [ex a; ex i; ex e]
     | _                 -> V_set.empty
   in ex e
 
@@ -67,6 +77,8 @@ let expr_rels e =
     | Un_op (_, e)      -> ex e
     | Bi_op (_, e1, e2) -> R_set.union (ex e1) (ex e2)
     | Many_op (_, es)   -> R_set.unions_map ex es
+    | ArrSelect (a, i)  -> R_set.union (ex a) (ex i)
+    | ArrStore (a, i, e)-> R_set.unions [ex a; ex i; ex e]
     | _                 -> R_set.empty
   in ex e
 
@@ -76,6 +88,8 @@ let queries e =
     | Un_op (_, e)      -> ex e
     | Bi_op (_, e1, e2) -> Q_set.union (ex e1) (ex e2)
     | Many_op (_, es)   -> Q_set.unions_map ex es
+    | ArrSelect (a, i)  -> Q_set.union (ex a) (ex i)
+    | ArrStore (a, i, e)-> Q_set.unions [ex a; ex i; ex e]
     | _                 -> Q_set.empty
   in ex e
 
