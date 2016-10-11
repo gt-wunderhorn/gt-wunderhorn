@@ -1,69 +1,60 @@
-open Ir
+module L = Lang
 
 let line_sep = String.concat "\n"
 let space_sep = String.concat " "
 let parens strs = "(" ^ space_sep strs ^ ")"
 
-let header =
-  line_sep
+let header = line_sep
     [ "(set-option :fixedpoint.engine \"duality\")" ]
 
-let rec show_sort = function
-  | Array s -> parens ["Array"; "Int"; show_sort s]
-  | Int     -> "Int"
-  | Bool    -> "Bool"
-
-let show_var (Variable (v, _)) = v
-let show_var_sort (Variable (_, s)) = show_sort s
-
 let print_var v =
-  parens ["declare-var"; show_var v ; show_var_sort v]
+  parens ["declare-var"; v ; "Int"]
 
 let print_rel (lbl, vs) =
-  parens ["declare-rel"; lbl; parens (List.map show_var_sort vs)]
+  parens ["declare-rel"; "r_" ^ lbl; parens (List.map (fun v -> "Int") vs)]
 
-let print_expr query_count expr =
+let show_un_op = function
+  | L.Not -> "not"
+
+let show_bi_op = function
+  | L.Add  -> "+"
+  | L.Eq   -> "="
+  | L.Ge   -> ">="
+  | L.Gt   -> ">"
+  | L.Le   -> "<="
+  | L.Lt   -> "<"
+  | L.Impl -> "=>"
+
+let show_many_op = function
+  | L.And -> "and"
+
+let print_expr expr =
   let rec ex = function
-    | Relation (lbl, vs) -> parens (lbl :: List.map show_var vs)
-    | Query e ->
-      query_count := !query_count + 1;
-      parens ["q" ^ string_of_int !query_count; ex e]
-    | ArrStore (arr, idx, e) ->
-      parens ["store"; ex arr; ex idx; ex e]
-    | ArrSelect (e1, e2) -> parens ["select"; ex e1; ex e2]
-    | Var v              -> show_var v
-    | Add (e1, e2)       -> parens ["+";  ex e1; ex e2]
-    | Eq (e1, e2)        -> parens ["=";  ex e1; ex e2]
-    | Ge (e1, e2)        -> parens [">="; ex e1; ex e2]
-    | Gt (e1, e2)        -> parens [">";  ex e1; ex e2]
-    | Le (e1, e2)        -> parens ["<="; ex e1; ex e2]
-    | Lt (e1, e2)        -> parens ["<";  ex e1; ex e2]
-    | Implies (e1, e2)   -> parens ["=>"; ex e1; ex e2]
-    | And es             -> parens ("and" :: List.map ex es)
-    | Not e              -> parens ["not"; ex e]
-    | Int_lit i          -> string_of_int i
-    | True               -> "true"
-    | False              -> "false" in
+    | L.Query (lbl, e)     -> parens ["q_" ^ lbl; ex e]
+    | L.Relation (lbl, vs) -> parens (("r_" ^ lbl) :: vs)
+    | L.Var v              -> v
+    | L.Un_op (op, e)      -> parens [show_un_op op; ex e]
+    | L.Bi_op (op, e1, e2) -> parens [show_bi_op op; ex e1; ex e2]
+    | L.Many_op (op, es)   -> parens (show_many_op op :: List.map ex es)
+    | L.Int_lit i          -> string_of_int i
+    | L.True               -> "true"
+    | L.False              -> "false" in
   parens ["rule"; ex expr]
 
-let rec range start stop =
-  if start == stop then [] else start :: (range (start+1) stop)
+let declare_query (lbl, _) = parens ["declare-rel"; "q_" ^ lbl; parens ["Int"]]
 
-let declare_query n = parens ["declare-rel"; "q" ^ string_of_int n; parens ["Int"]]
-let query n = parens ["query"; "q" ^ string_of_int n]
+let query (lbl, _) = parens ["query"; "q_" ^ lbl]
 
 let print exprs =
-
-  let vars = Var_set.unions_map expr_vars exprs in
-  let rels = Rel_set.unions_map expr_rels exprs in
-
-  let query_count = ref (-1) in
+  let vars = L.V_set.unions_map L.expr_vars exprs in
+  let rels = L.R_set.unions_map L.expr_rels exprs in
+  let queries = L.Q_set.elements (L.Q_set.unions_map L.queries exprs) in
 
   line_sep
     [ header
-    ; line_sep (List.map print_var (Var_set.elements vars))
-    ; line_sep (List.map print_rel (Rel_set.elements rels))
-    ; line_sep (List.map declare_query (range 0 (num_queries exprs)))
-    ; line_sep (List.map (print_expr query_count) exprs)
-    ; line_sep (List.map query (range 0 (num_queries exprs)))
+    ; line_sep (List.map print_var (L.V_set.elements vars))
+    ; line_sep (List.map print_rel (L.R_set.elements rels))
+    ; line_sep (List.map declare_query queries)
+    ; line_sep (List.map print_expr exprs)
+    ; line_sep (List.map query queries)
     ]

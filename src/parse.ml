@@ -8,15 +8,17 @@ module JC = Sawja_pack.JControlFlow
 module Cmm = JB.ClassMethodMap
 module Mm = JB.MethodMap
 
-type 'a parse = { cms_lookup :
-                    JB.class_method_signature ->
-                    'a Ir.procedure
+type parse = { cms_lookup :
+                 JB.class_method_signature ->
+                 Proc.t
 
-                ; virtual_lookup :
-                    J.virtual_call_kind ->
-                    JB.method_signature ->
-                    ('a Ir.procedure) list
-                }
+(* ; virtual_lookup : *)
+(*     J.virtual_call_kind -> *)
+(*     JB.method_signature -> *)
+(*     ('a Ir.procedure) list *)
+             }
+module Cms_map = Map.Make(
+  struct type t = JB.class_method_signature;; let compare = compare end)
 
 type method_map =
   JB.class_method_signature ->
@@ -39,34 +41,45 @@ let parse id classpath cn =
     match cm.JL.cm_implementation with
     | JL.Native -> assert false
     | JL.Java x ->
-      { Ir.id    = "p" ^ string_of_int !id
-      ; params   = List.map (Var.tvar) (J.params (Lazy.force x))
-      ; ret_sort = Ir.Int (* TODO, where can I can get sort from? *)
-      ; content  = Array.to_list (J.code (Lazy.force x))
+      { Proc.id = "p" ^ string_of_int !id ^ "_"
+      ; Proc.params = List.map snd (J.params (Lazy.force x))
+      ; Proc.content = Array.to_list (J.code (Lazy.force x))
+      ; Proc.v_count = 0
+      ; Proc.assignments = Proc.V_map.empty
+        (* ; ret_sort = Ir.Int (1* TODO, where can I can get sort from? *1) *)
       } in
 
 
-  let virtual_lookup target ms =
-    let nodes = match target with
-      | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms
-      | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in
+  (* let virtual_lookup target ms = *)
+  (*   let nodes = match target with *)
+  (*     | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms *)
+  (*     | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in *)
 
-    let node_impl = function
-      | JP.Interface _ -> [] (* We only need to consider concrete implementations *)
-      | JP.Class node  -> [Mm.find ms (node.JP.c_info.JL.c_methods)] in
+  (*   let node_impl = function *)
+  (*     | JP.Interface _ -> [] (1* We only need to consider concrete implementations *1) *)
+  (*     | JP.Class node  -> [Mm.find ms (node.JP.c_info.JL.c_methods)] in *)
 
-    let get_inner_method = function
-      | JL.AbstractMethod _ -> assert false (* TODO *)
-      | JL.ConcreteMethod m -> m in
+  (*   let get_inner_method = function *)
+  (*     | JL.AbstractMethod _ -> assert false (1* TODO *1) *)
+  (*     | JL.ConcreteMethod m -> m in *)
 
-    nodes
-    |> List.map node_impl
-    |> List.concat
-    |> List.map (fun m -> parse_method (get_inner_method m)) in
+  (*   nodes *)
+  (*   |> List.map node_impl *)
+  (*   |> List.concat *)
+  (*   |> List.map (fun m -> parse_method (get_inner_method m)) in *)
 
-  let cms_lookup cms=
-    parse_method (snd (Cmm.find cms methods)) in
+  let cms_map = ref (Cms_map.empty) in
+
+  let cms_lookup cms =
+    if Cms_map.mem cms !cms_map
+    then
+      Cms_map.find cms !cms_map
+    else
+      let meth = parse_method (snd (Cmm.find cms methods)) in
+      cms_map := Cms_map.add cms meth !cms_map;
+      meth
+  in
 
   { cms_lookup
-  ; virtual_lookup
+  (* ; virtual_lookup *)
   }
