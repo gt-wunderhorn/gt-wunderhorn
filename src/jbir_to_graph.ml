@@ -34,12 +34,15 @@ let binop op x y = match op with
   | J.LUshr       -> assert false (* TODO *)
   | J.CMP _       -> assert false (* TODO *)
 
+let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
+
 let rec expr st = function
   | J.Const c -> const c
   | J.Var (t, v) -> L.Var (Proc.var st v)
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop _            -> assert false (* TODO *)
-  | J.Field (v, cn, fs) -> assert false (* TODO *)
+  | J.Field (v, cn, fs) ->
+    L.ArrSelect (L.Var (field_array_name cn fs, L.Array L.Int), expr st v)
   | J.StaticField _     -> assert false (* TODO *)
 
 let rec comp st cond x y = match cond with
@@ -92,7 +95,12 @@ let rec instr parse st line instr =
                      expr st arr,
                      L.ArrStore (sub_array, expr st ind, expr st e)))])
 
-  | J.AffectField (v, cn, fs, e) -> assert false
+  | J.AffectField (v, cn, fs, e) ->
+    let field_array = (field_array_name cn fs, L.Array L.Int) in (* TODO, array type *)
+
+    L.PG.singleton
+      (this, next,
+       [L.Assign (field_array , L.ArrStore (L.Var field_array, expr st v, expr st e))])
   | J.AffectStaticField _ -> assert false
   | J.Goto l -> L.PG.singleton (this, mk_lbl l, [])
   | J.Ifd ((cond, x, y), l) ->
@@ -108,9 +116,8 @@ let rec instr parse st line instr =
        match e with
        | None   -> (this, lbl, [])
        | Some e -> (this, lbl, [L.Assign (retvar, expr st e)]))
-  | J.New (v, cn, t, es) -> assert false
-  | J.NewArray (v, t, es) ->
-    build_identity v
+  | J.New (v, cn, t, es) -> build_identity v
+  | J.NewArray (v, t, es) -> build_identity v
   | J.InvokeStatic (v, cn, ms, args) ->
     if (JB.ms_name ms) = "ensure"
     then L.PG.of_list
