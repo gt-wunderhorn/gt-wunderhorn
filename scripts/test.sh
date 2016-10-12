@@ -1,37 +1,43 @@
 #!/bin/bash
 
-function expect_fail {
+function run {
   res=$(scripts/run_test.sh $1 | tail -1)
-  if [ "$res" != "sat" ]; then
-    echo "$1 failed: $res"
+  fn=$(basename "$1")
+  ext="${fn##*.}"
+
+
+  if [ "$ext" == "pass" ]; then
+    if [ "$res" != "unsat" ]; then
+      echo "$1 failed: $res"
+      exit 1
+    fi
+  elif [ "$ext" == "fail" ]; then
+    if [ "$res" != "sat" ]; then
+      echo "$1 failed: $res"
+      exit 1
+    fi
+  else
+    echo "invalid extension: $ext"
     exit 1
   fi
 }
 
-function expect_pass {
-  res=$(scripts/run_test.sh $1 | tail -1)
-  if [ "$res" != "unsat" ]; then
-    echo "$1 failed: $res"
-    exit 1
-  fi
-}
+# expect_pass ../test/method.pass
+# expect_pass ../test/nested.pass
 
-# expect_pass ../test/method.test
-# expect_pass ../test/nested.test
-
-expect_fail ../test/div_fail.test
-expect_pass ../test/div_pass.test
-expect_pass ../test/object_identity.test
-expect_pass ../test/field_pass.test
-expect_fail ../test/field_fail.test
-expect_pass ../test/array_pass.test
-expect_fail ../test/array_fail.test
-expect_pass ../test/multi_call_pass.test
-expect_pass ../test/call_pass.test
-expect_fail ../test/call_fail.test
-expect_pass ../test/while_pass.test
-expect_fail ../test/while_fail.test
-expect_pass ../test/if_pass.test
-expect_fail ../test/if_fail.test
-expect_pass ../test/linear_pass.test
-expect_fail ../test/linear_fail.test
+run ../test/div.pass
+run ../test/div.fail
+run ../test/object_identity.pass
+run ../test/field.pass
+run ../test/field.fail
+run ../test/array.pass
+run ../test/array.fail
+run ../test/multi_call.pass
+run ../test/call.pass
+run ../test/call.fail
+run ../test/while.pass
+run ../test/while.fail
+run ../test/if.pass
+run ../test/if.fail
+run ../test/linear.pass
+run ../test/linear.fail
