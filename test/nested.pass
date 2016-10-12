@@ -1,0 +1,18 @@
+public static void main(String[] args) {
+  Test t = new Test();
+  t.f();
+  ensure(t.x == 1);
+}
+
+void f() {
+  A a = new A();
+  a.g();
+}
+
+class A {
+  void g() {
+    x = 1;
+  }
+}
+
+int x;

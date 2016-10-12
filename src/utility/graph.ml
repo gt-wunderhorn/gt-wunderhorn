@@ -1,81 +1,130 @@
+(** `converge` repeatedly applies a function `f` to an argument `x` until
+    the change in `x` caused by `f` is stable. *)
+let converge is_stable f x =
+  let rec converge' x x' =
+    if is_stable x x' then x'
+    else converge' x' (f x')
+  in
+  converge' x (f x)
+
 module type Graph_info = sig
   type node
   type edge
 end
 
-module Make (T : Graph_info) = struct
-  type connected_edge =
-    { initial  : T.node
-    ; terminal : T.node
-    ; content  : T.edge
-    }
+module Make(T : Graph_info) = struct
+  module S = Set_ext.Make(
+    struct type t = T.node * T.node * T.edge;; let compare = compare end)
 
-  module CE_set = Set_ext.Make(
-    struct type t = connected_edge;; let compare = compare end)
+  module N = Set_ext.Make(
+    struct type t = T.node;; let compare = compare end)
 
-  type t = CE_set.t
+  type t = S.t
 
-  let empty = CE_set.empty
-  let merge = CE_set.union
-  let merges = CE_set.unions
+  let empty = S.empty
+  let singleton = S.singleton
+  let elements = S.elements
+  let union = S.union
+  let unions = S.unions
+  let filter = S.filter
+  let cardinal = S.cardinal
+  let choose = S.choose
+  let add = S.add
+  let diff = S.diff
+  let remove = S.remove
+  let of_list = S.of_list
 
-  let add initial terminal content =
-    CE_set.add ({ initial; terminal; content })
+  let init (i, _, _) = i
+  let term (_, t, _) = t
+  let edge (_, _, e) = e
 
-  let filter p = CE_set.filter (fun e -> p (e.content))
-
-  let from_list c_edges =
-    c_edges
-    |> List.map (fun (initial, terminal, content) ->
-        { initial; terminal; content })
-    |> CE_set.of_list
-
-  let singleton (initial, terminal, content) =
-    CE_set.singleton { initial; terminal; content }
-
-  let c_edges = CE_set.elements
+  (** Given a graph, get a list of all the edges *)
+  let edges g =
+    g |> elements |> List.map edge
 
   let nodes g =
-    g |> c_edges
-    |> List.map (fun e -> [e.initial; e.terminal])
+    g |> elements
+    |> List.map (fun ce -> [init ce; term ce])
     |> List.concat
+    |> N.of_list
+    |> N.elements
+
+  (** Find the subgraph where all edges terminate at a given node. *)
+  let parents g n = filter (fun (i, t, e) -> t = n) g
+
+  (** Find the subgraph where all edges initiate at a given node. *)
+  let children g n = filter (fun (i, t, e) -> i = n) g
+
+  (** Recursively find all paths from a particular node. The direction of search
+      is determined by `selector` and `direction`. Note that each node can only
+      be visited exactly once. *)
+  let find_paths selector direction g n =
+    let visited = ref [] in
+    let rec find_paths' g n =
+      if List.mem n !visited
+      then []
+      else
+        let local_edges = elements (direction g n) in
+        visited := n :: !visited;
+        let paths = List.map (fun e -> find_paths' g (selector e)) local_edges in
+        let local_paths = List.map (fun p -> [p]) local_edges in
+        let add_to_path edge path = path @ [edge] in
+        let connect_paths paths edge = List.map (add_to_path edge) paths in
+        let extended_paths =
+          (List.map2 connect_paths paths local_edges) |> List.concat in
+        local_paths @ extended_paths
+    in
+    find_paths' g n
     |> List.sort_uniq compare
 
-  let edges g =
-    g |> c_edges
-    |> List.map (fun e -> e.content)
+  (** What are the paths that terminate at the given node? *)
+  let paths_to = find_paths init parents
+  (** What are the paths that initiate at the given node? *)
+  let paths_from = find_paths term children
 
-  let connected_edges g =
-    g |> c_edges
-    |> List.map (fun e -> (e.initial, e.terminal, e.content))
-  (** Find the subgraph which is reachable using the node selector to compare
-      each edge against the given node.
+  (** Find the set of edges which are eventually connected to a starting node
+      in a particular direction. *)
+  let follow selector direction g n =
+    find_paths selector direction g n
+    |> List.concat
+    |> of_list
 
-      The algorithm maintains a `visited` list which indicates whether or not a
-      particular node has already been visited. This is to prevent the algorithm
-      from hanging when there are graphs which loop. *)
-  let reachable node_selector node graph =
-    let visited = ref [] in
-    let rec reachable node =
-      if List.mem node !visited
-      then CE_set.empty
-      else let neighbors = CE_set.filter (fun ce -> node_selector ce = node) graph in
-        visited := node :: !visited;
-        CE_set.union
-          neighbors
-          (nodes neighbors
-           |> List.map reachable
-           |> CE_set.unions) in
-    reachable node
+  (** Which edges eventually reach the node? *)
+  let reaches = follow init parents
+  (** Which edges eventually are reached from the node? *)
+  let reached_by = follow term children
 
-  let reached_by = reachable (fun e -> e.initial)
-  let reaches = reachable (fun e -> e.terminal)
 
-  let display print_node print_edge g =
-    g |> c_edges
-    |> List.map (fun e -> String.concat " "
-                    [ print_node e.initial
-                    ; print_node e.terminal
-                    ; print_edge e.content ])
+  (** We define a `bridge` node as being one which only has a single input edge
+      and a single output edge. `simplify` removes bridge nodes by combining
+      the input and output edge using `comcbine`. *)
+  let simplify combine =
+    let simplify' g =
+      let g' = ref g in
+
+      let simp_node n =
+        let g = !g' in
+        let ps = parents g n in
+        let cs = children g n in
+        if cardinal ps = 1 && cardinal cs = 1
+        then
+          (* When we've found a bridge, we removed both bridge edges and add
+             a new edge which combines the edges of the two removed edges. *)
+          let p = choose ps in
+          let c = choose cs in
+          g' := remove p !g';
+          g' := remove c !g';
+          g' := add (init p, term c, combine (edge p) (edge c)) !g'
+      in
+
+      g |> nodes |> List.iter simp_node;
+      !g'
+    in
+
+    converge (=) simplify'
+
+  let display sn se g =
+    g |> elements
+    |> List.map (fun (i, t, e) -> String.concat " " [sn i; sn t; se e])
     |> String.concat "\n"
 end

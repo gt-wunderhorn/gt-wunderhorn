@@ -1,0 +1,15 @@
+The return location needs to be bound only over the variables which matter.
+How can that be better determined?
+
+At the moment, the way to do this is to specify that the return condition is
+not directly connected on the graph, but rather is done so implicitly. It would
+actually be preferable to make that explicit, where the call site is a parameter
+to the function.
+
+However, the LOCALS of the caller need to be thrown away when considering a
+function. The GLOBALS should not! It seems that this means that there needs
+to be a notion of locality somewhere.
+
+In other words, each instruction needs a pool of variables which are available
+to it. This way, the function entrance will not have the variable available at
+all.
