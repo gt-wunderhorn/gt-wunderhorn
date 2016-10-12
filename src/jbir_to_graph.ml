@@ -10,8 +10,8 @@ type instr_state =
 let const = function
   | `ANull    -> assert false (* TODO *)
   | `Class _  -> assert false (* TODO *)
-  | `Double f -> assert false (* TODO *)
-  | `Float f  -> assert false (* TODO *)
+  | `Double f -> L.Real_lit f
+  | `Float f  -> L.Real_lit f
   | `Int i    -> L.Int_lit (Int32.to_int i)
   | `Long i   -> assert false (* TODO *)
   | `String s -> assert false (* TODO *)
@@ -46,7 +46,7 @@ let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
 let rec expr st = function
   | J.Const c -> const c
-  | J.Var (t, v) -> L.Var (Proc.var st.st v)
+  | J.Var (t, v) -> L.Var (Proc.var st.st v (Proc.sort t))
   | J.Binop (op, x, y)  -> binop st op (expr st x) (expr st y)
   | J.Unop _            -> assert false (* TODO *)
   | J.Field (v, cn, fs) ->
@@ -86,85 +86,90 @@ let rec instr parse proc line instr =
     L.PG.singleton
       (this, next,
        [ L.Assign (count, L.mk_add (L.Var count) (L.Int_lit 1))
-       ; L.Assign (Proc.var st.st v, L.Var count)
+       ; L.Assign (Proc.var st.st v L.Int, L.Var count)
        ]) in
 
   let g = match instr with
-  | J.Nop -> noop ()
-  | J.AffectVar (v, e) ->
-    L.PG.singleton (this, next, [L.Assign (Proc.var st.st v, expr st e)])
-  | J.AffectArray (arr, ind, e) ->
-    let array_array =
-      ("ARRAY", L.Array (L.Array L.Int)) in (* TODO, array type *)
+    | J.Nop -> noop ()
+    | J.AffectVar (v, e) ->
+      let ex = expr st e in
+      L.PG.singleton
+        (this, next,
+         [L.Assign (Proc.var st.st v (L.expr_sort ex), ex)])
+    | J.AffectArray (arr, ind, e) ->
+      let array_array =
+        ("ARRAY", L.Array (L.Array L.Int)) in (* TODO, array type *)
 
-    let sub_array =
-      L.ArrSelect (L.Var array_array, expr st arr) in
+      let sub_array =
+        L.ArrSelect (L.Var array_array, expr st arr) in
 
-    L.PG.singleton
-      (this, next,
-       [L.Assign (array_array
-                 , L.ArrStore (
-                     L.Var array_array,
-                     expr st arr,
-                     L.ArrStore (sub_array, expr st ind, expr st e)))])
+      L.PG.singleton
+        (this, next,
+         [L.Assign (array_array
+                   , L.ArrStore (
+                       L.Var array_array,
+                       expr st arr,
+                       L.ArrStore (sub_array, expr st ind, expr st e)))])
 
-  | J.AffectField (v, cn, fs, e) ->
-    let field_array = (field_array_name cn fs, L.Array L.Int) in (* TODO, array type *)
+    | J.AffectField (v, cn, fs, e) ->
+      let field_array = (field_array_name cn fs, L.Array L.Int) in (* TODO, array type *)
 
-    L.PG.singleton
-      (this, next,
-       [L.Assign (field_array , L.ArrStore (L.Var field_array, expr st v, expr st e))])
-  | J.AffectStaticField _ -> assert false
-  | J.Goto l -> L.PG.singleton (this, mk_lbl l, [])
-  | J.Ifd ((cond, x, y), l) ->
-    L.PG.of_list
-      [ (this, mk_lbl l, [L.Call (comp st cond x y)])
-      ; (this, next, [L.Call (comp st (opposite cond) x y)])
-      ]
-  | J.Throw _ -> assert false
-  | J.Return e ->
-    L.PG.singleton
-      (let lbl = id ^ "RET" in
-       let retvar = (id ^ "RETVAR", L.Int) in
-       match e with
-       | None   -> (this, lbl, [])
-       | Some e -> (this, lbl, [L.Assign (retvar, expr st e)]))
-  | J.New (v, cn, t, es) -> build_identity v
-  | J.NewArray (v, t, es) -> build_identity v
-  | J.InvokeStatic (v, cn, ms, args) ->
-    if (JB.ms_name ms) = "ensure"
-    then L.PG.of_list
-        [ (this, "NOWHERE", [(L.Assert (L.mk_eq (expr st (List.hd args)) (L.Int_lit 1)))])
-        ; (this, next, [])
+      L.PG.singleton
+        (this, next,
+         [L.Assign (field_array , L.ArrStore (L.Var field_array, expr st v, expr st e))])
+    | J.AffectStaticField _ -> assert false
+    | J.Goto l -> L.PG.singleton (this, mk_lbl l, [])
+    | J.Ifd ((cond, x, y), l) ->
+      L.PG.of_list
+        [ (this, mk_lbl l, [L.Call (comp st cond x y)])
+        ; (this, next, [L.Call (comp st (opposite cond) x y)])
         ]
-    else let v = match v with
-        | None -> ("DUMMY", L.Int)
-        | Some v -> Proc.var st.st v in
-      let proc = (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
-      let assignments = List.map2
-          (fun param arg -> L.Assign (param, expr st arg))
-          (List.map (Proc.var proc) proc.Proc.params)
-          args in
-      let ret = proc.Proc.id ^ "RET" in
-      let retvar = (proc.Proc.id ^ "RETVAR", L.Int) in
+    | J.Throw _ -> assert false
+    | J.Return e ->
+      L.PG.singleton
+        (let lbl = id ^ "RET" in
+         match e with
+         | None   -> (this, lbl, [])
+         | Some e ->
+           let ex = expr st e in
+           let retvar = (id ^ "RETVAR", (L.expr_sort ex)) in
+           (this, lbl, [L.Assign (retvar, ex)]))
+    | J.New (v, cn, t, es) -> build_identity v
+    | J.NewArray (v, t, es) -> build_identity v
+    | J.InvokeStatic (v, cn, ms, args) ->
+      if (JB.ms_name ms) = "ensure"
+      then L.PG.of_list
+          [ (this, "NOWHERE", [(L.Assert (L.mk_eq (expr st (List.hd args)) (L.Int_lit 1)))])
+          ; (this, next, [])
+          ]
+      else let v = match v with
+          | None -> ("DUMMY", L.Int)
+          | Some v -> Proc.var st.st v L.Int in
+        let proc = (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
+        let assignments = List.map2
+            (fun param arg -> L.Assign (param, expr st arg))
+            (List.map (fun (t, p) -> Proc.var proc p (Proc.sort t)) proc.Proc.params)
+            args in
+        let ret = proc.Proc.id ^ "RET" in
+        let retvar = (proc.Proc.id ^ "RETVAR", L.Int) in
 
-      let proc_graph = convert parse proc in
-      L.PG.union
-        (L.PG.of_list
-           [ (this, proc.Proc.id ^ "0", assignments)
-           ; (ret, next,
-              [ L.Relate this
-              ; L.Assign (v, L.Var retvar) ]) ])
-        proc_graph
+        let proc_graph = convert parse proc in
+        L.PG.union
+          (L.PG.of_list
+             [ (this, proc.Proc.id ^ "0", assignments)
+             ; (ret, next,
+                [ L.Relate this
+                ; L.Assign (v, L.Var retvar) ]) ])
+          proc_graph
 
-  (*         [Ir.Non_linear (Ir.Invoke (v, proc, List.map expr es))] *)
-  | J.InvokeVirtual (v, e, ck, ms, es) -> assert false (* TODO *)
-  | J.InvokeNonVirtual _    -> assert false (* TODO *)
-  | J.MonitorEnter _        -> assert false (* TODO *)
-  | J.MonitorExit _         -> assert false (* TODO *)
-  | J.MayInit _ -> noop ()
-  | J.Check _               -> noop ()
-  | J.Formula _             -> assert false (* TODO *)
+    (*         [Ir.Non_linear (Ir.Invoke (v, proc, List.map expr es))] *)
+    | J.InvokeVirtual (v, e, ck, ms, es) -> assert false (* TODO *)
+    | J.InvokeNonVirtual _    -> assert false (* TODO *)
+    | J.MonitorEnter _        -> assert false (* TODO *)
+    | J.MonitorExit _         -> assert false (* TODO *)
+    | J.MayInit _ -> noop ()
+    | J.Check _               -> noop ()
+    | J.Formula _             -> assert false (* TODO *)
 
   in
   if List.length st.extra_instrs > 0

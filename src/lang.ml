@@ -1,6 +1,7 @@
 type sort =
   | Int
   | Bool
+  | Real
   | Array of sort
 
 type var = string * sort
@@ -26,6 +27,7 @@ type expr =
   | ArrStore of expr * expr * expr
   | ArrSelect of expr * expr
   | Int_lit of int
+  | Real_lit of float
   | True
   | False
 and query = lbl * expr
@@ -35,6 +37,31 @@ type instr =
   | Assert of expr
   | Assign of var * expr
   | Call of expr
+
+let un_op_sort = function
+  | Not -> Bool
+
+let bi_op_sort = function
+  | Eq | Ge | Gt | Le | Lt | Impl -> Bool
+  | Add -> Int
+  | Div -> Int
+
+let many_op_sort = function
+  | And -> Bool
+
+let rec expr_sort = function
+  | Relation r       -> Bool
+  | Query q          -> Bool
+  | Var (_, s)       -> s
+  | Un_op (op, _)    -> un_op_sort op
+  | Bi_op (op, _, _) -> bi_op_sort op
+  | Many_op (op, _)  -> many_op_sort op
+  | ArrStore _       -> assert false
+  | ArrSelect _      -> assert false
+  | Int_lit _        -> Int
+  | Real_lit _       -> Real
+  | True             -> Bool
+  | False            -> Bool
 
 let mk_not = function
   | Un_op (Not, e) -> e

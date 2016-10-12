@@ -25,6 +25,8 @@ function run {
 # expect_pass ../test/method.pass
 # expect_pass ../test/nested.pass
 
+run ../test/float.pass
+run ../test/float.fail
 run ../test/div.pass
 run ../test/div.fail
 run ../test/object_identity.pass

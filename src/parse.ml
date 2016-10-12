@@ -42,7 +42,7 @@ let parse id classpath cn =
     | JL.Native -> assert false
     | JL.Java x ->
       { Proc.id = "p" ^ string_of_int !id ^ "_"
-      ; Proc.params = List.map snd (J.params (Lazy.force x))
+      ; Proc.params = J.params (Lazy.force x)
       ; Proc.content = Array.to_list (J.code (Lazy.force x))
       ; Proc.v_count = 0
       ; Proc.assignments = Proc.V_map.empty
