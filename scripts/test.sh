@@ -25,6 +25,10 @@ function run {
 # expect_pass ../test/method.pass
 # expect_pass ../test/nested.pass
 
+run ../test/not_null.pass
+run ../test/not_null.fail
+run ../test/is_null.pass
+run ../test/is_null.fail
 run ../test/float.pass
 run ../test/float.fail
 run ../test/div.pass

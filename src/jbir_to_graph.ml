@@ -8,7 +8,7 @@ type instr_state =
   }
 
 let const = function
-  | `ANull    -> assert false (* TODO *)
+  | `ANull    -> L.Int_lit 0
   | `Class _  -> assert false (* TODO *)
   | `Double f -> L.Real_lit f
   | `Float f  -> L.Real_lit f
@@ -69,6 +69,8 @@ let opposite = function
   | `Lt -> `Ge
   | `Ne -> `Eq
 
+let id_initialized = ref false
+
 let rec instr parse proc line instr =
   let id = proc.Proc.id in
   let mk_lbl n = id ^ string_of_int n in
@@ -82,11 +84,18 @@ let rec instr parse proc line instr =
     } in
 
   let build_identity v =
-    let count = ("COUNT", L.Int) in
+    let id = ("ID", L.Int) in
+    let id_init = if !id_initialized
+      then []
+      else
+        (id_initialized := true;
+         [L.Assign (id, L.Int_lit 1)]) in
+
     L.PG.singleton
       (this, next,
-       [ L.Assign (count, L.mk_add (L.Var count) (L.Int_lit 1))
-       ; L.Assign (Proc.var st.st v L.Int, L.Var count)
+       id_init @
+       [ L.Assign (id, L.mk_add (L.Var id) (L.Int_lit 1))
+       ; L.Assign (Proc.var st.st v L.Int, L.Var id)
        ]) in
 
   let g = match instr with
@@ -178,8 +187,6 @@ let rec instr parse proc line instr =
     L.PG.union extra_instrs g
   else
     g
-
-
 
 and convert parse proc =
   List.mapi (instr parse proc) proc.Proc.content
