@@ -14,7 +14,7 @@ type lbl = string
 type rel = lbl * var list
 
 type un_op = Not
-type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div
+type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div | Mul
 type many_op = And
 
 type expr =
@@ -38,30 +38,26 @@ type instr =
   | Assign of var * expr
   | Call of expr
 
-let un_op_sort = function
-  | Not -> Bool
-
-let bi_op_sort = function
-  | Eq | Ge | Gt | Le | Lt | Impl -> Bool
-  | Add -> Int
-  | Div -> Int
-
-let many_op_sort = function
-  | And -> Bool
-
 let rec expr_sort = function
-  | Relation r       -> Bool
-  | Query q          -> Bool
-  | Var (_, s)       -> s
-  | Un_op (op, _)    -> un_op_sort op
-  | Bi_op (op, _, _) -> bi_op_sort op
-  | Many_op (op, _)  -> many_op_sort op
-  | ArrStore _       -> assert false
-  | ArrSelect _      -> assert false
-  | Int_lit _        -> Int
-  | Real_lit _       -> Real
-  | True             -> Bool
-  | False            -> Bool
+  | Relation r         -> Bool
+  | Query q            -> Bool
+  | Var (_, s)         -> s
+  | Un_op (op, _)      -> un_op_sort op
+  | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
+  | Many_op (op, _)    -> many_op_sort op
+  | ArrStore _         -> assert false
+  | ArrSelect _        -> assert false
+  | Int_lit _          -> Int
+  | Real_lit _         -> Real
+  | True               -> Bool
+  | False              -> Bool
+and un_op_sort = function
+  | Not -> Bool
+and bi_op_sort op e1 e2 = match op with
+  | Eq | Ge | Gt | Le | Lt | Impl -> Bool
+  | Add | Div | Mul -> expr_sort e1
+and many_op_sort = function
+  | And -> Bool
 
 let mk_not = function
   | Un_op (Not, e) -> e
@@ -70,6 +66,7 @@ let mk_impl e1 e2 = Bi_op (Impl, e1, e2)
 let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
 let mk_add e1 e2 = Bi_op (Add, e1, e2)
 let mk_div e1 e2 = Bi_op (Div, e1, e2)
+let mk_mul e1 e2 = Bi_op (Mul, e1, e2)
 let mk_and = function
   | [e] -> e
   | es -> Many_op (And, es)

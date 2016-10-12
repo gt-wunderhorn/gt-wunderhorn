@@ -13,7 +13,7 @@ let const = function
   | `Double f -> L.Real_lit f
   | `Float f  -> L.Real_lit f
   | `Int i    -> L.Int_lit (Int32.to_int i)
-  | `Long i   -> assert false (* TODO *)
+  | `Long i   -> L.Int_lit (Int64.to_int i)
   | `String s -> assert false (* TODO *)
 
 let binop st op x y = match op with
@@ -22,7 +22,7 @@ let binop st op x y = match op with
     L.ArrSelect (L.ArrSelect (L.Var array_array, x), y)
   | J.Add _       -> L.mk_add x y
   | J.Sub _       -> assert false (* TODO *)
-  | J.Mult _      -> assert false (* TODO *)
+  | J.Mult _      -> L.mk_mul x y
   | J.Div _       ->
     st.extra_instrs <-
       (L.Assert (L.mk_not (L.mk_eq y (L.Int_lit 0)))) :: st.extra_instrs;
@@ -106,8 +106,9 @@ let rec instr parse proc line instr =
         (this, next,
          [L.Assign (Proc.var st.st v (L.expr_sort ex), ex)])
     | J.AffectArray (arr, ind, e) ->
+      let ex = expr st e in
       let array_array =
-        ("ARRAY", L.Array (L.Array L.Int)) in (* TODO, array type *)
+        ("ARRAY", L.Array (L.Array (L.expr_sort ex))) in (* TODO, array type *)
 
       let sub_array =
         L.ArrSelect (L.Var array_array, expr st arr) in
@@ -118,7 +119,7 @@ let rec instr parse proc line instr =
                    , L.ArrStore (
                        L.Var array_array,
                        expr st arr,
-                       L.ArrStore (sub_array, expr st ind, expr st e)))])
+                       L.ArrStore (sub_array, expr st ind, ex)))])
 
     | J.AffectField (v, cn, fs, e) ->
       let field_array = (field_array_name cn fs, L.Array L.Int) in (* TODO, array type *)
@@ -171,7 +172,6 @@ let rec instr parse proc line instr =
                 ; L.Assign (v, L.Var retvar) ]) ])
           proc_graph
 
-    (*         [Ir.Non_linear (Ir.Invoke (v, proc, List.map expr es))] *)
     | J.InvokeVirtual (v, e, ck, ms, es) -> assert false (* TODO *)
     | J.InvokeNonVirtual _    -> assert false (* TODO *)
     | J.MonitorEnter _        -> assert false (* TODO *)
