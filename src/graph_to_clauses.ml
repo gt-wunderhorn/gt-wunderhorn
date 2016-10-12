@@ -29,15 +29,14 @@ let mk_condition table label vars =
     L.Relation (label, List.map (mk_alias table) (L.V_set.elements vars))
 
 let reduce_instr p table = function
-  | L.Relate lbl ->
-    mk_condition table lbl (L.critical_vars p lbl)
-  | L.Assign (v, e) ->
-    let rhs = substitute table e in
-    Alias_table.increment table v;
-    let v = mk_alias table v in
-    L.Bi_op (L.Eq, L.Var v, rhs)
+  | L.Relate lbl -> mk_condition table lbl (L.critical_vars p lbl)
   | L.Call e -> substitute table e
   | L.Assert _ -> assert false
+  | L.Assign (v, e) ->
+    (* Calculating the rhs needs to occur before incrementing the variable *)
+    let rhs = substitute table e in
+    Alias_table.increment table v;
+    L.Bi_op (L.Eq, L.Var (mk_alias table v), rhs)
 
 let translate_path p (init, term, path) =
   let initial_vars  = L.critical_vars p init in
@@ -49,7 +48,7 @@ let translate_path p (init, term, path) =
   match path with
   | [L.Assert e] ->
     L.mk_impl
-      (L.mk_not (L.mk_impl precondition (L.mk_eq (substitute table e) (L.Int_lit 1))))
+      (L.mk_not (L.mk_impl precondition (substitute table e)))
       (substitute table (L.Query (init, e)))
 
   | path ->

@@ -23,6 +23,7 @@ let show_un_op = function
 
 let show_bi_op = function
   | L.Add  -> "+"
+  | L.Div  -> "/"
   | L.Eq   -> "="
   | L.Ge   -> ">="
   | L.Gt   -> ">"
@@ -48,7 +49,7 @@ let print_expr expr =
     | L.False                  -> "false" in
   parens ["rule"; ex expr]
 
-let declare_query (lbl, _) = parens ["declare-rel"; "q_" ^ lbl; parens ["Int"]]
+let declare_query (lbl, _) = parens ["declare-rel"; "q_" ^ lbl; parens ["Bool"]]
 
 let query (lbl, _) = parens ["query"; "q_" ^ lbl]
 

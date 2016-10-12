@@ -19,6 +19,8 @@ function expect_pass {
 # expect_pass ../test/method.test
 # expect_pass ../test/nested.test
 
+expect_fail ../test/div_fail.test
+expect_pass ../test/div_pass.test
 expect_pass ../test/object_identity.test
 expect_pass ../test/field_pass.test
 expect_fail ../test/field_fail.test

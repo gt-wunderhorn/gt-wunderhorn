@@ -2,6 +2,11 @@ module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
 module L = Lang
 
+type instr_state =
+  { st : Proc.t
+  ; mutable extra_instrs : L.instr list
+  }
+
 let const = function
   | `ANull    -> assert false (* TODO *)
   | `Class _  -> assert false (* TODO *)
@@ -11,14 +16,17 @@ let const = function
   | `Long i   -> assert false (* TODO *)
   | `String s -> assert false (* TODO *)
 
-let binop op x y = match op with
+let binop st op x y = match op with
   | J.ArrayLoad _ ->
     let array_array = ("ARRAY", L.Array (L.Array L.Int)) in
     L.ArrSelect (L.ArrSelect (L.Var array_array, x), y)
   | J.Add _       -> L.mk_add x y
   | J.Sub _       -> assert false (* TODO *)
   | J.Mult _      -> assert false (* TODO *)
-  | J.Div _       -> assert false (* TODO *)
+  | J.Div _       ->
+    st.extra_instrs <-
+      (L.Assert (L.mk_not (L.mk_eq y (L.Int_lit 0)))) :: st.extra_instrs;
+    L.mk_div x y
   | J.Rem _       -> assert false (* TODO *)
   | J.IShl        -> assert false (* TODO *)
   | J.IShr        -> assert false (* TODO *)
@@ -38,8 +46,8 @@ let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
 let rec expr st = function
   | J.Const c -> const c
-  | J.Var (t, v) -> L.Var (Proc.var st v)
-  | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
+  | J.Var (t, v) -> L.Var (Proc.var st.st v)
+  | J.Binop (op, x, y)  -> binop st op (expr st x) (expr st y)
   | J.Unop _            -> assert false (* TODO *)
   | J.Field (v, cn, fs) ->
     L.ArrSelect (L.Var (field_array_name cn fs, L.Array L.Int), expr st v)
@@ -61,25 +69,30 @@ let opposite = function
   | `Lt -> `Ge
   | `Ne -> `Eq
 
-let rec instr parse st line instr =
-  let mk_lbl n = st.Proc.id ^ string_of_int n in
+let rec instr parse proc line instr =
+  let id = proc.Proc.id in
+  let mk_lbl n = id ^ string_of_int n in
   let this = mk_lbl line in
   let next = mk_lbl (line+1) in
   let noop _ = L.PG.singleton (this, next, []) in
-  let id = st.Proc.id in
+
+  let st =
+    { st = proc
+    ; extra_instrs = []
+    } in
 
   let build_identity v =
     let count = ("COUNT", L.Int) in
     L.PG.singleton
       (this, next,
        [ L.Assign (count, L.mk_add (L.Var count) (L.Int_lit 1))
-       ; L.Assign (Proc.var st v, L.Var count)
+       ; L.Assign (Proc.var st.st v, L.Var count)
        ]) in
 
-  match instr with
+  let g = match instr with
   | J.Nop -> noop ()
   | J.AffectVar (v, e) ->
-    L.PG.singleton (this, next, [L.Assign (Proc.var st v, expr st e)])
+    L.PG.singleton (this, next, [L.Assign (Proc.var st.st v, expr st e)])
   | J.AffectArray (arr, ind, e) ->
     let array_array =
       ("ARRAY", L.Array (L.Array L.Int)) in (* TODO, array type *)
@@ -121,12 +134,12 @@ let rec instr parse st line instr =
   | J.InvokeStatic (v, cn, ms, args) ->
     if (JB.ms_name ms) = "ensure"
     then L.PG.of_list
-        [ (this, "NOWHERE", [(L.Assert (expr st (List.hd args)))])
+        [ (this, "NOWHERE", [(L.Assert (L.mk_eq (expr st (List.hd args)) (L.Int_lit 1)))])
         ; (this, next, [])
         ]
     else let v = match v with
         | None -> ("DUMMY", L.Int)
-        | Some v -> Proc.var st v in
+        | Some v -> Proc.var st.st v in
       let proc = (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
       let assignments = List.map2
           (fun param arg -> L.Assign (param, expr st arg))
@@ -152,6 +165,16 @@ let rec instr parse st line instr =
   | J.MayInit _ -> noop ()
   | J.Check _               -> noop ()
   | J.Formula _             -> assert false (* TODO *)
+
+  in
+  if List.length st.extra_instrs > 0
+  then
+    let extra_instrs = L.PG.singleton (this, "NOWHERE", st.extra_instrs) in
+    L.PG.union extra_instrs g
+  else
+    g
+
+
 
 and convert parse proc =
   List.mapi (instr parse proc) proc.Proc.content

@@ -13,7 +13,7 @@ type lbl = string
 type rel = lbl * var list
 
 type un_op = Not
-type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add
+type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div
 type many_op = And
 
 type expr =
@@ -42,6 +42,7 @@ let mk_not = function
 let mk_impl e1 e2 = Bi_op (Impl, e1, e2)
 let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
 let mk_add e1 e2 = Bi_op (Add, e1, e2)
+let mk_div e1 e2 = Bi_op (Div, e1, e2)
 let mk_and = function
   | [e] -> e
   | es -> Many_op (And, es)
