@@ -3,7 +3,7 @@ cd bin
 javac Test.java
 
 target=$(basename $1).z3
-./main.byte > $target
+./main.byte `cat ../classpath` Test > $target
 scheme-format $target > $target.tmp
 mv $target.tmp $target
 z3 $target
