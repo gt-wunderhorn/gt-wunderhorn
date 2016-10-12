@@ -22,9 +22,10 @@ function run {
   fi
 }
 
-# expect_pass ../test/method.pass
 # expect_pass ../test/nested.pass
 
+run ../test/method.pass
+run ../test/method.fail
 run ../test/return_real.fail
 run ../test/real_arith.fail
 run ../test/real_arith.pass

@@ -98,6 +98,30 @@ let rec instr parse proc line instr =
        ; L.Assign (Proc.var st.st v L.Int, L.Var id)
        ]) in
 
+  let call proc v args =
+    let sort = match proc.Proc.ret_type with
+      | None -> L.Int
+      | Some t -> Proc.sort t in
+    let v = match v with
+      | None -> ("DUMMY", L.Int)
+      | Some v -> Proc.var st.st v sort in
+    let assignments = List.map2
+        (fun param arg -> L.Assign (param, expr st arg))
+        (List.map (fun (t, p) -> Proc.var proc p (Proc.sort t)) proc.Proc.params)
+        args in
+    let ret = proc.Proc.id ^ "RET" in
+    let retvar = (proc.Proc.id ^ "RETVAR", sort) in
+
+    let proc_graph = convert parse proc in
+    L.PG.union
+      (L.PG.of_list
+         [ (this, proc.Proc.id ^ "0", assignments)
+         ; (ret, next,
+            [ L.Relate this
+            ; L.Assign (v, L.Var retvar) ]) ])
+      proc_graph
+  in
+
   let g = match instr with
     | J.Nop -> noop ()
     | J.AffectVar (v, e) ->
@@ -154,29 +178,11 @@ let rec instr parse proc line instr =
           ]
       else
         let proc = (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
-        let sort = match proc.Proc.ret_type with
-          | None -> L.Int
-          | Some t -> Proc.sort t in
-        let v = match v with
-          | None -> ("DUMMY", L.Int)
-          | Some v -> Proc.var st.st v sort in
-        let assignments = List.map2
-            (fun param arg -> L.Assign (param, expr st arg))
-            (List.map (fun (t, p) -> Proc.var proc p (Proc.sort t)) proc.Proc.params)
-            args in
-        let ret = proc.Proc.id ^ "RET" in
-        let retvar = (proc.Proc.id ^ "RETVAR", sort) in
+        call proc v args
 
-        let proc_graph = convert parse proc in
-        L.PG.union
-          (L.PG.of_list
-             [ (this, proc.Proc.id ^ "0", assignments)
-             ; (ret, next,
-                [ L.Relate this
-                ; L.Assign (v, L.Var retvar) ]) ])
-          proc_graph
-
-    | J.InvokeVirtual (v, e, ck, ms, es) -> assert false (* TODO *)
+    | J.InvokeVirtual (v, obj, ck, ms, args) ->
+      let proc = (List.hd (parse.Parse.virtual_lookup ck ms)) in (* TODO don't use hd *)
+      call proc v (obj :: args)
     | J.InvokeNonVirtual _    -> assert false (* TODO *)
     | J.MonitorEnter _        -> assert false (* TODO *)
     | J.MonitorExit _         -> assert false (* TODO *)

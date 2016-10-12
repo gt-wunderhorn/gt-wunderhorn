@@ -12,10 +12,10 @@ type parse = { cms_lookup :
                  JB.class_method_signature ->
                  Proc.t
 
-(* ; virtual_lookup : *)
-(*     J.virtual_call_kind -> *)
-(*     JB.method_signature -> *)
-(*     ('a Ir.procedure) list *)
+; virtual_lookup :
+    J.virtual_call_kind ->
+    JB.method_signature ->
+    Proc.t list
              }
 module Cms_map = Map.Make(
   struct type t = JB.class_method_signature;; let compare = compare end)
@@ -52,23 +52,23 @@ let parse id classpath cn =
       } in
 
 
-  (* let virtual_lookup target ms = *)
-  (*   let nodes = match target with *)
-  (*     | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms *)
-  (*     | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in *)
+  let virtual_lookup target ms =
+    let nodes = match target with
+      | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms
+      | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in
 
-  (*   let node_impl = function *)
-  (*     | JP.Interface _ -> [] (1* We only need to consider concrete implementations *1) *)
-  (*     | JP.Class node  -> [Mm.find ms (node.JP.c_info.JL.c_methods)] in *)
+    let node_impl = function
+      | JP.Interface _ -> [] (* We only need to consider concrete implementations *)
+      | JP.Class node  -> [Mm.find ms (node.JP.c_info.JL.c_methods)] in
 
-  (*   let get_inner_method = function *)
-  (*     | JL.AbstractMethod _ -> assert false (1* TODO *1) *)
-  (*     | JL.ConcreteMethod m -> m in *)
+    let get_inner_method = function
+      | JL.AbstractMethod _ -> assert false (* TODO *)
+      | JL.ConcreteMethod m -> m in
 
-  (*   nodes *)
-  (*   |> List.map node_impl *)
-  (*   |> List.concat *)
-  (*   |> List.map (fun m -> parse_method (get_inner_method m)) in *)
+    nodes
+    |> List.map node_impl
+    |> List.concat
+    |> List.map (fun m -> parse_method (get_inner_method m)) in
 
   let cms_map = ref (Cms_map.empty) in
 
@@ -83,5 +83,5 @@ let parse id classpath cn =
   in
 
   { cms_lookup
-  (* ; virtual_lookup *)
+  ; virtual_lookup
   }
