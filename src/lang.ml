@@ -59,39 +59,43 @@ let instr_assigns = function
   | Assign (v, _) -> [v]
   | _ -> []
 
-let expr_vars e =
-  let rec ex = function
-    | Relation (_, vs)  -> V_set.of_list vs
-    | Var v             -> V_set.singleton v
+(** A common pattern is to recurse over subexpressions to calculate some value.
+    `fold_expr` encapsulates this recursion. The user provides a `special_case`
+    function which indicates when an expression yields a result. When
+    `special_case` returns `None`, fold_expr recursively applies to the
+    subexpressions and combines the results using `f`. If there are no
+    subexpressions, then returns `zero`. *)
+let rec fold_expr special_case f zero e =
+  let ex = fold_expr special_case f zero in
+  match special_case e with
+  | Some r -> r
+  | None -> match e with
+    | Query q           -> zero
     | Un_op (_, e)      -> ex e
-    | Bi_op (_, e1, e2) -> V_set.union (ex e1) (ex e2)
-    | Many_op (_, es)   -> V_set.unions_map ex es
-    | ArrSelect (a, i)  -> V_set.union (ex a) (ex i)
-    | ArrStore (a, i, e)-> V_set.unions [ex a; ex i; ex e]
-    | _                 -> V_set.empty
-  in ex e
+    | Bi_op (_, e1, e2) -> f (ex e1) (ex e2)
+    | Many_op (_, es)   -> List.fold_left f zero (List.map ex es)
+    | ArrSelect (a, i)  -> f (ex a) (ex i)
+    | ArrStore (a, i, e)-> List.fold_left f zero [ex a; ex i; ex e]
+    | _                 -> zero
 
-let expr_rels e =
-  let rec ex = function
-    | Relation r        -> R_set.singleton r
-    | Un_op (_, e)      -> ex e
-    | Bi_op (_, e1, e2) -> R_set.union (ex e1) (ex e2)
-    | Many_op (_, es)   -> R_set.unions_map ex es
-    | ArrSelect (a, i)  -> R_set.union (ex a) (ex i)
-    | ArrStore (a, i, e)-> R_set.unions [ex a; ex i; ex e]
-    | _                 -> R_set.empty
-  in ex e
+let queries =
+  let special_case = function
+    | Query q -> Some (Q_set.singleton q)
+    | _ -> None
+  in fold_expr special_case Q_set.union Q_set.empty
 
-let queries e =
-  let rec ex = function
-    | Query q           -> Q_set.singleton (q)
-    | Un_op (_, e)      -> ex e
-    | Bi_op (_, e1, e2) -> Q_set.union (ex e1) (ex e2)
-    | Many_op (_, es)   -> Q_set.unions_map ex es
-    | ArrSelect (a, i)  -> Q_set.union (ex a) (ex i)
-    | ArrStore (a, i, e)-> Q_set.unions [ex a; ex i; ex e]
-    | _                 -> Q_set.empty
-  in ex e
+let expr_rels =
+  let special_case = function
+    | Relation r -> Some (R_set.singleton r)
+    | _ -> None
+  in fold_expr special_case R_set.union R_set.empty
+
+let expr_vars =
+  let special_case = function
+    | Relation (_, vs) -> Some (V_set.of_list vs)
+    | Var v -> Some (V_set.singleton v)
+    | _ -> None
+  in fold_expr special_case V_set.union V_set.empty
 
 let instr_uses instr =
   let ex e = expr_vars e |> V_set.elements in
