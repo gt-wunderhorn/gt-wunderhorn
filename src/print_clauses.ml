@@ -8,9 +8,9 @@ let header = line_sep
     [ "(set-option :fixedpoint.engine \"duality\")" ]
 
 let rec sort = function
-  | L.Int -> "Int"
-  | L.Bool -> "Bool"
-  | L.Real -> "Real"
+  | L.Int     -> "Int"
+  | L.Bool    -> "Bool"
+  | L.Real    -> "Real"
   | L.Array s -> parens ["Array Int"; sort s]
 
 let print_var (v, s) =

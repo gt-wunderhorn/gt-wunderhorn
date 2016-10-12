@@ -37,6 +37,7 @@ let parse id classpath cn =
   let methods = program.JP.parsed_methods in
 
   let parse_method cm =
+    let sign = cm.JL.cm_signature in
     id := !id + 1;
     match cm.JL.cm_implementation with
     | JL.Native -> assert false
@@ -44,6 +45,7 @@ let parse id classpath cn =
       { Proc.id = "p" ^ string_of_int !id ^ "_"
       ; Proc.params = J.params (Lazy.force x)
       ; Proc.content = Array.to_list (J.code (Lazy.force x))
+      ; Proc.ret_type = JB.ms_rtype sign
       ; Proc.v_count = 0
       ; Proc.assignments = Proc.V_map.empty
         (* ; ret_sort = Ir.Int (1* TODO, where can I can get sort from? *1) *)

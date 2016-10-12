@@ -5,9 +5,10 @@ module JB = Javalib_pack.JBasics
 module V_map = Map.Make(struct type t = J.var;; let compare = compare end)
 
 type t =
-  { id      : string
-  ; params  : (JB.value_type * J.var) list
-  ; content : J.instr list
+  { id       : string
+  ; params   : (JB.value_type * J.var) list
+  ; content  : J.instr list
+  ; ret_type : JB.value_type option
   ; mutable v_count : int
   ; mutable assignments : L.var V_map.t
   }
@@ -18,7 +19,7 @@ let rec sort = function
       | `Byte   -> assert false (* TODO *)
       | `Char   -> assert false (* TODO *)
       | `Double -> L.Real
-      | `Float  -> assert false (* TODO *)
+      | `Float  -> L.Real
       | `Int    -> L.Int
       | `Long   -> L.Int
       | `Short  -> L.Int)
@@ -30,6 +31,7 @@ let var st v s =
     let new_name = "v_" ^ st.id ^ string_of_int st.v_count in
     st.v_count <- st.v_count + 1;
     st.assignments <- V_map.add v (new_name, s) st.assignments;
-    ;
+    (new_name, s)
+  else
     V_map.find v st.assignments
 

@@ -1,0 +1,9 @@
+public static void main(String[] args) {
+  double x = 1.5;
+  x = f(x);
+  ensure(x < 3);
+}
+
+static double f(double x) {
+  return 2 + x;
+}

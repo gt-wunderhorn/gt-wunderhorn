@@ -152,16 +152,20 @@ let rec instr parse proc line instr =
           [ (this, "NOWHERE", [(L.Assert (L.mk_eq (expr st (List.hd args)) (L.Int_lit 1)))])
           ; (this, next, [])
           ]
-      else let v = match v with
-          | None -> ("DUMMY", L.Int)
-          | Some v -> Proc.var st.st v L.Int in
+      else
         let proc = (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
+        let sort = match proc.Proc.ret_type with
+          | None -> L.Int
+          | Some t -> Proc.sort t in
+        let v = match v with
+          | None -> ("DUMMY", L.Int)
+          | Some v -> Proc.var st.st v sort in
         let assignments = List.map2
             (fun param arg -> L.Assign (param, expr st arg))
             (List.map (fun (t, p) -> Proc.var proc p (Proc.sort t)) proc.Proc.params)
             args in
         let ret = proc.Proc.id ^ "RET" in
-        let retvar = (proc.Proc.id ^ "RETVAR", L.Int) in
+        let retvar = (proc.Proc.id ^ "RETVAR", sort) in
 
         let proc_graph = convert parse proc in
         L.PG.union

@@ -25,6 +25,7 @@ function run {
 # expect_pass ../test/method.pass
 # expect_pass ../test/nested.pass
 
+run ../test/return_real.fail
 run ../test/real_arith.fail
 run ../test/real_arith.pass
 run ../test/not_null.pass
