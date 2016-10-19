@@ -77,6 +77,7 @@ let rec instr parse proc line instr =
   let this = mk_lbl line in
   let next = mk_lbl (line+1) in
   let noop _ = L.PG.singleton (this, next, []) in
+  let class_array = ("CLASS_TYPE", L.Array L.Int) in
 
   let st =
     { st = proc
@@ -85,20 +86,19 @@ let rec instr parse proc line instr =
 
   let build_identity v =
     let id = ("ID", L.Int) in
-    let id_init = if !id_initialized
+    let id_init =
+      if !id_initialized
       then []
       else
         (id_initialized := true;
          [L.Assign (id, L.Int_lit 1)]) in
 
-    L.PG.singleton
-      (this, next,
-       id_init @
-       [ L.Assign (id, L.mk_add (L.Var id) (L.Int_lit 1))
-       ; L.Assign (Proc.var st.st v L.Int, L.Var id)
-       ]) in
+    id_init @
+    [ L.Assign (id, L.mk_add (L.Var id) (L.Int_lit 1))
+    ; L.Assign (v, L.Var id)
+    ] in
 
-  let call proc v args =
+  let call pred proc v args =
     let sort = match proc.Proc.ret_type with
       | None -> L.Int
       | Some t -> Proc.sort t in
@@ -118,7 +118,7 @@ let rec instr parse proc line instr =
          [ (this, proc.Proc.id ^ "0", assignments)
          ; (ret, next,
             [ L.Relate this
-            ; L.Assign (v, L.Var retvar) ]) ])
+            ; L.Assign (v, L.Var retvar) ] @ pred) ])
       proc_graph
   in
 
@@ -168,8 +168,19 @@ let rec instr parse proc line instr =
            let ex = expr st e in
            let retvar = (id ^ "RETVAR", (L.expr_sort ex)) in
            (this, lbl, [L.Assign (retvar, ex)]))
-    | J.New (v, cn, t, es) -> build_identity v
-    | J.NewArray (v, t, es) -> build_identity v
+    | J.New (v, cn, t, es) ->
+      let v = Proc.var st.st v L.Int in
+      let instrs =
+        build_identity v @
+        [L.Assign (class_array, L.ArrStore
+                     (L.Var class_array, L.Var v, L.Int_lit (parse.Parse.class_id cn)))]
+      in
+
+      L.PG.singleton (this, next, instrs)
+
+    | J.NewArray (v, t, es) ->
+      let v = Proc.var st.st v L.Int in
+      L.PG.singleton (this, next, build_identity v)
     | J.InvokeStatic (v, cn, ms, args) ->
       if (JB.ms_name ms) = "ensure"
       then L.PG.of_list
@@ -178,15 +189,23 @@ let rec instr parse proc line instr =
           ]
       else
         let proc = (parse.Parse.cms_lookup (JB.make_cms cn ms)) in
-        call proc v args
+        call [] proc v args
 
-    | J.InvokeVirtual (v, obj, ck, ms, args) ->
-      let proc = (List.hd (parse.Parse.virtual_lookup ck ms)) in (* TODO don't use hd *)
-      call proc v (obj :: args)
+    | J.InvokeVirtual (v, obj, ck, _, args) ->
+      let procs = parse.Parse.virtual_lookup proc.Proc.sign line in
+
+      let call_meth proc =
+        let pred = L.Call (L.mk_eq
+                             (L.ArrSelect (L.Var class_array, expr st obj))
+                             (L.Int_lit (parse.Parse.class_id proc.Proc.cl_name))) in
+        call [pred] proc v (obj :: args)
+      in
+      L.PG.unions_map call_meth procs
+
     | J.InvokeNonVirtual _    -> assert false (* TODO *)
     | J.MonitorEnter _        -> assert false (* TODO *)
     | J.MonitorExit _         -> assert false (* TODO *)
-    | J.MayInit _ -> noop ()
+    | J.MayInit _             -> noop ()
     | J.Check _               -> noop ()
     | J.Formula _             -> assert false (* TODO *)
 

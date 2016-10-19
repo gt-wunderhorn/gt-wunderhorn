@@ -12,13 +12,18 @@ type parse = { cms_lookup :
                  JB.class_method_signature ->
                  Proc.t
 
-; virtual_lookup :
-    J.virtual_call_kind ->
-    JB.method_signature ->
-    Proc.t list
+             ; virtual_lookup :
+                 JB.method_signature ->
+                 int ->
+                 Proc.t list
+
+             ; class_id : JB.class_name -> int
              }
 module Cms_map = Map.Make(
   struct type t = JB.class_method_signature;; let compare = compare end)
+
+module Cn_map = Map.Make(
+  struct type t = JB.class_name;; let compare = compare end)
 
 type method_map =
   JB.class_method_signature ->
@@ -42,32 +47,15 @@ let parse id classpath cn =
     match cm.JL.cm_implementation with
     | JL.Native -> assert false
     | JL.Java x ->
-      { Proc.id = "p" ^ string_of_int !id ^ "_"
-      ; Proc.params = J.params (Lazy.force x)
-      ; Proc.content = Array.to_list (J.code (Lazy.force x))
-      ; Proc.ret_type = JB.ms_rtype sign
-      ; Proc.v_count = 0
+      { Proc.id          = "p" ^ string_of_int !id ^ "_"
+      ; Proc.params      = J.params (Lazy.force x)
+      ; Proc.content     = Array.to_list (J.code (Lazy.force x))
+      ; Proc.ret_type    = JB.ms_rtype sign
+      ; Proc.sign        = sign
+      ; Proc.cl_name     = fst (JB.cms_split (cm.JL.cm_class_method_signature))
+      ; Proc.v_count     = 0
       ; Proc.assignments = Proc.V_map.empty
       } in
-
-
-  let virtual_lookup target ms =
-    let nodes = match target with
-      | J.VirtualCall obj  -> JC.static_lookup_virtual program obj ms
-      | J.InterfaceCall cn -> JC.static_lookup_interface program cn ms in
-
-    let node_impl = function
-      | JP.Interface _ -> [] (* We only need to consider concrete implementations *)
-      | JP.Class node  -> [Mm.find ms (node.JP.c_info.JL.c_methods)] in
-
-    let get_inner_method = function
-      | JL.AbstractMethod _ -> assert false (* TODO *)
-      | JL.ConcreteMethod m -> m in
-
-    nodes
-    |> List.map node_impl
-    |> List.concat
-    |> List.map (fun m -> parse_method (get_inner_method m)) in
 
   let cms_map = ref (Cms_map.empty) in
 
@@ -81,6 +69,24 @@ let parse id classpath cn =
       meth
   in
 
+  let virtual_lookup ms line =
+    program.JP.static_lookup_method cn ms line
+    |> JB.ClassMethodSet.elements
+    |> List.map cms_lookup
+  in
+
+  let cn_map = ref (Cn_map.empty) in
+  let cn_id = ref 0 in
+  let class_id cn =
+    if not (Cn_map.mem cn !cn_map)
+    then
+      cn_map := Cn_map.add cn !cn_id !cn_map;
+      cn_id := !cn_id + 1;
+    Cn_map.find cn !cn_map
+
+  in
+
   { cms_lookup
   ; virtual_lookup
+  ; class_id
   }

@@ -9,6 +9,8 @@ type t =
   ; params   : (JB.value_type * J.var) list
   ; content  : J.instr list
   ; ret_type : JB.value_type option
+  ; sign     : JB.method_signature
+  ; cl_name  : JB.class_name
   ; mutable v_count : int
   ; mutable assignments : L.var V_map.t
   }

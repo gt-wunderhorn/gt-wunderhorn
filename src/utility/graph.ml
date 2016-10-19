@@ -26,6 +26,7 @@ module Make(T : Graph_info) = struct
   let elements = S.elements
   let union = S.union
   let unions = S.unions
+  let unions_map = S.unions_map
   let filter = S.filter
   let cardinal = S.cardinal
   let choose = S.choose
