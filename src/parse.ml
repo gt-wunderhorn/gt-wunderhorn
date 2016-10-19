@@ -48,7 +48,6 @@ let parse id classpath cn =
       ; Proc.ret_type = JB.ms_rtype sign
       ; Proc.v_count = 0
       ; Proc.assignments = Proc.V_map.empty
-        (* ; ret_sort = Ir.Int (1* TODO, where can I can get sort from? *1) *)
       } in
 
 

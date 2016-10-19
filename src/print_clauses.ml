@@ -25,6 +25,7 @@ let show_un_op = function
 let show_bi_op = function
   | L.Add  -> "+"
   | L.Mul  -> "*"
+  | L.Rem  -> "rem"
   | L.Div  -> "/"
   | L.Eq   -> "="
   | L.Ge   -> ">="

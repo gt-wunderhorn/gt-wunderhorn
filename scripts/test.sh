@@ -24,6 +24,8 @@ function run {
 
 # expect_pass ../test/nested.pass
 
+run ../test/lcm.pass
+run ../test/lcm.fail
 run ../test/method.pass
 run ../test/method.fail
 run ../test/return_real.fail

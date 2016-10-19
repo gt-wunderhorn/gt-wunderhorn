@@ -27,7 +27,7 @@ let binop st op x y = match op with
     st.extra_instrs <-
       (L.Assert (L.mk_not (L.mk_eq y (L.Int_lit 0)))) :: st.extra_instrs;
     L.mk_div x y
-  | J.Rem _       -> assert false (* TODO *)
+  | J.Rem _       -> L.mk_rem x y
   | J.IShl        -> assert false (* TODO *)
   | J.IShr        -> assert false (* TODO *)
   | J.IAnd        -> assert false (* TODO *)
