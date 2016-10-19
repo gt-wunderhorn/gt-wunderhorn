@@ -45,8 +45,11 @@ let rec expr_sort = function
   | Un_op (op, _)      -> un_op_sort op
   | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
   | Many_op (op, _)    -> many_op_sort op
-  | ArrStore _         -> assert false
-  | ArrSelect _        -> assert false
+  | ArrStore (arr,_,_) -> expr_sort arr
+  | ArrSelect (arr,_)  ->
+    (match expr_sort arr with
+     | Array s -> s
+     | _ -> assert false)
   | Int_lit _          -> Int
   | Real_lit _         -> Real
   | True               -> Bool

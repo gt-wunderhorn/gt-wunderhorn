@@ -46,7 +46,7 @@ let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
 let rec expr st = function
   | J.Const c -> const c
-  | J.Var (t, v) -> L.Var (Proc.var st.st v (Proc.sort t))
+  | J.Var (t, v) -> L.Var (Proc.var st.st v, Proc.sort t)
   | J.Binop (op, x, y)  -> binop st op (expr st x) (expr st y)
   | J.Unop _            -> assert false (* TODO *)
   | J.Field (v, cn, fs) ->
@@ -76,7 +76,6 @@ let rec instr parse proc line instr =
   let mk_lbl n = id ^ string_of_int n in
   let this = mk_lbl line in
   let next = mk_lbl (line+1) in
-  let noop _ = L.PG.singleton (this, next, []) in
   let class_array = ("CLASS_TYPE", L.Array L.Int) in
 
   let st =
@@ -84,18 +83,22 @@ let rec instr parse proc line instr =
     ; extra_instrs = []
     } in
 
+  let assign name e = L.Assign ((name, L.expr_sort e), e) in
+  let store name idx e = L.ArrStore (L.Var (name, L.Array (L.expr_sort e)), idx, e) in
+  let linear instr = L.PG.singleton (this, next, [instr]) in
+  let update_arr name idx e = assign name (store name idx e) in
+  let jump lbl = L.PG.singleton (this, lbl, []) in
+
   let build_identity v =
-    let id = ("ID", L.Int) in
     let id_init =
       if !id_initialized
       then []
-      else
-        (id_initialized := true;
-         [L.Assign (id, L.Int_lit 1)]) in
+      else (id_initialized := true;
+            [assign "ID" (L.Int_lit 1)]) in
 
     id_init @
-    [ L.Assign (id, L.mk_add (L.Var id) (L.Int_lit 1))
-    ; L.Assign (v, L.Var id)
+    [ assign "ID" (L.mk_add (L.Var ("ID", L.Int)) (L.Int_lit 1))
+    ; assign v (L.Var ("ID", L.Int))
     ] in
 
   let call pred proc v args =
@@ -103,11 +106,11 @@ let rec instr parse proc line instr =
       | None -> L.Int
       | Some t -> Proc.sort t in
     let v = match v with
-      | None -> ("DUMMY", L.Int)
-      | Some v -> Proc.var st.st v sort in
+      | None -> "DUMMY"
+      | Some v -> Proc.var st.st v in
     let assignments = List.map2
-        (fun param arg -> L.Assign (param, expr st arg))
-        (List.map (fun (t, p) -> Proc.var proc p (Proc.sort t)) proc.Proc.params)
+        (fun param arg -> assign param (expr st arg))
+        (List.map (fun (t, p) -> Proc.var proc p) proc.Proc.params)
         args in
     let ret = proc.Proc.id ^ "RET" in
     let retvar = (proc.Proc.id ^ "RETVAR", sort) in
@@ -118,41 +121,26 @@ let rec instr parse proc line instr =
          [ (this, proc.Proc.id ^ "0", assignments)
          ; (ret, next,
             [ L.Relate this
-            ; L.Assign (v, L.Var retvar) ] @ pred) ])
+            ; assign v (L.Var retvar) ] @ pred) ])
       proc_graph
   in
 
+  let ex e = expr st e in
+
   let g = match instr with
-    | J.Nop -> noop ()
-    | J.AffectVar (v, e) ->
-      let ex = expr st e in
-      L.PG.singleton
-        (this, next,
-         [L.Assign (Proc.var st.st v (L.expr_sort ex), ex)])
+    | J.AffectVar (v, e) -> linear (assign (Proc.var st.st v) (ex e))
     | J.AffectArray (arr, ind, e) ->
-      let ex = expr st e in
-      let array_array =
-        ("ARRAY", L.Array (L.Array (L.expr_sort ex))) in (* TODO, array type *)
+      let array_array = ("ARRAY", L.Array (L.Array (L.expr_sort (ex e)))) in
 
-      let sub_array =
-        L.ArrSelect (L.Var array_array, expr st arr) in
-
-      L.PG.singleton
-        (this, next,
-         [L.Assign (array_array
-                   , L.ArrStore (
-                       L.Var array_array,
-                       expr st arr,
-                       L.ArrStore (sub_array, expr st ind, ex)))])
+      let sub_array = L.ArrSelect (L.Var array_array, expr st arr) in
+      linear (update_arr "ARRAY" (expr st arr) (L.ArrStore (sub_array, expr st ind, (ex e))))
 
     | J.AffectField (v, cn, fs, e) ->
-      let field_array = (field_array_name cn fs, L.Array L.Int) in (* TODO, array type *)
+      let field_array = field_array_name cn fs in
+      linear (update_arr field_array (ex v) (ex e))
 
-      L.PG.singleton
-        (this, next,
-         [L.Assign (field_array , L.ArrStore (L.Var field_array, expr st v, expr st e))])
     | J.AffectStaticField _ -> assert false
-    | J.Goto l -> L.PG.singleton (this, mk_lbl l, [])
+    | J.Goto l -> jump (mk_lbl l)
     | J.Ifd ((cond, x, y), l) ->
       L.PG.of_list
         [ (this, mk_lbl l, [L.Call (comp st cond x y)])
@@ -164,27 +152,24 @@ let rec instr parse proc line instr =
         (let lbl = id ^ "RET" in
          match e with
          | None   -> (this, lbl, [])
-         | Some e ->
-           let ex = expr st e in
-           let retvar = (id ^ "RETVAR", (L.expr_sort ex)) in
-           (this, lbl, [L.Assign (retvar, ex)]))
+         | Some e -> (this, lbl, [assign (id ^ "RETVAR") (ex e)]))
+
     | J.New (v, cn, t, es) ->
-      let v = Proc.var st.st v L.Int in
+      let v = Proc.var st.st v in
       let instrs =
         build_identity v @
-        [L.Assign (class_array, L.ArrStore
-                     (L.Var class_array, L.Var v, L.Int_lit (parse.Parse.class_id cn)))]
+        [update_arr "CLASS_TYPE" (L.Var (v, L.Int)) (L.Int_lit (parse.Parse.class_id cn))]
       in
 
       L.PG.singleton (this, next, instrs)
 
     | J.NewArray (v, t, es) ->
-      let v = Proc.var st.st v L.Int in
+      let v = Proc.var st.st v in
       L.PG.singleton (this, next, build_identity v)
     | J.InvokeStatic (v, cn, ms, args) ->
       if (JB.ms_name ms) = "ensure"
       then L.PG.of_list
-          [ (this, "NOWHERE", [(L.Assert (L.mk_eq (expr st (List.hd args)) (L.Int_lit 1)))])
+          [ (this, "NOWHERE", [(L.Assert (L.mk_eq (ex (List.hd args)) (L.Int_lit 1)))])
           ; (this, next, [])
           ]
       else
@@ -196,7 +181,7 @@ let rec instr parse proc line instr =
 
       let call_meth proc =
         let pred = L.Call (L.mk_eq
-                             (L.ArrSelect (L.Var class_array, expr st obj))
+                             (L.ArrSelect (L.Var class_array, ex obj))
                              (L.Int_lit (parse.Parse.class_id proc.Proc.cl_name))) in
         call [pred] proc v (obj :: args)
       in
@@ -205,9 +190,8 @@ let rec instr parse proc line instr =
     | J.InvokeNonVirtual _    -> assert false (* TODO *)
     | J.MonitorEnter _        -> assert false (* TODO *)
     | J.MonitorExit _         -> assert false (* TODO *)
-    | J.MayInit _             -> noop ()
-    | J.Check _               -> noop ()
     | J.Formula _             -> assert false (* TODO *)
+    | J.Nop | J.MayInit _ | J.Check _ -> jump next
 
   in
   if List.length st.extra_instrs > 0
