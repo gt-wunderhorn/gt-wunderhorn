@@ -1,0 +1,6 @@
+public static void main(String[] args) {
+  String x = "hello";
+  String y = "world";
+
+  ensure ((x + y).equals("helloworld"));
+}

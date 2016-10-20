@@ -81,7 +81,7 @@ let parse id classpath cn =
     if not (Cn_map.mem cn !cn_map)
     then
       cn_map := Cn_map.add cn !cn_id !cn_map;
-      cn_id := !cn_id + 1;
+    cn_id := !cn_id + 1;
     Cn_map.find cn !cn_map
 
   in

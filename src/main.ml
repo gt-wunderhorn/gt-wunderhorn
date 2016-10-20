@@ -1,12 +1,16 @@
 module JP = Sawja_pack.JProgram
 module JB = Javalib_pack.JBasics
 
+module I = Ir
+module J_to_i = Jbir_to_ir
+module I_to_g = Ir_to_graph
+
 let make_graph classpath cms =
   let proc_id = ref (0) in
   let cn = fst (JB.cms_split cms) in
   let parse = Parse.parse proc_id classpath cn in
-  parse.Parse.cms_lookup cms
-  |> Jbir_to_graph.convert parse
+  Jbir_to_ir.mk_proc parse cms
+  |> Ir_to_graph.procedure
 
 let inspect classpath class_name =
   let cn  = JB.make_cn class_name in

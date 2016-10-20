@@ -15,18 +15,6 @@ type t =
   ; mutable assignments : string V_map.t
   }
 
-let rec sort = function
-  | JB.TBasic t -> (match t with
-      | `Bool   -> L.Bool
-      | `Byte   -> assert false (* TODO *)
-      | `Char   -> assert false (* TODO *)
-      | `Double -> L.Real
-      | `Float  -> L.Real
-      | `Int    -> L.Int
-      | `Long   -> L.Int
-      | `Short  -> L.Int)
-  | JB.TObject t -> L.Int
-
 let var st v =
   if not (V_map.mem v st.assignments)
   then

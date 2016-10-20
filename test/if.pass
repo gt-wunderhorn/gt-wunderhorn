@@ -1,6 +1,0 @@
-public static void main(String[] args) {
-  int x = 3;
-  if (x == 3)
-    x = 5;
-  ensure(x != 4);
-}

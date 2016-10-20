@@ -22,15 +22,17 @@ function run {
   fi
 }
 
-# expect_pass ../test/nested.pass
+# run ../test/non_int_field.fail
+# run ../test/non_int_array.fail
 
+# run ../test/string.pass
 run ../test/array.fail
-run ../test/dispatch.pass
-run ../test/method.pass
-run ../test/method.fail
 run ../test/array.pass
 run ../test/lcm.pass
 run ../test/lcm.fail
+run ../test/dispatch.pass
+run ../test/method.pass
+run ../test/method.fail
 run ../test/return_real.fail
 run ../test/real_arith.fail
 run ../test/real_arith.pass
@@ -40,9 +42,9 @@ run ../test/is_null.pass
 run ../test/is_null.fail
 run ../test/float.pass
 run ../test/float.fail
+run ../test/object_identity.pass
 run ../test/div.pass
 run ../test/div.fail
-run ../test/object_identity.pass
 run ../test/field.pass
 run ../test/field.fail
 run ../test/multi_call.pass
@@ -50,7 +52,3 @@ run ../test/call.pass
 run ../test/call.fail
 run ../test/while.pass
 run ../test/while.fail
-run ../test/if.pass
-run ../test/if.fail
-run ../test/linear.pass
-run ../test/linear.fail

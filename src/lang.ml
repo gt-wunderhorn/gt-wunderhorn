@@ -45,11 +45,8 @@ let rec expr_sort = function
   | Un_op (op, _)      -> un_op_sort op
   | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
   | Many_op (op, _)    -> many_op_sort op
-  | ArrStore (arr,_,_) -> expr_sort arr
-  | ArrSelect (arr,_)  ->
-    (match expr_sort arr with
-     | Array s -> s
-     | _ -> assert false)
+  | ArrStore (arr,_,e) -> Array (expr_sort e)
+  | ArrSelect (arr,_)  -> expr_sort arr
   | Int_lit _          -> Int
   | Real_lit _         -> Real
   | True               -> Bool
@@ -71,9 +68,13 @@ let mk_add e1 e2 = Bi_op (Add, e1, e2)
 let mk_div e1 e2 = Bi_op (Div, e1, e2)
 let mk_mul e1 e2 = Bi_op (Mul, e1, e2)
 let mk_rem e1 e2 = Bi_op (Rem, e1, e2)
-let mk_and = function
+let mk_and es =
+  let es' = List.filter ((<>) True) es in
+  match es' with
   | [e] -> e
   | es -> Many_op (And, es)
+
+let mk_assign v e = Assign (v, e)
 
 module R_set = Set_ext.Make(
   struct type t = rel;; let compare (l1, _) (l2, _) = compare l1 l2 end)
@@ -83,10 +84,6 @@ module Q_set = Set_ext.Make(
 
 module PG = Graph.Make(
   struct type node = lbl;; type edge = instr list end)
-
-let instr_assigns = function
-  | Assign (v, _) -> [v]
-  | _ -> []
 
 (** A common pattern is to recurse over subexpressions to calculate some value.
     `fold_expr` encapsulates this recursion. The user provides a `special_case`
@@ -99,41 +96,41 @@ let rec fold_expr special_case f zero e =
   match special_case e with
   | Some r -> r
   | None -> match e with
-    | Query q           -> zero
-    | Un_op (_, e)      -> ex e
-    | Bi_op (_, e1, e2) -> f (ex e1) (ex e2)
-    | Many_op (_, es)   -> List.fold_left f zero (List.map ex es)
-    | ArrSelect (a, i)  -> f (ex a) (ex i)
-    | ArrStore (a, i, e)-> List.fold_left f zero [ex a; ex i; ex e]
-    | _                 -> zero
+    | Query q            -> zero
+    | Un_op (_, e)       -> ex e
+    | Bi_op (_, e1, e2)  -> f (ex e1) (ex e2)
+    | Many_op (_, es)    -> List.fold_left f zero (List.map ex es)
+    | ArrSelect (a, i)   -> f (ex a) (ex i)
+    | ArrStore (a, i, e) -> List.fold_left f zero [ex a; ex i; ex e]
+    | _                  -> zero
 
+(** Find the queries in an expression *)
 let queries =
   let special_case = function
     | Query q -> Some (Q_set.singleton q)
-    | _ -> None
+    | _       -> None
   in fold_expr special_case Q_set.union Q_set.empty
 
+(** Find the relations in an expression *)
 let expr_rels =
   let special_case = function
     | Relation r -> Some (R_set.singleton r)
     | _ -> None
   in fold_expr special_case R_set.union R_set.empty
 
+(** Find the variables in an expression *)
 let expr_vars =
   let special_case = function
     | Relation (_, vs) -> Some (V_set.of_list vs)
-    | Var v -> Some (V_set.singleton v)
-    | _ -> None
+    | Var v            -> Some (V_set.singleton v)
+    | _                -> None
   in fold_expr special_case V_set.union V_set.empty
 
-let instr_uses instr =
-  let ex e = expr_vars e |> V_set.elements in
-
-  match instr with
-  | Relate _ -> []
-  | Assert e -> ex e
-  | Assign (_, e) -> ex e
-  | Call e -> ex e
+let expr_assertions =
+  let special_case = function
+    | Bi_op (Div, _, y) -> Some [Assert (mk_not (mk_eq y (Int_lit 0)))]
+    | _                 -> None
+  in fold_expr special_case (@) []
 
 let path_var_locations var_finder path =
   path
@@ -144,8 +141,24 @@ let path_var_locations var_finder path =
           then dict
           else (v, line) :: dict) dict vs) []
 
-let path_assign_locations = path_var_locations instr_assigns
-let path_use_locations = path_var_locations instr_uses
+(** Find the locations where variable assignments occur. *)
+let path_assign_locations =
+  path_var_locations (function
+      | Assign (v, _) -> [v]
+      | _             -> [])
+
+(** Find the locations where variable usage occurs. *)
+let path_use_locations =
+  let instr_uses instr =
+    let ex e = expr_vars e |> V_set.elements in
+
+    match instr with
+    | Relate _      -> []
+    | Assert e      -> ex e
+    | Assign (_, e) -> ex e
+    | Call e        -> ex e
+  in
+  path_var_locations instr_uses
 
 let path_used_before_assigned path =
   let assigns = path_assign_locations path in
@@ -168,13 +181,13 @@ let connect_path path =
   |> List.map PG.edge
   |> List.fold_left (@) []
 
-let coming p lbl = PG.paths_to p lbl |> List.map connect_path
-let going p lbl = PG.paths_from p lbl |> List.map connect_path
-
 let critical_vars p lbl =
-  if List.length (going p lbl) = 0 then
-    (List.map path_assigns (coming p lbl) |> V_set.unions)
+  let coming = PG.paths_to p lbl |> List.map connect_path in
+  let going = PG.paths_from p lbl |> List.map connect_path in
+
+  if List.length going = 0 then
+    (List.map path_assigns coming |> V_set.unions)
   else
     V_set.inter
-      (List.map path_assigns (coming p lbl) |> V_set.unions)
-      (List.map path_used_before_assigned (going p lbl) |> V_set.unions)
+      (List.map path_assigns coming |> V_set.unions)
+      (List.map path_used_before_assigned going |> V_set.unions)
