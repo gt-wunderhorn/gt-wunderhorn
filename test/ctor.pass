@@ -9,6 +9,6 @@ static class Point {
 }
 
 public static void main(String[] args) {
-  Point p = new Point(0, 0);
-  ensure(p.x == 0);
+  Point p = new Point(6, 6);
+  ensure(p.x == 6);
 }

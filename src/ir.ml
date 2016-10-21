@@ -18,7 +18,8 @@ and ir =
   | Goto        of L.lbl
   | If          of comp * L.expr * L.expr * L.lbl
   | Return      of L.lbl * L.var * L.expr
-  | New         of L.var * class_type * L.expr list
+  | New         of proc * L.var * class_type * L.expr list
+  | NewArray    of L.var * class_type * L.expr list
   | Invoke      of proc * L.var * L.expr list
   | Dispatch    of L.expr * (class_type * proc) list * L.var * L.expr list
   | Assert      of L.expr
@@ -30,7 +31,8 @@ let ir_exprs = function
   | Goto _                   -> []
   | If (_, e1, e2, _)        -> [e1; e2]
   | Return (_, _, e)         -> [e]
-  | New (_, _, es)           -> es
+  | New (_, _, _, es)           -> es
+  | NewArray (_, _, es)      -> es
   | Invoke (_, _, es)        -> es
   | Dispatch (o, _, _, es)   -> o :: es
   | Assert _                 -> []

@@ -41,6 +41,12 @@ let parse id classpath cn =
 
   let methods = program.JP.parsed_methods in
 
+  (* let print_cms cms _ = *)
+  (*   let (cn, ms) = JB.cms_split cms in *)
+  (*   Printf.eprintf "%s %s\n" (JB.cn_name cn) (JB.ms_name ms); *)
+  (* in *)
+  (* Cmm.iter print_cms methods; *)
+
   let parse_method cm =
     let sign = cm.JL.cm_signature in
     id := !id + 1;

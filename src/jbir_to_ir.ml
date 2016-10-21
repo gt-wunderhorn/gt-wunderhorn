@@ -86,6 +86,10 @@ let rec comp cond x y = match cond with
   | `Lt -> L.Bi_op (L.Lt, x, y)
   | `Ne -> L.Un_op (L.Not, (L.Bi_op (L.Eq, x, y)))
 
+let ctor_sig cn t =
+  let ms = JB.make_ms "<init>" t None in
+  JB.make_cms cn ms
+
 let rec ir_proc parse st =
   let p = st.proc in
   { Ir.entrance = p.P.id ^ "0"
@@ -109,6 +113,10 @@ and instr parse st line i =
   let this = mk_lbl line in
   let next = mk_lbl (line+1) in
 
+  let return_var proc =
+    Option.map_default (fun v -> var v (snd proc.Ir.return)) ("DUMMY", L.Int)
+  in
+
   let i = match i with
     | J.AffectVar (v, e) -> Ir.Assign (var v (e_sort e), expr e)
 
@@ -128,15 +136,24 @@ and instr parse st line i =
       Ir.If (comp cond, expr x, expr y, mk_lbl l)
 
     | J.Return e ->
-      let e = Option.map_default expr (L.Int_lit 0) e in
+      (** If there is no return parameter, see if there were arguments. If so,
+          return the first parameter (which handles constructors). *)
+      let backup_ret =
+        if List.length st.proc.P.params = 0
+        then L.Int_lit 0
+        else L.Var ((fun (t, v) -> (rename st v, sort t)) (List.hd st.proc.P.params))
+      in
+
+      let e = Option.map_default expr backup_ret e in
       let v = (id ^ "RETVAR", L.expr_sort e) in
       Ir.Return (id ^ "RET", v, e)
 
     | J.New (v, cn, t, es) ->
-      Ir.New (var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)
+      let proc = mk_proc parse (ctor_sig cn t) in
+      Ir.New (proc, var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)
 
     | J.NewArray (v, t, es) ->
-      Ir.New (var v L.Int, L.Int_lit (-1), List.map expr es)
+      Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
       if (JB.ms_name ms) = "ensure"
@@ -144,7 +161,7 @@ and instr parse st line i =
         Ir.Assert (L.mk_eq (expr (List.hd args)) (L.Int_lit 1))
       else
         let proc = mk_proc parse (JB.make_cms cn ms) in
-        let v = Option.map_default (fun v -> var v (snd proc.Ir.return)) ("DUMMY", L.Int) v in
+        let v = return_var proc v in
         Ir.Invoke (proc, v, List.map expr args)
 
     | J.InvokeVirtual (v, obj, ck, _, args) ->
@@ -156,11 +173,14 @@ and instr parse st line i =
       let v =
         if List.length procs = 0
         then ("DUMMY", L.Int)
-        else Option.map_default (fun v -> var v (snd (snd (List.hd procs)).Ir.return)) ("DUMMY", L.Int) v in
+        else return_var (snd (List.hd procs)) v in
 
       Ir.Dispatch (expr obj, procs, v, List.map expr args)
 
-    | J.InvokeNonVirtual _
+    | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
+      let proc = mk_proc parse (JB.make_cms cn ms) in
+      let v = return_var proc v in
+      Ir.Invoke (proc, v, (expr obj) :: (List.map expr args))
     | J.MonitorEnter _
     | J.MonitorExit _
     | J.AffectStaticField _

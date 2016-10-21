@@ -56,17 +56,18 @@ let rec instr (this, next, i) =
     let assignments = List.map2 L.mk_assign proc.Ir.params args in
     G.union
       (G.of_list
-         [ (this, proc.Ir.entrance, assignments)
+         [ (this, proc.Ir.entrance, pred @ assignments)
          ; (proc.Ir.exit, next,
-            pred @ [ L.Relate this
-                   ; L.mk_assign v (L.Var proc.Ir.return) ] ) ])
+            [ L.Relate this
+            ; L.mk_assign v (L.Var proc.Ir.return) ] ) ])
       (procedure proc)
   in
 
   let g = match i with
     | Ir.Assign (v, e)          -> linear [L.mk_assign v e]
     | Ir.ArrAssign (arr, v, e)  -> linear [update_arr arr v e]
-    | Ir.New (v, ct, es)        -> linear (build_object v ct)
+    | Ir.New (p, v, ct, es)     -> call (build_object v ct) p v (L.Var v :: es)
+    | Ir.NewArray (v, ct, es)   -> linear (build_object v ct)
     | Ir.Invoke (p, v, args)    -> call [] p v args
     | Ir.Return (d, v, e)       -> G.singleton (this, d, [L.mk_assign v e])
     | Ir.Goto d                 -> jump d

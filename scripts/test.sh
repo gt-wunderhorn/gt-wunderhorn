@@ -22,23 +22,25 @@ function run {
   fi
 }
 
+run ../test/dispatch.pass
+run ../test/not_null.pass
+
+run ../test/ctor.pass
+# run ../test/string.pass
+
 run ../test/non_int_field.fail
 run ../test/mixed_array.fail
 run ../test/non_int_array.fail
 run ../test/non_int_array.pass
-
-# run ../test/string.pass
 run ../test/array.fail
 run ../test/array.pass
 run ../test/lcm.pass
 run ../test/lcm.fail
-run ../test/dispatch.pass
-run ../test/method.pass
-run ../test/method.fail
+# run ../test/method.pass
+# run ../test/method.fail
 run ../test/return_real.fail
 run ../test/real_arith.fail
 run ../test/real_arith.pass
-run ../test/not_null.pass
 run ../test/not_null.fail
 run ../test/is_null.pass
 run ../test/is_null.fail
