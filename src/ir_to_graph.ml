@@ -31,7 +31,6 @@ let rec show_sort = function
   | L.Int  -> "Int"
   | L.Real -> "Real"
   | L.Array s  -> "Array_" ^ show_sort s
-  | L.Object s -> "Object_" ^ show_sort s
 
 let rec instr (this, next, i) =
   let linear instr = G.singleton (this, next, instr) in

@@ -3,7 +3,6 @@ type sort =
   | Bool
   | Real
   | Array of sort
-  | Object of sort
 
 type var = string * sort
 
