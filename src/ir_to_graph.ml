@@ -59,7 +59,7 @@ let rec instr (this, next, i) =
 
     | Ir.ArrAssign (arr, ind, e) ->
       let array_array =
-        ( show_sort (L.Object (L.expr_sort e))
+        ( "ARRAY" ^ show_sort (L.expr_sort e)
         , L.Array (L.Array (L.expr_sort e))) in
       let sub_array = L.ArrSelect (L.Var array_array, arr) in
       linear [update_arr array_array arr (L.ArrStore (sub_array, ind, e))]

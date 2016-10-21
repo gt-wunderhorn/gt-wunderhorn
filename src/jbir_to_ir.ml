@@ -19,13 +19,23 @@ let rec show_sort = function
   | L.Array s  -> "Array_" ^ show_sort s
   | L.Object s -> "Object_" ^ show_sort s
 
+let rec sort = function
+  | JB.TBasic t -> (match t with
+      | `Bool   -> L.Bool
+      | `Byte   -> assert false (* TODO *)
+      | `Char   -> assert false (* TODO *)
+      | `Double -> L.Real
+      | `Float  -> L.Real
+      | `Int    -> L.Int
+      | `Long   -> L.Int
+      | `Short  -> L.Int)
+  | JB.TObject t -> (match t with
+      | JB.TClass _   -> L.Object L.Int
+      | JB.TArray t   -> L.Object (sort t))
+
 let binop op x y = match op with
-  | J.ArrayLoad _ ->
-    let s = match L.expr_sort x with
-      | L.Object s -> s
-      | _ -> assert false
-    in
-    let array_array = (show_sort s, L.Array (L.Array s)) in
+  | J.ArrayLoad t ->
+    let array_array = ("ARRAY" ^ show_sort (sort t), L.Array (L.Array (sort t))) in
     let inner_select = L.ArrSelect (L.Var array_array, x) in
     L.ArrSelect (inner_select, y)
   | J.Add _       -> L.mk_add x y
@@ -46,20 +56,6 @@ let binop op x y = match op with
   | J.LXor        -> assert false (* TODO *)
   | J.LUshr       -> assert false (* TODO *)
   | J.CMP _       -> assert false (* TODO *)
-
-let rec sort = function
-  | JB.TBasic t -> (match t with
-      | `Bool   -> L.Bool
-      | `Byte   -> assert false (* TODO *)
-      | `Char   -> assert false (* TODO *)
-      | `Double -> L.Real
-      | `Float  -> L.Real
-      | `Int    -> L.Int
-      | `Long   -> L.Int
-      | `Short  -> L.Int)
-  | JB.TObject t -> (match t with
-      | JB.TClass _   -> L.Object L.Int
-      | JB.TArray t   -> L.Object (sort t))
 
 let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
