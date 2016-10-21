@@ -53,8 +53,6 @@ let parse id classpath cn =
       ; Proc.ret_type    = JB.ms_rtype sign
       ; Proc.sign        = sign
       ; Proc.cl_name     = fst (JB.cms_split (cm.JL.cm_class_method_signature))
-      ; Proc.v_count     = 0
-      ; Proc.assignments = Proc.V_map.empty
       } in
 
   let cms_map = ref (Cms_map.empty) in

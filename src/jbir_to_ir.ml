@@ -56,9 +56,19 @@ let binop op x y = match op with
 
 let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
+module Label = Labeller.Make(struct type t = J.var;; let compare = compare end)
+
+type st =
+  { proc : Proc.t
+  ; labeller : Label.t
+  }
+
+let mk_st p = { proc = p ; labeller = Label.mk ("v_" ^ p.P.id) }
+let rename st = Label.label st.labeller
+
 let rec expr st = function
   | J.Const c -> const c
-  | J.Var (t, v) -> L.Var (P.var st v, sort t)
+  | J.Var (t, v) -> L.Var (rename st v, sort t)
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop _            -> assert false (* TODO *)
   | J.Field (v, cn, fs) ->
@@ -76,23 +86,24 @@ let rec comp cond x y = match cond with
   | `Lt -> L.Bi_op (L.Lt, x, y)
   | `Ne -> L.Un_op (L.Not, (L.Bi_op (L.Eq, x, y)))
 
-let rec ir_proc parse p =
+let rec ir_proc parse st =
+  let p = st.proc in
   { Ir.entrance = p.P.id ^ "0"
   ; Ir.exit     = p.P.id ^ "RET"
-  ; Ir.params   = List.map (fun (t, v) -> (P.var p v, sort t)) p.P.params
+  ; Ir.params   = List.map (fun (t, v) -> (rename st v, sort t)) p.P.params
   ; Ir.return   = (p.P.id ^ "RETVAR", Option.map_default sort L.Int p.P.ret_type)
-  ; Ir.content  = List.mapi (instr parse p) p.P.content
+  ; Ir.content  = List.mapi (instr parse st) p.P.content
   }
 
 and mk_proc parse cms =
   let p = (parse.Parse.cms_lookup cms) in
-  ir_proc parse p
+  ir_proc parse (mk_st p)
 
-and instr parse proc line i =
-  let var v s = (P.var proc v, s) in
-  let expr = expr proc in
+and instr parse st line i =
+  let var v s = (rename st v, s) in
+  let expr = expr st in
   let e_sort e = L.expr_sort (expr e) in
-  let id = proc.P.id in
+  let id = st.proc.P.id in
   let mk_lbl n = id ^ string_of_int n in
 
   let this = mk_lbl line in
@@ -138,9 +149,9 @@ and instr parse proc line i =
 
     | J.InvokeVirtual (v, obj, ck, _, args) ->
       let procs =
-        parse.Parse.virtual_lookup proc.P.sign line
+        parse.Parse.virtual_lookup st.proc.P.sign line
         |> List.map
-          (fun p -> ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse p)) in
+          (fun p -> ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st p))) in
 
       let v =
         if List.length procs = 0
@@ -164,5 +175,5 @@ and instr parse proc line i =
 
   in (this, next, i)
 
-let procedure parse proc =
-  List.mapi (instr parse proc) proc.P.content
+let procedure parse p =
+  List.mapi (instr parse (mk_st p)) p.P.content
