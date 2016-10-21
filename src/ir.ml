@@ -14,8 +14,7 @@ type proc =
   }
 and ir =
   | Assign      of L.var * L.expr
-  | ArrAssign   of L.expr * L.expr * L.expr
-  | FieldAssign of L.var * L.expr * L.expr
+  | ArrAssign   of L.var * L.expr * L.expr
   | Goto        of L.lbl
   | If          of comp * L.expr * L.expr * L.lbl
   | Return      of L.lbl * L.var * L.expr
@@ -27,8 +26,7 @@ and instr = L.lbl * L.lbl * ir
 
 let ir_exprs = function
   | Assign (_, e)            -> [e]
-  | ArrAssign (arr, i, e)    -> [arr; i; e]
-  | FieldAssign (_, f, e)    -> [f; e]
+  | ArrAssign (_, i, e)      -> [i; e]
   | Goto _                   -> []
   | If (_, e1, e2, _)        -> [e1; e2]
   | Return (_, _, e)         -> [e]

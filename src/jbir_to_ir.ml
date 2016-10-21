@@ -102,11 +102,13 @@ and instr parse proc line i =
     | J.AffectVar (v, e) -> Ir.Assign (var v (e_sort e), expr e)
 
     | J.AffectArray (arr, ind, e) ->
-      Ir.ArrAssign (expr arr, expr ind, expr e)
+      let array_array = ("ARRAY" ^ show_sort (e_sort e), L.Array (L.Array (e_sort e))) in
+      let sub_array = L.ArrSelect (L.Var array_array, expr arr) in
+      Ir.ArrAssign (array_array, expr arr, L.ArrStore (sub_array, expr ind, expr e))
 
     | J.AffectField (v, cn, fs, e) ->
       let fa = (field_array_name cn fs, L.Array (e_sort e)) in
-      Ir.FieldAssign (fa, expr v, expr e)
+      Ir.ArrAssign (fa, expr v, expr e)
 
     | J.Goto l ->
       Ir.Goto (mk_lbl l)
@@ -116,8 +118,8 @@ and instr parse proc line i =
 
     | J.Return e ->
       let e = Option.map_default expr (L.Int_lit 0) e in
-      let v = (proc.P.id ^ "RETVAR", L.expr_sort e) in
-      Ir.Return (proc.P.id ^ "RET", v, e)
+      let v = (id ^ "RETVAR", L.expr_sort e) in
+      Ir.Return (id ^ "RET", v, e)
 
     | J.New (v, cn, t, es) ->
       Ir.New (var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)

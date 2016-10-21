@@ -50,18 +50,11 @@ let rec instr (this, next, i) =
 
   let g = match i with
     | Ir.Assign (v, e)          -> linear [L.mk_assign v e]
-    | Ir.FieldAssign (fa, v, e) -> linear [update_arr fa v e]
+    | Ir.ArrAssign (arr, v, e)  -> linear [update_arr arr v e]
     | Ir.New (v, ct, es)        -> linear (build_object v ct)
     | Ir.Invoke (p, v, args)    -> call [] p v args
     | Ir.Return (d, v, e)       -> G.singleton (this, d, [L.mk_assign v e])
     | Ir.Goto d                 -> jump d
-
-    | Ir.ArrAssign (arr, ind, e) ->
-      let array_array =
-        ( "ARRAY" ^ show_sort (L.expr_sort e)
-        , L.Array (L.Array (L.expr_sort e))) in
-      let sub_array = L.ArrSelect (L.Var array_array, arr) in
-      linear [update_arr array_array arr (L.ArrStore (sub_array, ind, e))]
 
     | Ir.If (cmp, x, y, d) ->
       G.of_list
