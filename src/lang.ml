@@ -3,6 +3,7 @@ type sort =
   | Bool
   | Real
   | Array of sort
+  | Object of sort
 
 type var = string * sort
 
@@ -45,7 +46,7 @@ let rec expr_sort = function
   | Un_op (op, _)      -> un_op_sort op
   | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
   | Many_op (op, _)    -> many_op_sort op
-  | ArrStore (arr,_,e) -> Array (expr_sort e)
+  | ArrStore (arr,_,e) -> expr_sort arr
   | ArrSelect (arr,_)  -> expr_sort arr
   | Int_lit _          -> Int
   | Real_lit _         -> Real

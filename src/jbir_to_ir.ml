@@ -12,10 +12,20 @@ let const = function
   | `Long i   -> L.Int_lit (Int64.to_int i)
   | `String s -> assert false (* TODO *)
 
+let rec show_sort = function
+  | L.Bool -> "Bool"
+  | L.Int  -> "Int"
+  | L.Real -> "Real"
+  | L.Array s  -> "Array_" ^ show_sort s
+  | L.Object s -> "Object_" ^ show_sort s
+
 let binop op x y = match op with
   | J.ArrayLoad _ ->
-    (** TODO getting the correct sort for an array load *)
-    let array_array = ("ARRAY", L.Array (L.Array L.Int)) in
+    let s = match L.expr_sort x with
+      | L.Object s -> s
+      | _ -> assert false
+    in
+    let array_array = ("ARRAY", L.Array (L.Array s)) in
     let inner_select = L.ArrSelect (L.Var array_array, x) in
     L.ArrSelect (inner_select, y)
   | J.Add _       -> L.mk_add x y
@@ -47,13 +57,15 @@ let rec sort = function
       | `Int    -> L.Int
       | `Long   -> L.Int
       | `Short  -> L.Int)
-  | JB.TObject t -> L.Int
+  | JB.TObject t -> (match t with
+      | JB.TClass _   -> L.Object L.Int
+      | JB.TArray t   -> L.Object (sort t))
 
 let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 
 let rec expr st = function
   | J.Const c -> const c
-  | J.Var (t, v) -> L.Var (P.var st v, sort t)
+  | J.Var (t, v) -> L.Var (P.var st v (sort t))
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop _            -> assert false (* TODO *)
   | J.Field (v, cn, fs) ->
@@ -72,7 +84,7 @@ let rec comp cond x y = match cond with
 let rec ir_proc parse p =
   { Ir.entrance = p.P.id ^ "0"
   ; Ir.exit     = p.P.id ^ "RET"
-  ; Ir.params   = List.map (fun (t, v) -> (P.var p v, (sort t))) p.P.params
+  ; Ir.params   = List.map (fun (t, v) -> (P.var p v (sort t))) p.P.params
   ; Ir.return   = (p.P.id ^ "RETVAR", Option.map_default sort L.Int p.P.ret_type)
   ; Ir.content  = List.mapi (instr parse p) p.P.content
   }
@@ -82,7 +94,7 @@ and mk_proc parse cms =
   ir_proc parse p
 
 and instr parse proc line i =
-  let var v s = (P.var proc v, s) in
+  let var v s = (P.var proc v s) in
   let expr = expr proc in
   let e_sort e = L.expr_sort (expr e) in
   let id = proc.P.id in
@@ -116,7 +128,7 @@ and instr parse proc line i =
       Ir.New (var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)
 
     | J.NewArray (v, t, es) ->
-      Ir.New (var v L.Int, L.Int_lit (-1), List.map expr es)
+      Ir.New (var v (L.Object (sort t)), L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
       if (JB.ms_name ms) = "ensure"
