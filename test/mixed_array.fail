@@ -1,0 +1,12 @@
+public static void main(String[] args) {
+  float[] x = new float[2];
+  int[] y = new int[2];
+  x[0] = 2.7f;
+  y[0] = 3;
+
+  if (x[0] < 3 && y[0] == 3) {
+    x[1] = 6.2f;
+    y[1] = 5;
+  }
+  ensure(x[1] < 5 && y[1] == 6);
+}

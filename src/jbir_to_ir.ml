@@ -25,7 +25,7 @@ let binop op x y = match op with
       | L.Object s -> s
       | _ -> assert false
     in
-    let array_array = ("ARRAY", L.Array (L.Array s)) in
+    let array_array = (show_sort s, L.Array (L.Array s)) in
     let inner_select = L.ArrSelect (L.Var array_array, x) in
     L.ArrSelect (inner_select, y)
   | J.Add _       -> L.mk_add x y
@@ -69,8 +69,10 @@ let rec expr st = function
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop _            -> assert false (* TODO *)
   | J.Field (v, cn, fs) ->
-    (** TODO getting the correct type for a field select *)
-    L.ArrSelect (L.Var (field_array_name cn fs, L.Array L.Int), expr st v)
+    L.ArrSelect (L.Var
+                   ( field_array_name cn fs
+                   , L.Array (sort (JB.fs_type fs)))
+                , expr st v)
   | J.StaticField _     -> assert false (* TODO *)
 
 let rec comp cond x y = match cond with

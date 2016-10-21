@@ -22,7 +22,8 @@ function run {
   fi
 }
 
-# run ../test/non_int_field.fail
+run ../test/non_int_field.fail
+run ../test/mixed_array.fail
 run ../test/non_int_array.fail
 run ../test/non_int_array.pass
 
