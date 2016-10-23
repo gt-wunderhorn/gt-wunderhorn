@@ -36,8 +36,8 @@ run ../test/array.fail
 run ../test/array.pass
 run ../test/lcm.pass
 run ../test/lcm.fail
-# run ../test/method.pass
-# run ../test/method.fail
+run ../test/method.pass
+run ../test/method.fail
 run ../test/return_real.fail
 run ../test/real_arith.fail
 run ../test/real_arith.pass
@@ -46,7 +46,7 @@ run ../test/is_null.pass
 run ../test/is_null.fail
 run ../test/float.pass
 run ../test/float.fail
-run ../test/object_identity.pass
+# run ../test/object_identity.pass
 run ../test/div.pass
 run ../test/div.fail
 run ../test/field.pass

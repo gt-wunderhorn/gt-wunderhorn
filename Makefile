@@ -1,6 +1,6 @@
 OCB_FLAGS = -tag thread -use-ocamlfind -pkgs $(LIBS) -Is $(DIRS)
 OCB = ocamlbuild $(OCB_FLAGS)
-DIRS = scripts,src,src/utility
+DIRS = scripts,src,src/utility,unit
 
 LIBS = sawja
 
@@ -23,4 +23,8 @@ byte:
 test: all
 	scripts/test.sh
 
-.PHONY: all clean byte native debug test
+unit:
+	$(OCB) unit.byte
+	mv unit.byte bin
+
+.PHONY: all clean byte native debug test unit

@@ -19,7 +19,7 @@ module Make(T : Graph_info) = struct
   module N = Set_ext.Make(
     struct type t = T.node;; let compare = compare end)
 
-  type t = S.t
+  type t = T.node * T.node * T.edge
 
   let empty = S.empty
   let singleton = S.singleton
@@ -34,6 +34,7 @@ module Make(T : Graph_info) = struct
   let diff = S.diff
   let remove = S.remove
   let of_list = S.of_list
+  let iter = S.iter
 
   let init (i, _, _) = i
   let term (_, t, _) = t
@@ -51,10 +52,13 @@ module Make(T : Graph_info) = struct
     |> N.elements
 
   (** Find the subgraph where all edges terminate at a given node. *)
-  let parents g n = filter (fun (i, t, e) -> t = n) g
+  let node_entrances g n = filter (fun (i, t, e) -> t = n) g
 
   (** Find the subgraph where all edges initiate at a given node. *)
-  let children g n = filter (fun (i, t, e) -> i = n) g
+  let node_exits g n = filter (fun (i, t, e) -> i = n) g
+
+  let set_initial (i, t, e) i' = (i', t, e)
+  let set_terminal (i, t, e) t' = (i, t', e)
 
   (** Recursively find all paths from a particular node. The direction of search
       is determined by `selector` and `direction`. Note that each node can only
@@ -79,9 +83,9 @@ module Make(T : Graph_info) = struct
     |> List.sort_uniq compare
 
   (** What are the paths that terminate at the given node? *)
-  let paths_to = find_paths init parents
+  let paths_to = find_paths init node_entrances
   (** What are the paths that initiate at the given node? *)
-  let paths_from = find_paths term children
+  let paths_from = find_paths term node_exits
 
   (** Find the set of edges which are eventually connected to a starting node
       in a particular direction. *)
@@ -91,9 +95,9 @@ module Make(T : Graph_info) = struct
     |> of_list
 
   (** Which edges eventually reach the node? *)
-  let reaches = follow init parents
+  let reaches = follow init node_entrances
   (** Which edges eventually are reached from the node? *)
-  let reached_by = follow term children
+  let reached_by = follow term node_exits
 
 
   (** We define a `bridge` node as being one which only has a single input edge
@@ -103,10 +107,10 @@ module Make(T : Graph_info) = struct
     let simplify' g =
       let g' = ref g in
 
-      let simp_node n =
+      let simp n =
         let g = !g' in
-        let ps = parents g n in
-        let cs = children g n in
+        let ps = node_entrances g n in
+        let cs = node_exits g n in
         if cardinal ps = 1 && cardinal cs = 1
         then
           (* When we've found a bridge, we removed both bridge edges and add
@@ -117,12 +121,47 @@ module Make(T : Graph_info) = struct
           g' := remove c !g';
           g' := add (init p, term c, combine (edge p) (edge c)) !g'
       in
-
-      g |> nodes |> List.iter simp_node;
+      g |> nodes |> List.iter simp;
       !g'
     in
-
     converge (=) simplify'
+
+(** Two nodes are strictly connected if one has only one outgoing edge which goes
+    to the other and the other has only one incoming edge which comes from the
+    first.
+
+    It is sometimes useful to be able to combine strictly connected nodes into
+    a single node. The user provides a function which takes in two nodes and the
+    edge and might return the combined node. If the user function combines the
+    nodes, then the original nodes and edge are removed, the new node is added,
+    and other involved edges are rewired to the new node. *)
+  let merge_strictly_connected (f : t -> T.node option) =
+    let merge g =
+      let g' = ref g in
+      let simp (ce : t) =
+        let up = node_entrances !g' (term ce) in
+        let down = node_exits !g' (init ce) in
+
+        if cardinal down = 1 && cardinal up = 1
+        then match f ce with
+          | Some n ->
+            let incoming = node_entrances !g' (init ce) in
+            let outgoing = node_exits !g' (term ce) in
+            g' := remove ce !g';
+            iter (fun ce ->
+                g' := remove ce !g';
+                g' := add (init ce, n, edge ce) !g'
+              ) incoming;
+            iter (fun ce ->
+                g' := remove ce !g';
+                g' := add (n, term ce, edge ce) !g'
+              ) outgoing
+          | None -> ()
+      in
+      g |> elements |> List.iter simp;
+      !g'
+    in
+    converge (=) merge
 
   let display sn se g =
     g |> elements
