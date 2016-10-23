@@ -110,4 +110,6 @@ let rec instr (this, next, i) =
 and procedure proc =
   List.map instr proc.Ir.content
   |> G.unions
-  |> G.simplify (@)
+  |> G.merge_bridges (fun (e1, e2, n) -> Some (e1 @ e2))
+  |> G.merge_strictly_connected
+    (fun (i, t, e) -> if e = [] then Some i else None)

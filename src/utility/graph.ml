@@ -44,6 +44,7 @@ module Make(T : Graph_info) = struct
   let edges g =
     g |> elements |> List.map edge
 
+  (** Given a graph, get a list of all the nodes *)
   let nodes g =
     g |> elements
     |> List.map (fun ce -> [init ce; term ce])
@@ -102,8 +103,8 @@ module Make(T : Graph_info) = struct
 
   (** We define a `bridge` node as being one which only has a single input edge
       and a single output edge. `simplify` removes bridge nodes by combining
-      the input and output edge using `comcbine`. *)
-  let simplify combine =
+      the input and output edge using `combine`. *)
+  let merge_bridges (f : (T.edge * T.edge * T.node) -> T.edge option) =
     let simplify' g =
       let g' = ref g in
 
@@ -117,9 +118,13 @@ module Make(T : Graph_info) = struct
              a new edge which combines the edges of the two removed edges. *)
           let p = choose ps in
           let c = choose cs in
-          g' := remove p !g';
-          g' := remove c !g';
-          g' := add (init p, term c, combine (edge p) (edge c)) !g'
+
+          match f (edge p, edge c, n) with
+          | None -> ()
+          | Some e ->
+            g' := remove p !g';
+            g' := remove c !g';
+            g' := add (init p, term c, e) !g'
       in
       g |> nodes |> List.iter simp;
       !g'

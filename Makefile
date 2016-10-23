@@ -26,5 +26,6 @@ test: all
 unit:
 	$(OCB) unit.byte
 	mv unit.byte bin
+	bin/unit.byte
 
 .PHONY: all clean byte native debug test unit
