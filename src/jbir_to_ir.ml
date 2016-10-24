@@ -3,6 +3,8 @@ module JB = Javalib_pack.JBasics
 module P = Proc
 module L = Lang
 
+let array_length = ("ARRAY_LENGTH", L.Array L.Int)
+
 let const = function
   | `ANull    -> L.Int_lit 0
   | `Class _  -> assert false (* TODO *)
@@ -29,6 +31,13 @@ let rec sort = function
       | `Long   -> L.Int
       | `Short  -> L.Int)
   | JB.TObject t -> L.Int
+
+let unop op e = match op with
+  | J.Neg bt        -> L.mk_neg e
+  | J.Conv c        -> assert false (* TODO *)
+  | J.ArrayLength   -> L.ArrSelect (L.Var array_length, e)
+  | J.InstanceOf ot -> assert false (* TODO *)
+  | J.Cast ot       -> assert false (* TODO *)
 
 let binop op x y = match op with
   | J.ArrayLoad t ->
@@ -81,10 +90,10 @@ let mk_lbl lbl =
   S_map.find lbl !lbl_map
 
 let rec expr st = function
-  | J.Const c -> const c
-  | J.Var (t, v) -> L.Var (rename st v, sort t)
+  | J.Const c           -> const c
+  | J.Var (t, v)        -> L.Var (rename st v, sort t)
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
-  | J.Unop _            -> assert false (* TODO *)
+  | J.Unop (op, e)      -> unop op (expr st e)
   | J.Field (v, cn, fs) ->
     L.ArrSelect (L.Var
                    ( field_array_name cn fs

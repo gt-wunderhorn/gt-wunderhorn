@@ -11,7 +11,7 @@ module V_set = Set_ext.Make(
 
 type lbl = int
 
-type un_op = Not
+type un_op = Not | Neg
 type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div | Mul | Rem
 type many_op = And
 
@@ -58,6 +58,7 @@ and bi_op_sort op e1 e2 = match op with
 and many_op_sort = function
   | And -> Bool
 
+let mk_neg e = Un_op (Neg, e)
 let mk_not = function
   | Un_op (Not, e) -> e
   | e -> Un_op (Not, e)

@@ -51,7 +51,10 @@ let parse id classpath cn =
     let sign = cm.JL.cm_signature in
     id := !id + 1;
     match cm.JL.cm_implementation with
-    | JL.Native -> assert false
+    | JL.Native ->
+      let (cn, ms) = JB.cms_split (cm.JL.cm_class_method_signature) in
+      Printf.eprintf "%s %s\n" (JB.cn_name cn) (JB.ms_name ms);
+      assert false
     | JL.Java x ->
       { Proc.id          = "p" ^ string_of_int !id ^ "_"
       ; Proc.params      = J.params (Lazy.force x)

@@ -21,6 +21,7 @@ let print_rel (lbl, es) =
 
 let show_un_op = function
   | L.Not -> "not"
+  | L.Neg -> "-"
 
 let show_bi_op = function
   | L.Add  -> "+"

@@ -22,6 +22,7 @@ function run {
   fi
 }
 
+run ../test/string.pass
 run ../test/multi_call.pass
 run ../test/object_identity.pass
 run ../test/non_int_field.fail
@@ -30,7 +31,6 @@ run ../test/dispatch.pass
 run ../test/not_null.pass
 
 run ../test/ctor.pass
-# run ../test/string.pass
 
 run ../test/mixed_array.fail
 run ../test/non_int_array.fail

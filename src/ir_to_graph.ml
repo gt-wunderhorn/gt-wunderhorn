@@ -5,6 +5,7 @@ let id_initialized = ref false
 
 (** The global class array which stores the types of objects. *)
 let class_array = ("CLASS_TYPE", L.Array L.Int)
+let array_length = ("ARRAY_LENGTH", L.Array L.Int)
 (** The global identity counter which keeps track of how many objects have been
     created. *)
 let id = ("ID", L.Int)
@@ -73,7 +74,11 @@ let rec instr (this, next, i) =
     | Ir.Assign (v, e)          -> linear [L.mk_assign v e]
     | Ir.ArrAssign (arr, v, e)  -> linear [update_arr arr v e]
     | Ir.New (p, v, ct, es)     -> call (build_object v ct) p v (L.Var v :: es)
-    | Ir.NewArray (v, ct, es)   -> linear (build_object v ct)
+    | Ir.NewArray (v, ct, es)   ->
+      linear (
+
+        update_arr array_length (L.Var v) (List.hd es) ::
+        build_object v ct)
     | Ir.Invoke (p, v, args)    -> call [] p v args
     | Ir.Return (d, v, e)       -> G.singleton (this, d, [L.mk_assign v e])
     | Ir.Goto d                 -> jump d
