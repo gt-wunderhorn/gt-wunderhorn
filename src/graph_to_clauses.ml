@@ -16,7 +16,7 @@ let substitute table =
     | L.Bi_op (o, e1, e2)  -> L.Bi_op (o, su e1, su e2)
     | L.Many_op (o, es)    -> L.Many_op (o, List.map su es)
     | L.Query (loc, e)     -> L.Query (loc, su e)
-    | L.Relation (lbl, vs) -> L.Relation (lbl, List.map (mk_alias table) vs)
+    | L.Relation (lbl, es) -> L.Relation (lbl, List.map su es)
     | L.ArrSelect (a, i)   -> L.ArrSelect (su a, su i)
     | L.ArrStore (a, i, e) -> L.ArrStore (su a, su i, su e)
     | e                    -> e
@@ -26,12 +26,14 @@ let mk_condition table label vars =
   if L.V_set.is_empty vars
   then L.True
   else
-    L.Relation (label, List.map (mk_alias table) (L.V_set.elements vars))
+    L.Relation (label, List.map
+                  (fun v -> L.Var (mk_alias table v))
+                  (L.V_set.elements vars))
 
 let reduce_instr p table = function
-  | L.Relate lbl -> mk_condition table lbl (L.critical_vars p lbl)
-  | L.Call e -> substitute table e
-  | L.Assert _ -> assert false
+  | L.Relate lbl    -> mk_condition table lbl (L.critical_vars p lbl)
+  | L.Call e        -> substitute table e
+  | L.Assert _      -> assert false
   | L.Assign (v, e) ->
     (* Calculating the rhs needs to occur before incrementing the variable *)
     let rhs = substitute table e in
@@ -64,4 +66,7 @@ let translate_path p (init, term, path) =
 
 let translate p =
   let edges = L.PG.elements p in
+
+  L.Bi_op (L.Impl, L.True, (L.Relation ("p1_0", [L.Var ("X_0", L.Int)])))
+  ::
   List.map (translate_path p) edges

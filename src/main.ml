@@ -4,20 +4,30 @@ module JB = Javalib_pack.JBasics
 module I = Ir
 module J_to_i = Jbir_to_ir
 module I_to_g = Ir_to_graph
+module L = Lang
+module G = L.PG
 
 let make_graph classpath cms =
   let proc_id = ref (0) in
   let cn = fst (JB.cms_split cms) in
   let parse = Parse.parse proc_id classpath cn in
   Jbir_to_ir.mk_proc parse cms
+
   |> Ir_to_graph.procedure
+  |> G.union (G.singleton ("p1_0", "NOWHERE", [L.Assign (("X", L.Int), L.Int_lit 1)]))
+  |> G.merge_bridges (fun (e1, e2, n) -> Some (e1 @ e2))
+  |> G.merge_strictly_connected
+    (fun (i, t, e) -> if e = [] then Some t else None)
 
 let inspect classpath class_name =
   let cn  = JB.make_cn class_name in
   let cms = JB.make_cms cn JP.main_signature in
   let graph = make_graph classpath cms in
 
-  Print_clauses.print (Graph_to_clauses.translate graph)
+  graph
+  |> Graph_to_clauses.translate
+  |> List.map Simplify.remove_simple_assignments
+  |> Print_clauses.print
 
 let _ =
   if (Array.length Sys.argv < 3)

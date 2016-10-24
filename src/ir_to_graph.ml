@@ -59,7 +59,9 @@ let rec instr (this, next, i) =
          [ (this, proc.Ir.entrance, pred @ assignments)
          ; (proc.Ir.exit, next,
             [ L.Relate this
-            ; L.mk_assign v (L.Var proc.Ir.return) ] ) ])
+            ; L.mk_assign v (L.Var proc.Ir.return) ] )
+         ; (this, "NOWHERE", [L.Assign (("X", L.Int), L.Int_lit 1)])
+         ])
       (procedure proc)
   in
 
@@ -110,6 +112,3 @@ let rec instr (this, next, i) =
 and procedure proc =
   List.map instr proc.Ir.content
   |> G.unions
-  |> G.merge_bridges (fun (e1, e2, n) -> Some (e1 @ e2))
-  |> G.merge_strictly_connected
-    (fun (i, t, e) -> if e = [] then Some i else None)

@@ -11,8 +11,6 @@ module V_set = Set_ext.Make(
 
 type lbl = string
 
-type rel = lbl * var list
-
 type un_op = Not
 type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div | Mul | Rem
 type many_op = And
@@ -31,6 +29,7 @@ type expr =
   | True
   | False
 and query = lbl * expr
+and rel = lbl * expr list
 
 type instr =
   | Relate of lbl
@@ -96,7 +95,8 @@ let rec fold_expr special_case f zero e =
   match special_case e with
   | Some r -> r
   | None -> match e with
-    | Query q            -> zero
+    | Relation (_, es)     -> List.fold_left f zero (List.map ex es)
+    | Query (_, e)       -> ex e
     | Un_op (_, e)       -> ex e
     | Bi_op (_, e1, e2)  -> f (ex e1) (ex e2)
     | Many_op (_, es)    -> List.fold_left f zero (List.map ex es)
@@ -121,7 +121,6 @@ let expr_rels =
 (** Find the variables in an expression *)
 let expr_vars =
   let special_case = function
-    | Relation (_, vs) -> Some (V_set.of_list vs)
     | Var v            -> Some (V_set.singleton v)
     | _                -> None
   in fold_expr special_case V_set.union V_set.empty
@@ -185,9 +184,10 @@ let critical_vars p lbl =
   let coming = PG.paths_to p lbl |> List.map connect_path in
   let going = PG.paths_from p lbl |> List.map connect_path in
 
-  if List.length going = 0 then
-    (List.map path_assigns coming |> V_set.unions)
-  else
-    V_set.inter
-      (List.map path_assigns coming |> V_set.unions)
-      (List.map path_used_before_assigned going |> V_set.unions)
+  V_set.add ("X", Int)
+    (if List.length going = 0 then
+       (List.map path_assigns coming |> V_set.unions)
+     else
+       V_set.inter
+         (List.map path_assigns coming |> V_set.unions)
+         (List.map path_used_before_assigned going |> V_set.unions))

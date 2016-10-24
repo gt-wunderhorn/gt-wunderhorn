@@ -1,12 +1,3 @@
-(** `converge` repeatedly applies a function `f` to an argument `x` until
-    the change in `x` caused by `f` is stable. *)
-let converge is_stable f x =
-  let rec converge' x x' =
-    if is_stable x x' then x'
-    else converge' x' (f x')
-  in
-  converge' x (f x)
-
 module type Graph_info = sig
   type node
   type edge
@@ -60,6 +51,8 @@ module Make(T : Graph_info) = struct
 
   let set_initial (i, t, e) i' = (i', t, e)
   let set_terminal (i, t, e) t' = (i, t', e)
+
+  let map nf ef = S.map (fun (i, t, e) -> (nf i, nf t, ef e))
 
   (** Recursively find all paths from a particular node. The direction of search
       is determined by `selector` and `direction`. Note that each node can only
@@ -129,7 +122,7 @@ module Make(T : Graph_info) = struct
       g |> nodes |> List.iter simp;
       !g'
     in
-    converge (=) simplify'
+    Algorithm.converge (=) simplify'
 
 (** Two nodes are strictly connected if one has only one outgoing edge which goes
     to the other and the other has only one incoming edge which comes from the
@@ -166,7 +159,7 @@ module Make(T : Graph_info) = struct
       g |> elements |> List.iter simp;
       !g'
     in
-    converge (=) merge
+    Algorithm.converge (=) merge
 
   let display sn se g =
     g |> elements

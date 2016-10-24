@@ -22,13 +22,15 @@ function run {
   fi
 }
 
+run ../test/non_int_field.fail
+run ../test/multi_call.pass
+run ../test/div.fail
 run ../test/dispatch.pass
 run ../test/not_null.pass
 
 run ../test/ctor.pass
 # run ../test/string.pass
 
-run ../test/non_int_field.fail
 run ../test/mixed_array.fail
 run ../test/non_int_array.fail
 run ../test/non_int_array.pass
@@ -48,10 +50,8 @@ run ../test/float.pass
 run ../test/float.fail
 # run ../test/object_identity.pass
 run ../test/div.pass
-run ../test/div.fail
 run ../test/field.pass
 run ../test/field.fail
-run ../test/multi_call.pass
 run ../test/call.pass
 run ../test/call.fail
 run ../test/while.pass

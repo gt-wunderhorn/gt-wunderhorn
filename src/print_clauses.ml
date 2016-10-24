@@ -16,8 +16,8 @@ let rec sort = function
 let print_var (v, s) =
   parens ["declare-var"; v ; sort s]
 
-let print_rel (lbl, vs) =
-  parens ["declare-rel"; "r_" ^ lbl; parens (List.map (fun (_, s) -> sort s) vs)]
+let print_rel (lbl, es) =
+  parens ["declare-rel"; "r_" ^ lbl; parens (List.map (fun e -> sort (L.expr_sort e)) es)]
 
 let show_un_op = function
   | L.Not -> "not"
@@ -39,8 +39,8 @@ let show_many_op = function
 
 let print_expr expr =
   let rec ex = function
-    | L.Query (lbl, e)         -> parens ["q_" ^ lbl; ex e]
-    | L.Relation (lbl, vs)     -> parens (("r_" ^ lbl) :: (List.map fst vs))
+    | L.Query (lbl, e)         -> parens ["q_" ^ lbl; "true"]
+    | L.Relation (lbl, es)     -> parens (("r_" ^ lbl) :: (List.map ex es))
     | L.Var v                  -> fst v
     | L.Un_op (op, e)          -> parens [show_un_op op; ex e]
     | L.Bi_op (op, e1, e2)     -> parens [show_bi_op op; ex e1; ex e2]
