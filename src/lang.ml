@@ -9,7 +9,7 @@ type var = string * sort
 module V_set = Set_ext.Make(
   struct type t = var;; let compare = compare end)
 
-type lbl = string
+type lbl = int
 
 type un_op = Not
 type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div | Mul | Rem
@@ -184,10 +184,9 @@ let critical_vars p lbl =
   let coming = PG.paths_to p lbl |> List.map connect_path in
   let going = PG.paths_from p lbl |> List.map connect_path in
 
-  V_set.add ("X", Int)
-    (if List.length going = 0 then
-       (List.map path_assigns coming |> V_set.unions)
-     else
-       V_set.inter
-         (List.map path_assigns coming |> V_set.unions)
-         (List.map path_used_before_assigned going |> V_set.unions))
+  if List.length going = 0 then
+    (List.map path_assigns coming |> V_set.unions)
+  else
+    V_set.inter
+      (List.map path_assigns coming |> V_set.unions)
+      (List.map path_used_before_assigned going |> V_set.unions)

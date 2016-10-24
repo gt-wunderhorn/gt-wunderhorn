@@ -66,6 +66,20 @@ type st =
 let mk_st p = { proc = p ; labeller = Label.mk ("v_" ^ p.P.id) }
 let rename st = Label.label st.labeller
 
+module S_map = Map.Make(struct type t = string;; let compare = compare end)
+
+let lbl_map = ref S_map.empty
+let lbl_count = ref 0
+
+let mk_lbl lbl =
+  if not (S_map.mem lbl !lbl_map)
+  then
+    ( lbl_map := S_map.add lbl !lbl_count !lbl_map
+    ; lbl_count := !lbl_count + 1
+    )
+  ;
+  S_map.find lbl !lbl_map
+
 let rec expr st = function
   | J.Const c -> const c
   | J.Var (t, v) -> L.Var (rename st v, sort t)
@@ -92,8 +106,9 @@ let ctor_sig cn t =
 
 let rec ir_proc parse st =
   let p = st.proc in
-  { Ir.entrance = p.P.id ^ "0"
-  ; Ir.exit     = p.P.id ^ "RET"
+  { Ir.id       = p.P.id
+  ; Ir.entrance = mk_lbl (p.P.id ^ "0")
+  ; Ir.exit     = mk_lbl (p.P.id ^ "RET")
   ; Ir.params   = List.map (fun (t, v) -> (rename st v, sort t)) p.P.params
   ; Ir.return   = (p.P.id ^ "RETVAR", Option.map_default sort L.Int p.P.ret_type)
   ; Ir.content  = List.mapi (instr parse st) p.P.content
@@ -108,10 +123,10 @@ and instr parse st line i =
   let expr = expr st in
   let e_sort e = L.expr_sort (expr e) in
   let id = st.proc.P.id in
-  let mk_lbl n = id ^ string_of_int n in
+  let lbl n = mk_lbl (id ^ string_of_int n) in
 
-  let this = mk_lbl line in
-  let next = mk_lbl (line+1) in
+  let this = lbl line in
+  let next = lbl (line+1) in
 
   let return_var proc =
     Option.map_default (fun v -> var v (snd proc.Ir.return)) ("DUMMY", L.Int)
@@ -130,10 +145,10 @@ and instr parse st line i =
       Ir.ArrAssign (fa, expr v, expr e)
 
     | J.Goto l ->
-      Ir.Goto (mk_lbl l)
+      Ir.Goto (lbl l)
 
     | J.Ifd ((cond, x, y), l) ->
-      Ir.If (comp cond, expr x, expr y, mk_lbl l)
+      Ir.If (comp cond, expr x, expr y, lbl l)
 
     | J.Return e ->
       (** If there is no return parameter, see if there were arguments. If so,
@@ -146,7 +161,7 @@ and instr parse st line i =
 
       let e = Option.map_default expr backup_ret e in
       let v = (id ^ "RETVAR", L.expr_sort e) in
-      Ir.Return (id ^ "RET", v, e)
+      Ir.Return (mk_lbl (id ^ "RET"), v, e)
 
     | J.New (v, cn, t, es) ->
       let proc = mk_proc parse (ctor_sig cn t) in

@@ -14,7 +14,6 @@ let make_graph classpath cms =
   Jbir_to_ir.mk_proc parse cms
 
   |> Ir_to_graph.procedure
-  |> G.union (G.singleton ("p1_0", "NOWHERE", [L.Assign (("X", L.Int), L.Int_lit 1)]))
   |> G.merge_bridges (fun (e1, e2, n) -> Some (e1 @ e2))
   |> G.merge_strictly_connected
     (fun (i, t, e) -> if e = [] then Some t else None)

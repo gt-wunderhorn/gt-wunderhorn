@@ -6,7 +6,8 @@ type field_name = string
 type comp = L.expr -> L.expr -> L.expr
 
 type proc =
-  { entrance : L.lbl
+  { id       : string
+  ; entrance : L.lbl
   ; exit     : L.lbl
   ; params   : L.var list
   ; return   : L.var

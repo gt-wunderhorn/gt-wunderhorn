@@ -54,13 +54,17 @@ let rec instr (this, next, i) =
         3. A separate graph is evaluated for the callee. *)
   let call pred proc v args =
     let assignments = List.map2 L.mk_assign proc.Ir.params args in
+
+    let pc = (proc.Ir.id, L.Int) in
+
     G.union
       (G.of_list
-         [ (this, proc.Ir.entrance, pred @ assignments)
+         [ (this, proc.Ir.entrance,
+            L.Assign (pc, L.Int_lit this) :: pred @ assignments)
          ; (proc.Ir.exit, next,
-            [ L.Relate this
-            ; L.mk_assign v (L.Var proc.Ir.return) ] )
-         ; (this, "NOWHERE", [L.Assign (("X", L.Int), L.Int_lit 1)])
+            [ L.Call (L.mk_eq (L.Var pc) (L.Int_lit this))
+            ; L.mk_assign v (L.Var proc.Ir.return)
+            ] )
          ])
       (procedure proc)
   in
@@ -94,7 +98,7 @@ let rec instr (this, next, i) =
 
     | Ir.Assert e ->
       G.of_list
-        [ (this, "NOWHERE", [(L.Assert e)])
+        [ (this, -1, [(L.Assert e)])
         ; (this, next, [])
         ]
   in
@@ -106,7 +110,7 @@ let rec instr (this, next, i) =
   in
 
   G.union
-    (G.unions_map (fun a -> G.singleton (this, "NOWHERE", [a])) extra_assertions)
+    (G.unions_map (fun a -> G.singleton (this, -1, [a])) extra_assertions)
     g
 
 and procedure proc =

@@ -66,7 +66,4 @@ let translate_path p (init, term, path) =
 
 let translate p =
   let edges = L.PG.elements p in
-
-  L.Bi_op (L.Impl, L.True, (L.Relation ("p1_0", [L.Var ("X_0", L.Int)])))
-  ::
   List.map (translate_path p) edges
