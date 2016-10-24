@@ -22,9 +22,9 @@ function run {
   fi
 }
 
+run ../test/multi_call.pass
 run ../test/object_identity.pass
 run ../test/non_int_field.fail
-# run ../test/multi_call.pass
 run ../test/div.fail
 run ../test/dispatch.pass
 run ../test/not_null.pass

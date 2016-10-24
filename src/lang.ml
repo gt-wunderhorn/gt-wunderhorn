@@ -184,9 +184,10 @@ let critical_vars p lbl =
   let coming = PG.paths_to p lbl |> List.map connect_path in
   let going = PG.paths_from p lbl |> List.map connect_path in
 
-  if List.length going = 0 then
-    (List.map path_assigns coming |> V_set.unions)
-  else
-    V_set.inter
-      (List.map path_assigns coming |> V_set.unions)
-      (List.map path_used_before_assigned going |> V_set.unions)
+  V_set.add ("X", Int)
+    (if List.length going = 0 then
+       (List.map path_assigns coming |> V_set.unions)
+     else
+       V_set.inter
+         (List.map path_assigns coming |> V_set.unions)
+         (List.map path_used_before_assigned going |> V_set.unions))

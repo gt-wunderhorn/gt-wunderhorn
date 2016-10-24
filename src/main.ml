@@ -26,6 +26,7 @@ let inspect classpath class_name =
   graph
   |> Graph_to_clauses.translate
   |> List.map Simplify.remove_simple_assignments
+  |> fun es -> L.mk_impl L.True (L.Relation (0, [L.Var ("X", L.Int)])) :: es
   |> Print_clauses.print
 
 let _ =
