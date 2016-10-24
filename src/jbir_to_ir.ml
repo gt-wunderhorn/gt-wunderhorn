@@ -2,8 +2,7 @@ module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
 module P = Proc
 module L = Lang
-
-let array_length = ("ARRAY_LENGTH", L.Array L.Int)
+module LS = Lang_state
 
 let const = function
   | `ANull    -> L.Int_lit 0
@@ -12,13 +11,7 @@ let const = function
   | `Float f  -> L.Real_lit f
   | `Int i    -> L.Int_lit (Int32.to_int i)
   | `Long i   -> L.Int_lit (Int64.to_int i)
-  | `String s -> assert false (* TODO *)
-
-let rec show_sort = function
-  | L.Bool -> "Bool"
-  | L.Int  -> "Int"
-  | L.Real -> "Real"
-  | L.Array s  -> "Array_" ^ show_sort s
+  | `String s -> L.Str_lit (JB.jstr_raw s)
 
 let rec sort = function
   | JB.TBasic t -> (match t with
@@ -35,13 +28,13 @@ let rec sort = function
 let unop op e = match op with
   | J.Neg bt        -> L.mk_neg e
   | J.Conv c        -> assert false (* TODO *)
-  | J.ArrayLength   -> L.ArrSelect (L.Var array_length, e)
+  | J.ArrayLength   -> L.ArrSelect (L.Var LS.array_length, e)
   | J.InstanceOf ot -> assert false (* TODO *)
-  | J.Cast ot       -> assert false (* TODO *)
+  | J.Cast ot       -> e (** TODO ?? *)
 
 let binop op x y = match op with
   | J.ArrayLoad t ->
-    let array_array = ("ARRAY" ^ show_sort (sort t), L.Array (L.Array (sort t))) in
+    let array_array = LS.array_array (sort t) in
     let inner_select = L.ArrSelect (L.Var array_array, x) in
     L.ArrSelect (inner_select, y)
   | J.Add _       -> L.mk_add x y
@@ -68,11 +61,12 @@ let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
 module Label = Labeller.Make(struct type t = J.var;; let compare = compare end)
 
 type st =
-  { proc : Proc.t
+  { parse : Parse.t
+  ; proc : Proc.t
   ; labeller : Label.t
   }
 
-let mk_st p = { proc = p ; labeller = Label.mk ("v_" ^ p.P.id) }
+let mk_st parse p = { parse = parse; proc = p ; labeller = Label.mk ("v_" ^ p.P.id) }
 let rename st = Label.label st.labeller
 
 module S_map = Map.Make(struct type t = string;; let compare = compare end)
@@ -99,7 +93,11 @@ let rec expr st = function
                    ( field_array_name cn fs
                    , L.Array (sort (JB.fs_type fs)))
                 , expr st v)
-  | J.StaticField _     -> assert false (* TODO *)
+  | J.StaticField (cn, fs) ->
+    L.ArrSelect (L.Var
+                   ( field_array_name cn fs
+                   , L.Array (sort (JB.fs_type fs)))
+                , L.Int_lit (st.parse.Parse.class_id cn))
 
 let rec comp cond x y = match cond with
   | `Eq -> L.Bi_op (L.Eq, x, y)
@@ -125,7 +123,7 @@ let rec ir_proc parse st =
 
 and mk_proc parse cms =
   let p = (parse.Parse.cms_lookup cms) in
-  ir_proc parse (mk_st p)
+  ir_proc parse (mk_st parse p)
 
 and instr parse st line i =
   let var v s = (rename st v, s) in
@@ -145,13 +143,17 @@ and instr parse st line i =
     | J.AffectVar (v, e) -> Ir.Assign (var v (e_sort e), expr e)
 
     | J.AffectArray (arr, ind, e) ->
-      let array_array = ("ARRAY" ^ show_sort (e_sort e), L.Array (L.Array (e_sort e))) in
+      let array_array = LS.array_array (e_sort e) in
       let sub_array = L.ArrSelect (L.Var array_array, expr arr) in
       Ir.ArrAssign (array_array, expr arr, L.ArrStore (sub_array, expr ind, expr e))
 
     | J.AffectField (v, cn, fs, e) ->
       let fa = (field_array_name cn fs, L.Array (e_sort e)) in
       Ir.ArrAssign (fa, expr v, expr e)
+
+    | J.AffectStaticField (cn, fs, e) ->
+      let fa = (field_array_name cn fs, L.Array (e_sort e)) in
+      Ir.ArrAssign (fa, L.Int_lit (parse.Parse.class_id cn), expr e)
 
     | J.Goto l ->
       Ir.Goto (lbl l)
@@ -192,7 +194,7 @@ and instr parse st line i =
       let procs =
         parse.Parse.virtual_lookup st.proc.P.sign line
         |> List.map
-          (fun p -> ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st p))) in
+          (fun p -> ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p))) in
 
       let v =
         if List.length procs = 0
@@ -205,12 +207,10 @@ and instr parse st line i =
       let proc = mk_proc parse (JB.make_cms cn ms) in
       let v = return_var proc v in
       Ir.Invoke (proc, v, (expr obj) :: (List.map expr args))
-    | J.MonitorEnter _
-    | J.MonitorExit _
-    | J.AffectStaticField _
-    | J.Throw _
-    | J.Formula _
-      -> assert false
+    | J.MonitorEnter _ -> assert false (** TODO *)
+    | J.MonitorExit _  -> assert false (** TODO *)
+    | J.Throw _        -> assert false (** TODO *)
+    | J.Formula _      -> assert false (** TODO *)
 
     | J.Nop
     | J.MayInit _
@@ -220,4 +220,4 @@ and instr parse st line i =
   in (this, next, i)
 
 let procedure parse p =
-  List.mapi (instr parse (mk_st p)) p.P.content
+  List.mapi (instr parse (mk_st parse p)) p.P.content

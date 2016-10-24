@@ -23,18 +23,14 @@ function run {
 }
 
 run ../test/string.pass
-run ../test/multi_call.pass
+run ../test/static_field.fail
+run ../test/static_field.pass
 run ../test/object_identity.pass
-run ../test/non_int_field.fail
-run ../test/div.fail
-run ../test/dispatch.pass
-run ../test/not_null.pass
-
 run ../test/ctor.pass
-
+run ../test/not_null.pass
+run ../test/dispatch.pass
+run ../test/multi_call.pass
 run ../test/mixed_array.fail
-run ../test/non_int_array.fail
-run ../test/non_int_array.pass
 run ../test/array.fail
 run ../test/array.pass
 run ../test/lcm.pass
@@ -50,6 +46,8 @@ run ../test/is_null.fail
 run ../test/float.pass
 run ../test/float.fail
 run ../test/div.pass
+run ../test/div.fail
+run ../test/non_int_field.fail
 run ../test/field.pass
 run ../test/field.fail
 run ../test/call.pass

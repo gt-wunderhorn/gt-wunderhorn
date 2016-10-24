@@ -11,6 +11,7 @@ let rec sort = function
   | L.Int      -> "Int"
   | L.Bool     -> "Bool"
   | L.Real     -> "Real"
+  | L.String   -> "String"
   | L.Array s  -> parens ["Array Int"; sort s]
 
 let print_var (v, s) =
@@ -50,6 +51,7 @@ let print_expr expr =
     | L.ArrSelect (e1, e2)     -> parens ["select"; ex e1; ex e2]
     | L.Int_lit i              -> string_of_int i
     | L.Real_lit f             -> string_of_float f
+    | L.Str_lit s              -> "\"" ^ s ^ "\""
     | L.True                   -> "true"
     | L.False                  -> "false" in
   parens ["rule"; ex expr]

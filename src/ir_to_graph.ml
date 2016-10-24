@@ -1,41 +1,11 @@
 module L = Lang
 module G = L.PG
-
-let id_initialized = ref false
-
-(** The global class array which stores the types of objects. *)
-let class_array = ("CLASS_TYPE", L.Array L.Int)
-let array_length = ("ARRAY_LENGTH", L.Array L.Int)
-(** The global identity counter which keeps track of how many objects have been
-    created. *)
-let id = ("ID", L.Int)
-
-let update_arr arr idx e =
-  let store = L.ArrStore (L.Var arr, idx, e) in
-  L.mk_assign arr store
-
-(** Building a new object has a few steps.
-    1. If the global identity counter does not exist yet, it is created.
-    2. If the counter already existed, it is incremented from its previous value.
-    3. The object's variable is assigned the value of the counter.
-    4. The type of the new object is stored in the global class array. *)
-let build_object v ct =
-  let id_init =
-    if !id_initialized
-    then []
-    else (id_initialized := true;
-          [L.mk_assign id (L.Int_lit 1)]) in
-
-  id_init @
-  [ L.mk_assign id (L.mk_add (L.Var id) (L.Int_lit 1))
-  ; L.mk_assign v (L.Var id)
-  ; update_arr class_array (L.Var v) ct
-  ]
+module LS = Lang_state
 
 (** To inspect the type of an object, the global class array is accessed
     and the contents under the object are compared to the expected value. *)
 let check_type obj t =
-  L.Call (L.mk_eq (L.ArrSelect (L.Var class_array, obj)) t)
+  L.Call (L.mk_eq (L.ArrSelect (L.Var LS.class_array, obj)) t)
 
 let rec instr (this, next, i) =
   (** Many instruction types simply proceed to the next program location with
@@ -72,13 +42,12 @@ let rec instr (this, next, i) =
 
   let g = match i with
     | Ir.Assign (v, e)          -> linear [L.mk_assign v e]
-    | Ir.ArrAssign (arr, v, e)  -> linear [update_arr arr v e]
-    | Ir.New (p, v, ct, es)     -> call (build_object v ct) p v (L.Var v :: es)
+    | Ir.ArrAssign (arr, v, e)  -> linear [LS.update_arr arr v e]
+    | Ir.New (p, v, ct, es)     -> call (LS.build_object v ct) p v (L.Var v :: es)
     | Ir.NewArray (v, ct, es)   ->
       linear (
-
-        update_arr array_length (L.Var v) (List.hd es) ::
-        build_object v ct)
+        LS.update_arr LS.array_length (L.Var v) (List.hd es) ::
+        LS.build_object v ct)
     | Ir.Invoke (p, v, args)    -> call [] p v args
     | Ir.Return (d, v, e)       -> G.singleton (this, d, [L.mk_assign v e])
     | Ir.Goto d                 -> jump d

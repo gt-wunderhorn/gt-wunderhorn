@@ -2,6 +2,7 @@ type sort =
   | Int
   | Bool
   | Real
+  | String
   | Array of sort
 
 type var = string * sort
@@ -26,6 +27,7 @@ type expr =
   | ArrSelect of expr * expr
   | Int_lit of int
   | Real_lit of float
+  | Str_lit of string
   | True
   | False
 and query = lbl * expr
