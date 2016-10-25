@@ -43,17 +43,19 @@ let rec expr_sort = function
   | Relation r         -> Bool
   | Query q            -> Bool
   | Var (_, s)         -> s
-  | Un_op (op, _)      -> un_op_sort op
+  | Un_op (op, e)      -> un_op_sort op e
   | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
   | Many_op (op, _)    -> many_op_sort op
   | ArrStore (arr,_,e) -> expr_sort arr
   | ArrSelect (arr,_)  -> expr_sort arr
   | Int_lit _          -> Int
   | Real_lit _         -> Real
+  | Str_lit _          -> String
   | True               -> Bool
   | False              -> Bool
-and un_op_sort = function
+and un_op_sort op e = match op with
   | Not -> Bool
+  | Neg -> expr_sort e
 and bi_op_sort op e1 e2 = match op with
   | Eq | Ge | Gt | Le | Lt | Impl -> Bool
   | Add | Div | Mul | Rem -> expr_sort e1

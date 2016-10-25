@@ -22,6 +22,7 @@ function run {
   fi
 }
 
+run ../test/string.fail
 run ../test/string.pass
 run ../test/static_field.fail
 run ../test/static_field.pass

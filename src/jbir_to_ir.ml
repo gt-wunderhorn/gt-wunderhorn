@@ -17,7 +17,7 @@ let rec sort = function
   | JB.TBasic t -> (match t with
       | `Bool   -> L.Bool
       | `Byte   -> assert false (* TODO *)
-      | `Char   -> assert false (* TODO *)
+      | `Char   -> L.Int
       | `Double -> L.Real
       | `Float  -> L.Real
       | `Int    -> L.Int
@@ -209,7 +209,7 @@ and instr parse st line i =
       Ir.Invoke (proc, v, (expr obj) :: (List.map expr args))
     | J.MonitorEnter _ -> assert false (** TODO *)
     | J.MonitorExit _  -> assert false (** TODO *)
-    | J.Throw _        -> assert false (** TODO *)
+    | J.Throw _        -> Ir.Goto (-1) (** TODO *)
     | J.Formula _      -> assert false (** TODO *)
 
     | J.Nop
