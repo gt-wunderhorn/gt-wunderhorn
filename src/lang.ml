@@ -30,6 +30,7 @@ type expr =
   | Real_lit of float
   | True
   | False
+  | Any of sort
 and query = lbl * expr
 
 type instr =
@@ -51,6 +52,7 @@ let rec expr_sort = function
   | Real_lit _         -> Real
   | True               -> Bool
   | False              -> Bool
+  | Any s              -> s
 and un_op_sort = function
   | Not -> Bool
 and bi_op_sort op e1 e2 = match op with
