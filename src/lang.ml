@@ -30,6 +30,7 @@ type expr =
   | Str_lit of string
   | True
   | False
+  | Any of sort
 and query = lbl * expr
 and rel = lbl * expr list
 
@@ -53,6 +54,8 @@ let rec expr_sort = function
   | Str_lit _          -> String
   | True               -> Bool
   | False              -> Bool
+  | Any s              -> s
+
 and un_op_sort op e = match op with
   | Not -> Bool
   | Neg -> expr_sort e

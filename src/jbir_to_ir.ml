@@ -139,6 +139,16 @@ and instr parse st line i =
     Option.map_default (fun v -> var v (snd proc.Ir.return)) ("DUMMY", L.Int)
   in
 
+  let built_in name args =
+    if name = "ensure"
+    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1)))
+    (* else if name = "nextInt" *)
+    (* then Some (L.Any L.Int) *)
+    else if name = "print" || name = "println"
+    then Some (Ir.Goto next)
+    else None
+  in
+
   let i = match i with
     | J.AffectVar (v, e) -> Ir.Assign (var v (e_sort e), expr e)
 
@@ -182,13 +192,13 @@ and instr parse st line i =
       Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
-      if (JB.ms_name ms) = "ensure"
-      then
-        Ir.Assert (L.mk_eq (expr (List.hd args)) (L.Int_lit 1))
-      else
-        let proc = mk_proc parse (JB.make_cms cn ms) in
-        let v = return_var proc v in
-        Ir.Invoke (proc, v, List.map expr args)
+      let args = List.map expr args in
+      (match built_in (JB.ms_name ms) args with
+       | Some i -> i
+       | None ->
+         let proc = mk_proc parse (JB.make_cms cn ms) in
+         let v = return_var proc v in
+         Ir.Invoke (proc, v, args))
 
     | J.InvokeVirtual (v, obj, ck, _, args) ->
       let procs =

@@ -53,7 +53,9 @@ let print_expr expr =
     | L.Real_lit f             -> string_of_float f
     | L.Str_lit s              -> "\"" ^ s ^ "\""
     | L.True                   -> "true"
-    | L.False                  -> "false" in
+    | L.False                  -> "false"
+    | L.Any s                  -> "" (* TODO *)
+  in
   parens ["rule"; ex expr]
 
 let declare_query (lbl, _) = parens ["declare-rel"; "q_" ^ string_of_int lbl; parens ["Bool"]]

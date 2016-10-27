@@ -22,8 +22,6 @@ function run {
   fi
 }
 
-run ../test/string.fail
-run ../test/string.pass
 run ../test/static_field.fail
 run ../test/static_field.pass
 run ../test/object_identity.pass
@@ -32,7 +30,6 @@ run ../test/not_null.pass
 run ../test/dispatch.pass
 run ../test/multi_call.pass
 run ../test/mixed_array.fail
-run ../test/array.fail
 run ../test/array.pass
 run ../test/lcm.pass
 run ../test/lcm.fail
