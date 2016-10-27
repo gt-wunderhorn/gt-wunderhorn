@@ -5,6 +5,7 @@ module I = Ir
 module J_to_i = Jbir_to_ir
 module I_to_g = Ir_to_graph
 module L = Lang
+module LS = Lang_state
 module G = L.PG
 
 let make_graph classpath cms =
@@ -24,9 +25,10 @@ let inspect classpath class_name =
   let graph = make_graph classpath cms in
 
   graph
+  |> Simplify.remove_useless_nodes
   |> Graph_to_clauses.translate
   |> List.map Simplify.remove_simple_assignments
-  |> fun es -> L.mk_impl L.True (L.Relation (0, [L.Var ("X", L.Int)])) :: es
+  |> fun es -> LS.setup es
   |> Print_clauses.print
 
 let _ =

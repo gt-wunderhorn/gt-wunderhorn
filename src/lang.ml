@@ -40,10 +40,18 @@ type instr =
   | Assign of var * expr
   | Call of expr
 
+let rec show_sort = function
+  | Bool     -> "Bool"
+  | Int      -> "Int"
+  | Real     -> "Real"
+  | String   -> "String"
+  | Array s  -> "Array_" ^ show_sort s
 let rec expr_sort = function
   | Relation r         -> Bool
   | Query q            -> Bool
-  | Var (_, s)         -> s
+  | Var (name, s)      ->
+    (* Printf.eprintf "%s %s\n" name (show_sort s); *)
+    s
   | Un_op (op, e)      -> un_op_sort op e
   | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
   | Many_op (op, _)    -> many_op_sort op
@@ -192,7 +200,7 @@ let critical_vars p lbl =
   let coming = PG.paths_to p lbl |> List.map connect_path in
   let going = PG.paths_from p lbl |> List.map connect_path in
 
-  V_set.add ("X", Int)
+  V_set.add ("ID", Int)
     (if List.length going = 0 then
        (List.map path_assigns coming |> V_set.unions)
      else

@@ -1,5 +1,13 @@
 cd bin
-../scripts/build_test.sh $1 > Test.java
+
+fn=$(basename "$1")
+ext="${fn##*.}"
+
+if [ "$ext" == "java" ]; then
+  cp $1 Test.java
+else
+  ../scripts/build_test.sh $1 > Test.java
+fi
 
 rm *.class
 cp ../test/MyNative.java .

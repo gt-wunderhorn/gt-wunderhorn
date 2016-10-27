@@ -30,16 +30,14 @@ let update_arr arr idx e =
     2. If the counter already existed, it is incremented from its previous value.
     3. The object's variable is assigned the value of the counter.
     4. The type of the new object is stored in the global class array. *)
-let id_initialized = ref false
 let build_object v ct =
-  let id_init =
-    if !id_initialized
-    then []
-    else (id_initialized := true;
-          [L.mk_assign id (L.Int_lit 1)]) in
-
-  id_init @
   [ L.mk_assign id (L.mk_add (L.Var id) (L.Int_lit 1))
   ; L.mk_assign v (L.Var id)
   ; update_arr class_array (L.Var v) ct
   ]
+
+let setup es =
+  L.mk_impl
+    (L.mk_eq (L.Var id) (L.Int_lit 0))
+    (L.Relation (0, [L.Var id]))
+  :: es

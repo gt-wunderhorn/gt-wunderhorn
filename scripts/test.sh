@@ -6,7 +6,7 @@ function run {
   ext="${fn##*.}"
 
 
-  if [ "$ext" == "pass" ]; then
+  if [ "$ext" == "pass" ] || [ "$ext" == "java" ]; then
     if [ "$res" != "unsat" ]; then
       echo "$1 failed: $res"
       exit 1
@@ -22,9 +22,11 @@ function run {
   fi
 }
 
+# run ../test/Birthday.java
 run ../test/static_field.fail
 run ../test/static_field.pass
 run ../test/object_identity.pass
+run ../test/object_identity.fail
 run ../test/ctor.pass
 run ../test/not_null.pass
 run ../test/dispatch.pass

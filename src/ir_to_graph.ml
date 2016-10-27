@@ -46,8 +46,8 @@ let rec instr (this, next, i) =
     | Ir.New (p, v, ct, es)     -> call (LS.build_object v ct) p v (L.Var v :: es)
     | Ir.NewArray (v, ct, es)   ->
       linear (
-        LS.update_arr LS.array_length (L.Var v) (List.hd es) ::
-        LS.build_object v ct)
+        LS.build_object v ct @
+        [LS.update_arr LS.array_length (L.Var v) (List.hd es)])
     | Ir.Invoke (p, v, args)    -> call [] p v args
     | Ir.Return (d, v, e)       -> G.singleton (this, d, [L.mk_assign v e])
     | Ir.Goto d                 -> jump d

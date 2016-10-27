@@ -139,11 +139,16 @@ and instr parse st line i =
     Option.map_default (fun v -> var v (snd proc.Ir.return)) ("DUMMY", L.Int)
   in
 
-  let built_in name args =
+  let built_in name v args =
     if name = "ensure"
     then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1)))
-    (* else if name = "nextInt" *)
-    (* then Some (L.Any L.Int) *)
+    else if name = "nextInt"
+    then
+      Some (match v with
+      | Some v ->
+        let v = var v L.Int in
+        Ir.Assign (v, L.Var v)
+      | None -> Ir.Goto next)
     else if name = "print" || name = "println"
     then Some (Ir.Goto next)
     else None
@@ -185,15 +190,17 @@ and instr parse st line i =
       Ir.Return (mk_lbl (id ^ "RET"), v, e)
 
     | J.New (v, cn, t, es) ->
-      let proc = mk_proc parse (ctor_sig cn t) in
-      Ir.New (proc, var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)
+      if JB.cn_name cn = "java.util.Scanner" then Ir.Goto next
+      else
+        let proc = mk_proc parse (ctor_sig cn t) in
+        Ir.New (proc, var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)
 
     | J.NewArray (v, t, es) ->
       Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
       let args = List.map expr args in
-      (match built_in (JB.ms_name ms) args with
+      (match built_in (JB.ms_name ms) v args with
        | Some i -> i
        | None ->
          let proc = mk_proc parse (JB.make_cms cn ms) in
@@ -201,17 +208,22 @@ and instr parse st line i =
          Ir.Invoke (proc, v, args))
 
     | J.InvokeVirtual (v, obj, ck, _, args) ->
-      let procs =
-        parse.Parse.virtual_lookup st.proc.P.sign line
-        |> List.map
-          (fun p -> ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p))) in
+      let args = List.map expr args in
 
-      let v =
-        if List.length procs = 0
-        then ("DUMMY", L.Int)
-        else return_var (snd (List.hd procs)) v in
+      let lookup = parse.Parse.virtual_lookup st.proc.P.sign line in
+      if List.length lookup > 0
+      then (match built_in (List.hd lookup).P.name v args with
+          | Some i -> i
+          | None ->
+            let procs =
+              lookup
+              |> List.map
+                (fun p ->
+                   ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p))) in
+            let v = return_var (snd (List.hd procs)) v in
 
-      Ir.Dispatch (expr obj, procs, v, List.map expr args)
+            Ir.Dispatch (expr obj, procs, v, args))
+      else Ir.Dispatch (expr obj, [], ("DUMMY", L.Int), args)
 
     | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
       let proc = mk_proc parse (JB.make_cms cn ms) in

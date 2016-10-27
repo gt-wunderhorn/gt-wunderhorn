@@ -70,7 +70,8 @@ let parse id classpath cn =
     id := !id + 1;
     match cm.JL.cm_implementation with
     | JL.Java x ->
-      { Proc.id          = "p" ^ string_of_int !id ^ "_"
+      { Proc.name        = JB.ms_name sign
+      ; Proc.id          = "p" ^ string_of_int !id ^ "_"
       ; Proc.params      = J.params (Lazy.force x)
       ; Proc.content     = Array.to_list (J.code (Lazy.force x))
       ; Proc.ret_type    = JB.ms_rtype sign

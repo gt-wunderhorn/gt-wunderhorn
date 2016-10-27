@@ -3,7 +3,8 @@ module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
 
 type t =
-  { id       : string
+  { name     : string
+  ; id       : string
   ; params   : (JB.value_type * J.var) list
   ; content  : J.instr list
   ; ret_type : JB.value_type option

@@ -54,3 +54,22 @@ let remove_simple_assignments clause =
     | c -> c
   in
   Algorithm.converge (=) loop clause
+
+(** If there is a node in the graph which does not lead to an assertion, it can
+    be removed safely *)
+let remove_useless_nodes g =
+  let is_assertion = function
+    | L.Assert _ -> true
+    | _ -> false in
+
+  let edge_has_assertion =
+    List.exists is_assertion in
+
+  let has_assertion =
+    List.exists (fun (i, t, e) -> edge_has_assertion e) in
+
+  let leads_to_assertion n =
+    List.exists has_assertion (L.PG.paths_from g n) in
+
+  L.PG.filter (fun (i, t, e) ->
+      edge_has_assertion e || leads_to_assertion t) g
