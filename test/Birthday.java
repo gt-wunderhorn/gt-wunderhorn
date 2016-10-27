@@ -11,7 +11,6 @@ class Test {
       int[] arr = new int[10];
       for(int i=0;i<10;i++)
       {
-        ensure(i < arr.length);
         arr[i] = sc.nextInt();
       }
 

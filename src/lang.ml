@@ -79,6 +79,7 @@ let mk_not = function
   | e -> Un_op (Not, e)
 let mk_impl e1 e2 = Bi_op (Impl, e1, e2)
 let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
+let mk_lt e1 e2 = Bi_op (Lt, e1, e2)
 let mk_add e1 e2 = Bi_op (Add, e1, e2)
 let mk_div e1 e2 = Bi_op (Div, e1, e2)
 let mk_mul e1 e2 = Bi_op (Mul, e1, e2)

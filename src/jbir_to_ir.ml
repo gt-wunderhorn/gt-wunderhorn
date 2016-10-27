@@ -236,8 +236,12 @@ and instr parse st line i =
 
     | J.Nop
     | J.MayInit _
-    | J.Check _
       -> Ir.Goto next
+    | J.Check c ->
+      (match c with
+       | J.CheckArrayBound (a, i) ->
+         Ir.Assert (L.mk_lt (expr i) (L.ArrSelect (L.Var (LS.array_length), expr a)))
+       | _ -> Ir.Goto next)
 
   in (this, next, i)
 
