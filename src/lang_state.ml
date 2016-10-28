@@ -4,7 +4,6 @@ let rec show_sort = function
   | L.Bool     -> "Bool"
   | L.Int      -> "Int"
   | L.Real     -> "Real"
-  | L.String   -> "String"
   | L.Array s  -> "Array_" ^ show_sort s
 
 let array_array s =

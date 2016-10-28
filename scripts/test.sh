@@ -22,7 +22,7 @@ function run {
   fi
 }
 
-run ../test/Birthday.java
+# run ../test/Birthday.java
 # run ../test/static_field.fail
 # run ../test/static_field.pass
 # run ../test/object_identity.pass
@@ -45,8 +45,8 @@ run ../test/Birthday.java
 # run ../test/is_null.fail
 # run ../test/float.pass
 # run ../test/float.fail
-# run ../test/div.pass
-# run ../test/div.fail
+run ../test/div.pass
+run ../test/div.fail
 # run ../test/non_int_field.fail
 # run ../test/field.pass
 # run ../test/field.fail

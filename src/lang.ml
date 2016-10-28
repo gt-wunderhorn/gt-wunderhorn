@@ -2,7 +2,6 @@ type sort =
   | Int
   | Bool
   | Real
-  | String
   | Array of sort
 
 type var = string * sort
@@ -16,6 +15,18 @@ type un_op = Not | Neg
 type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div | Mul | Rem
 type many_op = And
 
+type assert_type =
+  | Div0
+  | Null
+  | ArrayBound
+  | User
+
+let show_assert_type = function
+  | Div0       -> "Division by 0?"
+  | Null       -> "Null?"
+  | ArrayBound -> "Array out of bound?"
+  | User       -> "User specified:"
+
 type expr =
   | Relation of rel
   | Query of query
@@ -27,16 +38,15 @@ type expr =
   | ArrSelect of expr * expr
   | Int_lit of int
   | Real_lit of float
-  | Str_lit of string
   | True
   | False
   | Any of sort
-and query = lbl * expr
+and query = lbl * expr * assert_type
 and rel = lbl * expr list
 
 type instr =
   | Relate of lbl
-  | Assert of expr
+  | Assert of expr * assert_type
   | Assign of var * expr
   | Call of expr
 
@@ -55,7 +65,6 @@ let rec expr_sort = function
   | ArrSelect (arr,_)  -> inner_sort (expr_sort arr)
   | Int_lit _          -> Int
   | Real_lit _         -> Real
-  | Str_lit _          -> String
   | True               -> Bool
   | False              -> Bool
   | Any s              -> s
@@ -108,8 +117,8 @@ let rec fold_expr special_case f zero e =
   match special_case e with
   | Some r -> r
   | None -> match e with
-    | Relation (_, es)     -> List.fold_left f zero (List.map ex es)
-    | Query (_, e)       -> ex e
+    | Relation (_, es)   -> List.fold_left f zero (List.map ex es)
+    | Query (_, e, _)    -> ex e
     | Un_op (_, e)       -> ex e
     | Bi_op (_, e1, e2)  -> f (ex e1) (ex e2)
     | Many_op (_, es)    -> List.fold_left f zero (List.map ex es)
@@ -138,12 +147,6 @@ let expr_vars =
     | _                -> None
   in fold_expr special_case V_set.union V_set.empty
 
-let expr_assertions =
-  let special_case = function
-    | Bi_op (Div, _, y) -> Some [Assert (mk_not (mk_eq y (Int_lit 0)))]
-    | _                 -> None
-  in fold_expr special_case (@) []
-
 let path_uses_before_assigns is =
   let loop (a_set, u_set) i =
     (* Add all the variables in the expression to the use set that were not in
@@ -155,7 +158,7 @@ let path_uses_before_assigns is =
 
     match i with
     | Assign (v, e) -> (V_set.add v a_set, augment e)
-    | Assert e      -> (a_set, augment e)
+    | Assert (e, _) -> (a_set, augment e)
     | Call e        -> (a_set, augment e)
     | Relate _      -> (a_set, u_set)
   in

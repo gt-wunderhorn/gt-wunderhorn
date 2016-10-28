@@ -11,7 +11,7 @@ let const = function
   | `Float f  -> L.Real_lit f
   | `Int i    -> L.Int_lit (Int32.to_int i)
   | `Long i   -> L.Int_lit (Int64.to_int i)
-  | `String s -> L.Str_lit (JB.jstr_raw s)
+  | `String s -> assert false (* TODO *)
 
 let rec sort = function
   | JB.TBasic t -> (match t with
@@ -141,14 +141,14 @@ and instr parse st line i =
 
   let built_in name v args =
     if name = "ensure"
-    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1)))
+    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), L.User))
     else if name = "nextInt"
     then
       Some (match v with
-      | Some v ->
-        let v = var v L.Int in
-        Ir.Assign (v, L.Var v)
-      | None -> Ir.Goto next)
+          | Some v ->
+            let v = var v L.Int in
+            Ir.Assign (v, L.Var v)
+          | None -> Ir.Goto next)
     else if name = "print" || name = "println"
     then Some (Ir.Goto next)
     else None
@@ -240,8 +240,22 @@ and instr parse st line i =
     | J.Check c ->
       (match c with
        | J.CheckArrayBound (a, i) ->
-         Ir.Assert (L.mk_lt (expr i) (L.ArrSelect (L.Var (LS.array_length), expr a)))
-       | _ -> Ir.Goto next)
+         Ir.Assert
+           ( L.mk_lt (expr i) (L.ArrSelect (L.Var (LS.array_length), expr a))
+           , L.ArrayBound
+           )
+       | J.CheckArithmetic e ->
+         Ir.Assert
+           ( L.mk_not (L.mk_eq (expr e) (L.Int_lit 0))
+           , L.Div0
+           )
+
+       | J.CheckNullPointer _
+       | J.CheckNegativeArraySize _
+       | J.CheckArrayStore _
+       | J.CheckCast _
+       | J.CheckLink _
+         -> Ir.Goto next)
 
   in (this, next, i)
 

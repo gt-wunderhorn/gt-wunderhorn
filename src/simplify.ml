@@ -22,7 +22,7 @@ let remove_simple_assignments clause =
   let rec replace_sa v e e' =
     let rec re = function
       | L.Relation (l, es)      -> L.Relation (l, List.map re es)
-      | L.Query (l, e')         -> L.Query (l, re e')
+      | L.Query (l, e', at)     -> L.Query (l, re e', at)
       | L.Var v'                -> if v = v' then e else L.Var v'
       | L.Un_op (op, e')        -> L.Un_op (op, re e')
       | L.Bi_op (op, e1, e2)    -> L.Bi_op (op, re e1, re e2)

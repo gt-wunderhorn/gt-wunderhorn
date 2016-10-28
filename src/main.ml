@@ -8,6 +8,9 @@ module L = Lang
 module LS = Lang_state
 module G = L.PG
 
+module R = Run_clauses
+module P = Print_clauses
+
 let make_graph classpath cms =
   let proc_id = ref (0) in
   let cn = fst (JB.cms_split cms) in
@@ -29,7 +32,8 @@ let inspect classpath class_name =
   |> Graph_to_clauses.translate
   |> List.map Simplify.remove_simple_assignments
   |> fun es -> LS.setup es
-  |> Print_clauses.print
+  |> Print_clauses.print |> Printf.printf "%s\n"
+  (* |> Run_clauses.run *)
 
 let _ =
   if (Array.length Sys.argv < 3)
@@ -38,4 +42,4 @@ let _ =
   else
     let classpath = Sys.argv.(1) in
     let class_name = Sys.argv.(2) in
-    Printf.printf "%s\n" (inspect classpath class_name)
+    inspect classpath class_name

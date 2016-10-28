@@ -15,7 +15,7 @@ let substitute table =
     | L.Un_op (o, e)       -> L.Un_op (o, su e)
     | L.Bi_op (o, e1, e2)  -> L.Bi_op (o, su e1, su e2)
     | L.Many_op (o, es)    -> L.Many_op (o, List.map su es)
-    | L.Query (loc, e)     -> L.Query (loc, su e)
+    | L.Query (loc, e, at) -> L.Query (loc, su e, at)
     | L.Relation (lbl, es) -> L.Relation (lbl, List.map su es)
     | L.ArrSelect (a, i)   -> L.ArrSelect (su a, su i)
     | L.ArrStore (a, i, e) -> L.ArrStore (su a, su i, su e)
@@ -48,10 +48,10 @@ let translate_path p (init, term, path) =
   let precondition = mk_condition table init initial_vars in
 
   match path with
-  | [L.Assert e] ->
+  | [L.Assert (e, at)] ->
     L.mk_impl
       (L.mk_not (L.mk_impl precondition (substitute table e)))
-      (substitute table (L.Query (init, e)))
+      (substitute table (L.Query (init, e, at)))
 
   | path ->
     let expressions = List.map (reduce_instr p table) path in

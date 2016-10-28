@@ -23,7 +23,7 @@ and ir =
   | NewArray    of L.var * class_type * L.expr list
   | Invoke      of proc * L.var * L.expr list
   | Dispatch    of L.expr * (class_type * proc) list * L.var * L.expr list
-  | Assert      of L.expr
+  | Assert      of L.expr * L.assert_type
 and instr = L.lbl * L.lbl * ir
 
 let ir_exprs = function

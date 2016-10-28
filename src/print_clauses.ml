@@ -11,14 +11,16 @@ let rec sort = function
   | L.Int      -> "Int"
   | L.Bool     -> "Bool"
   | L.Real     -> "Real"
-  | L.String   -> "String"
   | L.Array s  -> parens ["Array Int"; sort s]
 
 let print_var (v, s) =
-  parens ["declare-var"; v ; sort s]
+  parens [ "declare-var"; v ; sort s ]
 
 let print_rel (lbl, es) =
-  parens ["declare-rel"; "r_" ^ string_of_int lbl; parens (List.map (fun e -> sort (L.expr_sort e)) es)]
+  parens [ "declare-rel"
+         ; "r_" ^ string_of_int lbl
+         ; parens (List.map (fun e -> sort (L.expr_sort e)) es)
+         ]
 
 let show_un_op = function
   | L.Not -> "not"
@@ -41,7 +43,7 @@ let show_many_op = function
 
 let print_expr expr =
   let rec ex = function
-    | L.Query (lbl, e)         -> parens ["q_" ^ string_of_int lbl; "true"]
+    | L.Query (lbl, e, at)     -> parens ["q_" ^ string_of_int lbl; "true"]
     | L.Relation (lbl, es)     -> parens (("r_" ^ string_of_int lbl) :: (List.map ex es))
     | L.Var v                  -> fst v
     | L.Un_op (op, e)          -> parens [show_un_op op; ex e]
@@ -51,16 +53,15 @@ let print_expr expr =
     | L.ArrSelect (e1, e2)     -> parens ["select"; ex e1; ex e2]
     | L.Int_lit i              -> string_of_int i
     | L.Real_lit f             -> string_of_float f
-    | L.Str_lit s              -> "\"" ^ s ^ "\""
     | L.True                   -> "true"
     | L.False                  -> "false"
     | L.Any s                  -> "" (* TODO *)
   in
   parens ["rule"; ex expr]
 
-let declare_query (lbl, _) = parens ["declare-rel"; "q_" ^ string_of_int lbl; parens ["Bool"]]
+let declare_query (lbl, _, _) = parens ["declare-rel"; "q_" ^ string_of_int lbl; parens ["Bool"]]
 
-let query (lbl, _) = parens ["query"; "q_" ^ string_of_int lbl]
+let query (lbl, _, _) = parens ["query"; "q_" ^ string_of_int lbl]
 
 let print exprs =
   let vars = L.V_set.unions_map L.expr_vars exprs in
