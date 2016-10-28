@@ -148,49 +148,28 @@ let expr_assertions =
     | _                 -> None
   in fold_expr special_case (@) []
 
-let path_var_locations var_finder path =
-  path
-  |> List.mapi (fun line instr -> (line, var_finder instr))
-  |> List.fold_left (fun dict (line, vs) ->
-      List.fold_left (fun dict v ->
-          if List.mem_assoc v dict
-          then dict
-          else (v, line) :: dict) dict vs) []
+let path_uses_before_assigns is =
+  let loop (a_set, u_set) i =
+    (* Add all the variables in the expression to the use set that were not in
+       the assignment set. *)
+    let augment e =
+      V_set.union
+        (V_set.diff (expr_vars e) a_set)
+        u_set in
 
-(** Find the locations where variable assignments occur. *)
-let path_assign_locations =
-  path_var_locations (function
-      | Assign (v, _) -> [v]
-      | _             -> [])
-
-(** Find the locations where variable usage occurs. *)
-let path_use_locations =
-  let instr_uses instr =
-    let ex e = expr_vars e |> V_set.elements in
-
-    match instr with
-    | Relate _      -> []
-    | Assert e      -> ex e
-    | Assign (_, e) -> ex e
-    | Call e        -> ex e
+    match i with
+    | Assign (v, e) -> (V_set.add v a_set, augment e)
+    | Assert e      -> (a_set, augment e)
+    | Call e        -> (a_set, augment e)
+    | Relate _      -> (a_set, u_set)
   in
-  path_var_locations instr_uses
+  snd (List.fold_left loop (V_set.empty, V_set.empty) is)
 
-let path_used_before_assigned path =
-  let assigns = path_assign_locations path in
-  let uses    = path_use_locations path in
+let path_assigns =
+  V_set.unions_map (function
+      | Assign (v, _) -> V_set.singleton v
+      | _ -> V_set.empty)
 
-  uses
-  |> List.filter (fun (v, l) ->
-      not (List.mem_assoc v assigns) || (List.assoc v assigns >= l))
-  |> List.map fst
-  |> V_set.of_list
-
-let path_assigns path =
-  path
-  |> path_assign_locations
-  |> List.map fst
-  |> V_set.of_list
 
 let connect_path path =
   path
@@ -207,4 +186,4 @@ let critical_vars p lbl =
      else
        V_set.inter
          (List.map path_assigns coming |> V_set.unions)
-         (List.map path_used_before_assigned going |> V_set.unions))
+         (List.map path_uses_before_assigns going |> V_set.unions))

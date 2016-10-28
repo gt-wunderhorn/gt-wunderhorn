@@ -8,18 +8,18 @@ let remove_simple_assignments_test =
   let original =
     L.mk_impl
       (L.mk_and
-         [ L.Relation ("start", [x])
+         [ L.Relation (0, [x])
          ; L.mk_eq x one
          ; L.mk_eq y x
          ; L.mk_eq z y
          ])
-      (L.Relation ("stop", [z]))
+      (L.Relation (1, [z]))
   in
 
   let expected =
     L.mk_impl
-      (L.Relation ("start", [one]))
-      (L.Relation ("stop", [one]))
+      (L.Relation (0, [one]))
+      (L.Relation (1, [one]))
   in
 
   let actual = Simplify.remove_simple_assignments original in
