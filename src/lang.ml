@@ -40,23 +40,19 @@ type instr =
   | Assign of var * expr
   | Call of expr
 
-let rec show_sort = function
-  | Bool     -> "Bool"
-  | Int      -> "Int"
-  | Real     -> "Real"
-  | String   -> "String"
-  | Array s  -> "Array_" ^ show_sort s
+let rec inner_sort = function
+  | Array s -> s
+  | s -> s
+
 let rec expr_sort = function
   | Relation r         -> Bool
   | Query q            -> Bool
-  | Var (name, s)      ->
-    (* Printf.eprintf "%s %s\n" name (show_sort s); *)
-    s
+  | Var (name, s)      -> s
   | Un_op (op, e)      -> un_op_sort op e
   | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
   | Many_op (op, _)    -> many_op_sort op
   | ArrStore (arr,_,e) -> expr_sort arr
-  | ArrSelect (arr,_)  -> expr_sort arr
+  | ArrSelect (arr,_)  -> inner_sort (expr_sort arr)
   | Int_lit _          -> Int
   | Real_lit _         -> Real
   | Str_lit _          -> String
