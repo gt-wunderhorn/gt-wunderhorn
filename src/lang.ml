@@ -18,12 +18,14 @@ type many_op = And
 type assert_type =
   | Div0
   | Null
+  | NegArray
   | ArrayBound
   | User
 
 let show_assert_type = function
   | Div0       -> "Division by 0?"
   | Null       -> "Null?"
+  | NegArray   -> "Array with negative size?"
   | ArrayBound -> "Array out of bound?"
   | User       -> "User specified:"
 
@@ -85,6 +87,7 @@ let mk_not = function
 let mk_impl e1 e2 = Bi_op (Impl, e1, e2)
 let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
 let mk_lt e1 e2 = Bi_op (Lt, e1, e2)
+let mk_ge e1 e2 = Bi_op (Ge, e1, e2)
 let mk_add e1 e2 = Bi_op (Add, e1, e2)
 let mk_div e1 e2 = Bi_op (Div, e1, e2)
 let mk_mul e1 e2 = Bi_op (Mul, e1, e2)

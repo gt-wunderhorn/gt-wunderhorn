@@ -32,8 +32,8 @@ let inspect classpath class_name =
   |> Graph_to_clauses.translate
   |> List.map Simplify.remove_simple_assignments
   |> fun es -> LS.setup es
-  |> Print_clauses.print |> Printf.printf "%s\n"
-  (* |> Run_clauses.run *)
+  (* |> Print_clauses.print |> Printf.printf "%s\n" *)
+  |> Run_clauses.run
 
 let _ =
   if (Array.length Sys.argv < 3)

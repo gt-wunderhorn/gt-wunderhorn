@@ -13,8 +13,9 @@ rm *.class
 cp ../test/MyNative.java .
 javac *.java
 
-target=$(basename $1).z3
-./main.byte `cat ../classpath` Test > $target
-scheme-format $target > $target.tmp
-mv $target.tmp $target
-z3 $target
+# target=$(basename $1).z3
+./main.byte `cat ../classpath` Test
+# > $target
+# scheme-format $target > $target.tmp
+# mv $target.tmp $target
+# z3 $target

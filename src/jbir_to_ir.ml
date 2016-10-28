@@ -245,13 +245,15 @@ and instr parse st line i =
            , L.ArrayBound
            )
        | J.CheckArithmetic e ->
-         Ir.Assert
-           ( L.mk_not (L.mk_eq (expr e) (L.Int_lit 0))
-           , L.Div0
-           )
+         Ir.Assert (L.mk_not (L.mk_eq (expr e) (L.Int_lit 0)) , L.Div0)
+
+       (* | J.CheckNullPointer e -> *)
+       (*   Ir.Assert (L.mk_not (L.mk_eq (expr e) (L.Int_lit 0)) , L.Null) *)
+
+       | J.CheckNegativeArraySize e ->
+         Ir.Assert (L.mk_ge (expr e) (L.Int_lit 0), L.NegArray)
 
        | J.CheckNullPointer _
-       | J.CheckNegativeArraySize _
        | J.CheckArrayStore _
        | J.CheckCast _
        | J.CheckLink _

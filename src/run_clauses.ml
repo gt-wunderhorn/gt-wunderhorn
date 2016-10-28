@@ -72,7 +72,7 @@ let rec interpret_expr c e =
   | L.ArrStore (arr, idx, e) -> Ar.mk_store c.c (ex arr) (ex idx) (ex e)
   | L.ArrSelect (e1, e2)     -> Ar.mk_select c.c (ex e1) (ex e2)
   | L.Int_lit i  -> I.mk_numeral_i c.c i
-  | L.Real_lit f -> F.mk_numeral_f c.c f (find_sort c L.Real)
+  | L.Real_lit f -> R.mk_numeral_s c.c (string_of_float f)
   | L.True       -> B.mk_true c.c
   | L.False      -> B.mk_false c.c
   | L.Any s      -> assert false
@@ -94,7 +94,7 @@ let initialize () =
   let c  = Z3.mk_context [] in
   let fp = FP.mk_fixedpoint c in
   let r  = P.mk_params c in
-  P.add_int r (S.mk_string c "fixedpoint.timeout") 3000;
+  P.add_int r (S.mk_string c "fixedpoint.timeout") 120000;
   P.add_symbol r (S.mk_string c "fixedpoint.engine") (S.mk_string c "duality");
   FP.set_parameters fp r;
 
