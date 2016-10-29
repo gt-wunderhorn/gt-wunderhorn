@@ -54,6 +54,10 @@ module Make(T : Graph_info) = struct
 
   let map nf ef = S.map (fun (i, t, e) -> (nf i, nf t, ef e))
 
+  type elem = t
+  module P_set = Set_ext.Make(
+    struct type t = elem list;; let compare = compare end)
+
   (** Recursively find all paths from a particular node. The direction of search
       is determined by `selector` and `direction`. Note that each node can only
       be visited exactly once. *)
@@ -74,7 +78,8 @@ module Make(T : Graph_info) = struct
         local_paths @ extended_paths
     in
     find_paths' g n
-    |> List.sort_uniq compare
+    |> P_set.of_list
+    |> P_set.elements
 
   (** What are the paths that terminate at the given node? *)
   let paths_to = find_paths init node_entrances
