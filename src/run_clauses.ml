@@ -48,6 +48,7 @@ let rec interpret_expr c e =
     | L.Lt   -> A.mk_lt
     | L.Impl -> B.mk_implies
     | L.Add  -> fun c x y -> A.mk_add c [x; y]
+    | L.Sub  -> fun c x y -> A.mk_sub c [x; y]
     | L.Div  -> A.mk_div
     | L.Mul  -> fun c x y -> A.mk_mul c [x; y]
     | L.Rem  -> I.mk_rem

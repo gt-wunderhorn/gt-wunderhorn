@@ -6,12 +6,12 @@ module LS = Lang_state
 
 let const = function
   | `ANull    -> L.Int_lit 0
-  | `Class _  -> assert false (* TODO *)
+  | `Class _  -> L.Int_lit 0 (* TODO *)
   | `Double f -> L.Real_lit f
   | `Float f  -> L.Real_lit f
   | `Int i    -> L.Int_lit (Int32.to_int i)
   | `Long i   -> L.Int_lit (Int64.to_int i)
-  | `String s -> assert false (* TODO *)
+  | `String s -> L.Int_lit 0 (* TODO *)
 
 let rec sort = function
   | JB.TBasic t -> (match t with
@@ -27,9 +27,9 @@ let rec sort = function
 
 let unop op e = match op with
   | J.Neg bt        -> L.mk_neg e
-  | J.Conv c        -> assert false (* TODO *)
+  | J.Conv c        -> e (* TODO *)
   | J.ArrayLength   -> L.ArrSelect (L.Var LS.array_length, e)
-  | J.InstanceOf ot -> assert false (* TODO *)
+  | J.InstanceOf ot -> L.True (* TODO *)
   | J.Cast ot       -> e (** TODO ?? *)
 
 let binop op x y = match op with
@@ -38,7 +38,7 @@ let binop op x y = match op with
     let inner_select = L.ArrSelect (L.Var array_array, x) in
     L.ArrSelect (inner_select, y)
   | J.Add _       -> L.mk_add x y
-  | J.Sub _       -> assert false (* TODO *)
+  | J.Sub _       -> L.mk_sub x y
   | J.Mult _      -> L.mk_mul x y
   | J.Div _       -> L.mk_div x y
   | J.Rem _       -> L.mk_rem x y
@@ -229,11 +229,10 @@ and instr parse st line i =
       let proc = mk_proc parse (JB.make_cms cn ms) in
       let v = return_var proc v in
       Ir.Invoke (proc, v, (expr obj) :: (List.map expr args))
-    | J.MonitorEnter _ -> assert false (** TODO *)
-    | J.MonitorExit _  -> assert false (** TODO *)
-    | J.Throw _        -> Ir.Goto (-1) (** TODO *)
-    | J.Formula _      -> assert false (** TODO *)
-
+    | J.MonitorEnter _
+    | J.MonitorExit _
+    | J.Throw _
+    | J.Formula _
     | J.Nop
     | J.MayInit _
       -> Ir.Goto next

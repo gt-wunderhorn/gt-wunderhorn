@@ -12,7 +12,9 @@ module V_set = Set_ext.Make(
 type lbl = int
 
 type un_op = Not | Neg
-type bi_op = Eq | Ge | Gt | Le | Lt | Impl | Add | Div | Mul | Rem
+type bi_op =
+  | Eq | Ge | Gt | Le | Lt | Impl
+  | Add | Div | Mul | Sub | Rem
 type many_op = And
 
 type assert_type =
@@ -76,7 +78,7 @@ and un_op_sort op e = match op with
   | Neg -> expr_sort e
 and bi_op_sort op e1 e2 = match op with
   | Eq | Ge | Gt | Le | Lt | Impl -> Bool
-  | Add | Div | Mul | Rem -> expr_sort e1
+  | Add | Sub | Div | Mul | Rem -> expr_sort e1
 and many_op_sort = function
   | And -> Bool
 
@@ -89,6 +91,7 @@ let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
 let mk_lt e1 e2 = Bi_op (Lt, e1, e2)
 let mk_ge e1 e2 = Bi_op (Ge, e1, e2)
 let mk_add e1 e2 = Bi_op (Add, e1, e2)
+let mk_sub e1 e2 = Bi_op (Sub, e1, e2)
 let mk_div e1 e2 = Bi_op (Div, e1, e2)
 let mk_mul e1 e2 = Bi_op (Mul, e1, e2)
 let mk_rem e1 e2 = Bi_op (Rem, e1, e2)
