@@ -207,28 +207,30 @@ and instr parse st line i =
          let v = return_var proc v in
          Ir.Invoke (proc, v, args))
 
-    | J.InvokeVirtual (v, obj, ck, _, args) ->
+    | J.InvokeVirtual (v, obj, ck, ms, args) ->
       let args = List.map expr args in
 
       let lookup = parse.Parse.virtual_lookup st.proc.P.sign line in
-      if List.length lookup > 0
-      then (match built_in (List.hd lookup).P.name v args with
-          | Some i -> i
-          | None ->
-            let procs =
-              lookup
-              |> List.map
-                (fun p ->
-                   ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p))) in
-            let v = return_var (snd (List.hd procs)) v in
-
-            Ir.Dispatch (expr obj, procs, v, args))
-      else Ir.Dispatch (expr obj, [], ("DUMMY", L.Int), args)
+      (match built_in (JB.ms_name ms) v args with
+       | Some i -> i
+       | None ->
+         let procs =
+           lookup
+           |> List.map
+             (fun p ->
+                ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p))) in
+         let v = return_var (snd (List.hd procs)) v in
+         Ir.Dispatch (expr obj, procs, v, args))
 
     | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
       let proc = mk_proc parse (JB.make_cms cn ms) in
-      let v = return_var proc v in
-      Ir.Invoke (proc, v, (expr obj) :: (List.map expr args))
+      let args = List.map expr args in
+
+      (match built_in (JB.ms_name ms) v args with
+       | Some i -> i
+       | None ->
+         let v = return_var proc v in
+         Ir.Invoke (proc, v, (expr obj) :: args))
     | J.MonitorEnter _
     | J.MonitorExit _
     | J.Throw _
