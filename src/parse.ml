@@ -47,13 +47,6 @@ let parse id classpath cn =
       prta in
 
   let methods = program.JP.parsed_methods in
-
-  (* let print_cms cms _ = *)
-  (*   let (cn, ms) = JB.cms_split cms in *)
-  (*   Printf.eprintf "%s %s\n" (JB.cn_name cn) (JB.ms_name ms); *)
-  (* in *)
-  (* Cmm.iter print_cms methods; *)
-
   let cms_map = ref (Cms_map.empty) in
 
   let rec cms_lookup cms =
@@ -84,7 +77,6 @@ let parse id classpath cn =
 
       let alternate_sig = JB.make_cms native ms in
       Printf.eprintf "%s %s\n" (JB.cn_name cn) (JB.ms_name ms);
-      (* assert false *)
       cms_lookup alternate_sig
   in
 

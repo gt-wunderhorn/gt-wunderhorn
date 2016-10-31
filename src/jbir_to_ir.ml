@@ -140,16 +140,20 @@ and instr parse st line i =
   in
 
   let built_in name v args =
-    if name = "ensure"
-    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), L.User))
-    else if name = "nextInt"
-    then
+    let arbitrary t =
       Some (match v with
           | Some v ->
-            let v = var v L.Int in
+            let v = var v t in
             Ir.Assign (v, L.Var v)
-          | None -> Ir.Goto next)
-    else if name = "print" || name = "println"
+          | None -> Ir.Goto next) in
+
+    if name = "ensure"
+    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), L.User))
+    else if name = "nextShort" || name = "nextInt" || name = "nextLong"
+    then arbitrary L.Int
+    else if name = "nextFloat" || name = "nextDouble"
+    then arbitrary L.Real
+    else if name = "print" || name = "println" || name = "close"
     then Some (Ir.Goto next)
     else None
   in
