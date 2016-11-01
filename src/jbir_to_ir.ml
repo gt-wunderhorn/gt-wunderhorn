@@ -230,8 +230,6 @@ and instr parse st line i =
       Ir.Return (mk_lbl (id ^ "RET"), v, e)
 
     | J.New (v, cn, t, es) ->
-      Printf.eprintf "new %s\n" (JB.cn_name cn);
-
       if is_built_in_class cn
       then Ir.Goto next
       else
@@ -242,7 +240,6 @@ and instr parse st line i =
       Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
-      Printf.eprintf "static %s\n" (JB.ms_name ms);
       let args = List.map expr args in
       (match built_in (JB.ms_name ms) v args with
        | Some i -> i
@@ -252,7 +249,6 @@ and instr parse st line i =
          Ir.Invoke (proc, v, args))
 
     | J.InvokeVirtual (v, obj, ck, ms, args) ->
-      Printf.eprintf "virtual %s %s %d\n" (JB.ms_name ms) (JB.cn_name st.proc.P.cl_name) line;
       let args = List.map expr args in
 
       let lookup =
@@ -271,7 +267,6 @@ and instr parse st line i =
          Ir.Dispatch (expr obj, procs, v, args))
 
     | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
-      Printf.eprintf "nonvirtual %s %s\n" (JB.cn_name cn) (JB.ms_name ms);
 
       if (JB.cn_name cn) = "java.lang.Throwable"
       then Ir.Goto next
@@ -289,15 +284,12 @@ and instr parse st line i =
       let ms = JB.clinit_signature in
       let cms = JB.make_cms cn ms in
 
-
-      Printf.eprintf "initializing %s %d\n" (JB.cn_name cn) (List.length !class_initialized);
       if is_built_in_class cn
       || List.mem cn !class_initialized
       || not (parse.Parse.has_cms cms)
       then Ir.Goto next
       else
-        ( Printf.eprintf "initializing %s\n" (JB.cn_name cn);
-          class_initialized := cn :: !class_initialized;
+        ( class_initialized := cn :: !class_initialized;
           let proc = mk_proc parse cms in
           let v = ("DUMMY", L.Int) in
           Ir.Invoke (proc, v, [])
