@@ -10,7 +10,7 @@ module Mm = JB.MethodMap
 
 type t = { cms_lookup :
              JB.class_method_signature ->
-             Proc.t
+             Proc.t list
 
          ; virtual_lookup :
              JB.method_signature ->
@@ -51,39 +51,40 @@ let parse id classpath cn =
 
   let rec cms_lookup cms =
     if Cms_map.mem cms !cms_map
+    then [Cms_map.find cms !cms_map]
+    else if Cmm.mem cms methods
     then
-      Cms_map.find cms !cms_map
-    else
       let meth = parse_method (snd (Cmm.find cms methods)) in
       cms_map := Cms_map.add cms meth !cms_map;
-      meth
+      [meth]
+    else []
 
   and parse_method cm =
     let sign = cm.JL.cm_signature in
     id := !id + 1;
     match cm.JL.cm_implementation with
     | JL.Java x ->
-      { Proc.name        = JB.ms_name sign
-      ; Proc.id          = "p" ^ string_of_int !id ^ "_"
-      ; Proc.params      = J.params (Lazy.force x)
-      ; Proc.content     = Array.to_list (J.code (Lazy.force x))
-      ; Proc.ret_type    = JB.ms_rtype sign
-      ; Proc.sign        = sign
-      ; Proc.cl_name     = fst (JB.cms_split (cm.JL.cm_class_method_signature))
+      { Proc.name     = JB.ms_name sign
+      ; Proc.id       = "p" ^ string_of_int !id ^ "_"
+      ; Proc.params   = J.params (Lazy.force x)
+      ; Proc.content  = Array.to_list (J.code (Lazy.force x))
+      ; Proc.ret_type = JB.ms_rtype sign
+      ; Proc.sign     = sign
+      ; Proc.cl_name  = fst (JB.cms_split (cm.JL.cm_class_method_signature))
       }
 
     | JL.Native ->
       let (cn, ms) = JB.cms_split (cm.JL.cm_class_method_signature) in
 
       let alternate_sig = JB.make_cms native ms in
-      Printf.eprintf "%s %s\n" (JB.cn_name cn) (JB.ms_name ms);
-      cms_lookup alternate_sig
+      List.hd (cms_lookup alternate_sig)
   in
 
   let virtual_lookup ms line =
     program.JP.static_lookup_method cn ms line
     |> JB.ClassMethodSet.elements
     |> List.map cms_lookup
+    |> List.concat
   in
 
   let cn_map = ref (Cn_map.empty) in

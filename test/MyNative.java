@@ -17,4 +17,8 @@ class MyNative {
       dest_[destPos+i] = src_[srcPos +i];
     }
   }
+
+  public static int[] newArray(java.lang.Class ct, int length) {
+    return new int[length];
+  }
 }

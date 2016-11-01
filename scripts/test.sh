@@ -6,7 +6,9 @@ function run {
   scripts/run_test.sh $1
 }
 
-run ../test/Neg.java
+run ../test/MyList.java
+# run ../test/ArrayList.java
+# run ../test/Neg.java
 # run ../test/Birthday.java
 # run ../test/static_field.fail
 # run ../test/static_field.pass

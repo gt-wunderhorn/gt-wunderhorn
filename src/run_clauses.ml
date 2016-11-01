@@ -6,6 +6,7 @@ module A = Z3.Arithmetic
 module I = A.Integer
 module R = A.Real
 module B = Z3.Boolean
+module BV = Z3.BitVector
 module F = Z3.FloatingPoint
 module Ar = Z3.Z3Array
 
@@ -40,18 +41,28 @@ let rec interpret_expr c e =
     | L.Neg -> assert false
   in
 
-  let bi_op = function
-    | L.Eq   -> B.mk_eq
-    | L.Ge   -> A.mk_ge
-    | L.Gt   -> A.mk_gt
-    | L.Le   -> A.mk_le
-    | L.Lt   -> A.mk_lt
-    | L.Impl -> B.mk_implies
-    | L.Add  -> fun c x y -> A.mk_add c [x; y]
-    | L.Sub  -> fun c x y -> A.mk_sub c [x; y]
-    | L.Div  -> A.mk_div
-    | L.Mul  -> fun c x y -> A.mk_mul c [x; y]
-    | L.Rem  -> I.mk_rem
+  let bi_op o =
+    let bitwise f c x y=
+      BV.mk_bv2int c (f c (I.mk_int2bv c 64 x) (I.mk_int2bv c 64 y)) true in
+
+    match o with
+    | L.Eq    -> B.mk_eq
+    | L.Ge    -> A.mk_ge
+    | L.Gt    -> A.mk_gt
+    | L.Le    -> A.mk_le
+    | L.Lt    -> A.mk_lt
+    | L.Impl  -> B.mk_implies
+    | L.Add   -> fun c x y -> A.mk_add c [x; y]
+    | L.Sub   -> fun c x y -> A.mk_sub c [x; y]
+    | L.Div   -> A.mk_div
+    | L.Mul   -> fun c x y -> A.mk_mul c [x; y]
+    | L.Rem   -> I.mk_rem
+    | L.BAnd  -> bitwise BV.mk_and
+    | L.BOr   -> bitwise BV.mk_or
+    | L.BXor  -> bitwise BV.mk_xor
+    | L.BShl  -> bitwise BV.mk_shl
+    | L.BLShr -> bitwise BV.mk_lshr
+    | L.BAShr -> bitwise BV.mk_ashr
   in
 
   let many_op = function
@@ -101,6 +112,8 @@ let initialize () =
 
   let int_sort = I.mk_sort c in
   let int_array_sort = Ar.mk_sort c int_sort int_sort in
+  let bool_sort = B.mk_sort c in
+  let bool_array_sort = Ar.mk_sort c int_sort bool_sort in
   let real_sort = R.mk_sort c in
   let real_array_sort = Ar.mk_sort c int_sort real_sort in
 
@@ -113,6 +126,8 @@ let initialize () =
              ; (L.Real, real_sort)
              ; (L.Array L.Int, int_array_sort)
              ; (L.Array (L.Array L.Int), Ar.mk_sort c int_sort int_array_sort)
+             ; (L.Array L.Bool, bool_array_sort)
+             ; (L.Array (L.Array L.Bool), Ar.mk_sort c int_sort bool_array_sort)
              ; (L.Array L.Real, real_array_sort)
              ; (L.Array (L.Array L.Real), Ar.mk_sort c int_sort real_array_sort)
              ]

@@ -15,7 +15,7 @@ let const = function
 
 let rec sort = function
   | JB.TBasic t -> (match t with
-      | `Bool   -> L.Bool
+      | `Bool   -> L.Int
       | `Byte   -> assert false (* TODO *)
       | `Char   -> L.Int
       | `Double -> L.Real
@@ -42,18 +42,18 @@ let binop op x y = match op with
   | J.Mult _      -> L.mk_mul x y
   | J.Div _       -> L.mk_div x y
   | J.Rem _       -> L.mk_rem x y
-  | J.IShl        -> assert false (* TODO *)
-  | J.IShr        -> assert false (* TODO *)
-  | J.IAnd        -> assert false (* TODO *)
-  | J.IOr         -> assert false (* TODO *)
-  | J.IXor        -> assert false (* TODO *)
-  | J.IUshr       -> assert false (* TODO *)
-  | J.LShl        -> assert false (* TODO *)
-  | J.LShr        -> assert false (* TODO *)
-  | J.LAnd        -> assert false (* TODO *)
-  | J.LOr         -> assert false (* TODO *)
-  | J.LXor        -> assert false (* TODO *)
-  | J.LUshr       -> assert false (* TODO *)
+  | J.IShl        -> L.mk_bshl x y
+  | J.IShr        -> L.mk_bashr x y
+  | J.IAnd        -> L.mk_band x y
+  | J.IOr         -> L.mk_bor x y
+  | J.IXor        -> L.mk_bxor x y
+  | J.IUshr       -> L.mk_blshr x y
+  | J.LShl        -> L.mk_bshl x y
+  | J.LShr        -> L.mk_bashr x y
+  | J.LAnd        -> L.mk_band x y
+  | J.LOr         -> L.mk_bor x y
+  | J.LXor        -> L.mk_bxor x y
+  | J.LUshr       -> L.mk_blshr x y
   | J.CMP _       -> assert false (* TODO *)
 
 let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
@@ -122,8 +122,8 @@ let rec ir_proc parse st =
   }
 
 and mk_proc parse cms =
-  let p = (parse.Parse.cms_lookup cms) in
-  ir_proc parse (mk_st parse p)
+  let p = parse.Parse.cms_lookup cms in
+  ir_proc parse (mk_st parse (List.hd p))
 
 and instr parse st line i =
   let var v s = (rename st v, s) in
@@ -149,11 +149,26 @@ and instr parse st line i =
 
     if name = "ensure"
     then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), L.User))
-    else if name = "nextShort" || name = "nextInt" || name = "nextLong"
+    else if name = "hasNextShort"
+         || name = "hasNextInt"
+         || name = "hasNextLong"
+         || name = "hasNextBigInteger"
+         || name = "hasNextFloat"
+         || name = "hasNextDouble"
+    then arbitrary L.Bool
+    else if name = "nextShort"
+         || name = "nextInt"
+         || name = "nextLong"
+         || name = "nextBigInteger"
     then arbitrary L.Int
-    else if name = "nextFloat" || name = "nextDouble"
+    else if name = "nextFloat"
+         || name = "nextDouble"
     then arbitrary L.Real
-    else if name = "print" || name = "println" || name = "close"
+    else if name = "print"
+         || name = "println"
+         || name = "close"
+         || name = "getClass"
+         || name = "getComponentType"
     then Some (Ir.Goto next)
     else None
   in
@@ -194,7 +209,10 @@ and instr parse st line i =
       Ir.Return (mk_lbl (id ^ "RET"), v, e)
 
     | J.New (v, cn, t, es) ->
-      if JB.cn_name cn = "java.util.Scanner" then Ir.Goto next
+      Printf.eprintf "new %s\n" (JB.cn_name cn);
+      if JB.cn_name cn = "java.util.Scanner"
+      || JB.cn_name cn = "java.io.BufferedInputStream"
+      then Ir.Goto next
       else
         let proc = mk_proc parse (ctor_sig cn t) in
         Ir.New (proc, var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)
@@ -203,6 +221,7 @@ and instr parse st line i =
       Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
+      Printf.eprintf "static %s\n" (JB.ms_name ms);
       let args = List.map expr args in
       (match built_in (JB.ms_name ms) v args with
        | Some i -> i
@@ -212,9 +231,13 @@ and instr parse st line i =
          Ir.Invoke (proc, v, args))
 
     | J.InvokeVirtual (v, obj, ck, ms, args) ->
+      Printf.eprintf "virtual %s %s %d\n" (JB.ms_name ms) (JB.cn_name st.proc.P.cl_name) line;
       let args = List.map expr args in
 
-      let lookup = parse.Parse.virtual_lookup st.proc.P.sign line in
+      let lookup =
+        parse.Parse.cms_lookup (JB.make_cms st.proc.P.cl_name ms)
+        @
+        parse.Parse.virtual_lookup st.proc.P.sign line in
       (match built_in (JB.ms_name ms) v args with
        | Some i -> i
        | None ->
@@ -227,14 +250,19 @@ and instr parse st line i =
          Ir.Dispatch (expr obj, procs, v, args))
 
     | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
-      let proc = mk_proc parse (JB.make_cms cn ms) in
-      let args = List.map expr args in
+      Printf.eprintf "nonvirtual %s %s\n" (JB.cn_name cn) (JB.ms_name ms);
 
-      (match built_in (JB.ms_name ms) v args with
-       | Some i -> i
-       | None ->
-         let v = return_var proc v in
-         Ir.Invoke (proc, v, (expr obj) :: args))
+      if (JB.cn_name cn) = "java.lang.Throwable"
+      then Ir.Goto next
+      else
+        let proc = mk_proc parse (JB.make_cms cn ms) in
+        let args = List.map expr args in
+
+        (match built_in (JB.ms_name ms) v args with
+         | Some i -> i
+         | None ->
+           let v = return_var proc v in
+           Ir.Invoke (proc, v, (expr obj) :: args))
     | J.MonitorEnter _
     | J.MonitorExit _
     | J.Throw _
@@ -251,9 +279,6 @@ and instr parse st line i =
            )
        | J.CheckArithmetic e ->
          Ir.Assert (L.mk_not (L.mk_eq (expr e) (L.Int_lit 0)) , L.Div0)
-
-       (* | J.CheckNullPointer e -> *)
-       (*   Ir.Assert (L.mk_not (L.mk_eq (expr e) (L.Int_lit 0)) , L.Null) *)
 
        | J.CheckNegativeArraySize e ->
          Ir.Assert (L.mk_ge (expr e) (L.Int_lit 0), L.NegArray)
