@@ -74,6 +74,8 @@ module S_map = Map.Make(struct type t = string;; let compare = compare end)
 let lbl_map = ref S_map.empty
 let lbl_count = ref 0
 
+let class_initialized = ref []
+
 let mk_lbl lbl =
   if not (S_map.mem lbl !lbl_map)
   then
@@ -169,8 +171,27 @@ and instr parse st line i =
          || name = "close"
          || name = "getClass"
          || name = "getComponentType"
+         || name = "desiredAssertionStatus"
+         || name = "getPrimitiveClass"
+         || name = "getSavedProperty"
     then Some (Ir.Goto next)
+    else if name = "valueOf"
+    then
+      let v' = Option.map_default (fun v -> var v L.Int) ("DUMMY", L.Int) v in
+      Some (Ir.Assign (v', List.hd args))
     else None
+  in
+
+  let is_built_in_class cn =
+    let name = JB.cn_name cn in
+    name = "java.util.Scanner" ||
+    name = "java.util.Properties" ||
+    name = "java.io.BufferedInputStream" ||
+    name = "java.lang.Integer" ||
+    name = "java.lang.System" ||
+    name = "java.lang.Object" ||
+    name = "java.lang.Class" ||
+    name = "sun.misc.VM"
   in
 
   let i = match i with
@@ -210,8 +231,8 @@ and instr parse st line i =
 
     | J.New (v, cn, t, es) ->
       Printf.eprintf "new %s\n" (JB.cn_name cn);
-      if JB.cn_name cn = "java.util.Scanner"
-      || JB.cn_name cn = "java.io.BufferedInputStream"
+
+      if is_built_in_class cn
       then Ir.Goto next
       else
         let proc = mk_proc parse (ctor_sig cn t) in
@@ -263,13 +284,32 @@ and instr parse st line i =
          | None ->
            let v = return_var proc v in
            Ir.Invoke (proc, v, (expr obj) :: args))
+
+    | J.MayInit cn ->
+      let ms = JB.clinit_signature in
+      let cms = JB.make_cms cn ms in
+
+
+      Printf.eprintf "initializing %s %d\n" (JB.cn_name cn) (List.length !class_initialized);
+      if is_built_in_class cn
+      || List.mem cn !class_initialized
+      || not (parse.Parse.has_cms cms)
+      then Ir.Goto next
+      else
+        ( Printf.eprintf "initializing %s\n" (JB.cn_name cn);
+          class_initialized := cn :: !class_initialized;
+          let proc = mk_proc parse cms in
+          let v = ("DUMMY", L.Int) in
+          Ir.Invoke (proc, v, [])
+        )
+
     | J.MonitorEnter _
     | J.MonitorExit _
     | J.Throw _
     | J.Formula _
     | J.Nop
-    | J.MayInit _
       -> Ir.Goto next
+
     | J.Check c ->
       (match c with
        | J.CheckArrayBound (a, i) ->

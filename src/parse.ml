@@ -12,6 +12,10 @@ type t = { cms_lookup :
              JB.class_method_signature ->
              Proc.t list
 
+         ; has_cms :
+             JB.class_method_signature ->
+             bool
+
          ; virtual_lookup :
              JB.method_signature ->
              int ->
@@ -80,6 +84,10 @@ let parse id classpath cn =
       List.hd (cms_lookup alternate_sig)
   in
 
+  let has_cms cms =
+    Cmm.mem cms methods
+  in
+
   let virtual_lookup ms line =
     program.JP.static_lookup_method cn ms line
     |> JB.ClassMethodSet.elements
@@ -99,6 +107,7 @@ let parse id classpath cn =
   in
 
   { cms_lookup
+  ; has_cms
   ; virtual_lookup
   ; class_id
   }

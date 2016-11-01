@@ -9,7 +9,7 @@ class MyList<T> {
 
   MyList() {
     size = 0;
-    cap = 10;
+    cap = 5;
     @SuppressWarnings("unchecked")
     T[] temp = (T[])(new Object[cap]);
     arr = temp;
@@ -26,8 +26,8 @@ class MyList<T> {
       T[] temp = (T[])(new Object[cap]);
       for (int i = 0; i < size; ++i) {
         temp[i] = arr[i];
-        arr = temp;
       }
+      arr = temp;
     }
     arr[size] = t;
     size++;
@@ -127,19 +127,11 @@ class MyList<T> {
 public class Test {
   public static void main(String[] args){
     Scanner sc=new Scanner(System.in);
-    int x=sc.nextInt();
-    while(x!=0){
-      MyList<Integer> s=new MyList<Integer>();
-      int y=sc.nextInt();
-      for(int i=0;i<y;i++){
-        int a=sc.nextInt();
-        if(s.contains(a))
-          s.remove(s.indexOf(a));
-        else
-          s.add(a);
-      }
-      System.out.println(s.get(0));
-      x--;
+    MyList<Integer> s = new MyList<Integer>();
+
+    for (int i = 0; i < 20; ++i) {
+      int x=sc.nextInt();
+      s.add(x);
     }
   }
 }
