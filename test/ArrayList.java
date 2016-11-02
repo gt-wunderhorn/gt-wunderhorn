@@ -21,37 +21,37 @@ public class Test {
 
   public static void main(String[] args) {
     Scanner stdin = new Scanner(new BufferedInputStream(System.in));
-    List<Integer> ipArr = new ArrayList<Integer>();
-    while (stdin.hasNextInt()){
-      ipArr.add(stdin.nextInt());
-    }
-    ipSize = Integer.valueOf(ipArr.get(0));
-    int k = 1;
+    ArrayList<Integer> ipArr = new ArrayList<Integer>();
 
-    for(int ip = 0; ip< ipSize; ip++){
-      matrixSize = Integer.valueOf(ipArr.get(k));
-      myRowarr = new int[matrixSize*matrixSize +1];
-      myColarr = new int[matrixSize*matrixSize +1];
-      int i = 1;
-      int j = 1;
+    ipArr.add(stdin.nextInt());
 
-      for(i = 1; i <= matrixSize; i++) {
+    // while (stdin.hasNextInt()){
+    //   ipArr.add(stdin.nextInt());
+    // }
+    // ipSize = Integer.valueOf(ipArr.get(0));
+    // int k = 1;
 
-        for(j = 1; j <= matrixSize; j++){
-          k ++;
-          myRowarr[Integer.valueOf(ipArr.get(k))] = i;
-          myColarr[Integer.valueOf(ipArr.get(k))] = j;
+    // for(int ip = 0; ip< ipSize; ip++){
+    //   matrixSize = Integer.valueOf(ipArr.get(k));
+    //   myRowarr = new int[matrixSize*matrixSize +1];
+    //   myColarr = new int[matrixSize*matrixSize +1];
+    //   int i = 1;
+    //   int j = 1;
 
-        }
+    //   for(i = 1; i <= matrixSize; i++) {
 
-      }
-      calcPath(matrixSize, myRowarr,  myColarr);
-      k++;
-      myRowarr = null;
-      myColarr = null;
-    }
+    //     for(j = 1; j <= matrixSize; j++){
+    //       k ++;
+    //       myRowarr[Integer.valueOf(ipArr.get(k))] = i;
+    //       myColarr[Integer.valueOf(ipArr.get(k))] = j;
 
+    //     }
 
+    //   }
+    //   calcPath(matrixSize, myRowarr,  myColarr);
+    //   k++;
+    //   myRowarr = null;
+    //   myColarr = null;
+    // }
   }
-
 }

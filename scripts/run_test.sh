@@ -11,6 +11,7 @@ fi
 
 rm *.class
 cp ../test/MyNative.java .
+cp ../test/MyList.java .
 javac *.java
 
 # target=$(basename $1).z3

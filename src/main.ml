@@ -27,13 +27,17 @@ let inspect classpath class_name =
   let cms = JB.make_cms cn JP.main_signature in
   let graph = make_graph classpath cms in
 
+  Printf.eprintf "graph assembled\n%!";
+
   let exprs = graph
   |> Simplify.remove_useless_nodes
   |> Graph_to_clauses.translate
   |> List.map Simplify.remove_simple_assignments
   |> fun es -> LS.setup es in
 
-  (* Print_clauses.print exprs |> Printf.printf "%s\n"; *)
+  Print_clauses.print exprs |> Printf.printf "%s\n%!";
+  Printf.eprintf "invoking z3\n%!";
+
   Run_clauses.run exprs;
   ()
 

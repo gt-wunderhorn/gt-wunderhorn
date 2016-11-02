@@ -4,6 +4,15 @@ module P = Proc
 module L = Lang
 module LS = Lang_state
 
+let contains s1 s2 =
+  try
+    let len = String.length s2 in
+    for i = 0 to String.length s1 - len do
+      if String.sub s1 i len = s2 then raise Exit
+    done;
+    false
+  with Exit -> true
+
 let const = function
   | `ANull    -> L.Int_lit 0
   | `Class _  -> L.Int_lit 0 (* TODO *)
@@ -141,7 +150,25 @@ and instr parse st line i =
     Option.map_default (fun v -> var v (snd proc.Ir.return)) ("DUMMY", L.Int)
   in
 
-  let built_in name v args =
+  let is_built_in_class cn =
+    let name = JB.cn_name cn in
+    name = "java.util.Scanner" ||
+    name = "java.util.Properties" ||
+    name = "java.util.ArrayList$SubList" ||
+    name = "java.util.Collections$UnmodifiableList" ||
+    name = "java.io.BufferedInputStream" ||
+    name = "java.lang.Integer" ||
+    name = "java.lang.System" ||
+    name = "java.lang.Object" ||
+    name = "java.lang.Class" ||
+    name = "java.lang.Math" ||
+    name = "sun.misc.VM" ||
+    contains name "String" ||
+    contains name "Error" ||
+    contains name "Exception"
+  in
+
+  let built_in cn name v args =
     let arbitrary t =
       Some (match v with
           | Some v ->
@@ -166,7 +193,8 @@ and instr parse st line i =
     else if name = "nextFloat"
          || name = "nextDouble"
     then arbitrary L.Real
-    else if name = "print"
+    else if is_built_in_class cn
+         || name = "print"
          || name = "println"
          || name = "close"
          || name = "getClass"
@@ -174,24 +202,23 @@ and instr parse st line i =
          || name = "desiredAssertionStatus"
          || name = "getPrimitiveClass"
          || name = "getSavedProperty"
+         || name = "outOfBoundsMsg"
+         || name = "floatToRawIntBits"
+         || name = "doubleToRawLongBits"
+         || name = "toString"
+         || name = "stringSize"
+         || name = "getChars"
+         || name = "checkForComodification"
+         || name = "newArray"
+         || name = "hugeCapacity"
+         || contains name "Error"
+         || contains name "Exception"
     then Some (Ir.Goto next)
     else if name = "valueOf"
     then
       let v' = Option.map_default (fun v -> var v L.Int) ("DUMMY", L.Int) v in
       Some (Ir.Assign (v', List.hd args))
     else None
-  in
-
-  let is_built_in_class cn =
-    let name = JB.cn_name cn in
-    name = "java.util.Scanner" ||
-    name = "java.util.Properties" ||
-    name = "java.io.BufferedInputStream" ||
-    name = "java.lang.Integer" ||
-    name = "java.lang.System" ||
-    name = "java.lang.Object" ||
-    name = "java.lang.Class" ||
-    name = "sun.misc.VM"
   in
 
   let i = match i with
@@ -230,6 +257,7 @@ and instr parse st line i =
       Ir.Return (mk_lbl (id ^ "RET"), v, e)
 
     | J.New (v, cn, t, es) ->
+      Printf.eprintf "Invoke new %s\n%!" (JB.cn_name cn);
       if is_built_in_class cn
       then Ir.Goto next
       else
@@ -240,8 +268,9 @@ and instr parse st line i =
       Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
+      Printf.eprintf "Invoke static %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
       let args = List.map expr args in
-      (match built_in (JB.ms_name ms) v args with
+      (match built_in cn (JB.ms_name ms) v args with
        | Some i -> i
        | None ->
          let proc = mk_proc parse (JB.make_cms cn ms) in
@@ -249,15 +278,16 @@ and instr parse st line i =
          Ir.Invoke (proc, v, args))
 
     | J.InvokeVirtual (v, obj, ck, ms, args) ->
+      let cn = st.proc.P.cl_name in
+      Printf.eprintf "Invoke virtual %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
       let args = List.map expr args in
-
-      let lookup =
-        parse.Parse.cms_lookup (JB.make_cms st.proc.P.cl_name ms)
-        @
-        parse.Parse.virtual_lookup st.proc.P.sign line in
-      (match built_in (JB.ms_name ms) v args with
+      (match built_in cn (JB.ms_name ms) v args with
        | Some i -> i
        | None ->
+         let lookup =
+           parse.Parse.cms_lookup (JB.make_cms st.proc.P.cl_name ms)
+           @
+           parse.Parse.virtual_lookup cn st.proc.P.sign line in
          let procs =
            lookup
            |> List.map
@@ -267,16 +297,17 @@ and instr parse st line i =
          Ir.Dispatch (expr obj, procs, v, args))
 
     | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
+      Printf.eprintf "Invoke nonvirtual %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
 
       if (JB.cn_name cn) = "java.lang.Throwable"
       then Ir.Goto next
       else
-        let proc = mk_proc parse (JB.make_cms cn ms) in
         let args = List.map expr args in
 
-        (match built_in (JB.ms_name ms) v args with
+        (match built_in cn (JB.ms_name ms) v args with
          | Some i -> i
          | None ->
+           let proc = mk_proc parse (JB.make_cms cn ms) in
            let v = return_var proc v in
            Ir.Invoke (proc, v, (expr obj) :: args))
 

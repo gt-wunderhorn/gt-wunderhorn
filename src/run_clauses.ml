@@ -38,11 +38,10 @@ let rec interpret_expr c e =
 
   let un_op = function
     | L.Not -> B.mk_not
-    | L.Neg -> assert false
   in
 
   let bi_op o =
-    let bitwise f c x y=
+    let bitwise f c x y =
       BV.mk_bv2int c (f c (I.mk_int2bv c 64 x) (I.mk_int2bv c 64 y)) true in
 
     match o with

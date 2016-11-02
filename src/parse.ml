@@ -17,6 +17,7 @@ type t = { cms_lookup :
              bool
 
          ; virtual_lookup :
+             JB.class_name ->
              JB.method_signature ->
              int ->
              Proc.t list
@@ -40,10 +41,19 @@ let native_entry =
 
 let parse id classpath cn =
   let (prta,instantiated_classes) =
-    Sawja_pack.JRTA.parse_program
+    Sawja_pack.JRRTA.parse_program
       ~other_entrypoints:[native_entry]
       classpath
       (JB.make_cms cn JP.main_signature) in
+  (* let prta = *)
+  (*   Sawja_pack.JCRA.parse_program *)
+  (*     classpath *)
+  (*     [cn; native] in *)
+  (* let (prta,instantiated_classes) = *)
+    (* Sawja_pack.JRTA.parse_program *)
+    (*   ~other_entrypoints:[native_entry] *)
+    (*   classpath *)
+    (*   (JB.make_cms cn JP.main_signature) in *)
 
   let program = JP.map_program2
       (fun _ -> J.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[])
@@ -88,7 +98,7 @@ let parse id classpath cn =
     Cmm.mem cms methods
   in
 
-  let virtual_lookup ms line =
+  let virtual_lookup cn ms line =
     program.JP.static_lookup_method cn ms line
     |> JB.ClassMethodSet.elements
     |> List.map cms_lookup

@@ -24,20 +24,33 @@ let print_rel (lbl, es) =
 
 let show_un_op = function
   | L.Not -> "not"
-  | L.Neg -> "-"
 
-let show_bi_op = function
-  | L.Add  -> "+"
-  | L.Sub  -> "-"
-  | L.Mul  -> "*"
-  | L.Rem  -> "rem"
-  | L.Div  -> "/"
-  | L.Eq   -> "="
-  | L.Ge   -> ">="
-  | L.Gt   -> ">"
-  | L.Le   -> "<="
-  | L.Lt   -> "<"
-  | L.Impl -> "=>"
+let show_bi_op op e1 e2 =
+  let bitwise o =
+    let to_bv e = parens ["(_ int2bv 64)"; e] in
+    parens ["bv2int"; parens [o; to_bv e1; to_bv e2]]
+  in
+
+  let apply o = parens [o; e1; e2] in
+
+  match op with
+  | L.Add  -> apply "+"
+  | L.Sub  -> apply "-"
+  | L.Mul  -> apply "*"
+  | L.Rem  -> apply "rem"
+  | L.Div  -> apply "/"
+  | L.Eq   -> apply "="
+  | L.Ge   -> apply ">="
+  | L.Gt   -> apply ">"
+  | L.Le   -> apply "<="
+  | L.Lt   -> apply "<"
+  | L.Impl -> apply "=>"
+  | L.BAnd  -> bitwise "bvand"
+  | L.BOr   -> bitwise "bvor"
+  | L.BXor  -> bitwise "bvxor"
+  | L.BShl  -> bitwise "bvshl"
+  | L.BLShr -> bitwise "bvlshr"
+  | L.BAShr -> bitwise "bvashr"
 
 let show_many_op = function
   | L.And -> "and"
@@ -48,7 +61,7 @@ let print_expr expr =
     | L.Relation (lbl, es)     -> parens (("r_" ^ string_of_int lbl) :: (List.map ex es))
     | L.Var v                  -> fst v
     | L.Un_op (op, e)          -> parens [show_un_op op; ex e]
-    | L.Bi_op (op, e1, e2)     -> parens [show_bi_op op; ex e1; ex e2]
+    | L.Bi_op (op, e1, e2)     -> show_bi_op op (ex e1) (ex e2)
     | L.Many_op (op, es)       -> parens (show_many_op op :: List.map ex es)
     | L.ArrStore (arr, idx, e) -> parens ["store"; ex arr; ex idx; ex e]
     | L.ArrSelect (e1, e2)     -> parens ["select"; ex e1; ex e2]

@@ -123,15 +123,3 @@ class MyList<T> {
     size = 0;
   }
 }
-
-public class Test {
-  public static void main(String[] args){
-    Scanner sc=new Scanner(System.in);
-    MyList<Integer> s = new MyList<Integer>();
-
-    for (int i = 0; i < 20; ++i) {
-      int x=sc.nextInt();
-      s.add(x);
-    }
-  }
-}

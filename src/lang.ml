@@ -11,7 +11,7 @@ module V_set = Set_ext.Make(
 
 type lbl = int
 
-type un_op = Not | Neg
+type un_op = Not
 type bi_op =
   | Eq | Ge | Gt | Le | Lt | Impl
   | Add | Div | Mul | Sub | Rem
@@ -76,7 +76,6 @@ let rec expr_sort = function
 
 and un_op_sort op e = match op with
   | Not -> Bool
-  | Neg -> expr_sort e
 and bi_op_sort op e1 e2 = match op with
   | BAnd | BOr | BXor | BShl | BLShr | BAShr -> Int
   | Eq | Ge | Gt | Le | Lt | Impl -> Bool
@@ -84,7 +83,10 @@ and bi_op_sort op e1 e2 = match op with
 and many_op_sort = function
   | And -> Bool
 
-let mk_neg e = Un_op (Neg, e)
+let mk_sub e1 e2 = Bi_op (Sub, e1, e2)
+let mk_neg e = match expr_sort e with
+  | Int -> mk_sub (Int_lit 0) e
+  | Real -> mk_sub (Real_lit 0.0) e
 let mk_not = function
   | Un_op (Not, e) -> e
   | e -> Un_op (Not, e)
@@ -93,7 +95,6 @@ let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
 let mk_lt e1 e2 = Bi_op (Lt, e1, e2)
 let mk_ge e1 e2 = Bi_op (Ge, e1, e2)
 let mk_add e1 e2 = Bi_op (Add, e1, e2)
-let mk_sub e1 e2 = Bi_op (Sub, e1, e2)
 let mk_div e1 e2 = Bi_op (Div, e1, e2)
 let mk_mul e1 e2 = Bi_op (Mul, e1, e2)
 let mk_rem e1 e2 = Bi_op (Rem, e1, e2)

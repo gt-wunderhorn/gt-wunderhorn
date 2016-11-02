@@ -41,6 +41,7 @@ let reduce_instr p table = function
     L.Bi_op (L.Eq, L.Var (mk_alias table v), rhs)
 
 let translate_path p (init, term, path) =
+  Printf.eprintf "translating a path!\n%!";
   let initial_vars  = L.critical_vars p init in
   let terminal_vars = L.critical_vars p term in
   let table = Alias_table.empty () in
@@ -66,4 +67,5 @@ let translate_path p (init, term, path) =
 
 let translate p =
   let edges = L.PG.elements p in
+  Printf.eprintf "num edges %d\n%!" (List.length edges);
   List.map (translate_path p) edges
