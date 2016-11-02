@@ -25,7 +25,7 @@ let const = function
 let rec sort = function
   | JB.TBasic t -> (match t with
       | `Bool   -> L.Int
-      | `Byte   -> assert false (* TODO *)
+      | `Byte   -> L.Int
       | `Char   -> L.Int
       | `Double -> L.Real
       | `Float  -> L.Real
@@ -154,10 +154,13 @@ and instr parse st line i =
     let name = JB.cn_name cn in
     name = "java.util.Scanner" ||
     name = "java.util.Properties" ||
+    name = "java.util.Arrays" ||
     name = "java.util.ArrayList$SubList" ||
     name = "java.util.Collections$UnmodifiableList" ||
     name = "java.io.BufferedInputStream" ||
+    name = "java.lang.Boolean" ||
     name = "java.lang.Integer" ||
+    name = "java.lang.Long" ||
     name = "java.lang.System" ||
     name = "java.lang.Object" ||
     name = "java.lang.Class" ||
@@ -168,7 +171,46 @@ and instr parse st line i =
     contains name "Exception"
   in
 
-  let built_in cn name v args =
+  let built_in cn ms v args =
+    let built_in_list =
+      [ "hasNextShort"
+      ; "hasNextInt"
+      ; "hasNextLong"
+      ; "hasNextBigInteger"
+      ; "hasNextFloat"
+      ; "hasNextDouble"
+      ; "hasNextBoolean"
+      ; "nextBoolean"
+      ; "nextShort"
+      ; "nextInt"
+      ; "nextLong"
+      ; "nextBigInteger"
+      ; "nextFloat"
+      ; "nextDouble"
+      ; "print"
+      ; "println"
+      ; "close"
+      ; "flush"
+      ; "getClass"
+      ; "getComponentType"
+      ; "desiredAssertionStatus"
+      ; "getPrimitiveClass"
+      ; "getSavedProperty"
+      ; "outOfBoundsMsg"
+      ; "floatToRawIntBits"
+      ; "doubleToRawLongBits"
+      ; "toString"
+      ; "stringSize"
+      ; "getChars"
+      ; "checkForComodification"
+      ; "newArray"
+      ; "hugeCapacity"
+      ; "copyOf"
+      ] in
+    let name = JB.ms_name ms in
+
+    let s = JB.ms_rtype ms in
+
     let arbitrary t =
       Some (match v with
           | Some v ->
@@ -178,39 +220,12 @@ and instr parse st line i =
 
     if name = "ensure"
     then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), L.User))
-    else if name = "hasNextShort"
-         || name = "hasNextInt"
-         || name = "hasNextLong"
-         || name = "hasNextBigInteger"
-         || name = "hasNextFloat"
-         || name = "hasNextDouble"
-    then arbitrary L.Bool
-    else if name = "nextShort"
-         || name = "nextInt"
-         || name = "nextLong"
-         || name = "nextBigInteger"
-    then arbitrary L.Int
-    else if name = "nextFloat"
-         || name = "nextDouble"
-    then arbitrary L.Real
+
+    else if List.mem name built_in_list
+    then match s with
+      | None -> Some (Ir.Goto next)
+      | Some s -> arbitrary (sort s)
     else if is_built_in_class cn
-         || name = "print"
-         || name = "println"
-         || name = "close"
-         || name = "getClass"
-         || name = "getComponentType"
-         || name = "desiredAssertionStatus"
-         || name = "getPrimitiveClass"
-         || name = "getSavedProperty"
-         || name = "outOfBoundsMsg"
-         || name = "floatToRawIntBits"
-         || name = "doubleToRawLongBits"
-         || name = "toString"
-         || name = "stringSize"
-         || name = "getChars"
-         || name = "checkForComodification"
-         || name = "newArray"
-         || name = "hugeCapacity"
          || contains name "Error"
          || contains name "Exception"
     then Some (Ir.Goto next)
@@ -270,7 +285,7 @@ and instr parse st line i =
     | J.InvokeStatic (v, cn, ms, args) ->
       Printf.eprintf "Invoke static %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
       let args = List.map expr args in
-      (match built_in cn (JB.ms_name ms) v args with
+      (match built_in cn ms v args with
        | Some i -> i
        | None ->
          let proc = mk_proc parse (JB.make_cms cn ms) in
@@ -281,7 +296,7 @@ and instr parse st line i =
       let cn = st.proc.P.cl_name in
       Printf.eprintf "Invoke virtual %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
       let args = List.map expr args in
-      (match built_in cn (JB.ms_name ms) v args with
+      (match built_in cn ms v args with
        | Some i -> i
        | None ->
          let lookup =
@@ -304,7 +319,7 @@ and instr parse st line i =
       else
         let args = List.map expr args in
 
-        (match built_in cn (JB.ms_name ms) v args with
+        (match built_in cn ms v args with
          | Some i -> i
          | None ->
            let proc = mk_proc parse (JB.make_cms cn ms) in

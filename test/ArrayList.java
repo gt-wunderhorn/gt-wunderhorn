@@ -2,6 +2,7 @@ import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Arrays;
 import java.lang.Math;
 
 public class Test {
@@ -24,6 +25,7 @@ public class Test {
     ArrayList<Integer> ipArr = new ArrayList<Integer>();
 
     ipArr.add(stdin.nextInt());
+    Arrays.sort(ipArr);
 
     // while (stdin.hasNextInt()){
     //   ipArr.add(stdin.nextInt());

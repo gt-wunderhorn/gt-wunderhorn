@@ -1,18 +1,49 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Iterator;
 
-class MyList<T> {
+public class MyList<T> implements Iterable<T> {
+  class MyIterator implements Iterator<T> {
+    private int idx;
+
+    MyIterator() {
+      idx = 0;
+    }
+
+    public boolean hasNext() {
+      return idx < size;
+    }
+
+    public T next() {
+      return arr[idx];
+    }
+  }
+
+  public Iterator<T> iterator() {
+    return new MyIterator();
+  }
+
   private int size;
   private int cap;
   private T[] arr;
 
-  MyList() {
-    size = 0;
-    cap = 5;
+  MyList(int cap) {
+    this.size = 0;
+    this.cap = cap;
     @SuppressWarnings("unchecked")
     T[] temp = (T[])(new Object[cap]);
-    arr = temp;
+    this.arr = temp;
+  }
+
+  MyList() {
+    this(5);
+  }
+
+  MyList(MyList<T> other) {
+    for (int i = 0; i < other.size(); ++i) {
+      add(other.get(i));
+    }
   }
 
   int size() {
@@ -36,8 +67,8 @@ class MyList<T> {
 
   void add(int idx, T element) {
     add(get(size-1));
-    for (int i = idx; i < size - 2; ++i) {
-      arr[i+1] = arr[i];
+    for (int i = size-2; i > idx; --i) {
+      arr[i] = arr[i-1];
     }
     arr[idx] = element;
   }
