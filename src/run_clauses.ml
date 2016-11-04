@@ -11,6 +11,8 @@ module F = Z3.FloatingPoint
 module Ar = Z3.Z3Array
 
 module L = Lang
+module PG = Program_graph
+module Set = Core.Std.Set.Poly
 
 type context = { c  : Z3.context
                ; fp : FP.fixedpoint
@@ -97,8 +99,8 @@ let interpret_query c (lbl, e, at) =
 
   let res = FP.query_r c.fp [f] in
   match res with
-  | Z3.Solver.SATISFIABLE   -> Printf.printf "%s unsafe\n" (L.show_assert_type at)
-  | Z3.Solver.UNSATISFIABLE -> Printf.printf "%s safe\n" (L.show_assert_type at)
+  | Z3.Solver.SATISFIABLE   -> Printf.printf "%s unsafe\n" (PG.show_assert_type at)
+  | Z3.Solver.UNSATISFIABLE -> Printf.printf "%s safe\n" (PG.show_assert_type at)
   | _ -> Printf.printf "unknown\n"
 
 let initialize () =
@@ -132,17 +134,20 @@ let initialize () =
              ]
   }
 
+let union_map_list f xs = Set.union_list (List.map f xs)
+let r_union_map_list f xs = List.fold_left L.R_set.union L.R_set.empty (List.map f xs)
+
 let run exprs =
-  let vars = L.V_set.unions_map L.expr_vars exprs in
-  let rels = L.R_set.unions_map L.expr_rels exprs in
-  let queries = L.Q_set.unions_map L.queries exprs in
+  let vars = union_map_list L.expr_vars exprs in
+  let rels = r_union_map_list L.expr_rels exprs in
+  let queries = union_map_list L.queries exprs in
 
   let c = initialize () in
 
-  L.V_set.iter (interpret_var c) vars;
+  Set.iter ~f:(interpret_var c) vars;
   L.R_set.iter (fun (lbl, es) ->
       interpret_relation c ("r_" ^ string_of_int lbl, es)) rels;
-  L.Q_set.iter (fun (lbl, e, at) ->
+  Set.iter ~f:(fun (lbl, e, at) ->
       interpret_relation c ("q_" ^ string_of_int lbl, [e])) queries;
   List.iter (interpret_clause c) exprs;
-  L.Q_set.iter (interpret_query c) queries
+  Set.iter ~f:(interpret_query c) queries

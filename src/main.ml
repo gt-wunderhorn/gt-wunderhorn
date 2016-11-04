@@ -9,8 +9,6 @@ module LS = Lang_state
 module G = Graph
 module PG = Program_graph
 
-(* module R = Run_clauses *)
-
 let make_graph classpath cms =
   let proc_id = ref (0) in
   let cn = fst (JB.cms_split cms) in
@@ -34,18 +32,20 @@ let inspect classpath class_name =
 
   let exprs = graph
   |> Simplify.remove_useless_nodes
+  |> Variable_analysis.annotate_nodes
   |> Path_to_expr.translate
-  |> PG.map_body Simplify.remove_simple_assignments
   |> G.pinch (fun (i, t, e) -> match e with
       | PG.Body L.True -> Some t
       | _ -> None)
-  (* |> Collapse_expr_graph.collapse *)
+  |> Collapse_expr_graph.collapse
+  |> G.map_edges Simplify.remove_simple_assignments
+  |> G.edges
   |> fun es -> LS.setup es in
 
   (* Print_clauses.print exprs |> Printf.printf "%s\n%!"; *)
-  (* Printf.eprintf "invoking z3\n%!"; *)
 
-  (* R.run exprs; *)
+  Printf.eprintf "invoking z3\n%!";
+  Run_clauses.run exprs;
   ()
 
 let _ =

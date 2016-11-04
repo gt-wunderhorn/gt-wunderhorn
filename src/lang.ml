@@ -1,6 +1,6 @@
 module G = Graph
 module PG = Program_graph
-module Set = Core.Std.Set.Poly
+module S = Core.Std.Set.Poly
 
 type lbl = PG.lbl
 
@@ -106,6 +106,8 @@ let rec fold_expr special_case f zero e =
   match special_case e with
   | Some r -> r
   | None -> match e with
+    | Relation (_, es)   -> List.fold_left f zero (List.map ex es)
+    | Query (_, e, _)    -> ex e
     | Un_op (_, e)       -> ex e
     | Bi_op (_, e1, e2)  -> f (ex e1) (ex e2)
     | Many_op (_, es)    -> List.fold_left f zero (List.map ex es)
@@ -116,43 +118,27 @@ let rec fold_expr special_case f zero e =
 (** Find the variables in an expression *)
 let expr_vars =
   let special_case = function
-    | Var v            -> Some (Set.singleton v)
-    | _                -> None
-  in fold_expr special_case Set.union Set.empty
+    | Var v -> Some (S.singleton v)
+    | _     -> None
+  in fold_expr special_case S.union S.empty
 
-let path_uses_before_assigns p =
-  let loop (a_set, u_set) (v, e) =
-    (* Add the variables in e to the use set if they were not in the assignment set. *)
-    let augment e =
-      Set.union
-        (Set.diff (expr_vars e) a_set)
-        u_set in
+(** Find the queries in an expression *)
+let queries =
+  let special_case = function
+    | Query q -> Some (S.singleton q)
+    | _       -> None
+  in fold_expr special_case S.union S.empty
 
-    (Set.add a_set v, augment e)
+module R_set = Set.Make(
+  struct
+    type t = rel
+    let compare (lbl1, _) (lbl2, _) = compare lbl1 lbl2
+  end)
+
+(** Find the relations in an expression *)
+let expr_rels =
+  let special_case = function
+    | Relation r -> Some (R_set.singleton r)
+    | _ -> None
   in
-
-  match p with
-  | PG.Relate -> Set.empty
-  | PG.Assert (e, _) -> expr_vars e
-  | PG.Body (e, assigns) ->
-    Set.union
-      (expr_vars e)
-      (snd (List.fold_left loop (Set.empty, Set.empty) assigns))
-
-let path_assigns = function
-  | PG.Relate | PG.Assert _ -> Set.empty
-  | PG.Body (e, assigns) -> List.map fst assigns |> Set.of_list
-
-let nested_map f xs =
-  List.map (List.map f) xs
-
-let critical_vars p lbl =
-  let coming = G.walks_to p lbl |> nested_map G.edge in
-  let going = G.walks_from p lbl |> nested_map G.edge in
-
-  if List.length going = 0 then
-    (nested_map path_assigns coming |> List.concat |> Set.union_list)
-  else
-    Set.inter
-      (nested_map path_assigns coming |> List.concat |> Set.union_list)
-      (nested_map path_uses_before_assigns going |> List.concat|> Set.union_list)
+  fold_expr special_case R_set.union R_set.empty

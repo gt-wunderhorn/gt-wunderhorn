@@ -19,6 +19,9 @@ let array_length = ("ARRAY_LENGTH", L.Array L.Int)
 (** The global identity counter which keeps track of how many objects have been
     created. *)
 let id = ("ID", L.Int)
+let id_0 = L.Var ("ID_0", L.Int)
+
+let mandatory_vars = [id]
 
 let update_arr arr idx e =
   let store = L.ArrStore (L.Var arr, idx, e) in
@@ -35,8 +38,8 @@ let build_object v ct =
   ; update_arr class_array (L.Var v) ct
   ]
 
-let setup es = L.True
-  (* L.mk_impl *)
-  (*   (L.mk_eq (L.Var id) (L.Int_lit 0)) *)
-  (*   (L.Relation (0, [L.Var id])) *)
-  (* :: es *)
+let setup es =
+  L.mk_impl
+    (L.mk_eq id_0 (L.Int_lit 0))
+    (L.Relation (0, [id_0]))
+  :: es

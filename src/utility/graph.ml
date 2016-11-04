@@ -1,57 +1,50 @@
 module Set = Core.Std.Set.Poly
 
-type ('n, 'e) conn = ('n * 'n * 'e)
-type ('n, 'e) t =
-  { nodes : 'n Set.t
-  ; conns : (('n, 'e) conn) Set.t
-  }
+type ('n, 'e) t = ('n * 'n * 'e) Set.t
 
-let empty = { nodes = Set.empty ; conns = Set.empty }
+let empty = Set.empty
 
-let conns g = Set.to_list g.conns
-let nodes g = Set.to_list g.nodes
-let edges g = Set.to_list (Set.map ~f:(fun (_,_,x) -> x) g.conns)
+let conns g = Set.to_list g
+let nodes g =
+  g
+  |> Set.elements
+  |> List.map (fun (p, c, e) -> [p; c])
+  |> List.concat
 
-let add_node n g = { g with nodes = Set.add g.nodes n }
-let add_conn (n1, n2, e) g =
-  let g' = add_node n1 g |> add_node n2 in
-  { g' with conns = Set.add g'.conns (n1, n2, e) }
+let edges g = Set.to_list (Set.map ~f:(fun (_,_,x) -> x) g)
+
+let add (n1, n2, e) g =
+  Set.add g (n1, n2, e)
 
 let of_conns conns =
-  let add g c = add_conn c g in
+  let add g c = add c g in
   List.fold_left add empty conns
 
 let singleton conn = of_conns [conn]
 
 let map nf ef g =
   let conn (n1, n2, e) = (nf n1, nf n2, ef e) in
-  { nodes       = Set.map ~f:nf g.nodes
-  ; conns = Set.map ~f:conn g.conns
-  }
+  Set.map ~f:conn g
 
 let id x = x
 let map_nodes nf g = map nf id g
 let map_edges ef g = map id ef g
+let map_conns f g = Set.map ~f:f g
 
-let union g1 g2 =
-  { nodes = Set.union g1.nodes g2.nodes
-  ; conns = Set.union g1.conns g2.conns
-  }
+let union = Set.union
 
 let unions g = List.fold_left union empty g
 let unions_map f xs = unions (List.map f xs)
 
 let filter_nodes p g =
   let conn (n1, n2, _) = p n1 && p n2 in
-  { nodes = Set.filter ~f:p g.nodes
-  ; conns = Set.filter ~f:conn g.conns }
+  Set.filter ~f:conn g
 
 let filter_edges p g =
   let conn (_, _, e) = p e in
-  { g with conns = Set.filter ~f:conn g.conns }
+  Set.filter ~f:conn g
 
-let filter_conns p g =
-  { g with conns = Set.filter ~f:p g.conns }
+let filter_conns p g = Set.filter ~f:p g
 
 let parents g n =
   List.filter (fun (_, c, _) -> c = n) (conns g)
@@ -122,7 +115,7 @@ let splice f g =
         | None   -> !g'
         | Some e -> changed := true;
           filter_nodes (fun n' -> n' <> n) !g'
-          |> add_conn (p, c, e)
+          |> add (p, c, e)
     done;
     if not !changed then finished := true;
     !g'
