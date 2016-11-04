@@ -3,6 +3,7 @@ module JB = Javalib_pack.JBasics
 module P = Proc
 module L = Lang
 module LS = Lang_state
+module PG = Program_graph
 
 let contains s1 s2 =
   try
@@ -219,7 +220,7 @@ and instr parse st line i =
           | None -> Ir.Goto next) in
 
     if name = "ensure"
-    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), L.User))
+    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), PG.User))
 
     else if List.mem name built_in_list
     then match s with
@@ -272,7 +273,6 @@ and instr parse st line i =
       Ir.Return (mk_lbl (id ^ "RET"), v, e)
 
     | J.New (v, cn, t, es) ->
-      Printf.eprintf "Invoke new %s\n%!" (JB.cn_name cn);
       if is_built_in_class cn
       then Ir.Goto next
       else
@@ -283,7 +283,6 @@ and instr parse st line i =
       Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
-      Printf.eprintf "Invoke static %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
       let args = List.map expr args in
       (match built_in cn ms v args with
        | Some i -> i
@@ -294,7 +293,6 @@ and instr parse st line i =
 
     | J.InvokeVirtual (v, obj, ck, ms, args) ->
       let cn = st.proc.P.cl_name in
-      Printf.eprintf "Invoke virtual %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
       let args = List.map expr args in
       (match built_in cn ms v args with
        | Some i -> i
@@ -312,8 +310,6 @@ and instr parse st line i =
          Ir.Dispatch (expr obj, procs, v, args))
 
     | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
-      Printf.eprintf "Invoke nonvirtual %s %s\n%!" (JB.cn_name cn) (JB.ms_name ms);
-
       if (JB.cn_name cn) = "java.lang.Throwable"
       then Ir.Goto next
       else
@@ -353,13 +349,13 @@ and instr parse st line i =
        | J.CheckArrayBound (a, i) ->
          Ir.Assert
            ( L.mk_lt (expr i) (L.ArrSelect (L.Var (LS.array_length), expr a))
-           , L.ArrayBound
+           , PG.ArrayBound
            )
        | J.CheckArithmetic e ->
-         Ir.Assert (L.mk_not (L.mk_eq (expr e) (L.Int_lit 0)) , L.Div0)
+         Ir.Assert (L.mk_not (L.mk_eq (expr e) (L.Int_lit 0)) , PG.Div0)
 
        | J.CheckNegativeArraySize e ->
-         Ir.Assert (L.mk_ge (expr e) (L.Int_lit 0), L.NegArray)
+         Ir.Assert (L.mk_ge (expr e) (L.Int_lit 0), PG.NegArray)
 
        | J.CheckNullPointer _
        | J.CheckArrayStore _

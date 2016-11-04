@@ -35,8 +35,8 @@ let build_object v ct =
   ; update_arr class_array (L.Var v) ct
   ]
 
-let setup es =
-  L.mk_impl
-    (L.mk_eq (L.Var id) (L.Int_lit 0))
-    (L.Relation (0, [L.Var id]))
-  :: es
+let setup es = L.True
+  (* L.mk_impl *)
+  (*   (L.mk_eq (L.Var id) (L.Int_lit 0)) *)
+  (*   (L.Relation (0, [L.Var id])) *)
+  (* :: es *)

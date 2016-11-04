@@ -1,4 +1,7 @@
 module L = Lang
+module Set = Core.Std.Set.Poly
+
+let union_map_list f xs = Set.union_list (List.map f xs)
 
 let line_sep = String.concat "\n"
 let space_sep = String.concat " "
@@ -57,8 +60,6 @@ let show_many_op = function
 
 let print_expr expr =
   let rec ex = function
-    | L.Query (lbl, e, at)     -> parens ["q_" ^ string_of_int lbl; "true"]
-    | L.Relation (lbl, es)     -> parens (("r_" ^ string_of_int lbl) :: (List.map ex es))
     | L.Var v                  -> fst v
     | L.Un_op (op, e)          -> parens [show_un_op op; ex e]
     | L.Bi_op (op, e1, e2)     -> show_bi_op op (ex e1) (ex e2)
@@ -78,14 +79,14 @@ let declare_query (lbl, _, _) = parens ["declare-rel"; "q_" ^ string_of_int lbl;
 let query (lbl, _, _) = parens ["query"; "q_" ^ string_of_int lbl]
 
 let print exprs =
-  let vars = L.V_set.unions_map L.expr_vars exprs in
-  let rels = L.R_set.unions_map L.expr_rels exprs in
-  let queries = L.Q_set.elements (L.Q_set.unions_map L.queries exprs) in
+  let vars = union_map_list L.expr_vars exprs in
+  let rels = union_map_list L.expr_rels exprs in
+  let queries = Set.elements (Set.union_map_list L.queries exprs) in
 
   line_sep
     [ header
-    ; line_sep (List.map print_var (L.V_set.elements vars))
-    ; line_sep (List.map print_rel (L.R_set.elements rels))
+    ; line_sep (List.map print_var (Set.elements vars))
+    ; line_sep (List.map print_rel (Set.elements rels))
     ; line_sep (List.map declare_query queries)
     ; line_sep (List.map print_expr exprs)
     ; line_sep (List.map query queries)

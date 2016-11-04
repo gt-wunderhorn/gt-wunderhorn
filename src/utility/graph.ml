@@ -1,173 +1,159 @@
-module type Graph_info = sig
-  type node
-  type edge
-end
+module Set = Core.Std.Set.Poly
 
-module Make(T : Graph_info) = struct
-  module S = Set_ext.Make(
-    struct type t = T.node * T.node * T.edge;; let compare = compare end)
+type ('n, 'e) conn = ('n * 'n * 'e)
+type ('n, 'e) t =
+  { nodes : 'n Set.t
+  ; conns : (('n, 'e) conn) Set.t
+  }
 
-  module N = Set_ext.Make(
-    struct type t = T.node;; let compare = compare end)
+let empty = { nodes = Set.empty ; conns = Set.empty }
 
-  type t = T.node * T.node * T.edge
+let conns g = Set.to_list g.conns
+let nodes g = Set.to_list g.nodes
+let edges g = Set.to_list (Set.map ~f:(fun (_,_,x) -> x) g.conns)
 
-  let empty = S.empty
-  let singleton = S.singleton
-  let elements = S.elements
-  let union = S.union
-  let unions = S.unions
-  let unions_map = S.unions_map
-  let filter = S.filter
-  let cardinal = S.cardinal
-  let choose = S.choose
-  let add = S.add
-  let diff = S.diff
-  let remove = S.remove
-  let of_list = S.of_list
-  let iter = S.iter
+let add_node n g = { g with nodes = Set.add g.nodes n }
+let add_conn (n1, n2, e) g =
+  let g' = add_node n1 g |> add_node n2 in
+  { g' with conns = Set.add g'.conns (n1, n2, e) }
 
-  let init (i, _, _) = i
-  let term (_, t, _) = t
-  let edge (_, _, e) = e
+let of_conns conns =
+  let add g c = add_conn c g in
+  List.fold_left add empty conns
 
-  (** Given a graph, get a list of all the edges *)
-  let edges g =
-    g |> elements |> List.map edge
+let singleton conn = of_conns [conn]
 
-  (** Given a graph, get a list of all the nodes *)
-  let nodes g =
-    g |> elements
-    |> List.map (fun ce -> [init ce; term ce])
-    |> List.concat
-    |> N.of_list
-    |> N.elements
+let map nf ef g =
+  let conn (n1, n2, e) = (nf n1, nf n2, ef e) in
+  { nodes       = Set.map ~f:nf g.nodes
+  ; conns = Set.map ~f:conn g.conns
+  }
 
-  (** Find the subgraph where all edges terminate at a given node. *)
-  let node_entrances g n = filter (fun (i, t, e) -> t = n) g
+let id x = x
+let map_nodes nf g = map nf id g
+let map_edges ef g = map id ef g
 
-  (** Find the subgraph where all edges initiate at a given node. *)
-  let node_exits g n = filter (fun (i, t, e) -> i = n) g
+let union g1 g2 =
+  { nodes = Set.union g1.nodes g2.nodes
+  ; conns = Set.union g1.conns g2.conns
+  }
 
-  let set_initial (i, t, e) i' = (i', t, e)
-  let set_terminal (i, t, e) t' = (i, t', e)
+let unions g = List.fold_left union empty g
+let unions_map f xs = unions (List.map f xs)
 
-  let map nf ef = S.map (fun (i, t, e) -> (nf i, nf t, ef e))
+let filter_nodes p g =
+  let conn (n1, n2, _) = p n1 && p n2 in
+  { nodes = Set.filter ~f:p g.nodes
+  ; conns = Set.filter ~f:conn g.conns }
 
-  type elem = t
-  module P_set = Set_ext.Make(
-    struct type t = elem list;; let compare = compare end)
+let filter_edges p g =
+  let conn (_, _, e) = p e in
+  { g with conns = Set.filter ~f:conn g.conns }
 
-  (** Recursively find all paths from a particular node. The direction of search
-      is determined by `selector` and `direction`. Note that each node can only
-      be visited exactly once. *)
-  let find_paths selector direction g n =
-    let visited = ref [] in
-    let rec find_paths' g n =
-      if List.mem n !visited
-      then []
-      else
-        let local_edges = elements (direction g n) in
-        visited := n :: !visited;
-        let paths = List.map (fun e -> find_paths' g (selector e)) local_edges in
-        let local_paths = List.map (fun p -> [p]) local_edges in
-        let add_to_path edge path = path @ [edge] in
-        let connect_paths paths edge = List.map (add_to_path edge) paths in
-        let extended_paths =
-          (List.map2 connect_paths paths local_edges) |> List.concat in
-        local_paths @ extended_paths
-    in
-    find_paths' g n
-    |> P_set.of_list
-    |> P_set.elements
+let filter_conns p g =
+  { g with conns = Set.filter ~f:p g.conns }
 
-  (** What are the paths that terminate at the given node? *)
-  let paths_to = find_paths init node_entrances
-  (** What are the paths that initiate at the given node? *)
-  let paths_from = find_paths term node_exits
+let parents g n =
+  List.filter (fun (_, c, _) -> c = n) (conns g)
+  |> List.map (fun (p, _, _) -> p)
 
-  (** Find the set of edges which are eventually connected to a starting node
-      in a particular direction. *)
-  let follow selector direction g n =
-    find_paths selector direction g n
-    |> List.concat
-    |> of_list
+let children g n =
+  List.filter (fun (p, _, _) -> p = n) (conns g)
+  |> List.map (fun (_, c, _) -> c)
 
-  (** Which edges eventually reach the node? *)
-  let reaches = follow init node_entrances
-  (** Which edges eventually are reached from the node? *)
-  let reached_by = follow term node_exits
+let conns_to g n =
+  List.filter (fun (_, c, _) -> c = n) (conns g)
 
+let conns_from g n =
+  List.filter (fun (p, _, _) -> p = n) (conns g)
 
-  (** We define a `bridge` node as being one which only has a single input edge
-      and a single output edge. `simplify` removes bridge nodes by combining
-      the input and output edge using `combine`. *)
-  let merge_bridges (f : (T.edge * T.edge * T.node) -> T.edge option) =
-    let simplify' g =
-      let g' = ref g in
+let entrances g n =
+  List.filter (fun (_, c, _) -> c = n) (conns g)
+  |> List.map (fun (_, _, e) -> e)
 
-      let simp n =
-        let g = !g' in
-        let ps = node_entrances g n in
-        let cs = node_exits g n in
-        if cardinal ps = 1 && cardinal cs = 1
-        then
-          (* When we've found a bridge, we removed both bridge edges and add
-             a new edge which combines the edges of the two removed edges. *)
-          let p = choose ps in
-          let c = choose cs in
+let exits g n =
+  List.filter (fun (p, _, _) -> p = n) (conns g)
+  |> List.map (fun (_, _, e) -> e)
 
-          match f (edge p, edge c, n) with
-          | None -> ()
-          | Some e ->
-            g' := remove p !g';
-            g' := remove c !g';
-            g' := add (init p, term c, e) !g'
-      in
-      g |> nodes |> List.iter simp;
-      !g'
-    in
-    Algorithm.converge (=) simplify'
+let init (p, _, _) = p
+let term (_, c, _) = c
+let edge (_, _, e) = e
 
-(** Two nodes are strictly connected if one has only one outgoing edge which goes
-    to the other and the other has only one incoming edge which comes from the
-    first.
+let pinch f g =
+  let finished = ref false in
+  let pinch' g =
+    let pinchable = List.filter
+        (fun (p, c, _) -> List.length (children g p) = 1 &&
+                          List.length (parents g c) = 1) (conns g)
+                    |> Array.of_list in
+    let changed = ref false in
+    let idx = ref 0 in
+    let g' = ref g in
+    while (not !changed && !idx < Array.length pinchable) do
+      let (p, c, e) = pinchable.(!idx) in
+      idx := !idx + 1;
+      g' := match f (p, c, e) with
+        | None   -> !g'
+        | Some n -> changed := true;
+          filter_conns (fun conn -> conn <> (p, c, e)) !g'
+          |> map_nodes (fun n' -> if n' = p || n' = c then n else n')
+    done;
+    if not !changed then finished := true;
+    !g'
+  in
+  Algorithm.converge (fun _ _ -> !finished) pinch' g
 
-    It is sometimes useful to be able to combine strictly connected nodes into
-    a single node. The user provides a function which takes in two nodes and the
-    edge and might return the combined node. If the user function combines the
-    nodes, then the original nodes and edge are removed, the new node is added,
-    and other involved edges are rewired to the new node. *)
-  let merge_strictly_connected (f : t -> T.node option) =
-    let merge g =
-      let g' = ref g in
-      let simp (ce : t) =
-        let up = node_entrances !g' (term ce) in
-        let down = node_exits !g' (init ce) in
+let splice f g =
+  let finished = ref false in
+  let splice' g =
+    let spliceable = List.filter
+        (fun n -> List.length (parents g n) = 1 &&
+                  List.length (children g n) = 1) (nodes g)
+                     |> Array.of_list in
+    let changed = ref false in
+    let idx = ref 0 in
+    let g' = ref g in
+    while (not !changed && !idx < Array.length spliceable) do
+      let n = spliceable.(!idx) in
+      let (p, _, e1) = List.hd (conns_to g n) in
+      let (_, c, e2) = List.hd (conns_from g n) in
+      idx := !idx + 1;
+      g' := match f (e1, n, e2) with
+        | None   -> !g'
+        | Some e -> changed := true;
+          filter_nodes (fun n' -> n' <> n) !g'
+          |> add_conn (p, c, e)
+    done;
+    if not !changed then finished := true;
+    !g'
+  in
+  Algorithm.converge (fun _ _ -> !finished) splice' g
 
-        if cardinal down = 1 && cardinal up = 1
-        then match f ce with
-          | Some n ->
-            let incoming = node_entrances !g' (init ce) in
-            let outgoing = node_exits !g' (term ce) in
-            g' := remove ce !g';
-            iter (fun ce ->
-                g' := remove ce !g';
-                g' := add (init ce, n, edge ce) !g'
-              ) incoming;
-            iter (fun ce ->
-                g' := remove ce !g';
-                g' := add (n, term ce, edge ce) !g'
-              ) outgoing
-          | None -> ()
-      in
-      g |> elements |> List.iter simp;
-      !g'
-    in
-    Algorithm.converge (=) merge
+(** Recursively find all walks from a particular node. The direction of search
+    is determined by `selector` and `direction`. Note that each node can only
+    be visited exactly once. *)
+let find_walks selector direction g n =
+  let visited = ref [] in
+  let rec find_walks' g n =
+    if List.mem n !visited
+    then []
+    else
+      let local_edges = direction g n in
+      visited := n :: !visited;
+      let walks = List.map (fun e -> find_walks' g (selector e)) local_edges in
+      let local_walks = List.map (fun p -> [p]) local_edges in
+      let add_to_path edge path = path @ [edge] in
+      let connect_walks walks edge = List.map (add_to_path edge) walks in
+      let extended_walks =
+        (List.map2 connect_walks walks local_edges) |> List.concat in
+      local_walks @ extended_walks
+  in
+  find_walks' g n
+  |> Set.of_list
+  |> Set.elements
 
-  let display sn se g =
-    g |> elements
-    |> List.map (fun (i, t, e) -> String.concat " " [sn i; sn t; se e])
-    |> String.concat "\n"
-end
+(** What are the walks that terminate at the given node? *)
+let walks_to g n = find_walks init conns_to g n
+(** What are the walks that initiate at the given node? *)
+let walks_from g n = find_walks term conns_from g n
+

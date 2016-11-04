@@ -1,3 +1,9 @@
+module G = Graph
+module PG = Program_graph
+module Set = Core.Std.Set.Poly
+
+type lbl = PG.lbl
+
 type sort =
   | Int
   | Bool
@@ -6,31 +12,12 @@ type sort =
 
 type var = string * sort
 
-module V_set = Set_ext.Make(
-  struct type t = var;; let compare = compare end)
-
-type lbl = int
-
 type un_op = Not
 type bi_op =
   | Eq | Ge | Gt | Le | Lt | Impl
   | Add | Div | Mul | Sub | Rem
   | BAnd | BOr | BXor | BShl | BLShr | BAShr
 type many_op = And
-
-type assert_type =
-  | Div0
-  | Null
-  | NegArray
-  | ArrayBound
-  | User
-
-let show_assert_type = function
-  | Div0       -> "Division by 0?"
-  | Null       -> "Null?"
-  | NegArray   -> "Array with negative size?"
-  | ArrayBound -> "Array out of bound?"
-  | User       -> "User specified:"
 
 type expr =
   | Relation of rel
@@ -46,14 +33,8 @@ type expr =
   | True
   | False
   | Any of sort
-and query = lbl * expr * assert_type
+and query = lbl * expr * PG.assert_type
 and rel = lbl * expr list
-
-type instr =
-  | Relate of lbl
-  | Assert of expr * assert_type
-  | Assign of var * expr
-  | Call of expr
 
 let rec inner_sort = function
   | Array s -> s
@@ -87,6 +68,7 @@ let mk_sub e1 e2 = Bi_op (Sub, e1, e2)
 let mk_neg e = match expr_sort e with
   | Int -> mk_sub (Int_lit 0) e
   | Real -> mk_sub (Real_lit 0.0) e
+  | _ -> Int_lit 0
 let mk_not = function
   | Un_op (Not, e) -> e
   | e -> Un_op (Not, e)
@@ -107,19 +89,11 @@ let mk_bxor e1 e2 = Bi_op (BXor, e1, e2)
 let mk_and es =
   let es' = List.filter ((<>) True) es in
   match es' with
+  | [] -> True
   | [e] -> e
   | es -> Many_op (And, es)
 
-let mk_assign v e = Assign (v, e)
-
-module R_set = Set_ext.Make(
-  struct type t = rel;; let compare (l1, _) (l2, _) = compare l1 l2 end)
-
-module Q_set = Set_ext.Make(
-  struct type t = query;; let compare = compare end)
-
-module PG = Graph.Make(
-  struct type node = lbl;; type edge = instr list end)
+let mk_assign v e = (v, e)
 
 (** A common pattern is to recurse over subexpressions to calculate some value.
     `fold_expr` encapsulates this recursion. The user provides a `special_case`
@@ -132,8 +106,6 @@ let rec fold_expr special_case f zero e =
   match special_case e with
   | Some r -> r
   | None -> match e with
-    | Relation (_, es)   -> List.fold_left f zero (List.map ex es)
-    | Query (_, e, _)    -> ex e
     | Un_op (_, e)       -> ex e
     | Bi_op (_, e1, e2)  -> f (ex e1) (ex e2)
     | Many_op (_, es)    -> List.fold_left f zero (List.map ex es)
@@ -141,63 +113,46 @@ let rec fold_expr special_case f zero e =
     | ArrStore (a, i, e) -> List.fold_left f zero [ex a; ex i; ex e]
     | _                  -> zero
 
-(** Find the queries in an expression *)
-let queries =
-  let special_case = function
-    | Query q -> Some (Q_set.singleton q)
-    | _       -> None
-  in fold_expr special_case Q_set.union Q_set.empty
-
-(** Find the relations in an expression *)
-let expr_rels =
-  let special_case = function
-    | Relation r -> Some (R_set.singleton r)
-    | _ -> None
-  in fold_expr special_case R_set.union R_set.empty
-
 (** Find the variables in an expression *)
 let expr_vars =
   let special_case = function
-    | Var v            -> Some (V_set.singleton v)
+    | Var v            -> Some (Set.singleton v)
     | _                -> None
-  in fold_expr special_case V_set.union V_set.empty
+  in fold_expr special_case Set.union Set.empty
 
-let path_uses_before_assigns is =
-  let loop (a_set, u_set) i =
-    (* Add all the variables in the expression to the use set that were not in
-       the assignment set. *)
+let path_uses_before_assigns p =
+  let loop (a_set, u_set) (v, e) =
+    (* Add the variables in e to the use set if they were not in the assignment set. *)
     let augment e =
-      V_set.union
-        (V_set.diff (expr_vars e) a_set)
+      Set.union
+        (Set.diff (expr_vars e) a_set)
         u_set in
 
-    match i with
-    | Assign (v, e) -> (V_set.add v a_set, augment e)
-    | Assert (e, _) -> (a_set, augment e)
-    | Call e        -> (a_set, augment e)
-    | Relate _      -> (a_set, u_set)
+    (Set.add a_set v, augment e)
   in
-  snd (List.fold_left loop (V_set.empty, V_set.empty) is)
 
-let path_assigns =
-  V_set.unions_map (function
-      | Assign (v, _) -> V_set.singleton v
-      | _ -> V_set.empty)
+  match p with
+  | PG.Relate -> Set.empty
+  | PG.Assert (e, _) -> expr_vars e
+  | PG.Body (e, assigns) ->
+    Set.union
+      (expr_vars e)
+      (snd (List.fold_left loop (Set.empty, Set.empty) assigns))
 
+let path_assigns = function
+  | PG.Relate | PG.Assert _ -> Set.empty
+  | PG.Body (e, assigns) -> List.map fst assigns |> Set.of_list
 
-let connect_path path =
-  path
-  |> List.map PG.edge
-  |> List.fold_left (@) []
+let nested_map f xs =
+  List.map (List.map f) xs
 
 let critical_vars p lbl =
-  let coming = PG.paths_to p lbl |> List.map connect_path in
-  let going = PG.paths_from p lbl |> List.map connect_path in
+  let coming = G.walks_to p lbl |> nested_map G.edge in
+  let going = G.walks_from p lbl |> nested_map G.edge in
 
-  V_set.add ("ID", Int)
-    (if List.length going = 0 then
-       (List.map path_assigns coming |> V_set.unions)
-     else
-       V_set.inter
-         (List.map path_assigns coming |> V_set.unions)
-         (List.map path_uses_before_assigns going |> V_set.unions))
+  if List.length going = 0 then
+    (nested_map path_assigns coming |> List.concat |> Set.union_list)
+  else
+    Set.inter
+      (nested_map path_assigns coming |> List.concat |> Set.union_list)
+      (nested_map path_uses_before_assigns going |> List.concat|> Set.union_list)
