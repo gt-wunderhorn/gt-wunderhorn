@@ -1,52 +1,48 @@
 module JP = Sawja_pack.JProgram
 module JB = Javalib_pack.JBasics
 
-module I = Ir
-module J_to_i = Jbir_to_ir
-module I_to_g = Ir_to_graph
-module L = Lang
-module LS = Lang_state
-module G = Graph
-module PG = Program_graph
-
-let make_graph classpath cms =
-  let proc_id = ref (0) in
-  let cn = fst (JB.cms_split cms) in
-  let parse = Parse.parse proc_id classpath cn in
-  Jbir_to_ir.mk_proc parse cms
-
-  |> Ir_to_graph.procedure
-  |> G.splice (fun (e1, n, e2) -> match (e1, e2) with
-      | (PG.Body (p, as1), PG.Body (L.True, as2)) ->
-        Some (PG.Body (p, as1 @ as2))
-      | _ -> None)
-  |> G.pinch
-    (fun (i, t, e) -> match e with
-       | PG.Body (_, []) -> Some t
-       | _ -> None)
-
 let inspect classpath class_name =
   let cn  = JB.make_cn class_name in
   let cms = JB.make_cms cn JP.main_signature in
-  let graph = make_graph classpath cms in
+  let proc_id = ref (0) in
+  let parse = Parse.parse proc_id classpath cn in
 
-  graph
-  |> Simplify.remove_useless_nodes
+  (* Create an IR procedure representing the entire program starting
+     from the entrypoint. *)
+  Jbir_to_ir.mk_proc parse cms
+
+  (* The IR procedure can be converted into a graph which shows the control
+     flow of the program. The edges of the graph are lists of instructions and
+     the nodes are program locations.*)
+  |> Ir_to_graph.procedure
+
+  (* Perform some graph simplifications to reduce the number of edges. *)
+  |> Simplify.concatenate_consecutive_paths
+  |> Simplify.remove_empty_paths
+  |> Simplify.remove_non_asserting_nodes
+
+  (* Annotate each program node with the variables relevant across that node's
+     program location. *)
   |> Variable_analysis.annotate_nodes
+
+  (* Transform the graph by:
+     1) Changing each edge by converting a list of instructions into a single
+        conjunction.
+     2) Aliasing all appropriate variables in the nodes. *)
   |> Path_to_expr.translate
-  |> G.pinch (fun (i, t, e) -> match e with
-      | PG.Body L.True -> Some t
-      | _ -> None)
-  |> Collapse_expr_graph.collapse
-  |> G.map_edges Simplify.remove_simple_assignments
+
+  (* Remove any trivial edges (those which are simply `True`). *)
+  |> Simplify.remove_empty_exprs
+
+  (* Transform the edges from conjunctions to horn clauses by bringing the
+     pre and post conditions in from the nodes. *)
+  |> Expr_to_clauses.translate
+
+  (* Simplify certain clauses by substituting simple equality statements. *)
+  |> Simplify.remove_simple_equalities
+
+  (* Translate the horn clauses to z3 expressions and run them. *)
   |> Run_clauses.run
-(* |> G.edges *)
-(* |> fun es -> LS.setup es in *)
-
-(* Print_clauses.print exprs |> Printf.printf "%s\n%!"; *)
-
-(* Printf.eprintf "invoking z3\n%!"; *)
-(* () *)
 
 let _ =
   if (Array.length Sys.argv < 3)
