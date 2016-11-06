@@ -18,7 +18,7 @@ let make_graph classpath cms =
   |> Ir_to_graph.procedure
   |> G.splice (fun (e1, n, e2) -> match (e1, e2) with
       | (PG.Body (p, as1), PG.Body (L.True, as2)) ->
-         Some (PG.Body (p, as1 @ as2))
+        Some (PG.Body (p, as1 @ as2))
       | _ -> None)
   |> G.pinch
     (fun (i, t, e) -> match e with
@@ -30,7 +30,7 @@ let inspect classpath class_name =
   let cms = JB.make_cms cn JP.main_signature in
   let graph = make_graph classpath cms in
 
-  let exprs = graph
+  graph
   |> Simplify.remove_useless_nodes
   |> Variable_analysis.annotate_nodes
   |> Path_to_expr.translate
@@ -39,14 +39,14 @@ let inspect classpath class_name =
       | _ -> None)
   |> Collapse_expr_graph.collapse
   |> G.map_edges Simplify.remove_simple_assignments
-  |> G.edges
-  |> fun es -> LS.setup es in
+  |> Run_clauses.run
+(* |> G.edges *)
+(* |> fun es -> LS.setup es in *)
 
-  (* Print_clauses.print exprs |> Printf.printf "%s\n%!"; *)
+(* Print_clauses.print exprs |> Printf.printf "%s\n%!"; *)
 
-  Printf.eprintf "invoking z3\n%!";
-  Run_clauses.run exprs;
-  ()
+(* Printf.eprintf "invoking z3\n%!"; *)
+(* () *)
 
 let _ =
   if (Array.length Sys.argv < 3)

@@ -22,14 +22,23 @@ let of_conns conns =
 
 let singleton conn = of_conns [conn]
 
+let id x = x
+
 let map nf ef g =
   let conn (n1, n2, e) = (nf n1, nf n2, ef e) in
   Set.map ~f:conn g
-
-let id x = x
 let map_nodes nf g = map nf id g
 let map_edges ef g = map id ef g
 let map_conns f g = Set.map ~f:f g
+
+let iter nf ef g =
+  let conn (n1, n2, e) =
+    nf n1; nf n2; ef e in
+  Set.iter ~f:conn g
+let iter_nodes nf g = iter nf id g
+let iter_edges ef g = iter id ef g
+let iter_conns f g = Set.iter ~f:f g
+
 
 let union = Set.union
 
