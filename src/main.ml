@@ -1,6 +1,11 @@
 module JP = Sawja_pack.JProgram
 module JB = Javalib_pack.JBasics
 
+let print_graph g =
+  g |> Graph.edges
+  |> Print_clauses.print
+  |> Printf.printf "%s\n"
+
 let inspect classpath class_name =
   let cn  = JB.make_cn class_name in
   let cms = JB.make_cms cn JP.main_signature in
@@ -42,7 +47,8 @@ let inspect classpath class_name =
   |> Simplify.remove_simple_equalities
 
   (* Translate the horn clauses to z3 expressions and run them. *)
-  |> Run_clauses.run
+  |> print_graph
+  (* |> Run_clauses.run *)
 
 let _ =
   if (Array.length Sys.argv < 3)

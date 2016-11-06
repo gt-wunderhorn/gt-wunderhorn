@@ -3,6 +3,21 @@ module G = Graph
 module PG = Program_graph
 module LS = Lang_state
 
+let update_arr arr idx e =
+  let store = L.ArrStore (L.Var arr, idx, e) in
+  L.mk_assign arr store
+
+(** Building a new object has a few steps.
+    1. If the global identity counter does not exist yet, it is created.
+    2. If the counter already existed, it is incremented from its previous value.
+    3. The object's variable is assigned the value of the counter.
+    4. The type of the new object is stored in the global class array. *)
+let build_object v ct =
+  [ L.mk_assign LS.id (L.mk_add (L.Var LS.id) (L.Int_lit 1))
+  ; L.mk_assign v (L.Var LS.id)
+  ; update_arr LS.class_array (L.Var v) ct
+  ]
+
 (** To inspect the type of an object, the global class array is accessed
     and the contents under the object are compared to the expected value. *)
 let check_type obj t =
@@ -43,15 +58,15 @@ let rec instr special (this, next, i) =
       ]
   in
 
-  let base = function
+  let base (this, next, i) = match i with
     | Ir.Assign (v, e)          -> linear [L.mk_assign v e]
-    | Ir.ArrAssign (arr, v, e)  -> linear [LS.update_arr arr v e]
+    | Ir.ArrAssign (arr, v, e)  -> linear [update_arr arr v e]
     | Ir.Invoke (p, v, args)    -> call L.True [] p v args
     | Ir.Return (d, v, e)       -> unconditional this d [(v, e)]
     | Ir.Goto d                 -> jump d
-    | Ir.New (p, v, ct, es)     -> call L.True (LS.build_object v ct) p v (L.Var v :: es)
+    | Ir.New (p, v, ct, es)     -> call L.True (build_object v ct) p v (L.Var v :: es)
     | Ir.NewArray (v, ct, es)   ->
-      linear (LS.build_object v ct @ [LS.update_arr LS.array_length (L.Var v) (List.hd es)])
+      linear (build_object v ct @ [update_arr LS.array_length (L.Var v) (List.hd es)])
 
     (** An if statement generates a graph with two edges diverging from one
         starting node. One edge proceeds to the target destination if the
@@ -76,7 +91,7 @@ let rec instr special (this, next, i) =
         (G.singleton (this, -1, PG.Assert (e, at)))
         (unconditional this next [])
   in
-  Special.specialize base special i
+  Special.specialize base special (this, next, i)
 
 and procedure special proc =
   List.map (instr special) proc.Ir.content
