@@ -8,9 +8,12 @@ module LS = Lang_state
 let check_type obj t =
   L.mk_eq (L.ArrSelect (L.Var LS.class_array, obj)) t
 
-let rec instr (this, next, i) =
+let rec instr special (this, next, i) =
+  let conditional here there pred assigns =
+    G.singleton (here, there, PG.Body (pred, assigns)) in
+
   let unconditional here there assigns =
-    G.singleton (here, there, PG.Body (L.True, assigns)) in
+    conditional here there L.True assigns in
 
   (** Many instruction types simply proceed to the next program location with
       some instructions on the edge. *)
@@ -30,52 +33,51 @@ let rec instr (this, next, i) =
   let call pred assigns proc v args =
     let assignments = List.map2 L.mk_assign proc.Ir.params args in
     let pc = (proc.Ir.id, L.Int) in
+    let entr = proc.Ir.entrance in
+    let exit = proc.Ir.exit in
 
-    G.union
-      (G.of_conns
-         [ (this, proc.Ir.entrance,
-            PG.Body (pred, (pc, L.Int_lit this) :: assigns @ assignments))
-         ; (proc.Ir.exit, next,
-            PG.Body (L.mk_eq (L.Var pc) (L.Int_lit this), [(v, (L.Var proc.Ir.return))]))
-         ])
-      (procedure proc)
+    G.unions
+      [ conditional this entr pred ((pc, L.Int_lit this) :: assigns @ assignments)
+      ; conditional exit next (L.mk_eq (L.Var pc) (L.Int_lit this)) [(v, (L.Var proc.Ir.return))]
+      ; procedure special proc
+      ]
   in
 
-  match i with
-  | Ir.Assign (v, e)          -> linear [L.mk_assign v e]
-  | Ir.ArrAssign (arr, v, e)  -> linear [LS.update_arr arr v e]
-  | Ir.New (p, v, ct, es)     -> call L.True (LS.build_object v ct) p v (L.Var v :: es)
-  | Ir.NewArray (v, ct, es)   ->
-    linear (
-      LS.build_object v ct @
-      [LS.update_arr LS.array_length (L.Var v) (List.hd es)])
-  | Ir.Invoke (p, v, args)    -> call L.True [] p v args
-  | Ir.Return (d, v, e)       -> unconditional this d [(v, e)]
-  | Ir.Goto d                 -> jump d
+  let base = function
+    | Ir.Assign (v, e)          -> linear [L.mk_assign v e]
+    | Ir.ArrAssign (arr, v, e)  -> linear [LS.update_arr arr v e]
+    | Ir.Invoke (p, v, args)    -> call L.True [] p v args
+    | Ir.Return (d, v, e)       -> unconditional this d [(v, e)]
+    | Ir.Goto d                 -> jump d
+    | Ir.New (p, v, ct, es)     -> call L.True (LS.build_object v ct) p v (L.Var v :: es)
+    | Ir.NewArray (v, ct, es)   ->
+      linear (LS.build_object v ct @ [LS.update_arr LS.array_length (L.Var v) (List.hd es)])
 
-  (** An if statement generates a graph with two edges diverging from one
-      starting node. One edge proceeds to the target destination if the
-      condition is true. The other proceeds to the next location if the
-      condition is false *)
-  | Ir.If (cmp, x, y, dest) ->
-    G.of_conns
-      [ (this, dest, PG.Body (cmp x y, []))
-      ; (this, next, PG.Body (L.mk_not (cmp x y), []))
-      ]
+    (** An if statement generates a graph with two edges diverging from one
+        starting node. One edge proceeds to the target destination if the
+        condition is true. The other proceeds to the next location if the
+        condition is false *)
+    | Ir.If (cmp, x, y, dest) ->
+      G.of_conns
+        [ (this, dest, PG.Body (cmp x y, []))
+        ; (this, next, PG.Body (L.mk_not (cmp x y), []))
+        ]
 
-  (** A dynamic dispatch generates a graph with many edges diverging from
-      one node. Each divergent edge is predicated by a check to see which
-      version of the dispatch should be used. *)
-  | Ir.Dispatch (obj, ps, v, args) ->
-    let call_meth (t, proc) =
-      call (check_type obj t) [] proc v (obj :: args) in
-    G.unions_map call_meth ps
+    (** A dynamic dispatch generates a graph with many edges diverging from
+        one node. Each divergent edge is predicated by a check to see which
+        version of the dispatch should be used. *)
+    | Ir.Dispatch (obj, ps, v, args) ->
+      let call_meth (t, proc) =
+        call (check_type obj t) [] proc v (obj :: args) in
+      G.unions_map call_meth ps
 
-  | Ir.Assert (e, at) ->
-    G.union
-      (G.singleton (this, -1, PG.Assert (e, at)))
-      (unconditional this next [])
+    | Ir.Assert (e, at) ->
+      G.union
+        (G.singleton (this, -1, PG.Assert (e, at)))
+        (unconditional this next [])
+  in
+  Special.specialize base special i
 
-and procedure proc =
-  List.map instr proc.Ir.content
+and procedure special proc =
+  List.map (instr special) proc.Ir.content
   |> G.unions

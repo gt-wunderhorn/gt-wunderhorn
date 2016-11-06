@@ -26,15 +26,3 @@ and ir =
   | Dispatch    of L.expr * (class_type * proc) list * L.var * L.expr list
   | Assert      of L.expr * PG.assert_type
 and instr = PG.lbl * PG.lbl * ir
-
-let ir_exprs = function
-  | Assign (_, e)          -> [e]
-  | ArrAssign (_, i, e)    -> [i; e]
-  | Goto _                 -> []
-  | If (_, e1, e2, _)      -> [e1; e2]
-  | Return (_, _, e)       -> [e]
-  | New (_, _, _, es)      -> es
-  | NewArray (_, _, es)    -> es
-  | Invoke (_, _, es)      -> es
-  | Dispatch (o, _, _, es) -> o :: es
-  | Assert _               -> []

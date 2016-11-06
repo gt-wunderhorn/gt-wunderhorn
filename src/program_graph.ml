@@ -19,10 +19,3 @@ let show_assert_type = function
 type ('a, 'b) path =
   | Assert of 'a * assert_type
   | Body of 'b
-
-let map_body f g =
-  let f_edge = function
-    | Assert (a, t) -> Assert (a, t)
-    | Body b -> Body (f b)
-  in
-  G.map_edges f_edge g

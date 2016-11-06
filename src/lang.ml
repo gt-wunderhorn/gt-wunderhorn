@@ -4,11 +4,7 @@ module S = Core.Std.Set.Poly
 
 type lbl = PG.lbl
 
-type sort =
-  | Int
-  | Bool
-  | Real
-  | Array of sort
+type sort = Int | Bool | Real | Array of sort
 
 type var = string * sort
 
@@ -64,11 +60,6 @@ and bi_op_sort op e1 e2 = match op with
 and many_op_sort = function
   | And -> Bool
 
-let mk_sub e1 e2 = Bi_op (Sub, e1, e2)
-let mk_neg e = match expr_sort e with
-  | Int -> mk_sub (Int_lit 0) e
-  | Real -> mk_sub (Real_lit 0.0) e
-  | _ -> Int_lit 0
 let mk_not = function
   | Un_op (Not, e) -> e
   | e -> Un_op (Not, e)
@@ -76,9 +67,22 @@ let mk_impl e1 e2 = Bi_op (Impl, e1, e2)
 let mk_eq e1 e2 = Bi_op (Eq, e1, e2)
 let mk_lt e1 e2 = Bi_op (Lt, e1, e2)
 let mk_ge e1 e2 = Bi_op (Ge, e1, e2)
-let mk_add e1 e2 = Bi_op (Add, e1, e2)
-let mk_div e1 e2 = Bi_op (Div, e1, e2)
-let mk_mul e1 e2 = Bi_op (Mul, e1, e2)
+
+let simplifying_biop fi fr op e1 e2 = match (e1, e2) with
+  | (Int_lit x, Int_lit y)   -> Int_lit (fi x y)
+  | (Real_lit x, Real_lit y) -> Real_lit (fr x y)
+  | _ -> Bi_op (op, e1, e2)
+
+let mk_add = simplifying_biop ( + ) ( +. ) Add
+let mk_mul = simplifying_biop ( * ) ( *. ) Mul
+let mk_sub = simplifying_biop ( - ) ( -. ) Sub
+let mk_div = simplifying_biop ( / ) ( /. ) Div
+
+let mk_neg e = match expr_sort e with
+  | Int -> mk_sub (Int_lit 0) e
+  | Real -> mk_sub (Real_lit 0.0) e
+  | _ -> Int_lit 0
+
 let mk_rem e1 e2 = Bi_op (Rem, e1, e2)
 let mk_bshl e1 e2 = Bi_op (BShl, e1, e2)
 let mk_blshr e1 e2 = Bi_op (BLShr, e1, e2)
@@ -101,11 +105,9 @@ let mk_assign v e = (v, e)
     `special_case` returns `None`, fold_expr recursively applies to the
     subexpressions and combines the results using `f`. If there are no
     subexpressions, then returns `zero`. *)
-let rec fold_expr special_case f zero e =
-  let ex = fold_expr special_case f zero in
-  match special_case e with
-  | Some r -> r
-  | None -> match e with
+let rec fold_expr special f zero e =
+  let ex = fold_expr special f zero in
+  let base = function
     | Relation (_, es)   -> List.fold_left f zero (List.map ex es)
     | Query (_, e, _)    -> ex e
     | Un_op (_, e)       -> ex e
@@ -114,6 +116,8 @@ let rec fold_expr special_case f zero e =
     | ArrSelect (a, i)   -> f (ex a) (ex i)
     | ArrStore (a, i, e) -> List.fold_left f zero [ex a; ex i; ex e]
     | _                  -> zero
+  in
+  Special.specialize base special e
 
 (** Find the variables in an expression *)
 let expr_vars =

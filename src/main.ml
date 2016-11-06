@@ -14,7 +14,7 @@ let inspect classpath class_name =
   (* The IR procedure can be converted into a graph which shows the control
      flow of the program. The edges of the graph are lists of instructions and
      the nodes are program locations.*)
-  |> Ir_to_graph.procedure
+  |> Ir_to_graph.procedure Special.no_special
 
   (* Perform some graph simplifications to reduce the number of edges. *)
   |> Simplify.concatenate_consecutive_paths
