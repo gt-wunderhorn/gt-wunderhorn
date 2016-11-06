@@ -1,5 +1,5 @@
 module G = Graph
-module L = Lang
+module E = Expr
 module LS = Lang_state
 module PG = Program_graph
 module Set = Core.Std.Set.Poly
@@ -9,17 +9,17 @@ let path_uses_before_assigns p =
     (* Add the variables in e to the use set if they were not in the assignment set. *)
     let augment e =
       Set.union
-        (Set.diff (L.expr_vars e) a_set)
+        (Set.diff (E.vars e) a_set)
         u_set in
 
     (Set.add a_set v, augment e)
   in
 
   match p with
-  | PG.Assert (e, _) -> L.expr_vars e
+  | PG.Assert (e, _) -> E.vars e
   | PG.Body (e, assigns) ->
     Set.union
-      (L.expr_vars e)
+      (E.vars e)
       (snd (List.fold_left loop (Set.empty, Set.empty) assigns))
 
 let path_assigns = function

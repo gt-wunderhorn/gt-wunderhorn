@@ -1,4 +1,3 @@
-module L = Lang
 module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
 

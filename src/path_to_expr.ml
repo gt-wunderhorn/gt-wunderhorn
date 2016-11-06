@@ -1,10 +1,10 @@
-module L = Lang
+module E = Expr
 module G = Graph
 module PG = Program_graph
 
 module Alias_table = Count_table.Make(
   struct
-    type t = L.var
+    type t = E.var
     let compare = compare
   end)
 
@@ -13,12 +13,12 @@ let lookup table (name, sort) =
 
 let substitute table =
   let rec su = function
-    | L.Var v              -> L.Var (lookup table v)
-    | L.Un_op (o, e)       -> L.Un_op (o, su e)
-    | L.Bi_op (o, e1, e2)  -> L.Bi_op (o, su e1, su e2)
-    | L.Many_op (o, es)    -> L.Many_op (o, List.map su es)
-    | L.ArrSelect (a, i)   -> L.ArrSelect (su a, su i)
-    | L.ArrStore (a, i, e) -> L.ArrStore (su a, su i, su e)
+    | E.Var v              -> E.Var (lookup table v)
+    | E.Un_op (o, e)       -> E.Un_op (o, su e)
+    | E.Bi_op (o, e1, e2)  -> E.Bi_op (o, su e1, su e2)
+    | E.Many_op (o, es)    -> E.Many_op (o, List.map su es)
+    | E.ArrSelect (a, i)   -> E.ArrSelect (su a, su i)
+    | E.ArrStore (a, i, e) -> E.ArrStore (su a, su i, su e)
     | e                    -> e
   in su
 
@@ -32,11 +32,11 @@ let translate_conn ((lbl1, vs1), (lbl2, vs2), edge) =
     (* Calculating the rhs needs to occur before incrementing the variable *)
     let rhs = substitute e in
     Alias_table.increment table v;
-    L.Bi_op (L.Eq, L.Var (lookup table v), rhs) in
+    E.Bi_op (E.Eq, E.Var (lookup table v), rhs) in
 
   let convert_assignments (e, vs) =
     let e' = substitute e in
-    L.mk_and (e' :: List.map assign_to_expr vs) in
+    E.mk_and (e' :: List.map assign_to_expr vs) in
 
   let edge' = match edge with
     | PG.Assert (e, at) -> PG.Assert (substitute e, at)
@@ -47,5 +47,5 @@ let translate_conn ((lbl1, vs1), (lbl2, vs2), edge) =
 
   ((lbl1, vs1'), (lbl2, vs2'), edge')
 
-let translate g : (L.lbl * L.var list, ((L.expr, L.expr) PG.path)) G.t
+let translate g : (PG.lbl * E.var list, ((E.t, E.t) PG.path)) G.t
   = G.map_conns translate_conn g

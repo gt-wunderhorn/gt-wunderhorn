@@ -1,28 +1,28 @@
-module L = Lang
+module E = Expr
 module PG = Program_graph
 
-type class_type = L.expr
+type class_type = E.t
 type field_name = string
 
-type comp = L.expr -> L.expr -> L.expr
+type comp = E.t -> E.t -> E.t
 
 type proc =
   { id       : string
   ; entrance : PG.lbl
   ; exit     : PG.lbl
-  ; params   : L.var list
-  ; return   : L.var
+  ; params   : E.var list
+  ; return   : E.var
   ; content  : instr list
   }
 and ir =
-  | Assign      of L.var * L.expr
-  | ArrAssign   of L.var * L.expr * L.expr
+  | Assign      of E.var * E.t
+  | ArrAssign   of E.var * E.t * E.t
   | Goto        of PG.lbl
-  | If          of comp * L.expr * L.expr * PG.lbl
-  | Return      of PG.lbl * L.var * L.expr
-  | New         of proc * L.var * class_type * L.expr list
-  | NewArray    of L.var * class_type * L.expr list
-  | Invoke      of proc * L.var * L.expr list
-  | Dispatch    of L.expr * (class_type * proc) list * L.var * L.expr list
-  | Assert      of L.expr * PG.assert_type
+  | If          of comp * E.t * E.t * PG.lbl
+  | Return      of PG.lbl * E.var * E.t
+  | New         of proc * E.var * class_type * E.t list
+  | NewArray    of E.var * class_type * E.t list
+  | Invoke      of proc * E.var * E.t list
+  | Dispatch    of E.t * (class_type * proc) list * E.var * E.t list
+  | Assert      of E.t * PG.assert_type
 and instr = PG.lbl * PG.lbl * ir

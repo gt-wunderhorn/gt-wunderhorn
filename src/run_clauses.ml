@@ -2,7 +2,6 @@ module P = Z3.Params
 module S = Z3.Symbol
 module FP = Z3.Fixedpoint
 
-module L = Lang
 module G = Graph
 module PG = Program_graph
 module Set = Core.Std.Set.Poly
@@ -14,10 +13,10 @@ let query fp (q, at) =
   | _ -> Printf.printf "unknown\n"
 
 let run graph =
-  let module LZ = Lang_to_z3 in
+  let module CZ = Clauses_to_z3 in
 
-  let z3_state = LZ.translate graph in
-  let c = z3_state.LZ.context in
+  let z3_state = CZ.translate graph in
+  let c = z3_state.CZ.context in
 
   let fp = FP.mk_fixedpoint c in
   let r  = P.mk_params c in
@@ -25,6 +24,6 @@ let run graph =
   P.add_symbol r (S.mk_string c "fixedpoint.engine") (S.mk_string c "duality");
   FP.set_parameters fp r;
 
-  List.iter (fun v -> FP.register_variable fp v) z3_state.LZ.vars;
-  G.iter_edges (fun clause -> FP.add_rule fp clause None) z3_state.LZ.graph;
-  List.iter (query fp) z3_state.LZ.queries
+  List.iter (fun v -> FP.register_variable fp v) z3_state.CZ.vars;
+  G.iter_edges (fun clause -> FP.add_rule fp clause None) z3_state.CZ.graph;
+  List.iter (query fp) z3_state.CZ.queries

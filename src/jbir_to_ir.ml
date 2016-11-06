@@ -1,69 +1,60 @@
 module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
 module P = Proc
-module L = Lang
+module E = Expr
 module LS = Lang_state
 module PG = Program_graph
 
-let contains s1 s2 =
-  try
-    let len = String.length s2 in
-    for i = 0 to String.length s1 - len do
-      if String.sub s1 i len = s2 then raise Exit
-    done;
-    false
-  with Exit -> true
-
 let const = function
-  | `ANull    -> L.Int_lit 0
-  | `Class _  -> L.Int_lit 0 (* TODO *)
-  | `Double f -> L.Real_lit f
-  | `Float f  -> L.Real_lit f
-  | `Int i    -> L.Int_lit (Int32.to_int i)
-  | `Long i   -> L.Int_lit (Int64.to_int i)
-  | `String s -> L.Int_lit 0 (* TODO *)
+  | `ANull    -> E.Int_lit 0
+  | `Class _  -> E.Int_lit 0 (* TODO *)
+  | `Double f -> E.Real_lit f
+  | `Float f  -> E.Real_lit f
+  | `Int i    -> E.Int_lit (Int32.to_int i)
+  | `Long i   -> E.Int_lit (Int64.to_int i)
+  | `String s -> E.Int_lit 0 (* TODO *)
 
 let rec sort = function
   | JB.TBasic t -> (match t with
-      | `Bool   -> L.Int
-      | `Byte   -> L.Int
-      | `Char   -> L.Int
-      | `Double -> L.Real
-      | `Float  -> L.Real
-      | `Int    -> L.Int
-      | `Long   -> L.Int
-      | `Short  -> L.Int)
-  | JB.TObject t -> L.Int
+      | `Bool   -> E.Int
+      | `Byte   -> E.Int
+      | `Char   -> E.Int
+      | `Double -> E.Real
+      | `Float  -> E.Real
+      | `Int    -> E.Int
+      | `Long   -> E.Int
+      | `Short  -> E.Int)
+  | JB.TObject t -> E.Int
 
 let unop op e = match op with
-  | J.Neg bt        -> L.mk_neg e
+  | J.Neg bt        -> E.mk_neg e
   | J.Conv c        -> e (* TODO *)
-  | J.ArrayLength   -> L.ArrSelect (L.Var LS.array_length, e)
-  | J.InstanceOf ot -> L.True (* TODO *)
+  | J.ArrayLength   -> E.ArrSelect (E.Var LS.array_length, e)
+  | J.InstanceOf ot -> E.True (* TODO *)
   | J.Cast ot       -> e (** TODO ?? *)
 
 let binop op x y = match op with
   | J.ArrayLoad t ->
     let array_array = LS.array_array (sort t) in
-    let inner_select = L.ArrSelect (L.Var array_array, x) in
-    L.ArrSelect (inner_select, y)
-  | J.Add _       -> L.mk_add x y
-  | J.Sub _       -> L.mk_sub x y
-  | J.Mult _      -> L.mk_mul x y
-  | J.Div _       -> L.mk_div x y
-  | J.Rem _       -> L.mk_rem x y
-  | J.IShl        -> L.mk_bshl x y
-  | J.IShr        -> L.mk_bashr x y
-  | J.IAnd        -> L.mk_band x y
-  | J.IOr         -> L.mk_bor x y
-  | J.IXor        -> L.mk_bxor x y
-  | J.IUshr       -> L.mk_blshr x y
-  | J.LShl        -> L.mk_bshl x y
-  | J.LShr        -> L.mk_bashr x y
-  | J.LAnd        -> L.mk_band x y
-  | J.LOr         -> L.mk_bor x y
-  | J.LXor        -> L.mk_bxor x y
-  | J.LUshr       -> L.mk_blshr x y
+    let inner_select = E.ArrSelect (E.Var array_array, x) in
+    E.ArrSelect (inner_select, y)
+  | J.Add _       -> E.mk_add x y
+  | J.Sub _       -> E.mk_sub x y
+  | J.Mult _      -> E.mk_mul x y
+  | J.Div _       -> E.mk_div x y
+  | J.Rem _       -> E.mk_rem x y
+  | J.IShl        -> E.mk_bshl x y
+  | J.IShr        -> E.mk_bashr x y
+  | J.IAnd        -> E.mk_band x y
+  | J.IOr         -> E.mk_bor x y
+  | J.IXor        -> E.mk_bxor x y
+  | J.IUshr       -> E.mk_blshr x y
+  | J.LShl        -> E.mk_bshl x y
+  | J.LShr        -> E.mk_bashr x y
+  | J.LAnd        -> E.mk_band x y
+  | J.LOr         -> E.mk_bor x y
+  | J.LXor        -> E.mk_bxor x y
+  | J.LUshr       -> E.mk_blshr x y
   | J.CMP _       -> assert false (* TODO *)
 
 let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
@@ -84,44 +75,43 @@ module S_map = Map.Make(struct type t = string;; let compare = compare end)
 let lbl_map = ref S_map.empty
 let lbl_count = ref 0
 
-let class_initialized = ref []
-
 let mk_lbl lbl =
   if not (S_map.mem lbl !lbl_map)
   then
     ( lbl_map := S_map.add lbl !lbl_count !lbl_map
     ; lbl_count := !lbl_count + 1
-    )
-  ;
+    );
   S_map.find lbl !lbl_map
 
 let rec expr st = function
   | J.Const c           -> const c
-  | J.Var (t, v)        -> L.Var (rename st v, sort t)
+  | J.Var (t, v)        -> E.Var (rename st v, sort t)
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop (op, e)      -> unop op (expr st e)
   | J.Field (v, cn, fs) ->
-    L.ArrSelect (L.Var
+    E.ArrSelect (E.Var
                    ( field_array_name cn fs
-                   , L.Array (sort (JB.fs_type fs)))
+                   , E.Array (sort (JB.fs_type fs)))
                 , expr st v)
   | J.StaticField (cn, fs) ->
-    L.ArrSelect (L.Var
+    E.ArrSelect (E.Var
                    ( field_array_name cn fs
-                   , L.Array (sort (JB.fs_type fs)))
-                , L.Int_lit (st.parse.Parse.class_id cn))
+                   , E.Array (sort (JB.fs_type fs)))
+                , E.Int_lit (st.parse.Parse.class_id cn))
 
 let rec comp cond x y = match cond with
-  | `Eq -> L.Bi_op (L.Eq, x, y)
-  | `Ge -> L.Bi_op (L.Ge, x, y)
-  | `Gt -> L.Bi_op (L.Gt, x, y)
-  | `Le -> L.Bi_op (L.Le, x, y)
-  | `Lt -> L.Bi_op (L.Lt, x, y)
-  | `Ne -> L.Un_op (L.Not, (L.Bi_op (L.Eq, x, y)))
+  | `Eq -> E.Bi_op (E.Eq, x, y)
+  | `Ge -> E.Bi_op (E.Ge, x, y)
+  | `Gt -> E.Bi_op (E.Gt, x, y)
+  | `Le -> E.Bi_op (E.Le, x, y)
+  | `Lt -> E.Bi_op (E.Lt, x, y)
+  | `Ne -> E.Un_op (E.Not, (E.Bi_op (E.Eq, x, y)))
 
 let ctor_sig cn t =
   let ms = JB.make_ms "<init>" t None in
   JB.make_cms cn ms
+
+let dummy = ("DUMMY", E.Int)
 
 let rec ir_proc parse st =
   let p = st.proc in
@@ -129,7 +119,7 @@ let rec ir_proc parse st =
   ; Ir.entrance = mk_lbl (p.P.id ^ "0")
   ; Ir.exit     = mk_lbl (p.P.id ^ "RET")
   ; Ir.params   = List.map (fun (t, v) -> (rename st v, sort t)) p.P.params
-  ; Ir.return   = (p.P.id ^ "RETVAR", Option.map_default sort L.Int p.P.ret_type)
+  ; Ir.return   = (p.P.id ^ "RETVAR", Option.map_default sort E.Int p.P.ret_type)
   ; Ir.content  = List.mapi (instr parse st) p.P.content
   }
 
@@ -140,118 +130,41 @@ and mk_proc parse cms =
 and instr parse st line i =
   let var v s = (rename st v, s) in
   let expr = expr st in
-  let e_sort e = L.expr_sort (expr e) in
+  let e_sort e = E.sort_of (expr e) in
+  let field cn fs = (field_array_name cn fs, E.Array (sort (JB.fs_type fs))) in
   let id = st.proc.P.id in
   let lbl n = mk_lbl (id ^ string_of_int n) in
 
   let this = lbl line in
   let next = lbl (line+1) in
 
-  let return_var proc =
-    Option.map_default (fun v -> var v (snd proc.Ir.return)) ("DUMMY", L.Int)
+  let return_var v ms =
+    match (v, JB.ms_rtype ms) with
+    | (Some v, Some s) -> var v (sort s)
+    | _ -> dummy
   in
 
-  let is_built_in_class cn =
-    let name = JB.cn_name cn in
-    name = "java.util.Scanner" ||
-    name = "java.util.Properties" ||
-    name = "java.util.Arrays" ||
-    name = "java.util.ArrayList$SubList" ||
-    name = "java.util.Collections$UnmodifiableList" ||
-    name = "java.io.BufferedInputStream" ||
-    name = "java.lang.Boolean" ||
-    name = "java.lang.Integer" ||
-    name = "java.lang.Long" ||
-    name = "java.lang.System" ||
-    name = "java.lang.Object" ||
-    name = "java.lang.Class" ||
-    name = "java.lang.Math" ||
-    name = "sun.misc.VM" ||
-    contains name "String" ||
-    contains name "Error" ||
-    contains name "Exception"
-  in
-
-  let built_in cn ms v args =
-    let built_in_list =
-      [ "hasNextShort"
-      ; "hasNextInt"
-      ; "hasNextLong"
-      ; "hasNextBigInteger"
-      ; "hasNextFloat"
-      ; "hasNextDouble"
-      ; "hasNextBoolean"
-      ; "nextBoolean"
-      ; "nextShort"
-      ; "nextInt"
-      ; "nextLong"
-      ; "nextBigInteger"
-      ; "nextFloat"
-      ; "nextDouble"
-      ; "print"
-      ; "println"
-      ; "close"
-      ; "flush"
-      ; "getClass"
-      ; "getComponentType"
-      ; "desiredAssertionStatus"
-      ; "getPrimitiveClass"
-      ; "getSavedProperty"
-      ; "outOfBoundsMsg"
-      ; "floatToRawIntBits"
-      ; "doubleToRawLongBits"
-      ; "toString"
-      ; "stringSize"
-      ; "getChars"
-      ; "checkForComodification"
-      ; "newArray"
-      ; "hugeCapacity"
-      ; "copyOf"
-      ] in
-    let name = JB.ms_name ms in
-
-    let s = JB.ms_rtype ms in
-
-    let arbitrary t =
-      Some (match v with
-          | Some v ->
-            let v = var v t in
-            Ir.Assign (v, L.Var v)
-          | None -> Ir.Goto next) in
-
-    if name = "ensure"
-    then Some (Ir.Assert (L.mk_eq (List.hd args) (L.Int_lit 1), PG.User))
-
-    else if List.mem name built_in_list
-    then match s with
-      | None -> Some (Ir.Goto next)
-      | Some s -> arbitrary (sort s)
-    else if is_built_in_class cn
-         || contains name "Error"
-         || contains name "Exception"
-    then Some (Ir.Goto next)
-    else if name = "valueOf"
-    then
-      let v' = Option.map_default (fun v -> var v L.Int) ("DUMMY", L.Int) v in
-      Some (Ir.Assign (v', List.hd args))
-    else None
-  in
+  let invoke cn ms v args =
+    match Built_in.call_built_in_method cn ms v args next with
+    | Some i -> i
+    | None ->
+      let proc = mk_proc parse (JB.make_cms cn ms) in
+      Ir.Invoke (proc, v, args) in
 
   let i = match i with
-    | J.AffectVar (v, e) -> Ir.Assign (var v (e_sort e), expr e)
+    | J.AffectVar (v, e) ->
+      Ir.Assign (var v (e_sort e), expr e)
 
     | J.AffectArray (arr, ind, e) ->
       let array_array = LS.array_array (e_sort e) in
-      let sub_array = L.ArrSelect (L.Var array_array, expr arr) in
-      Ir.ArrAssign (array_array, expr arr, L.ArrStore (sub_array, expr ind, expr e))
+      let sub_array = E.ArrSelect (E.Var array_array, expr arr) in
+      Ir.ArrAssign (array_array, expr arr, E.ArrStore (sub_array, expr ind, expr e))
 
     | J.AffectField (v, cn, fs, e) ->
-      let fa = (field_array_name cn fs, L.Array (e_sort e)) in
-      Ir.ArrAssign (fa, expr v, expr e)
+      Ir.ArrAssign (field cn fs, expr v, expr e)
 
     | J.AffectStaticField (cn, fs, e) ->
-      let fa = (field_array_name cn fs, L.Array (e_sort e)) in
-      Ir.ArrAssign (fa, L.Int_lit (parse.Parse.class_id cn), expr e)
+      Ir.ArrAssign (field cn fs, E.Int_lit (parse.Parse.class_id cn), expr e)
 
     | J.Goto l ->
       Ir.Goto (lbl l)
@@ -264,37 +177,39 @@ and instr parse st line i =
           return the first parameter (which handles constructors). *)
       let backup_ret =
         if List.length st.proc.P.params = 0
-        then L.Int_lit 0
-        else L.Var ((fun (t, v) -> (rename st v, sort t)) (List.hd st.proc.P.params))
+        then E.Int_lit 0
+        else E.Var ((fun (t, v) -> (rename st v, sort t)) (List.hd st.proc.P.params))
       in
 
       let e = Option.map_default expr backup_ret e in
-      let v = (id ^ "RETVAR", L.expr_sort e) in
+      let v = (id ^ "RETVAR", E.sort_of e) in
       Ir.Return (mk_lbl (id ^ "RET"), v, e)
 
     | J.New (v, cn, t, es) ->
-      if is_built_in_class cn
+      if Built_in.is_built_in_class cn
       then Ir.Goto next
       else
         let proc = mk_proc parse (ctor_sig cn t) in
-        Ir.New (proc, var v L.Int, L.Int_lit (parse.Parse.class_id cn), List.map expr es)
+        Ir.New (proc, var v E.Int, E.Int_lit (parse.Parse.class_id cn), List.map expr es)
 
     | J.NewArray (v, t, es) ->
-      Ir.NewArray (var v L.Int, L.Int_lit (-1), List.map expr es)
+      Ir.NewArray (var v E.Int, E.Int_lit (-1), List.map expr es)
 
     | J.InvokeStatic (v, cn, ms, args) ->
       let args = List.map expr args in
-      (match built_in cn ms v args with
-       | Some i -> i
-       | None ->
-         let proc = mk_proc parse (JB.make_cms cn ms) in
-         let v = return_var proc v in
-         Ir.Invoke (proc, v, args))
+      let v = return_var v ms in
+      invoke cn ms v args
+
+    | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
+      let args = List.map expr args in
+      let v = return_var v ms in
+      invoke cn ms v (expr obj :: args)
 
     | J.InvokeVirtual (v, obj, ck, ms, args) ->
       let cn = st.proc.P.cl_name in
       let args = List.map expr args in
-      (match built_in cn ms v args with
+      let v = return_var v ms in
+      (match Built_in.call_built_in_method cn ms v args next with
        | Some i -> i
        | None ->
          let lookup =
@@ -305,37 +220,39 @@ and instr parse st line i =
            lookup
            |> List.map
              (fun p ->
-                ((L.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p))) in
-         let v = return_var (snd (List.hd procs)) v in
+                ((E.Int_lit (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p))) in
          Ir.Dispatch (expr obj, procs, v, args))
-
-    | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
-      if (JB.cn_name cn) = "java.lang.Throwable"
-      then Ir.Goto next
-      else
-        let args = List.map expr args in
-
-        (match built_in cn ms v args with
-         | Some i -> i
-         | None ->
-           let proc = mk_proc parse (JB.make_cms cn ms) in
-           let v = return_var proc v in
-           Ir.Invoke (proc, v, (expr obj) :: args))
 
     | J.MayInit cn ->
       let ms = JB.clinit_signature in
       let cms = JB.make_cms cn ms in
 
-      if is_built_in_class cn
-      || List.mem cn !class_initialized
+      if Built_in.is_built_in_class cn
       || not (parse.Parse.has_cms cms)
       then Ir.Goto next
       else
-        ( class_initialized := cn :: !class_initialized;
-          let proc = mk_proc parse cms in
-          let v = ("DUMMY", L.Int) in
-          Ir.Invoke (proc, v, [])
-        )
+        let proc = mk_proc parse cms in
+        let v = dummy in
+        Ir.Invoke (proc, v, [])
+
+    | J.Check c ->
+      (match c with
+       | J.CheckArrayBound (a, i) ->
+         Ir.Assert
+           ( E.mk_lt (expr i) (E.ArrSelect (E.Var (LS.array_length), expr a))
+           , PG.ArrayBound
+           )
+       | J.CheckArithmetic e ->
+         Ir.Assert (E.mk_not (E.mk_eq (expr e) (E.Int_lit 0)) , PG.Div0)
+
+       | J.CheckNegativeArraySize e ->
+         Ir.Assert (E.mk_ge (expr e) (E.Int_lit 0), PG.NegArray)
+
+       | J.CheckNullPointer _
+       | J.CheckArrayStore _
+       | J.CheckCast _
+       | J.CheckLink _
+         -> Ir.Goto next)
 
     | J.MonitorEnter _
     | J.MonitorExit _
@@ -344,26 +261,4 @@ and instr parse st line i =
     | J.Nop
       -> Ir.Goto next
 
-    | J.Check c ->
-      (match c with
-       | J.CheckArrayBound (a, i) ->
-         Ir.Assert
-           ( L.mk_lt (expr i) (L.ArrSelect (L.Var (LS.array_length), expr a))
-           , PG.ArrayBound
-           )
-       | J.CheckArithmetic e ->
-         Ir.Assert (L.mk_not (L.mk_eq (expr e) (L.Int_lit 0)) , PG.Div0)
-
-       | J.CheckNegativeArraySize e ->
-         Ir.Assert (L.mk_ge (expr e) (L.Int_lit 0), PG.NegArray)
-
-       | J.CheckNullPointer _
-       | J.CheckArrayStore _
-       | J.CheckCast _
-       | J.CheckLink _
-         -> Ir.Goto next)
-
   in (this, next, i)
-
-let procedure parse p =
-  List.mapi (instr parse (mk_st parse p)) p.P.content
