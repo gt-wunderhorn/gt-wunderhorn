@@ -66,6 +66,7 @@ let print_expr expr =
     | E.Many_op (op, es)       -> parens (show_many_op op :: List.map ex es)
     | E.ArrStore (arr, idx, e) -> parens ["store"; ex arr; ex idx; ex e]
     | E.ArrSelect (e1, e2)     -> parens ["select"; ex e1; ex e2]
+    | E.FieldSelect (v, e)     -> parens ["select"; ex (E.Var v); ex e]
     | E.Int_lit i              -> string_of_int i
     | E.Real_lit f             -> string_of_float f
     | E.True                   -> "true"

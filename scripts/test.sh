@@ -6,14 +6,14 @@ function run {
   scripts/run_test.sh $1
 }
 
-run ../test/Linked.java
+# run ../test/Linked.java
 # run ../test/MyListTest.java
 # run ../test/ArrayList.java
 # run ../test/Birthday.java
 # run ../test/bit_shift.pass
 # run ../test/bit_shift.fail
-# run ../test/static_field.fail
-# run ../test/static_field.pass
+run ../test/static_field.fail
+run ../test/static_field.pass
 # run ../test/object_identity.pass
 # run ../test/object_identity.fail
 # run ../test/ctor.pass
@@ -38,8 +38,8 @@ run ../test/Linked.java
 # run ../test/div.pass
 # run ../test/div.fail
 # run ../test/non_int_field.fail
-# run ../test/field.pass
-# run ../test/field.fail
+run ../test/field.pass
+run ../test/field.fail
 # run ../test/call.pass
 # run ../test/call.fail
 # run ../test/while.pass

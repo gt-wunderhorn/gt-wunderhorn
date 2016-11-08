@@ -51,6 +51,22 @@ let translate graph =
 
   G.map_conns conn graph
 
+let subst_loads this reads e =
+  let current = ref (-1) in
+
+  match e with
+  (** Record any array selects. They should also be uniquely named. The selection
+      itself should be replaced with a new read destination. *)
+  | E.ArrSelect (e1, e2) ->
+    let suffix = string_of_int this ^ "_" ^ string_of_int !current in
+    let dst = ("rdst" ^ suffix, E.inner_sort (E.sort_of e1)) in
+    let time = ("rtime" ^ suffix, E.Int) in
+
+    current := !current + 1;
+    reads := (Ir.Assign (time, E.ArrSelect (e1, e2)), dst, time) :: !reads;
+    Some (E.Var dst)
+
+  | _ -> None
 
 let derive classpath class_name =
   let ts = ("TS", E.Int) in
@@ -91,7 +107,7 @@ let derive classpath class_name =
     let locs = SS.locations st in
     let rebind_location (loc, field, src, time) =
       (greatest_under loc locs, field, src, time) in
-    { st with writes = List.map rebind_location st.writes } in
+    { st with SS.writes = List.map rebind_location st.SS.writes } in
 
   let writes = ref [] in
 
@@ -104,5 +120,5 @@ let derive classpath class_name =
                 |> mark_datatypes
                 |> translate in
   assoc_writes { graph = graph''
-               ; writes = !writes
+               ; SS.writes = !writes
                }

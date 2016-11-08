@@ -93,6 +93,7 @@ let rec expr special rels vars e =
     | E.Many_op (o, es)        -> (many_op o ctx) (List.map ex es)
     | E.ArrStore (arr, idx, e) -> Ar.mk_store ctx (ex arr) (ex idx) (ex e)
     | E.ArrSelect (e1, e2)     -> Ar.mk_select ctx (ex e1) (ex e2)
+    | E.FieldSelect (v, e)     -> Ar.mk_select ctx (ex (E.Var v)) (ex e)
     | E.Int_lit i              -> I.mk_numeral_i ctx i
     | E.Real_lit f             -> R.mk_numeral_s ctx (string_of_float f)
     | E.True                   -> B.mk_true ctx

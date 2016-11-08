@@ -89,13 +89,11 @@ let rec expr st = function
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop (op, e)      -> unop op (expr st e)
   | J.Field (v, cn, fs) ->
-    E.ArrSelect (E.Var
-                   ( field_array_name cn fs
+    E.FieldSelect ((field_array_name cn fs
                    , E.Array (sort (JB.fs_type fs)))
                 , expr st v)
   | J.StaticField (cn, fs) ->
-    E.ArrSelect (E.Var
-                   ( field_array_name cn fs
+    E.FieldSelect ((field_array_name cn fs
                    , E.Array (sort (JB.fs_type fs)))
                 , E.Int_lit (st.parse.Parse.class_id cn))
 

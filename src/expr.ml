@@ -22,6 +22,7 @@ type t =
   | Many_op of many_op * t list
   | ArrStore of t * t * t
   | ArrSelect of t * t
+  | FieldSelect of var * t
   | Int_lit of int
   | Real_lit of float
   | True
@@ -35,19 +36,20 @@ let rec inner_sort = function
   | s -> s
 
 let rec sort_of = function
-  | Relation r         -> Bool
-  | Query q            -> Bool
-  | Var (name, s)      -> s
-  | Un_op (op, e)      -> un_op_sort op e
-  | Bi_op (op, e1, e2) -> bi_op_sort op e1 e2
-  | Many_op (op, _)    -> many_op_sort op
-  | ArrStore (arr,_,e) -> sort_of arr
-  | ArrSelect (arr,_)  -> inner_sort (sort_of arr)
-  | Int_lit _          -> Int
-  | Real_lit _         -> Real
-  | True               -> Bool
-  | False              -> Bool
-  | Any s              -> s
+  | Relation r             -> Bool
+  | Query q                -> Bool
+  | Var (name, s)          -> s
+  | Un_op (op, e)          -> un_op_sort op e
+  | Bi_op (op, e1, e2)     -> bi_op_sort op e1 e2
+  | Many_op (op, _)        -> many_op_sort op
+  | ArrStore (arr,_,e)     -> sort_of arr
+  | ArrSelect (arr,_)      -> inner_sort (sort_of arr)
+  | FieldSelect ((v, s),_) -> s
+  | Int_lit _              -> Int
+  | Real_lit _             -> Real
+  | True                   -> Bool
+  | False                  -> Bool
+  | Any s                  -> s
 
 and un_op_sort op e = match op with
   | Not -> Bool
@@ -115,16 +117,18 @@ let rec fold special f zero e =
     | Many_op (_, es)    -> List.fold_left f zero (List.map ex es)
     | ArrSelect (a, i)   -> f (ex a) (ex i)
     | ArrStore (a, i, e) -> List.fold_left f zero [ex a; ex i; ex e]
+    | FieldSelect (_, e) -> ex e
     | _                  -> zero
   in
   Special.specialize base special e
 
 (** Find the variables in an expression *)
-let vars =
+let rec vars e =
   let special_case = function
+    | FieldSelect (v, e) -> Some (S.union (S.singleton v) (vars e))
     | Var v -> Some (S.singleton v)
     | _     -> None
-  in fold special_case S.union S.empty
+  in fold special_case S.union S.empty e
 
 (** Find the queries in an expression *)
 let queries =

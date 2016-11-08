@@ -19,6 +19,7 @@ let substitute table =
     | E.Many_op (o, es)    -> E.Many_op (o, List.map su es)
     | E.ArrSelect (a, i)   -> E.ArrSelect (su a, su i)
     | E.ArrStore (a, i, e) -> E.ArrStore (su a, su i, su e)
+    | E.FieldSelect (v, e) -> E.FieldSelect (lookup table v, su e)
     | e                    -> e
   in su
 
