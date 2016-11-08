@@ -1,6 +1,6 @@
 OCB_FLAGS = -tag thread -use-ocamlfind -pkgs $(LIBS) -Is $(DIRS)
 OCB = ocamlbuild $(OCB_FLAGS)
-DIRS = scripts,src,src/utility,unit
+DIRS = scripts,src,src/utility,src/shape,unit
 
 LIBS = sawja,Z3,core
 

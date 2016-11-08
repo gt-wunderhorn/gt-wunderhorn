@@ -1,6 +1,17 @@
 module JP = Sawja_pack.JProgram
 module JB = Javalib_pack.JBasics
 
+let to_clauses g =
+  g
+
+  (* Transform the edges from conjunctions to horn clauses by bringing the
+     pre and post conditions in from the nodes. *)
+  |> Exprs_to_clauses.translate
+
+  (* Simplify certain clauses by substituting simple equality statements. *)
+  |> Simplify.remove_simple_equalities
+
+
 let inspect special_graph_formulation classpath class_name =
   let cn  = JB.make_cn class_name in
   let cms = JB.make_cms cn JP.main_signature in
@@ -34,19 +45,15 @@ let inspect special_graph_formulation classpath class_name =
   (* Remove any trivial edges (those which are simply `True`). *)
   |> Simplify.remove_empty_exprs
 
-  (* Transform the edges from conjunctions to horn clauses by bringing the
-     pre and post conditions in from the nodes. *)
-  |> Exprs_to_clauses.translate
-
-  (* Simplify certain clauses by substituting simple equality statements. *)
-  |> Simplify.remove_simple_equalities
-
 let print classpath class_name =
   inspect Special.no_special classpath class_name
+  |> to_clauses
   |> Graph.edges
   |> Print_clauses.print
   |> Printf.printf "%s\n"
 
 let run classpath class_name =
   inspect Special.no_special classpath class_name
+  |> to_clauses
+  |> Variable_analysis.unannotate_nodes
   |> Run_clauses.run

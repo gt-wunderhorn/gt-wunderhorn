@@ -18,6 +18,6 @@ let translate g =
       E.mk_impl
         (E.mk_and [precondition; e])
         (E.Relation (lbl2, vs2')) in
-    (lbl1, lbl2, edge')
+    ((lbl1, vs1), (lbl2, vs2), edge')
   in
   G.map_conns translate' g

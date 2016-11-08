@@ -44,3 +44,7 @@ let critical_vars g n =
 let annotate_nodes g =
   let ann n = (n, critical_vars g n) in
   G.map_nodes ann g
+
+let unannotate_nodes g =
+  let unann (n, _) = n in
+  G.map_nodes unann g

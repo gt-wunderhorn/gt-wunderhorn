@@ -2,15 +2,6 @@ module JB = Javalib_pack.JBasics
 module E = Expr
 module PG = Program_graph
 
-let contains s1 s2 =
-  try
-    let len = String.length s2 in
-    for i = 0 to String.length s1 - len do
-      if String.sub s1 i len = s2 then raise Exit
-    done;
-    false
-  with Exit -> true
-
 let is_built_in_class cn =
   let name = JB.cn_name cn in
   name = "java.util.Scanner" ||
@@ -28,9 +19,9 @@ let is_built_in_class cn =
   name = "java.lang.Math" ||
   name = "java.lang.Throwable" ||
   name = "sun.misc.VM" ||
-  contains name "String" ||
-  contains name "Error" ||
-  contains name "Exception"
+  String_ext.contains name "String" ||
+  String_ext.contains name "Error" ||
+  String_ext.contains name "Exception"
 
 let call_built_in_method cn ms v args next =
   let built_in_list =

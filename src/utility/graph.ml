@@ -39,7 +39,6 @@ let iter_nodes nf g = iter nf id g
 let iter_edges ef g = iter id ef g
 let iter_conns f g = Set.iter ~f:f g
 
-
 let union = Set.union
 
 let unions g = List.fold_left union empty g
