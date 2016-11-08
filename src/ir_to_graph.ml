@@ -45,7 +45,8 @@ let rec instr special (this, next, i) =
 
   let base (this, next, i) = match i with
     | Ir.Assign (v, e)          -> linear [E.mk_assign v e]
-    | Ir.ArrAssign (arr, v, e)  -> linear [LS.update_arr arr v e]
+    | Ir.ArrAssign (arr, i, e)  -> linear [LS.update_arr arr i e]
+    | Ir.FieldAssign (f, i, e)  -> linear [E.mk_assign f (E.FieldStore (f, i ,e))]
     | Ir.Invoke (p, v, args)    -> call E.True [] p v args
     | Ir.Return (d, v, e)       -> unconditional this d [(v, e)]
     | Ir.Goto d                 -> jump d

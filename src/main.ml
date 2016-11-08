@@ -9,8 +9,8 @@ let _ =
     let class_name = Sys.argv.(2) in
     (* Inspect.print classpath class_name; *)
     Inspect.run classpath class_name;
-    (* let st = Shape.derive classpath class_name in *)
 
+    (* let st = Shape.derive classpath class_name in *)
     (* List.iter (fun loc -> Printf.eprintf "%d\n" (nwrites st loc)) (locations st); *)
     ()
 

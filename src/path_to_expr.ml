@@ -11,17 +11,13 @@ module Alias_table = Count_table.Make(
 let lookup table (name, sort) =
   (name ^ "_" ^ (string_of_int (Alias_table.get table (name, sort))), sort)
 
-let substitute table =
-  let rec su = function
-    | E.Var v              -> E.Var (lookup table v)
-    | E.Un_op (o, e)       -> E.Un_op (o, su e)
-    | E.Bi_op (o, e1, e2)  -> E.Bi_op (o, su e1, su e2)
-    | E.Many_op (o, es)    -> E.Many_op (o, List.map su es)
-    | E.ArrSelect (a, i)   -> E.ArrSelect (su a, su i)
-    | E.ArrStore (a, i, e) -> E.ArrStore (su a, su i, su e)
-    | E.FieldSelect (v, e) -> E.FieldSelect (lookup table v, su e)
-    | e                    -> e
-  in su
+let rec substitute table =
+  let special = function
+    | E.Var v              -> Some (E.Var (lookup table v))
+    | E.FieldSelect (v, e) -> Some (E.FieldSelect (lookup table v, substitute table e))
+    | _ -> None
+  in
+  E.map special
 
 let translate_conn ((lbl1, vs1), (lbl2, vs2), edge) =
   let table = Alias_table.empty () in

@@ -22,6 +22,7 @@ type t =
   | Many_op of many_op * t list
   | ArrStore of t * t * t
   | ArrSelect of t * t
+  | FieldStore of var * t * t
   | FieldSelect of var * t
   | Int_lit of int
   | Real_lit of float
@@ -36,20 +37,21 @@ let rec inner_sort = function
   | s -> s
 
 let rec sort_of = function
-  | Relation r             -> Bool
-  | Query q                -> Bool
-  | Var (name, s)          -> s
-  | Un_op (op, e)          -> un_op_sort op e
-  | Bi_op (op, e1, e2)     -> bi_op_sort op e1 e2
-  | Many_op (op, _)        -> many_op_sort op
-  | ArrStore (arr,_,e)     -> sort_of arr
-  | ArrSelect (arr,_)      -> inner_sort (sort_of arr)
-  | FieldSelect ((v, s),_) -> s
-  | Int_lit _              -> Int
-  | Real_lit _             -> Real
-  | True                   -> Bool
-  | False                  -> Bool
-  | Any s                  -> s
+  | Relation r              -> Bool
+  | Query q                 -> Bool
+  | Var (name, s)           -> s
+  | Un_op (op, e)           -> un_op_sort op e
+  | Bi_op (op, e1, e2)      -> bi_op_sort op e1 e2
+  | Many_op (op, _)         -> many_op_sort op
+  | ArrStore (arr,_,e)      -> sort_of arr
+  | ArrSelect (arr,_)       -> inner_sort (sort_of arr)
+  | FieldStore ((v, s),_,_) -> s
+  | FieldSelect ((v, s),_)  -> inner_sort s
+  | Int_lit _               -> Int
+  | Real_lit _              -> Real
+  | True                    -> Bool
+  | False                   -> Bool
+  | Any s                   -> s
 
 and un_op_sort op e = match op with
   | Not -> Bool
@@ -110,24 +112,42 @@ let mk_assign v e = (v, e)
 let rec fold special f zero e =
   let ex = fold special f zero in
   let base = function
-    | Relation (_, es)   -> List.fold_left f zero (List.map ex es)
-    | Query (_, e, _)    -> ex e
-    | Un_op (_, e)       -> ex e
-    | Bi_op (_, e1, e2)  -> f (ex e1) (ex e2)
-    | Many_op (_, es)    -> List.fold_left f zero (List.map ex es)
-    | ArrSelect (a, i)   -> f (ex a) (ex i)
-    | ArrStore (a, i, e) -> List.fold_left f zero [ex a; ex i; ex e]
-    | FieldSelect (_, e) -> ex e
-    | _                  -> zero
+    | Relation (_, es)     -> List.fold_left f zero (List.map ex es)
+    | Query (_, e, _)      -> ex e
+    | Un_op (_, e)         -> ex e
+    | Bi_op (_, e1, e2)    -> f (ex e1) (ex e2)
+    | Many_op (_, es)      -> List.fold_left f zero (List.map ex es)
+    | ArrStore (a, i, e)   -> List.fold_left f zero [ex a; ex i; ex e]
+    | ArrSelect (a, i)     -> f (ex a) (ex i)
+    | FieldStore (_, i, e) -> f (ex i) (ex e)
+    | FieldSelect (_, e)   -> ex e
+    | _                    -> zero
+  in
+  Special.specialize base special e
+
+let rec map special e =
+  let ex = map special in
+  let base = function
+    | Relation (lbl, es)   -> Relation (lbl, List.map ex es)
+    | Query (lbl, e, at)   -> Query (lbl, ex e, at)
+    | Un_op (op, e)        -> Un_op (op, ex e)
+    | Bi_op (op, e1, e2)   -> Bi_op (op, ex e1, ex e2)
+    | Many_op (op, es)     -> Many_op (op, (List.map ex es))
+    | ArrStore (a, i, e)   -> ArrStore (ex a, ex i, ex e)
+    | ArrSelect (a, i)     -> ArrSelect (ex a, ex i)
+    | FieldStore (f, i, e) -> FieldStore (f, ex i, ex e)
+    | FieldSelect (f, e)   -> FieldSelect (f, ex e)
+    | e                    -> e
   in
   Special.specialize base special e
 
 (** Find the variables in an expression *)
 let rec vars e =
   let special_case = function
-    | FieldSelect (v, e) -> Some (S.union (S.singleton v) (vars e))
-    | Var v -> Some (S.singleton v)
-    | _     -> None
+    | FieldSelect (v, e)   -> Some (S.union (S.singleton v) (vars e))
+    | FieldStore (v, i, e) -> Some (S.union_list [S.singleton v; vars i; vars e])
+    | Var v                -> Some (S.singleton v)
+    | _                    -> None
   in fold special_case S.union S.empty e
 
 (** Find the queries in an expression *)

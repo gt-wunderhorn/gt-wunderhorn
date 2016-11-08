@@ -17,6 +17,7 @@ type proc =
 and ir =
   | Assign      of E.var * E.t
   | ArrAssign   of E.var * E.t * E.t
+  | FieldAssign of E.var * E.t * E.t
   | Goto        of PG.lbl
   | If          of comp * E.t * E.t * PG.lbl
   | Return      of PG.lbl * E.var * E.t

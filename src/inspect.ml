@@ -8,6 +8,9 @@ let to_clauses g =
      pre and post conditions in from the nodes. *)
   |> Exprs_to_clauses.translate
 
+  (* |> Graph.map_edges Shape.modify_field_use *)
+  (* |> Graph.map_edges (fun (_, _, e) -> e) *)
+
   (* Simplify certain clauses by substituting simple equality statements. *)
   |> Simplify.remove_simple_equalities
 

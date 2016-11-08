@@ -57,7 +57,8 @@ let binop op x y = match op with
   | J.LUshr       -> E.mk_blshr x y
   | J.CMP _       -> assert false (* TODO *)
 
-let field_array_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
+let field_name cn fs = JB.cn_name cn ^ "_" ^ JB.fs_name fs
+let field cn fs = (field_name cn fs, E.Array (sort (JB.fs_type fs)))
 
 module Label = Labeller.Make(struct type t = J.var;; let compare = compare end)
 
@@ -89,13 +90,9 @@ let rec expr st = function
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop (op, e)      -> unop op (expr st e)
   | J.Field (v, cn, fs) ->
-    E.FieldSelect ((field_array_name cn fs
-                   , E.Array (sort (JB.fs_type fs)))
-                , expr st v)
+    E.FieldSelect (field cn fs, expr st v)
   | J.StaticField (cn, fs) ->
-    E.FieldSelect ((field_array_name cn fs
-                   , E.Array (sort (JB.fs_type fs)))
-                , E.Int_lit (st.parse.Parse.class_id cn))
+    E.FieldSelect (field cn fs, E.Int_lit (st.parse.Parse.class_id cn))
 
 let rec comp cond x y = match cond with
   | `Eq -> E.Bi_op (E.Eq, x, y)
@@ -129,7 +126,6 @@ and instr parse st line i =
   let var v s = (rename st v, s) in
   let expr = expr st in
   let e_sort e = E.sort_of (expr e) in
-  let field cn fs = (field_array_name cn fs, E.Array (sort (JB.fs_type fs))) in
   let id = st.proc.P.id in
   let lbl n = mk_lbl (id ^ string_of_int n) in
 
@@ -159,7 +155,7 @@ and instr parse st line i =
       Ir.ArrAssign (array_array, expr arr, E.ArrStore (sub_array, expr ind, expr e))
 
     | J.AffectField (v, cn, fs, e) ->
-      Ir.ArrAssign (field cn fs, expr v, expr e)
+      Ir.FieldAssign (field cn fs, expr v, expr e)
 
     | J.AffectStaticField (cn, fs, e) ->
       Ir.ArrAssign (field cn fs, E.Int_lit (parse.Parse.class_id cn), expr e)

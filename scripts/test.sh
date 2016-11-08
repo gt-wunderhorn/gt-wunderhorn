@@ -37,7 +37,7 @@ run ../test/static_field.pass
 # run ../test/float.fail
 # run ../test/div.pass
 # run ../test/div.fail
-# run ../test/non_int_field.fail
+run ../test/non_int_field.fail
 run ../test/field.pass
 run ../test/field.fail
 # run ../test/call.pass
