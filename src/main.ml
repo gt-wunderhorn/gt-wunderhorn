@@ -1,4 +1,5 @@
-open Shape
+open Shape_state
+
 let _ =
   if (Array.length Sys.argv < 3)
   then
