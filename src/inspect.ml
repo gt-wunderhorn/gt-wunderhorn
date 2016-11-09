@@ -11,10 +11,6 @@ let to_clauses graph =
   (* Simplify certain clauses by substituting simple equality statements. *)
   |> Simplify.remove_simple_equalities
 
-  |> Graph.map_edges Field.modify_use
-  |> Graph.map_edges (fun (_, _, e) -> e)
-
-
 let inspect classpath class_name =
   let cn  = JB.make_cn class_name in
   let cms = JB.make_cms cn JP.main_signature in

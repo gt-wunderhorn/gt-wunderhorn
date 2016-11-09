@@ -33,21 +33,15 @@ let mk_datatype s cs =
   (t, List.hd acs)
 
 let mk_enum s es =
-  if es == [] then (B.mk_sort ctx,[]) else
-    (let t = mk_type s (List.map (fun (e) -> mk_ctor e [] []) es) in
-     let cs = DT.get_constructors t in
-     (t, cs))
+    if es == [] then (B.mk_sort ctx,[]) else
+          (let t = mk_type s (List.map (fun (e) -> mk_ctor e [] []) es) in
+                let cs = DT.get_constructors t in
+     (t, List.map (fun (f) -> Z3.Expr.mk_app ctx f []) cs))
 
 let create_datatype lbl vs =
   let const (name, s) = Z3.Expr.mk_const_s ctx name (CZ.sort s) in
   let vs' = List.map const vs in
   mk_datatype ("Data" ^ string_of_int lbl) ["mk-data" ^ string_of_int lbl, vs']
-
-(* let mark_datatypes graph = *)
-(*   let mark_node (lbl, vs) = *)
-(*     let (t, acs) = create_datatype lbl vs in *)
-(*     (lbl, vs, t, acs) in *)
-(*   G.map_nodes mark_node graph *)
 
 let rec has_acsor s t =
   match t with

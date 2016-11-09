@@ -1,4 +1,4 @@
-open Shape_state
+open Ingestion
 
 let _ =
   if (Array.length Sys.argv < 3)
@@ -10,25 +10,27 @@ let _ =
     (* Inspect.print classpath class_name; *)
     (* Inspect.run classpath class_name; *)
 
-    let shapes = Shape.derive classpath class_name in
+    let context = derive classpath class_name in
 
     let line _ = Printf.eprintf "\n" in
 
-    List.iter
-      (fun sh ->
-         Printf.eprintf "label: %d\n" sh.label;
+    List.iteri
+      (fun i bb ->
+         Printf.eprintf "label: %d\n" i;
          Printf.eprintf "predecessors: ";
 
-         List.iter (Printf.eprintf "%d ") sh.predecessors;
+         List.iter (fun bb -> Printf.eprintf "%s " (location_name bb)) (predecessors context bb);
          line ();
 
          Printf.eprintf "reads: ";
-         List.iter (fun r -> Printf.eprintf "%s " r.Field.name) sh.reads;
+
+         (* List.iter (fun r -> Printf.eprintf "%s " r.Field.name) bb.reads; *)
+         (* line (); *)
+
+         (* Printf.eprintf "writes: "; *)
+         (* List.iter (fun r -> Printf.eprintf "%s " r.Field.name) bb.writes; *)
          line ();
 
-         Printf.eprintf "writes: ";
-         List.iter (fun r -> Printf.eprintf "%s " r.Field.name) sh.writes;
          line ();
-
-         line ();
-      ) shapes
+      ) (locations context);
+    Printf.eprintf "%s\n" (location_name (final_location context));

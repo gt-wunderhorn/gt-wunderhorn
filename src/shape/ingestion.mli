@@ -5,8 +5,8 @@ val locations : context -> bb list
 val nil_location : context -> bb
 val initial_location : context -> bb
 val final_location : context -> bb
-val location_name : context -> bb -> string
-val location_eq : context -> bb -> bb -> bool
+val location_name : bb -> string
+val location_eq : bb -> bb -> bool
 
 val predecessors : context -> bb -> bb list
 
@@ -26,6 +26,8 @@ val write_src : context -> bb -> int -> Z3.Expr.expr -> Z3.Expr.expr
 val read_time : context -> bb -> int -> Z3.Expr.expr -> Z3.Expr.expr
 val read_dst : context -> bb -> int -> Z3.Expr.expr -> Z3.Expr.expr
 
-val transition : context -> bb -> bb -> Z3.Expr.expr -> Z3.Expr.expr -> Z3.Expr.expr
+val transition : context -> bb -> Z3.Expr.expr -> Z3.Expr.expr -> Z3.Expr.expr
 
 val assertion : context -> Z3.Expr.expr -> Z3.Expr.expr
+
+val derive : string (* classpath *) -> string (* class name *) -> context
