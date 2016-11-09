@@ -17,7 +17,7 @@ let _ =
     List.iter
       (fun sh ->
          Printf.eprintf "label: %d\n" sh.label;
-         Printf.eprintf "predecesors: ";
+         Printf.eprintf "predecessors: ";
 
          List.iter (Printf.eprintf "%d ") sh.predecessors;
          line ();
@@ -31,7 +31,4 @@ let _ =
          line ();
 
          line ();
-      ) shapes;
-
-    (* List.iter (fun loc -> Printf.eprintf "%d\n" (nwrites st loc)) (locations st); *)
-    ()
+      ) shapes

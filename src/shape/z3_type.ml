@@ -13,8 +13,6 @@ let ctx = CZ.ctx
 let rec constant_list v n =
   if n == 0 then [] else v::(constant_list v (n-1))
 
-type marked_node = PG.lbl * E.var list * Z3.Sort.sort * FD.func_decl list
-
 let mk_ctor s ps ts =
   DT.mk_constructor_s ctx
     s
@@ -45,11 +43,11 @@ let create_datatype lbl vs =
   let vs' = List.map const vs in
   mk_datatype ("Data" ^ string_of_int lbl) ["mk-data" ^ string_of_int lbl, vs']
 
-let mark_datatypes graph =
-  let mark_node (lbl, vs) =
-    let (t, acs) = create_datatype lbl vs in
-    (lbl, vs, t, acs) in
-  G.map_nodes mark_node graph
+(* let mark_datatypes graph = *)
+(*   let mark_node (lbl, vs) = *)
+(*     let (t, acs) = create_datatype lbl vs in *)
+(*     (lbl, vs, t, acs) in *)
+(*   G.map_nodes mark_node graph *)
 
 let rec has_acsor s t =
   match t with

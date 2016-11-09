@@ -8,81 +8,64 @@ module F = Field
 open Z3_type
 
 type zexpr = Z3.Expr.expr
-type bb = PG.lbl
+type bb = int
+type field = F.field
 
-type shape =
-  { label : int
-  ; predecessors : int list
-  ; s1 : Z3.Sort.sort
-  ; s2 : Z3.Sort.sort
-  ; t1 : FD.func_decl list
-  ; t2 : FD.func_decl list
+type context =
+  { label : bb
+  ; predecessors : bb list
+  ; result_sort : Z3.Sort.sort
   ; reads  : ((zexpr -> zexpr) F.field_desc) list
   ; writes : ((zexpr -> zexpr) F.field_desc) list
   ; transition : zexpr -> zexpr -> zexpr
   }
 
-let field_eq = (=)
+let nil_result_sort,nilresults = mk_enum "NilResult" ["nilresult"]
 
-let label_of_node (l, _, _) = l
-let sort_of_node (_, s, _) = s
-let type_of_node (_, _, t) = t
+let all_predecessors c = List.map (fun sh -> sh.predecessors) c
+let result_sorts c = List.map (fun sh -> sh.result_sort) c
 
-let nil_location = -2
-let locations graph =
-  G.nodes graph
-  |> List.sort_uniq (fun n1 n2 -> compare (label_of_node n1) (label_of_node n2))
-  |> List.map label_of_node
+let map_map f c = List.map (List.map f) c
+
+let transitions c = List.map (fun sh -> sh.transition) c
+
+let write_fields cs = List.map (fun c -> List.map (fun w -> w.F.name) c.writes) cs
+let read_fields  cs = List.map (fun c -> List.map (fun w -> w.F.name) c.reads) cs
+let write_times  cs = List.map (fun c -> List.map (fun w -> w.F.time) c.writes) cs
+let read_times   cs = List.map (fun c -> List.map (fun w -> w.F.time) c.reads) cs
+let write_srcs   cs = List.map (fun c -> List.map (fun w -> w.F.var) c.writes) cs
+let read_dsts    cs = List.map (fun c -> List.map (fun w -> w.F.var) c.reads) cs
+
+let nwrites c = List.map List.length (write_fields c)
+let nreads  c = List.map List.length (read_fields c)
+
+let locations c = List.map (fun sh -> sh.label) c
+
+let nil_location _ = -2
+let initial_location _ = 0
 
 let location_name = string_of_int
 let location_eq = (=)
 
-let nil_result_sort,nilresults = mk_enum "NilResult" ["nilresult"]
-let nilresult = List.hd nilresults
+let predecessors c bb = List.nth (all_predecessors c) bb
+let result_sort c bb = List.nth (result_sorts c) bb
+let nilresult _ = List.hd nilresults
 
-let result_sort graph n =
-  if n = nil_location then nil_result_sort
-  else
-    graph
-    |> G.nodes
-    |> List.filter (fun node -> label_of_node node =  n)
-    |> List.hd
-    |> sort_of_node
 
-let result_type graph n =
-  graph
-  |> G.nodes
-  |> List.filter (fun node -> label_of_node node =  n)
-  |> List.hd
-  |> type_of_node
+let nwrites c bb = List.nth (nwrites c) bb
+let nreads c bb  = List.nth (nreads c) bb
 
-let predecessors shs = List.map (fun sh -> sh.predecessors) shs
+let field_eq = (=)
+let write_field c bb = List.nth (write_fields c) bb
+let read_field c bb  = List.nth (read_fields c) bb
 
-let reads shs  = List.map (fun sh -> sh.reads) shs
-let writes shs = List.map (fun sh -> sh.writes) shs
-let transitions shs = List.map (fun sh -> sh.transition) shs
+let write_time c bb n = List.nth (List.nth (write_times c) bb) n
+let write_src  c bb n = List.nth (List.nth (write_srcs  c) bb) n
+let read_time  c bb n = List.nth (List.nth (read_times c) bb) n
+let read_dst   c bb n = List.nth (List.nth (read_dsts  c) bb) n
 
-let map_map f shs = List.map (List.map f) shs
+let transition c bb = List.nth (transitions c) bb
 
-let write_times shs = map_map (fun f -> f.F.time) (writes shs)
-let read_times  shs = map_map (fun f -> f.F.time) (reads shs)
-
-let write_srcs shs = map_map (fun f -> f.F.var) (writes shs)
-let read_dsts  shs = map_map (fun f -> f.F.var) (reads shs)
-
-let write_fields shs = map_map (fun f -> f.F.name) (writes shs)
-let read_fields  shs = map_map (fun f -> f.F.name) (reads shs)
-
-let nwrites shs : int list = List.map List.length (write_fields shs)
-let nreads  shs : int list = List.map List.length (read_fields shs)
-
-(* let write_times shs = *)
-(*   shs.writes |> List.map (fun (lbl, _, _, time) -> *)
-(*       assign time (result_type shs lbl)) *)
-
-(* let write_sources shs = *)
-(*   shs.writes |> List.map (fun (lbl, _, src, _) -> *)
-(*       assign src (result_type shs lbl)) *)
-
-(* let nwrites shs lbl = *)
-(*   writes_for shs lbl |> List.length *)
+let final_location c = assert false (* TODO *)
+let assertion c = assert false (* TODO *)
+(* val assertion : context -> Z3.Expr.expr -> Z3.Expr.expr *)

@@ -32,7 +32,7 @@ let translate graph =
                                    else Z3.Expr.mk_app ctx (get_acsor name t2) [v2])
         | _ -> None in
 
-      let e' = CZ.expr special rels [] e in
+    let e' = CZ.expr special rels [] e in
       CZ.many_op E.And ctx (assignments @ [e'])
   in
 
@@ -52,20 +52,30 @@ let translate graph =
   let labels =
     graph
     |> G.map_edges fst
-    |> G.map_nodes (fun (l, _, _, _) -> l) in
+    |> G.map_nodes (fun (l, _) -> l) in
 
-  let conn ((lbl1, vs1, s1, t1), (lbl2, vs2, s2, t2), (label, (reads, writes, e))) =
+  let conn ((lbl1, vs1), (lbl2, vs2), (label, (reads, writes, e))) =
+
+    let get_accessors d = [d.Field.var; d.Field.time] in
+    let accessors = List.map get_accessors reads @ List.map get_accessors writes
+                    |> List.concat in
+
+    let vs2 = vs2 @ accessors in
+
+    List.iter (fun (n, _) -> Printf.eprintf "%s " n) vs2;
+    Printf.eprintf "\n";
+
     let extra_vars =
       Set.inter (Set.of_list vs1) (Set.of_list vs2) |> Set.to_list in
+
+    let (s1, t1) = create_datatype lbl1 vs1 in
+    let (s2, t2) = create_datatype lbl2 vs2 in
 
     let e' = expr extra_vars rels' t1 t2 e in
 
     { SS.label = label
     ; SS.predecessors = G.entrances labels lbl1
-    ; SS.s1 = s1
-    ; SS.s2 = s2
-    ; SS.t1 = t1
-    ; SS.t2 = t2
+    ; SS.result_sort = s2
     ; SS.reads  = List.map (Field.map_desc (fun r -> assign r t2)) reads
     ; SS.writes = List.map (Field.map_desc (fun w -> assign w t2)) writes
     ; SS.transition = e'
@@ -73,14 +83,11 @@ let translate graph =
   in
   List.map conn (G.conns graph)
 
-
 let derive classpath class_name =
   let remove_structure g =
     G.map_edges (function
         | PG.Assert (e, at) -> e
         | PG.Body e -> e) g in
 
-  Inspect.inspect classpath class_name
-  |> remove_structure
-  |> mark_datatypes
-  |> translate
+  let g = Inspect.inspect classpath class_name |> remove_structure in
+   translate g
