@@ -158,7 +158,7 @@ and instr parse st line i =
       Ir.FieldAssign (field cn fs, expr v, expr e)
 
     | J.AffectStaticField (cn, fs, e) ->
-      Ir.ArrAssign (field cn fs, E.Int_lit (parse.Parse.class_id cn), expr e)
+      Ir.FieldAssign (field cn fs, E.Int_lit (parse.Parse.class_id cn), expr e)
 
     | J.Goto l ->
       Ir.Goto (lbl l)

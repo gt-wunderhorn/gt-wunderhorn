@@ -8,7 +8,7 @@ module LS = Lang_state
 let check_type obj t =
   E.mk_eq (E.ArrSelect (E.Var LS.class_array, obj)) t
 
-let rec instr special (this, next, i) =
+let rec instr (this, next, i) =
   let conditional here there pred assigns =
     G.singleton (here, there, PG.Body (pred, assigns)) in
 
@@ -39,11 +39,11 @@ let rec instr special (this, next, i) =
     G.unions
       [ conditional this entr pred ((pc, E.Int_lit this) :: assigns @ assignments)
       ; conditional exit next (E.mk_eq (E.Var pc) (E.Int_lit this)) [(v, (E.Var proc.Ir.return))]
-      ; translate special proc
+      ; translate proc
       ]
   in
 
-  let base (this, next, i) = match i with
+  match i with
     | Ir.Assign (v, e)          -> linear [E.mk_assign v e]
     | Ir.ArrAssign (arr, i, e)  -> linear [LS.update_arr arr i e]
     | Ir.FieldAssign (f, i, e)  -> linear [E.mk_assign f (E.FieldStore (f, i ,e))]
@@ -76,9 +76,7 @@ let rec instr special (this, next, i) =
       G.union
         (G.singleton (this, -1, PG.Assert (e, at)))
         (unconditional this next [])
-  in
-  Special.specialize base special (this, next, i)
 
-and translate special proc =
-  List.map (instr special) proc.Ir.content
+and translate proc =
+  List.map instr proc.Ir.content
   |> G.unions

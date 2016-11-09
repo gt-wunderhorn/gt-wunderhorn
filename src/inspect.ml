@@ -1,21 +1,21 @@
 module JP = Sawja_pack.JProgram
 module JB = Javalib_pack.JBasics
 
-let to_clauses g =
-  g
+let to_clauses graph =
+  graph
 
   (* Transform the edges from conjunctions to horn clauses by bringing the
      pre and post conditions in from the nodes. *)
   |> Exprs_to_clauses.translate
 
-  (* |> Graph.map_edges Shape.modify_field_use *)
-  (* |> Graph.map_edges (fun (_, _, e) -> e) *)
-
   (* Simplify certain clauses by substituting simple equality statements. *)
   |> Simplify.remove_simple_equalities
 
+  |> Graph.map_edges Field.modify_use
+  |> Graph.map_edges (fun (_, _, e) -> e)
 
-let inspect special_graph_formulation classpath class_name =
+
+let inspect classpath class_name =
   let cn  = JB.make_cn class_name in
   let cms = JB.make_cms cn JP.main_signature in
   let proc_id = ref (0) in
@@ -28,7 +28,7 @@ let inspect special_graph_formulation classpath class_name =
   (* The IR procedure can be converted into a graph which shows the control
      flow of the program. The edges of the graph are lists of instructions and
      the nodes are program locations.*)
-  |> Ir_to_graph.translate special_graph_formulation
+  |> Ir_to_graph.translate
 
   (* Perform some graph simplifications to reduce the number of edges. *)
   |> Simplify.concatenate_consecutive_paths
@@ -49,14 +49,14 @@ let inspect special_graph_formulation classpath class_name =
   |> Simplify.remove_empty_exprs
 
 let print classpath class_name =
-  inspect Special.no_special classpath class_name
+  inspect classpath class_name
   |> to_clauses
   |> Graph.edges
   |> Print_clauses.print
   |> Printf.printf "%s\n"
 
 let run classpath class_name =
-  inspect Special.no_special classpath class_name
+  inspect classpath class_name
   |> to_clauses
   |> Variable_analysis.unannotate_nodes
   |> Run_clauses.run

@@ -8,10 +8,30 @@ let _ =
     let classpath = Sys.argv.(1) in
     let class_name = Sys.argv.(2) in
     (* Inspect.print classpath class_name; *)
-    Inspect.run classpath class_name;
+    (* Inspect.run classpath class_name; *)
 
-    (* let st = Shape.derive classpath class_name in *)
+    let shapes = Shape.derive classpath class_name in
+
+    let line _ = Printf.eprintf "\n" in
+
+    List.iter
+      (fun sh ->
+         Printf.eprintf "label: %d\n" sh.label;
+         Printf.eprintf "predecesors: ";
+
+         List.iter (Printf.eprintf "%d ") sh.predecessors;
+         line ();
+
+         Printf.eprintf "reads: ";
+         List.iter (fun r -> Printf.eprintf "%s " r.Field.name) sh.reads;
+         line ();
+
+         Printf.eprintf "writes: ";
+         List.iter (fun r -> Printf.eprintf "%s " r.Field.name) sh.writes;
+         line ();
+
+         line ();
+      ) shapes;
+
     (* List.iter (fun loc -> Printf.eprintf "%d\n" (nwrites st loc)) (locations st); *)
     ()
-
-
