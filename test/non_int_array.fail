@@ -1,8 +1,0 @@
-public static void main(String[] args) {
-  float[] x = new float[2];
-  x[0] = 2.7f;
-  if (x[0] < 3) {
-    x[1] = 6.2f;
-  }
-  ensure(x[1] < 5);
-}

@@ -1,31 +1,27 @@
-OCB_FLAGS = -tag thread -use-ocamlfind -pkgs $(LIBS) -Is $(DIRS)
-OCB = ocamlbuild $(OCB_FLAGS)
-DIRS = scripts,src,src/utility,src/shape,unit
+all: _oasis
+	ocaml setup.ml -build
 
-LIBS = sawja,Z3,core
-
-NAME = main
-
-all: byte
-
-use:
-	$(OCB) use.byte
-	mv use.byte bin
+setup:
+	oasis setup && ocaml setup.ml -configure
 
 clean:
-	$(OCB) -clean
-	rm -rf parsed
+	ocaml setup.ml -clean
+	find -name *.mllib   | xargs rm
+	find -name *.mldylib | xargs rm
+	find -name *.byte    | xargs rm
+	rm bin/*
+	rm setup.ml
 
-byte:
-	$(OCB) $(NAME).byte
-	mv $(NAME).byte bin
+test:
+	ocaml setup.ml -test
 
-test: all
-	scripts/test.sh
+simple:
+	./scripts/test_simple.sh run
 
-unit:
-	$(OCB) unit.byte
-	mv unit.byte bin
-	bin/unit.byte
+hard:
+	./scripts/test_hard.sh run
 
-.PHONY: all clean byte native debug test unit
+example:
+	./scripts/example.sh
+
+.PHONY: all setup clean test simple hard example

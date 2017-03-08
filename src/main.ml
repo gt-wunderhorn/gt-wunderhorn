@@ -1,36 +1,26 @@
-open Ingestion
+let usage _ =
+  Printf.eprintf "usage: %s <classpath> <main class name> [print|run]\n" Sys.argv.(0)
 
 let _ =
-  if (Array.length Sys.argv < 3)
+  if (Array.length Sys.argv < 4)
   then
-    Printf.eprintf "usage: %s <classpath> <main class name>\n" Sys.argv.(0)
+    usage ()
   else
     let classpath = Sys.argv.(1) in
     let class_name = Sys.argv.(2) in
-    (* Inspect.print classpath class_name; *)
-    (* Inspect.run classpath class_name; *)
 
-    let context = derive classpath class_name in
+    let exprs = Inspect.inspect classpath class_name in
 
-    let line _ = Printf.eprintf "\n" in
+    if Sys.argv.(3) = "print"
+    then
+      let p = PrintClauses.print exprs in
+      Core.Std.Out_channel.write_all "example.z3" ~data:p
 
-    List.iteri
-      (fun i bb ->
-         Printf.eprintf "label: %d\n" i;
-         Printf.eprintf "predecessors: ";
+    else if Sys.argv.(3) = "run"
+    then ClausesToZ3.run exprs
 
-         List.iter (fun bb -> Printf.eprintf "%s " (location_name bb)) (predecessors context bb);
-         line ();
+    else
+      ( Printf.eprintf "unknown run type: %s\n" Sys.argv.(3)
+      ; usage ()
+      )
 
-         Printf.eprintf "reads: ";
-
-         (* List.iter (fun r -> Printf.eprintf "%s " r.Field.name) bb.reads; *)
-         (* line (); *)
-
-         (* Printf.eprintf "writes: "; *)
-         (* List.iter (fun r -> Printf.eprintf "%s " r.Field.name) bb.writes; *)
-         line ();
-
-         line ();
-      ) (locations context);
-    Printf.eprintf "%s\n" (location_name (final_location context));

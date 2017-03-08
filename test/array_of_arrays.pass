@@ -1,9 +1,0 @@
-public static void main(String[] args) {
-  int[][] xs = new int[2][2];
-
-  xs[0][0] = 1;
-  if (xs[0][0] == 1) {
-    xs[1][1] = 5;
-  }
-  ensure(xs[1][1] == 5);
-}

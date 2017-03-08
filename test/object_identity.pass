@@ -1,8 +1,0 @@
-static class O { }
-
-public static void main(String[] args) {
-  O o1 = new O();
-  O o2 = new O();
-
-  ensure(o1 != o2);
-}

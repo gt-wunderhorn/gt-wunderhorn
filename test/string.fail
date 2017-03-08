@@ -1,4 +1,0 @@
-public static void main(String[] args) {
-  char[] x_body = {'h', 'e', 'l', 'l', 'o'};
-  String x = new String(x_body);
-}

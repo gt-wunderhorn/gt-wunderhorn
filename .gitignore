@@ -4,6 +4,9 @@ bin/
 *.class
 *.byte
 *.native
+*.log
+*.data
+setup.ml
 parsed/
 Test.java
 test.z3
