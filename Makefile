@@ -22,6 +22,6 @@ hard:
 	./scripts/test_hard.sh run
 
 example:
-	./scripts/example.sh
+	./scripts/example.sh $(program)
 
 .PHONY: all setup clean test simple hard example

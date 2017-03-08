@@ -4,9 +4,9 @@ SOURCE_DIR=$(dirname "$SOURCE_DIR")
 source "$SOURCE_DIR/common.sh"
 
 if [[ $(get_ext "$1") = 'java' ]]; then
-    cp $1 Test.java
+    cp "$1" Test.java
 else
-    build_test $1 > Test.java
+    build_test "$1" > Test.java
 fi
 
 # sed -i -e 's/\<ArrayList\>/MyList/g' Test.java
