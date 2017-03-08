@@ -1,11 +1,15 @@
-fn=$(basename "$1")
-ext="${fn##*.}"
+#!/usr/bin/env bash
+SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
+SOURCE_DIR=$(dirname "$SOURCE_DIR")
+source "$SOURCE_DIR/common.sh"
 
 cp $1 $2
 cp $3 Test.java
 
-rm *.class
-cp ../benchmark/native/MyNative.java .
+rm -f *.class
+cp "$(source_dir)"/../benchmark/native/MyNative.java .
 javac -g *.java
 
-./main.byte `cat ../benchmark/classpath` Test $4
+echo "Using classpath of $(classpath)."
+
+./main.byte "$(classpath)" Test $4

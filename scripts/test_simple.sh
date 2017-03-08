@@ -1,7 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
+SOURCE_DIR=$(dirname "$SOURCE_DIR")
+source "$SOURCE_DIR/common.sh"
 
 mkdir -p bin
-cp main.byte bin
+cp "$(source_dir)"/../main.byte bin
 cd bin
 
 type=$1
@@ -9,39 +12,39 @@ type=$1
 function run {
   echo
   echo $1
-  ../scripts/run_simple_test.sh $1 $type
+  "$(source_dir)"/run_simple_test.sh $1 $type
 }
 
-run ../benchmark/simple/fib.pass
-run ../benchmark/simple/fib.fail
-run ../benchmark/simple/mutual_recursion.pass
-run ../benchmark/simple/bit_shift.pass
-run ../benchmark/simple/bit_shift.fail
-run ../benchmark/simple/static_field.fail
-run ../benchmark/simple/static_field.pass
-run ../benchmark/simple/object_identity.pass
-run ../benchmark/simple/object_identity.fail
-run ../benchmark/simple/ctor.pass
-run ../benchmark/simple/dispatch.pass
-run ../benchmark/simple/multi_call.pass
-run ../benchmark/simple/mixed_array.fail
-run ../benchmark/simple/array.fail
-run ../benchmark/simple/array.pass
-run ../benchmark/simple/method.pass
-run ../benchmark/simple/method.fail
-run ../benchmark/simple/return_real.fail
-run ../benchmark/simple/real_arith.fail
-run ../benchmark/simple/real_arith.pass
-run ../benchmark/simple/not_null.fail
-run ../benchmark/simple/not_null.pass
-run ../benchmark/simple/is_null.pass
-run ../benchmark/simple/is_null.fail
-run ../benchmark/simple/float.pass
-run ../benchmark/simple/float.fail
-run ../benchmark/simple/non_int_field.fail
-run ../benchmark/simple/field.pass
-run ../benchmark/simple/field.fail
-run ../benchmark/simple/call.pass
-run ../benchmark/simple/call.fail
-run ../benchmark/simple/while.pass
-run ../benchmark/simple/while.fail
+run "$(source_dir)"/../benchmark/simple/fib.pass
+run "$(source_dir)"/../benchmark/simple/fib.fail
+run "$(source_dir)"/../benchmark/simple/mutual_recursion.pass
+run "$(source_dir)"/../benchmark/simple/bit_shift.pass
+run "$(source_dir)"/../benchmark/simple/bit_shift.fail
+run "$(source_dir)"/../benchmark/simple/static_field.fail
+run "$(source_dir)"/../benchmark/simple/static_field.pass
+run "$(source_dir)"/../benchmark/simple/object_identity.pass
+run "$(source_dir)"/../benchmark/simple/object_identity.fail
+run "$(source_dir)"/../benchmark/simple/ctor.pass
+run "$(source_dir)"/../benchmark/simple/dispatch.pass
+run "$(source_dir)"/../benchmark/simple/multi_call.pass
+run "$(source_dir)"/../benchmark/simple/mixed_array.fail
+run "$(source_dir)"/../benchmark/simple/array.fail
+run "$(source_dir)"/../benchmark/simple/array.pass
+run "$(source_dir)"/../benchmark/simple/method.pass
+run "$(source_dir)"/../benchmark/simple/method.fail
+run "$(source_dir)"/../benchmark/simple/return_real.fail
+run "$(source_dir)"/../benchmark/simple/real_arith.fail
+run "$(source_dir)"/../benchmark/simple/real_arith.pass
+run "$(source_dir)"/../benchmark/simple/not_null.fail
+run "$(source_dir)"/../benchmark/simple/not_null.pass
+run "$(source_dir)"/../benchmark/simple/is_null.pass
+run "$(source_dir)"/../benchmark/simple/is_null.fail
+run "$(source_dir)"/../benchmark/simple/float.pass
+run "$(source_dir)"/../benchmark/simple/float.fail
+run "$(source_dir)"/../benchmark/simple/non_int_field.fail
+run "$(source_dir)"/../benchmark/simple/field.pass
+run "$(source_dir)"/../benchmark/simple/field.fail
+run "$(source_dir)"/../benchmark/simple/call.pass
+run "$(source_dir)"/../benchmark/simple/call.fail
+run "$(source_dir)"/../benchmark/simple/while.pass
+run "$(source_dir)"/../benchmark/simple/while.fail
