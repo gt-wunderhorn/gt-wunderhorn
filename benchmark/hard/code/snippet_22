@@ -1,0 +1,20 @@
+    public int sumOfLeftLeaves(TreeNode root) {
+        int[] result = new int[]{0};
+        sumHelper(root, result);
+        return result[0];
+    }
+    private boolean sumHelper(TreeNode root, int[] result) {
+        // base case
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null) {
+            return true;
+        }
+        // At current layer, add left leaf into result
+        if (sumHelper(root.left, result)) {
+            result[0] += root.left.val;
+        }
+        sumHelper(root.right, result);
+        return false;
+    }

@@ -1,0 +1,20 @@
+public class Test {
+  public static void ensure(boolean b) { }
+  public static void fill(TreeNode n, int x) {
+    if (x <= 0) {
+      return;
+    } else {
+      n.left  = new TreeNode(n.val-5);
+      n.right = new TreeNode(n.val+1);
+      fill(n.left,  x-1);
+      fill(n.right, x-1);
+    }
+  }
+
+  public static void main(String[] args) {
+    TreeNode n = new TreeNode(0);
+    fill(n, 10);
+    n = new Solution().deleteNode(n, 0);
+    ensure(n.val != 5);
+  }
+}

@@ -1,0 +1,16 @@
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root == null) return 0;
+        TreeNode curr = root;
+        int sum = 0;
+        while (true) {
+            sum += sumOfLeftLeaves(curr.right);
+            curr = curr.left;
+            if (curr == null) break;
+            if (curr.left == null && curr.right == null) {
+                sum += curr.val;
+                break;
+            }
+        }
+
+        return sum;
+    }

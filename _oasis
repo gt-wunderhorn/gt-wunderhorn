@@ -1,0 +1,60 @@
+OASISFormat: 0.4
+Name:        Safety
+Version:     1
+Synopsis:    Safety analysis through Horn Clause Interpolation.
+Authors:     David Heath
+License:     BSD-3-clause
+
+Library utility
+  Path:         src/utility
+  BuildTools:   ocamlbuild
+  BuildDepends: core
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+  Modules:      Algorithm,
+                QualifiedIdentity,
+                Comparable,
+                CountTable,
+                OffsetTable,
+                Graph
+
+Library ir
+  Path:         src/ir
+  BuildTools:   ocamlbuild
+  BuildDepends: utility
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+  Modules:      Type,
+                Lbl,
+                Var,
+                Expr,
+                Instr
+
+Library safetycore
+  Path:         src/safety-core
+  BuildTools:   ocamlbuild
+  BuildDepends: ir, Z3, sawja
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+  Modules:      BuiltIn,
+                ClausesToZ3,
+                ExprsToClauses,
+                Inspect,
+                IrToGraph,
+                JBirToIr,
+                LangState,
+                Parse,
+                PathToExpr,
+                PrintClauses,
+                Proc,
+                ProgramGraph,
+                Simplify,
+                VariableAnalysis
+
+Executable safetycheck
+  Path:         src
+  BuildTools:   ocamlbuild
+  MainIs:       main.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread

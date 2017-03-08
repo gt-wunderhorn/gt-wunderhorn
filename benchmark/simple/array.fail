@@ -1,0 +1,8 @@
+public static void main(String[] args) {
+  int[] x = new int[2];
+  x[0] = 5;
+  if (x[0] == 5) {
+     x[1] = 2;
+  }
+  ensure(x[1] == 3);
+}

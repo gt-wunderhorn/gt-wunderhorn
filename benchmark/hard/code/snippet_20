@@ -1,0 +1,32 @@
+public int sumOfLeftLeaves(TreeNode root) {
+    if(root ==null || root.left == null && root.right == null){
+    
+        return 0;
+    }
+    if(root.left != null){
+        visit(root.left, 0);
+    }
+    if(root.right != null){
+        visit(root.right, 1);
+    }
+    
+    return ans;
+}
+
+public void visit(TreeNode r, int c){
+    if(r.left != null){
+        visit(r.left, 0);
+        if(r.right!=null){
+            visit(r.right, 1);
+        }
+    }
+    else if(r.right == null ){
+        if(c==0){
+            ans+=r.val;
+        }
+    }
+    else{
+        visit(r.right, 1);
+    }
+    
+}

@@ -1,0 +1,23 @@
+public class Solution {
+    int total;
+    public int pathSum(TreeNode root, int sum) {
+        total = 0;
+        traverse(root, sum);
+        return total;
+    }
+    
+    public void traverse(TreeNode root, int sum){
+        if(root == null) return;
+        helper(root,0,sum);
+        traverse(root.left, sum);
+        traverse(root.right, sum);
+    }
+    
+    public void helper(TreeNode root, int v, int sum){
+        if(root == null) return;
+        v += root.val;
+        if(v==sum) total++;
+        helper(root.left, v, sum);
+        helper(root.right, v, sum);
+    }
+}

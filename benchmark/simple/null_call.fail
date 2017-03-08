@@ -1,0 +1,10 @@
+static class O {
+  int f() {
+    return 5;
+  }
+}
+
+public static void main(String[] args) {
+  O o = null;
+  o.f();
+}

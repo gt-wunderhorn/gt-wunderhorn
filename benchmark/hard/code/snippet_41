@@ -1,0 +1,23 @@
+private int k = 0;
+    private int count = 0;
+    private int val;
+
+    public int kthSmallest(TreeNode root, int k) {
+        this.k = k;
+        count = 0;
+        inorder(root);
+        return val;
+    }
+
+    public void inorder(TreeNode root) {
+        if (count == k) {
+            return;
+        }
+        if (root != null) {
+            inorder(root.left);
+            if (++count == k) {
+                val = root.val;
+                return;
+            }
+            inorder(root.right);
+        }

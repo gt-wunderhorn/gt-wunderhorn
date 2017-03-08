@@ -1,0 +1,31 @@
+public class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+		TreeNode now  = root;
+		int count = k;
+		while (now != null) {
+			if (now.left != null) {
+				TreeNode left = now.left;
+				while (left.right != null && left.right != now) {
+					left = left.right;
+				}
+				if (left.right == null) {
+					left.right = now;
+					now = now.left;
+				} else {
+					left.right = null;
+					count--;
+					if (count == 0)
+						return now.val;
+					now = now.right;					
+				}
+			} else {
+				count --;
+				if (count == 0) {
+					return now.val;
+				}
+				now = now.right;
+				
+			}			
+		}
+		return -1;
+    }

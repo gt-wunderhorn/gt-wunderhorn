@@ -1,0 +1,14 @@
+    private int cnt=0;
+	private int res=0;
+	private boolean founded=false;
+    public int kthSmallest(TreeNode root, int k) {
+        helper(root,k);
+        return res;
+    }
+    private void helper(TreeNode cur,int k){
+    	if(!founded&&cur!=null){
+    		helper(cur.left,k);
+    		cnt++;
+    		if(cnt==k) {res=cur.val;founded=true;return;}
+    		helper(cur.right,k);
+    	}

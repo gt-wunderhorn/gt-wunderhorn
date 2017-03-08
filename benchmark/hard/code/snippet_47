@@ -1,0 +1,13 @@
+public int kthSmallest(TreeNode root, int k) {
+    int[] result = new int[2];
+    helper(root, k, result);
+    return result[1];
+}
+
+public void helper(TreeNode root, int k, int[] result){
+    if(root == null || result[0] == k)
+        return;
+    helper(root.left, k, result);
+    if(++result[0] == k)
+        result[1] = root.val;
+    helper(root.right, k, result);

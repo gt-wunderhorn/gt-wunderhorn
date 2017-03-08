@@ -1,0 +1,10 @@
+public class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        if(root == null) return 0;
+        int t = 0;
+        if(root.left!=null && root.left.left == null && root.left.right == null){
+            t = root.left.val;
+        }
+        return t + sumOfLeftLeaves(root.right) + sumOfLeftLeaves(root.left);
+    }
+}

@@ -1,0 +1,30 @@
+public class MinStack {
+    Node top = null;
+
+    public int getMin() {
+        return top.min;
+    }   
+
+    public void pop() {
+        top = top.next;
+    }   
+
+    public void push(int x) {
+        top = new Node(top, x, top == null ? x : Math.min(x, top.min));
+    }   
+
+    public int top() {
+        return top.data;
+    }   
+
+    static class Node {
+        int data, min;
+        Node next;
+
+        Node(Node next, int data, int min) {
+            this.next = next;
+            this.data = data;
+            this.min = min;
+        }   
+    }   
+}

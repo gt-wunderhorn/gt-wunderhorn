@@ -1,0 +1,11 @@
+static class A {
+  int size;
+
+  int size() {
+    return size;
+  }
+}
+
+public static void main(String[] args) {
+  A a;
+}

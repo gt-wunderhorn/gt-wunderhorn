@@ -1,0 +1,4 @@
+public static void main(String[] args) {
+  String x = "hello";
+  ensure(x.charAt(0) == 'h');
+}

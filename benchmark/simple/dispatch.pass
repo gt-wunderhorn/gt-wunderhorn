@@ -1,0 +1,27 @@
+static interface Super {
+  public int f(int x);
+}
+
+static class A implements Super {
+  public int f(int x) {
+    return x + 2;
+  }
+}
+
+static class B implements Super {
+  public int f(int x) {
+    return x + 5;
+  }
+}
+
+public static void main(String[] args) {
+  int x = 5;
+  Super s;
+
+  if (x == 0) {
+    s = new A();
+  } else {
+    s = new B();
+  }
+  ensure(s.f(5) == 10);
+}

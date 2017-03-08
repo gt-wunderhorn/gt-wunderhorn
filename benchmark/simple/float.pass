@@ -1,0 +1,4 @@
+public static void main(String[] args) {
+  double x = 1.5;
+  ensure (x < 1.8);
+}

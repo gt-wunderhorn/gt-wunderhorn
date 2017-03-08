@@ -1,0 +1,16 @@
+public static void main(String[] args) {
+  int x = 0;
+  x = f(x);
+
+  int y = 0;
+  y = f(y);
+  ensure(x == 6 && y == 6);
+}
+
+static int f(int x) {
+  if (x < 3) {
+    return 6;
+  } else {
+    return 5;
+  }
+}
