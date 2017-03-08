@@ -6,6 +6,8 @@ bin/
 *.native
 *.log
 *.data
+*.mldylib
+*.mllib
 setup.ml
 myocamlbuild.ml
 parsed/
