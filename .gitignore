@@ -1,4 +1,5 @@
 _build/
+_tags
 bin/
 *.swp
 *.class

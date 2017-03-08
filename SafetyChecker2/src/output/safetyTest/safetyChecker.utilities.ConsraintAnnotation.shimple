@@ -1,5 +1,0 @@
-public annotation interface  safetyChecker.utilities.ConsraintAnnotation extends java.lang.Object implements java.lang.annotation.Annotation
-{
-
-    public abstract boolean constraint();
-}
