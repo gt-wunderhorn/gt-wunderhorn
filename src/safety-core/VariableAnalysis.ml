@@ -39,7 +39,7 @@ let remove_locals qid m =
     QID.full_prefix qid' = qid
   in
   let f ~key ~data = not (is_local key) in
-  Map.filteri m f
+  Map.filter m f
 
 let enter qid m = remove_locals qid (Map.map m (fun _ -> Callee))
 let exit  qid m = remove_locals qid (Map.map m (fun _ -> Caller))
