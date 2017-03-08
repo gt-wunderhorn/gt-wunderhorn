@@ -7,6 +7,7 @@ bin/
 *.log
 *.data
 setup.ml
+myocamlbuild.ml
 parsed/
 Test.java
 test.z3

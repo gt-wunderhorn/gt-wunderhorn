@@ -1,0 +1,64 @@
+public class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) return null;
+        if (root.val == key) {
+            if (root.left == null && root.right == null) root = null;
+            else {
+                if (root.left != null && root.right != null) {
+                    root.val = minNode(root.right).val;
+                    deleteNode(root.right, root.val, root);
+                }
+                else if (root.left != null) root = root.left;
+                else root = root.right;
+            }
+        } else {
+            if (key < root.val)
+                deleteNode(root.left, key, root);
+            else
+                deleteNode(root.right, key, root);
+        }
+        return root;
+    }
+    
+    public void deleteNode(TreeNode root, int key, TreeNode parent) {
+        if (root == null) return;
+        if (root.val > key) {
+            deleteNode(root.left, key, root);
+        }
+        else if (root.val < key) {
+            deleteNode(root.right, key, root);
+        }
+        else {
+            if (root.left == null && root.right == null) {
+                if (parent.left == root)
+                    parent.left = null;
+                else
+                    parent.right = null;
+            } else {
+                if (root.left != null && root.right != null) {
+                    root.val = minNode(root.right).val;
+                    deleteNode(root.right, root.val, root);
+                }
+                else if (root.left != null) {
+                    if (parent.left == root)
+                        parent.left = root.left;
+                    else
+                        parent.right = root.left;
+                }
+                else {
+                    if (parent.left == root)
+                        parent.left = root.right;
+                    else
+                        parent.right = root.right;
+                }
+            }
+        }
+    }
+    
+    public TreeNode minNode(TreeNode root) {
+        if (root == null) return null;
+        while (root.left != null)
+            root = root.left;
+        return root;
+    }
+}

@@ -1,0 +1,10 @@
+public class Solution {
+    int ct = 0; 
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null) return 0;            
+        int res = kthSmallest(root.left, k);  
+        if(ct == k) return res;               
+        else if(++ct == k) return root.val;  
+        return kthSmallest(root.right, k);  
+    }
+}

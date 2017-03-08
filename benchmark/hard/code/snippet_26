@@ -1,0 +1,27 @@
+public class Solution {
+    
+    class Sums {
+        int father;
+        int sons;
+        public Sums(int a, int b) {
+            father = a;
+            sons = b;
+        }
+    }
+    
+    public int rob(TreeNode root) {
+        if (root == null) return 0;
+        Sums result = robs(root);
+        return Math.max(result.father, result.sons);
+    }
+    
+    public Sums robs(TreeNode root) {
+        if (root == null) return new Sums(0, 0);
+        if (root.left == null && root.right == null) return new Sums(root.val, 0);
+        
+        Sums left = robs(root.left);
+        Sums right = robs(root.right);
+        
+        return new Sums(Math.max(root.val + left.sons + right.sons, left.father + right.father), left.father + right.father);
+    }
+}

@@ -1,0 +1,26 @@
+public class Solution {
+    public int countNodes(TreeNode root) {
+        if(root == null) return 0;
+        TreeNode cur = root;
+        int count = 1;
+        while(cur.left != null) {
+            if(getHeight(cur.left) > getHeight(cur.right)) {
+                cur = cur.left;
+                count *= 2;
+            } else {
+                cur = cur.right;
+                count = count * 2 + 1;
+            }
+        }
+        return count;   
+    }
+    
+    private int getHeight(TreeNode root) {
+        int height = -1;
+        while(root != null) {
+            root = root.left;
+            height++;
+        }
+        return height;
+    }
+}

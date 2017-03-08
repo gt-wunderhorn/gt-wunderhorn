@@ -1,0 +1,14 @@
+public int rob(TreeNode root) {
+    int[] rst = postOrderTraversal(root);
+    return Math.max(rst[0],rst[1]);
+}
+
+ public int[] postOrderTraversal(TreeNode node){
+    int[] arr = new int[2];
+    if(node==null) return arr;
+    int[] left = postOrderTraversal(node.left);
+    int[] right = postOrderTraversal(node.right);
+    arr[0] = node.val + left[1] + right[1];
+    arr[1] = Math.max(left[0],left[1]) + Math.max(right[0], right[1]);
+    return arr;
+}

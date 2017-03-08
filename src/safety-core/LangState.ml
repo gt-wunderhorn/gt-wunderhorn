@@ -19,5 +19,5 @@ let id            = global "ID" T.Int
 let dummy         = global "DUMMY" T.Int
 
 let update_field arr idx e =
-  let store = E.Store (arr, idx, e) in
+  let store = E.Store (E.Var arr, idx, e) in
   I.mk_assign arr store

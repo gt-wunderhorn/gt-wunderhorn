@@ -11,7 +11,7 @@ module I = Instr
 (** To inspect the type of an object, the global class array is accessed
     and the contents under the object are compared to the expected value. *)
 let check_type obj t =
-  E.mk_eq (E.Select (LS.class_array, obj)) t
+  E.mk_eq (E.Select (E.Var LS.class_array, obj)) t
 
 let rec instr proc (I.Instr (this, i)) =
   let next = Lbl.next this in

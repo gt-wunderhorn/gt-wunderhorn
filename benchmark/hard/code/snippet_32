@@ -1,0 +1,18 @@
+public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode node1, TreeNode node2) {
+
+	if (root == null || root == node1 || root == node2)
+		return root;
+
+	TreeNode leftSearch = lowestCommonAncestor(root.left, node1, node2);
+	TreeNode rightSearch = lowestCommonAncestor(root.right, node1, node2);
+
+	if (leftSearch != null && rightSearch != null) {
+		return root;
+	} else if (leftSearch != null && rightSearch == null) {
+		return leftSearch;
+	} else if (leftSearch == null && rightSearch != null) {
+		return rightSearch;
+	} else {
+		return null;
+	}
+

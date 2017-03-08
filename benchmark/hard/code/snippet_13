@@ -1,0 +1,19 @@
+public class Solution {
+    private int result = 0;
+    public int pathSum(TreeNode root, int sum) {
+        if (root == null) return result;
+        helper(root, sum, false);
+        return result;
+    }
+    
+    private void helper(TreeNode node, int sum, boolean hasParent) {
+        if (node == null) return;
+        if (node.val == sum) {
+            result++;
+        }
+        helper(node.left, sum - node.val, true);
+        if (!hasParent) helper(node.left, sum, false);
+        helper(node.right, sum - node.val, true);
+        if (!hasParent) helper(node.right, sum, false);
+    }
+}

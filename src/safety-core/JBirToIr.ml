@@ -36,7 +36,7 @@ let unop op e = match op with
       | `Long            -> E.mk_ineg e
       | `Int2Bool        -> assert false) (* Cannot take negative value of bool *)
   | J.Conv c        -> e (* TODO *)
-  | J.ArrayLength   -> E.Select (LS.array_length, e)
+  | J.ArrayLength   -> E.Select (E.Var LS.array_length, e)
   | J.InstanceOf ot -> E.Bool true (* TODO *)
   | J.Cast ot       -> e (** TODO ?? *)
 
@@ -45,12 +45,10 @@ let binop op x y =
     | `Double | `Float    -> rop x y
     | `Long   | `Int2Bool -> iop x y in
   match op with
-  (* TODO Array Load *)
-  | J.ArrayLoad t -> assert false
-  (* | J.ArrayLoad t -> *)
-  (*   let array_array = LS.array_array (typ t) in *)
-  (*   let inner_select = E.Select (array_array, x) in *)
-  (*   E.Select (inner_select, y) *)
+  | J.ArrayLoad t ->
+    let array_array = LS.array_array (typ t) in
+    let inner_select = E.Select (E.Var array_array, x) in
+    E.Select (inner_select, y)
   | J.Add  t -> num_op t E.mk_iadd E.mk_radd
   | J.Sub  t -> num_op t E.mk_isub E.mk_rsub
   | J.Mult t -> num_op t E.mk_imul E.mk_rmul
@@ -92,9 +90,9 @@ let rec expr st = function
   | J.Var (t, v)        -> E.Var (Var.Mk (vname st v, typ t))
   | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
   | J.Unop (op, e)      -> unop op (expr st e)
-  | J.Field (v, cn, fs) -> E.Select (field cn fs, expr st v)
+  | J.Field (v, cn, fs) -> E.Select (E.Var (field cn fs), expr st v)
   | J.StaticField (cn, fs) ->
-    E.Select (field cn fs, E.Int (st.parse.Parse.class_id cn))
+    E.Select (E.Var (field cn fs), E.Int (st.parse.Parse.class_id cn))
 
 let rec comp cond x y =
   let decide i r =
@@ -188,19 +186,17 @@ and instr parse st line i =
     [I.Assign (var v (e_type e), expr e)]
 
   | J.AffectArray (arr, ind, e) ->
-    (* TODO *)
-    assert false
-    (* let array_array = LS.array_array (e_type e) in *)
-    (* let sub_array = E.Select (E.Var array_array, expr arr) in *)
-    (* [I.Assign (array_array, *)
-    (*            E.Store (E.Var array_array, expr arr, *)
-    (*                     E.Store (sub_array, expr ind, expr e)))] *)
+    let array_array = LS.array_array (e_type e) in
+    let sub_array = E.Select (E.Var array_array, expr arr) in
+    [I.Assign (array_array,
+               E.Store (E.Var array_array, expr arr,
+                        E.Store (sub_array, expr ind, expr e)))]
 
   | J.AffectField (v, cn, fs, e) ->
-    [I.Assign (field cn fs, E.Store (field cn fs, expr v, expr e))]
+    [I.Assign (field cn fs, E.Store (E.Var (field cn fs), expr v, expr e))]
 
   | J.AffectStaticField (cn, fs, e) ->
-    [I.Assign (field cn fs, E.Store (field cn fs,
+    [I.Assign (field cn fs, E.Store (E.Var (field cn fs),
                                      E.Int (parse.Parse.class_id cn), expr e))]
 
   | J.Goto l ->
@@ -237,8 +233,8 @@ and instr parse st line i =
     let v' = var v T.Int in
     [ I.Assign (LS.id, E.mk_iadd (E.Var LS.id) (E.Int 1))
     ; I.Assign (v', E.Var LS.id)
-    ; I.Assign (LS.class_array, E.Store  (LS.class_array,  E.Var v', E.Int (-1)))
-    ; I.Assign (LS.array_length, E.Store (LS.array_length, E.Var v', expr (List.hd es)))
+    ; I.Assign (LS.class_array, E.Store  (E.Var LS.class_array,  E.Var v', E.Int (-1)))
+    ; I.Assign (LS.array_length, E.Store (E.Var LS.array_length, E.Var v', expr (List.hd es)))
     ]
 
   | J.InvokeStatic (v, cn, ms, args) ->

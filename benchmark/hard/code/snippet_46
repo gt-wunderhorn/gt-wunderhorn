@@ -1,0 +1,21 @@
+public class Solution {
+    private int curK;
+    
+    public int kthSmallest(TreeNode root, int k) {
+        curK = k;
+        return kthSmallestInner(root).val;
+    }
+    
+    public TreeNode kthSmallestInner(TreeNode node) {
+        if (node == null)
+            return null;
+
+        TreeNode leftFound = kthSmallestInner(node.left);
+        if (leftFound!=null)
+            return leftFound;
+
+        if (--curK == 0)
+            return node;
+    
+        return kthSmallestInner(node.right);
+    }

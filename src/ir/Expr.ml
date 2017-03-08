@@ -31,8 +31,8 @@ type t =
   | Int       of int
   | Real      of float
   | Bool      of bool
-  | Store     of Var.t * t * t
-  | Select    of Var.t * t
+  | Store     of t * t * t
+  | Select    of t * t
   | Apply     of op * t list
   | Relation  of rel * t list
   | Query     of query * t
@@ -69,8 +69,8 @@ let rec type_of e =
   | Bool _        -> T.Bool
   | Relation _    -> T.Bool
   | Query _       -> T.Bool
-  | Store (v,_,_) -> var_t v
-  | Select (v,_)  -> T.inner (var_t v)
+  | Store (v,_,_) -> type_of v
+  | Select (v,_)  -> T.inner (type_of v)
   | Allocate _    -> T.Bool
 
 let mk_not = function
@@ -249,8 +249,8 @@ let fold_union sc = fold sc Set.union Set.empty
 (** Find the variables in an expression *)
 let rec vars e = fold_union (function
     | Var v           -> Some (Set.singleton v)
-    | Store (v, i, e) -> Some (Set.add (Set.union (vars i) (vars e)) v)
-    | Select (v, i)   -> Some (Set.add (vars i) v)
+    | Store (v, i, e) -> Some (Algorithm.union_map_list vars [v;i;e])
+    | Select (v, i)   -> Some (Set.union (vars i) (vars v))
     | _               -> None) e
 
 (** Find the queries in an expression *)

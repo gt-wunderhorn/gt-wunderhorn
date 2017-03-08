@@ -1,0 +1,22 @@
+public class Solution {
+    int res;
+    int curK;
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null) return 0;
+        curK = k;
+        helper(root);
+        return res;
+    }
+    public void helper(TreeNode root){
+        if(root == null || curK < 1) return;
+        helper(root.left);
+        if(curK == 1) {
+            res = root.val ;
+            curK -= 1;
+        }
+        else {
+            curK -= 1;
+        }
+        helper(root.right);
+    }
+}

@@ -93,8 +93,8 @@ let rec expr special accessors e =
 
     | E.Var v           -> var v
     | E.Apply (o, es)   -> (op ctx o) (List.map ex es)
-    | E.Store (v, i, e) -> Ar.mk_store ctx (var v) (ex i) (ex e)
-    | E.Select (v, e)   -> Ar.mk_select ctx (var v) (ex e)
+    | E.Store (v, i, e) -> Ar.mk_store ctx (ex v) (ex i) (ex e)
+    | E.Select (v, e)   -> Ar.mk_select ctx (ex v) (ex e)
     | E.Int i           -> I.mk_numeral_i ctx i
     | E.Real f          -> R.mk_numeral_s ctx (string_of_float f)
     | E.Bool true       -> B.mk_true ctx

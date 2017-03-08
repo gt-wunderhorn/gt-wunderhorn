@@ -1,0 +1,15 @@
+public int sumOfLeftLeaves(TreeNode root) {
+        return sumOfLeftTreeNodes(false, 0, root);
+    }
+    
+
+    public int sumOfLeftTreeNodes(boolean isLeft, int sum, TreeNode root){
+        // if you end up here, means parent wasn't a left or it was not a right subtree
+        if(root==null) return sum;
+       // pre determine if its a left subtree and a leaf, so you add sum and return
+        if(root.left==null && root.right==null && isLeft) return sum + root.val; 
+       // collect whats from left subtree
+        int leftsum = sumOfLeftTreeNodes(true, sum, root.left);
+       // collect and return the right subtree sum
+       return sumOfLeftTreeNodes(false, leftsum, root.right);
+        

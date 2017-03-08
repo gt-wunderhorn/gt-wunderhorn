@@ -1,0 +1,26 @@
+public int countNodes(TreeNode root) {
+    if (root == null) return 0;
+    
+    return countNodes(root, heightR(root.right));
+}
+
+// Recursively solve the problem
+// rHeightR is the result of heightR(root.right), which is calculated already
+// in previous call, as heightR(root) - 1 = heightR(root.right)
+public int countNodes(TreeNode root, int rHeightR) {
+    if (root == null) return 0;
+    
+    int lHeightR = heightR(root.left);
+    if (lHeightR == rHeightR) { // Right is full
+        return countNodes(root.left, lHeightR-1) + (1 << rHeightR);
+    } else {
+        return countNodes(root.right, rHeightR-1) + (1 << lHeightR);
+    }
+}
+
+// The length of the path from the Root to its right most leaf    
+private int heightR(TreeNode root) {
+    if (root == null) return 0;
+    
+    return 1 + heightR(root.right);
+}

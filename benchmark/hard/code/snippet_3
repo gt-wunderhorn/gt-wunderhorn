@@ -1,0 +1,56 @@
+public class MinStack {
+    public static final int DEFAULT_SIZE = 16; 
+    public static final int RESIZE_FACTOR = 2;
+    int[] minValues;
+    int[] stack;
+    int minIndex = -1;
+    int stackIndex = -1;
+    Integer currentMin = null;
+    
+    public MinStack() {
+        minValues = new int[DEFAULT_SIZE];
+        stack = new int[DEFAULT_SIZE];
+    }
+    
+    public void push(int x) {
+        stack = ensureCapacity(stack, stackIndex + 1);
+        stack[++stackIndex] = x;
+        if(currentMin == null || x <= currentMin){
+            currentMin = x;
+            minValues = ensureCapacity(minValues, minIndex + 1);
+            minValues[++minIndex] = x;
+        }
+    }
+    
+    public void pop() { //throws EmptyStackException
+        //if(stackIndex < 0) throw new EmptyStackException();
+        int x = stack[stackIndex--];
+        if(x == minValues[minIndex])
+            currentMin = --minIndex < 0 ? null : minValues[minIndex];
+    }
+    
+    public int top() { //throws EmptyStackException 
+        //if(stackIndex < 0) throw new EmptyStackException();
+        return stack[stackIndex];
+    }
+    
+    public int getMin() { //throws EmptyStackException 
+        //if(currentMin == null) throw new EmptyStackException();
+        return currentMin;
+    }
+    
+    private int[] ensureCapacity(int[] arr, int index){
+        if(index >= arr.length){
+            arr = resize(arr);
+        }
+        return arr;
+    }
+    
+    private int[] resize(int[] arr){
+        int[] s = new int[arr.length * RESIZE_FACTOR];
+        for(int i = 0; i < arr.length; i++){
+            s[i] = arr[i];
+        }
+        return s;
+    }
+}

@@ -1,0 +1,22 @@
+public class Solution {
+    
+    int k;
+    
+    public int kthSmallest(TreeNode root, int k) {
+        this.k = k;
+        return (int) kthSmallest(root);
+    }
+    
+    public long kthSmallest(TreeNode node) {
+        if (node == null) return Long.MAX_VALUE;
+        long left = kthSmallest(node.left);
+        if (left != Long.MAX_VALUE) {
+            return left;
+        } else {
+            if (k == 1) {
+                return node.val;
+            }
+            k--;
+            return kthSmallest(node.right);
+        }
+    }

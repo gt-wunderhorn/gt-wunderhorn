@@ -1,0 +1,15 @@
+    public int pathSum(TreeNode root, int sum) {
+        if (root == null) return 0;
+        return helper(root, sum, false);
+    }
+    // Either the path has not started, or it has to go all the way to the end.
+    private int helper(TreeNode root, int sum, boolean hasStarted) {
+        if (root == null) return 0;
+        // if the path has not started, we start now or not.
+        if (!hasStarted) {
+            return helper(root, sum, true) + helper(root.left, sum, false) + helper(root.right, sum, false);
+        }
+        // if the path has started
+        sum -= root.val;
+        return helper(root.left, sum, true) + helper(root.right, sum, true) + (sum == 0? 1 : 0);            
+    }

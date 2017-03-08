@@ -16,8 +16,8 @@ let rec substitute table e =
   let subst e = substitute table e in
   let special = function
     | E.Var v           -> Some (E.Var (lookup table v))
-    | E.Store (v, i, e) -> Some (E.Store (lookup table v, subst i, subst e))
-    | E.Select (v, i)   -> Some (E.Select (lookup table v, subst i))
+    | E.Store (v, i, e) -> Some (E.Store (subst v, subst i, subst e))
+    | E.Select (v, i)   -> Some (E.Select (subst v, subst i))
     | _       -> None
   in
   E.map special e

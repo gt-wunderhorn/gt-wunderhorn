@@ -1,0 +1,23 @@
+static class Element {
+  public Element next;
+}
+
+static int length(Element e) {
+  int l = 0;
+  while (e != null) {
+    l = l + 1;
+    e = e.next;
+  }
+  return l;
+}
+
+public static void main(String[] args) {
+  Element e = null;
+  for (int i = 0; i < 5; ++i) {
+    Element t = new Element();
+    t.next = e;
+    e = t;
+  }
+
+  ensure(length(e) == 6);
+}

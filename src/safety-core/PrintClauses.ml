@@ -66,8 +66,8 @@ let expr e =
     | E.Real f                 -> string_of_float f
     | E.Bool true              -> "true"
     | E.Bool false             -> "false"
-    | E.Store (v, i, e)        -> A.parens ["store"; var v; ex i; ex e]
-    | E.Select (v, e)          -> A.parens ["select"; var v; ex e]
+    | E.Store (v, i, e)        -> A.parens ["store"; ex v; ex i; ex e]
+    | E.Select (v, e)          -> A.parens ["select"; ex v; ex e]
     | E.Allocate _             -> assert false
   in
   A.parens ["rule"; ex e]
