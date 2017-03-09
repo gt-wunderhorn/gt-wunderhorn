@@ -78,3 +78,8 @@ make hard
 make example program=benchmark/simple/fib.pass
 ```
 
+### Making an Example
+
+This is useful for testing out a single program by hand, now
+`make example program=benchmark/<program>` outputs the generated Z3 and
+it produces an HTML view of the JBir representation of the program.
