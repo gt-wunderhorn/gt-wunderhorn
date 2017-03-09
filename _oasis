@@ -58,3 +58,12 @@ Executable safetycheck
   BuildDepends: safetycore
   ByteOpt:      -thread
   NativeOpt:    -thread
+
+
+Executable sawjainspect
+  Path:         scripts
+  BuildTools:   ocamlbuild
+  BuildDepends: Z3, sawja
+  MainIs:       SawjaInspect.ml
+  ByteOpt:      -thread
+  NativeOpt:    -thread

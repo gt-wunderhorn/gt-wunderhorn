@@ -4,9 +4,16 @@ open JBasics
 open Sawja_pack
 open JProgram
 
-(* TODO: Make better *)
 let classpath =
-  "/home/david/Shape/bin:/usr/lib/jvm/java-7-oracle/jre/lib/rt.jar"
+  let default_cp = [
+    (Sys.getcwd ());
+  ] in
+  let with_env_vars = try
+    (Sys.getenv "CLASSPATH") :: default_cp
+  with
+    Not_found -> default_cp
+  in
+  String.concat ":" with_env_vars
 
 let (prta,instantiated_classes) =
   JRTA.parse_program classpath
@@ -19,4 +26,4 @@ let pbir = JProgram.map_program2
     prta
 
 let () =
-  JBir.print_program pbir "./out";
+  JBir.print_program pbir "./jbir-html";
