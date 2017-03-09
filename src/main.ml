@@ -9,12 +9,21 @@ let _ =
     let classpath = Sys.argv.(1) in
     let class_name = Sys.argv.(2) in
 
-    let exprs = Inspect.inspect classpath class_name in
+    let ir = Inspect.gen_ir classpath class_name in
+    let exprs = Inspect.inspect ir in
 
     if Sys.argv.(3) = "print"
     then
       let p = PrintClauses.print exprs in
       Core.Std.Out_channel.write_all "example.z3" ~data:p
+
+    (* TODO: not all the ir is printed, why? *)
+    else if Sys.argv.(3) = "print-ir"
+    then
+      let content = Lazy.force ir.Instr.content in
+      ( Instr.proc_to_str ir |> Printf.printf "%s\n"
+      ; Instr.instructions_to_str content |> Printf.printf "%s\n"
+      ; ())
 
     else if Sys.argv.(3) = "run"
     then ClausesToZ3.run exprs

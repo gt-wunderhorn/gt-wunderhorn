@@ -83,3 +83,15 @@ make example program=benchmark/simple/fib.pass
 This is useful for testing out a single program by hand, now
 `make example program=benchmark/<program>` outputs the generated Z3 and
 it produces an HTML view of the JBir representation of the program.
+
+## Running
+
+The `main` program takes two arguments:
+
+```bash
+./main.byte <classpath> [print | print-ir | run]
+```
+
+ - `print` saves the Z3 output of the program as `example.z3`
+ - `print-ir` prints the IR used in this project to standard out
+ - `run` does the entire verification process (including trying to satisfy the clauses)

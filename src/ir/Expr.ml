@@ -1,5 +1,6 @@
 module Set = Core.Std.Set.Poly
 module T = Type
+module P = Printf
 
 type unop = Not
 
@@ -37,6 +38,73 @@ type t =
   | Relation  of rel * t list
   | Query     of query * t
   | Allocate  of t
+
+let unop_to_str = function Not -> "Not"
+
+let biop_to_str = function
+  | BAnd  -> "BAnd"
+  | BOr   -> "BOr"
+  | BXor  -> "BXor"
+  | BShl  -> "BShl"
+  | BLShr -> "BLShr"
+  | BAShr -> "BAShr"
+  | Eq    -> "Eq"
+  | Impl  -> "Impl"
+  | IAdd  -> "IAdd"
+  | IDiv  -> "IDiv"
+  | IMul  -> "IMul"
+  | ISub  -> "ISub"
+  | IRem  -> "IRem"
+  | IGe   -> "IGe"
+  | IGt   -> "IGt"
+  | ILe   -> "ILe"
+  | ILt   -> "ILt"
+  | RAdd  -> "RAdd"
+  | RDiv  -> "RDiv"
+  | RMul  -> "RMul"
+  | RSub  -> "RSub"
+  | RRem  -> "RRem"
+  | RGe   -> "RGe"
+  | RGt   -> "RGt"
+  | RLe   -> "RLe"
+  | RLt   -> "RLt"
+
+let manyop_to_str = function
+  | And -> "And"
+  | Or  -> "Or"
+
+let assert_t_to_str = function
+  | Div0       -> "Div0"
+  | Null       -> "Null"
+  | NegArray   -> "NegArray"
+  | ArrayBound -> "ArrayBound"
+  | User       -> "User"
+
+let op_to_str = function
+  | Unop (op)   -> unop_to_str op
+  | Biop (op)   -> biop_to_str op
+  | Manyop (op) -> manyop_to_str op
+
+let query_to_str = function
+  | (label, asrt) -> P.sprintf "Query (%s, %s)" (Lbl.lbl_to_str label) (assert_t_to_str asrt)
+
+let rel_to_str = function
+  | (label, ts) -> P.sprintf "Rel (%s, [%s])" (Lbl.lbl_to_str label)
+      (List.map (Type.type_to_str) ts |> String.concat ", ")
+
+let rec expr_to_str = function
+  | Var (var)          -> P.sprintf "Var (%s)" (Var.var_to_str var)
+  | Int (num)          -> P.sprintf "Int (%d)" num
+  | Real (num)         -> P.sprintf "Real (%f)" num
+  | Bool (flag)        -> P.sprintf "Bool (%B)" flag
+  | Store (a, b, c)    -> P.sprintf "Store (%s, %s, %s)" (expr_to_str a) (expr_to_str b) (expr_to_str c)
+  | Select (a, b)      -> P.sprintf "Select (%s, %s)" (expr_to_str a) (expr_to_str b)
+  | Apply (op, ts)     -> P.sprintf "Apply (%s, [%s])" (op_to_str op)
+      (List.map (expr_to_str) ts |> String.concat ", ")
+  | Relation (rel, ts) -> P.sprintf "Relation (%s, [%s])" (rel_to_str rel)
+      (List.map (expr_to_str) ts |> String.concat ", ")
+  | Query (q, a)       -> P.sprintf "Query (%s, %s)" (query_to_str q) (expr_to_str a)
+  | Allocate (a)       -> P.sprintf "Allocate (%s)" (expr_to_str a)
 
 let to_horn_clause = function
   | Apply (Biop Impl, [lhs; rhs]) ->

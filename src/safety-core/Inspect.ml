@@ -1,7 +1,7 @@
 module JP = Sawja_pack.JProgram
 module JB = Javalib_pack.JBasics
 
-let expr_graph classpath class_name =
+let gen_ir classpath class_name =
   let cn  = JB.make_cn class_name in
   let cms = JB.make_cms cn JP.main_signature in
   let proc_id = ref (0) in
@@ -11,6 +11,8 @@ let expr_graph classpath class_name =
      from the entrypoint. *)
   JBirToIr.mk_proc parse cms
 
+let expr_graph ir =
+  ir
   (* The IR procedure can be converted into a graph which shows the control
      flow of the program. The edges of the graph are lists of instructions and
      the nodes are program locations.*)
@@ -35,8 +37,8 @@ let expr_graph classpath class_name =
   |> Simplify.remove_empty_exprs
   |> Simplify.concatenate_consecutive_exprs
 
-let inspect classpath class_name =
-  expr_graph classpath class_name
+let inspect ir =
+  expr_graph ir
 
   (* Transform the edges from conjunctions to horn clauses by bringing the
      pre and post conditions in from the nodes. *)
