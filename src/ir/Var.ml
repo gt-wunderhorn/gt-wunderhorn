@@ -7,6 +7,8 @@ let specify (Mk (qid, t)) suffix = Mk (QID.specify qid suffix, t)
 
 let as_path (Mk (qid, _)) = QID.as_path qid
 
+let basename (Mk (qid, _)) = QID.most_specific qid
+
 let is_bool (Mk (_, t)) = t = Type.Bool
 
 let type_of (Mk (_, t)) = t

@@ -20,7 +20,7 @@ let const = function
 
 let rec typ = function
   | JB.TBasic t -> (match t with
-      | `Bool   -> T.Int
+      | `Bool   -> T.Bool
       | `Byte   -> T.Int
       | `Char   -> T.Int
       | `Double -> T.Real
@@ -152,6 +152,7 @@ let rec ir_proc parse st cn =
   ; I.params   = List.map (fun (t, v) ->
         Var.Mk (vname st v, typ t)
       ) p.P.params
+  ; I.ret_type = Option.map (typ) p.P.ret_type
   ; I.content  = instrs
   ; I.class_t  = E.Int (parse.Parse.class_id cn)
   }

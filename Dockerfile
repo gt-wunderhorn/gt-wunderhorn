@@ -20,6 +20,7 @@ RUN apt-get install -y \
 # setup opam and install ocam libraries
 RUN opam init -y && eval $(opam config env) && opam install -y \
     core \
+    ocaml-extlib \
     sawja
 
 # build z3 with ml bindings

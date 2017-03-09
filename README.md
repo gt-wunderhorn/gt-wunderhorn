@@ -38,6 +38,7 @@ opam init -y
 eval $(opam config env)
 opam install -y \
     core \
+    ocaml-extlib \
     sawja
 ```
 
