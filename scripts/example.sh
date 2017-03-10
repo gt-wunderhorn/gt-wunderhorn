@@ -5,8 +5,8 @@ source "$SOURCE_DIR/common.sh"
 
 PROGRAM="$(readlink -f "$1")"
 mkdir -p bin
-cp "$(source_dir)"/../main.byte bin
-cp "$(source_dir)"/../SawjaInspect.byte bin
+cp -r "$(source_dir)"/../main.byte bin
+cp -r "$(source_dir)"/../SawjaInspect.byte bin
 cd bin
 
 echo

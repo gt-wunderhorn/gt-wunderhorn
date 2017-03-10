@@ -9,6 +9,12 @@ else
     build_test "$1" > Test.java
 fi
 
+if [[ $(get_ext "$1") = 'pass' ]]; then
+    EXPECTED="safe"
+elif [[ $(get_ext "$1") = 'fail' ]]; then
+    EXPECTED="unsafe"
+fi
+
 # sed -i -e 's/\<ArrayList\>/MyList/g' Test.java
 # sed -i -e 's/\<List\>/MyList/g' Test.java
 # sed -i -e 's/\<LinkedList\>/MyList/g' Test.java
@@ -28,4 +34,8 @@ javac -g *.java
 
 echo "Using classpath of $(classpath)."
 
-./main.byte "$(classpath)" Test $2
+if [[ $2 = 'run' ]]; then
+    expect_safety "$EXPECTED" ./main.byte "$(classpath)" Test run
+else
+    ./main.byte "$(classpath)" Test "$2"
+fi
