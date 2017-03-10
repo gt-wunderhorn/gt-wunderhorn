@@ -4,6 +4,7 @@ module Set = Core.Std.Set.Poly
 module Map = Core.Std.Map.Poly
 module QID = QualifiedIdentity
 
+module V = Var
 module T = Type
 module E = Expr
 module I = Instr
@@ -86,10 +87,7 @@ let remove_empty_exprs g =
 
 (* Some low level languages (including JVM Bytecode) do not represent booleans
    directly. This results in strange clauses. This transforms instructions
-   sequences which conditionally assign integers to a boolean assignment.
-
-   TODO this could potentially break code which legitimately assigns integers 0 and 1.
-   TODO a more general approach to this problem. *)
+   sequences which conditionally assign integers to a boolean assignment. *)
 let simplify_boolean_assignment is =
   let rec replace_instrs = function
     | (I.Instr (l1, I.If (c, ll1)))
@@ -99,6 +97,13 @@ let simplify_boolean_assignment is =
       :: (I.Instr (l5, ins))
       :: rest when ll1 = l4 &&
                    ll2 = l5 &&
+                   (* from the Java Docs on variable naming:
+                      the dollar sign character, by convention, is never used at all.
+                      You may find some situations where auto-generated names will
+                      contain the dollar sign, but your variable names should always
+                      avoid using it.
+                      must be compiled with '-g' though *)
+                   (Var.basename v1).[0] = '$' &&
                    v1 = v2 ->
       let (m, rest) = replace_instrs (I.Instr ((l5, ins)) :: rest) in
       let v = Var.with_type v1 T.Bool in
@@ -127,6 +132,9 @@ let simplify_boolean_assignment is =
   in
 
   let replace_vars = function
+    | I.Assign (V.Mk (var, T.Bool), E.Int (0 | 1 as bin)) ->
+      let to_bool = if bin = 1 then true else false in
+      I.Assign (V.Mk (var, T.Bool), E.Bool (to_bool))
     | I.Assign (v, e)           -> I.Assign (lookup v, ex e)
     | I.Goto l                  -> I.Goto l
     | I.If (e, l)               -> I.If (ex e, l)
