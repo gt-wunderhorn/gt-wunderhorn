@@ -163,6 +163,7 @@ let rec ir_proc parse st cn =
       |> List.mapi (fun line ir -> I.Instr (Lbl.At (p.P.name, Lbl.Line line), ir))
       |> List.map fix_offset
       |> Simplify.simplify_boolean_assignment
+      |> Simplify.simplify_boolean_checks
     ) in
 
   { I.id       = p.P.name

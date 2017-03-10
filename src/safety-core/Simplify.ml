@@ -146,6 +146,30 @@ let simplify_boolean_assignment is =
   List.map
     (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i)) is'
 
+let simplify_boolean_checks is =
+  let ex =
+    let special = function
+      | E.Apply (E.Biop (E.Eq), [E.Var (V.Mk (_, T.Bool)) as var; E.Int (0 | 1 as bin)]) ->
+        if bin = 1
+        then Some (var)
+        else Some (E.Apply (E.Unop (E.Not), [var]))
+      | _ -> None in
+    E.map special
+  in
+  let replace_vars = function
+    | I.Assign (v, e)           -> I.Assign (v, ex e)
+    | I.Goto l                  -> I.Goto l
+    | I.If (e, l)               -> I.If (ex e, l)
+    | I.Return e                -> I.Return (ex e)
+    | I.Invoke (p, v, es)       -> I.Invoke (p, v, List.map ex es)
+    | I.Dispatch (e, ps, v, es) -> I.Dispatch (ex e, ps, v, List.map ex es)
+    | I.Assert (e, at)          -> I.Assert (ex e, at)
+  in
+  List.map
+    (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i))
+    is
+
+
 (* If a relation only appears on the right hand side of a Horn Clause once, then
    other references to that relation can be inlined. *)
 let inline_relations es =
