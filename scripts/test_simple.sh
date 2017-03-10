@@ -3,6 +3,7 @@ SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
 SOURCE_DIR=$(dirname "$SOURCE_DIR")
 source "$SOURCE_DIR/common.sh"
 
+rm -rf bin
 mkdir -p bin
 cp "$(source_dir)"/../main.byte bin
 cd bin
