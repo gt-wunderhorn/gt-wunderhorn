@@ -146,16 +146,8 @@ let simplify_boolean_assignment is =
   List.map
     (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i)) is'
 
-let simplify_boolean_checks is =
-  let ex =
-    let special = function
-      | E.Apply (E.Biop (E.Eq), [E.Var (V.Mk (_, T.Bool)) as var; E.Int (0 | 1 as bin)]) ->
-        if bin = 1
-        then Some (var)
-        else Some (E.Apply (E.Unop (E.Not), [var]))
-      | _ -> None in
-    E.map special
-  in
+let expr_replacement replacer is =
+  let ex = E.map replacer in
   let replace_vars = function
     | I.Assign (v, e)           -> I.Assign (v, ex e)
     | I.Goto l                  -> I.Goto l
@@ -168,6 +160,54 @@ let simplify_boolean_checks is =
   List.map
     (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i))
     is
+
+(* changes (my_bool = true) -> (my_bool) *)
+let simplify_boolean_checks is =
+  let replacer = function
+    | E.Apply (E.Biop (E.Eq), [E.Var (V.Mk (_, T.Bool)) as var; E.Int (0 | 1 as bin)]) ->
+      if bin = 1
+      then Some (var)
+      else Some (E.Apply (E.Unop (E.Not), [var]))
+    | _ -> None
+  in
+  expr_replacement replacer is
+
+let inline_assignments is =
+  let rec assignment_counts = function
+    | (I.Instr (_, I.Assign (var, assign))) :: rest ->
+      let m = assignment_counts rest in
+      (match Map.find m var with
+        | None -> Map.add ~key:var ~data:(1, assign) m
+        | Some (c, _) -> Map.add ~key:var ~data:(c + 1, assign) m
+      )
+    | (i :: rest) -> assignment_counts rest
+    | [] -> Map.empty
+  in
+  let counts = assignment_counts is in
+
+  let replacer = function
+    | E.Var v ->
+      (match Map.find counts v with
+        | Some (1, e) -> Some (e)
+        | _ -> None
+      )
+    | _ -> None
+  in
+
+  let inlined = expr_replacement replacer is in
+
+  let rec remove_unused_assigns = function
+    | (I.Instr (now, I.Assign (var, _)))
+      :: (I.Instr (next, next_instr))
+      :: rest
+      when (Map.mem counts var) ->
+        (I.Instr (now, I.Goto next))
+        :: (I.Instr (next, next_instr))
+        :: (remove_unused_assigns rest)
+    | (i :: rest) -> i :: remove_unused_assigns rest
+    | [] -> []
+  in
+  remove_unused_assigns inlined
 
 
 (* If a relation only appears on the right hand side of a Horn Clause once, then
