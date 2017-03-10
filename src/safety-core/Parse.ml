@@ -1,4 +1,5 @@
 module JL = Javalib_pack.Javalib
+module JCode = Javalib_pack.JCode
 module JP = Sawja_pack.JProgram
 module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
@@ -41,6 +42,28 @@ let native_entry =
   let ms = JB.make_ms "entry" [] None in
   JB.make_cms native ms
 
+let local_var_table classpath cname =
+  let jl_class_or_iface = JL.get_class (JL.class_path classpath) cname in
+
+  let get_concrete ms jl_method map = match jl_method with
+    | JL.AbstractMethod _ -> map
+    | JL.ConcreteMethod ({JL.cm_implementation}) ->
+      (match cm_implementation with
+        | JL.Native -> map
+        | JL.Java lazy_code ->
+          let ({JCode.c_local_variable_table}) = Lazy.force lazy_code in
+          (match c_local_variable_table with
+            | None -> map
+            | Some vars -> JB.MethodMap.add ms vars map
+          )
+      )
+  in
+
+  match jl_class_or_iface with
+    | JL.JClass ({JL.c_methods}) ->
+      JB.MethodMap.fold (get_concrete) c_methods (JB.MethodMap.empty)
+    | _ -> JB.MethodMap.empty
+
 let parse id classpath cn =
   let (prta,instantiated_classes) =
     Sawja_pack.JRTA.parse_program
@@ -69,6 +92,13 @@ let parse id classpath cn =
   and parse_method cm =
     let sign = cm.JL.cm_signature in
     let cl_name = fst (JB.cms_split (cm.JL.cm_class_method_signature)) in
+    (* TODO: shouldn't read whole class every time *)
+    let var_tables = local_var_table classpath cl_name in
+    let opt_vartable = try
+      Some (JB.MethodMap.find sign var_tables)
+    with
+      | _ -> None
+    in
     id := !id + 1;
     match cm.JL.cm_implementation with
     | JL.Java x ->
@@ -80,6 +110,7 @@ let parse id classpath cn =
       ; Proc.content  = Array.to_list (J.code (Lazy.force x))
       ; Proc.ret_type = JB.ms_rtype sign
       ; Proc.sign     = sign
+      ; Proc.vartable = opt_vartable
       ; Proc.cl_name  = fst (JB.cms_split (cm.JL.cm_class_method_signature))
       }
 

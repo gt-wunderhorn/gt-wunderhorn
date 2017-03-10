@@ -83,14 +83,12 @@ module S_map = Map.Make(struct type t = string;; let compare = compare end)
 let names_to_var p_name v_name =
   QID.specify p_name v_name
 
-let vname st v = names_to_var st.proc.P.name (J.var_name_g v)
-
-let rec expr st = function
+let rec expr st mk_var jbir = match jbir with
   | J.Const c           -> const c
-  | J.Var (t, v)        -> E.Var (Var.Mk (vname st v, typ t))
-  | J.Binop (op, x, y)  -> binop op (expr st x) (expr st y)
-  | J.Unop (op, e)      -> unop op (expr st e)
-  | J.Field (v, cn, fs) -> E.Select (E.Var (field cn fs), expr st v)
+  | J.Var (t, v)        -> E.Var (mk_var (typ t) v)
+  | J.Binop (op, x, y)  -> binop op (expr st mk_var x) (expr st mk_var y)
+  | J.Unop (op, e)      -> unop op (expr st mk_var e)
+  | J.Field (v, cn, fs) -> E.Select (E.Var (field cn fs), expr st mk_var v)
   | J.StaticField (cn, fs) ->
     E.Select (E.Var (field cn fs), E.Int (st.parse.Parse.class_id cn))
 
@@ -117,10 +115,29 @@ let rec ir_proc parse st cn =
   let p = st.proc in
   let module OT = OffsetTable in
 
+  let vartable = p.P.vartable in
+  let find_type_from_table var_name = match vartable with
+    | None -> None
+    | Some (locals) ->
+      (* TODO: Multiple vars of the same name within function?? *)
+      (* TODO: the same thing for feild names *)
+      let same_name (_, _, s, _, _) = s = (J.var_name_g var_name) in
+      let vars = List.filter (same_name) locals in
+      match vars with
+        | ((_, _, _, t, _) :: _) -> Some (typ t)
+        | _ -> None
+  in
+
+  let var_name st v = names_to_var st.proc.P.name (J.var_name_g v) in
+  let mk_var t v =
+    let better_type = find_type_from_table v in
+    Var.Mk (var_name st v, Option.default t better_type)
+  in
+
   let instrs = Lazy.from_fun (fun _ ->
       let groups =
         p.P.content
-        |> List.mapi (instr parse st) in
+        |> List.mapi (instr parse st mk_var) in
 
       let jump_offsets =
         let offsets = List.mapi
@@ -149,9 +166,7 @@ let rec ir_proc parse st cn =
     ) in
 
   { I.id       = p.P.name
-  ; I.params   = List.map (fun (t, v) ->
-        Var.Mk (vname st v, typ t)
-      ) p.P.params
+  ; I.params   = List.map (fun (t, v) -> mk_var (typ t) v) p.P.params
   ; I.ret_type = Option.map (typ) p.P.ret_type
   ; I.content  = instrs
   ; I.class_t  = E.Int (parse.Parse.class_id cn)
@@ -161,16 +176,15 @@ and mk_proc parse cms =
   let p = parse.Parse.cms_lookup cms in
   ir_proc parse (mk_st parse (List.hd p)) (fst (JB.cms_split cms))
 
-and instr parse st line i =
-  let var v t = Var.Mk (vname st v, t) in
-  let expr = expr st in
+and instr parse st mk_var line i =
+  let expr = expr st mk_var in
   let e_type e = E.type_of (expr e) in
   let lbl l = Lbl.At (st.proc.P.name, Lbl.Line l) in
   let next = lbl (line+1) in
 
   let return_var v ms =
     match (v, JB.ms_rtype ms) with
-    | (Some v, Some s) -> var v (typ s)
+    | (Some v, Some s) -> mk_var (typ s) v
     | _ -> LS.dummy
   in
 
@@ -184,7 +198,7 @@ and instr parse st line i =
 
   match i with
   | J.AffectVar (v, e) ->
-    [I.Assign (var v (e_type e), expr e)]
+    [I.Assign (mk_var (e_type e) v, expr e)]
 
   | J.AffectArray (arr, ind, e) ->
     let array_array = LS.array_array (e_type e) in
@@ -217,8 +231,7 @@ and instr parse st line i =
       let backup_ret =
         if List.length st.proc.P.params = 0
         then E.Int 0
-        else E.Var ((fun (t, v) -> Var.Mk (vname st v, typ t))
-                      (List.hd st.proc.P.params))
+        else E.Var ((fun (t, v) -> mk_var (typ t) v) (List.hd st.proc.P.params))
       in
       let e = Option.map_default expr backup_ret e in
       [I.Return e]
@@ -228,10 +241,10 @@ and instr parse st line i =
     then [I.Goto next]
     else
       let proc = mk_proc parse (ctor_sig cn t) in
-      [I.Invoke (proc, var v T.Int, List.map expr es)]
+      [I.Invoke (proc, mk_var T.Int v, List.map expr es)]
 
   | J.NewArray (v, t, es) ->
-    let v' = var v T.Int in
+    let v' = mk_var T.Int v in
     [ I.Assign (LS.id, E.mk_iadd (E.Var LS.id) (E.Int 1))
     ; I.Assign (v', E.Var LS.id)
     ; I.Assign (LS.class_array, E.Store  (E.Var LS.class_array,  E.Var v', E.Int (-1)))
