@@ -21,7 +21,7 @@ Library utility
 Library ir
   Path:         src/ir
   BuildTools:   ocamlbuild
-  BuildDepends: utility, ocaml-extlib
+  BuildDepends: utility, extlib-compat
   ByteOpt:      -thread
   NativeOpt:    -thread
   Modules:      Type,
