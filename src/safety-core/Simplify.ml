@@ -109,8 +109,11 @@ let simplify_boolean_assignment is =
       let v = Var.with_type v1 T.Bool in
       let m' = Map.add ~key:v1 ~data:v m in
       (m',
-       (I.Instr (l1, I.Assign (v, E.mk_not c)))
-       :: (I.Instr(l2, I.Goto l5)) :: rest)
+           (I.Instr (l1, I.If (c, l4)))
+        :: (I.Instr (l2, I.Assign (v, E.Bool true)))
+        :: (I.Instr (l3, I.Goto l5))
+        :: (I.Instr (l4, I.Assign (v, E.Bool false)))
+        :: rest)
     | (i :: is) ->
       let (m, rest) = replace_instrs is in
       (m, i :: rest)
@@ -173,25 +176,38 @@ let simplify_boolean_checks is =
   expr_replacement replacer is
 
 let inline_assignments is =
+  let is_global_assignment = function
+    | E.Var var when (LangState.is_global var) -> true
+    | _ -> false
+  in
   let rec assignment_counts = function
-    | (I.Instr (_, I.Assign (var, assign))) :: rest ->
-      let m = assignment_counts rest in
-      (match Map.find m var with
-        | None -> Map.add ~key:var ~data:(1, assign) m
-        | Some (c, _) -> Map.add ~key:var ~data:(c + 1, assign) m
-      )
+    | (I.Instr (lbl, I.Assign (var, assign))) :: rest
+      when (V.is_local var lbl)
+      &&   (V.is_scalar var)
+      &&   (not (is_global_assignment assign)) ->
+        let m = assignment_counts rest in
+        (match Map.find m var with
+          | None -> Map.add ~key:var ~data:(1, assign) m
+          | Some (c, _) -> Map.add ~key:var ~data:(c + 1, assign) m
+        )
     | (i :: rest) -> assignment_counts rest
     | [] -> Map.empty
   in
   let counts = assignment_counts is in
 
-  let replacer = function
+  let rec replacer = function
     | E.Var v ->
       (match Map.find counts v with
-        | Some (1, e) -> Some (e)
+        | Some (1, e) -> Some (E.map replacer e)
         | _ -> None
       )
     | _ -> None
+  in
+
+  let is_unique var =
+    match Map.find counts var with
+      | Some(1, _) -> true
+      | _ -> false
   in
 
   let inlined = expr_replacement replacer is in
@@ -200,10 +216,10 @@ let inline_assignments is =
     | (I.Instr (now, I.Assign (var, _)))
       :: (I.Instr (next, next_instr))
       :: rest
-      when (Map.mem counts var) ->
+      when (is_unique var) ->
+        (Printf.printf "got %s\n" (V.var_to_str var));
         (I.Instr (now, I.Goto next))
-        :: (I.Instr (next, next_instr))
-        :: (remove_unused_assigns rest)
+        :: (remove_unused_assigns (I.Instr (next, next_instr) :: rest))
     | (i :: rest) -> i :: remove_unused_assigns rest
     | [] -> []
   in

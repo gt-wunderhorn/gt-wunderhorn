@@ -11,6 +11,9 @@ let rec show_type = function
   | T.Array t  -> "Array_" ^ show_type t
 
 let global n t = Var.Mk (QID.of_list ["g"; n], t)
+let is_global = function
+  | (Var.Mk (QID.QID ("g" :: _), _)) -> true
+  | _ -> false
 
 let array_array t = global ("ARRAY" ^ show_type t) (T.Array (T.Array t))
 let class_array   = global "CLASS_TYPE" (T.Array T.Int)

@@ -128,6 +128,7 @@ let rec ir_proc parse st cn =
         | _ -> None
   in
 
+  (* TODO: Check how this works with non-local variables *)
   let var_name st v = names_to_var st.proc.P.name (J.var_name_g v) in
   let mk_var t v =
     let better_type = find_type_from_table v in

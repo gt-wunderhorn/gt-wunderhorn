@@ -92,7 +92,8 @@ let parse id classpath cn =
   and parse_method cm =
     let sign = cm.JL.cm_signature in
     let cl_name = fst (JB.cms_split (cm.JL.cm_class_method_signature)) in
-    (* TODO: shouldn't read whole class every time *)
+    (* TODO: shouldn't read whole class every time
+       idea, maybe make a map of QID -> type *)
     let var_tables = local_var_table classpath cl_name in
     let opt_vartable = try
       Some (JB.MethodMap.find sign var_tables)
