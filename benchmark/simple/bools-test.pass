@@ -1,0 +1,27 @@
+  public static void main(String[] args) {
+    ensure(test(2, true));
+  }
+
+  public static boolean test(int n, boolean w) {
+    boolean x;
+    if (2 == n) {
+      x = true;
+    } else {
+      x = false;
+    }
+
+    int y;
+    if (2 == n) {
+      y = 1;
+    } else {
+      y = 0;
+    }
+
+    boolean z = y != 0;
+
+    boolean a = ((x && z && w) ? 2 : 1) + y == 3;
+
+    boolean b = n == 1;
+
+    return w && x || a || b;
+  }

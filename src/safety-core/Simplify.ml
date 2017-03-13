@@ -4,6 +4,7 @@ module Set = Core.Std.Set.Poly
 module Map = Core.Std.Map.Poly
 module QID = QualifiedIdentity
 
+module V = Var
 module T = Type
 module E = Expr
 module I = Instr
@@ -86,10 +87,7 @@ let remove_empty_exprs g =
 
 (* Some low level languages (including JVM Bytecode) do not represent booleans
    directly. This results in strange clauses. This transforms instructions
-   sequences which conditionally assign integers to a boolean assignment.
-
-   TODO this could potentially break code which legitimately assigns integers 0 and 1.
-   TODO a more general approach to this problem. *)
+   sequences which conditionally assign integers to a boolean assignment. *)
 let simplify_boolean_assignment is =
   let rec replace_instrs = function
     | (I.Instr (l1, I.If (c, ll1)))
@@ -99,13 +97,23 @@ let simplify_boolean_assignment is =
       :: (I.Instr (l5, ins))
       :: rest when ll1 = l4 &&
                    ll2 = l5 &&
+                   (* from the Java Docs on variable naming:
+                      the dollar sign character, by convention, is never used at all.
+                      You may find some situations where auto-generated names will
+                      contain the dollar sign, but your variable names should always
+                      avoid using it.
+                      must be compiled with '-g' though *)
+                   (Var.basename v1).[0] = '$' &&
                    v1 = v2 ->
       let (m, rest) = replace_instrs (I.Instr ((l5, ins)) :: rest) in
       let v = Var.with_type v1 T.Bool in
       let m' = Map.add ~key:v1 ~data:v m in
       (m',
-       (I.Instr (l1, I.Assign (v, E.mk_not c)))
-       :: (I.Instr(l2, I.Goto l5)) :: rest)
+           (I.Instr (l1, I.If (c, l4)))
+        :: (I.Instr (l2, I.Assign (v, E.Bool true)))
+        :: (I.Instr (l3, I.Goto l5))
+        :: (I.Instr (l4, I.Assign (v, E.Bool false)))
+        :: rest)
     | (i :: is) ->
       let (m, rest) = replace_instrs is in
       (m, i :: rest)
@@ -127,6 +135,9 @@ let simplify_boolean_assignment is =
   in
 
   let replace_vars = function
+    | I.Assign (V.Mk (var, T.Bool), E.Int (0 | 1 as bin)) ->
+      let to_bool = if bin = 1 then true else false in
+      I.Assign (V.Mk (var, T.Bool), E.Bool (to_bool))
     | I.Assign (v, e)           -> I.Assign (lookup v, ex e)
     | I.Goto l                  -> I.Goto l
     | I.If (e, l)               -> I.If (ex e, l)
@@ -137,6 +148,83 @@ let simplify_boolean_assignment is =
   in
   List.map
     (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i)) is'
+
+let expr_replacement replacer is =
+  let ex = E.map replacer in
+  let replace_vars = function
+    | I.Assign (v, e)           -> I.Assign (v, ex e)
+    | I.Goto l                  -> I.Goto l
+    | I.If (e, l)               -> I.If (ex e, l)
+    | I.Return e                -> I.Return (ex e)
+    | I.Invoke (p, v, es)       -> I.Invoke (p, v, List.map ex es)
+    | I.Dispatch (e, ps, v, es) -> I.Dispatch (ex e, ps, v, List.map ex es)
+    | I.Assert (e, at)          -> I.Assert (ex e, at)
+  in
+  List.map
+    (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i))
+    is
+
+(* changes (my_bool = true) -> (my_bool) *)
+let simplify_boolean_checks is =
+  let replacer = function
+    | E.Apply (E.Biop (E.Eq), [E.Var (V.Mk (_, T.Bool)) as var; E.Int (0 | 1 as bin)]) ->
+      if bin = 1
+      then Some (var)
+      else Some (E.Apply (E.Unop (E.Not), [var]))
+    | _ -> None
+  in
+  expr_replacement replacer is
+
+let inline_assignments is =
+  let is_global_assignment = function
+    | E.Var var when (LangState.is_global var) -> true
+    | _ -> false
+  in
+  let rec assignment_counts = function
+    | (I.Instr (lbl, I.Assign (var, assign))) :: rest
+      when (V.is_local var lbl)
+      &&   (V.is_scalar var)
+      &&   (not (is_global_assignment assign)) ->
+        let m = assignment_counts rest in
+        (match Map.find m var with
+          | None -> Map.add ~key:var ~data:(1, assign) m
+          | Some (c, _) -> Map.add ~key:var ~data:(c + 1, assign) m
+        )
+    | (i :: rest) -> assignment_counts rest
+    | [] -> Map.empty
+  in
+  let counts = assignment_counts is in
+
+  let rec replacer = function
+    | E.Var v ->
+      (match Map.find counts v with
+        | Some (1, e) -> Some (E.map replacer e)
+        | _ -> None
+      )
+    | _ -> None
+  in
+
+  let is_unique var =
+    match Map.find counts var with
+      | Some(1, _) -> true
+      | _ -> false
+  in
+
+  let inlined = expr_replacement replacer is in
+
+  let rec remove_unused_assigns = function
+    | (I.Instr (now, I.Assign (var, _)))
+      :: (I.Instr (next, next_instr))
+      :: rest
+      when (is_unique var) ->
+        (Printf.printf "got %s\n" (V.var_to_str var));
+        (I.Instr (now, I.Goto next))
+        :: (remove_unused_assigns (I.Instr (next, next_instr) :: rest))
+    | (i :: rest) -> i :: remove_unused_assigns rest
+    | [] -> []
+  in
+  remove_unused_assigns inlined
+
 
 (* If a relation only appears on the right hand side of a Horn Clause once, then
    other references to that relation can be inlined. *)

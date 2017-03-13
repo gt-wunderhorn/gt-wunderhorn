@@ -21,7 +21,7 @@ Library utility
 Library ir
   Path:         src/ir
   BuildTools:   ocamlbuild
-  BuildDepends: utility
+  BuildDepends: utility, core
   ByteOpt:      -thread
   NativeOpt:    -thread
   Modules:      Type,
@@ -56,5 +56,14 @@ Executable safetycheck
   BuildTools:   ocamlbuild
   MainIs:       main.ml
   BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+
+Executable sawjainspect
+  Path:         scripts
+  BuildTools:   ocamlbuild
+  BuildDepends: Z3, sawja
+  MainIs:       SawjaInspect.ml
   ByteOpt:      -thread
   NativeOpt:    -thread

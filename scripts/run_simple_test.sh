@@ -1,11 +1,20 @@
-fn=$(basename "$1")
-ext="${fn##*.}"
+#!/usr/bin/env bash
+SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
+SOURCE_DIR=$(dirname "$SOURCE_DIR")
+source "$SOURCE_DIR/common.sh"
 
-if [ "$ext" == "java" ]; then
-  cp $1 Test.java
+if [[ $(get_ext "$1") = 'java' ]]; then
+    cp "$1" Test.java
 else
-  ../scripts/build_test.sh $1 > Test.java
+    build_test "$1" > Test.java
 fi
+
+if [[ $(get_ext "$1") = 'pass' ]]; then
+    EXPECTED="safe"
+elif [[ $(get_ext "$1") = 'fail' ]]; then
+    EXPECTED="unsafe"
+fi
+
 # sed -i -e 's/\<ArrayList\>/MyList/g' Test.java
 # sed -i -e 's/\<List\>/MyList/g' Test.java
 # sed -i -e 's/\<LinkedList\>/MyList/g' Test.java
@@ -17,10 +26,16 @@ fi
 # sed -i -e 's/import java.util.MyList;/ /g' Test.java
 # sed -i -e 's/import java.util.MyArrays;/ /g' Test.java
 
-rm *.class
-cp ../benchmark/native/MyNative.java .
-# cp ../benchmark/native/MyList.java .
-# cp ../benchmark/native/MyArrays.java .
+rm -f *.class
+cp "$(source_dir)"/../benchmark/native/MyNative.java .
+# cp "$(source_dir)"/../benchmark/native/MyList.java .
+# cp "$(source_dir)"/../benchmark/native/MyArrays.java .
 javac -g *.java
 
-./main.byte `cat ../benchmark/classpath` Test $2
+echo "Using classpath of $(classpath)."
+
+if [[ $2 = 'run' ]]; then
+    expect_safety "$EXPECTED" ./main.byte "$(classpath)" Test run
+else
+    ./main.byte "$(classpath)" Test "$2"
+fi

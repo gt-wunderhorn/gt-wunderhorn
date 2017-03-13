@@ -1,0 +1,439 @@
+diff --git a/src/api/api_datalog.cpp b/src/api/api_datalog.cpp
+index 903fedd..6cc5e68 100644
+--- a/src/api/api_datalog.cpp
++++ b/src/api/api_datalog.cpp
+@@ -18,6 +18,7 @@ Revision History:
+ #include"api_datalog.h"
+ #include"api_context.h"
+ #include"api_util.h"
++#include"api_model.h"
+ #include"ast_pp.h"
+ #include"api_ast_vector.h"
+ #include"api_log_macros.h"
+@@ -334,6 +335,30 @@ extern "C" {
+         Z3_CATCH_RETURN(0);
+     }
+ 
++    void Z3_API Z3_fixedpoint_display_certificate(Z3_context c, Z3_fixedpoint d) {
++        Z3_TRY;
++        LOG_Z3_fixedpoint_display_certificate(c, d);
++        RESET_ERROR_CODE();
++        to_fixedpoint_ref(d)->ctx().display_certificate(std::cout);
++        Z3_CATCH;
++    }
++
++    Z3_model Z3_API Z3_fixedpoint_get_refutation(Z3_context c, Z3_fixedpoint d) {
++        Z3_TRY;
++        LOG_Z3_fixedpoint_get_refutation(c, d);
++        RESET_ERROR_CODE();
++        model_ref _m = to_fixedpoint_ref(d)->ctx().get_refutation();
++        if (!_m) {
++            SET_ERROR_CODE(Z3_INVALID_USAGE);
++            RETURN_Z3(0);
++        }
++        Z3_model_ref * m_ref = alloc(Z3_model_ref, *mk_c(c));
++        m_ref->m_model = _m;
++        mk_c(c)->save_object(m_ref);
++        RETURN_Z3(of_model(m_ref));
++        Z3_CATCH_RETURN(0);
++    }
++
+     Z3_string Z3_API Z3_fixedpoint_get_reason_unknown(Z3_context c,Z3_fixedpoint d) {
+         Z3_TRY;
+         LOG_Z3_fixedpoint_get_reason_unknown(c, d);
+@@ -436,6 +461,12 @@ extern "C" {
+         Z3_CATCH;
+     }
+ 
++    void Z3_API Z3_fixedpoint_register_variable(Z3_context c, Z3_fixedpoint d, Z3_func_decl f) {
++        Z3_TRY;
++        to_fixedpoint_ref(d)->ctx().register_variable(to_func_decl(f));
++        Z3_CATCH;
++    }
++
+     void Z3_API Z3_fixedpoint_set_predicate_representation(
+         Z3_context c,
+         Z3_fixedpoint d, 
+diff --git a/src/api/ml/z3.ml b/src/api/ml/z3.ml
+index b7016c4..bb6c373 100644
+--- a/src/api/ml/z3.ml
++++ b/src/api/ml/z3.ml
+@@ -1806,6 +1806,7 @@ struct
+     List.iter (Z3native.fixedpoint_assert (gc x) x) constraints
+ 
+   let register_relation x = Z3native.fixedpoint_register_relation (gc x) x
++  let register_variable x = Z3native.fixedpoint_register_variable (gc x) x
+ 
+   let add_rule (x:fixedpoint) (rule:expr) (name:Symbol.symbol option) =
+     match name with
+@@ -1835,6 +1836,13 @@ struct
+     let q = Z3native.fixedpoint_get_answer (gc x) x in
+     if Z3native.is_null_ast q then None else Some q
+ 
++  let display_certificate x =
++    Z3native.fixedpoint_display_certificate (gc x) x
++
++  let get_refutation x =
++    let q = Z3native.fixedpoint_get_refutation (gc x) x in
++    if Z3native.is_null_ast q then None else Some q
++                                            
+   let get_reason_unknown x = Z3native.fixedpoint_get_reason_unknown (gc x) x
+   let get_num_levels x = Z3native.fixedpoint_get_num_levels (gc x) x
+ 
+diff --git a/src/api/ml/z3.mli b/src/api/ml/z3.mli
+index 1c91b28..d8c8447 100644
+--- a/src/api/ml/z3.mli
++++ b/src/api/ml/z3.mli
+@@ -3133,6 +3133,9 @@ sig
+   (** Register predicate as recursive relation. *)
+   val register_relation : fixedpoint -> FuncDecl.func_decl -> unit
+ 
++  (** Register variable as relation argument. *)
++  val register_variable : fixedpoint -> FuncDecl.func_decl -> unit
++
+   (** Add rule into the fixedpoint solver. *)
+   val add_rule : fixedpoint -> Expr.expr -> Symbol.symbol option -> unit
+ 
+@@ -3167,7 +3170,13 @@ sig
+   (** Retrieve satisfying instance or instances of solver,
+       or definitions for the recursive predicates that show unsatisfiability. *)
+   val get_answer : fixedpoint -> Expr.expr option
++                                           
++  (** Display certificate *)
++  val display_certificate : fixedpoint -> unit
+ 
++  (** Get refutation model (Duality only). *)
++  val get_refutation : fixedpoint -> Model.model option
++                                            
+   (** Retrieve explanation why fixedpoint engine returned status Unknown. *)
+   val get_reason_unknown : fixedpoint -> string
+ 
+diff --git a/src/api/z3_fixedpoint.h b/src/api/z3_fixedpoint.h
+index dc98fdb..6782049 100644
+--- a/src/api/z3_fixedpoint.h
++++ b/src/api/z3_fixedpoint.h
+@@ -146,6 +146,12 @@ extern "C" {
+     Z3_ast Z3_API Z3_fixedpoint_get_answer(Z3_context c, Z3_fixedpoint d);
+ 
+     /**
++       \brief Display certificate. 
++       def_API('Z3_fixedpoint_display_certificate', VOID, (_in(CONTEXT), _in(FIXEDPOINT)))
++    */
++    void Z3_API Z3_fixedpoint_display_certificate(Z3_context c, Z3_fixedpoint d);
++
++    /**
+        \brief Retrieve a string that describes the last status returned by #Z3_fixedpoint_query.
+ 
+        Use this method when #Z3_fixedpoint_query returns Z3_L_UNDEF.
+@@ -155,6 +161,13 @@ extern "C" {
+     Z3_string Z3_API Z3_fixedpoint_get_reason_unknown(Z3_context c, Z3_fixedpoint d);
+ 
+     /**
++       \brief Retrieve the model for the counterexample (Duality only).
++
++       def_API('Z3_fixedpoint_get_refutation', MODEL, (_in(CONTEXT), _in(FIXEDPOINT)))
++    */
++    Z3_model Z3_API Z3_fixedpoint_get_refutation(Z3_context c, Z3_fixedpoint d);
++
++    /**
+        \brief Update a named rule.
+        A rule with the same name must have been previously created.
+ 
+@@ -217,6 +230,13 @@ extern "C" {
+     void Z3_API Z3_fixedpoint_register_relation(Z3_context c, Z3_fixedpoint d, Z3_func_decl f);
+ 
+     /**
++       \brief Register variable as Fixedpoint defined.
++
++       def_API('Z3_fixedpoint_register_variable', VOID, (_in(CONTEXT), _in(FIXEDPOINT), _in(FUNC_DECL)))
++    */
++    void Z3_API Z3_fixedpoint_register_variable(Z3_context c, Z3_fixedpoint d, Z3_func_decl f);
++
++    /**
+        \brief Configure the predicate representation.
+ 
+        It sets the predicate to use a set of domains given by the list of symbols.
+diff --git a/src/duality/duality_rpfp.cpp b/src/duality/duality_rpfp.cpp
+index c86ff9f..6501af9 100755
+--- a/src/duality/duality_rpfp.cpp
++++ b/src/duality/duality_rpfp.cpp
+@@ -4000,6 +4000,14 @@ namespace Duality {
+             for(unsigned j = 0; j < chs.size(); j++)
+                 if(chs[j] == parent){
+                     expr lit = GetRel(in_edge,j);
++                    if (parent->Name.arity() != lit.num_args() + new_params.size())
++                    {
++                        std::cout << "(cvoss) BUG! Looks like a relation "
++                            "appears twice on the LHS of a rule. Disambiguate "
++                            "by naming them P1,P2, and establish equivalence "
++                            "with P1 => P2, P2 => P1.\n";
++                        exit(0);
++                    }
+                     expr new_lit = AddParamsToApp(lit,parent->Name,new_params);
+                     func_decl fd = SuffixFuncDecl(new_lit,j);
+                     int nargs = new_lit.num_args();
+diff --git a/src/muz/base/dl_context.cpp b/src/muz/base/dl_context.cpp
+index 08fc0b9..e9f3a44 100644
+--- a/src/muz/base/dl_context.cpp
++++ b/src/muz/base/dl_context.cpp
+@@ -872,6 +872,11 @@ namespace datalog {
+         return m_engine->get_model();
+     }
+ 
++    model_ref context::get_refutation() {
++        ensure_engine();
++        return m_engine->get_refutation();
++    }
++
+     proof_ref context::get_proof() {
+         ensure_engine();
+         return m_engine->get_proof();
+diff --git a/src/muz/base/dl_context.h b/src/muz/base/dl_context.h
+index 3c1a7bf..3e969f1 100644
+--- a/src/muz/base/dl_context.h
++++ b/src/muz/base/dl_context.h
+@@ -519,6 +519,13 @@ namespace datalog {
+         model_ref get_model();
+ 
+         /**
++           \brief retrieve model showing query is sat.
++           
++           \pre engine == 'duality' - this option is only for Duality mode.
++         */
++        model_ref get_refutation();
++
++        /**
+            \brief retrieve proof from derivation of the query.
+            
+            \pre engine == 'pdr'  || engine == 'duality'- this option is only supported
+@@ -547,7 +554,6 @@ namespace datalog {
+         */
+         expr* get_answer_as_formula();
+ 
+-
+         void collect_statistics(statistics& st) const;
+ 
+         void reset_statistics();
+diff --git a/src/muz/base/dl_engine_base.h b/src/muz/base/dl_engine_base.h
+index f353fbf..6f7d1f9 100644
+--- a/src/muz/base/dl_engine_base.h
++++ b/src/muz/base/dl_engine_base.h
+@@ -83,6 +83,9 @@ namespace datalog {
+         virtual model_ref get_model() {
+             return model_ref(alloc(model, m));
+         }
++        virtual model_ref get_refutation() {
++            return model_ref(alloc(model, m));
++        }
+         virtual proof_ref get_proof() {
+             return proof_ref(m.mk_asserted(m.mk_true()), m);
+         }
+diff --git a/src/muz/duality/duality_dl_interface.cpp b/src/muz/duality/duality_dl_interface.cpp
+index 978391a..537b80e 100755
+--- a/src/muz/duality/duality_dl_interface.cpp
++++ b/src/muz/duality/duality_dl_interface.cpp
+@@ -506,6 +506,33 @@ namespace Duality {
+         return expr_ref(m_ctx.get_manager());
+     }
+ 
++    model_ref dl_interface::get_refutation() {
++        ast_manager &m = m_ctx.get_manager();
++        model_ref md(alloc(::model, m));
++        if(_d->status != StatusRefutation)
++            return model_ref(md);
++        // negation of the query is the last clause -- prove it
++        hash_set<func_decl> locals;
++        local_func_decls = &locals;
++        model orig_model = _d->cex.get_tree()->dualModel;
++        for(unsigned i = 0; i < orig_model.num_consts(); i++){
++            func_decl cnst = orig_model.get_const_decl(i);
++            if (locals.find(cnst) == locals.end()) {
++                expr thing = orig_model.get_const_interp(cnst);
++                md->register_decl(to_func_decl(cnst.raw()), to_expr(thing.raw()));
++            }
++        }
++        for(unsigned i = 0; i < orig_model.num_funcs(); i++){
++            func_decl cnst = orig_model.get_func_decl(i);
++            if (locals.find(cnst) == locals.end()) {
++                func_interp thing = orig_model.get_func_interp(cnst);
++                ::func_interp *thing_raw = thing;
++                md->register_decl(to_func_decl(cnst.raw()), thing_raw->copy());
++            }
++        }
++        return md;
++    }
++    
+     void dl_interface::cancel() {
+ #if 0
+         if(_d && _d->ls)
+diff --git a/src/muz/duality/duality_dl_interface.h b/src/muz/duality/duality_dl_interface.h
+index a7c1860..8a0d410 100644
+--- a/src/muz/duality/duality_dl_interface.h
++++ b/src/muz/duality/duality_dl_interface.h
+@@ -65,6 +65,8 @@ namespace Duality {
+                
+         void updt_params();
+ 
++        model_ref get_refutation();
++
+         model_ref get_model();
+ 
+         proof_ref get_proof();
+diff --git a/test/.gitignore b/test/.gitignore
+new file mode 100644
+index 0000000..f7d8570
+--- /dev/null
++++ b/test/.gitignore
+@@ -0,0 +1 @@
++duality_test
+diff --git a/test/duality_test.c b/test/duality_test.c
+new file mode 100644
+index 0000000..6ff98a4
+--- /dev/null
++++ b/test/duality_test.c
+@@ -0,0 +1,79 @@
++#include "z3.h"
++
++int main ()
++{
++    Z3_config conf = Z3_mk_config();
++    Z3_context c = Z3_mk_context(conf);
++    
++    Z3_params p = Z3_mk_params(c);
++    Z3_params_inc_ref(c, p);
++    Z3_fixedpoint fp = Z3_mk_fixedpoint(c);
++    Z3_params_set_uint(c, p, Z3_mk_string_symbol(c, "fixedpoint.timeout"), 3000);
++    Z3_params_set_symbol(c, p, Z3_mk_string_symbol(c, "fixedpoint.engine"), Z3_mk_string_symbol(c, "duality"));
++    Z3_fixedpoint_set_params(c, fp, p);
++    
++    Z3_sort Int = Z3_mk_int_sort(c);
++    Z3_sort IntInt[2] = {Int, Int};
++    Z3_sort Bool = Z3_mk_bool_sort(c);
++
++    Z3_func_decl P = Z3_mk_func_decl(c, Z3_mk_string_symbol(c, "P"),
++                                     2, IntInt, Bool);
++    Z3_func_decl P2 = Z3_mk_func_decl(c, Z3_mk_string_symbol(c, "P"),
++                                      2, IntInt, Bool);
++    Z3_func_decl Q = Z3_mk_func_decl(c, Z3_mk_string_symbol(c, "Q"),
++                                     2, IntInt, Bool);
++    Z3_func_decl Goal = Z3_mk_func_decl(c, Z3_mk_string_symbol(c, "Goal"),
++                                        2, IntInt, Bool);
++    Z3_fixedpoint_register_relation(c, fp, P);
++    Z3_fixedpoint_register_relation(c, fp, P2);
++    Z3_fixedpoint_register_relation(c, fp, Q);
++    Z3_fixedpoint_register_relation(c, fp, Goal);    
++
++    Z3_func_decl x_ = Z3_mk_func_decl(c, Z3_mk_string_symbol(c, "x"), 0, NULL, Int);
++    Z3_func_decl y_ = Z3_mk_func_decl(c, Z3_mk_string_symbol(c, "y"), 0, NULL, Int);
++    Z3_func_decl z_ = Z3_mk_func_decl(c, Z3_mk_string_symbol(c, "z"), 0, NULL, Int);
++    Z3_ast x = Z3_mk_app(c, x_, 0, NULL);
++    Z3_ast y = Z3_mk_app(c, y_, 0, NULL);
++    Z3_ast z = Z3_mk_app(c, z_, 0, NULL);
++    Z3_fixedpoint_register_variable(c, fp, x_);
++    Z3_fixedpoint_register_variable(c, fp, y_);
++    Z3_fixedpoint_register_variable(c, fp, z_);
++    
++    Z3_ast xy_args[2] = {x,y};
++    Z3_ast xz_args[2] = {x,z};
++    Z3_ast yz_args[2] = {y,z};
++    Z3_ast y1_args[2] = {y,Z3_mk_int(c, 1, Int)};
++    Z3_ast and_args1[2] = {Z3_mk_app(c, P, 2, xy_args), Z3_mk_eq(c,z,Z3_mk_add(c, 2, y1_args))};
++    Z3_ast and_args2[2] = {Z3_mk_app(c, P, 2, xy_args), Z3_mk_app(c, P2, 2, yz_args)};
++    Z3_fixedpoint_add_rule(c, fp,
++                           Z3_mk_implies(c, Z3_mk_app(c, P, 2, xy_args), Z3_mk_app(c, P2, 2, xy_args)),
++                           Z3_mk_string_symbol(c, "ra"));
++    Z3_fixedpoint_add_rule(c, fp,
++                           Z3_mk_implies(c, Z3_mk_app(c, P2, 2, xy_args), Z3_mk_app(c, P, 2, xy_args)),
++                           Z3_mk_string_symbol(c, "rb"));
++    Z3_fixedpoint_add_rule(c, fp,
++                           Z3_mk_implies(c, Z3_mk_eq(c,x,y), Z3_mk_app(c, P, 2, xy_args)),
++                           Z3_mk_string_symbol(c, "r1"));
++    Z3_fixedpoint_add_rule(c, fp,
++                           Z3_mk_implies(c, Z3_mk_and(c, 2, and_args1), Z3_mk_app(c, P, 2, xz_args)),
++                           Z3_mk_string_symbol(c, "r2"));
++    Z3_fixedpoint_add_rule(c, fp,
++                           Z3_mk_implies(c, Z3_mk_and(c, 2, and_args2), Z3_mk_app(c, Q, 2, xz_args)),
++                           Z3_mk_string_symbol(c, "r3"));
++
++    Z3_ast theSafety = Z3_mk_implies(c, Z3_mk_app(c, Q, 2, xz_args), Z3_mk_le(c,x,z));
++    Z3_fixedpoint_add_rule(c, fp,
++                           Z3_mk_implies(c, Z3_mk_not(c, theSafety), Z3_mk_app(c, Goal, 2, xz_args)),
++                           Z3_mk_string_symbol(c, "r4"));
++
++    Z3_lbool res = Z3_fixedpoint_query(c, fp, Z3_mk_app(c, Goal, 2, xz_args));
++    if (res == Z3_L_TRUE)
++        printf("sat (unsafe)\n");
++    else if (res == Z3_L_FALSE)
++        printf("unsat (safe)\n");
++    else
++        printf("unknown\n");
++    
++    return 0;
++}
++
+diff --git a/test/duality_test.ml b/test/duality_test.ml
+new file mode 100644
+index 0000000..981319d
+--- /dev/null
++++ b/test/duality_test.ml
+@@ -0,0 +1,60 @@
++#directory "/home/caleb/repos/z3/build/api/ml";;
++#load "nums.cma";;
++#load "z3ml.cma";;
++
++open Z3;;
++open Fixedpoint;;
++open Params;;
++open Symbol;;
++open FuncDecl;;
++open Arithmetic;;
++open Boolean;;
++       
++let c = mk_context [] in
++let fp = mk_fixedpoint c in
++let p = mk_params c in
++  add_int p (mk_string c "fixedpoint.timeout") 3000;
++  add_symbol p (mk_string c "fixedpoint.engine") (mk_string c "duality");
++  set_parameters fp p;
++
++  let sint = Integer.mk_sort c in
++  let sbool = Boolean.mk_sort c in
++  
++  let predP = mk_func_decl c (mk_string c "P") [sint; sint] sbool in
++  let predP2 = mk_func_decl c (mk_string c "P2") [sint; sint] sbool in
++  let predQ = mk_func_decl c (mk_string c "Q") [sint; sint] sbool in
++  let predGoal = mk_func_decl c (mk_string c "Goal") [sint; sint] sbool in
++  
++    register_relation fp predP;
++    register_relation fp predP2;
++    register_relation fp predQ;
++    register_relation fp predGoal;
++
++    let x_ = mk_func_decl c (mk_string c "x") [] sint in
++    let y_ = mk_func_decl c (mk_string c "y") [] sint in
++    let z_ = mk_func_decl c (mk_string c "z") [] sint in
++    let x = apply x_ [] in
++    let y = apply y_ [] in
++    let z = apply z_ [] in
++      register_variable fp x_;
++      register_variable fp y_;
++      register_variable fp z_;
++
++      add_rule fp (mk_implies c (apply predP [x; y]) (apply predP2 [x; y])) None;
++      add_rule fp (mk_implies c (apply predP2 [x; y]) (apply predP [x; y])) None;
++
++      add_rule fp (mk_implies c (mk_eq c x y) (apply predP [x; y])) None;
++      add_rule fp (mk_implies c (mk_and c [apply predP [x; y];
++                                           mk_eq c z (mk_add c [y; Integer.mk_numeral_i c 1])])
++                              (apply predP [x; z])) None;
++      add_rule fp (mk_implies c (mk_and c [apply predP [x; y]; apply predP [y; z]])
++                              (apply predQ [x; z])) None;
++     
++      let theSafety = mk_implies c (apply predQ [x; z]) (mk_le c x z) in
++        add_rule fp (mk_implies c (mk_not c theSafety) (apply predGoal [x; z])) None;
++        
++        let res = query fp (apply predGoal [x; z]) in
++        match res with
++        | Solver.SATISFIABLE -> Printf.printf("sat (unsafe)\n")
++        | Solver.UNSATISFIABLE -> Printf.printf("unsat (safe)\n")
++        | _ -> Printf.printf("unknown\n")

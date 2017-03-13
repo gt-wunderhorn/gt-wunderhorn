@@ -1,0 +1,33 @@
+public static void main(String[] args) {
+    int a = slow_add(5, 4);
+    int b = slow_add(4, 5);
+    ensure(a == b);
+}
+
+public static int slow_add(int m, int n) {
+    boolean keep_going = true;
+    int step = 1;
+    int i = 0;
+    int sum = m;
+
+    while (keep_going) {
+        sum += step;
+        i += 1;
+
+        if (i >= n) {
+            keep_going = false;
+        }
+    }
+
+    return sum;
+}
+
+/*
+public static int slow_add(int m, int n) {
+    int sum = m;
+    for (int i = 0; i < n; i += 1) {
+        n += 1;
+    }
+    return sum;
+}
+*/

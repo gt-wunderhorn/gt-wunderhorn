@@ -6,11 +6,12 @@ setup:
 
 clean:
 	ocaml setup.ml -clean
-	find -name *.mllib   | xargs rm
-	find -name *.mldylib | xargs rm
-	find -name *.byte    | xargs rm
-	rm bin/*
-	rm setup.ml
+	find -name *.mllib -exec rm -f {} \;
+	find -name *.mldylib -exec rm -f {} \;
+	find -name *.byte -exec rm -f {} \;
+	rm -rf bin/*
+	rm -f setup.ml
+	git clean -xdf
 
 test:
 	ocaml setup.ml -test
@@ -22,6 +23,6 @@ hard:
 	./scripts/test_hard.sh run
 
 example:
-	./scripts/example.sh
+	./scripts/example.sh $(program)
 
 .PHONY: all setup clean test simple hard example
