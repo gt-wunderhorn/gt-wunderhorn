@@ -38,7 +38,6 @@ opam init -y
 eval $(opam config env)
 opam install -y \
     core \
-    ocaml-extlib \
     sawja
 ```
 
@@ -48,6 +47,7 @@ Finally you need to build z3 from source with the OCaml bindings.
 eval $(opam config env)
 git clone 'https://github.com/Z3Prover/z3.git'
 cd z3
+git checkout tags/z3-4.5.0
 git apply --whitespace=nowarn /z3-patches/*.patch
 python scripts/mk_make.py --ml
 cd build

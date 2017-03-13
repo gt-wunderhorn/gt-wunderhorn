@@ -20,14 +20,14 @@ RUN apt-get install -y \
 # setup opam and install ocam libraries
 RUN opam init -y && eval $(opam config env) && opam install -y \
     core \
-    ocaml-extlib \
     sawja
 
 # build z3 with ml bindings
-# known working: 91eddecd6ed42395b5d83205973707f12b27e803
+# stay on version 4.5.0 for now
 COPY z3-patches /z3-patches
 RUN git clone 'https://github.com/Z3Prover/z3.git' && \
     cd z3 && \
+    git checkout tags/z3-4.5.0 && \
     eval $(opam config env) && \
     ls /z3-patches/*.patch && git apply --whitespace=nowarn /z3-patches/*.patch && \
     python scripts/mk_make.py --ml && \
