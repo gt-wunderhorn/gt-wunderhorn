@@ -8,14 +8,26 @@ RUN apt-get update
 # javalib/sawja Deps: zlib1g-dev
 # ocamlfind Deps: m4
 # project Deps: openjdk-7-jdk
+# scheme-format Deps: chicken-bin libchicken-dev
 RUN apt-get install -y \
     m4 \
     zlib1g-dev \
     python \
     openjdk-7-jdk \
+    chicken-bin \
+    libchicken-dev \
     opam \
     oasis \
     ocaml
+
+# set up scheme-format helper binary
+RUN git clone 'https://github.com/russellw/scheme-format.git' && \
+    cd scheme-format && \
+    git checkout f03ebe75fd4e7a5f22f40744d37d0f67c20d3bd8 && \
+    csc main.scm -o scheme-format && \
+    mv scheme-format /usr/bin/ && \
+    cd .. && \
+    rm -rf scheme-format
 
 # setup opam and install ocam libraries
 RUN opam init -y && eval $(opam config env) && opam install -y \
