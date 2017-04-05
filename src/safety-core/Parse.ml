@@ -64,12 +64,12 @@ let local_var_table classpath cname =
       JB.MethodMap.fold (get_concrete) c_methods (JB.MethodMap.empty)
     | _ -> JB.MethodMap.empty
 
-let parse id classpath cn =
+let parse id classpath cms =
   let (prta,instantiated_classes) =
     Sawja_pack.JRTA.parse_program
-      ~other_entrypoints:[native_entry]
+      ~other_entrypoints:[native_entry; cms]
       classpath
-      (JB.make_cms cn JP.main_signature) in
+      cms in
 
   let program = JP.map_program2
       (fun _ -> J.transform ~bcv:false ~ch_link:false ~formula:false ~formula_cmd:[])

@@ -1,5 +1,10 @@
+module JB = Javalib_pack.JBasics
+module JP = Sawja_pack.JProgram
+
 let usage _ =
   Printf.eprintf "usage: %s <classpath> <main class name> [print|run]\n" Sys.argv.(0)
+
+let method_sig = JP.main_signature
 
 let _ =
   if (Array.length Sys.argv < 4)
@@ -9,7 +14,7 @@ let _ =
     let classpath = Sys.argv.(1) in
     let class_name = Sys.argv.(2) in
 
-    let ir = Inspect.gen_ir classpath class_name in
+    let ir = Inspect.gen_ir classpath class_name method_sig in
     let exprs = Inspect.inspect ir in
 
     if Sys.argv.(3) = "print"

@@ -1,6 +1,10 @@
 module E = Expr
 module P = Printf
-module Option = Core.Option
+(* module Option = Core.Option *)
+
+let value_map default f = function
+  | Some x -> f x
+  | None   -> default
 
 (** SimplIr is intended to be an extremely bare-bones language which can be used
     for analysis. *)
@@ -63,7 +67,7 @@ and proc_to_str = function { id; params; ret_type; content; class_t } ->
   P.sprintf "Proc {id: %s; params: [%s]; ret_type: %s; content: _; class: %s}"
     (QualifiedIdentity.as_path id)
     (List.map (Var.var_to_str) params |> String.concat ", ")
-    (Option.value_map ~default:"Unknown" ~f:(Type.type_to_str) ret_type)
+    (value_map "Unknown" (Type.type_to_str) ret_type)
     (E.expr_to_str class_t)
 
 and class_proc_to_str = function (class_type, proc) ->
