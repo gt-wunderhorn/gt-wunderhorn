@@ -21,7 +21,7 @@ let expr_graph ir =
   (* Perform some graph simplifications to reduce the number of edges. *)
   |> Simplify.concatenate_consecutive_paths
   |> Simplify.remove_empty_paths
-  |> Simplify.remove_non_asserting_nodes
+  (* |> Simplify.remove_non_asserting_nodes *)
 
   (* Annotate each program node with the variables relevant across that node's
      program location. *)

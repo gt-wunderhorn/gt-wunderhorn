@@ -16,8 +16,10 @@ let check_type obj t =
 let rec instr proc (I.Instr (this, i)) =
   let next = Lbl.next this in
 
+  let params = proc.Instr.params in
+
   let unconditional here there assigns =
-    G.singleton (here, there, PG.Body (E.Bool true, assigns)) in
+    G.singleton (here, there, (params, PG.Body (E.Bool true, assigns))) in
 
   (** Many instruction types simply proceed to the next program location with
       some instructions on the edge. *)
@@ -34,7 +36,7 @@ let rec instr proc (I.Instr (this, i)) =
            This edge allows variables (which are not live in the target
            procedure) to be passed.
         4. A separate graph is evaluated for the callee. *)
-  let call pred proc v args =
+  let call caller_params pred proc v args =
     let assignments = List.map2 I.mk_assign proc.I.params args
                       |> List.sort (fun (v1, e1) (v2, e2) -> compare v1 v2) in
     let entr = I.entrance proc in
@@ -42,20 +44,20 @@ let rec instr proc (I.Instr (this, i)) =
 
     G.union
       (G.of_conns
-         [ this, entr, PG.ScopeIn  (proc.I.id, pred, assignments)
-         ; exit, next, PG.ScopeOut proc.I.id
-         ; this, next, PG.CallLink (exit, entr, exit, assignments, v)
+         [ this, entr, (caller_params, PG.ScopeIn  (proc.I.id, pred, assignments))
+         ; exit, next, (caller_params, PG.ScopeOut proc.I.id)
+         ; this, next, (caller_params, PG.CallLink (exit, entr, exit, assignments, v))
          ])
       (translate proc)
   in
 
   match i with
   | I.Assign (v, e)          -> linear [I.mk_assign v e]
-  | I.Invoke (p, v, args)    -> call (E.Bool true) p v args
+  | I.Invoke (p, v, args)    -> call params (E.Bool true) p v args
   | I.Return e               ->
     let exit = Lbl.At (proc.I.id, Lbl.Exit) in
     G.singleton (this, exit,
-                 (PG.Return
+                 (params, PG.Return
                     (I.entrance proc
                     , I.exit proc
                     , proc.I.params
@@ -70,8 +72,8 @@ let rec instr proc (I.Instr (this, i)) =
       condition is false *)
   | I.If (e, dest) ->
     G.of_conns
-      [ (this, dest, PG.Body (e, []))
-      ; (this, next, PG.Body (E.mk_not e, []))
+      [ (this, dest, (params, PG.Body (e, [])))
+      ; (this, next, (params, PG.Body (E.mk_not e, [])))
       ]
 
   (** A dynamic dispatch generates a graph with many edges diverging from
@@ -79,12 +81,12 @@ let rec instr proc (I.Instr (this, i)) =
       version of the dispatch should be used. *)
   | I.Dispatch (obj, ps, v, args) ->
     let call_meth (t, proc) =
-      call (check_type obj t) proc v (obj :: args) in
+      call params (check_type obj t) proc v (obj :: args) in
     G.unions_map call_meth ps
 
   | I.Assert (e, at) ->
     G.union
-      (G.singleton (this, Lbl.Nowhere, PG.Assert (e, at)))
+      (G.singleton (this, Lbl.Nowhere, (params, PG.Assert (e, at))))
       (unconditional this next [])
 
 and subgraph_set = ref (Set.empty)
@@ -114,5 +116,5 @@ and translate proc =
       ;
       List.map (instr proc) (Lazy.force proc.I.content)
       |> G.unions
-      |> G.add (i, t, PG.Body (E.Bool true, e))
+      |> G.add (i, t, (proc.Instr.params, PG.Body (E.Bool true, e)))
     )

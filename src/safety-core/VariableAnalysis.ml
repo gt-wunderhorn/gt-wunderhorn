@@ -121,8 +121,10 @@ let live g n =
   Map.keys all_assigns
   |> List.filter is_relevant
 
-let annotate_nodes g =
+let annotate_nodes (g : (Lbl.t, (Var.t list * Lbl.t PG.instr_path)) Graph.t) =
   let conn (n1, n2, e) =
+    let (params, e) = e in
+    let g = G.map_edges snd g in
     let ambient lbl params =
       let inputs = live g lbl in
       Set.to_list
@@ -143,8 +145,8 @@ let annotate_nodes g =
       | PG.ScopeOut qid -> PG.ScopeOut qid
     in
 
-    let vs1 = live g n1 in
-    let vs2 = live g n2 in
+    let vs1 = Algorithm.nub (params @ live g n1) in
+    let vs2 = Algorithm.nub (params @ live g n2) in
 
     ((n1, vs1), (n2, vs2), e')
   in

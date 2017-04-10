@@ -51,12 +51,12 @@ let remove_non_asserting_nodes g =
       edge_is_assertion e || leads_to_assertion t) g
 
 let concatenate_consecutive_paths g =
-  let concat (e1, n, e2) = match (e1, e2) with
+  let concat ((ps1, e1), n, (ps2, e2)) = match (e1, e2) with
     | (PG.Body (p, as1), PG.Body (E.Bool true, as2)) ->
-      Some (PG.Body (p, as1 @ as2))
+      Some (ps1, PG.Body (p, as1 @ as2))
     | ( PG.Body (p, as1)
       , PG.Return (ent, ex, ps, E.Bool true, as2, value)) ->
-      Some (PG.Return (ent, ex, ps, p, as1 @ as2, value))
+      Some (ps1, PG.Return (ent, ex, ps, p, as1 @ as2, value))
     | _ -> None
   in
   G.splice concat g
@@ -72,8 +72,8 @@ let concatenate_consecutive_exprs g =
   G.splice concat g
 
 let remove_empty_paths g =
-  let remove (i, t, e) =  match e with
-    | PG.Body (_, []) -> Some t
+  let remove (i, t, e) = match e with
+    | (_, PG.Body (_, [])) -> Some t
     | _ -> None
   in
   G.pinch remove g
