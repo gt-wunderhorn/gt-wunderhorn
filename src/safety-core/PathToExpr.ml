@@ -63,7 +63,7 @@ let alias_conn ((lbl1, vs1), (lbl2, vs2), edge) =
       let ret'     = substitute ret in
 
       let es = params' @
-        (* ambient @ ambient' @ *)
+        ambient @ ambient' @
                [ret'] in
       let transfer_rel = E.Relation ((lbl2, List.map E.type_of es), es) in
       Some (PG.EReturn (lhs, transfer_rel))
