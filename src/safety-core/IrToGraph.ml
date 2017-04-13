@@ -112,9 +112,12 @@ and translate proc =
       then [LS.id, E.Int 0]
       else [] in
 
+    let assign_param p = I.mk_assign p (E.Var (Var.qualify "p" p)) in
+    let bind_params = List.map assign_param proc.Instr.params in
+
     ( subgraph_set := Set.add !subgraph_set proc.I.id
       ;
       List.map (instr proc) (Lazy.force proc.I.content)
       |> G.unions
-      |> G.add (i, t, (proc.Instr.params, PG.Body (E.Bool true, e)))
+      |> G.add (i, t, (proc.Instr.params, PG.Body (E.Bool true, bind_params @ e)))
     )

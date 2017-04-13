@@ -1,8 +1,6 @@
-public static void main(String[] args) {}
-public static int loop(int arg) {
-  int sum = 0;
-  for (int i = 0; i < arg; i++) {
-    sum++;
-  }
-  return sum;
+public static int f(int arg) {
+  while (arg < 50) { arg++; }
+  return 0;
+}
+public static void main(String[] args) {
 }

@@ -39,7 +39,7 @@ let remove_locals qid m =
     QID.full_prefix qid' = qid
   in
   let f ~key ~data = not (is_local key) in
-  Map.filter m f
+  Map.filteri m f
 
 let enter qid m = remove_locals qid (Map.map m (fun _ -> Callee))
 let exit  qid m = remove_locals qid (Map.map m (fun _ -> Caller))
@@ -136,7 +136,6 @@ let annotate_nodes (g : (Lbl.t, (Var.t list * Lbl.t PG.instr_path)) Graph.t) =
       | PG.CallLink (lbl, entr, exit, args, v) ->
         let params = List.map fst args in
         PG.CallLink (lbl, ambient entr params, ambient exit params, args, v)
-
       | PG.Return (entr, exit, params, e, b, v) ->
         PG.Return (ambient entr params, ambient exit params, params, e, b, v)
       | PG.Assert (e, at) -> PG.Assert (e, at)
@@ -145,8 +144,15 @@ let annotate_nodes (g : (Lbl.t, (Var.t list * Lbl.t PG.instr_path)) Graph.t) =
       | PG.ScopeOut qid -> PG.ScopeOut qid
     in
 
-    let vs1 = Algorithm.nub (params @ live g n1) in
-    let vs2 = Algorithm.nub (params @ live g n2) in
+    let ps = List.map (Var.qualify "p") params in
+    Printf.eprintf "%s\n" (Lbl.lbl_to_str n1);
+    List.iter (fun p -> Printf.eprintf "%s\n" (Var.var_to_str p)) ps;
+    Printf.eprintf "n1\n";
+    List.iter (fun p -> Printf.eprintf "%s\n" (Var.var_to_str p)) (live g n1);
+    Printf.eprintf "n2\n";
+    List.iter (fun p -> Printf.eprintf "%s\n" (Var.var_to_str p)) (live g n2);
+    let vs1 = Algorithm.nub (ps @ live g n1) in
+    let vs2 = Algorithm.nub (ps @ live g n2) in
 
     ((n1, vs1), (n2, vs2), e')
   in

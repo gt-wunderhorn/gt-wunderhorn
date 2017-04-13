@@ -12,8 +12,9 @@ cd bin
 echo
 echo "Generating Z3 SMT for $1"
 "$(source_dir)"/run_simple_test.sh "${PROGRAM}" print
+scheme-format ../bin/example.z3 > tmp && mv tmp ../bin/example.z3
 
-echo
-echo "Generating JBir representation for $1"
-mkdir -p jbir-html
-CLASSPATH="$(classpath)" ./SawjaInspect.byte
+# echo
+# echo "Generating JBir representation for $1"
+# mkdir -p jbir-html
+# CLASSPATH="$(classpath)" ./SawjaInspect.byte

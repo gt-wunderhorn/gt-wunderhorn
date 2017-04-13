@@ -1,0 +1,11 @@
+public static int f(int x) {
+  while (x > 0) {
+    x--;
+  }
+  return x;
+}
+
+public static void main(String[] args) {
+  int res = f(5);
+  ensure(res > 0);
+}

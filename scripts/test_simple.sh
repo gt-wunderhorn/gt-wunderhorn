@@ -16,6 +16,7 @@ function run {
   "$(source_dir)"/run_simple_test.sh $1 $type
 }
 
+# run "$(source_dir)"/../benchmark/simple/mutableparam.fail
 # run "$(source_dir)"/../benchmark/simple/slow-add.pass
 # run "$(source_dir)"/../benchmark/simple/slow-add.fail
 run "$(source_dir)"/../benchmark/simple/fib.pass
