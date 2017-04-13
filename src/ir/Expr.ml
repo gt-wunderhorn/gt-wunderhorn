@@ -22,6 +22,7 @@ type assert_type =
   | Null
   | NegArray
   | ArrayBound
+  | Equivalence
   | User
 
 type query = Lbl.t * assert_type
@@ -74,11 +75,12 @@ let manyop_to_str = function
   | Or  -> "Or"
 
 let assert_t_to_str = function
-  | Div0       -> "Div0"
-  | Null       -> "Null"
-  | NegArray   -> "NegArray"
-  | ArrayBound -> "ArrayBound"
-  | User       -> "User"
+  | Div0        -> "Div0"
+  | Null        -> "Null"
+  | NegArray    -> "NegArray"
+  | ArrayBound  -> "ArrayBound"
+  | Equivalence -> "Equivalence"
+  | User        -> "User"
 
 let op_to_str = function
   | Unop (op)   -> unop_to_str op

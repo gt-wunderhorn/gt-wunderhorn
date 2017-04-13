@@ -1,0 +1,36 @@
+AddDigits1
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+Equivalence safe
+5.47user 0.14system 0:05.21elapsed 107%CPU (0avgtext+0avgdata 92560maxresident)k
+0inputs+80outputs (0major+21214minor)pagefaults 0swaps
+AddDigits2
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+Equivalence safe
+6.74user 0.09system 0:06.40elapsed 106%CPU (0avgtext+0avgdata 94296maxresident)k
+0inputs+80outputs (0major+21718minor)pagefaults 0swaps
+ClimbingStairs1
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+ClimbingStairs2
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+ClimbingStairs3
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+ReverseInteger1
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+TrailingZeroes1
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+TrailingZeroes2
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+TrailingZeroes3
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+TrailingZeroes4
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.
+The program contains native method. Beware that native methods' side effects may invalidate the result of the analysis.

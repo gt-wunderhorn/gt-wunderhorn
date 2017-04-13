@@ -59,11 +59,100 @@ Executable safetycheck
   ByteOpt:      -thread
   NativeOpt:    -thread
 
-
 Executable sawjainspect
   Path:         scripts
   BuildTools:   ocamlbuild
   BuildDepends: Z3, sawja
   MainIs:       SawjaInspect.ml
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+
+## EQUIVALENCE BENCHMARKS
+Executable equivcheck
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       Loop.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable AddDigits1
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       AddDigits1.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable AddDigits2
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       AddDigits2.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable ClimbingStairs1
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       ClimbingStairs1.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable ClimbingStairs2
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       ClimbingStairs2.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable ClimbingStairs3
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       ClimbingStairs3.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable ReverseInteger1
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       ReverseInteger1.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable TrailingZeroes1
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       TrailingZeroes1.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable TrailingZeroes2
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       TrailingZeroes2.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable TrailingZeroes3
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       TrailingZeroes3.ml
+  BuildDepends: safetycore
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+
+Executable TrailingZeroes4
+  Path:         src/equiv
+  BuildTools:   ocamlbuild
+  MainIs:       TrailingZeroes4.ml
+  BuildDepends: safetycore
   ByteOpt:      -thread
   NativeOpt:    -thread

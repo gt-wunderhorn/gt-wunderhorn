@@ -128,11 +128,12 @@ let translate exprs =
 
 let query fp (lbl, (q, at)) =
   let show_assert_type = function
-    | E.Div0       -> "Division by 0?"
-    | E.Null       -> "Null?"
-    | E.NegArray   -> "Array with negative size?"
-    | E.ArrayBound -> "Array out of bound?"
-    | E.User       -> "User specified:" in
+    | E.Div0        -> "Division by 0?"
+    | E.Null        -> "Null?"
+    | E.NegArray    -> "Array with negative size?"
+    | E.ArrayBound  -> "Array out of bound?"
+    | E.Equivalence -> "Equivalence"
+    | E.User        -> "User specified:" in
 
   match FP.query_r fp [q] with
   | Z3.Solver.SATISFIABLE   -> Printf.printf "%s unsafe\n" (show_assert_type at)
@@ -145,7 +146,7 @@ let run es =
 
   let fp = FP.mk_fixedpoint c in
   let r  = P.mk_params c in
-  P.add_int r (S.mk_string c "fixedpoint.timeout") 120000;
+  P.add_int r (S.mk_string c "fixedpoint.timeout") 500000;
   P.add_symbol r (S.mk_string c "fixedpoint.engine") (S.mk_string c "duality");
   FP.set_parameters fp r;
 
