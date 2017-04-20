@@ -7,9 +7,3 @@ let inner = function
 let is_scalar = function
   | Array _ -> false
   | _ -> true
-
-let rec type_to_str = function
-  | Int -> "Int"
-  | Bool -> "Bool"
-  | Real -> "Real"
-  | Array (kind) -> Printf.sprintf "[%s]" (type_to_str kind)

@@ -217,7 +217,7 @@ let inline_assignments is =
       :: (I.Instr (next, next_instr))
       :: rest
       when (is_unique var) ->
-        (Printf.printf "got %s\n" (V.var_to_str var));
+        (Printf.printf "got %s\n" (ToStr.var var));
         (I.Instr (now, I.Goto next))
         :: (remove_unused_assigns (I.Instr (next, next_instr) :: rest))
     | (i :: rest) -> i :: remove_unused_assigns rest

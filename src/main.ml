@@ -26,8 +26,8 @@ let _ =
     else if Sys.argv.(3) = "print-ir"
     then
       let content = Lazy.force ir.Instr.content in
-      ( Instr.proc_to_str ir |> Printf.printf "%s\n"
-      ; Instr.instructions_to_str content |> Printf.printf "%s\n"
+      ( ToStr.proc ir |> Printf.printf "%s\n"
+      ; ToStr.instructions content |> Printf.printf "%s\n"
       ; ())
 
     else if Sys.argv.(3) = "run"
