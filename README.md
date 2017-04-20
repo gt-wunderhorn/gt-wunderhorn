@@ -41,6 +41,12 @@ opam install -y \
     sawja
 ```
 
+You should add the opam envs to your `.bashrc` or similar:
+
+```bash
+echo 'eval $(opam config env)' >> ~/.bashrc
+```
+
 Finally you need to build z3 from source with the OCaml bindings.
 
 ```bash
@@ -55,10 +61,29 @@ make
 sudo make install
 ```
 
-You should add the opam envs to your `.bashrc` or similar:
+#### Z3 Source Formatting
+
+If you want your Z3 source to be formatted nicely when you run
+`make example program=<arg>` you will need `scheme-format` in your path.
+
+To install you must build it from the
+[repo](https://github.com/russellw/scheme-format/).
+This project is written in
+[Chicken Scheme](https://www.call-cc.org/)
+so you should install it:
 
 ```bash
-echo 'eval $(opam config env)' >> ~/.bashrc
+apt-get install -y \
+    chicken-bin \
+    libchicken-dev
+```
+
+Finally build it and add it to your path:
+```bash
+git clone 'https://github.com/russellw/scheme-format.git'
+cd scheme-format
+csc main.scm -o scheme-format
+sudo mv scheme-format /usr/bin/
 ```
 
 ## Building
