@@ -19,8 +19,8 @@ function run {
 # run "$(source_dir)"/../benchmark/simple/lcm.pass
 run "$(source_dir)"/../benchmark/simple/lcm.fail
 run "$(source_dir)"/../benchmark/simple/mutableparam.fail
-# run "$(source_dir)"/../benchmark/simple/slow-add.pass
-# run "$(source_dir)"/../benchmark/simple/slow-add.fail
+run "$(source_dir)"/../benchmark/simple/slow-add.pass
+run "$(source_dir)"/../benchmark/simple/slow-add.fail
 run "$(source_dir)"/../benchmark/simple/fib.pass
 run "$(source_dir)"/../benchmark/simple/fib.fail
 run "$(source_dir)"/../benchmark/simple/mutual_recursion.pass
