@@ -25,7 +25,7 @@ function get_ext() {
 function build_test() {
     echo 'public class Test {'
     echo '  static void ensure(boolean b) {}'
-    sed  's/^/  /' $1
+    sed  's/^/  /' "$1"
     echo '}'
 }
 
@@ -39,10 +39,11 @@ function classpath() {
 
 # expect a certain safety outcome
 function expect_safety() {
-    local OUTPUT=$(eval "${@:2}" | tee /dev/tty)
     local EXPECTED="$1"
+    shift
+    local OUTPUT=$("$@" | tee /dev/tty)
     local GOT=$(echo "$OUTPUT" | grep 'User specified' | tail -1 | awk '{print $NF}')
-    if [[ $GOT = $EXPECTED ]]; then
+    if [[ "$GOT" = "$EXPECTED" ]]; then
         echo "Success!"
         return 0
     else

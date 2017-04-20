@@ -8,12 +8,12 @@ mkdir -p bin
 cp "$(source_dir)"/../main.byte bin
 cd bin
 
-type=$1
+type="$1"
 
 function run {
   echo
   echo $1 $2 $3
-  "$(source_dir)"/run_hard_test.sh $1 $2 $3 $type
+  "$(source_dir)"/run_hard_test.sh "$1" "$2" "$3" "$type"
 }
 
 # run ../db/code/snippet_0 MinStack.java ../db/harness/MinStack.harness

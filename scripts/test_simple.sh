@@ -13,7 +13,7 @@ type=$1
 function run {
   echo
   echo $1
-  "$(source_dir)"/run_simple_test.sh $1 $type
+  "$(source_dir)"/run_simple_test.sh "$1" $type
 }
 
 # run "$(source_dir)"/../benchmark/simple/lcm.pass
