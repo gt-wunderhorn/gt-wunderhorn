@@ -84,9 +84,9 @@ let rec instr proc (I.Instr (this, i)) =
       call params (check_type obj t) proc v (obj :: args) in
     G.unions_map call_meth ps
 
-  | I.Assert (e, at) ->
+  | I.Assert (e, q) ->
     G.union
-      (G.singleton (this, Lbl.Nowhere, (params, PG.Assert (e, at))))
+      (G.singleton (this, Lbl.Nowhere, (params, PG.Assert (e, q))))
       (unconditional this next [])
 
 and subgraph_set = ref (Set.empty)

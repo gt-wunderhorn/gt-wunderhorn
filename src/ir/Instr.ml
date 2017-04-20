@@ -20,7 +20,7 @@ and ir =
   | Return      of E.t
   | Invoke      of t proc * Var.t * E.t list
   | Dispatch    of E.t * (class_type * t proc) list * Var.t * E.t list
-  | Assert      of E.t * E.assert_type
+  | Assert      of E.t * E.query
 
 and t = Instr of Lbl.t * ir
 

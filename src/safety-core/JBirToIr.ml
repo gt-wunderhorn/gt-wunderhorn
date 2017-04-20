@@ -182,6 +182,12 @@ and mk_proc parse cms =
 and instr parse st mk_var line i =
   let expr = expr st mk_var in
   let e_type e = E.type_of (expr e) in
+  let fname = QID.as_path st.proc.P.name in
+
+  let src_line = match J.get_source_line_number line st.proc.P.j_method with
+    | None   -> -1
+    | Some n -> n in
+
   let lbl l = Lbl.At (st.proc.P.name, Lbl.Line l) in
   let next = lbl (line+1) in
 
@@ -192,7 +198,7 @@ and instr parse st mk_var line i =
   in
 
   let invoke cn ms v args =
-    match BuiltIn.call_built_in_method cn ms v args next with
+    match BuiltIn.call_built_in_method fname src_line cn ms v args next with
     | Some i -> [i]
     | None ->
       let proc = mk_proc parse (JB.make_cms cn ms) in
@@ -268,7 +274,7 @@ and instr parse st mk_var line i =
     let cn = st.proc.P.cl_name in
     let args = List.map expr args in
     let v = return_var v ms in
-    (match BuiltIn.call_built_in_method cn ms v args next with
+    (match BuiltIn.call_built_in_method fname src_line cn ms v args next with
      | Some i -> [i]
      | None ->
        let lookup =
@@ -294,18 +300,21 @@ and instr parse st mk_var line i =
       [I.Invoke (proc, v, [])]
 
   | J.Check c ->
-    (* [I.Goto next] *)
   (match c with
    | J.CheckArrayBound (a, i) ->
      [I.Assert
        ( E.mk_ilt (expr i) (E.Select (E.Var (LS.array_length), expr a))
-       , E.ArrayBound
+       , E.QueryInfo (E.ArrayBound, fname, src_line)
        )]
    | J.CheckArithmetic e ->
-     [I.Assert (E.mk_not (E.mk_eq (expr e) (E.Int 0)) , E.Div0)]
+     [I.Assert
+        ( E.mk_not (E.mk_eq (expr e) (E.Int 0))
+        , E.QueryInfo (E.Div0, fname, src_line))]
 
    | J.CheckNegativeArraySize e ->
-     [I.Assert (E.mk_ige (expr e) (E.Int 0), E.NegArray)]
+     [I.Assert
+        ( E.mk_ige (expr e) (E.Int 0)
+        , E.QueryInfo (E.NegArray, fname, src_line))]
 
    | J.CheckNullPointer _
    | J.CheckArrayStore _

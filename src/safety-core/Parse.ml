@@ -113,6 +113,7 @@ let parse id classpath cms =
       ; Proc.sign     = sign
       ; Proc.vartable = opt_vartable
       ; Proc.cl_name  = fst (JB.cms_split (cm.JL.cm_class_method_signature))
+      ; Proc.j_method = (Lazy.force x)
       }
 
     | JL.Native ->

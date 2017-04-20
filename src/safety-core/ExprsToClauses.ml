@@ -20,10 +20,10 @@ let translate g =
     let horn_clause e = E.mk_impl (E.mk_and [pre; e]) post in
 
     match edge with
-      | PG.EAssert (e, at) ->
+      | PG.EAssert (e, q) ->
         E.mk_impl
           (E.mk_not (E.mk_impl pre e))
-          (E.Query ((Lbl.qualify "q" lbl1, at), e))
+          (E.Query (Lbl.qualify "q" lbl1, q, e))
       | PG.EBody e -> horn_clause e
       | PG.EReturn (lhs, rhs) -> E.mk_impl (E.mk_and [pre; lhs]) rhs
   in

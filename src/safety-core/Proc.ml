@@ -10,4 +10,5 @@ type t =
   ; sign     : JB.method_signature
   ; vartable : (int * int * string * JB.value_type * int) list option
   ; cl_name  : JB.class_name
+  ; j_method : J.t
   }

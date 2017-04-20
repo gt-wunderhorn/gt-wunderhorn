@@ -59,7 +59,7 @@ let op o es =
 let expr e =
   let var (Var.Mk (name, _)) = QID.as_path name in
   let rec ex = function
-    | E.Query ((l, at), e)     -> Lbl.name l
+    | E.Query (l, at, e)       -> Lbl.name l
     | E.Relation ((l, ss), es) -> A.parens (Lbl.name l :: (List.map ex es))
     | E.Var v                  -> var v
     | E.Apply (o, es)          -> op o (List.map ex es)

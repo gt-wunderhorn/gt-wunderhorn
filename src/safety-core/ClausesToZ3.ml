@@ -29,7 +29,7 @@ type z3_state =
   { context : Z3.context
   ; exprs   : Z3.Expr.expr list
   ; vars    : FD.func_decl list
-  ; queries : (Lbl.t * (FD.func_decl * E.assert_type)) list
+  ; queries : (Lbl.t * (FD.func_decl * E.query)) list
   }
 
 (** Convert operator to Z3. *)
@@ -76,7 +76,7 @@ let op ctx o es =
 type accessors =
   { vars    : (Var.t * FD.func_decl) list
   ; rels    : (Lbl.t * FD.func_decl) list
-  ; queries : (Lbl.t * (FD.func_decl * E.assert_type)) list
+  ; queries : (Lbl.t * (FD.func_decl * E.query)) list
   }
 
 (** Convert an expression to Z3. This is done by recursively applying to
@@ -85,7 +85,7 @@ let rec expr special accessors e =
   let ex = expr special accessors in
   let var v = FD.apply (List.assoc v accessors.vars) [] in
   let base = function
-    | E.Query ((lbl, at), e) ->
+    | E.Query (lbl, q, e) ->
       FD.apply (fst (List.assoc lbl accessors.queries)) [ex e]
 
     | E.Relation ((lbl, _), es) ->
@@ -109,7 +109,7 @@ let translate exprs =
   let func_decl n ps t = FD.mk_func_decl ctx (S.mk_string ctx n) ps t in
   let var v = (v, func_decl (Var.as_path v) [] (typ (Var.type_of v))) in
   let relation (lbl, ts) = (lbl, func_decl (Lbl.name lbl) (List.map typ ts) bool_sort) in
-  let query (lbl, at) = let (lbl, q) = relation (lbl, [T.Bool]) in (lbl, (q, at)) in
+  let query (lbl, qinfo) = let (lbl, q) = relation (lbl, [T.Bool]) in (lbl, (q, qinfo)) in
 
   let upgrade group f = E.exprs_access group exprs |> List.map f in
 
@@ -126,18 +126,18 @@ let translate exprs =
   ; queries = accessors.queries
   }
 
-let query fp (lbl, (q, at)) =
+let query fp (lbl, (q, E.QueryInfo (at, fname, line))) =
   let show_assert_type = function
-    | E.Div0        -> "Division by 0?"
-    | E.Null        -> "Null?"
-    | E.NegArray    -> "Array with negative size?"
-    | E.ArrayBound  -> "Array out of bound?"
+    | E.Div0        -> "Division by 0"
+    | E.Null        -> "Null pointer dereference"
+    | E.NegArray    -> "Array access (negative bounds)"
+    | E.ArrayBound  -> "Array access (beyond bounds)"
     | E.Equivalence -> "Equivalence"
-    | E.User        -> "User specified:" in
+    | E.User        -> "User specified property" in
 
   match FP.query_r fp [q] with
-  | Z3.Solver.SATISFIABLE   -> Printf.printf "%s unsafe\n" (show_assert_type at)
-  | Z3.Solver.UNSATISFIABLE -> Printf.printf "%s safe\n" (show_assert_type at)
+  | Z3.Solver.SATISFIABLE   -> Printf.printf "%s unsafe at %s line %d\n" (show_assert_type at) fname line
+  | Z3.Solver.UNSATISFIABLE -> Printf.printf "%s safe at %s line %d\n" (show_assert_type at) fname line
   | _ -> Printf.printf "unknown\n"
 
 let run es =

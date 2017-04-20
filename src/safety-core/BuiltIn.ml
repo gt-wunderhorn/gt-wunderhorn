@@ -4,26 +4,26 @@ module E = Expr
 
 let is_built_in_class cn =
   let name = JB.cn_name cn in
-  name = "java.util.Scanner" ||
-  name = "java.util.Properties" ||
-  name = "java.util.Arrays" ||
-  name = "java.util.ArrayList$SubList" ||
-  name = "java.util.Collections$UnmodifiableList" ||
-  name = "java.io.BufferedInputStream" ||
-  name = "java.lang.Boolean" ||
-  name = "java.lang.Integer" ||
-  name = "java.lang.Long" ||
-  name = "java.lang.System" ||
-  name = "java.lang.Object" ||
-  name = "java.lang.Class" ||
-  name = "java.lang.Math" ||
-  name = "java.lang.Throwable" ||
-  name = "sun.misc.VM" ||
-  Algorithm.contains name "String" ||
-  Algorithm.contains name "Error" ||
-  Algorithm.contains name "Exception"
+     name = "java.util.Scanner"
+  || name = "java.util.Properties"
+  || name = "java.util.Arrays"
+  || name = "java.util.ArrayList$SubList"
+  || name = "java.util.Collections$UnmodifiableList"
+  || name = "java.io.BufferedInputStream"
+  || name = "java.lang.Boolean"
+  || name = "java.lang.Integer"
+  || name = "java.lang.Long"
+  || name = "java.lang.System"
+  || name = "java.lang.Object"
+  || name = "java.lang.Class"
+  || name = "java.lang.Math"
+  || name = "java.lang.Throwable"
+  || name = "sun.misc.VM"
+  || Algorithm.contains name "String"
+  || Algorithm.contains name "Error"
+  || Algorithm.contains name "Exception"
 
-let call_built_in_method cn ms v args next =
+let call_built_in_method fn src_line cn ms v args next =
   let built_in_list =
     [ "hasNextShort"
     ; "hasNextInt"
@@ -65,7 +65,7 @@ let call_built_in_method cn ms v args next =
   let arbitrary = Instr.Assign (v, E.Var v) in
 
   if name = "ensure"
-  then Some (Instr.Assert (E.mk_eq (List.hd args) (E.Int 1), E.User))
+  then Some (Instr.Assert (E.mk_eq (List.hd args) (E.Int 1), QueryInfo (E.User, fn, src_line)))
   else if List.mem name built_in_list
   then Some (match s with
     | None -> Instr.Goto next

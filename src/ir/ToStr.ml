@@ -68,24 +68,24 @@ let op = function
   | E.Biop (op)   -> biop op
   | E.Manyop (op) -> manyop op
 
-let query = function
-  | (label, asrt) -> fmt "Query (%s, %s)" (lbl label) (assert_t asrt)
+let query (E.QueryInfo (asrt, fname, line)) =
+  fmt "Query (%s, %s, %d)" (assert_t asrt) fname line
 
 let rel = function
   | (label, ts) -> fmt "Rel (%s, [%s])" (lbl label)
       (List.map (typ) ts |> String.concat ", ")
 
 let rec expr = function
-  | E.Var v            -> fmt "Var (%s)" (var v)
-  | E.Int num          -> fmt "Int (%d)" num
-  | E.Real num         -> fmt "Real (%f)" num
-  | E.Bool flag        -> fmt "Bool (%B)" flag
-  | E.Store (a, b, c)  -> fmt "Store (%s, %s, %s)" (expr a) (expr b) (expr c)
-  | E.Select (a, b)    -> fmt "Select (%s, %s)" (expr a) (expr b)
-  | E.Apply (o, ts)    -> fmt "Apply (%s, [%s])" (op o) (List.map expr ts |> String.concat ", ")
-  | E.Relation (r, ts) -> fmt "Relation (%s, [%s])" (rel r) (List.map expr ts |> String.concat ", ")
-  | E.Query (q, a)     -> fmt "Query (%s, %s)" (query q) (expr a)
-  | E.Allocate a       -> fmt "Allocate (%s)" (expr a)
+  | E.Var v             -> fmt "Var (%s)" (var v)
+  | E.Int num           -> fmt "Int (%d)" num
+  | E.Real num          -> fmt "Real (%f)" num
+  | E.Bool flag         -> fmt "Bool (%B)" flag
+  | E.Store (a, b, c)   -> fmt "Store (%s, %s, %s)" (expr a) (expr b) (expr c)
+  | E.Select (a, b)     -> fmt "Select (%s, %s)" (expr a) (expr b)
+  | E.Apply (o, ts)     -> fmt "Apply (%s, [%s])" (op o) (List.map expr ts |> String.concat ", ")
+  | E.Relation (r, ts)  -> fmt "Relation (%s, [%s])" (rel r) (List.map expr ts |> String.concat ", ")
+  | E.Query (l, q, a)   -> fmt "Query (%s, %s, %s)" (lbl l) (query q) (expr a)
+  | E.Allocate a        -> fmt "Allocate (%s)" (expr a)
 
 let rec instr (I.Instr (label, i)) = fmt "Instr (%s, %s)" (lbl label) (ir i)
 
@@ -115,8 +115,8 @@ and ir = function
                                             (var v)
                                             (List.map expr args |> String.concat ", ")
 
-  | I.Assert   (e, assert_type)      -> fmt "Assert (%s, %s)"
-                                            (expr e) (assert_t assert_type)
+  | I.Assert   (e, q)                -> fmt "Assert (%s, %s)"
+                                            (expr e) (query q)
 
 (* TODO: print content in some way *)
 and proc { I.id; I.params; I.ret_type; I.content; I.class_t } =

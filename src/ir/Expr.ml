@@ -24,7 +24,7 @@ type assert_type =
   | Equivalence
   | User
 
-type query = Lbl.t * assert_type
+type query = QueryInfo of assert_type * string * int
 type rel = Lbl.t * T.t list
 
 type t =
@@ -36,7 +36,7 @@ type t =
   | Select    of t * t
   | Apply     of op * t list
   | Relation  of rel * t list
-  | Query     of query * t
+  | Query     of Lbl.t * query * t
   | Allocate  of t
 
 let to_horn_clause = function
@@ -125,12 +125,12 @@ let mk_or  es = Apply (Manyop Or , es)
 let rec map special e =
   let ex = map special in
   let base = function
-    | Relation (r, es) -> Relation (r, List.map ex es)
-    | Query (q, e)     -> Query (q, ex e)
-    | Apply (op, es)   -> Apply (op, (List.map ex es))
-    | Store (f, i, e)  -> Store (f, ex i, ex e)
-    | Select (f, e)    -> Select (f, ex e)
-    | e                -> e
+    | Relation (r, es)  -> Relation (r, List.map ex es)
+    | Query (lbl, q, e) -> Query (lbl, q, ex e)
+    | Apply (op, es)    -> Apply (op, (List.map ex es))
+    | Store (f, i, e)   -> Store (f, ex i, ex e)
+    | Select (f, e)     -> Select (f, ex e)
+    | e                 -> e
   in
   Algorithm.specialize base special e
 
@@ -144,7 +144,7 @@ let rec fold special f zero e =
   let ex = fold special f zero in
   let base = function
     | Relation (_, es) -> List.fold_left f zero (List.map ex es)
-    | Query (_, e)     -> ex e
+    | Query (_, _, e)  -> ex e
     | Apply (_, es)    -> List.fold_left f zero (List.map ex es)
     | Store (v, i, e)  -> f (ex i) (ex e)
     | Select (v, e)    -> ex e
@@ -256,8 +256,8 @@ let rec vars e = fold_union (function
 
 (** Find the queries in an expression *)
 let queries = fold_union (function
-    | Query (q, _) -> Some (Set.singleton q)
-    | _            -> None)
+    | Query (lbl, q, _) -> Some (Set.singleton (lbl, q))
+    | _                 -> None)
 
 (** Find the relations in an expression *)
 let rels = fold_union (function

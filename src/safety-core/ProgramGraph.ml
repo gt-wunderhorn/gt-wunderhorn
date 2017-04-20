@@ -3,7 +3,7 @@ module QID = QualifiedIdentity
 module E = Expr
 
 type 'a instr_path =
-  | Assert   of E.t * E.assert_type
+  | Assert   of E.t * E.query
   | Body     of E.t * (Var.t * E.t) list
   | ScopeIn  of QID.t * E.t * (Var.t * E.t) list
   | ScopeOut of QID.t
@@ -24,6 +24,6 @@ type linked_path = Lbl.t instr_path
 type annotated_path = (Var.t list) instr_path
 
 type expr_path =
-  | EAssert of E.t * E.assert_type
+  | EAssert of E.t * E.query
   | EBody of E.t
   | EReturn of E.t * E.t
