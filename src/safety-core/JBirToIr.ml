@@ -294,24 +294,24 @@ and instr parse st mk_var line i =
       [I.Invoke (proc, v, [])]
 
   | J.Check c ->
-    [I.Goto next]
-  (* (match c with *)
-  (*  | J.CheckArrayBound (a, i) -> *)
-  (*    E.Assert *)
-  (*      ( E.mk_lt (expr i) (E.ArrSelect (E.Var (LS.array_length), expr a)) *)
-  (*      , PG.ArrayBound *)
-  (*      ) *)
-  (*  | J.CheckArithmetic e -> *)
-  (*    E.Assert (E.mk_not (E.mk_eq (expr e) (E.Int 0)) , PG.Div0) *)
+    (* [I.Goto next] *)
+  (match c with
+   | J.CheckArrayBound (a, i) ->
+     [I.Assert
+       ( E.mk_ilt (expr i) (E.Select (E.Var (LS.array_length), expr a))
+       , E.ArrayBound
+       )]
+   | J.CheckArithmetic e ->
+     [I.Assert (E.mk_not (E.mk_eq (expr e) (E.Int 0)) , E.Div0)]
 
-  (*  | J.CheckNegativeArraySize e -> *)
-  (*    E.Assert (E.mk_ge (expr e) (E.Int 0), PG.NegArray) *)
+   | J.CheckNegativeArraySize e ->
+     [I.Assert (E.mk_ige (expr e) (E.Int 0), E.NegArray)]
 
-  (*  | J.CheckNullPointer _ *)
-  (*  | J.CheckArrayStore _ *)
-  (*  | J.CheckCast _ *)
-  (*  | J.CheckLink _ *)
-  (*    -> E.Goto next) *)
+   | J.CheckNullPointer _
+   | J.CheckArrayStore _
+   | J.CheckCast _
+   | J.CheckLink _
+     -> [I.Goto next])
 
   | J.MonitorEnter _
   | J.MonitorExit _
