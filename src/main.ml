@@ -5,7 +5,6 @@ let usage _ =
   Printf.eprintf "usage: %s <classpath> <main class name> [print|run]\n" Sys.argv.(0)
 
 let method_sig = JP.main_signature
-(* let method_sig = JB.make_ms "f" [(TBasic `Int)] (Some((TBasic `Int))) *)
 
 let _ =
   if (Array.length Sys.argv < 4)
