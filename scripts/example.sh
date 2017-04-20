@@ -12,9 +12,17 @@ cd bin
 echo
 echo "Generating Z3 SMT for $1"
 "$(source_dir)"/run_simple_test.sh "${PROGRAM}" print
-scheme-format ../bin/example.z3 > tmp && mv tmp ../bin/example.z3
 
-# echo
-# echo "Generating JBir representation for $1"
-# mkdir -p jbir-html
-# CLASSPATH="$(classpath)" ./SawjaInspect.byte
+echo
+if hash scheme-format 2>/dev/null; then
+    echo "Formatting Z3 output"
+    scheme-format -i 'example.z3'
+else
+    echo "scheme-format not found, not formatting Z3."
+fi
+
+echo
+echo "Generating JBir representation for $1"
+mkdir -p jbir-html
+CLASSPATH="$(classpath)" ./SawjaInspect.byte
+

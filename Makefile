@@ -5,10 +5,10 @@ setup:
 	oasis setup && ocaml setup.ml -configure
 
 clean:
-	ocaml setup.ml -clean
-	find -name *.mllib -exec rm -f {} \;
-	find -name *.mldylib -exec rm -f {} \;
-	find -name *.byte -exec rm -f {} \;
+	ocaml setup.ml -clean || true
+	find -name '*.mllib' -delete
+	find -name '*.mldylib' -delete
+	find -name '*.byte' -delete
 	rm -rf bin/*
 	rm -f setup.ml
 	git clean -xdf
