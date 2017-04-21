@@ -164,6 +164,25 @@ let expr_replacement replacer is =
     (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i))
     is
 
+let is_global_assignment = function
+  | E.Var var when (LangState.is_global var) -> true
+  | _ -> false
+
+
+let rec gotos_reaching target min max = function
+  | (I.Instr (from, I.Goto towards)) :: _
+    when (Lbl.compare_lines false (=) towards target)
+      && ((Lbl.compare_lines false (<) from min)
+         || (Lbl.compare_lines false (>) from max)) ->
+    true
+  | (I.Instr (from, I.If (_, towards))) :: _
+    when (Lbl.compare_lines false (=) towards target)
+      && ((Lbl.compare_lines false (<) from min)
+         || (Lbl.compare_lines false (>) from max)) ->
+    true
+  | i :: rest -> gotos_reaching target min max rest
+  | [] -> false
+
 (* changes (my_bool = true) -> (my_bool) *)
 let simplify_boolean_checks is =
   let replacer = function
@@ -176,54 +195,94 @@ let simplify_boolean_checks is =
   expr_replacement replacer is
 
 let inline_assignments is =
-  let is_global_assignment = function
-    | E.Var var when (LangState.is_global var) -> true
-    | _ -> false
+  let rec slice_linear min max = function
+    (* TODO is checking for jumps going _out_ of the region necessary? *)
+    (* | ((I.Instr (_, I.Goto towards)) as curr_instr) :: rest *)
+    (*   when (Lbl.compare_lines false (<) min towards) *)
+    (*     || (Lbl.compare_lines false (>) max towards) -> *)
+    (*   ([], curr_instr :: rest) *)
+    (* | ((I.Instr (_, I.If (_, towards))) as curr_instr) :: rest *)
+    (*   when (Lbl.compare_lines false (<) min towards) *)
+    (*     || (Lbl.compare_lines false (>) max towards) -> *)
+    (*   ([], curr_instr :: rest) *)
+    | ((I.Instr (lbl, _)) as curr_instr) :: rest ->
+      if gotos_reaching lbl min max is
+      then ([], curr_instr :: rest)
+      else
+        let (sliced, leftover) = slice_linear min max rest in
+        (curr_instr :: sliced, leftover)
+    | [] -> ([], [])
   in
-  let rec assignment_counts = function
+  let into_linear_region region = match region with
+    | (I.Instr (lbl, _)) :: rest ->
+      let min = Lbl.map_ln ((+) (-1)) lbl in
+      let max = Lbl.map_ln ((+) (List.length region)) lbl in
+      slice_linear min max region
+    | [] -> ([], [])
+  in
+
+  let rec find_region var dep_vars = function
+    | ((I.Instr (lbl, I.Assign (assigned, _))) as curr_instr) :: rest
+      when (Set.mem dep_vars assigned) -> ([], curr_instr :: rest)
+    | i :: rest ->
+      let (region, leftover) = find_region var dep_vars rest in
+      (i :: region, leftover)
+    | [] -> ([], [])
+  in
+  let process_region var dep_vars assignment intrs =
+    let (region, leftover) = find_region var dep_vars intrs in
+    let (linear_region, slice_leftover) = into_linear_region region in
+    let rec replacer = function
+      | E.Var v when v = var -> Some(assignment)
+      | _ -> None
+    in
+    (expr_replacement replacer linear_region, List.flatten [slice_leftover; leftover])
+  in
+  let rec find_regions = function
     | (I.Instr (lbl, I.Assign (var, assign))) :: rest
       when (V.is_local var lbl)
-      &&   (V.is_scalar var)
-      &&   (not (is_global_assignment assign)) ->
-        let m = assignment_counts rest in
-        (match Map.find m var with
-          | None -> Map.add ~key:var ~data:(1, assign) m
-          | Some (c, _) -> Map.add ~key:var ~data:(c + 1, assign) m
-        )
-    | (i :: rest) -> assignment_counts rest
+        && (V.is_scalar var)
+        && (not (is_global_assignment assign)) ->
+      let dep_vars = E.vars assign in
+      let curr_instr = I.Instr (lbl, I.Assign (var, assign)) in
+      if Set.mem dep_vars var
+      then curr_instr :: find_regions rest
+      else
+        let (inlined, leftover) = process_region var (Set.add dep_vars var) assign rest in
+        curr_instr :: (find_regions (List.flatten [inlined; leftover]))
+    | (i :: rest) -> i :: (find_regions rest)
+    | [] -> []
+  in
+  find_regions is
+
+let remove_unused_vars is =
+  let rec assignments_to_remove = function
+    | (I.Instr (lbl, I.Assign (var, assign))) :: rest
+      when (V.is_local var lbl)
+        && (V.is_scalar var)
+        && (not (is_global_assignment assign)) ->
+      let m = assignments_to_remove rest in
+      let is_recursive = Set.mem (E.vars assign) var in
+      (match Map.find m var with
+       | None -> Map.add ~key:var ~data:(not is_recursive) m
+       | Some c -> Map.add ~key:var ~data:false m
+      )
+    | (i :: rest) -> assignments_to_remove rest
     | [] -> Map.empty
   in
-  let counts = assignment_counts is in
-
-  let rec replacer = function
-    | E.Var v ->
-      (match Map.find counts v with
-        | Some (1, e) -> Some (E.map replacer e)
-        | _ -> None
-      )
-    | _ -> None
-  in
-
-  let is_unique var =
-    match Map.find counts var with
-      | Some(1, _) -> true
-      | _ -> false
-  in
-
-  let inlined = expr_replacement replacer is in
+  let to_remove = assignments_to_remove is in
 
   let rec remove_unused_assigns = function
     | (I.Instr (now, I.Assign (var, _)))
       :: (I.Instr (next, next_instr))
       :: rest
-      when (is_unique var) ->
-        (Printf.printf "got %s\n" (ToStr.var var));
+      when (Option.default false (Map.find to_remove var)) ->
         (I.Instr (now, I.Goto next))
         :: (remove_unused_assigns (I.Instr (next, next_instr) :: rest))
     | (i :: rest) -> i :: remove_unused_assigns rest
     | [] -> []
   in
-  remove_unused_assigns inlined
+  remove_unused_assigns is
 
 
 (* If a relation only appears on the right hand side of a Horn Clause once, then
