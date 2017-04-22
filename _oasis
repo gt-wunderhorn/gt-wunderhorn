@@ -28,6 +28,7 @@ Library ir
                 Lbl,
                 Var,
                 Expr,
+                ToStr,
                 Instr
 
 Library safetycore
