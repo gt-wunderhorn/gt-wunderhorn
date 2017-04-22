@@ -165,11 +165,8 @@ let rec ir_proc parse st cn =
       |> List.map fix_offset
       |> Simplify.simplify_boolean_assignment
       |> Simplify.simplify_boolean_checks
-      |> (fun (ints) -> (Printf.printf "\nBefore inlining:\n"; ints))
-      |> (fun (ints) -> (Printf.printf "%s\n" (Instr.instructions_to_str ints); ints))
       |> Simplify.inline_assignments
-      |> (fun (ints) -> (Printf.printf "\nAfter inlining:\n"; ints))
-      |> (fun (ints) -> (Printf.printf "%s\n" (Instr.instructions_to_str ints); ints))
+      |> Simplify.remove_unused_vars
     ) in
 
   { I.id       = p.P.name

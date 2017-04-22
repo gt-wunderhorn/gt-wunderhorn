@@ -183,6 +183,7 @@ let rec gotos_reaching target min max = function
   | i :: rest -> gotos_reaching target min max rest
   | [] -> false
 
+
 (* changes (my_bool = true) -> (my_bool) *)
 let simplify_boolean_checks is =
   let replacer = function
@@ -195,15 +196,16 @@ let simplify_boolean_checks is =
   expr_replacement replacer is
 
 let inline_assignments is =
+
   let rec slice_linear min max = function
     (* TODO is checking for jumps going _out_ of the region necessary? *)
     (* | ((I.Instr (_, I.Goto towards)) as curr_instr) :: rest *)
-    (*   when (Lbl.compare_lines false (<) min towards) *)
-    (*     || (Lbl.compare_lines false (>) max towards) -> *)
+    (*   when (Lbl.compare_lines false (<) towards min) *)
+    (*     || (Lbl.compare_lines false (>) towards max) -> *)
     (*   ([], curr_instr :: rest) *)
     (* | ((I.Instr (_, I.If (_, towards))) as curr_instr) :: rest *)
-    (*   when (Lbl.compare_lines false (<) min towards) *)
-    (*     || (Lbl.compare_lines false (>) max towards) -> *)
+    (*   when (Lbl.compare_lines false (<) towards min) *)
+    (*     || (Lbl.compare_lines false (>) towards max) -> *)
     (*   ([], curr_instr :: rest) *)
     | ((I.Instr (lbl, _)) as curr_instr) :: rest ->
       if gotos_reaching lbl min max is
@@ -213,6 +215,7 @@ let inline_assignments is =
         (curr_instr :: sliced, leftover)
     | [] -> ([], [])
   in
+
   let into_linear_region region = match region with
     | (I.Instr (lbl, _)) :: rest ->
       let min = Lbl.map_ln ((+) (-1)) lbl in
@@ -256,33 +259,72 @@ let inline_assignments is =
   find_regions is
 
 let remove_unused_vars is =
-  let rec assignments_to_remove = function
-    | (I.Instr (lbl, I.Assign (var, assign))) :: rest
+  let check_used var = function
+    | E.Var v when v = var -> Some(true)
+    | _ -> None
+  in
+  let is_used_in_expr var expr = E.fold (check_used var) (||) false expr in
+
+  let rec slice_linear min max = function
+    | ((I.Instr (_, I.Goto towards)) as curr_instr) :: rest
+      when (Lbl.compare_lines false (<) towards min)
+        || (Lbl.compare_lines false (>) towards max) ->
+      ([], curr_instr :: rest)
+    | ((I.Instr (_, I.If (_, towards))) as curr_instr) :: rest
+      when (Lbl.compare_lines false (<) towards min)
+        || (Lbl.compare_lines false (>) towards max) ->
+      ([], curr_instr :: rest)
+    | ((I.Instr (lbl, _)) as curr_instr) :: rest ->
+      if gotos_reaching lbl min max is
+      then ([], curr_instr :: rest)
+      else
+        let (sliced, leftover) = slice_linear min max rest in
+        (curr_instr :: sliced, leftover)
+    | [] -> ([], [])
+  in
+
+  let into_linear_region region = match region with
+    | (I.Instr (lbl, _)) :: rest ->
+      let min = Lbl.map_ln ((+) (-1)) lbl in
+      let max = Lbl.map_ln ((+) (List.length region)) lbl in
+      slice_linear min max region
+    | [] -> ([], [])
+  in
+
+  let rec is_used var acc = function
+    | (I.Instr (_, (I.Assign (v, e)))) :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.If (e, j))))     :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.Return e)))      :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.Assert (e, _)))) :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.Invoke (_, _, es)))) :: _
+      when List.exists (is_used_in_expr var) es       -> true
+    | (I.Instr (_, (I.Dispatch (e, _, _, es)))) :: _
+      when (is_used_in_expr var e)
+        || (List.exists (is_used_in_expr var) es)     -> true
+    | (I.Instr (lbl, (I.Assign (v, _)))) :: _ when var = v ->
+      let (_, leftover) = into_linear_region (List.rev acc) in
+      leftover != []
+    | i :: rest -> is_used var (i :: acc) rest
+    | [] ->
+      let (used, leftover) = into_linear_region (List.rev acc) in
+      leftover != []
+  in
+
+  let rec find_unused = function
+    | (I.Instr (lbl, I.Assign (var, assign)) as curr_instr)
+      :: (I.Instr (next, _) as next_instr)
+      :: rest
       when (V.is_local var lbl)
         && (V.is_scalar var)
         && (not (is_global_assignment assign)) ->
-      let m = assignments_to_remove rest in
-      let is_recursive = Set.mem (E.vars assign) var in
-      (match Map.find m var with
-       | None -> Map.add ~key:var ~data:(not is_recursive) m
-       | Some c -> Map.add ~key:var ~data:false m
-      )
-    | (i :: rest) -> assignments_to_remove rest
-    | [] -> Map.empty
-  in
-  let to_remove = assignments_to_remove is in
-
-  let rec remove_unused_assigns = function
-    | (I.Instr (now, I.Assign (var, _)))
-      :: (I.Instr (next, next_instr))
-      :: rest
-      when (Option.default false (Map.find to_remove var)) ->
-        (I.Instr (now, I.Goto next))
-        :: (remove_unused_assigns (I.Instr (next, next_instr) :: rest))
-    | (i :: rest) -> i :: remove_unused_assigns rest
+      if is_used var [curr_instr] (next_instr :: rest)
+      then curr_instr :: (find_unused (next_instr :: rest))
+      else (I.Instr (lbl, I.Goto next)) :: (find_unused (next_instr :: rest))
+    | (i :: rest) -> i :: (find_unused rest)
     | [] -> []
   in
-  remove_unused_assigns is
+
+  find_unused is
 
 
 (* If a relation only appears on the right hand side of a Horn Clause once, then
