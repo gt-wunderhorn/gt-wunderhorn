@@ -15,30 +15,17 @@ elif [[ $(get_ext "$1") = 'fail' ]]; then
   EXPECTED="1"
 fi
 
-# sed -i -e 's/\<ArrayList\>/MyList/g' Test.java
-# sed -i -e 's/\<List\>/MyList/g' Test.java
-# sed -i -e 's/\<LinkedList\>/MyList/g' Test.java
-# sed -i -e 's/\<LinkedList\>/MyList/g' Test.java
-
-# sed -i -e 's/\<Arrays\>/MyArrays/g' Test.java
-# sed -i -e 's/\<Collections\>/MyArrays/g' Test.java
-
-# sed -i -e 's/import java.util.MyList;/ /g' Test.java
-# sed -i -e 's/import java.util.MyArrays;/ /g' Test.java
-
 rm -f *.class
 cp "$(source_dir)"/../benchmark/native/MyNative.java .
 javac -g *.java
 
-echo "Using classpath of $(classpath)."
-
 if [[ $2 = 'run' ]]; then
-  ./main.byte "$(classpath)" Test run
+  ./main.byte "$(classpath)" Test run &>/dev/null
   res="$?"
   if [[ "$res" = "$EXPECTED" ]]; then
-    echo "Success!"
+    echo "$1: Success!"
   else
-    echo "Error: Expected $EXPECTED, got $res."
+    echo "$1: Error, expected $EXPECTED, got $res."
   fi
 else
   ./main.byte "$(classpath)" Test "$2"
