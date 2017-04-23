@@ -14,3 +14,4 @@ myocamlbuild.ml
 parsed/
 Test.java
 test.z3
+.#*

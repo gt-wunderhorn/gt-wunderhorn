@@ -165,7 +165,8 @@ let rec ir_proc parse st cn =
       |> List.map fix_offset
       |> Simplify.simplify_boolean_assignment
       |> Simplify.simplify_boolean_checks
-      (* |> Simplify.inline_assignments *)
+      |> Simplify.inline_assignments
+      |> Simplify.remove_unused_vars
     ) in
 
   { I.id       = p.P.name

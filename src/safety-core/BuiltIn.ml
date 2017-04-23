@@ -65,7 +65,7 @@ let call_built_in_method fn src_line cn ms v args next =
   let arbitrary = Instr.Assign (v, E.Var v) in
 
   if name = "ensure"
-  then Some (Instr.Assert (E.mk_eq (List.hd args) (E.Int 1), QueryInfo (E.User, fn, src_line)))
+  then Some (Instr.Assert (E.mk_eq (List.hd args) (E.Int 1), E.QueryInfo (E.User, fn, src_line)))
   else if List.mem name built_in_list
   then Some (match s with
     | None -> Instr.Goto next

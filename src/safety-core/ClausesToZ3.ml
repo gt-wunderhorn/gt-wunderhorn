@@ -136,9 +136,15 @@ let query fp (lbl, (q, E.QueryInfo (at, fname, line))) =
     | E.User        -> "User specified property" in
 
   match FP.query_r fp [q] with
-  | Z3.Solver.SATISFIABLE   -> Printf.printf "%s unsafe at %s line %d\n" (show_assert_type at) fname line
-  | Z3.Solver.UNSATISFIABLE -> Printf.printf "%s safe at %s line %d\n" (show_assert_type at) fname line
-  | _ -> Printf.printf "unknown\n"
+  | Z3.Solver.SATISFIABLE   ->
+    Printf.printf "%s unsafe at %s line %d\n" (show_assert_type at) fname line;
+    exit 1
+
+  | Z3.Solver.UNSATISFIABLE -> ();
+
+  | _ ->
+    Printf.printf "unknown status\n";
+    exit 1
 
 let run es =
   let z3_state = translate es in
@@ -152,4 +158,5 @@ let run es =
 
   List.iter (fun v -> FP.register_variable fp v) z3_state.vars;
   List.iter (fun clause -> FP.add_rule fp clause None) z3_state.exprs;
-  List.iter (query fp) z3_state.queries
+  List.iter (query fp) z3_state.queries;
+  exit 0

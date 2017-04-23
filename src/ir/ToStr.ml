@@ -7,6 +7,8 @@ let fmt = Printf.sprintf
 
 let qid = QualifiedIdentity.as_path
 
+let commasep = String.concat ", "
+
 let lbl = function
   | L.At (q, (L.Line lineno)) -> fmt "Lbl %s:%u" (qid q) lineno
   | L.At (q, (L.Entrance))    -> fmt "Lbl %s:Entrance" (qid q)
@@ -73,7 +75,7 @@ let query (E.QueryInfo (asrt, fname, line)) =
 
 let rel = function
   | (label, ts) -> fmt "Rel (%s, [%s])" (lbl label)
-      (List.map (typ) ts |> String.concat ", ")
+      (List.map (typ) ts |> commasep)
 
 let rec expr = function
   | E.Var v             -> fmt "Var (%s)" (var v)
@@ -82,50 +84,38 @@ let rec expr = function
   | E.Bool flag         -> fmt "Bool (%B)" flag
   | E.Store (a, b, c)   -> fmt "Store (%s, %s, %s)" (expr a) (expr b) (expr c)
   | E.Select (a, b)     -> fmt "Select (%s, %s)" (expr a) (expr b)
-  | E.Apply (o, ts)     -> fmt "Apply (%s, [%s])" (op o) (List.map expr ts |> String.concat ", ")
-  | E.Relation (r, ts)  -> fmt "Relation (%s, [%s])" (rel r) (List.map expr ts |> String.concat ", ")
+  | E.Apply (o, ts)     -> fmt "Apply (%s, [%s])" (op o) (List.map expr ts |> commasep)
+  | E.Relation (r, ts)  -> fmt "Relation (%s, [%s])" (rel r) (List.map expr ts |> commasep)
   | E.Query (l, q, a)   -> fmt "Query (%s, %s, %s)" (lbl l) (query q) (expr a)
   | E.Allocate a        -> fmt "Allocate (%s)" (expr a)
 
 let rec instr (I.Instr (label, i)) = fmt "Instr (%s, %s)" (lbl label) (ir i)
 
 and ir = function
-  | I.Assign   (v, e)                -> fmt "Assign (%s, %s)"
-                                            (var v)
-                                            (expr e)
-
-  | I.Goto     label                 -> fmt "Goto (%s)"
-                                            (lbl label)
-
-  | I.If       (e, label)            -> fmt "If (%s, %s)"
-                                            (expr e)
-                                            (lbl label)
-
-  | I.Return   e                     -> fmt "Return (%s)"
-                                            (expr e)
-
-  | I.Invoke   (p, v, es)            -> fmt "Invoke (%s, %s, [%s])"
-                                            (proc p)
-                                            (var v)
-                                            (List.map expr es |> String.concat ", ")
-
+  | I.Assign (v, e) -> fmt "Assign (%s, %s)" (var v) (expr e)
+  | I.Goto label    -> fmt "Goto (%s)" (lbl label)
+  | I.If (e, label) -> fmt "If (%s, %s)" (expr e) (lbl label)
+  | I.Return e      -> fmt "Return (%s)" (expr e)
+  | I.Invoke (p, v, es) -> fmt "Invoke (%s, %s, [%s])"
+                               (proc p)
+                               (var v)
+                               (List.map expr es |> commasep)
   | I.Dispatch (e, classes, v, args) -> fmt "Dispatch (%s, [%s], %s, [%s])"
                                             (expr e)
-                                            (List.map class_proc classes |> String.concat ", ")
+                                            (List.map class_proc classes |> commasep)
                                             (var v)
-                                            (List.map expr args |> String.concat ", ")
-
-  | I.Assert   (e, q)                -> fmt "Assert (%s, %s)"
-                                            (expr e) (query q)
+                                            (List.map expr args |> commasep)
+  | I.Assert   (e, q) -> fmt "Assert (%s, %s)"
+                             (expr e) (query q)
 
 (* TODO: print content in some way *)
 and proc { I.id; I.params; I.ret_type; I.content; I.class_t } =
   fmt "Proc {id: %s; params: [%s]; ret_type: %s; content: _; class: %s}"
     (qid id)
-    (List.map var params |> String.concat ", ")
+    (List.map var params |> commasep)
     (Core.Std.Option.value_map ~default:"Unknown" ~f:typ ret_type)
     (expr class_t)
 
 and class_proc (class_type, p) = fmt "(%s, %s)" (expr class_type) (proc p)
 
-let instructions intrs = (List.map instr intrs |> String.concat "\n")
+let instructions intrs = (List.map instr intrs |> commasep)

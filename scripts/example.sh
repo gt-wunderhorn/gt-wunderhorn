@@ -26,3 +26,11 @@ echo "Generating JBir representation for $1"
 mkdir -p jbir-html
 CLASSPATH="$(classpath)" ./SawjaInspect.byte
 
+echo
+if hash z3 2>/dev/null; then
+    echo "Testing program safety (unsat is safe, sat is unsafe)..."
+    z3 'example.z3'
+else
+    echo "z3 not found, will not test safety."
+fi
+

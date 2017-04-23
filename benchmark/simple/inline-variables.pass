@@ -1,0 +1,23 @@
+public static boolean test_inline(int z) {
+    int y = 5;
+    y = 6;
+
+    int x = y + 5;
+    y = 3;
+
+    int w = z;
+    z = z + 1;
+
+    int v = 0;
+    for (int i = 0; i < 2; i += 1) {
+        v = z;
+        z += 1;
+    }
+
+    return y == 3 && x == 11 && w + 3 == z && v + 1 == z;
+}
+
+public static void main(String... args) {
+    ensure(test_inline(2));
+}
+
