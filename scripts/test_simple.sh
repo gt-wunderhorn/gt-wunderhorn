@@ -16,6 +16,7 @@ function run {
 
 echo "Running all simple benchmarks with classpath set to: $(classpath)."
 
+run "$(source_dir)"/../benchmark/simple/dispatch.pass
 run "$(source_dir)"/../benchmark/simple/lcm.pass
 run "$(source_dir)"/../benchmark/simple/lcm.fail
 run "$(source_dir)"/../benchmark/simple/mutableparam.fail
@@ -31,7 +32,6 @@ run "$(source_dir)"/../benchmark/simple/static_field.pass
 run "$(source_dir)"/../benchmark/simple/object_identity.pass
 run "$(source_dir)"/../benchmark/simple/object_identity.fail
 run "$(source_dir)"/../benchmark/simple/ctor.pass
-# run "$(source_dir)"/../benchmark/simple/dispatch.pass
 run "$(source_dir)"/../benchmark/simple/multi_call.pass
 run "$(source_dir)"/../benchmark/simple/mixed_array.fail
 run "$(source_dir)"/../benchmark/simple/array.fail

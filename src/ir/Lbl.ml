@@ -1,7 +1,7 @@
 module QID = QualifiedIdentity
 
 type position = Line of int | Entrance | Exit
-type t = At of QID.t * position | Nowhere
+type t = At of QID.t * position
 
 let show sep = function
   | At (id, l) ->
@@ -9,13 +9,11 @@ let show sep = function
         | Line l   -> string_of_int l
         | Entrance -> "Entrance"
         | Exit     -> "Exit"))
-  | Nowhere  -> "Nowhere"
 
 let name = show "/"
 
 let qualify prefix = function
   | At (qid, lt) -> At (QID.qualify prefix qid, lt)
-  | Nowhere -> Nowhere
 
 let next = function
   | At (id, Line l) -> At (id, Line (l+1))

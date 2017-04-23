@@ -18,5 +18,4 @@ let type_of (Mk (_, t)) = t
 let with_type (Mk (qid, _)) t = Mk (qid, t)
 
 let is_local (Mk (qid, _)) = function
-  | (Lbl.Nowhere) -> false
-  | (Lbl.At (method_qid, _)) -> method_qid = (QID.full_prefix qid)
+  | (Lbl.At (method_qid, _)) -> method_qid = QID.full_prefix qid

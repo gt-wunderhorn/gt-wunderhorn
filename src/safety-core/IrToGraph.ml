@@ -86,7 +86,7 @@ let rec instr proc (I.Instr (this, i)) =
 
   | I.Assert (e, q) ->
     G.union
-      (G.singleton (this, Lbl.Nowhere, (params, PG.Assert (e, q))))
+      (G.singleton (this, I.exit proc, (params, PG.Assert (e, q))))
       (unconditional this next [])
 
 and subgraph_set = ref (Set.empty)

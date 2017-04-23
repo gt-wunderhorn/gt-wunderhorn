@@ -13,7 +13,6 @@ let lbl = function
   | L.At (q, (L.Line lineno)) -> fmt "Lbl %s:%u" (qid q) lineno
   | L.At (q, (L.Entrance))    -> fmt "Lbl %s:Entrance" (qid q)
   | L.At (q, (L.Exit))        -> fmt "Lbl %s:Exit" (qid q)
-  | L.Nowhere                 -> "Lbl Nowhere"
 
 let rec typ = function
   | Type.Int -> "Int"
