@@ -8,7 +8,7 @@ type class_type = E.t
 type 'a proc =
   { id       : QualifiedIdentity.t
   ; params   : Var.t list
-  ; ret_type : Type.t option
+  ; ret_type : Type.t
   ; content  : ('a list) Lazy.t
   ; class_t  : class_type
   }

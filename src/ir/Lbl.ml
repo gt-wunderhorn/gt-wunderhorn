@@ -33,4 +33,3 @@ let compare_lines default f a b =
 let is_after a b = compare_lines false (>) a b
 
 let is_before a b = compare_lines false (<) a b
-

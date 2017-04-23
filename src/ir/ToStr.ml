@@ -15,7 +15,8 @@ let lbl = function
   | L.At (q, (L.Exit))        -> fmt "Lbl %s:Exit" (qid q)
 
 let rec typ = function
-  | Type.Int -> "Int"
+  | Type.Unit -> "Unit"
+  | Type.Int  -> "Int"
   | Type.Bool -> "Bool"
   | Type.Real -> "Real"
   | Type.Array (kind) -> fmt "[%s]" (typ kind)
@@ -112,7 +113,7 @@ and proc { I.id; I.params; I.ret_type; I.content; I.class_t } =
   fmt "Proc {id: %s; params: [%s]; ret_type: %s; content: _; class: %s}"
     (qid id)
     (List.map var params |> commasep)
-    (Core.Std.Option.value_map ~default:"Unknown" ~f:typ ret_type)
+    (typ ret_type)
     (expr class_t)
 
 and class_proc (class_type, p) = fmt "(%s, %s)" (expr class_type) (proc p)

@@ -20,6 +20,7 @@ let real_sort = R.mk_sort ctx
 
 let rec typ s =
   match s with
+  | T.Unit    -> int_sort
   | T.Bool    -> bool_sort
   | T.Int     -> int_sort
   | T.Real    -> real_sort

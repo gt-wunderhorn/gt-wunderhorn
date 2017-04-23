@@ -8,6 +8,7 @@ let header = A.unlines
     [ "(set-option :fixedpoint.engine \"duality\")" ]
 
 let rec sort = function
+  | T.Unit     -> "Int"
   | T.Int      -> "Int"
   | T.Bool     -> "Bool"
   | T.Real     -> "Real"

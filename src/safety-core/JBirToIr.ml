@@ -171,7 +171,7 @@ let rec ir_proc parse st cn =
 
   { I.id       = p.P.name
   ; I.params   = List.map (fun (t, v) -> mk_var (typ t) v) p.P.params
-  ; I.ret_type = Option.map (typ) p.P.ret_type
+  ; I.ret_type = Core.Std.Option.value_map ~default:T.Unit ~f:typ p.P.ret_type
   ; I.content  = instrs
   ; I.class_t  = E.Int (parse.Parse.class_id cn)
   }

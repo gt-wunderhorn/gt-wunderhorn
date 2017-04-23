@@ -5,6 +5,7 @@ module E = Expr
 module T = Type
 
 let rec show_type = function
+  | T.Unit     -> "Unit"
   | T.Bool     -> "Bool"
   | T.Int      -> "Int"
   | T.Real     -> "Real"
