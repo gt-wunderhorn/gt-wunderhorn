@@ -11,7 +11,6 @@ clean:
 	find -name '*.byte' -delete
 	rm -rf bin/*
 	rm -f setup.ml
-	git clean -xdf
 
 test:
 	ocaml setup.ml -test

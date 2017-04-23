@@ -12,6 +12,7 @@ Library utility
   ByteOpt:      -thread
   NativeOpt:    -thread
   Modules:      Algorithm,
+                Command,
                 QualifiedIdentity,
                 Comparable,
                 CountTable,
