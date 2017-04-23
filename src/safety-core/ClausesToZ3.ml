@@ -133,7 +133,6 @@ let query fp (lbl, (q, E.QueryInfo (at, fname, line))) =
     | Assert.Null        -> "Null pointer dereference possible"
     | Assert.NegArray    -> "Array access (negative bounds) possible"
     | Assert.ArrayBound  -> "Array access (beyond bounds) possible"
-    | Assert.Equivalence -> "Equivalence"
     | Assert.User        -> "User specified property unsafe" in
 
   match FP.query_r fp [q] with

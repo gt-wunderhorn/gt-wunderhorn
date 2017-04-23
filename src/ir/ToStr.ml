@@ -62,7 +62,6 @@ let assert_t = function
   | Assert.Null        -> "Null"
   | Assert.NegArray    -> "NegArray"
   | Assert.ArrayBound  -> "ArrayBound"
-  | Assert.Equivalence -> "Equivalence"
   | Assert.User        -> "User"
 
 let op = function
