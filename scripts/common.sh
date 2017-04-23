@@ -36,18 +36,3 @@ function classpath() {
   # include the current directory also
   echo "$(pwd):$(find_bootcp_jar rt)"
 }
-
-# expect a certain safety outcome
-function expect_safety() {
-  local EXPECTED="$1"
-  shift
-  local OUTPUT=$("$@" | tee /dev/tty)
-  local GOT=$(echo "$OUTPUT" | grep 'User specified' | tail -1 | awk '{print $NF}')
-  if [[ "$GOT" = "$EXPECTED" ]]; then
-    echo "Success!"
-    return 0
-  else
-    echo "Error: Expected $EXPECTED, got $GOT."
-    return 64
-  fi
-}

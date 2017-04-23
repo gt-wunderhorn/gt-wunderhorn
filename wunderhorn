@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
+SOURCE_DIR=$(dirname "$SOURCE_DIR")
+source "$SOURCE_DIR/scripts/common.sh"
+
+fullname=$(basename "$1")
+ext="${fullname##*.}"
+filename="${fullname%.*}"
+
+if [[ "$ext" = "java" ]]; then
+  javac $fullname
+  ./main.byte "$(classpath)" $filename run
+elif [[ "$ext" = "class" ]]; then
+  ./main.byte "$(classpath)" $filename run
+fi

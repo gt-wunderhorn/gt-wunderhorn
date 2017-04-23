@@ -37,11 +37,6 @@ type method_map =
     JB.class_method_signature ->
     J.t
 
-let native = JB.make_cn "MyNative"
-let native_entry =
-  let ms = JB.make_ms "entry" [] None in
-  JB.make_cms native ms
-
 let local_var_table classpath cname =
   let jl_class_or_iface = JL.get_class (JL.class_path classpath) cname in
 
@@ -67,7 +62,7 @@ let local_var_table classpath cname =
 let parse id classpath cms =
   let (prta,instantiated_classes) =
     Sawja_pack.JRTA.parse_program
-      ~other_entrypoints:[native_entry; cms]
+      ~other_entrypoints:[cms]
       classpath
       cms in
 
@@ -117,10 +112,8 @@ let parse id classpath cms =
       }
 
     | JL.Native ->
-      let (cn, ms) = JB.cms_split (cm.JL.cm_class_method_signature) in
-
-      let alternate_sig = JB.make_cms native ms in
-      List.hd (cms_lookup alternate_sig)
+      Printf.eprintf "unhandled native method\n";
+      exit 1
   in
 
   let has_cms cms =

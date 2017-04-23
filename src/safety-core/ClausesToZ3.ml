@@ -128,22 +128,22 @@ let translate exprs =
 
 let query fp (lbl, (q, E.QueryInfo (at, fname, line))) =
   let show_assert_type = function
-    | E.Div0        -> "Division by 0"
-    | E.Null        -> "Null pointer dereference"
-    | E.NegArray    -> "Array access (negative bounds)"
-    | E.ArrayBound  -> "Array access (beyond bounds)"
+    | E.Div0        -> "Division by 0 possible"
+    | E.Null        -> "Null pointer dereference possible"
+    | E.NegArray    -> "Array access (negative bounds) possible"
+    | E.ArrayBound  -> "Array access (beyond bounds) possible"
     | E.Equivalence -> "Equivalence"
-    | E.User        -> "User specified property" in
+    | E.User        -> "User specified property unsafe" in
 
   match FP.query_r fp [q] with
   | Z3.Solver.SATISFIABLE   ->
-    Printf.printf "%s unsafe at %s line %d\n" (show_assert_type at) fname line;
+    Printf.eprintf "%s at %s line %d\n" (show_assert_type at) fname line;
     exit 1
 
   | Z3.Solver.UNSATISFIABLE -> ();
 
   | _ ->
-    Printf.printf "unknown status\n";
+    Printf.eprintf "unknown status\n";
     exit 1
 
 let run es =
@@ -159,4 +159,6 @@ let run es =
   List.iter (fun v -> FP.register_variable fp v) z3_state.vars;
   List.iter (fun clause -> FP.add_rule fp clause None) z3_state.exprs;
   List.iter (query fp) z3_state.queries;
+
+  Printf.eprintf "safe!\n";
   exit 0
