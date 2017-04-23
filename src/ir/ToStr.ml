@@ -57,17 +57,17 @@ let manyop = function
   | E.Or  -> "Or"
 
 let assert_t = function
-  | E.Div0        -> "Div0"
-  | E.Null        -> "Null"
-  | E.NegArray    -> "NegArray"
-  | E.ArrayBound  -> "ArrayBound"
-  | E.Equivalence -> "Equivalence"
-  | E.User        -> "User"
+  | Assert.Div0        -> "Div0"
+  | Assert.Null        -> "Null"
+  | Assert.NegArray    -> "NegArray"
+  | Assert.ArrayBound  -> "ArrayBound"
+  | Assert.Equivalence -> "Equivalence"
+  | Assert.User        -> "User"
 
 let op = function
-  | E.Unop (op)   -> unop op
-  | E.Biop (op)   -> biop op
-  | E.Manyop (op) -> manyop op
+  | E.Unop op   -> unop op
+  | E.Biop op   -> biop op
+  | E.Manyop op -> manyop op
 
 let query (E.QueryInfo (asrt, fname, line)) =
   fmt "Query (%s, %s, %d)" (assert_t asrt) fname line

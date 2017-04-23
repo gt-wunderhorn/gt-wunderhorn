@@ -16,15 +16,7 @@ type op =
   | Biop   of biop
   | Manyop of manyop
 
-type assert_type =
-  | Div0
-  | Null
-  | NegArray
-  | ArrayBound
-  | Equivalence
-  | User
-
-type query = QueryInfo of assert_type * string * int
+type query = QueryInfo of Assert.t * string * int
 type rel = Lbl.t * T.t list
 
 type t =

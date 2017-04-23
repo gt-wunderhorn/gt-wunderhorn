@@ -128,17 +128,17 @@ let translate exprs =
 
 let query fp (lbl, (q, E.QueryInfo (at, fname, line))) =
   let show_assert_type = function
-    | E.Div0        -> "Division by 0 possible"
-    | E.Null        -> "Null pointer dereference possible"
-    | E.NegArray    -> "Array access (negative bounds) possible"
-    | E.ArrayBound  -> "Array access (beyond bounds) possible"
-    | E.Equivalence -> "Equivalence"
-    | E.User        -> "User specified property unsafe" in
+    | Assert.Div0        -> "Division by 0 possible"
+    | Assert.Null        -> "Null pointer dereference possible"
+    | Assert.NegArray    -> "Array access (negative bounds) possible"
+    | Assert.ArrayBound  -> "Array access (beyond bounds) possible"
+    | Assert.Equivalence -> "Equivalence"
+    | Assert.User        -> "User specified property unsafe" in
 
   match FP.query_r fp [q] with
   | Z3.Solver.SATISFIABLE   ->
     Printf.eprintf "%s at %s line %d\n" (show_assert_type at) fname line;
-    exit 1
+    exit (Assert.error_code at)
 
   | Z3.Solver.UNSATISFIABLE -> ();
 

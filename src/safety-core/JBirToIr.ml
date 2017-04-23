@@ -305,17 +305,18 @@ and instr parse st mk_var line i =
    | J.CheckArrayBound (a, i) ->
      [I.Assert
        ( E.mk_ilt (expr i) (E.Select (E.Var (LS.array_length), expr a))
-       , E.QueryInfo (E.ArrayBound, fname, src_line)
+       , E.QueryInfo (Assert.ArrayBound, fname, src_line)
        )]
+
    | J.CheckArithmetic e ->
      [I.Assert
         ( E.mk_not (E.mk_eq (expr e) (E.Int 0))
-        , E.QueryInfo (E.Div0, fname, src_line))]
+        , E.QueryInfo (Assert.Div0, fname, src_line))]
 
    | J.CheckNegativeArraySize e ->
      [I.Assert
         ( E.mk_ige (expr e) (E.Int 0)
-        , E.QueryInfo (E.NegArray, fname, src_line))]
+        , E.QueryInfo (Assert.NegArray, fname, src_line))]
 
    | J.CheckNullPointer _
    | J.CheckArrayStore _
