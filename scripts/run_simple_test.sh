@@ -4,15 +4,15 @@ SOURCE_DIR=$(dirname "$SOURCE_DIR")
 source "$SOURCE_DIR/common.sh"
 
 if [[ $(get_ext "$1") = 'java' ]]; then
-    cp "$1" Test.java
+  cp "$1" Test.java
 else
-    build_test "$1" > Test.java
+  build_test "$1" > Test.java
 fi
 
 if [[ $(get_ext "$1") = 'pass' ]]; then
-    EXPECTED="safe"
+  EXPECTED="0"
 elif [[ $(get_ext "$1") = 'fail' ]]; then
-    EXPECTED="unsafe"
+  EXPECTED="1"
 fi
 
 # sed -i -e 's/\<ArrayList\>/MyList/g' Test.java
@@ -28,14 +28,18 @@ fi
 
 rm -f *.class
 cp "$(source_dir)"/../benchmark/native/MyNative.java .
-# cp "$(source_dir)"/../benchmark/native/MyList.java .
-# cp "$(source_dir)"/../benchmark/native/MyArrays.java .
 javac -g *.java
 
 echo "Using classpath of $(classpath)."
 
 if [[ $2 = 'run' ]]; then
-    expect_safety "$EXPECTED" ./main.byte "$(classpath)" Test run
+  ./main.byte "$(classpath)" Test run
+  res="$?"
+  if [[ "$res" = "$EXPECTED" ]]; then
+    echo "Success!"
+  else
+    echo "Error: Expected $EXPECTED, got $res."
+  fi
 else
-    ./main.byte "$(classpath)" Test "$2"
+  ./main.byte "$(classpath)" Test "$2"
 fi

@@ -21,12 +21,6 @@ let next = function
   | At (id, Line l) -> At (id, Line (l+1))
   | _ -> assert false
 
-let lbl_to_str = function
-  | At (qid, (Line lineno)) -> Printf.sprintf "Lbl %s:%d" (QID.as_path qid) lineno
-  | At (qid, (Entrance)) -> Printf.sprintf "Lbl %s:Entrance" (QID.as_path qid)
-  | At (qid, (Exit)) -> Printf.sprintf "Lbl %s:Exit" (QID.as_path qid)
-  | Nowhere -> "Lbl Nowhere"
-
 let map_ln f a =
   match a with
   | At (id, (Line la)) -> At (id, (Line (f la)))
