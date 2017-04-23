@@ -18,4 +18,5 @@ let rec lookup table idx =
       else lookup rest idx
     | _ -> 0
   in
+  Printf.printf "offset table %d %d\n" idx res;
   res

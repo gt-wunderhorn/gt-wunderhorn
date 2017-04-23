@@ -3,12 +3,11 @@ module QID = QualifiedIdentity
 type position = Line of int | Entrance | Exit
 type t = At of QID.t * position
 
-let show sep = function
-  | At (id, l) ->
-    QID.to_string sep (QID.specify id (match l with
-        | Line l   -> string_of_int l
-        | Entrance -> "Entrance"
-        | Exit     -> "Exit"))
+let show sep (At (id, l)) =
+  QID.to_string sep (QID.specify id (match l with
+      | Line l   -> string_of_int l
+      | Entrance -> "Entrance"
+      | Exit     -> "Exit"))
 
 let name = show "/"
 

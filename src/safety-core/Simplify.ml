@@ -143,7 +143,6 @@ let simplify_boolean_assignment is =
     | I.If (e, l)               -> I.If (ex e, l)
     | I.Return e                -> I.Return (ex e)
     | I.Invoke (p, v, es)       -> I.Invoke (p, lookup v, List.map ex es)
-    | I.Dispatch (e, ps, v, es) -> I.Dispatch (ex e, ps, lookup v, List.map ex es)
     | I.Assert (e, at)          -> I.Assert (ex e, at)
   in
   List.map
@@ -157,7 +156,6 @@ let expr_replacement replacer is =
     | I.If (e, l)               -> I.If (ex e, l)
     | I.Return e                -> I.Return (ex e)
     | I.Invoke (p, v, es)       -> I.Invoke (p, v, List.map ex es)
-    | I.Dispatch (e, ps, v, es) -> I.Dispatch (ex e, ps, v, List.map ex es)
     | I.Assert (e, at)          -> I.Assert (ex e, at)
   in
   List.map
@@ -298,9 +296,6 @@ let remove_unused_vars is =
     | (I.Instr (_, (I.Assert (e, _)))) :: _ when is_used_in_expr var e -> true
     | (I.Instr (_, (I.Invoke (_, _, es)))) :: _
       when List.exists (is_used_in_expr var) es       -> true
-    | (I.Instr (_, (I.Dispatch (e, _, _, es)))) :: _
-      when (is_used_in_expr var e)
-        || (List.exists (is_used_in_expr var) es)     -> true
     | (I.Instr (lbl, (I.Assign (v, _)))) :: _ when var = v ->
       let (_, leftover) = into_linear_region (List.rev acc) in
       leftover != []

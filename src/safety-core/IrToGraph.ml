@@ -76,14 +76,6 @@ let rec instr proc (I.Instr (this, i)) =
       ; (this, next, (params, PG.Body (E.mk_not e, [])))
       ]
 
-  (** A dynamic dispatch generates a graph with many edges diverging from
-      one node. Each divergent edge is predicated by a check to see which
-      version of the dispatch should be used. *)
-  | I.Dispatch (obj, ps, v, args) ->
-    let call_meth (t, proc) =
-      call params (check_type obj t) proc v (obj :: args) in
-    G.unions_map call_meth ps
-
   | I.Assert (e, q) ->
     G.union
       (G.singleton (this, I.exit proc, (params, PG.Assert (e, q))))

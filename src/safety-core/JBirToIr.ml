@@ -30,6 +30,7 @@ let rec typ = function
       | `Short  -> T.Int)
   | JB.TObject t -> T.Int
 
+
 let unop op e = match op with
   | J.Neg bt -> (match bt with
       | `Double | `Float -> E.mk_rneg e
@@ -115,6 +116,19 @@ let update_field arr idx e =
   let store = E.Store (E.Var arr, idx, e) in
   I.Assign (arr, store)
 
+(* How many instructions are inserted for each original instruction? *)
+let number_of_new_instructions parse st line = function
+  | J.InvokeVirtual (v, obj, ck, ms, args) ->
+    let cn = st.proc.P.cl_name in
+    (if List.mem (JB.ms_name ms) BuiltIn.built_in_list
+     then 1
+     else
+       let procs =
+         parse.Parse.cms_lookup (JB.make_cms st.proc.P.cl_name ms)
+         @ parse.Parse.virtual_lookup cn st.proc.P.sign line in
+       3 * List.length procs)
+  | _ -> 1
+
 let rec ir_proc parse st cn =
   let p = st.proc in
   let module OT = OffsetTable in
@@ -156,31 +170,29 @@ let rec ir_proc parse st cn =
   in
 
   let instrs = Lazy.from_fun (fun _ ->
-      let groups = p.P.content |> List.mapi (instr parse st mk_var) in
-
       let jump_offsets =
+        let num_instrs = List.mapi (number_of_new_instructions parse st) p.P.content in
         let offsets =
-          (List.mapi (fun line xs -> (line, List.length xs - 1)) groups) in
+          (List.mapi (fun line num -> (line, num - 1)) num_instrs) in
         List.fold_left (fun tb (l, o) ->
             if o <> 0
             then OT.add l o tb
             else tb) (OT.mk (List.length opening_instructions)) offsets in
 
-      let fix_offset (I.Instr (loc, ir)) =
-        let lbl = function
-          | Lbl.At (qid, Lbl.Line l) -> Lbl.At (qid, Lbl.Line (l + OT.lookup jump_offsets l))
-          | l                        -> l in
-        let ir' = match ir with
-        | I.Goto l    -> I.Goto (lbl l)
-        | I.If (c, l) -> I.If (c, lbl l)
-        | i           -> i in
-        I.Instr (loc, ir')
+      let renumber = function
+        | J.Goto l       -> J.Goto (l + OT.lookup jump_offsets l)
+        | J.Ifd (cmp, l) -> J.Ifd (cmp, l + OT.lookup jump_offsets l)
+        | other          -> other
       in
+
+      let groups =
+        p.P.content
+        |> List.map renumber
+        |> List.mapi (instr parse st mk_var) in
 
       opening_instructions :: groups
       |> List.concat
       |> List.mapi (fun line ir -> I.Instr (Lbl.At (p.P.name, Lbl.Line line), ir))
-      |> List.map fix_offset
       |> Simplify.simplify_boolean_assignment
       |> Simplify.simplify_boolean_checks
       |> Simplify.inline_assignments
@@ -191,7 +203,6 @@ let rec ir_proc parse st cn =
   ; I.params   = List.map (fun (t, v) -> mk_var (typ t) v) p.P.params
   ; I.ret_type = Core.Std.Option.value_map ~default:T.Unit ~f:typ p.P.ret_type
   ; I.content  = instrs
-  ; I.class_t  = E.Int (parse.Parse.class_id cn)
   }
 
 and mk_proc parse cms =
@@ -218,10 +229,10 @@ and instr parse st mk_var line i =
 
   let invoke cn ms v args =
     match BuiltIn.call_built_in_method fname src_line cn ms v args next with
-    | Some i -> [i]
+    | Some i -> i
     | None ->
       let proc = mk_proc parse (JB.make_cms cn ms) in
-      [I.Invoke (proc, v, args)]
+      I.Invoke (proc, v, args)
   in
 
   match i with
@@ -279,12 +290,12 @@ and instr parse st mk_var line i =
   | J.InvokeStatic (v, cn, ms, args) ->
     let args = List.map expr args in
     let v = return_var v ms in
-    invoke cn ms v args
+    [invoke cn ms v args]
 
   | J.InvokeNonVirtual (v, obj, cn, ms, args) ->
     let args = List.map expr args in
     let v = return_var v ms in
-    invoke cn ms v (expr obj :: args)
+    [invoke cn ms v (expr obj :: args)]
 
   | J.InvokeVirtual (v, obj, ck, ms, args) ->
     let cn = st.proc.P.cl_name in
@@ -293,22 +304,34 @@ and instr parse st mk_var line i =
     (match BuiltIn.call_built_in_method fname src_line cn ms v args next with
      | Some i -> [i]
      | None ->
-       let lookup =
+       Printf.printf "original line number %d\n" line;
+       let procs =
          parse.Parse.cms_lookup (JB.make_cms st.proc.P.cl_name ms)
          @ parse.Parse.virtual_lookup cn st.proc.P.sign line in
-       let procs =
-         lookup
-         |> List.map
-           (fun p ->
-              ((E.Int (parse.Parse.class_id p.P.cl_name)), ir_proc parse (mk_st parse p) cn)) in
-       [I.Dispatch (expr obj, procs, v, args)])
+
+       Printf.printf "final dest %d\n" (line + 3*(List.length procs));
+       let final_dest = lbl (line + 3*(List.length procs)) in
+
+       procs
+       |> List.mapi
+         (fun idx p ->
+            let cid = E.Int (parse.Parse.class_id p.P.cl_name) in
+            let dest = lbl (line + 3*(idx + 1)) in
+            Printf.printf "jump destination %d\n" (line + 3*(idx + 1));
+
+            let _ = mk_proc parse (JB.make_cms p.P.cl_name p.P.sign) in
+
+            [ I.If (E.mk_neq cid (E.Select (E.Var LS.class_array, expr obj)), dest)
+            ; invoke p.P.cl_name p.P.sign v (expr obj :: args)
+            ; I.Goto final_dest
+            ])
+       |> List.concat)
 
   | J.MayInit cn ->
     let ms = JB.clinit_signature in
     let cms = JB.make_cms cn ms in
 
-    if BuiltIn.is_built_in_class cn
-    || not (parse.Parse.has_cms cms)
+    if BuiltIn.is_built_in_class cn || not (parse.Parse.has_cms cms)
     then [I.Goto next]
     else
       let proc = mk_proc parse cms in

@@ -11,8 +11,8 @@ let commasep = String.concat ", "
 
 let lbl = function
   | L.At (q, (L.Line lineno)) -> fmt "Lbl %s:%u" (qid q) lineno
-  | L.At (q, (L.Entrance))    -> fmt "Lbl %s:Entrance" (qid q)
-  | L.At (q, (L.Exit))        -> fmt "Lbl %s:Exit" (qid q)
+  | L.At (q, (L.Entrance))        -> fmt "Lbl %s:Entrance" (qid q)
+  | L.At (q, (L.Exit))            -> fmt "Lbl %s:Exit" (qid q)
 
 let rec typ = function
   | Type.Unit -> "Unit"
@@ -99,21 +99,15 @@ and ir = function
                                (proc p)
                                (var v)
                                (List.map expr es |> commasep)
-  | I.Dispatch (e, classes, v, args) -> fmt "Dispatch (%s, [%s], %s, [%s])"
-                                            (expr e)
-                                            (List.map class_proc classes |> commasep)
-                                            (var v)
-                                            (List.map expr args |> commasep)
   | I.Assert   (e, q) -> fmt "Assert (%s, %s)"
                              (expr e) (query q)
 
 (* TODO: print content in some way *)
-and proc { I.id; I.params; I.ret_type; I.content; I.class_t } =
-  fmt "Proc {id: %s; params: [%s]; ret_type: %s; content: _; class: %s}"
+and proc { I.id; I.params; I.ret_type; I.content } =
+  fmt "Proc {id: %s; params: [%s]; ret_type: %s; content: _}"
     (qid id)
     (List.map var params |> commasep)
     (typ ret_type)
-    (expr class_t)
 
 and class_proc (class_type, p) = fmt "(%s, %s)" (expr class_type) (proc p)
 

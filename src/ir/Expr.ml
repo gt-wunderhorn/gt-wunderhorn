@@ -98,6 +98,7 @@ let mk_band  = mk_biop BAnd
 let mk_bor   = mk_biop BOr
 let mk_bxor  = mk_biop BXor
 let mk_eq    = mk_biop Eq
+let mk_neq x y = mk_not (mk_biop Eq x y)
 
 let mk_ineg = mk_isub (Int  0  )
 let mk_rneg = mk_rsub (Real 0.0)
