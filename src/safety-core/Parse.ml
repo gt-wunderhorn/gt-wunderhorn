@@ -61,7 +61,7 @@ let local_var_table classpath cname =
 
 let parse id classpath cms =
   let (prta,instantiated_classes) =
-    Command.with_suppressed_stderr (Sawja_pack.JRTA.parse_program
+    Algorithm.with_suppressed_stderr (Sawja_pack.JRTA.parse_program
       ~other_entrypoints:[cms]
       classpath)
       cms in

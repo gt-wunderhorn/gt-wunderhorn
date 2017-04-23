@@ -64,3 +64,22 @@ let rec last = function
   | [x]       -> x
   | (x :: xs) -> last xs
 
+(* Run a procedure with a single argument over the provided argument. `stderr`
+ * is suppressed while the procedure runs.
+ *
+ * If you want to use this with a multi-argument procedure, just curry the
+ * procedure:
+ *
+ * `with_suppressed_stderr (f x y) z`
+ *)
+let with_suppressed_stderr f arg =
+  let oldstderr = Unix.dup Unix.stderr in
+  let newstderr = open_out "/dev/null" in
+  Unix.dup2 (Unix.descr_of_out_channel newstderr) Unix.stderr;
+
+  let res = f arg in
+
+  flush stderr;
+  Unix.dup2 oldstderr Unix.stderr;
+
+  res
