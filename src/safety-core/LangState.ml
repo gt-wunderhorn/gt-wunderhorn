@@ -21,7 +21,3 @@ let class_array   = global "CLASS_TYPE" (T.Array T.Int)
 let array_length  = global "ARRAY_LENGTH" (T.Array T.Int)
 let id            = global "ID" T.Int
 let dummy         = global "DUMMY" T.Int
-
-let update_field arr idx e =
-  let store = E.Store (E.Var arr, idx, e) in
-  I.mk_assign arr store

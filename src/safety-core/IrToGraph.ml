@@ -100,18 +100,6 @@ and translate proc =
     let i = Lbl.At (proc.I.id, Lbl.Entrance) in
     let t = Lbl.At (proc.I.id, Lbl.Line 0) in
 
-    let e =
-      if QID.most_specific proc.I.id = "<init>"
-      then
-        let this = Var.Mk (QID.specify proc.I.id "this", T.Int) in
-        [ I.mk_assign LS.id (E.mk_iadd (E.Var LS.id) (E.Int 1))
-        ; I.mk_assign this (E.Var LS.id)
-        ; LS.update_field LS.class_array (E.Var this) proc.I.class_t
-        ]
-      else if proc.I.id = QID.of_list ["Test"; "main"]
-      then [LS.id, E.Int 0]
-      else [] in
-
     let assign_param p = I.mk_assign p (E.Var (Var.qualify "p" p)) in
     let bind_params = List.map assign_param proc.Instr.params in
 
@@ -119,5 +107,5 @@ and translate proc =
       ;
       List.map (instr proc) (Lazy.force proc.I.content)
       |> G.unions
-      |> G.add (i, t, (proc.Instr.params, PG.Body (E.Bool true, bind_params @ e)))
+      |> G.add (i, t, (proc.Instr.params, PG.Body (E.Bool true, bind_params)))
     )

@@ -16,6 +16,7 @@ function run {
 
 echo "Running all simple benchmarks with classpath set to: $(classpath)."
 
+
 # run "$(source_dir)"/../benchmark/simple/dispatch.pass
 run "$(source_dir)"/../benchmark/simple/lcm.pass
 run "$(source_dir)"/../benchmark/simple/lcm.fail

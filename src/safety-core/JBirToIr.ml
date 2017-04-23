@@ -111,9 +111,29 @@ let ctor_sig cn t =
   let ms = JB.make_ms "<init>" t None in
   JB.make_cms cn ms
 
+let update_field arr idx e =
+  let store = E.Store (E.Var arr, idx, e) in
+  I.Assign (arr, store)
+
 let rec ir_proc parse st cn =
   let p = st.proc in
   let module OT = OffsetTable in
+
+  let opening_instructions =
+    let name = JB.ms_name st.proc.Proc.sign in
+    if name = "main"
+    then
+      [I.Assign (LS.id, E.Int 0)]
+    else if name = "<init>"
+    then
+      let this = Var.Mk (QID.specify p.P.name "this", T.Int) in
+      let class_t = E.Int (parse.Parse.class_id cn) in
+      [ I.Assign (LS.id, E.mk_iadd (E.Var LS.id) (E.Int 1))
+      ; I.Assign (this, E.Var LS.id)
+      ; update_field LS.class_array (E.Var this) class_t
+      ]
+    else
+      [] in
 
   let vartable = p.P.vartable in
   let find_type_from_table var_name = match vartable with
@@ -136,17 +156,15 @@ let rec ir_proc parse st cn =
   in
 
   let instrs = Lazy.from_fun (fun _ ->
-      let groups =
-        p.P.content
-        |> List.mapi (instr parse st mk_var) in
+      let groups = p.P.content |> List.mapi (instr parse st mk_var) in
 
       let jump_offsets =
-        let offsets = List.mapi
-                        (fun line xs -> (line, List.length xs - 1)) groups in
+        let offsets =
+          (List.mapi (fun line xs -> (line, List.length xs - 1)) groups) in
         List.fold_left (fun tb (l, o) ->
             if o <> 0
             then OT.add l o tb
-            else tb) OT.mk offsets in
+            else tb) (OT.mk (List.length opening_instructions)) offsets in
 
       let fix_offset (I.Instr (loc, ir)) =
         let lbl = function
@@ -159,7 +177,7 @@ let rec ir_proc parse st cn =
         I.Instr (loc, ir')
       in
 
-      groups
+      opening_instructions :: groups
       |> List.concat
       |> List.mapi (fun line ir -> I.Instr (Lbl.At (p.P.name, Lbl.Line line), ir))
       |> List.map fix_offset
@@ -213,16 +231,13 @@ and instr parse st mk_var line i =
   | J.AffectArray (arr, ind, e) ->
     let array_array = LS.array_array (e_type e) in
     let sub_array = E.Select (E.Var array_array, expr arr) in
-    [I.Assign (array_array,
-               E.Store (E.Var array_array, expr arr,
-                        E.Store (sub_array, expr ind, expr e)))]
+    [update_field array_array (expr arr) (E.Store (sub_array, expr ind, expr e))]
 
   | J.AffectField (v, cn, fs, e) ->
-    [I.Assign (field cn fs, E.Store (E.Var (field cn fs), expr v, expr e))]
+    [update_field (field cn fs) (expr v) (expr e)]
 
   | J.AffectStaticField (cn, fs, e) ->
-    [I.Assign (field cn fs, E.Store (E.Var (field cn fs),
-                                     E.Int (parse.Parse.class_id cn), expr e))]
+    [update_field (field cn fs) (E.Int (parse.Parse.class_id cn)) (expr e)]
 
   | J.Goto l ->
     [I.Goto (lbl l)]
@@ -257,8 +272,8 @@ and instr parse st mk_var line i =
     let v' = mk_var T.Int v in
     [ I.Assign (LS.id, E.mk_iadd (E.Var LS.id) (E.Int 1))
     ; I.Assign (v', E.Var LS.id)
-    ; I.Assign (LS.class_array, E.Store  (E.Var LS.class_array,  E.Var v', E.Int (-1)))
-    ; I.Assign (LS.array_length, E.Store (E.Var LS.array_length, E.Var v', expr (List.hd es)))
+    ; update_field LS.class_array (E.Var v') (E.Int (-1))
+    ; update_field LS.array_length (E.Var v') (expr (List.hd es))
     ]
 
   | J.InvokeStatic (v, cn, ms, args) ->

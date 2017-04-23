@@ -22,7 +22,7 @@ cp "$(source_dir)"/../benchmark/native/MyNative.java .
 javac -g *.java
 
 if [[ $2 = 'run' ]]; then
-  ./main.byte "$(classpath)" Test run &>/dev/null || res="$?"
+  ./main.byte "$(classpath)" Test run 2>/dev/null || res="$?"
   if [[ ($ext = "pass" && "${res:-0}" = "0") || ($ext = "fail" && ("${res:-0}" -ne "0"))]] ; then
     echo "$1: Success, ${res:-0}!"
   else
