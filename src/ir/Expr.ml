@@ -145,6 +145,13 @@ let rec fold special f zero e =
   in
   Algorithm.specialize base special e
 
+let contains f =
+  let check_used = function
+    | e when (f e) -> Some(true)
+    | _ -> None
+  in
+  fold check_used (||) false
+
 let rec optimize e =
   let optimize' e =
     let reduce e =
