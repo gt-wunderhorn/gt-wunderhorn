@@ -2,7 +2,9 @@ type t = (int * int) list
 
 let mk off : t = [(0, off)]
 
-let add index off = function
+let add index off table =
+  if off = 0 then table
+  else match table with
   | ((idx', off') :: rest) -> (index, off + off') :: (idx', off') :: rest
   | []                     -> [index, off; 0, 0]
 
@@ -11,12 +13,8 @@ let add index off = function
  * the query
  *)
 let rec lookup table idx =
-  let res =
-    match table with
-    | ((idx', off) :: rest) ->
-      if idx >= idx' then off
-      else lookup rest idx
-    | _ -> 0
-  in
-  Printf.printf "offset table %d %d\n" idx res;
-  res
+  match table with
+  | ((idx', off) :: rest) ->
+    if idx >= idx' then off
+    else lookup rest idx
+  | _ -> 0

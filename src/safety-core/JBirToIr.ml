@@ -127,6 +127,7 @@ let number_of_new_instructions parse st line = function
          parse.Parse.cms_lookup (JB.make_cms st.proc.P.cl_name ms)
          @ parse.Parse.virtual_lookup cn st.proc.P.sign line in
        3 * List.length procs)
+  | J.NewArray _ -> 4
   | _ -> 1
 
 let rec ir_proc parse st cn =
@@ -171,13 +172,10 @@ let rec ir_proc parse st cn =
 
   let instrs = Lazy.from_fun (fun _ ->
       let jump_offsets =
-        let num_instrs = List.mapi (number_of_new_instructions parse st) p.P.content in
-        let offsets =
-          (List.mapi (fun line num -> (line, num - 1)) num_instrs) in
-        List.fold_left (fun tb (l, o) ->
-            if o <> 0
-            then OT.add l o tb
-            else tb) (OT.mk (List.length opening_instructions)) offsets in
+        List.mapi (number_of_new_instructions parse st) p.P.content
+        |> List.mapi (fun line num -> (line, num - 1))
+        |> List.fold_left (fun tb (l, o) -> OT.add (l+1) o tb)
+           (OT.mk (List.length opening_instructions)) in
 
       let renumber = function
         | J.Goto l       -> J.Goto (l + OT.lookup jump_offsets l)
@@ -188,7 +186,7 @@ let rec ir_proc parse st cn =
       let groups =
         p.P.content
         |> List.map renumber
-        |> List.mapi (instr parse st mk_var) in
+        |> List.mapi (function line -> instr parse st mk_var line (line + OT.lookup jump_offsets line)) in
 
       opening_instructions :: groups
       |> List.concat
@@ -209,12 +207,12 @@ and mk_proc parse cms =
   let p = parse.Parse.cms_lookup cms in
   ir_proc parse (mk_st parse (List.hd p)) (fst (JB.cms_split cms))
 
-and instr parse st mk_var line i =
+and instr parse st mk_var orig_line line i =
   let expr = expr st mk_var in
   let e_type e = E.type_of (expr e) in
   let fname = QID.as_path st.proc.P.name in
 
-  let src_line = match J.get_source_line_number line st.proc.P.j_method with
+  let src_line = match J.get_source_line_number orig_line st.proc.P.j_method with
     | None   -> -1
     | Some n -> n in
 
@@ -304,12 +302,10 @@ and instr parse st mk_var line i =
     (match BuiltIn.call_built_in_method fname src_line cn ms v args next with
      | Some i -> [i]
      | None ->
-       Printf.printf "original line number %d\n" line;
        let procs =
          parse.Parse.cms_lookup (JB.make_cms st.proc.P.cl_name ms)
-         @ parse.Parse.virtual_lookup cn st.proc.P.sign line in
+         @ parse.Parse.virtual_lookup cn st.proc.P.sign orig_line in
 
-       Printf.printf "final dest %d\n" (line + 3*(List.length procs));
        let final_dest = lbl (line + 3*(List.length procs)) in
 
        procs
@@ -317,8 +313,6 @@ and instr parse st mk_var line i =
          (fun idx p ->
             let cid = E.Int (parse.Parse.class_id p.P.cl_name) in
             let dest = lbl (line + 3*(idx + 1)) in
-            Printf.printf "jump destination %d\n" (line + 3*(idx + 1));
-
             let _ = mk_proc parse (JB.make_cms p.P.cl_name p.P.sign) in
 
             [ I.If (E.mk_neq cid (E.Select (E.Var LS.class_array, expr obj)), dest)
