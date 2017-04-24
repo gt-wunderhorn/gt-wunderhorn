@@ -30,7 +30,7 @@ let translate ir =
 
   |> Simplify.remove_unaffecting_relations
 
-  (* |> Simplify.inline_relations *)
+  |> Simplify.inline_relations
 
   (* Simplify certain clauses by substituting simple equality statements. *)
   |> List.map Expr.optimize
