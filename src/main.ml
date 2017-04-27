@@ -25,9 +25,9 @@ let _ =
     (* TODO: not all the ir is printed, why? *)
     else if Sys.argv.(3) = "print-ir"
     then
-      let content = Lazy.force ir.Instr.content in
+      let content = ir.Instr.content in
       ( ToStr.proc ir |> Printf.printf "%s\n"
-      ; ToStr.instructions content |> Printf.printf "%s\n"
+      ; ToStr.instructions (Lazy.force content) |> Printf.printf "%s\n"
       ; ())
 
     else if Sys.argv.(3) = "run"

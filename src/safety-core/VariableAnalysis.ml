@@ -1,5 +1,4 @@
 module G = Graph
-module LS = LangState
 module PG = ProgramGraph
 module Set = Core.Std.Set.Poly
 module Map = Core.Std.Map.Poly

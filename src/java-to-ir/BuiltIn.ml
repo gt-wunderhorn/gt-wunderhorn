@@ -1,5 +1,4 @@
 module JB = Javalib_pack.JBasics
-module PG = ProgramGraph
 module E = Expr
 
 let is_built_in_class cn =

@@ -1,13 +1,257 @@
 module J = Sawja_pack.JBir
 module JB = Javalib_pack.JBasics
+
 module P = Proc
 module LS = LangState
-module PG = ProgramGraph
 module QID = QualifiedIdentity
+
+module Set = Core.Std.Set.Poly
+module Map = Core.Std.Map.Poly
 
 module T = Type
 module E = Expr
 module I = Instr
+module V = Var
+
+let is_global = function
+  | (Var.Mk (QID.QID ("g" :: _), _)) -> true
+  | _ -> false
+
+let is_global_assignment = function
+  | E.Var var when (is_global var) -> true
+  | _ -> false
+
+let expr_replacement replacer is =
+  let ex = E.map replacer in
+  let replace_vars = function
+    | I.Assign (v, e)           -> I.Assign (v, ex e)
+    | I.Goto l                  -> I.Goto l
+    | I.If (e, l)               -> I.If (ex e, l)
+    | I.Return e                -> I.Return (ex e)
+    | I.Invoke (p, v, es)       -> I.Invoke (p, v, List.map ex es)
+    | I.Assert (e, at)          -> I.Assert (ex e, at)
+  in
+  List.map
+    (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i))
+    is
+
+let rec gotos_reaching target min max = function
+  | (I.Instr (from, I.Goto towards)) :: _
+    when (Lbl.compare_lines false (=) towards target)
+      && ((Lbl.compare_lines false (<) from min)
+         || (Lbl.compare_lines false (>) from max)) ->
+    true
+  | (I.Instr (from, I.If (_, towards))) :: _
+    when (Lbl.compare_lines false (=) towards target)
+      && ((Lbl.compare_lines false (<) from min)
+         || (Lbl.compare_lines false (>) from max)) ->
+    true
+  | i :: rest -> gotos_reaching target min max rest
+  | [] -> false
+
+(* Some low level languages (including JVM Bytecode) do not represent booleans
+   directly. This results in strange clauses. This transforms instructions
+   sequences which conditionally assign integers to a boolean assignment. *)
+let simplify_boolean_assignment is =
+  let rec replace_instrs = function
+    | (I.Instr (l1, I.If (c, ll1)))
+      :: (I.Instr (l2, I.Assign (v1, E.Int 1)))
+      :: (I.Instr (l3, I.Goto ll2))
+      :: (I.Instr (l4, I.Assign (v2, E.Int 0)))
+      :: (I.Instr (l5, ins))
+      :: rest when ll1 = l4 &&
+                   ll2 = l5 &&
+                   (* from the Java Docs on variable naming:
+                      the dollar sign character, by convention, is never used at all.
+                      You may find some situations where auto-generated names will
+                      contain the dollar sign, but your variable names should always
+                      avoid using it.
+                      must be compiled with '-g' though *)
+                   (Var.basename v1).[0] = '$' &&
+                   v1 = v2 ->
+      let (m, rest) = replace_instrs (I.Instr ((l5, ins)) :: rest) in
+      let v = Var.with_type v1 T.Bool in
+      let m' = Map.add ~key:v1 ~data:v m in
+      (m',
+           (I.Instr (l1, I.If (c, l4)))
+        :: (I.Instr (l2, I.Assign (v, E.Bool true)))
+        :: (I.Instr (l3, I.Goto l5))
+        :: (I.Instr (l4, I.Assign (v, E.Bool false)))
+        :: rest)
+    | (i :: is) ->
+      let (m, rest) = replace_instrs is in
+      (m, i :: rest)
+    | [] -> (Map.empty, [])
+  in
+
+  let (m, is') = replace_instrs is in
+
+  let lookup v = match Map.find m v with
+    | None -> v
+    | Some v' -> v' in
+
+
+  let ex =
+    let special = function
+      | E.Var v -> Some (E.Var (lookup v))
+      | e -> None in
+    E.map special
+  in
+
+  let replace_vars = function
+    | I.Assign (V.Mk (var, T.Bool), E.Int (0 | 1 as bin)) ->
+      let to_bool = if bin = 1 then true else false in
+      I.Assign (V.Mk (var, T.Bool), E.Bool (to_bool))
+    | I.Assign (v, e)           -> I.Assign (lookup v, ex e)
+    | I.Goto l                  -> I.Goto l
+    | I.If (e, l)               -> I.If (ex e, l)
+    | I.Return e                -> I.Return (ex e)
+    | I.Invoke (p, v, es)       -> I.Invoke (p, lookup v, List.map ex es)
+    | I.Assert (e, at)          -> I.Assert (ex e, at)
+  in
+  List.map
+    (fun (I.Instr (lbl, i)) -> I.Instr (lbl, replace_vars i)) is'
+
+
+(* changes (my_bool = true) -> (my_bool) *)
+let simplify_boolean_checks is =
+  let replacer = function
+    | E.Apply (E.Biop (E.Eq), [E.Var (V.Mk (_, T.Bool)) as var; E.Int (0 | 1 as bin)]) ->
+      if bin = 1
+      then Some (var)
+      else Some (E.Apply (E.Unop (E.Not), [var]))
+    | _ -> None
+  in
+  expr_replacement replacer is
+
+let inline_assignments is =
+
+  let rec slice_linear min max = function
+    (* TODO is checking for jumps going _out_ of the region necessary? *)
+    (* | ((I.Instr (_, I.Goto towards)) as curr_instr) :: rest *)
+    (*   when (Lbl.compare_lines false (<) towards min) *)
+    (*     || (Lbl.compare_lines false (>) towards max) -> *)
+    (*   ([], curr_instr :: rest) *)
+    (* | ((I.Instr (_, I.If (_, towards))) as curr_instr) :: rest *)
+    (*   when (Lbl.compare_lines false (<) towards min) *)
+    (*     || (Lbl.compare_lines false (>) towards max) -> *)
+    (*   ([], curr_instr :: rest) *)
+    | ((I.Instr (lbl, _)) as curr_instr) :: rest ->
+      if gotos_reaching lbl min max is
+      then ([], curr_instr :: rest)
+      else
+        let (sliced, leftover) = slice_linear min max rest in
+        (curr_instr :: sliced, leftover)
+    | [] -> ([], [])
+  in
+
+  let into_linear_region region = match region with
+    | (I.Instr (lbl, _)) :: rest ->
+      let min = Lbl.map_ln ((+) (-1)) lbl in
+      let max = Lbl.map_ln ((+) (List.length region)) lbl in
+      slice_linear min max region
+    | [] -> ([], [])
+  in
+
+  let rec find_region var dep_vars = function
+    | ((I.Instr (lbl, I.Assign (assigned, _))) as curr_instr) :: rest
+      when (Set.mem dep_vars assigned) -> ([], curr_instr :: rest)
+    | i :: rest ->
+      let (region, leftover) = find_region var dep_vars rest in
+      (i :: region, leftover)
+    | [] -> ([], [])
+  in
+  let process_region var dep_vars assignment intrs =
+    let (region, leftover) = find_region var dep_vars intrs in
+    let (linear_region, slice_leftover) = into_linear_region region in
+    let rec replacer = function
+      | E.Var v when v = var -> Some(assignment)
+      | _ -> None
+    in
+    (expr_replacement replacer linear_region, List.flatten [slice_leftover; leftover])
+  in
+  let rec find_regions = function
+    | (I.Instr (lbl, I.Assign (var, assign))) :: rest
+      when (V.is_local var lbl)
+        && (V.is_scalar var)
+        && (not (is_global_assignment assign)) ->
+      let dep_vars = E.vars assign in
+      let curr_instr = I.Instr (lbl, I.Assign (var, assign)) in
+      if Set.mem dep_vars var
+      then curr_instr :: find_regions rest
+      else
+        let (inlined, leftover) = process_region var (Set.add dep_vars var) assign rest in
+        curr_instr :: (find_regions (List.flatten [inlined; leftover]))
+    | (i :: rest) -> i :: (find_regions rest)
+    | [] -> []
+  in
+  find_regions is
+
+let remove_unused_vars is =
+  let check_used var = function
+    | E.Var v when v = var -> Some(true)
+    | _ -> None
+  in
+  let is_used_in_expr var expr = E.fold (check_used var) (||) false expr in
+
+  let rec slice_linear min max = function
+    | ((I.Instr (_, I.Goto towards)) as curr_instr) :: rest
+      when (Lbl.compare_lines false (<) towards min)
+        || (Lbl.compare_lines false (>) towards max) ->
+      ([], curr_instr :: rest)
+    | ((I.Instr (_, I.If (_, towards))) as curr_instr) :: rest
+      when (Lbl.compare_lines false (<) towards min)
+        || (Lbl.compare_lines false (>) towards max) ->
+      ([], curr_instr :: rest)
+    | ((I.Instr (lbl, _)) as curr_instr) :: rest ->
+      if gotos_reaching lbl min max is
+      then ([], curr_instr :: rest)
+      else
+        let (sliced, leftover) = slice_linear min max rest in
+        (curr_instr :: sliced, leftover)
+    | [] -> ([], [])
+  in
+
+  let into_linear_region region = match region with
+    | (I.Instr (lbl, _)) :: rest ->
+      let min = Lbl.map_ln ((+) (-1)) lbl in
+      let max = Lbl.map_ln ((+) (List.length region)) lbl in
+      slice_linear min max region
+    | [] -> ([], [])
+  in
+
+  let rec is_used var acc = function
+    | (I.Instr (_, (I.Assign (v, e)))) :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.If (e, j))))     :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.Return e)))      :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.Assert (e, _)))) :: _ when is_used_in_expr var e -> true
+    | (I.Instr (_, (I.Invoke (_, _, es)))) :: _
+      when List.exists (is_used_in_expr var) es       -> true
+    | (I.Instr (lbl, (I.Assign (v, _)))) :: _ when var = v ->
+      let (_, leftover) = into_linear_region (List.rev acc) in
+      leftover != []
+    | i :: rest -> is_used var (i :: acc) rest
+    | [] ->
+      let (used, leftover) = into_linear_region (List.rev acc) in
+      leftover != []
+  in
+
+  let rec find_unused = function
+    | (I.Instr (lbl, I.Assign (var, assign)) as curr_instr)
+      :: (I.Instr (next, _) as next_instr)
+      :: rest
+      when (V.is_local var lbl)
+        && (V.is_scalar var)
+        && (not (is_global_assignment assign)) ->
+      if is_used var [curr_instr] (next_instr :: rest)
+      then curr_instr :: (find_unused (next_instr :: rest))
+      else (I.Instr (lbl, I.Goto next)) :: (find_unused (next_instr :: rest))
+    | (i :: rest) -> i :: (find_unused rest)
+    | [] -> []
+  in
+
+  find_unused is
+
 
 let const = function
   | `ANull    -> E.Int 0
@@ -78,8 +322,6 @@ type st =
   }
 
 let mk_st parse p = { parse = parse; proc = p }
-
-module S_map = Map.Make(struct type t = string;; let compare = compare end)
 
 let names_to_var p_name v_name =
   QID.specify p_name v_name
@@ -191,10 +433,10 @@ let rec ir_proc parse st cn =
       opening_instructions :: groups
       |> List.concat
       |> List.mapi (fun line ir -> I.Instr (Lbl.At (p.P.name, Lbl.Line line), ir))
-      |> Simplify.simplify_boolean_assignment
-      |> Simplify.simplify_boolean_checks
-      |> Simplify.inline_assignments
-      |> Simplify.remove_unused_vars
+      |> simplify_boolean_assignment
+      |> simplify_boolean_checks
+      |> inline_assignments
+      |> remove_unused_vars
     ) in
 
   { I.id       = p.P.name

@@ -17,6 +17,8 @@ and ir =
 
 and t = Instr of Lbl.t * ir
 
+let map_content f p = { p with content = Lazy.from_fun (fun _ -> f (Lazy.force p.content)) }
+
 let entrance proc = Lbl.At (proc.id, Lbl.Entrance)
 let exit     proc = Lbl.At (proc.id, Lbl.Exit)
 

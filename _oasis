@@ -32,23 +32,30 @@ Library ir
                 ToStr,
                 Instr
 
-Library safetycore
-  Path:         src/safety-core
+Library java_to_ir
+  Path:         src/java-to-ir
   BuildTools:   ocamlbuild
   BuildDepends: ir, Z3, sawja
   ByteOpt:      -thread
   NativeOpt:    -thread
   Modules:      BuiltIn,
-                ClausesToZ3,
-                ExprsToClauses,
-                Inspect,
-                IrToGraph,
                 JBirToIr,
                 LangState,
                 Parse,
+                Proc
+
+Library safetycore
+  Path:         src/safety-core
+  BuildTools:   ocamlbuild
+  BuildDepends: ir, Z3, sawja, java_to_ir
+  ByteOpt:      -thread
+  NativeOpt:    -thread
+  Modules:      ClausesToZ3,
+                ExprsToClauses,
+                Inspect,
+                IrToGraph,
                 PathToExpr,
                 PrintClauses,
-                Proc,
                 ProgramGraph,
                 Simplify,
                 VariableAnalysis

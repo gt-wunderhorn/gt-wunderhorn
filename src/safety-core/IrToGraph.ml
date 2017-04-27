@@ -1,17 +1,11 @@
 module G = Graph
 module PG = ProgramGraph
-module LS = LangState
 module QID = QualifiedIdentity
 module Set = Core.Std.Set.Poly
 
 module T = Type
 module E = Expr
 module I = Instr
-
-(** To inspect the type of an object, the global class array is accessed
-    and the contents under the object are compared to the expected value. *)
-let check_type obj t =
-  E.mk_eq (E.Select (E.Var LS.class_array, obj)) t
 
 let rec instr proc (I.Instr (this, i)) =
   let next = Lbl.next this in
