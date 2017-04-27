@@ -47,12 +47,12 @@ Library java_to_ir
 Library safetycore
   Path:         src/safety-core
   BuildTools:   ocamlbuild
-  BuildDepends: ir, Z3, sawja, java_to_ir
+  BuildDepends: ir, Z3, sawja
   ByteOpt:      -thread
   NativeOpt:    -thread
   Modules:      ClausesToZ3,
                 ExprsToClauses,
-                Inspect,
+                ProgramToClauses,
                 IrToGraph,
                 PathToExpr,
                 PrintClauses,
@@ -64,7 +64,7 @@ Executable safetycheck
   Path:         src
   BuildTools:   ocamlbuild
   MainIs:       main.ml
-  BuildDepends: safetycore
+  BuildDepends: safetycore, java_to_ir
   ByteOpt:      -thread
   NativeOpt:    -thread
 

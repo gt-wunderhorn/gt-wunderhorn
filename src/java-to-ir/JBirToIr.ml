@@ -604,3 +604,13 @@ and instr parse st mk_var orig_line line i =
   | J.Formula _
   | J.Nop
     -> [I.Goto next]
+
+let gen_ir classpath class_name method_sig =
+  let cn  = JB.make_cn class_name in
+  let cms = JB.make_cms cn method_sig in
+  let proc_id = ref (0) in
+  let parse = Parse.parse proc_id classpath cms in
+
+  (* Create an IR procedure representing the entire program starting
+     from the entrypoint. *)
+  mk_proc parse cms

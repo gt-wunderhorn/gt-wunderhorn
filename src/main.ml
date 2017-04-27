@@ -14,8 +14,8 @@ let _ =
     let classpath = Sys.argv.(1) in
     let class_name = Sys.argv.(2) in
 
-    let ir = Inspect.gen_ir classpath class_name method_sig in
-    let exprs = Inspect.inspect ir in
+    let ir = JBirToIr.gen_ir classpath class_name method_sig in
+    let exprs = ProgramToClauses.translate ir in
 
     if Sys.argv.(3) = "print"
     then
