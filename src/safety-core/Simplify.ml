@@ -2,15 +2,14 @@ module G = Graph
 module PG = ProgramGraph
 module Set = Core.Std.Set.Poly
 module Map = Core.Std.Map.Poly
+module Fn = Core.Std.Fn
 module QID = QualifiedIdentity
 
 module V = Var
 module T = Type
 module E = Expr
 module I = Instr
-module L = Core_kernel.Core_list
-module M = Core_kernel.Core_map
-module Fn = Core_kernel.Fn
+module L = Core.Std.List
 
 (* If a relation never appears on the rhs of a horn clause, then it can be safely
    removed from any expression which refers to it. *)
@@ -108,7 +107,6 @@ let inline_relations es =
   let queries = L.fold (L.map es (find_queried)) ~init:Set.empty ~f:Set.union in
 
   let aggregate_uniques acc ((b, args), head) = match Map.find acc head with
-    (* TODO: ignoring query relations necessary? *)
     | None -> if (Set.mem queries @@ Lbl.qualify "q" @@ fst head)
       || (E.contains (is_recursive_relation head) b)
       then Map.add ~key:head ~data:None acc
@@ -117,7 +115,7 @@ let inline_relations es =
     | Some (Some _) -> Map.add ~key:head ~data:None acc
   in
   let head_count = List.fold_left (aggregate_uniques) Map.empty clauses in
-  let unique_heads = M.filter_map head_count (Fn.id) in
+  let unique_heads = Map.filter_map head_count (Fn.id) in
 
   let alias ~key:r ~data:(body, args)=
     let deduplicate_args arg (body, args, count) =
@@ -176,18 +174,5 @@ let inline_relations es =
       Some (E.from_horn_clause (E.map replace_relations body) head)
   in
 
-  let replaced = L.filter_map es map_body in
-
-
-  Printf.eprintf "\nBefore:\n";
-  List.iter (fun data -> Printf.eprintf "%s\n" (ToStr.expr data)) es;
-
-  Printf.eprintf "\nAfter:\n";
-  List.iter (fun data -> Printf.eprintf "%s\n" (ToStr.expr data)) replaced;
-
-  Printf.eprintf "\n";
-  Map.iteri aliased_heads (fun ~key ~data:(b, args) -> Printf.eprintf "UNIQUE %s:\nBODY: %s\n" (ToStr.lbl @@ fst key) (ToStr.expr b));
-  Printf.eprintf "\n";
-
-  replaced
+  L.filter_map es map_body
 
