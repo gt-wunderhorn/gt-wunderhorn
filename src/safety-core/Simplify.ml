@@ -88,9 +88,12 @@ let remove_empty_exprs g =
   G.pinch remove g
 
 
+let always_inline ~inlined:_ ~original:_ = true
+
+
 (* If a relation only appears on the right hand side of a Horn Clause once, then
    other references to that relation can be inlined. *)
-let inline_relations es =
+let inline_relations heuristic es =
   let to_clause expr = match E.to_horn_clause expr with
     | Some((b, E.Relation (r, args))) -> Some(((b, args), r))
     | _ -> None
@@ -162,7 +165,10 @@ let inline_relations es =
           in
           let body = E.map randomize_vars b in
           let body' = List.fold_left2 replace_body body args' args in
-          Some (E.map replace_relations body')
+          let inlined = E.map replace_relations body' in
+          if heuristic ~inlined:inlined ~original:b
+          then Some inlined
+          else Some b
         | None -> None)
     | _ -> None
   in
