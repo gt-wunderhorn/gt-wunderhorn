@@ -94,6 +94,7 @@ let always_inline ~inlined:_ ~original:_ = true
 (* If a relation only appears on the right hand side of a Horn Clause once, then
    other references to that relation can be inlined. *)
 let inline_relations heuristic es =
+  (* TODO: Check for recursive cycles *)
   let to_clause expr = match E.to_horn_clause expr with
     | Some((b, E.Relation (r, args))) -> Some(((b, args), r))
     | _ -> None
@@ -148,27 +149,32 @@ let inline_relations heuristic es =
     E.map special body
   in
 
-  let rec replace_relations = function
+  let rec replace_relations id_table = function
     | E.Relation (r, args) -> (match Map.find aliased_heads r with
         | Some (b, args') ->
           let arg_vars = List.fold_left (fun set e -> Set.union set @@ E.vars e) Set.empty args' in
           let other_vars = Set.diff (E.vars b) arg_vars in
-          let assign_ids map var =
-            Map.add map ~key:var ~data:(Random.int 1000 |> string_of_int)
+          let assign_ids map var = match Map.find !id_table (V.strip_prime var) with
+            | Some id ->
+              id_table := Map.add !id_table ~key:(V.strip_prime var) ~data:(id + 1);
+              Map.add map ~key:var ~data:(string_of_int (id + 1))
+            | None ->
+              id_table := Map.add !id_table ~key:(V.strip_prime var) ~data:0;
+              Map.add map ~key:var ~data:"0"
           in
           let table = Set.fold other_vars ~init:Map.empty ~f:assign_ids in
-          let randomize_vars = function
+          let alias_other_vars = function
             | E.Var v -> (match Map.find table v with
-                | Some id -> Some (E.Var (Var.specify v id))
+                | Some id -> Some (E.Var (Var.primed v id))
                 | None -> None)
             | _ -> None
           in
-          let body = E.map randomize_vars b in
+          let body = E.map alias_other_vars b in
           let body' = List.fold_left2 replace_body body args' args in
-          let inlined = E.map replace_relations body' in
-          if heuristic ~inlined:inlined ~original:b
-          then Some inlined
-          else Some b
+          let inlined = E.map (replace_relations id_table) body' in
+          (* TODO: add heuristic *)
+          (* watch out, don't remove the relation if the heuristic says not to inline *)
+          Some inlined
         | None -> None)
     | _ -> None
   in
@@ -177,7 +183,23 @@ let inline_relations heuristic es =
     | None -> Some expr
     | Some (_, E.Relation (r, _)) when Map.mem unique_heads r -> None
     | Some (body, head) ->
-      Some (E.from_horn_clause (E.map replace_relations body) head)
+      let id_table = ref Map.empty in
+      let collect_ids = function
+        | E.Var var ->
+          let stripped_var = V.strip_prime var in
+          let var_prime = V.default_prime_count var in
+          (match Map.find !id_table stripped_var with
+           | Some id ->
+             id_table := Map.add !id_table ~key:stripped_var ~data:(max id var_prime);
+             None
+           | None ->
+             id_table := Map.add !id_table ~key:stripped_var ~data:var_prime;
+             None
+          )
+        | _ -> None
+      in
+      let _ = (E.map (collect_ids) body) in
+      Some (E.from_horn_clause (E.map (replace_relations id_table) body) head)
   in
 
   L.filter_map es map_body
