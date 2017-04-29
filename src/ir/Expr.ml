@@ -108,6 +108,10 @@ let is_false e = e = Bool false
 
 let is_var = function | Var _ -> true | _ -> false
 
+let into_var = function
+  | Var t -> Some t
+  | _ -> None
+
 let is_simp = function
   | Var _ | Int _ | Real _ | Bool _ -> true
   | _ -> false
@@ -144,6 +148,13 @@ let rec fold special f zero e =
     | _                -> zero
   in
   Algorithm.specialize base special e
+
+let contains f =
+  let check_used = function
+    | e when (f e) -> Some true
+    | _ -> None
+  in
+  fold check_used (||) false
 
 let rec optimize e =
   let optimize' e =

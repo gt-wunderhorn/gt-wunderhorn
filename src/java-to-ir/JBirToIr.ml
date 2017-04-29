@@ -188,11 +188,7 @@ let inline_assignments is =
   find_regions is
 
 let remove_unused_vars is =
-  let check_used var = function
-    | E.Var v when v = var -> Some(true)
-    | _ -> None
-  in
-  let is_used_in_expr var expr = E.fold (check_used var) (||) false expr in
+  let is_used_in_expr var = E.contains ((=) (E.Var var)) in
 
   let rec slice_linear min max = function
     | ((I.Instr (_, I.Goto towards)) as curr_instr) :: rest
@@ -229,11 +225,11 @@ let remove_unused_vars is =
       when List.exists (is_used_in_expr var) es       -> true
     | (I.Instr (lbl, (I.Assign (v, _)))) :: _ when var = v ->
       let (_, leftover) = into_linear_region (List.rev acc) in
-      leftover != []
+      leftover <> []
     | i :: rest -> is_used var (i :: acc) rest
     | [] ->
       let (used, leftover) = into_linear_region (List.rev acc) in
-      leftover != []
+      leftover <> []
   in
 
   let rec find_unused = function
