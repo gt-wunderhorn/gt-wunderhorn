@@ -1,3 +1,5 @@
+# Wunderhorn
+
 ## Setting up the Dev Environment
 
 ### Docker
@@ -15,7 +17,7 @@ directory.
 
 ### Manually
 
-To build this project you need a few dependencies, below is there debian
+To build this project you need a few dependencies, below is their debian
 package names:
 
 ```bash
@@ -29,9 +31,10 @@ apt-get install -y \
     ocaml
 ```
 
-You need Java to compile the java programs, this project is in OCaml and
-opam is nice to get OCaml packages, while oasis is the build tool.
-You should also get some OCaml packages:
+You need Java to compile the java programs, OCaml to compile the project,
+opam to act as the pacakge manager, and oasis to build it.
+You should also get some OCaml packages
+([sawja](http://sawja.inria.fr/), [core](https://janestreet.github.io/)):
 
 ```bash
 opam init -y
@@ -47,7 +50,7 @@ You should add the opam envs to your `.bashrc` or similar:
 echo 'eval $(opam config env)' >> ~/.bashrc
 ```
 
-Finally you need to build z3 from source with the OCaml bindings.
+Finally you need to build Z3 from source with the OCaml bindings.
 
 ```bash
 eval $(opam config env)
@@ -88,7 +91,7 @@ sudo mv scheme-format /usr/bin/
 
 ## Building
 
-Once your in the build environment you can make the project with
+Once your in the build environment you can build the project with
 
 ```bash
 make setup
@@ -99,8 +102,8 @@ Finally, you run the simple or hard benchmarks with the Makefile,
 and you can test a specific test with `make example`.
 
 ```bash
-make simple
-make hard
+make simple # or
+make hard   # or
 make example program=benchmark/simple/fib.pass
 ```
 
