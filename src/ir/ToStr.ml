@@ -102,7 +102,6 @@ and ir = function
   | I.Assert   (e, q) -> fmt "Assert (%s, %s)"
                              (expr e) (query q)
 
-(* TODO: print content in some way *)
 and proc { I.id; I.params; I.ret_type; I.content } =
   fmt "Proc {id: %s; params: [%s]; ret_type: %s; content: _}"
     (qid id)

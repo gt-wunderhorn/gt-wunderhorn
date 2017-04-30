@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
 SOURCE_DIR=$(dirname "$SOURCE_DIR")
+# shellcheck source=common.sh
 source "$SOURCE_DIR/common.sh"
 
 rm -rf bin
 mkdir -p bin
 cp "$(source_dir)"/../main.byte bin
-cd bin
+cd bin || exit 1
 
 type="$1"
 
 function run {
   echo
-  echo $1 $2 $3
+  echo "$1" "$2" "$3"
   "$(source_dir)"/run_hard_test.sh "$1" "$2" "$3" "$type"
 }
 

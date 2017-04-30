@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
 SOURCE_DIR=$(dirname "$SOURCE_DIR")
+# shellcheck source=common.sh
 source "$SOURCE_DIR/common.sh"
 
 rm -rf bin
 mkdir -p bin
 cp "$(source_dir)"/../main.byte bin
-cd bin
+cd bin || exit 1
 
 type=$1
 
 function run {
-  "$(source_dir)"/run_simple_test.sh "$1" $type
+  "$(source_dir)"/run_simple_test.sh "$1" "$type"
 }
 
 echo "Running all simple benchmarks with classpath set to: $(classpath)."

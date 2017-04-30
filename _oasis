@@ -2,7 +2,7 @@ OASISFormat: 0.4
 Name:        Safety
 Version:     1
 Synopsis:    Safety analysis through Horn Clause Interpolation.
-Authors:     David Heath
+Authors:     David Heath, Michael Eden
 License:     BSD-3-clause
 
 Library utility
