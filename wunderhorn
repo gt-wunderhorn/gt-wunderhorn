@@ -2,6 +2,7 @@
 
 SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
 SOURCE_DIR=$(dirname "$SOURCE_DIR")
+# shellcheck source=scripts/common.sh
 source "$SOURCE_DIR/scripts/common.sh"
 
 fullname=$(basename "$1")
@@ -9,8 +10,9 @@ ext="${fullname##*.}"
 filename="${fullname%.*}"
 
 if [[ "$ext" = "java" ]]; then
-  javac -g $fullname
-  ./main.byte "$(classpath)" $filename run
+  javac -g "$fullname"
+  ./main.byte "$(classpath)" "$filename" run
 elif [[ "$ext" = "class" ]]; then
-  ./main.byte "$(classpath)" $filename run
+  ./main.byte "$(classpath)" "$filename" run
 fi
+

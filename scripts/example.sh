@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
 SOURCE_DIR=$(dirname "$SOURCE_DIR")
+# shellcheck source=common.sh
 source "$SOURCE_DIR/common.sh"
 
 PROGRAM="$(readlink -f "$1")"
 mkdir -p bin
 cp -r "$(source_dir)"/../main.byte bin
 cp -r "$(source_dir)"/../SawjaInspect.byte bin
-cd bin
+cd bin || exit 1
 
 echo
 echo "Generating Z3 SMT for $1"

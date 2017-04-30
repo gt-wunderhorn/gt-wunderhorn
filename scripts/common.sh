@@ -3,7 +3,8 @@ set -euo pipefail
 
 # get the directory the file is in
 function source_dir() {
-  local SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
+  local SOURCE_DIR
+  SOURCE_DIR=$(readlink -f "${BASH_SOURCE[0]}")
   dirname "$SOURCE_DIR"
 }
 
@@ -17,7 +18,8 @@ function find_bootcp_jar() {
 
 # get the extension of the filename
 function get_ext() {
-  local fn=$(basename "$1")
+  local fn
+  fn=$(basename "$1")
   echo "${fn##*.}"
 }
 
