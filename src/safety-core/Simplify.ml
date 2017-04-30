@@ -94,7 +94,6 @@ let always_inline ~inlined:_ ~original:_ = true
 (* If a relation only appears on the right hand side of a Horn Clause once, then
    other references to that relation can be inlined. *)
 let inline_relations heuristic es =
-  (* TODO: Check for recursive cycles *)
   let to_clause expr = match E.to_horn_clause expr with
     | Some((b, E.Relation (r, args))) -> Some(((b, args), r))
     | _ -> None
