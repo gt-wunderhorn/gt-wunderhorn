@@ -14,7 +14,7 @@ module I = Instr
 module V = Var
 
 let is_global = function
-  | (Var.Mk (QID.QID ("g" :: _), _)) -> true
+  | (V.Mk (QID.QID ("g" :: _), _)) -> true
   | _ -> false
 
 let is_global_assignment = function
@@ -67,10 +67,10 @@ let simplify_boolean_assignment is =
                       contain the dollar sign, but your variable names should always
                       avoid using it.
                       must be compiled with '-g' though *)
-                   (Var.basename v1).[0] = '$' &&
+                   (V.basename v1).[0] = '$' &&
                    v1 = v2 ->
       let (m, rest) = replace_instrs (I.Instr ((l5, ins)) :: rest) in
-      let v = Var.with_type v1 T.Bool in
+      let v = V.with_type v1 T.Bool in
       let m' = Map.add ~key:v1 ~data:v m in
       (m',
            (I.Instr (l1, I.If (c, l4)))
@@ -310,7 +310,7 @@ let binop op x y =
   | J.CMP _  -> assert false (* TODO *)
 
 let field_name cn fs = QID.of_list [JB.cn_name cn; JB.fs_name fs]
-let field cn fs = Var.Mk (field_name cn fs, T.Array (typ (JB.fs_type fs)))
+let field cn fs = V.Mk (field_name cn fs, T.Array (typ (JB.fs_type fs)))
 
 type st =
   { parse : Parse.t
@@ -328,7 +328,7 @@ let rec expr st mk_var jbir = match jbir with
   | J.Binop (op, x, y)  -> binop op (expr st mk_var x) (expr st mk_var y)
   | J.Unop (op, e)      -> unop op (expr st mk_var e)
   | J.Field (v, cn, fs) -> E.Select (E.Var (field cn fs), expr st mk_var v)
-  | J.StaticField (cn, fs) -> E.Var (field cn fs)
+  | J.StaticField (cn, fs) -> E.Var (V.Mk (field_name cn fs, typ (JB.fs_type fs)))
 
 let rec comp cond x y =
   let decide i r =
@@ -483,7 +483,8 @@ and instr parse st mk_var orig_line line i =
     [update_field (field cn fs) (expr v) (expr e)]
 
   | J.AffectStaticField (cn, fs, e) ->
-    [I.Assign (field cn fs, expr e)]
+    let v = V.Mk (field_name cn fs, typ (JB.fs_type fs)) in
+    [I.Assign (v, expr e)]
 
   | J.Goto l ->
     [I.Goto (lbl l)]
