@@ -328,8 +328,7 @@ let rec expr st mk_var jbir = match jbir with
   | J.Binop (op, x, y)  -> binop op (expr st mk_var x) (expr st mk_var y)
   | J.Unop (op, e)      -> unop op (expr st mk_var e)
   | J.Field (v, cn, fs) -> E.Select (E.Var (field cn fs), expr st mk_var v)
-  | J.StaticField (cn, fs) ->
-    E.Select (E.Var (field cn fs), E.Int (st.parse.Parse.class_id cn))
+  | J.StaticField (cn, fs) -> E.Var (field cn fs)
 
 let rec comp cond x y =
   let decide i r =
@@ -484,7 +483,7 @@ and instr parse st mk_var orig_line line i =
     [update_field (field cn fs) (expr v) (expr e)]
 
   | J.AffectStaticField (cn, fs, e) ->
-    [update_field (field cn fs) (E.Int (parse.Parse.class_id cn)) (expr e)]
+    [I.Assign (field cn fs, expr e)]
 
   | J.Goto l ->
     [I.Goto (lbl l)]
